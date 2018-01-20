@@ -1,0 +1,20 @@
+rm(list = ls())
+
+library(dplyr)
+library(magrittr)
+library(readstata13)
+
+# Reading the data
+dat <- read.dta13("SNS datamerged081315edited.dta")
+
+# Filtering the dataset
+dat2 <- dat %>%
+  select(
+    School, photoid,
+    matches("sch_friend.+")
+    )
+
+dat3 <- subset(dat, select = c(
+  "School", "photoid",
+  colnames(dat)[grepl("sch_friend.+", colnames(dat))]
+))

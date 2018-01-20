@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied SNA with R</title>
+  <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied SNA with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  <meta name="github-repo" content="USCCANA/appliedsnar" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied SNA with R" />
+  
+  <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  
+
+<meta name="author" content="George G. Vega Yon">
+
+
+<meta name="date" content="2018-01-19">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="r-basics.html">
+<link rel="next" href="applications.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied SNA with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
+<li class="chapter" data-level="3.1" data-path="r-basics.html"><a href="r-basics.html#what-is-r"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics.html"><a href="r-basics.html#how-to-install-packages"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html"><i class="fa fa-check"></i><b>4</b> Week 1: SNS Study</a><ul>
+<li class="chapter" data-level="4.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#the-social-network-study"><i class="fa fa-check"></i><b>4.1</b> The Social Network Study</a></li>
+<li class="chapter" data-level="4.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#reading-the-data"><i class="fa fa-check"></i><b>4.2</b> Reading the data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
+<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
+<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied SNA with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="week-1-sns-study" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Week 1: SNS Study</h1>
+<div id="the-social-network-study" class="section level2">
+<h2><span class="header-section-number">4.1</span> The Social Network Study</h2>
+</div>
+<div id="reading-the-data" class="section level2">
+<h2><span class="header-section-number">4.2</span> Reading the data</h2>
+<p>R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the <a href="https://cran.r-project.org/package=readr"><code>readr</code></a> package; or it can be binary files like dta (Stata), Octave, SPSS, for which <a href="https://cran.r-project.org/package=readr"><code>foreign</code></a> can be used; or it could be excel files in which case you should be using <a href="https://cran.r-project.org/package=readxl"><code>readxl</code></a>. In our case, the data for this session is in Stata13 format, and so we will be using <a href="https://cran.r-project.org/package=readstata13"><code>readstata13</code></a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(magrittr)
+<span class="kw">library</span>(readstata13)
+
+<span class="co"># Reading the data</span>
+dat &lt;-<span class="st"> </span><span class="kw">read.dta13</span>(<span class="st">&quot;SNS datamerged081315edited.dta&quot;</span>)
+
+<span class="co"># Taking a look at the file</span>
+<span class="kw">head</span>(dat[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</code></pre></div>
+<pre><code>##   t4_SubjectID School photoid sch_friend41 sch_friend42
+## 1    411104010    111       1          347          420
+## 2    411103015    111       2          424          205
+## 3    411603020    111       7           NA          505
+## 4    411103026    111      13          608          387
+## 5    411103016    111      14           NA           NA
+## 6    411502003    111      15           NA          265</code></pre>
+<p>For now, we won’t be using all ~2,000 columns of this data (which is mostly because we have a wide format dataset here), so we need to filter all this data. In order to do so, we can use the <code>select</code> function from the <code>dplyr</code> package</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered &lt;-<span class="st"> </span><span class="kw">select</span>(
+  dat,
+  School, photoid,
+  <span class="kw">matches</span>(<span class="st">&quot;^sch_friend.+&quot;</span>)
+  )</code></pre></div>
+<p>The function <code>matches</code> allows us using regular expressions to select variables (reguwhat!?). Regular expressions are, as I once overheard, <em>the poor man’s RA</em>. In this case, instead of us having to look for all the variables that start with the pattern <code>sch_friend</code>, we use regular expressions to catch that, character by character, we have:</p>
+<ul>
+<li><code>^</code>: Line start</li>
+<li><code>sch_friend</code>: Followed by <code>sch_friend</code></li>
+<li><code>.+</code>: Followed by anything not null.</li>
+</ul>
+<p>We will see more of this in the future. Now, if you don’t want to use <code>dplyr</code> to do this simple variable selection, you can always use the base R function <code>subset</code>. The following example is equivalent to what we just did using <code>dplyr::select</code>, although it can be slower<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered &lt;-<span class="st"> </span><span class="kw">subset</span>(
+  dat,
+  <span class="dt">select =</span> <span class="kw">c</span>(
+    <span class="st">&quot;School&quot;</span>, <span class="st">&quot;photoid&quot;</span>,
+    <span class="kw">colnames</span>(dat)[<span class="kw">grepl</span>(<span class="st">&quot;sch_friend.+&quot;</span>, <span class="kw">colnames</span>(dat))]
+    )
+  )</code></pre></div>
+<p>As you can see, the <code>dplyr</code> syntax is more clear.</p>
+<p>Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id such that, for example, the last three <code>x</code> numbers are the photoid and the first ones are the school id. To do this we need to take into account the range of the variables. Here, <code>photoid</code> has the following range:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(photo_id_ran &lt;-<span class="st"> </span><span class="kw">range</span>(dat_filtered<span class="op">$</span>photoid))</code></pre></div>
+<pre><code>## [1]    1 2074</code></pre>
+<p>As the variable spans up to 2074, we need to set the last 4 units of the variable to store the <code>photoid</code>. Again, we use <code>dplyr</code> to create this variable, and we will call it… <code>id</code> (mind blowing, right?):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dat_filtered <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">id =</span> School<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>photoid)) <span class="op">%&gt;%</span>
+<span class="st">  </span>head <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(School, photoid, id)</code></pre></div>
+<pre><code>##   School photoid      id
+## 1    111       1 1110001
+## 2    111       2 1110002
+## 3    111       7 1110007
+## 4    111      13 1110013
+## 5    111      14 1110014
+## 6    111      15 1110015</code></pre>
+<p>Wow, what happend in the last three lines of code! What is that <code>%&gt;%</code>? Well, that’s the <a href="http://r4ds.had.co.nz/pipes.html">piping operator</a>, and it is a very nice way of writing nested function calls. In this case, instead of having write something like</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered<span class="op">$</span>id &lt;-<span class="st"> </span>dat_filtered<span class="op">$</span>School<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>dat_filtered<span class="op">$</span>photoid
+<span class="kw">subset</span>(<span class="kw">head</span>(dat_filtered), <span class="dt">select =</span> <span class="kw">c</span>(School, photoid, id))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(dat_filtered)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    2164 obs. of  79 variables:
+##  $ School       : int  111 111 111 111 111 111 111 111 111 111 ...
+##  $ photoid      : int  1 2 7 13 14 15 20 22 25 27 ...
+##  $ sch_friend41 : int  347 424 NA 608 NA NA 79 37 NA 95 ...
+##  $ sch_friend42 : int  420 205 505 387 NA 265 214 258 185 166 ...
+##  $ sch_friend43 : int  442 536 NA 93 599 NA 440 71 NA 248 ...
+##  $ sch_friend44 : int  257 NA NA 119 NA 313 NA 143 NA 330 ...
+##  $ sch_friend45 : int  NA 36 NA 627 134 339 NA 427 NA 346 ...
+##  $ sch_friend46 : int  NA NA NA 610 NA NA NA 470 NA NA ...
+##  $ sch_friend47 : int  NA NA NA 569 377 NA NA 371 NA NA ...
+##  $ sch_friend48 : int  NA NA NA NA 41 NA 188 NA NA NA ...
+##  $ sch_friend49 : int  NA NA NA NA 233 NA 278 NA NA NA ...
+##  $ sch_friend410: int  NA NA NA NA 494 NA NA NA NA NA ...
+##  $ sch_friend411: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend412: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend413: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend414: int  NA NA NA NA NA NA 544 NA NA NA ...
+##  $ sch_friend415: int  NA NA NA NA NA NA 109 NA NA NA ...
+##  $ sch_friend416: int  NA NA NA NA NA NA 110 NA NA NA ...
+##  $ sch_friend417: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend418: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend419: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend31 : int  347 NA NA 608 41 313 363 470 NA 144 ...
+##  $ sch_friend32 : int  442 NA 629 387 118 452 79 258 NA 297 ...
+##  $ sch_friend33 : int  279 NA 505 NA 68 NA NA 259 NA 411 ...
+##  $ sch_friend34 : int  188 NA NA NA 233 199 NA 167 NA NA ...
+##  $ sch_friend35 : int  198 NA NA NA NA NA NA 373 NA 346 ...
+##  $ sch_friend36 : int  346 NA NA NA NA 549 NA 71 NA NA ...
+##  $ sch_friend37 : int  NA NA NA NA NA 319 NA 427 NA NA ...
+##  $ sch_friend38 : int  241 NA 380 522 10 506 49 NA NA NA ...
+##  $ sch_friend39 : int  420 NA NA 606 NA 49 53 NA NA 461 ...
+##  $ sch_friend310: int  441 NA NA NA 605 162 130 NA NA 462 ...
+##  $ sch_friend311: int  483 NA NA NA 452 NA 148 NA NA 484 ...
+##  $ sch_friend312: int  375 NA NA NA 470 NA 192 NA NA 487 ...
+##  $ sch_friend313: int  NA NA NA NA 446 NA NA NA NA 512 ...
+##  $ sch_friend314: int  NA NA NA NA 582 NA 246 NA NA 619 ...
+##  $ sch_friend315: int  NA NA NA NA 557 NA 278 NA NA 39 ...
+##  $ sch_friend316: int  NA NA NA NA NA NA 311 NA NA 14 ...
+##  $ sch_friend317: int  NA NA NA NA 494 NA 322 NA NA 30 ...
+##  $ sch_friend318: int  NA NA NA NA 167 NA 297 NA NA 35 ...
+##  $ sch_friend319: int  NA NA NA NA 148 NA 443 NA NA 52 ...
+##  $ sch_friend11 : int  NA 424 629 232 582 26 528 NA 135 346 ...
+##  $ sch_friend12 : int  NA 423 505 569 134 488 NA NA 185 168 ...
+##  $ sch_friend13 : int  NA 426 NA NA 41 81 492 NA 553 559 ...
+##  $ sch_friend14 : int  NA 289 NA NA 592 138 395 NA 84 5 ...
+##  $ sch_friend15 : int  NA 321 NA NA 68 2 NA NA 201 411 ...
+##  $ sch_friend16 : int  NA NA NA NA 554 339 NA NA NA 283 ...
+##  $ sch_friend17 : int  NA NA NA NA 202 502 NA NA NA NA ...
+##  $ sch_friend18 : int  NA NA 146 NA NA NA 30 NA NA 1 ...
+##  $ sch_friend19 : int  NA NA 145 NA NA NA 385 NA NA 20 ...
+##  $ sch_friend110: int  NA NA 567 NA NA NA 378 NA NA 44 ...
+##  $ sch_friend111: int  NA NA NA NA NA NA 373 NA NA 64 ...
+##  $ sch_friend112: int  NA NA NA NA NA NA 337 NA NA 119 ...
+##  $ sch_friend113: int  NA NA NA NA NA NA 386 NA NA 67 ...
+##  $ sch_friend114: int  NA NA NA NA NA NA 433 NA NA 115 ...
+##  $ sch_friend115: int  NA NA NA NA NA NA 391 NA NA 166 ...
+##  $ sch_friend116: int  NA NA NA NA NA NA 564 NA NA NA ...
+##  $ sch_friend117: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend118: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend119: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend21 : int  NA NA 629 569 10 502 492 NA 135 346 ...
+##  $ sch_friend22 : int  NA 443 505 NA 557 225 528 NA 185 168 ...
+##  $ sch_friend23 : int  NA NA 575 NA 41 549 541 NA NA NA ...
+##  $ sch_friend24 : int  NA NA NA NA 68 81 190 NA 305 411 ...
+##  $ sch_friend25 : int  NA NA NA NA NA 26 192 NA 553 279 ...
+##  $ sch_friend26 : int  NA NA NA NA 582 49 310 NA 213 221 ...
+##  $ sch_friend27 : int  NA NA NA NA NA 506 334 NA 56 NA ...
+##  $ sch_friend28 : int  NA NA 629 NA NA NA 246 NA NA NA ...
+##  $ sch_friend29 : int  NA NA 575 NA NA NA 22 NA NA NA ...
+##  $ sch_friend210: int  NA NA 505 NA NA NA 46 NA NA NA ...
+##  $ sch_friend211: int  NA NA 145 NA NA NA 27 NA NA NA ...
+##  $ sch_friend212: int  NA NA 371 NA NA NA 49 NA NA NA ...
+##  $ sch_friend213: int  NA NA 567 NA NA NA 97 NA NA NA ...
+##  $ sch_friend214: int  NA NA 368 NA NA NA 273 NA NA NA ...
+##  $ sch_friend215: int  NA NA NA NA NA NA 337 NA NA NA ...
+##  $ sch_friend216: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ sch_friend217: int  NA NA NA NA NA NA 372 NA NA NA ...
+##  $ sch_friend218: int  NA NA NA NA NA NA 366 NA NA NA ...
+##  $ sch_friend219: int  NA NA NA NA NA NA 357 NA NA NA ...
+##  $ id           : num  1110001 1110002 1110007 1110013 1110014 ...</code></pre>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>Besides of having nice syntax, <code>dplyr</code> offers optimized routines to handle your data. I personally use it specifically for that, as that can be nice when you are dealing with relatively large datasets.<a href="week-1-sns-study.html#fnref2">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-basics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="applications.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

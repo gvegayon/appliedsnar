@@ -1,0 +1,20 @@
+--- 
+title: "Applied SNA with R"
+author: "George G. Vega Yon"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: USCCANA/appliedsnar
+description: "An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC's Center for Applied Network Analysis (CANA)"
+---
+
+# Prerequisites
+
+1.  Install R from CRAN: https://www.r-project.org/
+
+2.  (optional) Install Rstudio: https://rstudio.org
+
+While I find RStudio extreamly useful, it is not necesary to use it with R.

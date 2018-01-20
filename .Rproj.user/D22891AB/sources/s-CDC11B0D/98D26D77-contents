@@ -1,0 +1,162 @@
+--- 
+title: "Applied SNA with R"
+author: "George G. Vega Yon"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: USCCANA/appliedsnar
+description: "An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC's Center for Applied Network Analysis (CANA)"
+---
+
+# Prerequisites
+
+1.  Install R from CRAN: https://www.r-project.org/
+
+2.  (optional) Install Rstudio: https://rstudio.org
+
+While I find RStudio extreamly useful, it is not necesary to use it with R.
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction {#intro}
+
+This book will be build as part of a workshop on Applied Social Network Analysis with R. Its contents will be populated as the sessions take place, and for now there is particular program that we will follow, instead, we have the following workflow:
+
+1.  Participants will share their data and what they need to do with it.
+
+2.  Based on their data, I'll be preparing the sessions trying to show attendees how would I approach the problem, and at the same time, teach by example about the R language.
+
+3.  Materials will be published on this website and, hopefully, video recordings of the sessions.
+
+At least in the first version, the book will be organized by session, this is, one chapter per session.
+
+In general, we will besides of R itself, we will be using R studio and the following R packages: dplyr for data management, stringr for data cleaning, and of course igraph, netdiffuseR (a bit of a bias here), and statnet for our neat network analysis.^[Some of you may be wondering "what about ggplot2 and friends? What about [`tidyverse`](https://www.tidyverse.org/)", well, my short answer is I jumped into R before all of that was that popular. When I started plots were all about [`lattice`](https://CRAN.R-project.org/package=lattice), and after a couple of years on that, about base R graphics. What I'm saying is that so far I have not find a compelling reason to leave my "old-practices" and embrace all the `tidyverse` movement (religion?).]
+
+<!--chapter:end:01-intro.Rmd-->
+
+# R Basics
+
+## What is R
+
+## How to install packages
+
+Nowadays there are two ways of installing R packages (that I'm aware of), either using `install.packages`, which is a function shipped with R, or use the devtools R package to install a package from some remote repository other than CRAN, here is a couple of examples:
+
+```r
+# This will install the igraph package from CRAN
+> install.packages("netdiffuseR")
+
+# This will install the bleeding-edge version from the project's github repo!
+> devtools::install_github("USCCANA/netdiffuseR")
+```
+
+The first one, using `install.packages`, installs the CRAN version of `netdiffuseR`, whereas the second installs whatever version is plublished on https://github.com/USCCANA/netdiffuseR, which is usually called the development version.
+
+In some cases users may want/need to install packages from command line as some packages need extra configuration to be installed. But we won't need to look at it now.
+
+
+
+<!--chapter:end:02-the-basics.Rmd-->
+
+# Week 1: SNS Study
+
+## The Social Network Study
+
+## Reading the data
+
+R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the [`readr`](https://cran.r-project.org/package=readr) package; or it can be binary files like dta (Stata), Octave, SPSS, for which [`foreign`](https://cran.r-project.org/package=readr) can be used; or it could be excel files in which case you should be using [`readxl`](https://cran.r-project.org/package=readxl). In our case, the data for this session is in Stata13 format, and so we will be using [`readstata13`](https://cran.r-project.org/package=readstata13).
+
+```{r 03-read-data, message=FALSE}
+library(dplyr)
+library(magrittr)
+library(readstata13)
+
+# Reading the data
+dat <- read.dta13("SNS datamerged081315edited.dta")
+
+# Taking a look at the file
+head(dat[,1:5])
+```
+
+For now, we won't be using all ~2,000 columns of this data (which is mostly because we have a wide format dataset here), so we need to filter all this data. In order to do so, we can use the `select` function from the `dplyr` package
+
+```{r 03-filtering-data-pipe, cache=TRUE}
+dat_filtered <- select(
+  dat,
+  School, photoid,
+  matches("^sch_friend.+")
+  )
+```
+
+The function `matches` allows us using regular expressions to select variables (reguwhat!?). Regular expressions are, as I once overheard, _the poor man's RA_. In this case, instead of us having to look for all the variables that start with the pattern `sch_friend`, we use regular expressions to catch that, character by character, we have:
+
+*   `^`: Line start
+*   `sch_friend`: Followed by `sch_friend`
+*   `.+`: Followed by anything not null.
+
+We will see more of this in the future. Now, if you don't want to use `dplyr` to do this simple variable selection, you can always use the base R function `subset`. The following example is equivalent to what we just did using `dplyr::select`, although it can be slower^[Besides of having nice syntax, `dplyr` offers optimized routines to handle your data. I personally use it specifically for that, as that can be nice when you are dealing with relatively large datasets.]
+
+
+```{r 03-filter-no-pipe, eval=FALSE}
+dat_filtered <- subset(
+  dat,
+  select = c(
+    "School", "photoid",
+    colnames(dat)[grepl("sch_friend.+", colnames(dat))]
+    )
+  )
+
+```
+
+As you can see, the `dplyr` syntax is more clear.
+
+Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id such that, for example, the last three `x` numbers are the photoid and the first ones are the school id. To do this we need to take into account the range of the variables. Here, `photoid` has the following range:
+
+```{r 03-idrange}
+(photo_id_ran <- range(dat_filtered$photoid))
+```
+
+As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. Again, we use `dplyr` to create this variable, and we will call it... `id` (mind blowing, right?):
+
+```{r 03-newid}
+dat_filtered %>%
+  mutate(id = School*10000 + photoid) %>%
+  head %>%
+  select(School, photoid, id)
+```
+
+Wow, what happend in the last three lines of code! What is that `%>%`? Well, that's the [piping operator](http://r4ds.had.co.nz/pipes.html), and it is a very nice way of writing nested function calls. In this case, instead of having write something like
+
+```{r}
+dat_filtered$id <- dat_filterd$School*10000 + dat_filterd$photoid
+subset(head(dat_filtered), select = c(School, photoid, id))
+```
+
+
+
+
+<!--chapter:end:03-week-1-sns-study.Rmd-->
+
+# Applications
+
+Some _significant_ applications are demonstrated in this chapter.
+
+## Example one
+
+## Example two
+
+<!--chapter:end:04-application.Rmd-->
+
+# Final Words
+
+We have finished a nice book.
+
+<!--chapter:end:05-summary.Rmd-->
+
+`r if (knitr:::is_html_output()) '# References {-}'`
+
+<!--chapter:end:06-references.Rmd-->
+
