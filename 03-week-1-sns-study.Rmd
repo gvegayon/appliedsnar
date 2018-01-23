@@ -2,7 +2,7 @@
 
 ## The Social Network Study
 
-## Reading the data
+## Reading and _cleaning_ the data
 
 R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the [`readr`](https://cran.r-project.org/package=readr) package; or it can be binary files like dta (Stata), Octave, SPSS, for which [`foreign`](https://cran.r-project.org/package=readr) can be used; or it could be excel files in which case you should be using [`readxl`](https://cran.r-project.org/package=readxl). In our case, the data for this session is in Stata13 format, and so we will be using [`readstata13`](https://cran.r-project.org/package=readstata13).
 
@@ -71,9 +71,153 @@ dat_filtered$id <- dat_filtered$School*10000 + dat_filtered$photoid
 subset(head(dat_filtered), select = c(School, photoid, id))
 ```
 
-```{r}
-str(dat_filtered)
+## Retrieving the network
+
+```{r 03-loading-tidyr-stringr, message=FALSE}
+library(tidyr)
+library(stringr)
 ```
+
+Optionally, we can use the `tibble` type of object which is an alternative to the actual `data.frame`. This object is claimed to provide _more efficient methods for matrices and data frames_. We will use it for this bit.
+
+```{r 03-tibble}
+dat_filtered <- as_tibble(dat_filtered)
+```
+
+```{r 03-reshape}
+# Maybe too much piping... but its cool!
+net <- dat_filtered %>% 
+  select(id, School, starts_with("sch_friend")) %>%
+  gather(key = "varname", value = "content", -id, -School) %>%
+  filter(!is.na(content)) %>%
+  mutate(
+    friendid = School*10000 + content,
+    year     = str_extract(varname, "(?<=[a-z])[0-9]"),
+    nnom     = str_extract(varname, "(?<=[a-z][0-9])[0-9]+")
+  )
+```
+
+Let's take a look at this step by step:
+
+1.  First, we subset the data: We want to keep `id, School, sch_friend*`
+
+    ```{r}
+    dat_filtered %>% 
+      select(id, School, starts_with("sch_friend"))
+    ```
+    
+2.  Then, we reshape it to _long_ format: By transposing all the `sch_friend*` to long
+
+    ```{r}
+    dat_filtered %>% 
+      select(id, School, starts_with("sch_friend")) %>%
+      gather(key = "varname", value = "content", -id, -School)
+    ```
+    
+3.  We remove all the `NAs`
+
+    ```{r}
+    dat_filtered %>% 
+      select(id, School, starts_with("sch_friend")) %>%
+      gather(key = "varname", value = "content", -id, -School) %>%
+      filter(!is.na(content))
+    ```
+    
+4.  And finally, we create three new variables from this dataset: `friendid`, `year`, and `nom_num` (nomination number). All this using regular expressions:
+    
+    ```{r}
+    dat_filtered %>% 
+      select(id, School, starts_with("sch_friend")) %>%
+      gather(key = "varname", value = "content", -id, -School) %>%
+      filter(!is.na(content)) %>%
+      mutate(
+        friendid = School*10000 + content,
+        year     = str_extract(varname, "(?<=[a-z])[0-9]"),
+        nnom     = str_extract(varname, "(?<=[a-z][0-9])[0-9]+")
+        )
+    ```
+    
+    The regular expression `(?<=[a-z])` matches a string that is preceeded by any letter from _a_ to _z_, whereas the expression `[0-9]` matches a single number. Hence, from the string `"sch_friend12"`, the regular expression will only match the `1`, as it is the only number followed by a letter. On the other hand, the expression `(?<=[a-z][0-9])` matches a string that is preceeded by a letter from _a_ to _z_ and a number from _0_ to _9_; and the expression `[0-9]+` matches a string of numbers--so it could be more than one. Hence, from the string `"sch_friend12"`, we will get `2`. We can actually se this 
+    
+    ```{r 03-miniregex}
+    str_extract("sch_friend12", "(?<=[a-z])[0-9]")
+    str_extract("sch_friend12", "(?<=[a-z][0-9])[0-9]+")
+    ```
+    
+  
+Now that we have this edgelist, we can create an igraph object
+
+```{r 03-vertex}
+vertices <- dat_filtered %>% 
+  select(id, School)
+```
+
+Let's now use the function `graph_from_data_frame` to create an `igraph` object:
+
+```{r 03-igraph, message=FALSE, error = TRUE}
+library(igraph)
+
+ig_year1 <- net %>%
+  filter(year == "1") %>%
+  select(id, friendid) %>%
+  graph_from_data_frame(
+    vertices = vertices
+    )
+```
+
+Ups, it seems that individuals are making nominations to other students that were not included on the survery. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
+
+```{r 03-igraph-bis, cache=TRUE}
+
+ig_year1 <- net %>%
+  filter(year == "1", School == 111) %>%
+  
+  # Extra line, all nominations must be in ego too.
+  filter(friendid %in% id) %>% 
+  
+  select(id, friendid) %>%
+  graph_from_data_frame(
+    vertices = vertices
+    )
+
+```
+
+## Plotting the network in igraph
+
+```{r 03-plot-raw, cache=TRUE}
+plot(ig_year1)
+```
+
+```{r 03-plot-neat1}
+
+# Creating a subgraph
+ig_year1_111 <- induced_subgraph(
+  ig_year1,
+  which(degree(ig_year1) > 0 & V(ig_year1)$School == 111)
+)
+
+# Getting colors
+cols <- V(ig_year1_111)$School %>% as.factor
+cols <- colors()[cols]
+
+# Fancy graph
+set.seed(1)
+plot(
+  ig_year1_111,
+  vertex.size     = degree(ig_year1_111)/4,
+  vertex.label    = NA,
+  edge.arrow.size = .25,
+  vertex.color    = cols,
+  layout          = layout_with_fr
+  )
+```
+
+
+    
+        
+    
+
+
 
 
 

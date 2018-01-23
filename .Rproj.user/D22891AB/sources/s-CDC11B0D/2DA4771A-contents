@@ -1,5 +1,0 @@
-book_filename: "appliedsnar"
-output_dir: "docs"
-language:
-  ui:
-    chapter_name: "Chapter "
