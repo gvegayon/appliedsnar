@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-01-22">
+<meta name="date" content="2018-01-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -113,7 +113,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#the-social-network-study"><i class="fa fa-check"></i><b>4.1</b> The Social Network Study</a></li>
 <li class="chapter" data-level="4.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#reading-and-cleaning-the-data"><i class="fa fa-check"></i><b>4.2</b> Reading and <em>cleaning</em> the data</a></li>
 <li class="chapter" data-level="4.3" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#retrieving-the-network"><i class="fa fa-check"></i><b>4.3</b> Retrieving the network</a></li>
-<li class="chapter" data-level="4.4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#plotting-the-network-in-igraph"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a></li>
+<li class="chapter" data-level="4.4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#plotting-the-network-in-igraph"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
+<li class="chapter" data-level="4.4.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
 <li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
@@ -226,41 +229,43 @@ net &lt;-<span class="st"> </span>dat_filtered <span class="op">%&gt;%</span><sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(id, School, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 2,164 x 78
-##         id School sch_f… sch_f… sch_f… sch_… sch_… sch_… sch_… sch_… sch_…
-##      &lt;dbl&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1 1110001    111    347    420    442   257    NA    NA    NA    NA    NA
-##  2 1110002    111    424    205    536    NA    36    NA    NA    NA    NA
-##  3 1110007    111     NA    505     NA    NA    NA    NA    NA    NA    NA
-##  4 1110013    111    608    387     93   119   627   610   569    NA    NA
-##  5 1110014    111     NA     NA    599    NA   134    NA   377    41   233
-##  6 1110015    111     NA    265     NA   313   339    NA    NA    NA    NA
-##  7 1110020    111     79    214    440    NA    NA    NA    NA   188   278
-##  8 1110022    111     37    258     71   143   427   470   371    NA    NA
-##  9 1110025    111     NA    185     NA    NA    NA    NA    NA    NA    NA
-## 10 1110027    111     95    166    248   330   346    NA    NA    NA    NA
-## # ... with 2,154 more rows, and 67 more variables: sch_friend410 &lt;int&gt;,
-## #   sch_friend411 &lt;int&gt;, sch_friend412 &lt;int&gt;, sch_friend413 &lt;int&gt;,
-## #   sch_friend414 &lt;int&gt;, sch_friend415 &lt;int&gt;, sch_friend416 &lt;int&gt;,
-## #   sch_friend417 &lt;int&gt;, sch_friend418 &lt;int&gt;, sch_friend419 &lt;int&gt;,
-## #   sch_friend31 &lt;int&gt;, sch_friend32 &lt;int&gt;, sch_friend33 &lt;int&gt;,
-## #   sch_friend34 &lt;int&gt;, sch_friend35 &lt;int&gt;, sch_friend36 &lt;int&gt;,
-## #   sch_friend37 &lt;int&gt;, sch_friend38 &lt;int&gt;, sch_friend39 &lt;int&gt;,
-## #   sch_friend310 &lt;int&gt;, sch_friend311 &lt;int&gt;, sch_friend312 &lt;int&gt;,
-## #   sch_friend313 &lt;int&gt;, sch_friend314 &lt;int&gt;, sch_friend315 &lt;int&gt;,
-## #   sch_friend316 &lt;int&gt;, sch_friend317 &lt;int&gt;, sch_friend318 &lt;int&gt;,
-## #   sch_friend319 &lt;int&gt;, sch_friend11 &lt;int&gt;, sch_friend12 &lt;int&gt;,
-## #   sch_friend13 &lt;int&gt;, sch_friend14 &lt;int&gt;, sch_friend15 &lt;int&gt;,
-## #   sch_friend16 &lt;int&gt;, sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;,
-## #   sch_friend19 &lt;int&gt;, sch_friend110 &lt;int&gt;, sch_friend111 &lt;int&gt;,
-## #   sch_friend112 &lt;int&gt;, sch_friend113 &lt;int&gt;, sch_friend114 &lt;int&gt;,
-## #   sch_friend115 &lt;int&gt;, sch_friend116 &lt;int&gt;, sch_friend117 &lt;int&gt;,
-## #   sch_friend118 &lt;int&gt;, sch_friend119 &lt;int&gt;, sch_friend21 &lt;int&gt;,
-## #   sch_friend22 &lt;int&gt;, sch_friend23 &lt;int&gt;, sch_friend24 &lt;int&gt;,
-## #   sch_friend25 &lt;int&gt;, sch_friend26 &lt;int&gt;, sch_friend27 &lt;int&gt;,
-## #   sch_friend28 &lt;int&gt;, sch_friend29 &lt;int&gt;, sch_friend210 &lt;int&gt;,
-## #   sch_friend211 &lt;int&gt;, sch_friend212 &lt;int&gt;, sch_friend213 &lt;int&gt;,
-## #   sch_friend214 &lt;int&gt;, sch_friend215 &lt;int&gt;, sch_friend216 &lt;int&gt;,
-## #   sch_friend217 &lt;int&gt;, sch_friend218 &lt;int&gt;, sch_friend219 &lt;int&gt;</code></pre></li>
+##         id School sch_friend41 sch_friend42 sch_friend43 sch_friend44
+##      &lt;dbl&gt;  &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;
+##  1 1110001    111          347          420          442          257
+##  2 1110002    111          424          205          536           NA
+##  3 1110007    111           NA          505           NA           NA
+##  4 1110013    111          608          387           93          119
+##  5 1110014    111           NA           NA          599           NA
+##  6 1110015    111           NA          265           NA          313
+##  7 1110020    111           79          214          440           NA
+##  8 1110022    111           37          258           71          143
+##  9 1110025    111           NA          185           NA           NA
+## 10 1110027    111           95          166          248          330
+## # ... with 2,154 more rows, and 72 more variables: sch_friend45 &lt;int&gt;,
+## #   sch_friend46 &lt;int&gt;, sch_friend47 &lt;int&gt;, sch_friend48 &lt;int&gt;,
+## #   sch_friend49 &lt;int&gt;, sch_friend410 &lt;int&gt;, sch_friend411 &lt;int&gt;,
+## #   sch_friend412 &lt;int&gt;, sch_friend413 &lt;int&gt;, sch_friend414 &lt;int&gt;,
+## #   sch_friend415 &lt;int&gt;, sch_friend416 &lt;int&gt;, sch_friend417 &lt;int&gt;,
+## #   sch_friend418 &lt;int&gt;, sch_friend419 &lt;int&gt;, sch_friend31 &lt;int&gt;,
+## #   sch_friend32 &lt;int&gt;, sch_friend33 &lt;int&gt;, sch_friend34 &lt;int&gt;,
+## #   sch_friend35 &lt;int&gt;, sch_friend36 &lt;int&gt;, sch_friend37 &lt;int&gt;,
+## #   sch_friend38 &lt;int&gt;, sch_friend39 &lt;int&gt;, sch_friend310 &lt;int&gt;,
+## #   sch_friend311 &lt;int&gt;, sch_friend312 &lt;int&gt;, sch_friend313 &lt;int&gt;,
+## #   sch_friend314 &lt;int&gt;, sch_friend315 &lt;int&gt;, sch_friend316 &lt;int&gt;,
+## #   sch_friend317 &lt;int&gt;, sch_friend318 &lt;int&gt;, sch_friend319 &lt;int&gt;,
+## #   sch_friend11 &lt;int&gt;, sch_friend12 &lt;int&gt;, sch_friend13 &lt;int&gt;,
+## #   sch_friend14 &lt;int&gt;, sch_friend15 &lt;int&gt;, sch_friend16 &lt;int&gt;,
+## #   sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;, sch_friend19 &lt;int&gt;,
+## #   sch_friend110 &lt;int&gt;, sch_friend111 &lt;int&gt;, sch_friend112 &lt;int&gt;,
+## #   sch_friend113 &lt;int&gt;, sch_friend114 &lt;int&gt;, sch_friend115 &lt;int&gt;,
+## #   sch_friend116 &lt;int&gt;, sch_friend117 &lt;int&gt;, sch_friend118 &lt;int&gt;,
+## #   sch_friend119 &lt;int&gt;, sch_friend21 &lt;int&gt;, sch_friend22 &lt;int&gt;,
+## #   sch_friend23 &lt;int&gt;, sch_friend24 &lt;int&gt;, sch_friend25 &lt;int&gt;,
+## #   sch_friend26 &lt;int&gt;, sch_friend27 &lt;int&gt;, sch_friend28 &lt;int&gt;,
+## #   sch_friend29 &lt;int&gt;, sch_friend210 &lt;int&gt;, sch_friend211 &lt;int&gt;,
+## #   sch_friend212 &lt;int&gt;, sch_friend213 &lt;int&gt;, sch_friend214 &lt;int&gt;,
+## #   sch_friend215 &lt;int&gt;, sch_friend216 &lt;int&gt;, sch_friend217 &lt;int&gt;,
+## #   sch_friend218 &lt;int&gt;, sch_friend219 &lt;int&gt;</code></pre></li>
 <li><p>Then, we reshape it to <em>long</em> format: By transposing all the <code>sch_friend*</code> to long</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(id, School, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
@@ -343,7 +348,7 @@ ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
 <pre><code>## Error in graph_from_data_frame(., vertices = vertices): Some vertex names in edge list are not listed in vertex data frame</code></pre>
 <p>Ups, it seems that individuals are making nominations to other students that were not included on the survery. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the <em>quietly-remove-em’-and-don’t-tell</em> strategy:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> &quot;1&quot;</span>, School <span class="op">==</span><span class="st"> </span><span class="dv">111</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span>
 <span class="st">  </span><span class="co"># Extra line, all nominations must be in ego too.</span>
 <span class="st">  </span><span class="kw">filter</span>(friendid <span class="op">%in%</span><span class="st"> </span>id) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -355,17 +360,15 @@ ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
 </div>
 <div id="plotting-the-network-in-igraph" class="section level2">
 <h2><span class="header-section-number">4.4</span> Plotting the network in igraph</h2>
+<div id="single-plot" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Single plot</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(ig_year1)</code></pre></div>
 <p><img src="appliedsnar_files/figure-html/03-plot-raw-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating a subgraph</span>
 ig_year1_<span class="dv">111</span> &lt;-<span class="st"> </span><span class="kw">induced_subgraph</span>(
   ig_year1,
-  <span class="kw">which</span>(<span class="kw">degree</span>(ig_year1) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">V</span>(ig_year1)<span class="op">$</span>School <span class="op">==</span><span class="st"> </span><span class="dv">111</span>)
+  <span class="kw">which</span>(<span class="kw">degree</span>(ig_year1, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">V</span>(ig_year1)<span class="op">$</span>School <span class="op">==</span><span class="st"> </span><span class="dv">111</span>)
 )
-
-<span class="co"># Getting colors</span>
-cols &lt;-<span class="st"> </span><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>School <span class="op">%&gt;%</span><span class="st"> </span>as.factor
-cols &lt;-<span class="st"> </span><span class="kw">colors</span>()[cols]
 
 <span class="co"># Fancy graph</span>
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
@@ -374,11 +377,78 @@ cols &lt;-<span class="st"> </span><span class="kw">colors</span>()[cols]
   <span class="dt">vertex.size     =</span> <span class="kw">degree</span>(ig_year1_<span class="dv">111</span>)<span class="op">/</span><span class="dv">4</span>,
   <span class="dt">vertex.label    =</span> <span class="ot">NA</span>,
   <span class="dt">edge.arrow.size =</span> .<span class="dv">25</span>,
-  <span class="dt">vertex.color    =</span> cols,
   <span class="dt">layout          =</span> layout_with_fr
   )</code></pre></div>
-<p><img src="appliedsnar_files/figure-html/03-plot-neat1-1.png" width="672" /></p>
+<div class="figure"><span id="fig:03-plot-neat1"></span>
+<img src="appliedsnar_files/figure-html/03-plot-neat1-1.png" alt="Friends network in time 1 for school 111. The graph excludes isolates." width="672" />
+<p class="caption">
+Figure 4.1: Friends network in time 1 for school 111. The graph excludes isolates.
+</p>
+</div>
+<p>We can actually write this as a function so that, instead of us copying and pasting the code <span class="math inline">\(n\)</span> times (supposing that we want to crate a plot similar to this <span class="math inline">\(n\)</span> times), we just need t</p>
+</div>
+<div id="multiple-plots" class="section level3">
+<h3><span class="header-section-number">4.4.2</span> Multiple plots</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myplot &lt;-<span class="st"> </span><span class="cf">function</span>(
+  net,
+  schoolid,
+  <span class="dt">mindgr =</span> <span class="dv">1</span>,
+  <span class="dt">vcol   =</span> <span class="st">&quot;tomato&quot;</span>,
+  ...) {
+  
+  <span class="co"># Creating a subgraph</span>
+  subnet &lt;-<span class="st"> </span><span class="kw">induced_subgraph</span>(
+    net,
+    <span class="kw">which</span>(<span class="kw">degree</span>(net, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">&gt;=</span><span class="st"> </span>mindgr <span class="op">&amp;</span><span class="st"> </span><span class="kw">V</span>(net)<span class="op">$</span>School <span class="op">==</span><span class="st"> </span>schoolid)
+  )
+  
+  <span class="co"># Fancy graph</span>
+  <span class="kw">set.seed</span>(<span class="dv">1</span>)
+  <span class="kw">plot</span>(
+    subnet,
+    <span class="dt">vertex.size     =</span> <span class="kw">degree</span>(subnet)<span class="op">/</span><span class="dv">4</span>,
+    <span class="dt">vertex.label    =</span> <span class="ot">NA</span>,
+    <span class="dt">edge.arrow.size =</span> .<span class="dv">25</span>,
+    <span class="dt">vertex.color    =</span> vcol,
+    <span class="dt">layout          =</span> layout_with_fr,
+    ...
+    )
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plotting all together</span>
+oldpar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">no.readonly =</span> <span class="ot">TRUE</span>)
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">mai =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>), <span class="dt">oma=</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))
+<span class="kw">myplot</span>(ig_year1, <span class="dv">111</span>, <span class="dt">vcol =</span> <span class="st">&quot;tomato&quot;</span>)
+<span class="kw">myplot</span>(ig_year1, <span class="dv">112</span>, <span class="dt">vcol =</span> <span class="st">&quot;steelblue&quot;</span>)
+<span class="kw">myplot</span>(ig_year1, <span class="dv">113</span>, <span class="dt">vcol =</span> <span class="st">&quot;black&quot;</span>)
+<span class="kw">myplot</span>(ig_year1, <span class="dv">114</span>, <span class="dt">vcol =</span> <span class="st">&quot;gold&quot;</span>)
+<span class="kw">myplot</span>(ig_year1, <span class="dv">115</span>, <span class="dt">vcol =</span> <span class="st">&quot;white&quot;</span>)
+<span class="kw">par</span>(oldpar)
 
+<span class="co"># A fancy legend</span>
+<span class="kw">legend</span>(
+  <span class="st">&quot;bottom&quot;</span>,
+  <span class="dt">legend =</span> <span class="kw">c</span>(<span class="dv">111</span>, <span class="dv">112</span>, <span class="dv">113</span>, <span class="dv">114</span>, <span class="dv">115</span>),
+  <span class="dt">pt.bg  =</span> <span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;gold&quot;</span>, <span class="st">&quot;white&quot;</span>),
+  <span class="dt">pch    =</span> <span class="dv">21</span>,
+  <span class="dt">cex    =</span> <span class="dv">1</span>,
+  <span class="dt">bty    =</span> <span class="st">&quot;n&quot;</span>,
+  <span class="dt">title  =</span> <span class="st">&quot;Code&quot;</span>
+  )</code></pre></div>
+<div class="figure"><span id="fig:03-myplot-call"></span>
+<img src="appliedsnar_files/figure-html/03-myplot-call-1.png" alt="All 5 schools in time 1. Again, the graphs exclude isolates." width="672" />
+<p class="caption">
+Figure 4.2: All 5 schools in time 1. Again, the graphs exclude isolates.
+</p>
+</div>
+<ul>
+<li><p><code>oldpar &lt;- par(no.readonly = TRUE)</code> This line stores the current parameters for plotting. Since we are going to be changing them, we better make sure we are able to go back!.</p></li>
+<li><p><code>par(mfrow = c(2, 3), mai = rep(0, 4), oma=rep(0, 4))</code> Here we are setting various things at the same time. <code>mfrow</code> specifies how many <em>figures</em> will be drawn and in what order, in particular, we are asking the plotting device to allow for 2*3 = 6 plots organized in 2 rows and 3 columns, and these will be drawn by row.</p>
+<p><code>mai</code> specifies the size of the margins in inches. Setting all margins equal to zero (which is what we are doing now) gives more space to the network itself. The same is true for <code>oma</code>. See <code>?par</code> for more info.</p></li>
+<li><p><code>myplot(ig_year1, ...)</code> This is simply calling our plotting function. The neat part of this is that, since we set <code>mfrow = c(2, 3)</code>, R takes care of <em>distributing</em> the plots in the device.</p></li>
+<li><p><code>par(oldpar)</code> Finally, this line allows us to restore the plotting parameters.</p></li>
+</ul>
+
+</div>
 </div>
 </div>
 <div class="footnotes">
@@ -433,6 +503,17 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

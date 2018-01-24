@@ -170,7 +170,7 @@ Ups, it seems that individuals are making nominations to other students that wer
 ```{r 03-igraph-bis, cache=TRUE}
 
 ig_year1 <- net %>%
-  filter(year == "1", School == 111) %>%
+  filter(year == "1") %>%
   
   # Extra line, all nominations must be in ego too.
   filter(friendid %in% id) %>% 
@@ -184,21 +184,19 @@ ig_year1 <- net %>%
 
 ## Plotting the network in igraph
 
+### Single plot
+
 ```{r 03-plot-raw, cache=TRUE}
 plot(ig_year1)
 ```
 
-```{r 03-plot-neat1}
+```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates."}
 
 # Creating a subgraph
 ig_year1_111 <- induced_subgraph(
   ig_year1,
-  which(degree(ig_year1) > 0 & V(ig_year1)$School == 111)
+  which(degree(ig_year1, mode = "all") >= 1 & V(ig_year1)$School == 111)
 )
-
-# Getting colors
-cols <- V(ig_year1_111)$School %>% as.factor
-cols <- colors()[cols]
 
 # Fancy graph
 set.seed(1)
@@ -207,14 +205,77 @@ plot(
   vertex.size     = degree(ig_year1_111)/4,
   vertex.label    = NA,
   edge.arrow.size = .25,
-  vertex.color    = cols,
   layout          = layout_with_fr
   )
 ```
 
+We can actually write this as a function so that, instead of us copying and pasting the code $n$ times (supposing that we want to crate a plot similar to this $n$ times), we just need t
 
+### Multiple plots
+
+```{r 03-myplot-def}
+myplot <- function(
+  net,
+  schoolid,
+  mindgr = 1,
+  vcol   = "tomato",
+  ...) {
+  
+  # Creating a subgraph
+  subnet <- induced_subgraph(
+    net,
+    which(degree(net, mode = "all") >= mindgr & V(net)$School == schoolid)
+  )
+  
+  # Fancy graph
+  set.seed(1)
+  plot(
+    subnet,
+    vertex.size     = degree(subnet)/4,
+    vertex.label    = NA,
+    edge.arrow.size = .25,
+    vertex.color    = vcol,
+    layout          = layout_with_fr,
+    ...
+    )
+}
+```
+
+```{r 03-myplot-call, fig.cap="All 5 schools in time 1. Again, the graphs exclude isolates."}
+# Plotting all together
+oldpar <- par(no.readonly = TRUE)
+par(mfrow = c(2, 3), mai = rep(0, 4), oma= c(1, 0, 0, 0))
+myplot(ig_year1, 111, vcol = "tomato")
+myplot(ig_year1, 112, vcol = "steelblue")
+myplot(ig_year1, 113, vcol = "black")
+myplot(ig_year1, 114, vcol = "gold")
+myplot(ig_year1, 115, vcol = "white")
+par(oldpar)
+
+# A fancy legend
+legend(
+  "bottom",
+  legend = c(111, 112, 113, 114, 115),
+  pt.bg  = c("tomato", "steelblue", "black", "gold", "white"),
+  pch    = 21,
+  cex    = 1,
+  bty    = "n",
+  title  = "Code"
+  )
+```
+
+*   `oldpar <- par(no.readonly = TRUE)` This line stores the current parameters for plotting. Since we are going to be changing them, we better make sure we are able to go back!.
+
+*   `par(mfrow = c(2, 3), mai = rep(0, 4), oma=rep(0, 4))` Here we are setting various things at the same time. `mfrow` specifies how many _figures_ will be drawn and in what order, in particular, we are asking the plotting device to allow for 2*3 = 6 plots organized in 2 rows and 3 columns, and these will be drawn by row.
     
-        
+    `mai` specifies the size of the margins in inches. Setting all margins equal to zero (which is what we are doing now) gives more space to the network itself. The same is true for `oma`. See `?par` for more info.
+    
+
+*   `myplot(ig_year1, ...)` This is simply calling our plotting function. The neat part of this is that, since we set `mfrow = c(2, 3)`, R takes care of _distributing_ the plots in the device.
+
+*   `par(oldpar)` Finally, this line allows us to restore the plotting parameters.
+
+
     
 
 
