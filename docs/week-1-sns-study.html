@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-01-24">
+<meta name="date" content="2018-01-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -110,12 +110,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.2" data-path="r-basics.html"><a href="r-basics.html#how-to-install-packages"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html"><i class="fa fa-check"></i><b>4</b> Week 1: SNS Study</a><ul>
-<li class="chapter" data-level="4.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#the-social-network-study"><i class="fa fa-check"></i><b>4.1</b> The Social Network Study</a></li>
-<li class="chapter" data-level="4.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#reading-and-cleaning-the-data"><i class="fa fa-check"></i><b>4.2</b> Reading and <em>cleaning</em> the data</a></li>
-<li class="chapter" data-level="4.3" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#retrieving-the-network"><i class="fa fa-check"></i><b>4.3</b> Retrieving the network</a></li>
-<li class="chapter" data-level="4.4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#plotting-the-network-in-igraph"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
-<li class="chapter" data-level="4.4.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
+<li class="chapter" data-level="4.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#the-social-network-study"><i class="fa fa-check"></i><b>4.1</b> The Social Network Study</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#variables"><i class="fa fa-check"></i><b>4.1.1</b> Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#todays-goals"><i class="fa fa-check"></i><b>4.2</b> Today’s Goals</a></li>
+<li class="chapter" data-level="4.3" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#reading-and-cleaning-the-data"><i class="fa fa-check"></i><b>4.3</b> Reading and <em>cleaning</em> the data</a></li>
+<li class="chapter" data-level="4.4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#retrieving-the-network"><i class="fa fa-check"></i><b>4.4</b> Retrieving the network</a></li>
+<li class="chapter" data-level="4.5" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#plotting-the-network-in-igraph"><i class="fa fa-check"></i><b>4.5</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#single-plot"><i class="fa fa-check"></i><b>4.5.1</b> Single plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#network-descriptive-stats"><i class="fa fa-check"></i><b>4.6</b> Network descriptive stats</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#multiple-plots"><i class="fa fa-check"></i><b>4.6.1</b> Multiple plots</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
@@ -148,55 +153,72 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 4</span> Week 1: SNS Study</h1>
 <div id="the-social-network-study" class="section level2">
 <h2><span class="header-section-number">4.1</span> The Social Network Study</h2>
+<ul>
+<li><p>This data is part of the NIH Challenge grant # RC 1RC1AA019239 “Social Networks and Networking That Puts Adolescents at High Risk”.</p></li>
+<li><p>In general terms, the SNS’s goal was(is) “Understand the network effects on risk behaviors such as smoking initiation and substance use”.</p></li>
+<li></li>
+</ul>
+<div id="variables" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Variables</h3>
+<p>The data has a <em>wide</em> structure, which means that there is one row per individual, and that dynamic attributes are represented as one column per time.</p>
+<ul>
+<li><p><code>photoid</code> Photo id at the school level (can be repeated across schools).</p></li>
+<li><p><code>school</code> School id.</p></li>
+<li><p><code>hispanic</code> Indicator variable that equals 1 if the indivual ever reported himself as hispanic.</p></li>
+<li><p><code>female1</code>, …, <code>female4</code> Indicator variable that equals 1 if the individual reported to be female at the particular wave.</p></li>
+<li><p><code>grades1</code>,…, <code>grades4</code> Academic grades by wave. Values from 1 to 5, with 5 been the best.</p></li>
+<li><p><code>eversmk1</code>, …, <code>eversmk4</code> Indicator variable of ever smoking by wave. A one indicated that the individual had smoked at the time of the survey.</p></li>
+<li><p><code>everdrk1</code>, …, <code>everdrk4</code> Indicator variable of ever drinking by wave. A one indicated that the individual had drink at the time of the survey.</p></li>
+<li><p><code>home1</code>, …, <code>home4</code> Factor variable for home status by wave. A one indicates home ownership, a 2 rent, and a 3 a “I don’t know”.</p></li>
+</ul>
+<p>During the survey, participants were asked to name up to 19 of their school friends:</p>
+<ul>
+<li><p><code>sch_friend11</code>, …, <code>sch_friend119</code> School friends nominations (19 in total) for wave 1. The codes are mapped to the variable <code>photoid</code>.</p></li>
+<li><p><code>sch_friend21</code>, …, <code>sch_friend219</code> School friends nominations (19 in total) for wave 2. The codes are mapped to the variable <code>photoid</code>.</p></li>
+<li><p><code>sch_friend31</code>, …, <code>sch_friend319</code> School friends nominations (19 in total) for wave 3. The codes are mapped to the variable <code>photoid</code>.</p></li>
+<li><p><code>sch_friend41</code>, …, <code>sch_friend419</code> School friends nominations (19 in total) for wave 4. The codes are mapped to the variable <code>photoid</code>.</p></li>
+</ul>
+</div>
+</div>
+<div id="todays-goals" class="section level2">
+<h2><span class="header-section-number">4.2</span> Today’s Goals</h2>
+<ul>
+<li><p><strong>Visualize</strong>: Create one network per wave/school. To accomplish this we will need to take the data from wide format to long format, and recode the vertices ids.</p></li>
+<li><p><strong>Describe</strong>: Compute the follwing network statistics: density, average path length, number of components, etc.</p></li>
+</ul>
 </div>
 <div id="reading-and-cleaning-the-data" class="section level2">
-<h2><span class="header-section-number">4.2</span> Reading and <em>cleaning</em> the data</h2>
-<p>R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the <a href="https://cran.r-project.org/package=readr"><code>readr</code></a> package; or it can be binary files like dta (Stata), Octave, SPSS, for which <a href="https://cran.r-project.org/package=readr"><code>foreign</code></a> can be used; or it could be excel files in which case you should be using <a href="https://cran.r-project.org/package=readxl"><code>readxl</code></a>. In our case, the data for this session is in Stata13 format, and so we will be using <a href="https://cran.r-project.org/package=readstata13"><code>readstata13</code></a>.</p>
+<h2><span class="header-section-number">4.3</span> Reading and <em>cleaning</em> the data</h2>
+<p>R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the <a href="https://cran.r-project.org/package=readr"><code>readr</code></a> package; or it can be binary files like dta (Stata), Octave, SPSS, for which <a href="https://cran.r-project.org/package=readr"><code>foreign</code></a> can be used; or it could be excel files in which case you should be using <a href="https://cran.r-project.org/package=readxl"><code>readxl</code></a>. In our case, the data for this session is in Stata format:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="kw">library</span>(magrittr)
-<span class="kw">library</span>(readstata13)
+<span class="kw">library</span>(foreign)
 
 <span class="co"># Reading the data</span>
-dat &lt;-<span class="st"> </span><span class="kw">read.dta13</span>(<span class="st">&quot;SNS datamerged081315edited.dta&quot;</span>)
+dat &lt;-<span class="st"> </span>foreign<span class="op">::</span><span class="kw">read.dta</span>(<span class="st">&quot;03-sns.dta&quot;</span>)
 
-<span class="co"># Taking a look at the file</span>
-<span class="kw">head</span>(dat[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</code></pre></div>
-<pre><code>##   t4_SubjectID School photoid sch_friend41 sch_friend42
-## 1    411104010    111       1          347          420
-## 2    411103015    111       2          424          205
-## 3    411603020    111       7           NA          505
-## 4    411103026    111      13          608          387
-## 5    411103016    111      14           NA           NA
-## 6    411502003    111      15           NA          265</code></pre>
-<p>For now, we won’t be using all ~2,000 columns of this data (which is mostly because we have a wide format dataset here), so we need to filter all this data. In order to do so, we can use the <code>select</code> function from the <code>dplyr</code> package</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered &lt;-<span class="st"> </span><span class="kw">select</span>(
-  dat,
-  School, photoid,
-  <span class="kw">matches</span>(<span class="st">&quot;^sch_friend.+&quot;</span>)
-  )</code></pre></div>
-<p>The function <code>matches</code> allows us using regular expressions to select variables (reguwhat!?). Regular expressions are, as I once overheard, <em>the poor man’s RA</em>. In this case, instead of us having to look for all the variables that start with the pattern <code>sch_friend</code>, we use regular expressions to catch that, character by character, we have:</p>
-<ul>
-<li><code>^</code>: Line start</li>
-<li><code>sch_friend</code>: Followed by <code>sch_friend</code></li>
-<li><code>.+</code>: Followed by anything not null.</li>
-</ul>
-<p>We will see more of this in the future. Now, if you don’t want to use <code>dplyr</code> to do this simple variable selection, you can always use the base R function <code>subset</code>. The following example is equivalent to what we just did using <code>dplyr::select</code>, although it can be slower<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered &lt;-<span class="st"> </span><span class="kw">subset</span>(
-  dat,
-  <span class="dt">select =</span> <span class="kw">c</span>(
-    <span class="st">&quot;School&quot;</span>, <span class="st">&quot;photoid&quot;</span>,
-    <span class="kw">colnames</span>(dat)[<span class="kw">grepl</span>(<span class="st">&quot;sch_friend.+&quot;</span>, <span class="kw">colnames</span>(dat))]
-    )
-  )</code></pre></div>
-<p>As you can see, the <code>dplyr</code> syntax is more clear.</p>
+<span class="co"># Taking a look at the data&#39;s first 5 columns and 5 rows</span>
+dat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
+<pre><code>##   photoid school hispanic female1 female2 female3 female4 grades1 grades2
+## 1       1    111        1      NA      NA       0       0      NA      NA
+## 2       2    111        1       0      NA      NA       0     3.0      NA
+## 3       7    111        0       1       1       1       1     5.0     4.5
+## 4      13    111        1       1       1       1       1     2.5     2.5
+## 5      14    111        1       1       1       1      NA     3.0     3.5
+##   grades3
+## 1     3.5
+## 2      NA
+## 3     4.0
+## 4     2.5
+## 5     3.5</code></pre>
 <p>Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id such that, for example, the last three <code>x</code> numbers are the photoid and the first ones are the school id. To do this we need to take into account the range of the variables. Here, <code>photoid</code> has the following range:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(photo_id_ran &lt;-<span class="st"> </span><span class="kw">range</span>(dat_filtered<span class="op">$</span>photoid))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(photo_id_ran &lt;-<span class="st"> </span><span class="kw">range</span>(dat<span class="op">$</span>photoid))</code></pre></div>
 <pre><code>## [1]    1 2074</code></pre>
 <p>As the variable spans up to 2074, we need to set the last 4 units of the variable to store the <code>photoid</code>. Again, we use <code>dplyr</code> to create this variable, and we will call it… <code>id</code> (mind blowing, right?):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dat_filtered <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">id =</span> School<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>photoid)) <span class="op">%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dat <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">id =</span> school<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>photoid)) <span class="op">%&gt;%</span>
 <span class="st">  </span>head <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(School, photoid, id)</code></pre></div>
-<pre><code>##   School photoid      id
+<span class="st">  </span><span class="kw">select</span>(school, photoid, id)</code></pre></div>
+<pre><code>##   school photoid      id
 ## 1    111       1 1110001
 ## 2    111       2 1110002
 ## 3    111       7 1110007
@@ -204,55 +226,34 @@ dat &lt;-<span class="st"> </span><span class="kw">read.dta13</span>(<span class
 ## 5    111      14 1110014
 ## 6    111      15 1110015</code></pre>
 <p>Wow, what happend in the last three lines of code! What is that <code>%&gt;%</code>? Well, that’s the <a href="http://r4ds.had.co.nz/pipes.html">piping operator</a>, and it is a very nice way of writing nested function calls. In this case, instead of having write something like</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered<span class="op">$</span>id &lt;-<span class="st"> </span>dat_filtered<span class="op">$</span>School<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>dat_filtered<span class="op">$</span>photoid
-<span class="kw">subset</span>(<span class="kw">head</span>(dat_filtered), <span class="dt">select =</span> <span class="kw">c</span>(School, photoid, id))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered<span class="op">$</span>id &lt;-<span class="st"> </span>dat_filtered<span class="op">$</span>school<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>dat_filtered<span class="op">$</span>photoid
+<span class="kw">subset</span>(<span class="kw">head</span>(dat_filtered), <span class="dt">select =</span> <span class="kw">c</span>(school, photoid, id))</code></pre></div>
 </div>
 <div id="retrieving-the-network" class="section level2">
-<h2><span class="header-section-number">4.3</span> Retrieving the network</h2>
+<h2><span class="header-section-number">4.4</span> Retrieving the network</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
 <span class="kw">library</span>(stringr)</code></pre></div>
-<p>Optionally, we can use the <code>tibble</code> type of object which is an alternative to the actual <code>data.frame</code>. This object is claimed to provide <em>more efficient methods for matrices and data frames</em>. We will use it for this bit.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(dat_filtered)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Maybe too much piping... but its cool!</span>
-net &lt;-<span class="st"> </span>dat_filtered <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(id, School, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>School) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(content)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(
-    <span class="dt">friendid =</span> School<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>content,
-    <span class="dt">year     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z])[0-9]&quot;</span>),
-    <span class="dt">nnom     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z][0-9])[0-9]+&quot;</span>)
-  )</code></pre></div>
-<p>Let’s take a look at this step by step:</p>
-<ol style="list-style-type: decimal">
-<li><p>First, we subset the data: We want to keep <code>id, School, sch_friend*</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(id, School, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>))</code></pre></div>
-<pre><code>## # A tibble: 2,164 x 78
-##         id School sch_friend41 sch_friend42 sch_friend43 sch_friend44
-##      &lt;dbl&gt;  &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;
-##  1 1110001    111          347          420          442          257
-##  2 1110002    111          424          205          536           NA
-##  3 1110007    111           NA          505           NA           NA
-##  4 1110013    111          608          387           93          119
-##  5 1110014    111           NA           NA          599           NA
-##  6 1110015    111           NA          265           NA          313
-##  7 1110020    111           79          214          440           NA
-##  8 1110022    111           37          258           71          143
-##  9 1110025    111           NA          185           NA           NA
-## 10 1110027    111           95          166          248          330
-## # ... with 2,154 more rows, and 72 more variables: sch_friend45 &lt;int&gt;,
-## #   sch_friend46 &lt;int&gt;, sch_friend47 &lt;int&gt;, sch_friend48 &lt;int&gt;,
-## #   sch_friend49 &lt;int&gt;, sch_friend410 &lt;int&gt;, sch_friend411 &lt;int&gt;,
-## #   sch_friend412 &lt;int&gt;, sch_friend413 &lt;int&gt;, sch_friend414 &lt;int&gt;,
-## #   sch_friend415 &lt;int&gt;, sch_friend416 &lt;int&gt;, sch_friend417 &lt;int&gt;,
-## #   sch_friend418 &lt;int&gt;, sch_friend419 &lt;int&gt;, sch_friend31 &lt;int&gt;,
-## #   sch_friend32 &lt;int&gt;, sch_friend33 &lt;int&gt;, sch_friend34 &lt;int&gt;,
-## #   sch_friend35 &lt;int&gt;, sch_friend36 &lt;int&gt;, sch_friend37 &lt;int&gt;,
-## #   sch_friend38 &lt;int&gt;, sch_friend39 &lt;int&gt;, sch_friend310 &lt;int&gt;,
-## #   sch_friend311 &lt;int&gt;, sch_friend312 &lt;int&gt;, sch_friend313 &lt;int&gt;,
-## #   sch_friend314 &lt;int&gt;, sch_friend315 &lt;int&gt;, sch_friend316 &lt;int&gt;,
-## #   sch_friend317 &lt;int&gt;, sch_friend318 &lt;int&gt;, sch_friend319 &lt;int&gt;,
+<p>Optionally, we can use the <code>tibble</code> type of object which is an alternative to the actual <code>data.frame</code>. This object is claimed to provide <em>more efficient methods for matrices and data frames</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(dat)</code></pre></div>
+<p>What I like from tibbles is that when you print them on the console these actually look nice:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat</code></pre></div>
+<pre><code>## # A tibble: 2,164 x 100
+##    photoid school hispanic female1 female2 female3 female4 grades1 grades2
+##      &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1       1    111     1.00      NA      NA       0       0   NA      NA   
+##  2       2    111     1.00       0      NA      NA       0    3.00   NA   
+##  3       7    111     0          1       1       1       1    5.00    4.50
+##  4      13    111     1.00       1       1       1       1    2.50    2.50
+##  5      14    111     1.00       1       1       1      NA    3.00    3.50
+##  6      15    111     1.00       0       0       0       0    2.50    2.50
+##  7      20    111     1.00       1       1       1       1    2.50    2.50
+##  8      22    111     1.00      NA      NA       0       0   NA      NA   
+##  9      25    111     0          1       1      NA       1    4.50    3.50
+## 10      27    111     1.00       0      NA       0       0    3.50   NA   
+## # ... with 2,154 more rows, and 91 more variables: grades3 &lt;dbl&gt;,
+## #   grades4 &lt;dbl&gt;, eversmk1 &lt;int&gt;, eversmk2 &lt;int&gt;, eversmk3 &lt;int&gt;,
+## #   eversmk4 &lt;int&gt;, everdrk1 &lt;int&gt;, everdrk2 &lt;int&gt;, everdrk3 &lt;int&gt;,
+## #   everdrk4 &lt;int&gt;, home1 &lt;int&gt;, home2 &lt;int&gt;, home3 &lt;int&gt;, home4 &lt;int&gt;,
 ## #   sch_friend11 &lt;int&gt;, sch_friend12 &lt;int&gt;, sch_friend13 &lt;int&gt;,
 ## #   sch_friend14 &lt;int&gt;, sch_friend15 &lt;int&gt;, sch_friend16 &lt;int&gt;,
 ## #   sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;, sch_friend19 &lt;int&gt;,
@@ -265,67 +266,135 @@ net &lt;-<span class="st"> </span>dat_filtered <span class="op">%&gt;%</span><sp
 ## #   sch_friend29 &lt;int&gt;, sch_friend210 &lt;int&gt;, sch_friend211 &lt;int&gt;,
 ## #   sch_friend212 &lt;int&gt;, sch_friend213 &lt;int&gt;, sch_friend214 &lt;int&gt;,
 ## #   sch_friend215 &lt;int&gt;, sch_friend216 &lt;int&gt;, sch_friend217 &lt;int&gt;,
-## #   sch_friend218 &lt;int&gt;, sch_friend219 &lt;int&gt;</code></pre></li>
-<li><p>Then, we reshape it to <em>long</em> format: By transposing all the <code>sch_friend*</code> to long</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(id, School, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>School)</code></pre></div>
-<pre><code>## # A tibble: 164,464 x 4
-##         id School varname      content
-##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
-##  1 1110001    111 sch_friend41     347
-##  2 1110002    111 sch_friend41     424
-##  3 1110007    111 sch_friend41      NA
-##  4 1110013    111 sch_friend41     608
-##  5 1110014    111 sch_friend41      NA
-##  6 1110015    111 sch_friend41      NA
-##  7 1110020    111 sch_friend41      79
-##  8 1110022    111 sch_friend41      37
-##  9 1110025    111 sch_friend41      NA
-## 10 1110027    111 sch_friend41      95
-## # ... with 164,454 more rows</code></pre></li>
-<li><p>We remove all the <code>NAs</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(id, School, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>School) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(content))</code></pre></div>
-<pre><code>## # A tibble: 39,561 x 4
-##         id School varname      content
-##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
-##  1 1110001    111 sch_friend41     347
-##  2 1110002    111 sch_friend41     424
-##  3 1110013    111 sch_friend41     608
-##  4 1110020    111 sch_friend41      79
-##  5 1110022    111 sch_friend41      37
-##  6 1110027    111 sch_friend41      95
-##  7 1110029    111 sch_friend41     190
-##  8 1110030    111 sch_friend41      28
-##  9 1110032    111 sch_friend41     484
-## 10 1110035    111 sch_friend41     512
-## # ... with 39,551 more rows</code></pre></li>
-<li><p>And finally, we create three new variables from this dataset: <code>friendid</code>, <code>year</code>, and <code>nom_num</code> (nomination number). All this using regular expressions:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(id, School, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>School) <span class="op">%&gt;%</span>
+## #   sch_friend218 &lt;int&gt;, sch_friend219 &lt;int&gt;, sch_friend31 &lt;int&gt;,
+## #   sch_friend32 &lt;int&gt;, sch_friend33 &lt;int&gt;, sch_friend34 &lt;int&gt;,
+## #   sch_friend35 &lt;int&gt;, sch_friend36 &lt;int&gt;, sch_friend37 &lt;int&gt;,
+## #   sch_friend38 &lt;int&gt;, sch_friend39 &lt;int&gt;, sch_friend310 &lt;int&gt;,
+## #   sch_friend311 &lt;int&gt;, sch_friend312 &lt;int&gt;, sch_friend313 &lt;int&gt;,
+## #   sch_friend314 &lt;int&gt;, sch_friend315 &lt;int&gt;, sch_friend316 &lt;int&gt;,
+## #   sch_friend317 &lt;int&gt;, sch_friend318 &lt;int&gt;, sch_friend319 &lt;int&gt;,
+## #   sch_friend41 &lt;int&gt;, sch_friend42 &lt;int&gt;, sch_friend43 &lt;int&gt;,
+## #   sch_friend44 &lt;int&gt;, sch_friend45 &lt;int&gt;, sch_friend46 &lt;int&gt;,
+## #   sch_friend47 &lt;int&gt;, sch_friend48 &lt;int&gt;, sch_friend49 &lt;int&gt;,
+## #   sch_friend410 &lt;int&gt;, sch_friend411 &lt;int&gt;, sch_friend412 &lt;int&gt;,
+## #   sch_friend413 &lt;int&gt;, sch_friend414 &lt;int&gt;, sch_friend415 &lt;int&gt;,
+## #   sch_friend416 &lt;int&gt;, sch_friend417 &lt;int&gt;, sch_friend418 &lt;int&gt;,
+## #   sch_friend419 &lt;int&gt;, id &lt;dbl&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Maybe too much piping... but its cool!</span>
+net &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(content)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
-    <span class="dt">friendid =</span> School<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>content,
+    <span class="dt">friendid =</span> school<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>content,
+    <span class="dt">year     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z])[0-9]&quot;</span>),
+    <span class="dt">nnom     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z][0-9])[0-9]+&quot;</span>)
+  )</code></pre></div>
+<p>Let’s take a look at this step by step:</p>
+<ol style="list-style-type: decimal">
+<li><p>First, we subset the data: We want to keep <code>id, school, sch_friend*</code>. For the later we use the function <code>starts_with</code> (from the <code>tidyselect</code> package). This allows us to select all variables that starts with the word “<code>sch_friend</code>”, which means that <code>sch_friend11, sch_friend12, ...</code> will all be selected.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 2,164 x 78
+##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
+##      &lt;dbl&gt;  &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;
+##  1 1110001    111           NA           NA           NA           NA
+##  2 1110002    111          424          423          426          289
+##  3 1110007    111          629          505           NA           NA
+##  4 1110013    111          232          569           NA           NA
+##  5 1110014    111          582          134           41          592
+##  6 1110015    111           26          488           81          138
+##  7 1110020    111          528           NA          492          395
+##  8 1110022    111           NA           NA           NA           NA
+##  9 1110025    111          135          185          553           84
+## 10 1110027    111          346          168          559            5
+## # ... with 2,154 more rows, and 72 more variables: sch_friend15 &lt;int&gt;,
+## #   sch_friend16 &lt;int&gt;, sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;,
+## #   sch_friend19 &lt;int&gt;, sch_friend110 &lt;int&gt;, sch_friend111 &lt;int&gt;,
+## #   sch_friend112 &lt;int&gt;, sch_friend113 &lt;int&gt;, sch_friend114 &lt;int&gt;,
+## #   sch_friend115 &lt;int&gt;, sch_friend116 &lt;int&gt;, sch_friend117 &lt;int&gt;,
+## #   sch_friend118 &lt;int&gt;, sch_friend119 &lt;int&gt;, sch_friend21 &lt;int&gt;,
+## #   sch_friend22 &lt;int&gt;, sch_friend23 &lt;int&gt;, sch_friend24 &lt;int&gt;,
+## #   sch_friend25 &lt;int&gt;, sch_friend26 &lt;int&gt;, sch_friend27 &lt;int&gt;,
+## #   sch_friend28 &lt;int&gt;, sch_friend29 &lt;int&gt;, sch_friend210 &lt;int&gt;,
+## #   sch_friend211 &lt;int&gt;, sch_friend212 &lt;int&gt;, sch_friend213 &lt;int&gt;,
+## #   sch_friend214 &lt;int&gt;, sch_friend215 &lt;int&gt;, sch_friend216 &lt;int&gt;,
+## #   sch_friend217 &lt;int&gt;, sch_friend218 &lt;int&gt;, sch_friend219 &lt;int&gt;,
+## #   sch_friend31 &lt;int&gt;, sch_friend32 &lt;int&gt;, sch_friend33 &lt;int&gt;,
+## #   sch_friend34 &lt;int&gt;, sch_friend35 &lt;int&gt;, sch_friend36 &lt;int&gt;,
+## #   sch_friend37 &lt;int&gt;, sch_friend38 &lt;int&gt;, sch_friend39 &lt;int&gt;,
+## #   sch_friend310 &lt;int&gt;, sch_friend311 &lt;int&gt;, sch_friend312 &lt;int&gt;,
+## #   sch_friend313 &lt;int&gt;, sch_friend314 &lt;int&gt;, sch_friend315 &lt;int&gt;,
+## #   sch_friend316 &lt;int&gt;, sch_friend317 &lt;int&gt;, sch_friend318 &lt;int&gt;,
+## #   sch_friend319 &lt;int&gt;, sch_friend41 &lt;int&gt;, sch_friend42 &lt;int&gt;,
+## #   sch_friend43 &lt;int&gt;, sch_friend44 &lt;int&gt;, sch_friend45 &lt;int&gt;,
+## #   sch_friend46 &lt;int&gt;, sch_friend47 &lt;int&gt;, sch_friend48 &lt;int&gt;,
+## #   sch_friend49 &lt;int&gt;, sch_friend410 &lt;int&gt;, sch_friend411 &lt;int&gt;,
+## #   sch_friend412 &lt;int&gt;, sch_friend413 &lt;int&gt;, sch_friend414 &lt;int&gt;,
+## #   sch_friend415 &lt;int&gt;, sch_friend416 &lt;int&gt;, sch_friend417 &lt;int&gt;,
+## #   sch_friend418 &lt;int&gt;, sch_friend419 &lt;int&gt;</code></pre></li>
+<li><p>Then, we reshape it to <em>long</em> format: By transposing all the <code>sch_friend*</code> to long. We do this by means of the function <code>gather</code> (from the <code>tidyr</code> package). This is an alternative to the <code>reshape</code> function, and I personally find it easier to use. Let’s see how it works:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school)</code></pre></div>
+<pre><code>## # A tibble: 164,464 x 4
+##         id school varname      content
+##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
+##  1 1110001    111 sch_friend11      NA
+##  2 1110002    111 sch_friend11     424
+##  3 1110007    111 sch_friend11     629
+##  4 1110013    111 sch_friend11     232
+##  5 1110014    111 sch_friend11     582
+##  6 1110015    111 sch_friend11      26
+##  7 1110020    111 sch_friend11     528
+##  8 1110022    111 sch_friend11      NA
+##  9 1110025    111 sch_friend11     135
+## 10 1110027    111 sch_friend11     346
+## # ... with 164,454 more rows</code></pre>
+<p>In this case the <code>key</code> parameter sets the name of the variable that will contain the name of the variable that was reshaped, while <code>value</code> is the name of the variable that will hold the content of the data (that’s why I named those like that). The <code>-id, -school</code> bit tells the function to “drop” those variables before reshaping, in other words, “reshape everything but <code>id</code> and <code>school</code>”.</p>
+<p>Also, notice that we passed from 2164 rows to 19 (nominations) * 2164 (subjects) * 4 (waves) = 164464 rows, as expected.</p></li>
+<li><p>As the nomination data can be empty for some cells, we need to take care of those cases, the <code>NA</code>s, so we filter the data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(content))</code></pre></div>
+<pre><code>## # A tibble: 39,561 x 4
+##         id school varname      content
+##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
+##  1 1110002    111 sch_friend11     424
+##  2 1110007    111 sch_friend11     629
+##  3 1110013    111 sch_friend11     232
+##  4 1110014    111 sch_friend11     582
+##  5 1110015    111 sch_friend11      26
+##  6 1110020    111 sch_friend11     528
+##  7 1110025    111 sch_friend11     135
+##  8 1110027    111 sch_friend11     346
+##  9 1110029    111 sch_friend11     369
+## 10 1110030    111 sch_friend11     462
+## # ... with 39,551 more rows</code></pre></li>
+<li><p>And finally, we create three new variables from this dataset: <code>friendid</code>, <code>year</code>, and <code>nom_num</code> (nomination number). All this using regular expressions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(content)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">friendid =</span> school<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>content,
     <span class="dt">year     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z])[0-9]&quot;</span>),
     <span class="dt">nnom     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z][0-9])[0-9]+&quot;</span>)
     )</code></pre></div>
 <pre><code>## # A tibble: 39,561 x 7
-##         id School varname      content friendid year  nnom 
+##         id school varname      content friendid year  nnom 
 ##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-##  1 1110001    111 sch_friend41     347  1110347 4     1    
-##  2 1110002    111 sch_friend41     424  1110424 4     1    
-##  3 1110013    111 sch_friend41     608  1110608 4     1    
-##  4 1110020    111 sch_friend41      79  1110079 4     1    
-##  5 1110022    111 sch_friend41      37  1110037 4     1    
-##  6 1110027    111 sch_friend41      95  1110095 4     1    
-##  7 1110029    111 sch_friend41     190  1110190 4     1    
-##  8 1110030    111 sch_friend41      28  1110028 4     1    
-##  9 1110032    111 sch_friend41     484  1110484 4     1    
-## 10 1110035    111 sch_friend41     512  1110512 4     1    
+##  1 1110002    111 sch_friend11     424  1110424 1     1    
+##  2 1110007    111 sch_friend11     629  1110629 1     1    
+##  3 1110013    111 sch_friend11     232  1110232 1     1    
+##  4 1110014    111 sch_friend11     582  1110582 1     1    
+##  5 1110015    111 sch_friend11      26  1110026 1     1    
+##  6 1110020    111 sch_friend11     528  1110528 1     1    
+##  7 1110025    111 sch_friend11     135  1110135 1     1    
+##  8 1110027    111 sch_friend11     346  1110346 1     1    
+##  9 1110029    111 sch_friend11     369  1110369 1     1    
+## 10 1110030    111 sch_friend11     462  1110462 1     1    
 ## # ... with 39,551 more rows</code></pre>
 <p>The regular expression <code>(?&lt;=[a-z])</code> matches a string that is preceeded by any letter from <em>a</em> to <em>z</em>, whereas the expression <code>[0-9]</code> matches a single number. Hence, from the string <code>&quot;sch_friend12&quot;</code>, the regular expression will only match the <code>1</code>, as it is the only number followed by a letter. On the other hand, the expression <code>(?&lt;=[a-z][0-9])</code> matches a string that is preceeded by a letter from <em>a</em> to <em>z</em> and a number from <em>0</em> to <em>9</em>; and the expression <code>[0-9]+</code> matches a string of numbers–so it could be more than one. Hence, from the string <code>&quot;sch_friend12&quot;</code>, we will get <code>2</code>. We can actually se this</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_extract</span>(<span class="st">&quot;sch_friend12&quot;</span>, <span class="st">&quot;(?&lt;=[a-z])[0-9]&quot;</span>)</code></pre></div>
@@ -334,8 +403,8 @@ net &lt;-<span class="st"> </span>dat_filtered <span class="op">%&gt;%</span><sp
 <pre><code>## [1] &quot;2&quot;</code></pre></li>
 </ol>
 <p>Now that we have this edgelist, we can create an igraph object</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vertices &lt;-<span class="st"> </span>dat_filtered <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(id, School)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vertices &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school)</code></pre></div>
 <p>Let’s now use the function <code>graph_from_data_frame</code> to create an <code>igraph</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
 
@@ -359,15 +428,15 @@ ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
     )</code></pre></div>
 </div>
 <div id="plotting-the-network-in-igraph" class="section level2">
-<h2><span class="header-section-number">4.4</span> Plotting the network in igraph</h2>
+<h2><span class="header-section-number">4.5</span> Plotting the network in igraph</h2>
 <div id="single-plot" class="section level3">
-<h3><span class="header-section-number">4.4.1</span> Single plot</h3>
+<h3><span class="header-section-number">4.5.1</span> Single plot</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(ig_year1)</code></pre></div>
 <p><img src="appliedsnar_files/figure-html/03-plot-raw-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating a subgraph</span>
 ig_year1_<span class="dv">111</span> &lt;-<span class="st"> </span><span class="kw">induced_subgraph</span>(
   ig_year1,
-  <span class="kw">which</span>(<span class="kw">degree</span>(ig_year1, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">V</span>(ig_year1)<span class="op">$</span>School <span class="op">==</span><span class="st"> </span><span class="dv">111</span>)
+  <span class="kw">which</span>(<span class="kw">degree</span>(ig_year1, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">V</span>(ig_year1)<span class="op">$</span>school <span class="op">==</span><span class="st"> </span><span class="dv">111</span>)
 )
 
 <span class="co"># Fancy graph</span>
@@ -387,8 +456,144 @@ Figure 4.1: Friends network in time 1 for school 111. The graph excludes isolate
 </div>
 <p>We can actually write this as a function so that, instead of us copying and pasting the code <span class="math inline">\(n\)</span> times (supposing that we want to crate a plot similar to this <span class="math inline">\(n\)</span> times), we just need t</p>
 </div>
+</div>
+<div id="network-descriptive-stats" class="section level2">
+<h2><span class="header-section-number">4.6</span> Network descriptive stats</h2>
+<p>Computing stats on degree distribution</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>indegree   &lt;-<span class="st"> </span><span class="kw">degree</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;in&quot;</span>)
+<span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>outdegree  &lt;-<span class="st"> </span><span class="kw">degree</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;in&quot;</span>)
+<span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>closeness  &lt;-<span class="st"> </span><span class="kw">closeness</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;total&quot;</span>)
+<span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>betweeness &lt;-<span class="st"> </span><span class="kw">betweenness</span>(ig_year1_<span class="dv">111</span>)
+
+stats &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(ig_year1_<span class="dv">111</span>, <span class="dt">what =</span> <span class="st">&quot;vertices&quot;</span>)
+
+stats_degree &lt;-<span class="st"> </span><span class="kw">with</span>(stats, {
+ <span class="kw">cbind</span>(
+   <span class="dt">indegree   =</span> <span class="kw">quantile</span>(indegree, <span class="kw">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>)),
+   <span class="dt">outdegree  =</span> <span class="kw">quantile</span>(outdegree, <span class="kw">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>)),
+   <span class="dt">closeness  =</span> <span class="kw">quantile</span>(closeness, <span class="kw">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>)),
+   <span class="dt">betweeness =</span> <span class="kw">quantile</span>(betweeness, <span class="kw">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>))
+ )
+})
+
+stats_degree</code></pre></div>
+<pre><code>##       indegree outdegree    closeness betweeness
+## 2.5%     0.000     0.000 0.0005915148     0.0000
+## 50%      6.000     6.000 0.0007487833   834.1081
+## 97.5%   17.575    17.575 0.0008838413  4880.1200</code></pre>
+<p>Aggregated level stats</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stats_gen &lt;-<span class="st"> </span><span class="kw">cbind</span>(
+  <span class="dt">size    =</span> <span class="kw">vcount</span>(ig_year1_<span class="dv">111</span>),
+  <span class="dt">nedges  =</span> <span class="kw">ecount</span>(ig_year1_<span class="dv">111</span>),
+  <span class="dt">density =</span> <span class="kw">edge_density</span>(ig_year1_<span class="dv">111</span>),
+  <span class="dt">recip   =</span> <span class="kw">reciprocity</span>(ig_year1_<span class="dv">111</span>),
+  <span class="dt">centr   =</span> <span class="kw">centr_betw</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>centralization
+  ); stats_gen</code></pre></div>
+<pre><code>##      size nedges   density     recip      centr
+## [1,]  418   2638 0.0151343 0.3731513 0.03394126</code></pre>
+<p>Triadic census</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">triadic &lt;-<span class="st"> </span><span class="kw">triad_census</span>(ig_year1_<span class="dv">111</span>)
+triadic</code></pre></div>
+<pre><code>##  [1] 11278921   560974   225529     3619     3383     4401     3219
+##  [8]     2997      407       33      836      235      163      137
+## [15]      277       85</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cbind</span>(
+  <span class="dt">Pcent =</span> triadic<span class="op">/</span><span class="kw">sum</span>(triadic)<span class="op">*</span><span class="dv">100</span>,
+  <span class="kw">read.csv</span>(<span class="st">&quot;triadic_census.csv&quot;</span>)
+  ), <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Pcent</th>
+<th align="left">code</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">93.33</td>
+<td align="left">003</td>
+<td align="left">A,B,C, the empty graph.</td>
+</tr>
+<tr class="even">
+<td align="right">4.64</td>
+<td align="left">012</td>
+<td align="left">A-&gt;B, C, the graph with a single directed edge.</td>
+</tr>
+<tr class="odd">
+<td align="right">1.87</td>
+<td align="left">102</td>
+<td align="left">A&lt;-&gt;B, C, the graph with a mutual connection between two vertices.</td>
+</tr>
+<tr class="even">
+<td align="right">0.03</td>
+<td align="left">021D</td>
+<td align="left">A&lt;-B-&gt;C, the out-star.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.03</td>
+<td align="left">021U</td>
+<td align="left">A-&gt;B&lt;-C, the in-star.</td>
+</tr>
+<tr class="even">
+<td align="right">0.04</td>
+<td align="left">021C</td>
+<td align="left">A-&gt;B-&gt;C, directed line.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.03</td>
+<td align="left">111D</td>
+<td align="left">A&lt;-&gt;B&lt;-C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.02</td>
+<td align="left">111U</td>
+<td align="left">A&lt;-&gt;B-&gt;C.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="left">030T</td>
+<td align="left">A-&gt;B&lt;-C, A-&gt;C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="left">030C</td>
+<td align="left">A&lt;-B&lt;-C, A-&gt;C.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.01</td>
+<td align="left">201</td>
+<td align="left">A&lt;-&gt;B&lt;-&gt;C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="left">120D</td>
+<td align="left">A&lt;-B-&gt;C, A&lt;-&gt;C.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="left">120U</td>
+<td align="left">A-&gt;B&lt;-C, A&lt;-&gt;C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="left">120C</td>
+<td align="left">A-&gt;B-&gt;C, A&lt;-&gt;C.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="left">210</td>
+<td align="left">A-&gt;B&lt;-&gt;C, A&lt;-&gt;C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="left">300</td>
+<td align="left">A&lt;-&gt;B&lt;-&gt;C, A&lt;-&gt;C, the complete graph.</td>
+</tr>
+</tbody>
+</table>
 <div id="multiple-plots" class="section level3">
-<h3><span class="header-section-number">4.4.2</span> Multiple plots</h3>
+<h3><span class="header-section-number">4.6.1</span> Multiple plots</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myplot &lt;-<span class="st"> </span><span class="cf">function</span>(
   net,
   schoolid,
@@ -399,7 +604,7 @@ Figure 4.1: Friends network in time 1 for school 111. The graph excludes isolate
   <span class="co"># Creating a subgraph</span>
   subnet &lt;-<span class="st"> </span><span class="kw">induced_subgraph</span>(
     net,
-    <span class="kw">which</span>(<span class="kw">degree</span>(net, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">&gt;=</span><span class="st"> </span>mindgr <span class="op">&amp;</span><span class="st"> </span><span class="kw">V</span>(net)<span class="op">$</span>School <span class="op">==</span><span class="st"> </span>schoolid)
+    <span class="kw">which</span>(<span class="kw">degree</span>(net, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">&gt;=</span><span class="st"> </span>mindgr <span class="op">&amp;</span><span class="st"> </span><span class="kw">V</span>(net)<span class="op">$</span>school <span class="op">==</span><span class="st"> </span>schoolid)
   )
   
   <span class="co"># Fancy graph</span>
@@ -426,13 +631,13 @@ oldpar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt
 
 <span class="co"># A fancy legend</span>
 <span class="kw">legend</span>(
-  <span class="st">&quot;bottom&quot;</span>,
+  <span class="st">&quot;bottomright&quot;</span>,
   <span class="dt">legend =</span> <span class="kw">c</span>(<span class="dv">111</span>, <span class="dv">112</span>, <span class="dv">113</span>, <span class="dv">114</span>, <span class="dv">115</span>),
   <span class="dt">pt.bg  =</span> <span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;gold&quot;</span>, <span class="st">&quot;white&quot;</span>),
   <span class="dt">pch    =</span> <span class="dv">21</span>,
   <span class="dt">cex    =</span> <span class="dv">1</span>,
   <span class="dt">bty    =</span> <span class="st">&quot;n&quot;</span>,
-  <span class="dt">title  =</span> <span class="st">&quot;Code&quot;</span>
+  <span class="dt">title  =</span> <span class="st">&quot;School&quot;</span>
   )</code></pre></div>
 <div class="figure"><span id="fig:03-myplot-call"></span>
 <img src="appliedsnar_files/figure-html/03-myplot-call-1.png" alt="All 5 schools in time 1. Again, the graphs exclude isolates." width="672" />
@@ -450,12 +655,6 @@ Figure 4.2: All 5 schools in time 1. Again, the graphs exclude isolates.
 
 </div>
 </div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="2">
-<li id="fn2"><p>Besides of having nice syntax, <code>dplyr</code> offers optimized routines to handle your data. I personally use it specifically for that, as that can be nice when you are dealing with relatively large datasets.<a href="week-1-sns-study.html#fnref2">↩</a></p></li>
-</ol>
 </div>
             </section>
 
@@ -495,7 +694,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["appliedsnar.pdf"],
 "toc": {
 "collapse": "subsection"
 }

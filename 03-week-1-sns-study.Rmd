@@ -2,73 +2,54 @@
 
 ## The Social Network Study
 
+```{r 03-about-sns, echo=FALSE, results='asis'}
+cat(readLines("data-raw/03-sns.md"), sep="\n")
+```
+
+## Today's Goals
+
+*   **Visualize**: Create one network per wave/school. To accomplish this we will
+need to take the data from wide format to long format, and recode the vertices ids.
+
+*   **Describe**: Compute the follwing network statistics: density, average path
+length, number of components, etc.
+
+
 ## Reading and _cleaning_ the data
 
-R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the [`readr`](https://cran.r-project.org/package=readr) package; or it can be binary files like dta (Stata), Octave, SPSS, for which [`foreign`](https://cran.r-project.org/package=readr) can be used; or it could be excel files in which case you should be using [`readxl`](https://cran.r-project.org/package=readxl). In our case, the data for this session is in Stata13 format, and so we will be using [`readstata13`](https://cran.r-project.org/package=readstata13).
+R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the [`readr`](https://cran.r-project.org/package=readr) package; or it can be binary files like dta (Stata), Octave, SPSS, for which [`foreign`](https://cran.r-project.org/package=readr) can be used; or it could be excel files in which case you should be using [`readxl`](https://cran.r-project.org/package=readxl). In our case, the data for this session is in Stata format:
 
 ```{r 03-read-data, message=FALSE}
 library(dplyr)
 library(magrittr)
-library(readstata13)
+library(foreign)
 
 # Reading the data
-dat <- read.dta13("SNS datamerged081315edited.dta")
+dat <- foreign::read.dta("03-sns.dta")
 
-# Taking a look at the file
-head(dat[,1:5])
+# Taking a look at the data's first 5 columns and 5 rows
+dat[1:5, 1:10]
 ```
-
-For now, we won't be using all ~2,000 columns of this data (which is mostly because we have a wide format dataset here), so we need to filter all this data. In order to do so, we can use the `select` function from the `dplyr` package
-
-```{r 03-filtering-data-pipe, cache=TRUE}
-dat_filtered <- select(
-  dat,
-  School, photoid,
-  matches("^sch_friend.+")
-  )
-```
-
-The function `matches` allows us using regular expressions to select variables (reguwhat!?). Regular expressions are, as I once overheard, _the poor man's RA_. In this case, instead of us having to look for all the variables that start with the pattern `sch_friend`, we use regular expressions to catch that, character by character, we have:
-
-*   `^`: Line start
-*   `sch_friend`: Followed by `sch_friend`
-*   `.+`: Followed by anything not null.
-
-We will see more of this in the future. Now, if you don't want to use `dplyr` to do this simple variable selection, you can always use the base R function `subset`. The following example is equivalent to what we just did using `dplyr::select`, although it can be slower^[Besides of having nice syntax, `dplyr` offers optimized routines to handle your data. I personally use it specifically for that, as that can be nice when you are dealing with relatively large datasets.]
-
-
-```{r 03-filter-no-pipe, eval=FALSE}
-dat_filtered <- subset(
-  dat,
-  select = c(
-    "School", "photoid",
-    colnames(dat)[grepl("sch_friend.+", colnames(dat))]
-    )
-  )
-
-```
-
-As you can see, the `dplyr` syntax is more clear.
 
 Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id such that, for example, the last three `x` numbers are the photoid and the first ones are the school id. To do this we need to take into account the range of the variables. Here, `photoid` has the following range:
 
 ```{r 03-idrange}
-(photo_id_ran <- range(dat_filtered$photoid))
+(photo_id_ran <- range(dat$photoid))
 ```
 
 As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. Again, we use `dplyr` to create this variable, and we will call it... `id` (mind blowing, right?):
 
 ```{r 03-newid}
-(dat_filtered %<>% mutate(id = School*10000 + photoid)) %>%
+(dat %<>% mutate(id = school*10000 + photoid)) %>%
   head %>%
-  select(School, photoid, id)
+  select(school, photoid, id)
 ```
 
 Wow, what happend in the last three lines of code! What is that `%>%`? Well, that's the [piping operator](http://r4ds.had.co.nz/pipes.html), and it is a very nice way of writing nested function calls. In this case, instead of having write something like
 
 ```r
-dat_filtered$id <- dat_filtered$School*10000 + dat_filtered$photoid
-subset(head(dat_filtered), select = c(School, photoid, id))
+dat_filtered$id <- dat_filtered$school*10000 + dat_filtered$photoid
+subset(head(dat_filtered), select = c(school, photoid, id))
 ```
 
 ## Retrieving the network
@@ -78,20 +59,28 @@ library(tidyr)
 library(stringr)
 ```
 
-Optionally, we can use the `tibble` type of object which is an alternative to the actual `data.frame`. This object is claimed to provide _more efficient methods for matrices and data frames_. We will use it for this bit.
+Optionally, we can use the `tibble` type of object which is an alternative to the actual `data.frame`. This object is claimed to provide _more efficient methods for matrices and data frames_.
 
 ```{r 03-tibble}
-dat_filtered <- as_tibble(dat_filtered)
+dat <- as_tibble(dat)
 ```
+
+What I like from tibbles is that when you print them on the console these actually look nice:
+ 
+```{r 03-tibble-print}
+dat
+```
+
+
 
 ```{r 03-reshape}
 # Maybe too much piping... but its cool!
-net <- dat_filtered %>% 
-  select(id, School, starts_with("sch_friend")) %>%
-  gather(key = "varname", value = "content", -id, -School) %>%
+net <- dat %>% 
+  select(id, school, starts_with("sch_friend")) %>%
+  gather(key = "varname", value = "content", -id, -school) %>%
   filter(!is.na(content)) %>%
   mutate(
-    friendid = School*10000 + content,
+    friendid = school*10000 + content,
     year     = str_extract(varname, "(?<=[a-z])[0-9]"),
     nnom     = str_extract(varname, "(?<=[a-z][0-9])[0-9]+")
   )
@@ -99,39 +88,43 @@ net <- dat_filtered %>%
 
 Let's take a look at this step by step:
 
-1.  First, we subset the data: We want to keep `id, School, sch_friend*`
+1.  First, we subset the data: We want to keep `id, school, sch_friend*`. For the later we use the function `starts_with` (from the `tidyselect` package). This allows us to select all variables that starts with the word "`sch_friend`", which means that `sch_friend11, sch_friend12, ...` will all be selected.
 
     ```{r}
-    dat_filtered %>% 
-      select(id, School, starts_with("sch_friend"))
+    dat %>% 
+      select(id, school, starts_with("sch_friend"))
     ```
     
-2.  Then, we reshape it to _long_ format: By transposing all the `sch_friend*` to long
+2.  Then, we reshape it to _long_ format: By transposing all the `sch_friend*` to long. We do this by means of the function `gather` (from the `tidyr` package). This is an alternative to the `reshape` function, and I personally find it easier to use. Let's see how it works:
 
     ```{r}
-    dat_filtered %>% 
-      select(id, School, starts_with("sch_friend")) %>%
-      gather(key = "varname", value = "content", -id, -School)
+    dat %>% 
+      select(id, school, starts_with("sch_friend")) %>%
+      gather(key = "varname", value = "content", -id, -school)
     ```
     
-3.  We remove all the `NAs`
+    In this case the `key` parameter sets the name of the variable that will contain the name of the variable that was reshaped, while `value` is the name of the variable that will hold the content of the data (that's why I named those like that). The `-id, -school` bit tells the function to "drop" those variables before reshaping, in other words, "reshape everything but `id` and `school`".
+    
+    Also, notice that we passed from `r nrow(dat)` rows to 19 (nominations) * `r nrow(dat)` (subjects) * 4 (waves) = `r sprintf("%i", 19*nrow(dat)*4)` rows, as expected.
+    
+3.  As the nomination data can be empty for some cells, we need to take care of those cases, the `NA`s, so we filter the data:
 
     ```{r}
-    dat_filtered %>% 
-      select(id, School, starts_with("sch_friend")) %>%
-      gather(key = "varname", value = "content", -id, -School) %>%
+    dat %>% 
+      select(id, school, starts_with("sch_friend")) %>%
+      gather(key = "varname", value = "content", -id, -school) %>%
       filter(!is.na(content))
     ```
     
 4.  And finally, we create three new variables from this dataset: `friendid`, `year`, and `nom_num` (nomination number). All this using regular expressions:
     
     ```{r}
-    dat_filtered %>% 
-      select(id, School, starts_with("sch_friend")) %>%
-      gather(key = "varname", value = "content", -id, -School) %>%
+    dat %>% 
+      select(id, school, starts_with("sch_friend")) %>%
+      gather(key = "varname", value = "content", -id, -school) %>%
       filter(!is.na(content)) %>%
       mutate(
-        friendid = School*10000 + content,
+        friendid = school*10000 + content,
         year     = str_extract(varname, "(?<=[a-z])[0-9]"),
         nnom     = str_extract(varname, "(?<=[a-z][0-9])[0-9]+")
         )
@@ -148,8 +141,8 @@ Let's take a look at this step by step:
 Now that we have this edgelist, we can create an igraph object
 
 ```{r 03-vertex}
-vertices <- dat_filtered %>% 
-  select(id, School)
+vertices <- dat %>% 
+  select(id, school)
 ```
 
 Let's now use the function `graph_from_data_frame` to create an `igraph` object:
@@ -195,7 +188,7 @@ plot(ig_year1)
 # Creating a subgraph
 ig_year1_111 <- induced_subgraph(
   ig_year1,
-  which(degree(ig_year1, mode = "all") >= 1 & V(ig_year1)$School == 111)
+  which(degree(ig_year1, mode = "all") >= 1 & V(ig_year1)$school == 111)
 )
 
 # Fancy graph
@@ -211,6 +204,56 @@ plot(
 
 We can actually write this as a function so that, instead of us copying and pasting the code $n$ times (supposing that we want to crate a plot similar to this $n$ times), we just need t
 
+## Network descriptive stats
+
+Computing stats on degree distribution
+
+```{r 03-degree-stats}
+V(ig_year1_111)$indegree   <- degree(ig_year1_111, mode = "in")
+V(ig_year1_111)$outdegree  <- degree(ig_year1_111, mode = "in")
+V(ig_year1_111)$closeness  <- closeness(ig_year1_111, mode = "total")
+V(ig_year1_111)$betweeness <- betweenness(ig_year1_111)
+
+stats <- as_data_frame(ig_year1_111, what = "vertices")
+
+stats_degree <- with(stats, {
+ cbind(
+   indegree   = quantile(indegree, c(.025, .5, .975)),
+   outdegree  = quantile(outdegree, c(.025, .5, .975)),
+   closeness  = quantile(closeness, c(.025, .5, .975)),
+   betweeness = quantile(betweeness, c(.025, .5, .975))
+ )
+})
+
+stats_degree
+```
+
+Aggregated level stats
+
+```{r 03-network-stats}
+stats_gen <- cbind(
+  size    = vcount(ig_year1_111),
+  nedges  = ecount(ig_year1_111),
+  density = edge_density(ig_year1_111),
+  recip   = reciprocity(ig_year1_111),
+  centr   = centr_betw(ig_year1_111)$centralization
+  ); stats_gen
+```
+
+Triadic census
+
+```{r 03-triadic-census, echo=TRUE}
+triadic <- triad_census(ig_year1_111)
+triadic
+```
+
+```{r 03-triadic-census-print}
+knitr::kable(cbind(
+  Pcent = triadic/sum(triadic)*100,
+  read.csv("triadic_census.csv")
+  ), digits = 2)
+```
+
 ### Multiple plots
 
 ```{r 03-myplot-def}
@@ -224,7 +267,7 @@ myplot <- function(
   # Creating a subgraph
   subnet <- induced_subgraph(
     net,
-    which(degree(net, mode = "all") >= mindgr & V(net)$School == schoolid)
+    which(degree(net, mode = "all") >= mindgr & V(net)$school == schoolid)
   )
   
   # Fancy graph
@@ -254,13 +297,13 @@ par(oldpar)
 
 # A fancy legend
 legend(
-  "bottom",
+  "bottomright",
   legend = c(111, 112, 113, 114, 115),
   pt.bg  = c("tomato", "steelblue", "black", "gold", "white"),
   pch    = 21,
   cex    = 1,
   bty    = "n",
-  title  = "Code"
+  title  = "School"
   )
 ```
 
