@@ -2,20 +2,23 @@
 
 ## The Social Network Study
 
-```{r 03-about-sns, echo=FALSE, results='asis'}
-cat(readLines("data-raw/03-sns.md"), sep="\n")
-```
+The data can be downloaded from
+
+The codebook for the data provided here is in [the appendix](#sns-data).
 
 ## Today's Goals
 
-*   **Visualize**: Create one network per wave/school. To accomplish this we will
-need to take the data from wide format to long format, and recode the vertices ids.
+1.  Read the data into R,
 
-*   **Describe**: Compute the follwing network statistics: density, average path
-length, number of components, etc.
+2.  Create a network with it,
 
+3.  Compute descriptive statistics
 
-## Reading and _cleaning_ the data
+4.  Visualize the network
+
+## Data preprocessing
+
+### Reading the data into R
 
 R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the [`readr`](https://cran.r-project.org/package=readr) package; or it can be binary files like dta (Stata), Octave, SPSS, for which [`foreign`](https://cran.r-project.org/package=readr) can be used; or it could be excel files in which case you should be using [`readxl`](https://cran.r-project.org/package=readxl). In our case, the data for this session is in Stata format:
 
@@ -30,6 +33,8 @@ dat <- foreign::read.dta("03-sns.dta")
 # Taking a look at the data's first 5 columns and 5 rows
 dat[1:5, 1:10]
 ```
+
+### Creating a unique id for each participant
 
 Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id such that, for example, the last three `x` numbers are the photoid and the first ones are the school id. To do this we need to take into account the range of the variables. Here, `photoid` has the following range:
 
@@ -52,7 +57,17 @@ dat_filtered$id <- dat_filtered$school*10000 + dat_filtered$photoid
 subset(head(dat_filtered), select = c(school, photoid, id))
 ```
 
-## Retrieving the network
+## Creating a network
+
+*   We want to build a social network. For that, we either use an adjacency matrix or an edgelist.
+
+*   Each individual of the SNS data nomitated 19 friends from school. We will use those nominations to create the social network.
+
+*   In this case, we will create the network by coercing the dataset into an edgelist.
+
+### From survey to edgelist
+
+Let's start by loading a couple of handy R packages for this task.
 
 ```{r 03-loading-tidyr-stringr, message=FALSE}
 library(tidyr)
@@ -140,9 +155,11 @@ Let's take a look at this step by step:
   
 Now that we have this edgelist, we can create an igraph object
 
+### igraph network
+
 ```{r 03-vertex}
 vertices <- dat %>% 
-  select(id, school)
+  select(id, school, hispanic, female1, starts_with("eversmk"))
 ```
 
 Let's now use the function `graph_from_data_frame` to create an `igraph` object:
@@ -158,7 +175,7 @@ ig_year1 <- net %>%
     )
 ```
 
-Ups, it seems that individuals are making nominations to other students that were not included on the survery. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
+Ups! It seems that individuals are making nominations to other students that were not included on the survery. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
 
 ```{r 03-igraph-bis, cache=TRUE}
 
@@ -173,49 +190,56 @@ ig_year1 <- net %>%
     vertices = vertices
     )
 
+ig_year1
 ```
 
-## Plotting the network in igraph
-
-### Single plot
-
-```{r 03-plot-raw, cache=TRUE}
-plot(ig_year1)
-```
-
-```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates."}
-
-# Creating a subgraph
-ig_year1_111 <- induced_subgraph(
-  ig_year1,
-  which(degree(ig_year1, mode = "all") >= 1 & V(ig_year1)$school == 111)
-)
-
-# Fancy graph
-set.seed(1)
-plot(
-  ig_year1_111,
-  vertex.size     = degree(ig_year1_111)/4,
-  vertex.label    = NA,
-  edge.arrow.size = .25,
-  layout          = layout_with_fr
-  )
-```
-
-We can actually write this as a function so that, instead of us copying and pasting the code $n$ times (supposing that we want to crate a plot similar to this $n$ times), we just need t
+So there we have, our network with `r vcount(ig_year1)` nodes and `r ecount(ig_year1)` edges. The next steps: get some descriptive stats and visualize our network.
 
 ## Network descriptive stats
 
-Computing stats on degree distribution
+While we could do all networks at once, in this part we will focus on computing some network statistics for one of the schools only. We start by school 111. The first question that you should be asking your self now is, "how can I get that information from the igraph object?." Well, vertex attributes and edges attributes can be accessed via the `V` and `E` functions respectively; moreover, we can list what vertex/edge attributes are available:
 
-```{r 03-degree-stats}
+```{r 03-listing-attributes}
+list.vertex.attributes(ig_year1)
+list.edge.attributes(ig_year1) # we have no edge attributes here
+```
+
+Just like we would do with data frames, accessing vertex attributes is done via the dollar sign operator `$` together with the `V` function, for example, accessing the first 10 elements of the variable `hispanic` can be done as follows:
+
+```{r 03-first-10-hispanic}
+V(ig_year1)$hispanic[1:10]
+```
+
+Now that you know how to access vertex attributes, we can get the network corresponding to school 111 by identifying which vertices are part of it and pass that information to the `induced_subgraph` function:
+
+```{r 03-igraph-year1-111}
+# Which ids are from school 111?
+school111ids <- which(V(ig_year1)$school == 111)
+
+# Creating a subgraph
+ig_year1_111 <- induced_subgraph(
+  graph = ig_year1,
+  vids  = school111ids
+)
+```
+
+The `which` function in R returns a vector of indices indicating which elements are true. In our case it will return a vector of indices of the vertices which have the attribute `school` equal to 111. Now that we have our subgraph, we can compute different centrality measures^[For more information about the different centrality measurements, please take a look at the "Centrality" article on [Wikipedia](https://en.wikipedia.org/wiki/Centrality).] for each vertex and store them in the igraph object itself:
+
+```{r 03-centrality-measures}
+# Computing centrality measures for each vertex
 V(ig_year1_111)$indegree   <- degree(ig_year1_111, mode = "in")
-V(ig_year1_111)$outdegree  <- degree(ig_year1_111, mode = "in")
+V(ig_year1_111)$outdegree  <- degree(ig_year1_111, mode = "out")
 V(ig_year1_111)$closeness  <- closeness(ig_year1_111, mode = "total")
-V(ig_year1_111)$betweeness <- betweenness(ig_year1_111)
+V(ig_year1_111)$betweeness <- betweenness(ig_year1_111, normalized = TRUE)
+```
 
+From here, we can _go back_ to our old habits and get the set of vertex attributes as a data frame so we can compute some summary statistics on the centrality measurements that we just got
+
+```{r 03-centrality-stats}
+# Extracting each vectex features as a data.frame
 stats <- as_data_frame(ig_year1_111, what = "vertices")
 
+# Computing quantiles for each variable
 stats_degree <- with(stats, {
  cbind(
    indegree   = quantile(indegree, c(.025, .5, .975)),
@@ -228,31 +252,96 @@ stats_degree <- with(stats, {
 stats_degree
 ```
 
-Aggregated level stats
+The `with` function is somewhat similar to what `dplyr` allows us to do when we want to work with the dataset but without mentioning its name everytime that we ask for a variable. Without using the `with` function, the previous could have been done as follows:
+
+```r
+stats_degree <- 
+ cbind(
+   indegree   = quantile(stats$indegree, c(.025, .5, .975)),
+   outdegree  = quantile(stats$outdegree, c(.025, .5, .975)),
+   closeness  = quantile(stats$closeness, c(.025, .5, .975)),
+   betweeness = quantile(stats$betweeness, c(.025, .5, .975))
+ )
+
+```
+
+Now we will compute some statistics at the graph level:
 
 ```{r 03-network-stats}
-stats_gen <- cbind(
+cbind(
   size    = vcount(ig_year1_111),
   nedges  = ecount(ig_year1_111),
   density = edge_density(ig_year1_111),
   recip   = reciprocity(ig_year1_111),
-  centr   = centr_betw(ig_year1_111)$centralization
-  ); stats_gen
+  centr   = centr_betw(ig_year1_111)$centralization,
+  pathLen = mean_distance(ig_year1_111)
+  )
 ```
 
-Triadic census
 
-```{r 03-triadic-census, echo=TRUE}
-triadic <- triad_census(ig_year1_111)
-triadic
+
+## Plotting the network in igraph
+
+### Single plot
+
+*   
+
+Let's take a look at how does our network looks like when we use the default parameters in the plot method of the igraph object:
+
+```{r 03-plot-raw, cache=TRUE, fig.cap='A not very nice network plot. This is what we get with the default parameters in igraph.', fig.align='center'}
+plot(ig_year1)
 ```
 
-```{r 03-triadic-census-print}
-knitr::kable(cbind(
-  Pcent = triadic/sum(triadic)*100,
-  read.csv("triadic_census.csv")
-  ), digits = 2)
+Not very nice, right? A couple of things with this plot:
+
+1.  We are looking at all schools simultaneously, which does not make sense.
+
+2.  All the vertices have the same size, and more over, are overalaping.
+
+3.  Given the number of vertices in these networks, the labels are not useful here.
+
+```{r 03-color-hispanic}
+col_hispanic <- V(ig_year1_111)$hispanic + 1
+col_hispanic <- coalesce(col_hispanic, 3) 
+col_hispanic <- c("steelblue", "tomato", "white")[col_hispanic]
 ```
+
+
+```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates."}
+# Fancy graph
+set.seed(1)
+plot(
+  ig_year1_111,
+  vertex.size     = degree(ig_year1_111)/10 +1,
+  vertex.label    = NA,
+  edge.arrow.size = .25,
+  layout          = layout_with_fr,
+  vertex.color    = col_hispanic
+  )
+```
+
+```{r 03-color-smoke}
+col_eversmk1 <- V(ig_year1_111)$eversmk1 + 1
+col_eversmk1 <- coalesce(col_eversmk1, 3) 
+col_eversmk1 <- c("steelblue", "tomato", "white")[col_eversmk1]
+```
+
+```{r 03-plot-neat2, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates."}
+# Fancy graph
+set.seed(1)
+plot(
+  ig_year1_111,
+  vertex.size     = degree(ig_year1_111)/10 +1,
+  vertex.label    = NA,
+  edge.arrow.size = .25,
+  layout          = layout_with_fr,
+  vertex.color    = col_eversmk1
+  )
+```
+
+
+
+We can actually write this as a function so that, instead of us copying and pasting the code $n$ times (supposing that we want to crate a plot similar to this $n$ times), we just need t
 
 ### Multiple plots
 
@@ -270,11 +359,14 @@ myplot <- function(
     which(degree(net, mode = "all") >= mindgr & V(net)$school == schoolid)
   )
   
+  # Computing colors
+  
+  
   # Fancy graph
   set.seed(1)
   plot(
     subnet,
-    vertex.size     = degree(subnet)/4,
+    vertex.size     = degree(subnet)/10,
     vertex.label    = NA,
     edge.arrow.size = .25,
     vertex.color    = vcol,
@@ -320,9 +412,4 @@ legend(
 
 
     
-
-
-
-
-
 

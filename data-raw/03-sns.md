@@ -1,11 +1,10 @@
+### About the data
+
 *   This data is part of the NIH Challenge grant \# RC 1RC1AA019239 "Social
 Networks and Networking That Puts Adolescents at High Risk".
 
 *   In general terms, the SNS's goal was(is) "Understand the network effects on
 risk behaviors such as smoking initiation and substance use".
-
-*   
-
 
 ### Variables
 
