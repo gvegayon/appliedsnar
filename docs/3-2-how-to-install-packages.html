@@ -146,19 +146,22 @@ img {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="how-to-install-packages" class="section level2">
+<h2><span class="header-section-number">3.2</span> How to install packages</h2>
+<p>Nowadays there are two ways of installing R packages (that I’m aware of), either using <code>install.packages</code>, which is a function shipped with R, or use the devtools R package to install a package from some remote repository other than CRAN, here is a couple of examples:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This will install the igraph package from CRAN</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">install.packages</span>(<span class="st">&quot;netdiffuseR&quot;</span>)
+
+<span class="co"># This will install the bleeding-edge version from the project&#39;s github repo!</span>
+<span class="op">&gt;</span><span class="st"> </span>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;USCCANA/netdiffuseR&quot;</span>)</code></pre></div>
+<p>The first one, using <code>install.packages</code>, installs the CRAN version of <code>netdiffuseR</code>, whereas the second installs whatever version is plublished on <a href="https://github.com/USCCANA/netdiffuseR" class="uri">https://github.com/USCCANA/netdiffuseR</a>, which is usually called the development version.</p>
+<p>In some cases users may want/need to install packages from command line as some packages need extra configuration to be installed. But we won’t need to look at it now.</p>
 
 </div>
-
-
-
-
-
-
-
+<!-- </div> -->
 <p style="text-align: center;">
-<a href="6-final-words.html"><button class="btn btn-default">Previous</button></a>
+<a href="3-1-what-is-r.html"><button class="btn btn-default">Previous</button></a>
+<a href="4-week-1-sns-study.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>

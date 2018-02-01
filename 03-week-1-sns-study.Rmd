@@ -278,6 +278,19 @@ cbind(
   )
 ```
 
+Triadic census
+
+```{r 03-triadic-census, echo=TRUE}
+triadic <- triad_census(ig_year1_111)
+triadic
+```
+
+```{r 03-triadic-census-print}
+knitr::kable(cbind(
+  Pcent = triadic/sum(triadic)*100,
+  read.csv("triadic_census.csv")
+  ), digits = 2)
+```
 
 
 ## Plotting the network in igraph

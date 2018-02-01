@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-01-31">
+<meta name="date" content="2018-02-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -132,13 +132,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="datasets.html"><a href="datasets.html#sns-data"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
-<li class="chapter" data-level="A.1.1" data-path="datasets.html"><a href="datasets.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
-<li class="chapter" data-level="A.1.2" data-path="datasets.html"><a href="datasets.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
-</ul></li>
-</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -164,7 +157,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="the-social-network-study" class="section level2">
 <h2><span class="header-section-number">4.1</span> The Social Network Study</h2>
 <p>The data can be downloaded from</p>
-<p>The codebook for the data provided here is in <a href="datasets.html#sns-data">the appendix</a>.</p>
+<p>The codebook for the data provided here is in <a href="#sns-data">the appendix</a>.</p>
 </div>
 <div id="todays-goals" class="section level2">
 <h2><span class="header-section-number">4.2</span> Today’s Goals</h2>
@@ -433,10 +426,10 @@ ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
     )
 
 ig_year1</code></pre></div>
-<pre><code>## IGRAPH ab845be DN-- 2164 9514 -- 
+<pre><code>## IGRAPH ad95896 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n)
-## + edges from ab845be (vertex names):
+## + edges from ad95896 (vertex names):
 ##  [1] 1110007-&gt;1110629 1110013-&gt;1110232 1110014-&gt;1110582 1110015-&gt;1110026
 ##  [5] 1110025-&gt;1110135 1110027-&gt;1110346 1110029-&gt;1110369 1110035-&gt;1110034
 ##  [9] 1110040-&gt;1110390 1110041-&gt;1110557 1110044-&gt;1110027 1110046-&gt;1110030
@@ -512,6 +505,107 @@ stats_degree</code></pre></div>
   )</code></pre></div>
 <pre><code>##      size nedges     density     recip      centr pathLen
 ## [1,]  533   2638 0.009303277 0.3731513 0.02179154 4.23678</code></pre>
+<p>Triadic census</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">triadic &lt;-<span class="st"> </span><span class="kw">triad_census</span>(ig_year1_<span class="dv">111</span>)
+triadic</code></pre></div>
+<pre><code>##  [1] 24059676   724389   290849     3619     3383     4401     3219
+##  [8]     2997      407       33      836      235      163      137
+## [15]      277       85</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cbind</span>(
+  <span class="dt">Pcent =</span> triadic<span class="op">/</span><span class="kw">sum</span>(triadic)<span class="op">*</span><span class="dv">100</span>,
+  <span class="kw">read.csv</span>(<span class="st">&quot;triadic_census.csv&quot;</span>)
+  ), <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Pcent</th>
+<th align="left">code</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">95.88</td>
+<td align="left">003</td>
+<td align="left">A,B,C, the empty graph.</td>
+</tr>
+<tr class="even">
+<td align="right">2.89</td>
+<td align="left">012</td>
+<td align="left">A-&gt;B, C, the graph with a single directed edge.</td>
+</tr>
+<tr class="odd">
+<td align="right">1.16</td>
+<td align="left">102</td>
+<td align="left">A&lt;-&gt;B, C, the graph with a mutual connection between two vertices.</td>
+</tr>
+<tr class="even">
+<td align="right">0.01</td>
+<td align="left">021D</td>
+<td align="left">A&lt;-B-&gt;C, the out-star.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.01</td>
+<td align="left">021U</td>
+<td align="left">A-&gt;B&lt;-C, the in-star.</td>
+</tr>
+<tr class="even">
+<td align="right">0.02</td>
+<td align="left">021C</td>
+<td align="left">A-&gt;B-&gt;C, directed line.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.01</td>
+<td align="left">111D</td>
+<td align="left">A&lt;-&gt;B&lt;-C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.01</td>
+<td align="left">111U</td>
+<td align="left">A&lt;-&gt;B-&gt;C.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="left">030T</td>
+<td align="left">A-&gt;B&lt;-C, A-&gt;C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="left">030C</td>
+<td align="left">A&lt;-B&lt;-C, A-&gt;C.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="left">201</td>
+<td align="left">A&lt;-&gt;B&lt;-&gt;C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="left">120D</td>
+<td align="left">A&lt;-B-&gt;C, A&lt;-&gt;C.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="left">120U</td>
+<td align="left">A-&gt;B&lt;-C, A&lt;-&gt;C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="left">120C</td>
+<td align="left">A-&gt;B-&gt;C, A&lt;-&gt;C.</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="left">210</td>
+<td align="left">A-&gt;B&lt;-&gt;C, A&lt;-&gt;C.</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="left">300</td>
+<td align="left">A&lt;-&gt;B&lt;-&gt;C, A&lt;-&gt;C, the complete graph.</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="plotting-the-network-in-igraph" class="section level2">
 <h2><span class="header-section-number">4.6</span> Plotting the network in igraph</h2>
