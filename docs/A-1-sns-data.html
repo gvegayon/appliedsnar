@@ -153,57 +153,48 @@ img {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<div id="data-preprocessing" class="section level2">
-<h2><span class="header-section-number">4.3</span> Data preprocessing</h2>
-<div id="reading-the-data-into-r" class="section level3">
-<h3><span class="header-section-number">4.3.1</span> Reading the data into R</h3>
-<p>R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the <a href="https://cran.r-project.org/package=readr"><code>readr</code></a> package; or it can be binary files like dta (Stata), Octave, SPSS, for which <a href="https://cran.r-project.org/package=readr"><code>foreign</code></a> can be used; or it could be excel files in which case you should be using <a href="https://cran.r-project.org/package=readxl"><code>readxl</code></a>. In our case, the data for this session is in Stata format:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(magrittr)
-<span class="kw">library</span>(foreign)
+<div id="sns-data" class="section level2">
+<h2><span class="header-section-number">A.1</span> SNS data</h2>
+<div id="about-the-data" class="section level3">
+<h3><span class="header-section-number">A.1.1</span> About the data</h3>
+<ul>
+<li><p>This data is part of the NIH Challenge grant # RC 1RC1AA019239 “Social Networks and Networking That Puts Adolescents at High Risk”.</p></li>
+<li><p>In general terms, the SNS’s goal was(is) “Understand the network effects on risk behaviors such as smoking initiation and substance use”.</p></li>
+</ul>
+</div>
+<div id="variables" class="section level3">
+<h3><span class="header-section-number">A.1.2</span> Variables</h3>
+<p>The data has a <em>wide</em> structure, which means that there is one row per individual, and that dynamic attributes are represented as one column per time.</p>
+<ul>
+<li><p><code>photoid</code> Photo id at the school level (can be repeated across schools).</p></li>
+<li><p><code>school</code> School id.</p></li>
+<li><p><code>hispanic</code> Indicator variable that equals 1 if the indivual ever reported himself as hispanic.</p></li>
+<li><p><code>female1</code>, …, <code>female4</code> Indicator variable that equals 1 if the individual reported to be female at the particular wave.</p></li>
+<li><p><code>grades1</code>,…, <code>grades4</code> Academic grades by wave. Values from 1 to 5, with 5 been the best.</p></li>
+<li><p><code>eversmk1</code>, …, <code>eversmk4</code> Indicator variable of ever smoking by wave. A one indicated that the individual had smoked at the time of the survey.</p></li>
+<li><p><code>everdrk1</code>, …, <code>everdrk4</code> Indicator variable of ever drinking by wave. A one indicated that the individual had drink at the time of the survey.</p></li>
+<li><p><code>home1</code>, …, <code>home4</code> Factor variable for home status by wave. A one indicates home ownership, a 2 rent, and a 3 a “I don’t know”.</p></li>
+</ul>
+<p>During the survey, participants were asked to name up to 19 of their school friends:</p>
+<ul>
+<li><p><code>sch_friend11</code>, …, <code>sch_friend119</code> School friends nominations (19 in total) for wave 1. The codes are mapped to the variable <code>photoid</code>.</p></li>
+<li><p><code>sch_friend21</code>, …, <code>sch_friend219</code> School friends nominations (19 in total) for wave 2. The codes are mapped to the variable <code>photoid</code>.</p></li>
+<li><p><code>sch_friend31</code>, …, <code>sch_friend319</code> School friends nominations (19 in total) for wave 3. The codes are mapped to the variable <code>photoid</code>.</p></li>
+<li><p><code>sch_friend41</code>, …, <code>sch_friend419</code> School friends nominations (19 in total) for wave 4. The codes are mapped to the variable <code>photoid</code>.</p></li>
+</ul>
 
-<span class="co"># Reading the data</span>
-dat &lt;-<span class="st"> </span>foreign<span class="op">::</span><span class="kw">read.dta</span>(<span class="st">&quot;03-sns.dta&quot;</span>)
+</div>
+</div>
+</div>
 
-<span class="co"># Taking a look at the data&#39;s first 5 columns and 5 rows</span>
-dat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
-<pre><code>##   photoid school hispanic female1 female2 female3 female4 grades1 grades2
-## 1       1    111        1      NA      NA       0       0      NA      NA
-## 2       2    111        1       0      NA      NA       0     3.0      NA
-## 3       7    111        0       1       1       1       1     5.0     4.5
-## 4      13    111        1       1       1       1       1     2.5     2.5
-## 5      14    111        1       1       1       1      NA     3.0     3.5
-##   grades3
-## 1     3.5
-## 2      NA
-## 3     4.0
-## 4     2.5
-## 5     3.5</code></pre>
-</div>
-<div id="creating-a-unique-id-for-each-participant" class="section level3">
-<h3><span class="header-section-number">4.3.2</span> Creating a unique id for each participant</h3>
-<p>Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id such that, for example, the last three <code>x</code> numbers are the photoid and the first ones are the school id. To do this we need to take into account the range of the variables. Here, <code>photoid</code> has the following range:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(photo_id_ran &lt;-<span class="st"> </span><span class="kw">range</span>(dat<span class="op">$</span>photoid))</code></pre></div>
-<pre><code>## [1]    1 2074</code></pre>
-<p>As the variable spans up to 2074, we need to set the last 4 units of the variable to store the <code>photoid</code>. Again, we use <code>dplyr</code> to create this variable, and we will call it… <code>id</code> (mind blowing, right?):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dat <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">id =</span> school<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>photoid)) <span class="op">%&gt;%</span>
-<span class="st">  </span>head <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(school, photoid, id)</code></pre></div>
-<pre><code>##   school photoid      id
-## 1    111       1 1110001
-## 2    111       2 1110002
-## 3    111       7 1110007
-## 4    111      13 1110013
-## 5    111      14 1110014
-## 6    111      15 1110015</code></pre>
-<p>Wow, what happend in the last three lines of code! What is that <code>%&gt;%</code>? Well, that’s the <a href="http://r4ds.had.co.nz/pipes.html">piping operator</a>, and it is a very nice way of writing nested function calls. In this case, instead of having write something like</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_filtered<span class="op">$</span>id &lt;-<span class="st"> </span>dat_filtered<span class="op">$</span>school<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>dat_filtered<span class="op">$</span>photoid
-<span class="kw">subset</span>(<span class="kw">head</span>(dat_filtered), <span class="dt">select =</span> <span class="kw">c</span>(school, photoid, id))</code></pre></div>
-</div>
-</div>
+
+
+
+
+
+
 <p style="text-align: center;">
-<a href="4-2-todays-goals.html"><button class="btn btn-default">Previous</button></a>
-<a href="4-4-creating-a-network.html"><button class="btn btn-default">Next</button></a>
+<a href="A-datasets.html"><button class="btn btn-default">Previous</button></a>
 </p>
 </div>
 </div>

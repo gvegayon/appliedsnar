@@ -124,7 +124,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-02-01}
+  \date{2018-02-02}
 
 \usepackage{booktabs}
 
@@ -234,6 +234,7 @@ need to look at it now.
 \section{The Social Network Study}\label{the-social-network-study}
 
 The data can be downloaded from
+\href{https://gvegayon.github.io/appliedsnar/03-sns.dta}{here}.
 
 The codebook for the data provided here is in
 \protect\hyperlink{sns-data}{the appendix}.
@@ -1149,6 +1150,85 @@ Some \emph{significant} applications are demonstrated in this chapter.
 \chapter{Final Words}\label{final-words}
 
 We have finished a nice book.
+
+\cleardoublepage 
+
+\appendix
+
+
+\chapter{Datasets}\label{datasets}
+
+\hypertarget{sns-data}{\section{SNS data}\label{sns-data}}
+
+\subsection{About the data}\label{about-the-data}
+
+\begin{itemize}
+\item
+  This data is part of the NIH Challenge grant \# RC 1RC1AA019239
+  ``Social Networks and Networking That Puts Adolescents at High Risk''.
+\item
+  In general terms, the SNS's goal was(is) ``Understand the network
+  effects on risk behaviors such as smoking initiation and substance
+  use''.
+\end{itemize}
+
+\subsection{Variables}\label{variables}
+
+The data has a \emph{wide} structure, which means that there is one row
+per individual, and that dynamic attributes are represented as one
+column per time.
+
+\begin{itemize}
+\item
+  \texttt{photoid} Photo id at the school level (can be repeated across
+  schools).
+\item
+  \texttt{school} School id.
+\item
+  \texttt{hispanic} Indicator variable that equals 1 if the indivual
+  ever reported himself as hispanic.
+\item
+  \texttt{female1}, \ldots{}, \texttt{female4} Indicator variable that
+  equals 1 if the individual reported to be female at the particular
+  wave.
+\item
+  \texttt{grades1},\ldots{}, \texttt{grades4} Academic grades by wave.
+  Values from 1 to 5, with 5 been the best.
+\item
+  \texttt{eversmk1}, \ldots{}, \texttt{eversmk4} Indicator variable of
+  ever smoking by wave. A one indicated that the individual had smoked
+  at the time of the survey.
+\item
+  \texttt{everdrk1}, \ldots{}, \texttt{everdrk4} Indicator variable of
+  ever drinking by wave. A one indicated that the individual had drink
+  at the time of the survey.
+\item
+  \texttt{home1}, \ldots{}, \texttt{home4} Factor variable for home
+  status by wave. A one indicates home ownership, a 2 rent, and a 3 a
+  ``I don't know''.
+\end{itemize}
+
+During the survey, participants were asked to name up to 19 of their
+school friends:
+
+\begin{itemize}
+\item
+  \texttt{sch\_friend11}, \ldots{}, \texttt{sch\_friend119} School
+  friends nominations (19 in total) for wave 1. The codes are mapped to
+  the variable \texttt{photoid}.
+\item
+  \texttt{sch\_friend21}, \ldots{}, \texttt{sch\_friend219} School
+  friends nominations (19 in total) for wave 2. The codes are mapped to
+  the variable \texttt{photoid}.
+\item
+  \texttt{sch\_friend31}, \ldots{}, \texttt{sch\_friend319} School
+  friends nominations (19 in total) for wave 3. The codes are mapped to
+  the variable \texttt{photoid}.
+\item
+  \texttt{sch\_friend41}, \ldots{}, \texttt{sch\_friend419} School
+  friends nominations (19 in total) for wave 4. The codes are mapped to
+  the variable \texttt{photoid}.
+\end{itemize}
 
 \bibliography{book.bib,packages.bib}
 
