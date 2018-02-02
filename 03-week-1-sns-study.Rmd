@@ -2,7 +2,7 @@
 
 ## The Social Network Study
 
-The data can be downloaded from [here](https://gvegayon.github.io/appliedsnar/03-sns.dta).
+The data can be downloaded from [here](https://cdn.rawgit.com/gvegayon/appliedsnar/fdc0d26f/03-sns.dta).
 
 The codebook for the data provided here is in [the appendix](#sns-data).
 
