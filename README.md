@@ -1,1 +1,1 @@
-./01-intro.Rmd
+01-intro.Rmd
