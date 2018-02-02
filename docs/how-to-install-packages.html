@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="introduction.html">
-<link rel="next" href="what-is-r.html">
+<link rel="prev" href="what-is-r.html">
+<link rel="next" href="week-1-sns-study.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -156,16 +156,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-basics" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> R Basics</h1> 
+<div id="how-to-install-packages" class="section level2">
+<h2><span class="header-section-number">3.2</span> How to install packages</h2>
+<p>Nowadays there are two ways of installing R packages (that I’m aware of), either using <code>install.packages</code>, which is a function shipped with R, or use the devtools R package to install a package from some remote repository other than CRAN, here is a couple of examples:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This will install the igraph package from CRAN</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">install.packages</span>(<span class="st">&quot;netdiffuseR&quot;</span>)
+
+<span class="co"># This will install the bleeding-edge version from the project&#39;s github repo!</span>
+<span class="op">&gt;</span><span class="st"> </span>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;USCCANA/netdiffuseR&quot;</span>)</code></pre></div>
+<p>The first one, using <code>install.packages</code>, installs the CRAN version of <code>netdiffuseR</code>, whereas the second installs whatever version is plublished on <a href="https://github.com/USCCANA/netdiffuseR" class="uri">https://github.com/USCCANA/netdiffuseR</a>, which is usually called the development version.</p>
+<p>In some cases users may want/need to install packages from command line as some packages need extra configuration to be installed. But we won’t need to look at it now.</p>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="what-is-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="what-is-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="week-1-sns-study.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

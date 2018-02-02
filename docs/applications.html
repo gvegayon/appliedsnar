@@ -14,7 +14,7 @@
   
   
   <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="github-repo" content="USCCANA/appliedsnar" />
+  <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Applied SNA with R" />
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="week-1-sns-study.html">
-<link rel="next" href="final-words.html">
+<link rel="prev" href="plotting-the-network-in-igraph.html">
+<link rel="next" href="example-one.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -103,45 +103,42 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">Applied SNA with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
-<li class="chapter" data-level="3.1" data-path="r-basics.html"><a href="r-basics.html#what-is-r"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
-<li class="chapter" data-level="3.2" data-path="r-basics.html"><a href="r-basics.html#how-to-install-packages"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
+<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
+<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html"><i class="fa fa-check"></i><b>4</b> Week 1: SNS Study</a><ul>
-<li class="chapter" data-level="4.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#the-social-network-study"><i class="fa fa-check"></i><b>4.1</b> The Social Network Study</a></li>
-<li class="chapter" data-level="4.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#todays-goals"><i class="fa fa-check"></i><b>4.2</b> Today’s Goals</a></li>
-<li class="chapter" data-level="4.3" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#data-preprocessing"><i class="fa fa-check"></i><b>4.3</b> Data preprocessing</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.3.1</b> Reading the data into R</a></li>
-<li class="chapter" data-level="4.3.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.3.2</b> Creating a unique id for each participant</a></li>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#creating-a-network"><i class="fa fa-check"></i><b>4.4</b> Creating a network</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.4.1</b> From survey to edgelist</a></li>
-<li class="chapter" data-level="4.4.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#igraph-network"><i class="fa fa-check"></i><b>4.4.2</b> igraph network</a></li>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
+<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#network-descriptive-stats"><i class="fa fa-check"></i><b>4.5</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="4.6" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#plotting-the-network-in-igraph"><i class="fa fa-check"></i><b>4.6</b> Plotting the network in igraph</a><ul>
-<li class="chapter" data-level="4.6.1" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#single-plot"><i class="fa fa-check"></i><b>4.6.1</b> Single plot</a></li>
-<li class="chapter" data-level="4.6.2" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html#multiple-plots"><i class="fa fa-check"></i><b>4.6.2</b> Multiple plots</a></li>
+<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
+<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+<li class="chapter" data-level="5.1" data-path="example-one.html"><a href="example-one.html"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
+<li class="chapter" data-level="5.2" data-path="example-two.html"><a href="example-two.html"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="datasets.html"><a href="datasets.html#sns-data"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
-<li class="chapter" data-level="A.1.1" data-path="datasets.html"><a href="datasets.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
-<li class="chapter" data-level="A.1.2" data-path="datasets.html"><a href="datasets.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
+<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -161,22 +158,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="applications" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Applications</h1>
-<p>Some <em>significant</em> applications are demonstrated in this chapter.</p>
-<div id="example-one" class="section level2">
-<h2><span class="header-section-number">5.1</span> Example one</h2>
-</div>
-<div id="example-two" class="section level2">
-<h2><span class="header-section-number">5.2</span> Example two</h2>
-
-</div>
+<p>Some <em>significant</em> applications are demonstrated in this chapter.</p> 
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="week-1-sns-study.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="final-words.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="plotting-the-network-in-igraph.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="example-one.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -208,7 +198,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["appliedsnar.pdf", "appliedsnar.epub"],
 "toc": {
 "collapse": "subsection"
 }
@@ -229,4 +219,4 @@ gitbook.start({
 </script>
 </body>
 
-</html>
+<!-- </html> -->
