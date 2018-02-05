@@ -124,7 +124,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-02-02}
+  \date{2018-02-05}
 
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -1143,6 +1143,12 @@ similar to this \(n\) times). The next subsection does that.
 
 \subsection{Multiple plots}\label{multiple-plots}
 
+When you are repeating yourself over and over again, it is a good idea
+to write down a sequence of commands as a function. In this case, since
+we will be running the same type of plot for all schools/waves, we write
+a function in which the only things that changes are: (a) the school id,
+and (b) the color of the nodes.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{myplot <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}
@@ -1171,6 +1177,41 @@ similar to this \(n\) times). The next subsection does that.
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+
+The function definition:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The
+  \texttt{myplot\ \textless{}-\ function({[}arguments{]})\ \{{[}body\ of\ the\ function{]}\}}
+  tells R that we are going to create a function called \texttt{myplot}.
+\item
+  In the arguments part, we are declaring 4 specific arguments:
+  \texttt{net}, \texttt{schoolid}, \texttt{mindgr}, and \texttt{vcol}.
+  These are an igraph object, the school id, the minimum degree that a
+  vertex must have to be included in the plot, and the color of the
+  vertices. Notice that, as a difference from other programming
+  languages, in R we don't need to declare the types that these objects
+  are.
+\item
+  The elipsis object, \texttt{...}, is a special object in R that allows
+  us passing other arguments without us specifying which. In our case,
+  if you take a look at the \texttt{plot} bit of the body of the
+  function, you will see that we also added \texttt{...}; this means
+  that whatever other arguments (different from the ones that we
+  explicitly defined) are passed to the function, these will be passed
+  to the function \texttt{plot}, moreover, to the \texttt{plot.gexf}
+  function (since the \texttt{subnet} object is actually an igraph
+  object). In practice, this implies that we can, for example, set the
+  argument \texttt{edge.arrow.size} when calling \texttt{myplot}, even
+  though we did not included it in the function definition! (See
+  \texttt{?dotsMethods} in R for more details).
+\end{enumerate}
+
+In the following lines of code, using our new function, we will plot
+each schools' network in the same plotting device (window) with the help
+of the \texttt{par} function, and add legend with the \texttt{legend}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1204,6 +1245,8 @@ similar to this \(n\) times). The next subsection does that.
 graphs exclude isolates.}
 \end{figure}
 
+So what happend here?
+
 \begin{itemize}
 \item
   \texttt{oldpar\ \textless{}-\ par(no.readonly\ =\ TRUE)} This line
@@ -1227,8 +1270,8 @@ graphs exclude isolates.}
   \texttt{mfrow\ =\ c(2,\ 3)}, R takes care of \emph{distributing} the
   plots in the device.
 \item
-  \texttt{par(oldpar)} Finally, this line allows us to restore the
-  plotting parameters.
+  \texttt{par(oldpar)} This line allows us to restore the plotting
+  parameters.
 \end{itemize}
 
 \chapter{Applications}\label{applications}
