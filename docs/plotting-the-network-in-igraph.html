@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-02-02">
+<meta name="date" content="2018-02-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -245,6 +245,7 @@ Figure 4.3: Friends network in time 1 for school 111. The graph excludes isolate
 </div>
 <div id="multiple-plots" class="section level3">
 <h3><span class="header-section-number">4.4.2</span> Multiple plots</h3>
+<p>When you are repeating yourself over and over again, it is a good idea to write down a sequence of commands as a function. In this case, since we will be running the same type of plot for all schools/waves, we write a function in which the only things that changes are: (a) the school id, and (b) the color of the nodes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myplot &lt;-<span class="st"> </span><span class="cf">function</span>(
   net,
   schoolid,
@@ -269,6 +270,13 @@ Figure 4.3: Friends network in time 1 for school 111. The graph excludes isolate
     ...
     )
 }</code></pre></div>
+<p>The function definition:</p>
+<ol style="list-style-type: decimal">
+<li><p>The <code>myplot &lt;- function([arguments]) {[body of the function]}</code> tells R that we are going to create a function called <code>myplot</code>.</p></li>
+<li><p>In the arguments part, we are declaring 4 specific arguments: <code>net</code>, <code>schoolid</code>, <code>mindgr</code>, and <code>vcol</code>. These are an igraph object, the school id, the minimum degree that a vertex must have to be included in the plot, and the color of the vertices. Notice that, as a difference from other programming languages, in R we don’t need to declare the types that these objects are.</p></li>
+<li><p>The elipsis object, <code>...</code>, is a special object in R that allows us passing other arguments without us specifying which. In our case, if you take a look at the <code>plot</code> bit of the body of the function, you will see that we also added <code>...</code>; this means that whatever other arguments (different from the ones that we explicitly defined) are passed to the function, these will be passed to the function <code>plot</code>, moreover, to the <code>plot.gexf</code> function (since the <code>subnet</code> object is actually an igraph object). In practice, this implies that we can, for example, set the argument <code>edge.arrow.size</code> when calling <code>myplot</code>, even though we did not included it in the function definition! (See <code>?dotsMethods</code> in R for more details).</p></li>
+</ol>
+<p>In the following lines of code, using our new function, we will plot each schools’ network in the same plotting device (window) with the help of the <code>par</code> function, and add legend with the <code>legend</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plotting all together</span>
 oldpar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">no.readonly =</span> <span class="ot">TRUE</span>)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">mai =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>), <span class="dt">oma=</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))
@@ -295,12 +303,13 @@ oldpar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt
 Figure 4.4: All 5 schools in time 1. Again, the graphs exclude isolates.
 </p>
 </div>
+<p>So what happend here?</p>
 <ul>
 <li><p><code>oldpar &lt;- par(no.readonly = TRUE)</code> This line stores the current parameters for plotting. Since we are going to be changing them, we better make sure we are able to go back!.</p></li>
 <li><p><code>par(mfrow = c(2, 3), mai = rep(0, 4), oma=rep(0, 4))</code> Here we are setting various things at the same time. <code>mfrow</code> specifies how many <em>figures</em> will be drawn and in what order, in particular, we are asking the plotting device to allow for 2*3 = 6 plots organized in 2 rows and 3 columns, and these will be drawn by row.</p>
 <p><code>mai</code> specifies the size of the margins in inches. Setting all margins equal to zero (which is what we are doing now) gives more space to the network itself. The same is true for <code>oma</code>. See <code>?par</code> for more info.</p></li>
 <li><p><code>myplot(ig_year1, ...)</code> This is simply calling our plotting function. The neat part of this is that, since we set <code>mfrow = c(2, 3)</code>, R takes care of <em>distributing</em> the plots in the device.</p></li>
-<li><p><code>par(oldpar)</code> Finally, this line allows us to restore the plotting parameters.</p></li>
+<li><p><code>par(oldpar)</code> This line allows us to restore the plotting parameters.</p></li>
 </ul>
 
 </div>

@@ -383,6 +383,8 @@ We can actually write this as a function so that, instead of us copying and past
 
 ### Multiple plots
 
+When you are repeating yourself over and over again, it is a good idea to write down a sequence of commands as a function. In this case, since we will be running the same type of plot for all schools/waves, we write a function in which the only things that changes are: (a) the school id, and (b) the color of the nodes. 
+
 ```{r 03-myplot-def}
 myplot <- function(
   net,
@@ -410,6 +412,16 @@ myplot <- function(
 }
 ```
 
+The function definition:
+
+1.  The `myplot <- function([arguments]) {[body of the function]}` tells R that we are going to create a function called `myplot`.
+
+2.  In the arguments part, we are declaring 4 specific arguments: `net`, `schoolid`, `mindgr`, and `vcol`. These are an igraph object, the school id, the minimum degree that a vertex must have to be included in the plot, and the color of the vertices. Notice that, as a difference from other programming languages, in R we don't need to declare the types that these objects are.
+
+3.  The elipsis object, `...`, is a special object in R that allows us passing other arguments without us specifying which. In our case, if you take a look at the `plot` bit of the body of the function, you will see that we also added `...`; this means that whatever other arguments (different from the ones that we explicitly defined) are passed to the function, these will be passed to the function `plot`, moreover, to the `plot.gexf` function (since the `subnet` object is actually an igraph object). In practice, this implies that we can, for example, set the argument `edge.arrow.size` when calling `myplot`, even though we did not included it in the function definition! (See `?dotsMethods` in R for more details).
+
+In the following lines of code, using our new function, we will plot each schools' network in the same plotting device (window) with the help of the `par` function, and add legend with the `legend`:
+
 ```{r 03-myplot-call, fig.cap="All 5 schools in time 1. Again, the graphs exclude isolates."}
 # Plotting all together
 oldpar <- par(no.readonly = TRUE)
@@ -433,6 +445,8 @@ legend(
   )
 ```
 
+So what happend here?
+
 *   `oldpar <- par(no.readonly = TRUE)` This line stores the current parameters for plotting. Since we are going to be changing them, we better make sure we are able to go back!.
 
 *   `par(mfrow = c(2, 3), mai = rep(0, 4), oma=rep(0, 4))` Here we are setting various things at the same time. `mfrow` specifies how many _figures_ will be drawn and in what order, in particular, we are asking the plotting device to allow for 2*3 = 6 plots organized in 2 rows and 3 columns, and these will be drawn by row.
@@ -442,7 +456,8 @@ legend(
 
 *   `myplot(ig_year1, ...)` This is simply calling our plotting function. The neat part of this is that, since we set `mfrow = c(2, 3)`, R takes care of _distributing_ the plots in the device.
 
-*   `par(oldpar)` Finally, this line allows us to restore the plotting parameters.
+*   `par(oldpar)` This line allows us to restore the plotting parameters.
+
 
 
     
