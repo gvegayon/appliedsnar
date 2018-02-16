@@ -1,13 +1,9 @@
-# Introduction {#intro}
+# Introduction
 
-This book will be build as part of a workshop on Applied Social Network Analysis with R. Its contents will be populated as the sessions take place, and for now there is particular program that we will follow, instead, we have the following workflow:
+For this book we need the following
 
-1.  Participants will share their data and what they need to do with it.
+1.  Install R from CRAN: https://www.r-project.org/
 
-2.  Based on their data, I'll be preparing the sessions trying to show attendees how would I approach the problem, and at the same time, teach by example about the R language.
+2.  (optional) Install Rstudio: https://rstudio.org
 
-3.  Materials will be published on this website and, hopefully, video recordings of the sessions.
-
-At least in the first version, the book will be organized by session, this is, one chapter per session.
-
-In general, we will besides of R itself, we will be using R studio and the following R packages: dplyr for data management, stringr for data cleaning, and of course igraph, netdiffuseR (a bit of a bias here), and statnet for our neat network analysis.^[Some of you may be wondering "what about ggplot2 and friends? What about [`tidyverse`](https://www.tidyverse.org/)", well, my short answer is I jumped into R before all of that was that popular. When I started plots were all about [`lattice`](https://CRAN.R-project.org/package=lattice), and after a couple of years on that, about base R graphics. What I'm saying is that so far I have not find a compelling reason to leave my "old-practices" and embrace all the `tidyverse` movement (religion?).]
+While I find RStudio extreamly useful, it is not necesary to use it with R.

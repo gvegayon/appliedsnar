@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="introduction.html">
-<link rel="next" href="what-is-r.html">
+<link rel="prev" href="datasets.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -156,16 +156,54 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-basics" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> R Basics</h1> 
+<div id="sns-data" class="section level2">
+<h2><span class="header-section-number">A.1</span> SNS data</h2>
+<div id="about-the-data" class="section level3">
+<h3><span class="header-section-number">A.1.1</span> About the data</h3>
+<ul>
+<li><p>This data is part of the NIH Challenge grant # RC 1RC1AA019239 “Social Networks and Networking That Puts Adolescents at High Risk”.</p></li>
+<li><p>In general terms, the SNS’s goal was(is) “Understand the network effects on risk behaviors such as smoking initiation and substance use”.</p></li>
+</ul>
 </div>
+<div id="variables" class="section level3">
+<h3><span class="header-section-number">A.1.2</span> Variables</h3>
+<p>The data has a <em>wide</em> structure, which means that there is one row per individual, and that dynamic attributes are represented as one column per time.</p>
+<ul>
+<li><p><code>photoid</code> Photo id at the school level (can be repeated across schools).</p></li>
+<li><p><code>school</code> School id.</p></li>
+<li><p><code>hispanic</code> Indicator variable that equals 1 if the indivual ever reported himself as hispanic.</p></li>
+<li><p><code>female1</code>, …, <code>female4</code> Indicator variable that equals 1 if the individual reported to be female at the particular wave.</p></li>
+<li><p><code>grades1</code>,…, <code>grades4</code> Academic grades by wave. Values from 1 to 5, with 5 been the best.</p></li>
+<li><p><code>eversmk1</code>, …, <code>eversmk4</code> Indicator variable of ever smoking by wave. A one indicated that the individual had smoked at the time of the survey.</p></li>
+<li><p><code>everdrk1</code>, …, <code>everdrk4</code> Indicator variable of ever drinking by wave. A one indicated that the individual had drink at the time of the survey.</p></li>
+<li><p><code>home1</code>, …, <code>home4</code> Factor variable for home status by wave. A one indicates home ownership, a 2 rent, and a 3 a “I don’t know”.</p></li>
+</ul>
+<p>During the survey, participants were asked to name up to 19 of their school friends:</p>
+<ul>
+<li><p><code>sch_friend11</code>, …, <code>sch_friend119</code> School friends nominations (19 in total) for wave 1. The codes are mapped to the variable <code>photoid</code>.</p></li>
+<li><p><code>sch_friend21</code>, …, <code>sch_friend219</code> School friends nominations (19 in total) for wave 2. The codes are mapped to the variable <code>photoid</code>.</p></li>
+<li><p><code>sch_friend31</code>, …, <code>sch_friend319</code> School friends nominations (19 in total) for wave 3. The codes are mapped to the variable <code>photoid</code>.</p></li>
+<li><p><code>sch_friend41</code>, …, <code>sch_friend419</code> School friends nominations (19 in total) for wave 4. The codes are mapped to the variable <code>photoid</code>.</p></li>
+</ul>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="what-is-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="datasets.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

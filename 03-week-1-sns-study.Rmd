@@ -1,14 +1,10 @@
 # Week 1: SNS Study
 
-## The Social Network Study
-
 The data can be downloaded from [here](https://cdn.rawgit.com/gvegayon/appliedsnar/fdc0d26f/03-sns.dta).
 
 The codebook for the data provided here is in [the appendix](#sns-data).
 
-
-
-## Today's Goals
+This chapter's goals are:
 
 1.  Read the data into R,
 
@@ -159,19 +155,23 @@ Now that we have this edgelist, we can create an igraph object
 
 ### igraph network
 
+For coercing the edgelist into an igraph object, we will be using the `graph_from_data_frame` function in igraph. This function receives a data frame where the two first columns are sorce(ego) and target(alter), whether is it directed or not, and an optional data frame with vertices, in which's first column should contain the vertex ids.
+
+Using the optional `vertices` argument is a good practice since by doing so you are telling the function what is the set of vertex ids that you are expecting to find. Using the original dataset, we will create a data frame name vertices:
+
 ```{r 03-vertex}
 vertex_attrs <- dat %>% 
   select(id, school, hispanic, female1, starts_with("eversmk"))
 ```
 
-Let's now use the function `graph_from_data_frame` to create an `igraph` object:
+Now, let's now use the function `graph_from_data_frame` to create an `igraph` object:
 
 ```{r 03-igraph, message=FALSE, error = TRUE}
 library(igraph)
 
 ig_year1 <- net %>%
-  filter(year == "1") %>%
-  select(id, friendid) %>%
+  filter(year == "1") %>% 
+  select(id, friendid) %>% 
   graph_from_data_frame(
     vertices = vertex_attrs
   )
@@ -299,8 +299,6 @@ knitr::kable(cbind(
 
 ### Single plot
 
-*   
-
 Let's take a look at how does our network looks like when we use the default parameters in the plot method of the igraph object:
 
 ```{r 03-plot-raw, cache=TRUE, fig.cap='A not very nice network plot. This is what we get with the default parameters in igraph.', fig.align='center'}
@@ -309,11 +307,13 @@ plot(ig_year1)
 
 Not very nice, right? A couple of things with this plot:
 
-1.  We are looking at all schools simultaneously, which does not make sense.
+1.  We are looking at all schools simultaneously, which does not make sense. So, instead of plotting `ig_year1`, we will focus on `ig_year1_111`.
 
-2.  All the vertices have the same size, and more over, are overalaping.
+2.  All the vertices have the same size, and more over, are overalaping. So, instead of using the default size, we will size the vertices by indegree using the `degree` function, and passing the vector of degrees to `vertex.size`.^[Figuring out what is the optimal vertex size is a bit tricky. Without getting too technical, there's no other way of getting _nice_ vertex size other than just playing with different values of it. A nice solution to this is using [`netdiffuseR::igraph_vertex_rescale`](https://www.rdocumentation.org/packages/netdiffuseR/versions/1.17.0/topics/rescale_vertex_igraph) which rescales the vertices so that these keep their aspect ratio to a predefined proportion of the screen.]
 
-3.  Given the number of vertices in these networks, the labels are not useful here.
+3.  Given the number of vertices in these networks, the labels are not useful here. So we will remove them by setting `vertex.label = NA`. Moreover, we will reduce the size of the arrows' tip by setting `edge.arrow.size = 0.25`.
+
+4.  And finally, we will set the color of each vertex to be a function of whether the individual is hispanic or not. For this last bit we need to go a bit more of programming:
 
 ```{r 03-color-hispanic}
 col_hispanic <- V(ig_year1_111)$hispanic + 1
@@ -321,8 +321,26 @@ col_hispanic <- coalesce(col_hispanic, 3)
 col_hispanic <- c("steelblue", "tomato", "white")[col_hispanic]
 ```
 
+Line by line, we did the following:
 
-```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates."}
+1.  The first line added one to all no `NA` values, so that the 0s (non-hispanic) turned to 1s and the 1s (hispanic) turned to 2s.
+
+2.  The second line replaced all `NA`s with the number 3, so that our vector `col_hispanic` now ranges from 1 to 3 with no `NA`s in it.
+
+3.  In the last line we created a vector of colors. Essentially, what we are doing here is telling R to create a vector of length `length(col_hispanic)` by selecting elements by index from the vector `c("steelblue", "tomato", "white")`. This way, if, for example, the first element of the vector `col_hispanic` was a 3, our new vector of colors would have a `"white"` in it.
+
+To make sure we know we are right, let's print the first 10 elements of our new vector of colors together with the original `hispanic` column:
+
+```{r 03-colors-ok}
+cbind(
+  original = V(ig_year1_111)$hispanic[1:10],
+  colors   = col_hispanic[1:10]
+  )
+```
+
+With our nice vector of colors, now we can pass it to `plot.igraph` (which we call implicitly by just calling `plot`), via the `vertex.color` argument:
+
+```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111. "}
 # Fancy graph
 set.seed(1)
 plot(
@@ -330,35 +348,42 @@ plot(
   vertex.size     = degree(ig_year1_111)/10 +1,
   vertex.label    = NA,
   edge.arrow.size = .25,
-  layout          = layout_with_fr,
   vertex.color    = col_hispanic
   )
 ```
 
-```{r 03-color-smoke}
-col_eversmk1 <- V(ig_year1_111)$eversmk1 + 1
-col_eversmk1 <- coalesce(col_eversmk1, 3) 
-col_eversmk1 <- c("steelblue", "tomato", "white")[col_eversmk1]
+Nice! So it does look better. The only problem is that we have a lot of isolates. Let's try again by drawing the same plot without isolates. To do so we need to filter the graph, for which we will use the function `induced_subgraph`
+
+```{r 03-subgraph}
+# Which vertices are not isolates?
+which_ids <- which(degree(ig_year1_111, mode = "total") > 0)
+
+# Getting the subgraph
+ig_year1_111_sub <- induced_subgraph(ig_year1_111, which_ids)
+
+# We need to get the same subset in col_hispanic
+col_hispanic <- col_hispanic[which_ids]
 ```
 
 ```{r 03-plot-neat2, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates."}
 # Fancy graph
 set.seed(1)
 plot(
-  ig_year1_111,
-  vertex.size     = degree(ig_year1_111)/10 +1,
+  ig_year1_111_sub,
+  vertex.size     = degree(ig_year1_111_sub)/5 +1,
   vertex.label    = NA,
   edge.arrow.size = .25,
-  layout          = layout_with_fr,
-  vertex.color    = col_eversmk1
+  vertex.color    = col_hispanic
   )
 ```
 
+Now that's better! An interesting pattern that shows up is that individuals seem to cluster by whether they are hispanic or not. 
 
-
-We can actually write this as a function so that, instead of us copying and pasting the code $n$ times (supposing that we want to crate a plot similar to this $n$ times), we just need t
+We can actually write this as a function so that, instead of us copying and pasting the code $n$ times (supposing that we want to crate a plot similar to this $n$ times). The next subsection does that.
 
 ### Multiple plots
+
+When you are repeating yourself over and over again, it is a good idea to write down a sequence of commands as a function. In this case, since we will be running the same type of plot for all schools/waves, we write a function in which the only things that changes are: (a) the school id, and (b) the color of the nodes. 
 
 ```{r 03-myplot-def}
 myplot <- function(
@@ -374,22 +399,28 @@ myplot <- function(
     which(degree(net, mode = "all") >= mindgr & V(net)$school == schoolid)
   )
   
-  # Computing colors
-  
-  
   # Fancy graph
   set.seed(1)
   plot(
     subnet,
-    vertex.size     = degree(subnet)/10,
+    vertex.size     = degree(subnet)/5,
     vertex.label    = NA,
     edge.arrow.size = .25,
     vertex.color    = vcol,
-    layout          = layout_with_fr,
     ...
     )
 }
 ```
+
+The function definition:
+
+1.  The `myplot <- function([arguments]) {[body of the function]}` tells R that we are going to create a function called `myplot`.
+
+2.  In the arguments part, we are declaring 4 specific arguments: `net`, `schoolid`, `mindgr`, and `vcol`. These are an igraph object, the school id, the minimum degree that a vertex must have to be included in the plot, and the color of the vertices. Notice that, as a difference from other programming languages, in R we don't need to declare the types that these objects are.
+
+3.  The elipsis object, `...`, is a special object in R that allows us passing other arguments without us specifying which. In our case, if you take a look at the `plot` bit of the body of the function, you will see that we also added `...`; this means that whatever other arguments (different from the ones that we explicitly defined) are passed to the function, these will be passed to the function `plot`, moreover, to the `plot.gexf` function (since the `subnet` object is actually an igraph object). In practice, this implies that we can, for example, set the argument `edge.arrow.size` when calling `myplot`, even though we did not included it in the function definition! (See `?dotsMethods` in R for more details).
+
+In the following lines of code, using our new function, we will plot each schools' network in the same plotting device (window) with the help of the `par` function, and add legend with the `legend`:
 
 ```{r 03-myplot-call, fig.cap="All 5 schools in time 1. Again, the graphs exclude isolates."}
 # Plotting all together
@@ -414,6 +445,8 @@ legend(
   )
 ```
 
+So what happend here?
+
 *   `oldpar <- par(no.readonly = TRUE)` This line stores the current parameters for plotting. Since we are going to be changing them, we better make sure we are able to go back!.
 
 *   `par(mfrow = c(2, 3), mai = rep(0, 4), oma=rep(0, 4))` Here we are setting various things at the same time. `mfrow` specifies how many _figures_ will be drawn and in what order, in particular, we are asking the plotting device to allow for 2*3 = 6 plots organized in 2 rows and 3 columns, and these will be drawn by row.
@@ -423,7 +456,8 @@ legend(
 
 *   `myplot(ig_year1, ...)` This is simply calling our plotting function. The neat part of this is that, since we set `mfrow = c(2, 3)`, R takes care of _distributing_ the plots in the device.
 
-*   `par(oldpar)` Finally, this line allows us to restore the plotting parameters.
+*   `par(oldpar)` This line allows us to restore the plotting parameters.
+
 
 
     

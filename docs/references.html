@@ -1,45 +1,54 @@
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html >
 
 <head>
 
-<meta charset="utf-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="pandoc" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta property="og:title" content="Applied SNA with R" />
-<meta property="og:type" content="book" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied SNA with R</title>
+  <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied SNA with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  <meta name="github-repo" content="gvegayon/appliedsnar" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied SNA with R" />
+  
+  <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  
+
+<meta name="author" content="George G. Vega Yon">
 
 
-<meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-<meta name="github-repo" content="USCCANA/appliedsnar" />
+<meta name="date" content="2018-02-16">
 
-<meta name="author" content="George G. Vega Yon" />
-
-<meta name="date" content="2018-02-16" />
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
-
-<meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)">
-
-<title>Applied SNA with R</title>
-
-<script src="libs/jquery-1.11.3/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="libs/navigation-1.1/tabsets.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="final-words.html">
+<link rel="next" href="datasets.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
+
+
+
+
+
 <style type="text/css">
 div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -77,82 +86,76 @@ code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Ann
 code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-  height: auto;
-}
-</style>
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
 
-<div class="container-fluid main-container">
 
 
-<div class="row">
-<div class="col-sm-12">
-<div id="TOC">
-<ul>
-<li><a href="index.html#prerequisites"><span class="toc-section-number">1</span> Prerequisites</a></li>
-<li><a href="2-intro.html#intro"><span class="toc-section-number">2</span> Introduction</a></li>
-<li class="has-sub"><a href="3-r-basics.html#r-basics"><span class="toc-section-number">3</span> R Basics</a><ul>
-<li><a href="3-1-what-is-r.html#what-is-r"><span class="toc-section-number">3.1</span> What is R</a></li>
-<li><a href="3-2-how-to-install-packages.html#how-to-install-packages"><span class="toc-section-number">3.2</span> How to install packages</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied SNA with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
+<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
+<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
 </ul></li>
-<li class="has-sub"><a href="4-week-1-sns-study.html#week-1-sns-study"><span class="toc-section-number">4</span> Week 1: SNS Study</a><ul>
-<li><a href="4-1-the-social-network-study.html#the-social-network-study"><span class="toc-section-number">4.1</span> The Social Network Study</a></li>
-<li><a href="4-2-todays-goals.html#todays-goals"><span class="toc-section-number">4.2</span> Today’s Goals</a></li>
-<li class="has-sub"><a href="4-3-data-preprocessing.html#data-preprocessing"><span class="toc-section-number">4.3</span> Data preprocessing</a><ul>
-<li><a href="4-3-data-preprocessing.html#reading-the-data-into-r"><span class="toc-section-number">4.3.1</span> Reading the data into R</a></li>
-<li><a href="4-3-data-preprocessing.html#creating-a-unique-id-for-each-participant"><span class="toc-section-number">4.3.2</span> Creating a unique id for each participant</a></li>
+<li class="chapter" data-level="4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html"><i class="fa fa-check"></i><b>4</b> Week 1: SNS Study</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="has-sub"><a href="4-4-creating-a-network.html#creating-a-network"><span class="toc-section-number">4.4</span> Creating a network</a><ul>
-<li><a href="4-4-creating-a-network.html#from-survey-to-edgelist"><span class="toc-section-number">4.4.1</span> From survey to edgelist</a></li>
-<li><a href="4-4-creating-a-network.html#igraph-network"><span class="toc-section-number">4.4.2</span> igraph network</a></li>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
+<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
 </ul></li>
-<li><a href="4-5-network-descriptive-stats.html#network-descriptive-stats"><span class="toc-section-number">4.5</span> Network descriptive stats</a></li>
-<li class="has-sub"><a href="4-6-plotting-the-network-in-igraph.html#plotting-the-network-in-igraph"><span class="toc-section-number">4.6</span> Plotting the network in igraph</a><ul>
-<li><a href="4-6-plotting-the-network-in-igraph.html#single-plot"><span class="toc-section-number">4.6.1</span> Single plot</a></li>
-<li><a href="4-6-plotting-the-network-in-igraph.html#multiple-plots"><span class="toc-section-number">4.6.2</span> Multiple plots</a></li>
+<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
+<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="5-applications.html#applications"><span class="toc-section-number">5</span> Applications</a><ul>
-<li><a href="5-1-example-one.html#example-one"><span class="toc-section-number">5.1</span> Example one</a></li>
-<li><a href="5-2-example-two.html#example-two"><span class="toc-section-number">5.2</span> Example two</a></li>
+<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
+<li class="chapter" data-level="5.1" data-path="example-one.html"><a href="example-one.html"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
+<li class="chapter" data-level="5.2" data-path="example-two.html"><a href="example-two.html"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
 </ul></li>
-<li><a href="6-final-words.html#final-words"><span class="toc-section-number">6</span> Final Words</a></li>
-<li><a href="references.html#references">References</a></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="has-sub"><a href="A-datasets.html#datasets"><span class="toc-section-number">A</span> Datasets</a><ul>
-<li class="has-sub"><a href="A-1-sns-data.html#sns-data"><span class="toc-section-number">A.1</span> SNS data</a><ul>
-<li><a href="A-1-sns-data.html#about-the-data"><span class="toc-section-number">A.1.1</span> About the data</a></li>
-<li><a href="A-1-sns-data.html#variables"><span class="toc-section-number">A.1.2</span> Variables</a></li>
+<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
+<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
 </ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-sm-12">
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied SNA with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 
@@ -161,24 +164,63 @@ img {
 
 
 
-<p style="text-align: center;">
-<a href="6-final-words.html"><button class="btn btn-default">Previous</button></a>
-<a href="A-datasets.html"><button class="btn btn-default">Next</button></a>
-</p>
-</div>
-</div>
+            </section>
 
-
-</div>
-
+          </div>
+        </div>
+      </div>
+<a href="final-words.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="datasets.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-
-// add bootstrap table styles to pandoc tables
-$(document).ready(function () {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["appliedsnar.pdf", "appliedsnar.epub"],
+"toc": {
+"collapse": "subsection"
+}
 });
-
+});
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
+
 <!-- </html> -->

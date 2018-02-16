@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied SNA with R</title>
+  <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied SNA with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  <meta name="github-repo" content="gvegayon/appliedsnar" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied SNA with R" />
+  
+  <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  
+
+<meta name="author" content="George G. Vega Yon">
+
+
+<meta name="date" content="2018-02-16">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="data-preprocessing.html">
+<link rel="next" href="network-descriptive-stats.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied SNA with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
+<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
+<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="week-1-sns-study.html"><a href="week-1-sns-study.html"><i class="fa fa-check"></i><b>4</b> Week 1: SNS Study</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
+<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
+<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
+<li class="chapter" data-level="5.1" data-path="example-one.html"><a href="example-one.html"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
+<li class="chapter" data-level="5.2" data-path="example-two.html"><a href="example-two.html"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
+<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied SNA with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="creating-a-network" class="section level2">
+<h2><span class="header-section-number">4.2</span> Creating a network</h2>
+<ul>
+<li><p>We want to build a social network. For that, we either use an adjacency matrix or an edgelist.</p></li>
+<li><p>Each individual of the SNS data nomitated 19 friends from school. We will use those nominations to create the social network.</p></li>
+<li><p>In this case, we will create the network by coercing the dataset into an edgelist.</p></li>
+</ul>
+<div id="from-survey-to-edgelist" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> From survey to edgelist</h3>
+<p>Let’s start by loading a couple of handy R packages for this task.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
+<span class="kw">library</span>(stringr)</code></pre></div>
+<p>Optionally, we can use the <code>tibble</code> type of object which is an alternative to the actual <code>data.frame</code>. This object is claimed to provide <em>more efficient methods for matrices and data frames</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(dat)</code></pre></div>
+<p>What I like from tibbles is that when you print them on the console these actually look nice:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat</code></pre></div>
+<pre><code>## # A tibble: 2,164 x 100
+##    photoid school hispanic female1 female2 female3 female4 grades1 grades2
+##      &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1       1    111     1.00      NA      NA       0       0   NA      NA   
+##  2       2    111     1.00       0      NA      NA       0    3.00   NA   
+##  3       7    111     0          1       1       1       1    5.00    4.50
+##  4      13    111     1.00       1       1       1       1    2.50    2.50
+##  5      14    111     1.00       1       1       1      NA    3.00    3.50
+##  6      15    111     1.00       0       0       0       0    2.50    2.50
+##  7      20    111     1.00       1       1       1       1    2.50    2.50
+##  8      22    111     1.00      NA      NA       0       0   NA      NA   
+##  9      25    111     0          1       1      NA       1    4.50    3.50
+## 10      27    111     1.00       0      NA       0       0    3.50   NA   
+## # ... with 2,154 more rows, and 91 more variables: grades3 &lt;dbl&gt;,
+## #   grades4 &lt;dbl&gt;, eversmk1 &lt;int&gt;, eversmk2 &lt;int&gt;, eversmk3 &lt;int&gt;,
+## #   eversmk4 &lt;int&gt;, everdrk1 &lt;int&gt;, everdrk2 &lt;int&gt;, everdrk3 &lt;int&gt;,
+## #   everdrk4 &lt;int&gt;, home1 &lt;int&gt;, home2 &lt;int&gt;, home3 &lt;int&gt;, home4 &lt;int&gt;,
+## #   sch_friend11 &lt;int&gt;, sch_friend12 &lt;int&gt;, sch_friend13 &lt;int&gt;,
+## #   sch_friend14 &lt;int&gt;, sch_friend15 &lt;int&gt;, sch_friend16 &lt;int&gt;,
+## #   sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;, sch_friend19 &lt;int&gt;,
+## #   sch_friend110 &lt;int&gt;, sch_friend111 &lt;int&gt;, sch_friend112 &lt;int&gt;,
+## #   sch_friend113 &lt;int&gt;, sch_friend114 &lt;int&gt;, sch_friend115 &lt;int&gt;,
+## #   sch_friend116 &lt;int&gt;, sch_friend117 &lt;int&gt;, sch_friend118 &lt;int&gt;,
+## #   sch_friend119 &lt;int&gt;, sch_friend21 &lt;int&gt;, sch_friend22 &lt;int&gt;,
+## #   sch_friend23 &lt;int&gt;, sch_friend24 &lt;int&gt;, sch_friend25 &lt;int&gt;,
+## #   sch_friend26 &lt;int&gt;, sch_friend27 &lt;int&gt;, sch_friend28 &lt;int&gt;,
+## #   sch_friend29 &lt;int&gt;, sch_friend210 &lt;int&gt;, sch_friend211 &lt;int&gt;,
+## #   sch_friend212 &lt;int&gt;, sch_friend213 &lt;int&gt;, sch_friend214 &lt;int&gt;,
+## #   sch_friend215 &lt;int&gt;, sch_friend216 &lt;int&gt;, sch_friend217 &lt;int&gt;,
+## #   sch_friend218 &lt;int&gt;, sch_friend219 &lt;int&gt;, sch_friend31 &lt;int&gt;,
+## #   sch_friend32 &lt;int&gt;, sch_friend33 &lt;int&gt;, sch_friend34 &lt;int&gt;,
+## #   sch_friend35 &lt;int&gt;, sch_friend36 &lt;int&gt;, sch_friend37 &lt;int&gt;,
+## #   sch_friend38 &lt;int&gt;, sch_friend39 &lt;int&gt;, sch_friend310 &lt;int&gt;,
+## #   sch_friend311 &lt;int&gt;, sch_friend312 &lt;int&gt;, sch_friend313 &lt;int&gt;,
+## #   sch_friend314 &lt;int&gt;, sch_friend315 &lt;int&gt;, sch_friend316 &lt;int&gt;,
+## #   sch_friend317 &lt;int&gt;, sch_friend318 &lt;int&gt;, sch_friend319 &lt;int&gt;,
+## #   sch_friend41 &lt;int&gt;, sch_friend42 &lt;int&gt;, sch_friend43 &lt;int&gt;,
+## #   sch_friend44 &lt;int&gt;, sch_friend45 &lt;int&gt;, sch_friend46 &lt;int&gt;,
+## #   sch_friend47 &lt;int&gt;, sch_friend48 &lt;int&gt;, sch_friend49 &lt;int&gt;,
+## #   sch_friend410 &lt;int&gt;, sch_friend411 &lt;int&gt;, sch_friend412 &lt;int&gt;,
+## #   sch_friend413 &lt;int&gt;, sch_friend414 &lt;int&gt;, sch_friend415 &lt;int&gt;,
+## #   sch_friend416 &lt;int&gt;, sch_friend417 &lt;int&gt;, sch_friend418 &lt;int&gt;,
+## #   sch_friend419 &lt;int&gt;, id &lt;dbl&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Maybe too much piping... but its cool!</span>
+net &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(content)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">friendid =</span> school<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>content,
+    <span class="dt">year     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z])[0-9]&quot;</span>),
+    <span class="dt">nnom     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z][0-9])[0-9]+&quot;</span>)
+  )</code></pre></div>
+<p>Let’s take a look at this step by step:</p>
+<ol style="list-style-type: decimal">
+<li><p>First, we subset the data: We want to keep <code>id, school, sch_friend*</code>. For the later we use the function <code>starts_with</code> (from the <code>tidyselect</code> package). This allows us to select all variables that starts with the word “<code>sch_friend</code>”, which means that <code>sch_friend11, sch_friend12, ...</code> will all be selected.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 2,164 x 78
+##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
+##      &lt;dbl&gt;  &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;
+##  1 1110001    111           NA           NA           NA           NA
+##  2 1110002    111          424          423          426          289
+##  3 1110007    111          629          505           NA           NA
+##  4 1110013    111          232          569           NA           NA
+##  5 1110014    111          582          134           41          592
+##  6 1110015    111           26          488           81          138
+##  7 1110020    111          528           NA          492          395
+##  8 1110022    111           NA           NA           NA           NA
+##  9 1110025    111          135          185          553           84
+## 10 1110027    111          346          168          559            5
+## # ... with 2,154 more rows, and 72 more variables: sch_friend15 &lt;int&gt;,
+## #   sch_friend16 &lt;int&gt;, sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;,
+## #   sch_friend19 &lt;int&gt;, sch_friend110 &lt;int&gt;, sch_friend111 &lt;int&gt;,
+## #   sch_friend112 &lt;int&gt;, sch_friend113 &lt;int&gt;, sch_friend114 &lt;int&gt;,
+## #   sch_friend115 &lt;int&gt;, sch_friend116 &lt;int&gt;, sch_friend117 &lt;int&gt;,
+## #   sch_friend118 &lt;int&gt;, sch_friend119 &lt;int&gt;, sch_friend21 &lt;int&gt;,
+## #   sch_friend22 &lt;int&gt;, sch_friend23 &lt;int&gt;, sch_friend24 &lt;int&gt;,
+## #   sch_friend25 &lt;int&gt;, sch_friend26 &lt;int&gt;, sch_friend27 &lt;int&gt;,
+## #   sch_friend28 &lt;int&gt;, sch_friend29 &lt;int&gt;, sch_friend210 &lt;int&gt;,
+## #   sch_friend211 &lt;int&gt;, sch_friend212 &lt;int&gt;, sch_friend213 &lt;int&gt;,
+## #   sch_friend214 &lt;int&gt;, sch_friend215 &lt;int&gt;, sch_friend216 &lt;int&gt;,
+## #   sch_friend217 &lt;int&gt;, sch_friend218 &lt;int&gt;, sch_friend219 &lt;int&gt;,
+## #   sch_friend31 &lt;int&gt;, sch_friend32 &lt;int&gt;, sch_friend33 &lt;int&gt;,
+## #   sch_friend34 &lt;int&gt;, sch_friend35 &lt;int&gt;, sch_friend36 &lt;int&gt;,
+## #   sch_friend37 &lt;int&gt;, sch_friend38 &lt;int&gt;, sch_friend39 &lt;int&gt;,
+## #   sch_friend310 &lt;int&gt;, sch_friend311 &lt;int&gt;, sch_friend312 &lt;int&gt;,
+## #   sch_friend313 &lt;int&gt;, sch_friend314 &lt;int&gt;, sch_friend315 &lt;int&gt;,
+## #   sch_friend316 &lt;int&gt;, sch_friend317 &lt;int&gt;, sch_friend318 &lt;int&gt;,
+## #   sch_friend319 &lt;int&gt;, sch_friend41 &lt;int&gt;, sch_friend42 &lt;int&gt;,
+## #   sch_friend43 &lt;int&gt;, sch_friend44 &lt;int&gt;, sch_friend45 &lt;int&gt;,
+## #   sch_friend46 &lt;int&gt;, sch_friend47 &lt;int&gt;, sch_friend48 &lt;int&gt;,
+## #   sch_friend49 &lt;int&gt;, sch_friend410 &lt;int&gt;, sch_friend411 &lt;int&gt;,
+## #   sch_friend412 &lt;int&gt;, sch_friend413 &lt;int&gt;, sch_friend414 &lt;int&gt;,
+## #   sch_friend415 &lt;int&gt;, sch_friend416 &lt;int&gt;, sch_friend417 &lt;int&gt;,
+## #   sch_friend418 &lt;int&gt;, sch_friend419 &lt;int&gt;</code></pre></li>
+<li><p>Then, we reshape it to <em>long</em> format: By transposing all the <code>sch_friend*</code> to long. We do this by means of the function <code>gather</code> (from the <code>tidyr</code> package). This is an alternative to the <code>reshape</code> function, and I personally find it easier to use. Let’s see how it works:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school)</code></pre></div>
+<pre><code>## # A tibble: 164,464 x 4
+##         id school varname      content
+##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
+##  1 1110001    111 sch_friend11      NA
+##  2 1110002    111 sch_friend11     424
+##  3 1110007    111 sch_friend11     629
+##  4 1110013    111 sch_friend11     232
+##  5 1110014    111 sch_friend11     582
+##  6 1110015    111 sch_friend11      26
+##  7 1110020    111 sch_friend11     528
+##  8 1110022    111 sch_friend11      NA
+##  9 1110025    111 sch_friend11     135
+## 10 1110027    111 sch_friend11     346
+## # ... with 164,454 more rows</code></pre>
+<p>In this case the <code>key</code> parameter sets the name of the variable that will contain the name of the variable that was reshaped, while <code>value</code> is the name of the variable that will hold the content of the data (that’s why I named those like that). The <code>-id, -school</code> bit tells the function to “drop” those variables before reshaping, in other words, “reshape everything but <code>id</code> and <code>school</code>”.</p>
+<p>Also, notice that we passed from 2164 rows to 19 (nominations) * 2164 (subjects) * 4 (waves) = 164464 rows, as expected.</p></li>
+<li><p>As the nomination data can be empty for some cells, we need to take care of those cases, the <code>NA</code>s, so we filter the data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(content))</code></pre></div>
+<pre><code>## # A tibble: 39,561 x 4
+##         id school varname      content
+##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
+##  1 1110002    111 sch_friend11     424
+##  2 1110007    111 sch_friend11     629
+##  3 1110013    111 sch_friend11     232
+##  4 1110014    111 sch_friend11     582
+##  5 1110015    111 sch_friend11      26
+##  6 1110020    111 sch_friend11     528
+##  7 1110025    111 sch_friend11     135
+##  8 1110027    111 sch_friend11     346
+##  9 1110029    111 sch_friend11     369
+## 10 1110030    111 sch_friend11     462
+## # ... with 39,551 more rows</code></pre></li>
+<li><p>And finally, we create three new variables from this dataset: <code>friendid</code>, <code>year</code>, and <code>nom_num</code> (nomination number). All this using regular expressions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(content)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">friendid =</span> school<span class="op">*</span><span class="dv">10000</span> <span class="op">+</span><span class="st"> </span>content,
+    <span class="dt">year     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z])[0-9]&quot;</span>),
+    <span class="dt">nnom     =</span> <span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z][0-9])[0-9]+&quot;</span>)
+    )</code></pre></div>
+<pre><code>## # A tibble: 39,561 x 7
+##         id school varname      content friendid year  nnom 
+##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 1110002    111 sch_friend11     424  1110424 1     1    
+##  2 1110007    111 sch_friend11     629  1110629 1     1    
+##  3 1110013    111 sch_friend11     232  1110232 1     1    
+##  4 1110014    111 sch_friend11     582  1110582 1     1    
+##  5 1110015    111 sch_friend11      26  1110026 1     1    
+##  6 1110020    111 sch_friend11     528  1110528 1     1    
+##  7 1110025    111 sch_friend11     135  1110135 1     1    
+##  8 1110027    111 sch_friend11     346  1110346 1     1    
+##  9 1110029    111 sch_friend11     369  1110369 1     1    
+## 10 1110030    111 sch_friend11     462  1110462 1     1    
+## # ... with 39,551 more rows</code></pre>
+<p>The regular expression <code>(?&lt;=[a-z])</code> matches a string that is preceeded by any letter from <em>a</em> to <em>z</em>, whereas the expression <code>[0-9]</code> matches a single number. Hence, from the string <code>&quot;sch_friend12&quot;</code>, the regular expression will only match the <code>1</code>, as it is the only number followed by a letter. On the other hand, the expression <code>(?&lt;=[a-z][0-9])</code> matches a string that is preceeded by a letter from <em>a</em> to <em>z</em> and a number from <em>0</em> to <em>9</em>; and the expression <code>[0-9]+</code> matches a string of numbers–so it could be more than one. Hence, from the string <code>&quot;sch_friend12&quot;</code>, we will get <code>2</code>. We can actually se this</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_extract</span>(<span class="st">&quot;sch_friend12&quot;</span>, <span class="st">&quot;(?&lt;=[a-z])[0-9]&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;1&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_extract</span>(<span class="st">&quot;sch_friend12&quot;</span>, <span class="st">&quot;(?&lt;=[a-z][0-9])[0-9]+&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2&quot;</code></pre></li>
+</ol>
+<p>Now that we have this edgelist, we can create an igraph object</p>
+</div>
+<div id="igraph-network" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> igraph network</h3>
+<p>For coercing the edgelist into an igraph object, we will be using the <code>graph_from_data_frame</code> function in igraph. This function receives a data frame where the two first columns are sorce(ego) and target(alter), whether is it directed or not, and an optional data frame with vertices, in which’s first column should contain the vertex ids.</p>
+<p>Using the optional <code>vertices</code> argument is a good practice since by doing so you are telling the function what is the set of vertex ids that you are expecting to find. Using the original dataset, we will create a data frame name vertices:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vertex_attrs &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, school, hispanic, female1, <span class="kw">starts_with</span>(<span class="st">&quot;eversmk&quot;</span>))</code></pre></div>
+<p>Now, let’s now use the function <code>graph_from_data_frame</code> to create an <code>igraph</code> object:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
+
+ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(id, friendid) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">graph_from_data_frame</span>(
+    <span class="dt">vertices =</span> vertex_attrs
+  )</code></pre></div>
+<pre><code>## Error in graph_from_data_frame(., vertices = vertex_attrs): Some vertex names in edge list are not listed in vertex data frame</code></pre>
+<p>Ups! It seems that individuals are making nominations to other students that were not included on the survery. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the <em>quietly-remove-em’-and-don’t-tell</em> strategy:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># Extra line, all nominations must be in ego too.</span>
+<span class="st">  </span><span class="kw">filter</span>(friendid <span class="op">%in%</span><span class="st"> </span>id) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>
+<span class="st">  </span><span class="kw">select</span>(id, friendid) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">graph_from_data_frame</span>(
+    <span class="dt">vertices =</span> vertex_attrs
+    )
+
+ig_year1</code></pre></div>
+<pre><code>## IGRAPH 639e318 DN-- 2164 9514 -- 
+## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
+## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n)
+## + edges from 639e318 (vertex names):
+##  [1] 1110007-&gt;1110629 1110013-&gt;1110232 1110014-&gt;1110582 1110015-&gt;1110026
+##  [5] 1110025-&gt;1110135 1110027-&gt;1110346 1110029-&gt;1110369 1110035-&gt;1110034
+##  [9] 1110040-&gt;1110390 1110041-&gt;1110557 1110044-&gt;1110027 1110046-&gt;1110030
+## [13] 1110050-&gt;1110086 1110057-&gt;1110263 1110069-&gt;1110544 1110071-&gt;1110167
+## [17] 1110072-&gt;1110289 1110073-&gt;1110014 1110075-&gt;1110352 1110084-&gt;1110305
+## [21] 1110086-&gt;1110206 1110093-&gt;1110040 1110094-&gt;1110483 1110095-&gt;1110043
+## [25] 1110096-&gt;1110065 1110109-&gt;1110330 1110114-&gt;1110172 1110115-&gt;1110039
+## + ... omitted several edges</code></pre>
+<p>So there we have, our network with 2164 nodes and 9514 edges. The next steps: get some descriptive stats and visualize our network.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-preprocessing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="network-descriptive-stats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["appliedsnar.pdf", "appliedsnar.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+<!-- </html> -->
