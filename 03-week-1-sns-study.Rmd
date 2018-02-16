@@ -160,7 +160,7 @@ Now that we have this edgelist, we can create an igraph object
 ### igraph network
 
 ```{r 03-vertex}
-vertices <- dat %>% 
+vertex_attrs <- dat %>% 
   select(id, school, hispanic, female1, starts_with("eversmk"))
 ```
 
@@ -173,8 +173,8 @@ ig_year1 <- net %>%
   filter(year == "1") %>%
   select(id, friendid) %>%
   graph_from_data_frame(
-    vertices = vertices
-    )
+    vertices = vertex_attrs
+  )
 ```
 
 Ups! It seems that individuals are making nominations to other students that were not included on the survery. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
@@ -189,7 +189,7 @@ ig_year1 <- net %>%
   
   select(id, friendid) %>%
   graph_from_data_frame(
-    vertices = vertices
+    vertices = vertex_attrs
     )
 
 ig_year1

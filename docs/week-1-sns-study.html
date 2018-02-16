@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-02-02">
+<meta name="date" content="2018-02-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -408,7 +408,7 @@ net &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class=
 </div>
 <div id="igraph-network" class="section level3">
 <h3><span class="header-section-number">4.4.2</span> igraph network</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vertices &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vertex_attrs &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(id, school, hispanic, female1, <span class="kw">starts_with</span>(<span class="st">&quot;eversmk&quot;</span>))</code></pre></div>
 <p>Let’s now use the function <code>graph_from_data_frame</code> to create an <code>igraph</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
@@ -417,9 +417,9 @@ ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(id, friendid) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">graph_from_data_frame</span>(
-    <span class="dt">vertices =</span> vertices
-    )</code></pre></div>
-<pre><code>## Error in graph_from_data_frame(., vertices = vertices): Some vertex names in edge list are not listed in vertex data frame</code></pre>
+    <span class="dt">vertices =</span> vertex_attrs
+  )</code></pre></div>
+<pre><code>## Error in graph_from_data_frame(., vertices = vertex_attrs): Some vertex names in edge list are not listed in vertex data frame</code></pre>
 <p>Ups! It seems that individuals are making nominations to other students that were not included on the survery. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the <em>quietly-remove-em’-and-don’t-tell</em> strategy:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span>
@@ -429,14 +429,14 @@ ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
 <span class="st">  </span>
 <span class="st">  </span><span class="kw">select</span>(id, friendid) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">graph_from_data_frame</span>(
-    <span class="dt">vertices =</span> vertices
+    <span class="dt">vertices =</span> vertex_attrs
     )
 
 ig_year1</code></pre></div>
-<pre><code>## IGRAPH ad95896 DN-- 2164 9514 -- 
+<pre><code>## IGRAPH 639e318 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n)
-## + edges from ad95896 (vertex names):
+## + edges from 639e318 (vertex names):
 ##  [1] 1110007-&gt;1110629 1110013-&gt;1110232 1110014-&gt;1110582 1110015-&gt;1110026
 ##  [5] 1110025-&gt;1110135 1110027-&gt;1110346 1110029-&gt;1110369 1110035-&gt;1110034
 ##  [9] 1110040-&gt;1110390 1110041-&gt;1110557 1110044-&gt;1110027 1110046-&gt;1110030
@@ -786,7 +786,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["appliedsnar.pdf", "appliedsnar.epub"],
 "toc": {
 "collapse": "subsection"
 }
