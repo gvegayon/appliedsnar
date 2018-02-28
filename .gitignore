@@ -1,3 +1,6 @@
 *.dta
 _*/
 .Rproj.user
+.Rhistory
+know_script_v2_14\.R
+

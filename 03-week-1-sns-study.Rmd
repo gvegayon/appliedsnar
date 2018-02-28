@@ -94,8 +94,8 @@ net <- dat %>%
   filter(!is.na(content)) %>%
   mutate(
     friendid = school*10000 + content,
-    year     = str_extract(varname, "(?<=[a-z])[0-9]"),
-    nnom     = str_extract(varname, "(?<=[a-z][0-9])[0-9]+")
+    year     = as.integer(str_extract(varname, "(?<=[a-z])[0-9]")),
+    nnom     = as.integer(str_extract(varname, "(?<=[a-z][0-9])[0-9]+"))
   )
 ```
 
@@ -138,8 +138,8 @@ Let's take a look at this step by step:
       filter(!is.na(content)) %>%
       mutate(
         friendid = school*10000 + content,
-        year     = str_extract(varname, "(?<=[a-z])[0-9]"),
-        nnom     = str_extract(varname, "(?<=[a-z][0-9])[0-9]+")
+        year     = as.integer(str_extract(varname, "(?<=[a-z])[0-9]")),
+        nnom     = as.integer(str_extract(varname, "(?<=[a-z][0-9])[0-9]+"))
         )
     ```
     
@@ -149,9 +149,7 @@ Let's take a look at this step by step:
     str_extract("sch_friend12", "(?<=[a-z])[0-9]")
     str_extract("sch_friend12", "(?<=[a-z][0-9])[0-9]+")
     ```
-    
-  
-Now that we have this edgelist, we can create an igraph object
+And finally, the `as.integer` function coerces the returning value from the `str_extract` function from `character` to `integer`. Now that we have this edgelist, we can create an igraph object
 
 ### igraph network
 
@@ -171,7 +169,7 @@ library(igraph)
 
 ig_year1 <- net %>%
   filter(year == "1") %>% 
-  select(id, friendid) %>% 
+  select(id, friendid, nnom) %>%
   graph_from_data_frame(
     vertices = vertex_attrs
   )
@@ -187,7 +185,7 @@ ig_year1 <- net %>%
   # Extra line, all nominations must be in ego too.
   filter(friendid %in% id) %>% 
   
-  select(id, friendid) %>%
+  select(id, friendid, nnom) %>%
   graph_from_data_frame(
     vertices = vertex_attrs
     )
@@ -203,7 +201,7 @@ While we could do all networks at once, in this part we will focus on computing 
 
 ```{r 03-listing-attributes}
 list.vertex.attributes(ig_year1)
-list.edge.attributes(ig_year1) # we have no edge attributes here
+list.edge.attributes(ig_year1) 
 ```
 
 Just like we would do with data frames, accessing vertex attributes is done via the dollar sign operator `$` together with the `V` function, for example, accessing the first 10 elements of the variable `hispanic` can be done as follows:
@@ -287,6 +285,8 @@ triadic <- triad_census(ig_year1_111)
 triadic
 ```
 
+To get a nicer view of this, we can use a table that I retrieved from `?triad_census`. Moreover, instead of looking a the raw counts, we can normalize the `triadic` object by its sum so we get proportions instead^[During our workshop, Prof. De la Haye suggested using ${n \choose 3}$ as a normalizing constant. It turns out that `sum(triadic) = choose(n, 3)`! So either approach is correct.]
+
 ```{r 03-triadic-census-print}
 knitr::kable(cbind(
   Pcent = triadic/sum(triadic)*100,
@@ -340,7 +340,7 @@ cbind(
 
 With our nice vector of colors, now we can pass it to `plot.igraph` (which we call implicitly by just calling `plot`), via the `vertex.color` argument:
 
-```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111. "}
+```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111. ", cache=TRUE}
 # Fancy graph
 set.seed(1)
 plot(
@@ -365,7 +365,7 @@ ig_year1_111_sub <- induced_subgraph(ig_year1_111, which_ids)
 col_hispanic <- col_hispanic[which_ids]
 ```
 
-```{r 03-plot-neat2, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates."}
+```{r 03-plot-neat2, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates.", cache=TRUE}
 # Fancy graph
 set.seed(1)
 plot(
@@ -422,7 +422,7 @@ The function definition:
 
 In the following lines of code, using our new function, we will plot each schools' network in the same plotting device (window) with the help of the `par` function, and add legend with the `legend`:
 
-```{r 03-myplot-call, fig.cap="All 5 schools in time 1. Again, the graphs exclude isolates."}
+```{r 03-myplot-call, fig.cap="All 5 schools in time 1. Again, the graphs exclude isolates.", cache=TRUE}
 # Plotting all together
 oldpar <- par(no.readonly = TRUE)
 par(mfrow = c(2, 3), mai = rep(0, 4), oma= c(1, 0, 0, 0))
@@ -458,7 +458,85 @@ So what happend here?
 
 *   `par(oldpar)` This line allows us to restore the plotting parameters.
 
+## Statistical tests
+
+### Is nomination number correlated with indegree?
+
+Hypothesis: Individuals that on average are among the first nominations of their peers are more popular
+
+```{r 03-nomination-indegree, cache=TRUE}
+
+# Getting all the data in long format
+edgelist <- as_long_data_frame(ig_year1) %>%
+  as_tibble
+
+# Computing indegree (again) and average nomination number
+indeg_nom_cor <- group_by(edgelist, to, to_name, to_school) %>%
+  summarise(
+    indeg   = n(),
+    nom_avg = mean(nnom)
+  ) %>%
+  rename(
+    school = to_school
+  )
+
+indeg_nom_cor
+
+# Using pearson's correlation
+with(indeg_nom_cor, cor.test(indeg, nom_avg))
+```
+
+<!-- ```r -->
+<!-- with( -->
+<!--   indeg_nom_cor, -->
+<!--   mean((indeg - mean(indeg)) * (nom_avg - mean(nom_avg))) / -->
+<!--     sqrt(var(indeg)*var(nom_avg)) -->
+<!--   ) -->
+<!-- ``` -->
 
 
-    
 
+## Exponential Random Graph Models
+
+In this section we will use the `ergm` package (from the `statnet`) suit, and the `intergraph` package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
+
+```{r 03-ergms-setup, message=FALSE}
+library(ergm)
+library(intergraph)
+```
+
+Using the `asNetwork` function, we can coerce the igraph object into a network object so we can use it with the `ergm` function:
+
+```{r 03-ergms-intergraph, cache=TRUE}
+# Creating the new network
+network_111 <- intergraph::asNetwork(ig_year1_111)
+
+# Running a simple ergm (only fitting edge count)
+ergm(network_111 ~ edges)
+```
+
+So what happened here! We got a warning. It turns out that our network has loops (didn't thought about it before!). Let's take a look on that with the `which_loop` function
+
+```{r 03-ergms-which-loop}
+E(ig_year1_111)[which_loop(ig_year1_111)]
+```
+
+We can get rid of these using the `igraph::-.igraph`, and re-run our ERGM
+
+```{r 03-ergms-intergraph2, cache=TRUE}
+# Creating the new network
+network_111 <- ig_year1_111
+network_111 <- network_111 - E(network_111)[which(which_loop(network_111))]
+network_111 <- intergraph::asNetwork(network_111)
+
+# Running a simple ergm (only fitting edge count)
+ans0 <- ergm(network_111 ~ edges)
+summary(ans0)
+```
+
+Let's make it a bit more complex. 
+
+```{r}
+ans1 <- ergm(network_111 ~ edges + nodematch("hispanic") + nodematch("eversmk1"))
+summary(ans1)
+```

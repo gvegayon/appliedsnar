@@ -124,7 +124,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-02-16}
+  \date{2018-02-28}
 
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -159,88 +159,13 @@
 }
 \chapter{About this book}\label{about-this-book}
 
-This book will be build as part of a workshop on Applied Social Network
-Analysis with R. Its contents will be populated as the sessions take
-place, and for now there is particular program that we will follow,
-instead, we have the following workflow:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Participants will share their data and what they need to do with it.
-\item
-  Based on their data, I'll be preparing the sessions trying to show
-  attendees how would I approach the problem, and at the same time,
-  teach by example about the R language.
-\item
-  Materials will be published on this website and, hopefully, video
-  recordings of the sessions.
-\end{enumerate}
-
-At least in the first version, the book will be organized by session,
-this is, one chapter per session.
-
-All the book materials can be downloaded from
-\url{https://github.com/gvegayon/appliedsnar}
-
-In general, we will besides of R itself, we will be using R studio and
-the following R packages: dplyr for data management, stringr for data
-cleaning, and of course igraph, netdiffuseR (a bit of a bias here), and
-statnet for our neat network analysis.\footnote{Some of you may be
-  wondering ``what about ggplot2 and friends? What about
-  \href{https://www.tidyverse.org/}{\texttt{tidyverse}}'', well, my
-  short answer is I jumped into R before all of that was that popular.
-  When I started plots were all about
-  \href{https://CRAN.R-project.org/package=lattice}{\texttt{lattice}},
-  and after a couple of years on that, about base R graphics. What I'm
-  saying is that so far I have not find a compelling reason to leave my
-  ``old-practices'' and embrace all the \texttt{tidyverse} movement
-  (religion?).}
-
 \chapter{Introduction}\label{introduction}
-
-For this book we need the following
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Install R from CRAN: \url{https://www.r-project.org/}
-\item
-  (optional) Install Rstudio: \url{https://rstudio.org}
-\end{enumerate}
-
-While I find RStudio extreamly useful, it is not necesary to use it with
-R.
 
 \chapter{R Basics}\label{r-basics}
 
 \section{What is R}\label{what-is-r}
 
 \section{How to install packages}\label{how-to-install-packages}
-
-Nowadays there are two ways of installing R packages (that I'm aware
-of), either using \texttt{install.packages}, which is a function shipped
-with R, or use the devtools R package to install a package from some
-remote repository other than CRAN, here is a couple of examples:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# This will install the igraph package from CRAN}
-\OperatorTok{>}\StringTok{ }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"netdiffuseR"}\NormalTok{)}
-
-\CommentTok{# This will install the bleeding-edge version from the project's github repo!}
-\OperatorTok{>}\StringTok{ }\NormalTok{devtools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"USCCANA/netdiffuseR"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-The first one, using \texttt{install.packages}, installs the CRAN
-version of \texttt{netdiffuseR}, whereas the second installs whatever
-version is plublished on \url{https://github.com/USCCANA/netdiffuseR},
-which is usually called the development version.
-
-In some cases users may want/need to install packages from command line
-as some packages need extra configuration to be installed. But we won't
-need to look at it now.
 
 \chapter{Week 1: SNS Study}\label{week-1-sns-study}
 
@@ -410,16 +335,16 @@ these actually look nice:
 ## # A tibble: 2,164 x 100
 ##    photoid school hispanic female1 female2 female3 female4 grades1 grades2
 ##      <int>  <int>    <dbl>   <int>   <int>   <int>   <int>   <dbl>   <dbl>
-##  1       1    111     1.00      NA      NA       0       0   NA      NA   
-##  2       2    111     1.00       0      NA      NA       0    3.00   NA   
-##  3       7    111     0          1       1       1       1    5.00    4.50
-##  4      13    111     1.00       1       1       1       1    2.50    2.50
-##  5      14    111     1.00       1       1       1      NA    3.00    3.50
-##  6      15    111     1.00       0       0       0       0    2.50    2.50
-##  7      20    111     1.00       1       1       1       1    2.50    2.50
-##  8      22    111     1.00      NA      NA       0       0   NA      NA   
-##  9      25    111     0          1       1      NA       1    4.50    3.50
-## 10      27    111     1.00       0      NA       0       0    3.50   NA   
+##  1       1    111       1.      NA      NA       0       0   NA      NA   
+##  2       2    111       1.       0      NA      NA       0    3.00   NA   
+##  3       7    111       0.       1       1       1       1    5.00    4.50
+##  4      13    111       1.       1       1       1       1    2.50    2.50
+##  5      14    111       1.       1       1       1      NA    3.00    3.50
+##  6      15    111       1.       0       0       0       0    2.50    2.50
+##  7      20    111       1.       1       1       1       1    2.50    2.50
+##  8      22    111       1.      NA      NA       0       0   NA      NA   
+##  9      25    111       0.       1       1      NA       1    4.50    3.50
+## 10      27    111       1.       0      NA       0       0    3.50   NA   
 ## # ... with 2,154 more rows, and 91 more variables: grades3 <dbl>,
 ## #   grades4 <dbl>, eversmk1 <int>, eversmk2 <int>, eversmk3 <int>,
 ## #   eversmk4 <int>, everdrk1 <int>, everdrk2 <int>, everdrk3 <int>,
@@ -461,8 +386,8 @@ these actually look nice:
 \StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(content)) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}
     \DataTypeTok{friendid =}\NormalTok{ school}\OperatorTok{*}\DecValTok{10000} \OperatorTok{+}\StringTok{ }\NormalTok{content,}
-    \DataTypeTok{year     =} \KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z])[0-9]"}\NormalTok{),}
-    \DataTypeTok{nnom     =} \KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z][0-9])[0-9]+"}\NormalTok{)}
+    \DataTypeTok{year     =} \KeywordTok{as.integer}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z])[0-9]"}\NormalTok{)),}
+    \DataTypeTok{nnom     =} \KeywordTok{as.integer}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z][0-9])[0-9]+"}\NormalTok{))}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
@@ -488,18 +413,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 2,164 x 78
-##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
-##      <dbl>  <int>        <int>        <int>        <int>        <int>
-##  1 1110001    111           NA           NA           NA           NA
-##  2 1110002    111          424          423          426          289
-##  3 1110007    111          629          505           NA           NA
-##  4 1110013    111          232          569           NA           NA
-##  5 1110014    111          582          134           41          592
-##  6 1110015    111           26          488           81          138
-##  7 1110020    111          528           NA          492          395
-##  8 1110022    111           NA           NA           NA           NA
-##  9 1110025    111          135          185          553           84
-## 10 1110027    111          346          168          559            5
+##          id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
+##       <dbl>  <int>        <int>        <int>        <int>        <int>
+##  1 1110001.    111           NA           NA           NA           NA
+##  2 1110002.    111          424          423          426          289
+##  3 1110007.    111          629          505           NA           NA
+##  4 1110013.    111          232          569           NA           NA
+##  5 1110014.    111          582          134           41          592
+##  6 1110015.    111           26          488           81          138
+##  7 1110020.    111          528           NA          492          395
+##  8 1110022.    111           NA           NA           NA           NA
+##  9 1110025.    111          135          185          553           84
+## 10 1110027.    111          346          168          559            5
 ## # ... with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
 ## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
 ## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,
@@ -543,18 +468,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 164,464 x 4
-##         id school varname      content
-##      <dbl>  <int> <chr>          <int>
-##  1 1110001    111 sch_friend11      NA
-##  2 1110002    111 sch_friend11     424
-##  3 1110007    111 sch_friend11     629
-##  4 1110013    111 sch_friend11     232
-##  5 1110014    111 sch_friend11     582
-##  6 1110015    111 sch_friend11      26
-##  7 1110020    111 sch_friend11     528
-##  8 1110022    111 sch_friend11      NA
-##  9 1110025    111 sch_friend11     135
-## 10 1110027    111 sch_friend11     346
+##          id school varname      content
+##       <dbl>  <int> <chr>          <int>
+##  1 1110001.    111 sch_friend11      NA
+##  2 1110002.    111 sch_friend11     424
+##  3 1110007.    111 sch_friend11     629
+##  4 1110013.    111 sch_friend11     232
+##  5 1110014.    111 sch_friend11     582
+##  6 1110015.    111 sch_friend11      26
+##  7 1110020.    111 sch_friend11     528
+##  8 1110022.    111 sch_friend11      NA
+##  9 1110025.    111 sch_friend11     135
+## 10 1110027.    111 sch_friend11     346
 ## # ... with 164,454 more rows
 \end{verbatim}
 
@@ -583,18 +508,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 39,561 x 4
-##         id school varname      content
-##      <dbl>  <int> <chr>          <int>
-##  1 1110002    111 sch_friend11     424
-##  2 1110007    111 sch_friend11     629
-##  3 1110013    111 sch_friend11     232
-##  4 1110014    111 sch_friend11     582
-##  5 1110015    111 sch_friend11      26
-##  6 1110020    111 sch_friend11     528
-##  7 1110025    111 sch_friend11     135
-##  8 1110027    111 sch_friend11     346
-##  9 1110029    111 sch_friend11     369
-## 10 1110030    111 sch_friend11     462
+##          id school varname      content
+##       <dbl>  <int> <chr>          <int>
+##  1 1110002.    111 sch_friend11     424
+##  2 1110007.    111 sch_friend11     629
+##  3 1110013.    111 sch_friend11     232
+##  4 1110014.    111 sch_friend11     582
+##  5 1110015.    111 sch_friend11      26
+##  6 1110020.    111 sch_friend11     528
+##  7 1110025.    111 sch_friend11     135
+##  8 1110027.    111 sch_friend11     346
+##  9 1110029.    111 sch_friend11     369
+## 10 1110030.    111 sch_friend11     462
 ## # ... with 39,551 more rows
 \end{verbatim}
 \item
@@ -610,26 +535,26 @@ Let's take a look at this step by step:
 \StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(content)) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}
     \DataTypeTok{friendid =}\NormalTok{ school}\OperatorTok{*}\DecValTok{10000} \OperatorTok{+}\StringTok{ }\NormalTok{content,}
-    \DataTypeTok{year     =} \KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z])[0-9]"}\NormalTok{),}
-    \DataTypeTok{nnom     =} \KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z][0-9])[0-9]+"}\NormalTok{)}
+    \DataTypeTok{year     =} \KeywordTok{as.integer}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z])[0-9]"}\NormalTok{)),}
+    \DataTypeTok{nnom     =} \KeywordTok{as.integer}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z][0-9])[0-9]+"}\NormalTok{))}
 \NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 39,561 x 7
-##         id school varname      content friendid year  nnom 
-##      <dbl>  <int> <chr>          <int>    <dbl> <chr> <chr>
-##  1 1110002    111 sch_friend11     424  1110424 1     1    
-##  2 1110007    111 sch_friend11     629  1110629 1     1    
-##  3 1110013    111 sch_friend11     232  1110232 1     1    
-##  4 1110014    111 sch_friend11     582  1110582 1     1    
-##  5 1110015    111 sch_friend11      26  1110026 1     1    
-##  6 1110020    111 sch_friend11     528  1110528 1     1    
-##  7 1110025    111 sch_friend11     135  1110135 1     1    
-##  8 1110027    111 sch_friend11     346  1110346 1     1    
-##  9 1110029    111 sch_friend11     369  1110369 1     1    
-## 10 1110030    111 sch_friend11     462  1110462 1     1    
+##          id school varname      content friendid  year  nnom
+##       <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
+##  1 1110002.    111 sch_friend11     424 1110424.     1     1
+##  2 1110007.    111 sch_friend11     629 1110629.     1     1
+##  3 1110013.    111 sch_friend11     232 1110232.     1     1
+##  4 1110014.    111 sch_friend11     582 1110582.     1     1
+##  5 1110015.    111 sch_friend11      26 1110026.     1     1
+##  6 1110020.    111 sch_friend11     528 1110528.     1     1
+##  7 1110025.    111 sch_friend11     135 1110135.     1     1
+##  8 1110027.    111 sch_friend11     346 1110346.     1     1
+##  9 1110029.    111 sch_friend11     369 1110369.     1     1
+## 10 1110030.    111 sch_friend11     462 1110462.     1     1
 ## # ... with 39,551 more rows
 \end{verbatim}
 
@@ -665,9 +590,12 @@ Let's take a look at this step by step:
 \begin{verbatim}
 ## [1] "2"
 \end{verbatim}
-\end{enumerate}
 
-Now that we have this edgelist, we can create an igraph object
+  And finally, the \texttt{as.integer} function coerces the returning
+  value from the \texttt{str\_extract} function from \texttt{character}
+  to \texttt{integer}. Now that we have this edgelist, we can create an
+  igraph object
+\end{enumerate}
 
 \subsection{igraph network}\label{igraph-network}
 
@@ -698,7 +626,7 @@ create an \texttt{igraph} object:
 
 \NormalTok{ig_year1 <-}\StringTok{ }\NormalTok{net }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ "1"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, friendid) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(id, friendid, nnom) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{graph_from_data_frame}\NormalTok{(}
     \DataTypeTok{vertices =}\NormalTok{ vertex_attrs}
 \NormalTok{  )}
@@ -722,7 +650,7 @@ depends on what you need to do! In this case, we will go for the
 \StringTok{  }\CommentTok{# Extra line, all nominations must be in ego too.}
 \StringTok{  }\KeywordTok{filter}\NormalTok{(friendid }\OperatorTok{%in%}\StringTok{ }\NormalTok{id) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, friendid) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(id, friendid, nnom) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{graph_from_data_frame}\NormalTok{(}
     \DataTypeTok{vertices =}\NormalTok{ vertex_attrs}
 \NormalTok{    )}
@@ -732,17 +660,17 @@ depends on what you need to do! In this case, we will go for the
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH 199fa3c DN-- 2164 9514 -- 
+## IGRAPH 7532eb5 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
-## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n)
-## + edges from 199fa3c (vertex names):
+## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
+## | nnom (e/n)
+## + edges from 7532eb5 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
 ## [13] 1110050->1110086 1110057->1110263 1110069->1110544 1110071->1110167
 ## [17] 1110072->1110289 1110073->1110014 1110075->1110352 1110084->1110305
 ## [21] 1110086->1110206 1110093->1110040 1110094->1110483 1110095->1110043
-## [25] 1110096->1110065 1110109->1110330 1110114->1110172 1110115->1110039
 ## + ... omitted several edges
 \end{verbatim}
 
@@ -772,12 +700,12 @@ what vertex/edge attributes are available:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{list.edge.attributes}\NormalTok{(ig_year1) }\CommentTok{# we have no edge attributes here}
+\KeywordTok{list.edge.attributes}\NormalTok{(ig_year1) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## character(0)
+## [1] "nnom"
 \end{verbatim}
 
 Just like we would do with data frames, accessing vertex attributes is
@@ -1274,9 +1202,83 @@ So what happend here?
   parameters.
 \end{itemize}
 
-\chapter{Applications}\label{applications}
+\section{Statistical tests}\label{statistical-tests}
 
-Some \emph{significant} applications are demonstrated in this chapter.
+\subsection{Is nomination number correlated with
+indegree?}\label{is-nomination-number-correlated-with-indegree}
+
+Hypothesis: Individuals that on average are among the first nominations
+of their peers are more popular
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Getting all the data in long format}
+\NormalTok{edgelist <-}\StringTok{ }\KeywordTok{as_long_data_frame}\NormalTok{(ig_year1) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{as_tibble}
+
+\CommentTok{# Computing indegree (again) and average nomination number}
+\NormalTok{indeg_nom_cor <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(edgelist, to, to_name, to_school) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{indeg   =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{nom_avg =} \KeywordTok{mean}\NormalTok{(nnom)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{rename}\NormalTok{(}
+    \DataTypeTok{school =}\NormalTok{ to_school}
+\NormalTok{  )}
+
+\NormalTok{indeg_nom_cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1,561 x 5
+## # Groups:   to, to_name [1,561]
+##       to to_name school indeg nom_avg
+##    <dbl> <chr>    <int> <int>   <dbl>
+##  1    2. 1110002    111    22    4.50
+##  2    3. 1110007    111     7    5.71
+##  3    4. 1110013    111     6    5.83
+##  4    5. 1110014    111    19    7.47
+##  5    6. 1110015    111     3    6.67
+##  6    7. 1110020    111     6    6.50
+##  7    9. 1110025    111     6    4.67
+##  8   10. 1110027    111    13    4.54
+##  9   11. 1110029    111    14    7.64
+## 10   12. 1110030    111     6    4.50
+## # ... with 1,551 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Using pearson's correlation}
+\KeywordTok{with}\NormalTok{(indeg_nom_cor, }\KeywordTok{cor.test}\NormalTok{(indeg, nom_avg))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  indeg and nom_avg
+## t = 5.0502, df = 1559, p-value = 4.933e-07
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.07774571 0.17538115
+## sample estimates:
+##       cor 
+## 0.1268707
+\end{verbatim}
+
+\section{Exponential Random Graph
+Models}\label{exponential-random-graph-models}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ergm)}
+\end{Highlighting}
+\end{Shaded}
+
+\chapter{Applications}\label{applications}
 
 \section{Example one}\label{example-one}
 
@@ -1284,9 +1286,7 @@ Some \emph{significant} applications are demonstrated in this chapter.
 
 \chapter{Final Words}\label{final-words}
 
-We have finished a nice book.
-
-\cleardoublepage 
+\chapter{Placeholder}\label{placeholder}
 
 \appendix
 
@@ -1294,76 +1294,6 @@ We have finished a nice book.
 \chapter{Datasets}\label{datasets}
 
 \hypertarget{sns-data}{\section{SNS data}\label{sns-data}}
-
-\subsection{About the data}\label{about-the-data}
-
-\begin{itemize}
-\item
-  This data is part of the NIH Challenge grant \# RC 1RC1AA019239
-  ``Social Networks and Networking That Puts Adolescents at High Risk''.
-\item
-  In general terms, the SNS's goal was(is) ``Understand the network
-  effects on risk behaviors such as smoking initiation and substance
-  use''.
-\end{itemize}
-
-\subsection{Variables}\label{variables}
-
-The data has a \emph{wide} structure, which means that there is one row
-per individual, and that dynamic attributes are represented as one
-column per time.
-
-\begin{itemize}
-\item
-  \texttt{photoid} Photo id at the school level (can be repeated across
-  schools).
-\item
-  \texttt{school} School id.
-\item
-  \texttt{hispanic} Indicator variable that equals 1 if the indivual
-  ever reported himself as hispanic.
-\item
-  \texttt{female1}, \ldots{}, \texttt{female4} Indicator variable that
-  equals 1 if the individual reported to be female at the particular
-  wave.
-\item
-  \texttt{grades1},\ldots{}, \texttt{grades4} Academic grades by wave.
-  Values from 1 to 5, with 5 been the best.
-\item
-  \texttt{eversmk1}, \ldots{}, \texttt{eversmk4} Indicator variable of
-  ever smoking by wave. A one indicated that the individual had smoked
-  at the time of the survey.
-\item
-  \texttt{everdrk1}, \ldots{}, \texttt{everdrk4} Indicator variable of
-  ever drinking by wave. A one indicated that the individual had drink
-  at the time of the survey.
-\item
-  \texttt{home1}, \ldots{}, \texttt{home4} Factor variable for home
-  status by wave. A one indicates home ownership, a 2 rent, and a 3 a
-  ``I don't know''.
-\end{itemize}
-
-During the survey, participants were asked to name up to 19 of their
-school friends:
-
-\begin{itemize}
-\item
-  \texttt{sch\_friend11}, \ldots{}, \texttt{sch\_friend119} School
-  friends nominations (19 in total) for wave 1. The codes are mapped to
-  the variable \texttt{photoid}.
-\item
-  \texttt{sch\_friend21}, \ldots{}, \texttt{sch\_friend219} School
-  friends nominations (19 in total) for wave 2. The codes are mapped to
-  the variable \texttt{photoid}.
-\item
-  \texttt{sch\_friend31}, \ldots{}, \texttt{sch\_friend319} School
-  friends nominations (19 in total) for wave 3. The codes are mapped to
-  the variable \texttt{photoid}.
-\item
-  \texttt{sch\_friend41}, \ldots{}, \texttt{sch\_friend419} School
-  friends nominations (19 in total) for wave 4. The codes are mapped to
-  the variable \texttt{photoid}.
-\end{itemize}
 
 \bibliography{book.bib,packages.bib}
 
