@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="sns-exponential-random-graph-models.html">
-<link rel="next" href="final-words.html">
+<link rel="prev" href="statistical-tests.html">
+<link rel="next" href="the-ergm-package.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -128,7 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="sns-exponential-random-graph-models.html"><a href="sns-exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> SNS Exponential Random Graph Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="exponential-random-graph-models-in-a-nutshell.html"><a href="exponential-random-graph-models-in-a-nutshell.html"><i class="fa fa-check"></i><b>5.1</b> Exponential Random Graph Models in a Nutshell</a></li>
+<li class="chapter" data-level="5.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.1</b> The <code>ergm</code> package</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -158,8 +158,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exponential-random-graph-models-in-a-nutshell" class="section level2">
-<h2><span class="header-section-number">5.1</span> Exponential Random Graph Models in a Nutshell</h2>
+<div id="sns-exponential-random-graph-models" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> SNS Exponential Random Graph Models</h1>
 <p>I strongly suggest reading the vignette included in the <code>ergm</code> R package</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vignette</span>(<span class="st">&quot;ergm&quot;</span>, <span class="dt">package=</span><span class="st">&quot;ergm&quot;</span>)</code></pre></div>
 <p>So what are ERGMs anyway…</p>
@@ -176,77 +176,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 \tag{5.1}
 \]</span></p>
 <p>Where <span class="math inline">\(\theta\in\Omega\subset\mathbb{R}^q\)</span> is the vector of model coefficients and <span class="math inline">\(\mathbf{g}(\mathbf{y})\)</span> is a <em>q</em>-vector of statistics based on the adjacency matrix <span class="math inline">\(\mathbf{y}\)</span>.</p>
-<p>Model <a href="exponential-random-graph-models-in-a-nutshell.html#eq:04-1">(5.1)</a></p>
-<p>In this section we will use the <code>ergm</code> package (from the <code>statnet</code>) suit, and the <code>intergraph</code> package. The latter provides functions to go back and forth between <code>igraph</code> and <code>network</code> objects from the <code>igraph</code> and <code>network</code> packages respectively<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ergm)
-<span class="kw">library</span>(intergraph)</code></pre></div>
-<p>Using the <code>asNetwork</code> function, we can coerce the igraph object into a network object so we can use it with the <code>ergm</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the new network</span>
-network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<span class="op">::</span><span class="kw">asNetwork</span>(ig_year1_<span class="dv">111</span>)
-
-<span class="co"># Running a simple ergm (only fitting edge count)</span>
-<span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges)</code></pre></div>
-<pre><code>## [1] &quot;Warning:  This network contains loops&quot;
-## [1] &quot;Warning:  This network contains loops&quot;
-## [1] &quot;Warning:  This network contains loops&quot;</code></pre>
-<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
-<pre><code>## 
-## MLE Coefficients:
-##  edges  
-## -4.732</code></pre>
-<p>So what happened here! We got a warning. It turns out that our network has loops (didn’t thought about it before!). Let’s take a look on that with the <code>which_loop</code> function</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(ig_year1_<span class="dv">111</span>)[<span class="kw">which_loop</span>(ig_year1_<span class="dv">111</span>)]</code></pre></div>
-<pre><code>## + 1/2638 edge from 938a265 (vertex names):
-## [1] 1110111-&gt;1110111</code></pre>
-<p>We can get rid of these using the <code>igraph::-.igraph</code>, and re-run our ERGM</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the new network</span>
-network_<span class="dv">111</span> &lt;-<span class="st"> </span>ig_year1_<span class="dv">111</span>
-network_<span class="dv">111</span> &lt;-<span class="st"> </span>network_<span class="dv">111</span> <span class="op">-</span><span class="st"> </span><span class="kw">E</span>(network_<span class="dv">111</span>)[<span class="kw">which</span>(<span class="kw">which_loop</span>(network_<span class="dv">111</span>))]
-network_<span class="dv">111</span> &lt;-<span class="st"> </span>network_<span class="dv">111</span> <span class="op">-</span><span class="st"> </span><span class="kw">which</span>(<span class="kw">degree</span>(network_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
-network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<span class="op">::</span><span class="kw">asNetwork</span>(network_<span class="dv">111</span>)
-
-<span class="co"># Running a simple ergm (only fitting edge count)</span>
-ans0 &lt;-<span class="st"> </span><span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="op">+</span><span class="kw">gwesp</span>(<span class="dt">fixed=</span>T), <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">seed =</span> <span class="dv">1</span>))
-<span class="kw">summary</span>(ans0)
-<span class="kw">mcmc.diagnostics</span>(ans0)
-<span class="kw">library</span>(coda)
-<span class="kw">gof</span>(ans0)
-
-ans1 &lt;-<span class="st"> </span><span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span>triangles, <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">init =</span> ans0<span class="op">$</span>coef))
-
-ans2 &lt;-<span class="st"> </span><span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span>idegree1.<span class="dv">5</span>, <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">init =</span> ans1<span class="op">$</span>coef, <span class="dt">MCMLE.maxit=</span><span class="dv">40</span>))
-
-ans3 &lt;-<span class="st"> </span><span class="kw">ergm</span>(
-  network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span>idegree1.<span class="dv">5</span>,
-  <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">init =</span> ans2<span class="op">$</span>coef, <span class="dt">MCMLE.maxit=</span><span class="dv">40</span>, <span class="dt">parallel =</span> 4L)
-  )
-
-<span class="kw">summary</span>(ans3)</code></pre></div>
-<p>Let’s make it a bit more complex.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ans1 &lt;-<span class="st"> </span><span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>))
-<span class="kw">summary</span>(ans1)</code></pre></div>
-
+<p>Model <a href="sns-exponential-random-graph-models.html#eq:04-1">(5.1)</a> may be expanded by replacing <span class="math inline">\(\mathbf{g}(\mathbf{y})\)</span> with <span class="math inline">\(\mathbf{g}(\mathbf{y}, \mathbf{X})\)</span> to allow for additional covariate information <span class="math inline">\(\mathbf{X}\)</span> about the network. The denominator,</p>
+<p><span class="math display">\[
+\kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{z}\in\mathcal{Y}}{\mbox{exp}\left\{\theta^\mbox{T}\mathbf{g}(\mathbf{z})\right\}}}
+\]</span> Is the normalizing factor that ensures that equation <a href="sns-exponential-random-graph-models.html#eq:04-1">(5.1)</a> is a legitimate probability distribution. Even after fixing <span class="math inline">\(\mathcal{Y}\)</span> to be all the networks that have size <span class="math inline">\(n\)</span>, the size of <span class="math inline">\(\mathcal{Y}\)</span> makes this type of models hard to estimate as there are <span class="math inline">\(N = 2^{n(n-1)}\)</span> possible networks! <span class="citation">(Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p> 
 </div>
-<!-- </div> -->
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Hunter2008">
 <p>Hunter, David R., Mark S. Handcock, Carter T. Butts, Steven M. Goodreau, and Martina Morris. 2008. “ergm : A Package to Fit, Simulate and Diagnose Exponential-Family Models for Networks.” <em>Journal of Statistical Software</em> 24 (3). doi:<a href="https://doi.org/10.18637/jss.v024.i03">10.18637/jss.v024.i03</a>.</p>
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol start="5">
-<li id="fn5"><p>Yes, the classes have the same name as the packages.<a href="exponential-random-graph-models-in-a-nutshell.html#fnref5">↩</a></p></li>
-</ol>
-</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="sns-exponential-random-graph-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="final-words.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="statistical-tests.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-ergm-package.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

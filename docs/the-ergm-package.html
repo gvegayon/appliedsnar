@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="plotting-the-network-in-igraph.html">
-<link rel="next" href="sns-exponential-random-graph-models.html">
+<link rel="prev" href="sns-exponential-random-graph-models.html">
+<link rel="next" href="final-words.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -158,68 +158,92 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="statistical-tests" class="section level2">
-<h2><span class="header-section-number">4.5</span> Statistical tests</h2>
-<div id="is-nomination-number-correlated-with-indegree" class="section level3">
-<h3><span class="header-section-number">4.5.1</span> Is nomination number correlated with indegree?</h3>
-<p>Hypothesis: Individuals that on average are among the first nominations of their peers are more popular</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Getting all the data in long format</span>
-edgelist &lt;-<span class="st"> </span><span class="kw">as_long_data_frame</span>(ig_year1) <span class="op">%&gt;%</span>
-<span class="st">  </span>as_tibble
+<div id="the-ergm-package" class="section level2">
+<h2><span class="header-section-number">5.1</span> The <code>ergm</code> package</h2>
+<p>From the previous section:<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
+<span class="kw">library</span>(magrittr)
+<span class="kw">library</span>(dplyr)
 
-<span class="co"># Computing indegree (again) and average nomination number</span>
-<span class="co"># Include &quot;On a scale from one to five how close do you feel&quot;</span>
-<span class="co"># Also for egocentric friends (A. Friends)</span>
-indeg_nom_cor &lt;-<span class="st"> </span><span class="kw">group_by</span>(edgelist, to, to_name, to_school) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(
-    <span class="dt">indeg   =</span> <span class="kw">n</span>(),
-    <span class="dt">nom_avg =</span> <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(nnom)
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">rename</span>(
-    <span class="dt">school =</span> to_school
+<span class="kw">load</span>(<span class="st">&quot;03.rda&quot;</span>)</code></pre></div>
+<p>In this section we will use the <code>ergm</code> package (from the <code>statnet</code>) suit, and the <code>intergraph</code> package. The latter provides functions to go back and forth between <code>igraph</code> and <code>network</code> objects from the <code>igraph</code> and <code>network</code> packages respectively<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ergm)
+<span class="kw">library</span>(intergraph)</code></pre></div>
+<p>Using the <code>asNetwork</code> function, we can coerce the igraph object into a network object so we can use it with the <code>ergm</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the new network</span>
+network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<span class="op">::</span><span class="kw">asNetwork</span>(ig_year1_<span class="dv">111</span>)
+
+<span class="co"># Running a simple ergm (only fitting edge count)</span>
+<span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges)</code></pre></div>
+<pre><code>## [1] &quot;Warning:  This network contains loops&quot;
+## [1] &quot;Warning:  This network contains loops&quot;
+## [1] &quot;Warning:  This network contains loops&quot;</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre><code>## 
+## MLE Coefficients:
+##  edges  
+## -4.732</code></pre>
+<p>So what happened here! We got a warning. It turns out that our network has loops (didn’t thought about it before!). Let’s take a look on that with the <code>which_loop</code> function</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(ig_year1_<span class="dv">111</span>)[<span class="kw">which_loop</span>(ig_year1_<span class="dv">111</span>)]</code></pre></div>
+<pre><code>## + 1/2638 edge from 528f823 (vertex names):
+## [1] 1110111-&gt;1110111</code></pre>
+<p>We can get rid of these using the <code>igraph::-.igraph</code>. Moreover, just to illustrate how it can be done, let’s get rid of the isolates using the same operator</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the new network</span>
+network_<span class="dv">111</span> &lt;-<span class="st"> </span>ig_year1_<span class="dv">111</span>
+
+<span class="co"># Removing loops</span>
+network_<span class="dv">111</span> &lt;-<span class="st"> </span>network_<span class="dv">111</span> <span class="op">-</span><span class="st"> </span><span class="kw">E</span>(network_<span class="dv">111</span>)[<span class="kw">which</span>(<span class="kw">which_loop</span>(network_<span class="dv">111</span>))]
+
+<span class="co"># Removing isolates</span>
+network_<span class="dv">111</span> &lt;-<span class="st"> </span>network_<span class="dv">111</span> <span class="op">-</span><span class="st"> </span><span class="kw">which</span>(<span class="kw">degree</span>(network_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
+
+<span class="co"># Converting the network</span>
+network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<span class="op">::</span><span class="kw">asNetwork</span>(network_<span class="dv">111</span>)</code></pre></div>
+<p>Let’s rerun the model, now with a couple of extra terms</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Running a simple ergm (only fitting edge count)</span>
+ans0 &lt;-<span class="st"> </span><span class="kw">ergm</span>(
+  network_<span class="dv">111</span> <span class="op">~</span>
+<span class="st">    </span>edges <span class="op">+</span>
+<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">gwesp</span>(<span class="dt">fixed=</span>T),
+  <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">seed =</span> <span class="dv">1</span>)
   )
 
-indeg_nom_cor</code></pre></div>
-<pre><code>## # A tibble: 1,561 x 5
-## # Groups:   to, to_name [1,561]
-##       to to_name school indeg nom_avg
-##    &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;
-##  1  2.00 1110002    111    22   0.222
-##  2  3.00 1110007    111     7   0.175
-##  3  4.00 1110013    111     6   0.171
-##  4  5.00 1110014    111    19   0.134
-##  5  6.00 1110015    111     3   0.150
-##  6  7.00 1110020    111     6   0.154
-##  7  9.00 1110025    111     6   0.214
-##  8 10.0  1110027    111    13   0.220
-##  9 11.0  1110029    111    14   0.131
-## 10 12.0  1110030    111     6   0.222
-## # ... with 1,551 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Using pearson&#39;s correlation</span>
-<span class="kw">with</span>(indeg_nom_cor, <span class="kw">cor.test</span>(indeg, nom_avg))</code></pre></div>
-<pre><code>## 
-##  Pearson&#39;s product-moment correlation
-## 
-## data:  indeg and nom_avg
-## t = -12.254, df = 1559, p-value &lt; 2.2e-16
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  -0.3409964 -0.2504653
-## sample estimates:
-##        cor 
-## -0.2963965</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">save.image</span>(<span class="st">&quot;03.rda&quot;</span>)</code></pre></div>
+<span class="kw">summary</span>(ans0)
+<span class="kw">mcmc.diagnostics</span>(ans0)
+<span class="kw">library</span>(coda)
+<span class="kw">gof</span>(ans0)
+
+ans1 &lt;-<span class="st"> </span><span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span>triangles, <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">init =</span> ans0<span class="op">$</span>coef))
+
+ans2 &lt;-<span class="st"> </span><span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span>idegree1.<span class="dv">5</span>, <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">init =</span> ans1<span class="op">$</span>coef, <span class="dt">MCMLE.maxit=</span><span class="dv">40</span>))
+
+ans3 &lt;-<span class="st"> </span><span class="kw">ergm</span>(
+  network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span>idegree1.<span class="dv">5</span>,
+  <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">init =</span> ans2<span class="op">$</span>coef, <span class="dt">MCMLE.maxit=</span><span class="dv">40</span>, <span class="dt">parallel =</span> 4L)
+  )
+
+<span class="kw">summary</span>(ans3)</code></pre></div>
+<p>Let’s make it a bit more complex.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ans1 &lt;-<span class="st"> </span><span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>))
+<span class="kw">summary</span>(ans1)</code></pre></div>
 
 </div>
-</div>
 <!-- </div> -->
+<div class="footnotes">
+<hr />
+<ol start="5">
+<li id="fn5"><p>You can download the 03.rda file from <a href="https://github.com/gvegayon/appliedsnar">this link</a>.<a href="the-ergm-package.html#fnref5">↩</a></p></li>
+<li id="fn6"><p>Yes, the classes have the same name as the packages.<a href="the-ergm-package.html#fnref6">↩</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="plotting-the-network-in-igraph.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sns-exponential-random-graph-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="sns-exponential-random-graph-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-words.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
