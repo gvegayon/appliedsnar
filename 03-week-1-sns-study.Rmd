@@ -471,10 +471,12 @@ edgelist <- as_long_data_frame(ig_year1) %>%
   as_tibble
 
 # Computing indegree (again) and average nomination number
+# Include "On a scale from one to five how close do you feel"
+# Also for egocentric friends (A. Friends)
 indeg_nom_cor <- group_by(edgelist, to, to_name, to_school) %>%
   summarise(
     indeg   = n(),
-    nom_avg = mean(nnom)
+    nom_avg = 1/mean(nnom)
   ) %>%
   rename(
     school = to_school
@@ -497,6 +499,12 @@ with(indeg_nom_cor, cor.test(indeg, nom_avg))
 
 
 ## Exponential Random Graph Models
+
+Exponential Random Graph Models in a Nutshell
+
+$$
+\Pr{Y=y|\theta} = 
+$$
 
 In this section we will use the `ergm` package (from the `statnet`) suit, and the `intergraph` package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
 
@@ -527,11 +535,24 @@ We can get rid of these using the `igraph::-.igraph`, and re-run our ERGM
 # Creating the new network
 network_111 <- ig_year1_111
 network_111 <- network_111 - E(network_111)[which(which_loop(network_111))]
+network_111 <- network_111 - which(degree(network_111, mode = "all") == 0)
 network_111 <- intergraph::asNetwork(network_111)
 
 # Running a simple ergm (only fitting edge count)
-ans0 <- ergm(network_111 ~ edges)
+set.seed(1)
+ans0 <- ergm(network_111 ~ edges + idegree1.5)
 summary(ans0)
+
+ans1 <- ergm(network_111 ~ edges + idegree1.5, control = control.ergm(init = ans0$coef))
+
+ans2 <- ergm(network_111 ~ edges + idegree1.5, control = control.ergm(init = ans1$coef, MCMLE.maxit=40))
+
+ans3 <- ergm(
+  network_111 ~ edges + idegree1.5,
+  control = control.ergm(init = ans2$coef, MCMLE.maxit=40, parallel = 4L)
+  )
+
+summary(ans3)
 ```
 
 Let's make it a bit more complex. 
