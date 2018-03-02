@@ -539,11 +539,13 @@ network_111 <- network_111 - which(degree(network_111, mode = "all") == 0)
 network_111 <- intergraph::asNetwork(network_111)
 
 # Running a simple ergm (only fitting edge count)
-set.seed(1)
-ans0 <- ergm(network_111 ~ edges + idegree1.5)
+ans0 <- ergm(network_111 ~ edges + nodematch("hispanic") + +gwesp(fixed=T), control = control.ergm(seed = 1))
 summary(ans0)
+mcmc.diagnostics(ans0)
+library(coda)
+gof(ans0)
 
-ans1 <- ergm(network_111 ~ edges + idegree1.5, control = control.ergm(init = ans0$coef))
+ans1 <- ergm(network_111 ~ edges + triangles, control = control.ergm(init = ans0$coef))
 
 ans2 <- ergm(network_111 ~ edges + idegree1.5, control = control.ergm(init = ans1$coef, MCMLE.maxit=40))
 
