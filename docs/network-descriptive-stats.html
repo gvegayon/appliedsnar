@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-02-16">
+<meta name="date" content="2018-03-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,10 +123,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
 <li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
 </ul></li>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
-<li class="chapter" data-level="5.1" data-path="example-one.html"><a href="example-one.html"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="example-two.html"><a href="example-two.html"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="sns-exponential-random-graph-models.html"><a href="sns-exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> SNS Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="exponential-random-graph-models-in-a-nutshell.html"><a href="exponential-random-graph-models-in-a-nutshell.html"><i class="fa fa-check"></i><b>5.1</b> Exponential Random Graph Models in a Nutshell</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -162,8 +164,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">list.vertex.attributes</span>(ig_year1)</code></pre></div>
 <pre><code>## [1] &quot;name&quot;     &quot;school&quot;   &quot;hispanic&quot; &quot;female1&quot;  &quot;eversmk1&quot; &quot;eversmk2&quot;
 ## [7] &quot;eversmk3&quot; &quot;eversmk4&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">list.edge.attributes</span>(ig_year1) <span class="co"># we have no edge attributes here</span></code></pre></div>
-<pre><code>## character(0)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">list.edge.attributes</span>(ig_year1) </code></pre></div>
+<pre><code>## [1] &quot;nnom&quot;</code></pre>
 <p>Just like we would do with data frames, accessing vertex attributes is done via the dollar sign operator <code>$</code> together with the <code>V</code> function, for example, accessing the first 10 elements of the variable <code>hispanic</code> can be done as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(ig_year1)<span class="op">$</span>hispanic[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
 <pre><code>##  [1] 1 1 0 1 1 1 1 1 0 1</code></pre>
@@ -226,6 +228,7 @@ triadic</code></pre></div>
 <pre><code>##  [1] 24059676   724389   290849     3619     3383     4401     3219
 ##  [8]     2997      407       33      836      235      163      137
 ## [15]      277       85</code></pre>
+<p>To get a nicer view of this, we can use a table that I retrieved from <code>?triad_census</code>. Moreover, instead of looking a the raw counts, we can normalize the <code>triadic</code> object by its sum so we get proportions instead<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cbind</span>(
   <span class="dt">Pcent =</span> triadic<span class="op">/</span><span class="kw">sum</span>(triadic)<span class="op">*</span><span class="dv">100</span>,
   <span class="kw">read.csv</span>(<span class="st">&quot;triadic_census.csv&quot;</span>)
@@ -326,6 +329,7 @@ triadic</code></pre></div>
 <hr />
 <ol start="2">
 <li id="fn2"><p>For more information about the different centrality measurements, please take a look at the “Centrality” article on <a href="https://en.wikipedia.org/wiki/Centrality">Wikipedia</a>.<a href="network-descriptive-stats.html#fnref2">↩</a></p></li>
+<li id="fn3"><p>During our workshop, Prof. De la Haye suggested using <span class="math inline">\({n \choose 3}\)</span> as a normalizing constant. It turns out that <code>sum(triadic) = choose(n, 3)</code>! So either approach is correct.<a href="network-descriptive-stats.html#fnref3">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -366,7 +370,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["appliedsnar.pdf", "appliedsnar.epub"],
+"download": null,
 "toc": {
 "collapse": "subsection"
 }

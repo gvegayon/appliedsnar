@@ -11,6 +11,10 @@ github-repo: gvegayon/appliedsnar
 description: "An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC's Center for Applied Network Analysis (CANA)"
 ---
 
+\renewcommand{\Pr}[1]{\mbox{Pr}\left(#1\right)}
+\newcommand{\Prcond}[2]{\mbox{Pr}_{#2}\left(#1\right)}
+\renewcommand{\exp}[1]{\mbox{exp}\left\{#1\right\}}
+
 # About this book 
 
 This book will be build as part of a workshop on Applied Social Network Analysis with R. Its contents will be populated as the sessions take place, and for now there is particular program that we will follow, instead, we have the following workflow:

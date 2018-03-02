@@ -7,3 +7,7 @@ For this book we need the following
 2.  (optional) Install Rstudio: https://rstudio.org
 
 While I find RStudio extreamly useful, it is not necesary to use it with R.
+
+\renewcommand{\Pr}[1]{\mbox{Pr}\left(#1\right)}
+\renewcommand{\Prcond}[2]{\mbox{Pr}_{#2}\left(#1\right)}
+\renewcommand{\exp}[1]{\mbox{exp}\left\{#1\right\}}
