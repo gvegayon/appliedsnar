@@ -1,7 +1,7 @@
 --- 
 title: "Applied SNA with R"
 author: "George G. Vega Yon"
-date: "`r Sys.Date()`"
+date: "2018-03-07"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

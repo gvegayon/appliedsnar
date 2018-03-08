@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-03-02">
+<meta name="date" content="2018-03-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -177,16 +177,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## # A tibble: 2,164 x 100
 ##    photoid school hispanic female1 female2 female3 female4 grades1 grades2
 ##      &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1       1    111     1.00      NA      NA       0       0   NA      NA   
-##  2       2    111     1.00       0      NA      NA       0    3.00   NA   
-##  3       7    111     0          1       1       1       1    5.00    4.50
-##  4      13    111     1.00       1       1       1       1    2.50    2.50
-##  5      14    111     1.00       1       1       1      NA    3.00    3.50
-##  6      15    111     1.00       0       0       0       0    2.50    2.50
-##  7      20    111     1.00       1       1       1       1    2.50    2.50
-##  8      22    111     1.00      NA      NA       0       0   NA      NA   
-##  9      25    111     0          1       1      NA       1    4.50    3.50
-## 10      27    111     1.00       0      NA       0       0    3.50   NA   
+##  1       1    111       1.      NA      NA       0       0   NA      NA   
+##  2       2    111       1.       0      NA      NA       0    3.00   NA   
+##  3       7    111       0.       1       1       1       1    5.00    4.50
+##  4      13    111       1.       1       1       1       1    2.50    2.50
+##  5      14    111       1.       1       1       1      NA    3.00    3.50
+##  6      15    111       1.       0       0       0       0    2.50    2.50
+##  7      20    111       1.       1       1       1       1    2.50    2.50
+##  8      22    111       1.      NA      NA       0       0   NA      NA   
+##  9      25    111       0.       1       1      NA       1    4.50    3.50
+## 10      27    111       1.       0      NA       0       0    3.50   NA   
 ## # ... with 2,154 more rows, and 91 more variables: grades3 &lt;dbl&gt;,
 ## #   grades4 &lt;dbl&gt;, eversmk1 &lt;int&gt;, eversmk2 &lt;int&gt;, eversmk3 &lt;int&gt;,
 ## #   eversmk4 &lt;int&gt;, everdrk1 &lt;int&gt;, everdrk2 &lt;int&gt;, everdrk3 &lt;int&gt;,
@@ -233,18 +233,18 @@ net &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class=
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 2,164 x 78
-##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
-##      &lt;dbl&gt;  &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;
-##  1 1110001    111           NA           NA           NA           NA
-##  2 1110002    111          424          423          426          289
-##  3 1110007    111          629          505           NA           NA
-##  4 1110013    111          232          569           NA           NA
-##  5 1110014    111          582          134           41          592
-##  6 1110015    111           26          488           81          138
-##  7 1110020    111          528           NA          492          395
-##  8 1110022    111           NA           NA           NA           NA
-##  9 1110025    111          135          185          553           84
-## 10 1110027    111          346          168          559            5
+##          id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
+##       &lt;dbl&gt;  &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;
+##  1 1110001.    111           NA           NA           NA           NA
+##  2 1110002.    111          424          423          426          289
+##  3 1110007.    111          629          505           NA           NA
+##  4 1110013.    111          232          569           NA           NA
+##  5 1110014.    111          582          134           41          592
+##  6 1110015.    111           26          488           81          138
+##  7 1110020.    111          528           NA          492          395
+##  8 1110022.    111           NA           NA           NA           NA
+##  9 1110025.    111          135          185          553           84
+## 10 1110027.    111          346          168          559            5
 ## # ... with 2,154 more rows, and 72 more variables: sch_friend15 &lt;int&gt;,
 ## #   sch_friend16 &lt;int&gt;, sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;,
 ## #   sch_friend19 &lt;int&gt;, sch_friend110 &lt;int&gt;, sch_friend111 &lt;int&gt;,
@@ -275,18 +275,18 @@ net &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class=
 <span class="st">  </span><span class="kw">select</span>(id, school, <span class="kw">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school)</code></pre></div>
 <pre><code>## # A tibble: 164,464 x 4
-##         id school varname      content
-##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
-##  1 1110001    111 sch_friend11      NA
-##  2 1110002    111 sch_friend11     424
-##  3 1110007    111 sch_friend11     629
-##  4 1110013    111 sch_friend11     232
-##  5 1110014    111 sch_friend11     582
-##  6 1110015    111 sch_friend11      26
-##  7 1110020    111 sch_friend11     528
-##  8 1110022    111 sch_friend11      NA
-##  9 1110025    111 sch_friend11     135
-## 10 1110027    111 sch_friend11     346
+##          id school varname      content
+##       &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
+##  1 1110001.    111 sch_friend11      NA
+##  2 1110002.    111 sch_friend11     424
+##  3 1110007.    111 sch_friend11     629
+##  4 1110013.    111 sch_friend11     232
+##  5 1110014.    111 sch_friend11     582
+##  6 1110015.    111 sch_friend11      26
+##  7 1110020.    111 sch_friend11     528
+##  8 1110022.    111 sch_friend11      NA
+##  9 1110025.    111 sch_friend11     135
+## 10 1110027.    111 sch_friend11     346
 ## # ... with 164,454 more rows</code></pre>
 <p>In this case the <code>key</code> parameter sets the name of the variable that will contain the name of the variable that was reshaped, while <code>value</code> is the name of the variable that will hold the content of the data (that’s why I named those like that). The <code>-id, -school</code> bit tells the function to “drop” those variables before reshaping, in other words, “reshape everything but <code>id</code> and <code>school</code>”.</p>
 <p>Also, notice that we passed from 2164 rows to 19 (nominations) * 2164 (subjects) * 4 (waves) = 164464 rows, as expected.</p></li>
@@ -296,18 +296,18 @@ net &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class=
 <span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;varname&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;content&quot;</span>, <span class="op">-</span>id, <span class="op">-</span>school) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(content))</code></pre></div>
 <pre><code>## # A tibble: 39,561 x 4
-##         id school varname      content
-##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
-##  1 1110002    111 sch_friend11     424
-##  2 1110007    111 sch_friend11     629
-##  3 1110013    111 sch_friend11     232
-##  4 1110014    111 sch_friend11     582
-##  5 1110015    111 sch_friend11      26
-##  6 1110020    111 sch_friend11     528
-##  7 1110025    111 sch_friend11     135
-##  8 1110027    111 sch_friend11     346
-##  9 1110029    111 sch_friend11     369
-## 10 1110030    111 sch_friend11     462
+##          id school varname      content
+##       &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
+##  1 1110002.    111 sch_friend11     424
+##  2 1110007.    111 sch_friend11     629
+##  3 1110013.    111 sch_friend11     232
+##  4 1110014.    111 sch_friend11     582
+##  5 1110015.    111 sch_friend11      26
+##  6 1110020.    111 sch_friend11     528
+##  7 1110025.    111 sch_friend11     135
+##  8 1110027.    111 sch_friend11     346
+##  9 1110029.    111 sch_friend11     369
+## 10 1110030.    111 sch_friend11     462
 ## # ... with 39,551 more rows</code></pre></li>
 <li><p>And finally, we create three new variables from this dataset: <code>friendid</code>, <code>year</code>, and <code>nom_num</code> (nomination number). All this using regular expressions:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span><span class="st"> </span>
@@ -320,18 +320,18 @@ net &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class=
     <span class="dt">nnom     =</span> <span class="kw">as.integer</span>(<span class="kw">str_extract</span>(varname, <span class="st">&quot;(?&lt;=[a-z][0-9])[0-9]+&quot;</span>))
     )</code></pre></div>
 <pre><code>## # A tibble: 39,561 x 7
-##         id school varname      content friendid  year  nnom
-##      &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
-##  1 1110002    111 sch_friend11     424  1110424     1     1
-##  2 1110007    111 sch_friend11     629  1110629     1     1
-##  3 1110013    111 sch_friend11     232  1110232     1     1
-##  4 1110014    111 sch_friend11     582  1110582     1     1
-##  5 1110015    111 sch_friend11      26  1110026     1     1
-##  6 1110020    111 sch_friend11     528  1110528     1     1
-##  7 1110025    111 sch_friend11     135  1110135     1     1
-##  8 1110027    111 sch_friend11     346  1110346     1     1
-##  9 1110029    111 sch_friend11     369  1110369     1     1
-## 10 1110030    111 sch_friend11     462  1110462     1     1
+##          id school varname      content friendid  year  nnom
+##       &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;          &lt;int&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
+##  1 1110002.    111 sch_friend11     424 1110424.     1     1
+##  2 1110007.    111 sch_friend11     629 1110629.     1     1
+##  3 1110013.    111 sch_friend11     232 1110232.     1     1
+##  4 1110014.    111 sch_friend11     582 1110582.     1     1
+##  5 1110015.    111 sch_friend11      26 1110026.     1     1
+##  6 1110020.    111 sch_friend11     528 1110528.     1     1
+##  7 1110025.    111 sch_friend11     135 1110135.     1     1
+##  8 1110027.    111 sch_friend11     346 1110346.     1     1
+##  9 1110029.    111 sch_friend11     369 1110369.     1     1
+## 10 1110030.    111 sch_friend11     462 1110462.     1     1
 ## # ... with 39,551 more rows</code></pre>
 <p>The regular expression <code>(?&lt;=[a-z])</code> matches a string that is preceeded by any letter from <em>a</em> to <em>z</em>, whereas the expression <code>[0-9]</code> matches a single number. Hence, from the string <code>&quot;sch_friend12&quot;</code>, the regular expression will only match the <code>1</code>, as it is the only number followed by a letter. On the other hand, the expression <code>(?&lt;=[a-z][0-9])</code> matches a string that is preceeded by a letter from <em>a</em> to <em>z</em> and a number from <em>0</em> to <em>9</em>; and the expression <code>[0-9]+</code> matches a string of numbers–so it could be more than one. Hence, from the string <code>&quot;sch_friend12&quot;</code>, we will get <code>2</code>. We can actually se this</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_extract</span>(<span class="st">&quot;sch_friend12&quot;</span>, <span class="st">&quot;(?&lt;=[a-z])[0-9]&quot;</span>)</code></pre></div>
@@ -370,11 +370,11 @@ ig_year1 &lt;-<span class="st"> </span>net <span class="op">%&gt;%</span>
     )
 
 ig_year1</code></pre></div>
-<pre><code>## IGRAPH a8c1aad DN-- 2164 9514 -- 
+<pre><code>## IGRAPH d080ab1 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from a8c1aad (vertex names):
+## + edges from d080ab1 (vertex names):
 ##  [1] 1110007-&gt;1110629 1110013-&gt;1110232 1110014-&gt;1110582 1110015-&gt;1110026
 ##  [5] 1110025-&gt;1110135 1110027-&gt;1110346 1110029-&gt;1110369 1110035-&gt;1110034
 ##  [9] 1110040-&gt;1110390 1110041-&gt;1110557 1110044-&gt;1110027 1110046-&gt;1110030
@@ -423,7 +423,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["appliedsnar.pdf", "appliedsnar.epub"],
 "toc": {
 "collapse": "subsection"
 }

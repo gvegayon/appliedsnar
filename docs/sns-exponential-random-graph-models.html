@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-03-02">
+<meta name="date" content="2018-03-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -172,14 +172,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <p>The distribution of <span class="math inline">\(\mathbf{Y}\)</span> can be parameterized in the form</p>
 <p><span class="math display" id="eq:04-1">\[
-{\mbox{Pr}_{\theta, \mathcal{Y}}\left(\mathbf{Y}=\mathbf{y}\right)} = \frac{{\mbox{exp}\left\{\theta^\mbox{T}\mathbf{g}(\mathbf{y})\right\}}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
+{\mbox{Pr}\left(\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}\right)} = \frac{{\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
 \tag{5.1}
 \]</span></p>
 <p>Where <span class="math inline">\(\theta\in\Omega\subset\mathbb{R}^q\)</span> is the vector of model coefficients and <span class="math inline">\(\mathbf{g}(\mathbf{y})\)</span> is a <em>q</em>-vector of statistics based on the adjacency matrix <span class="math inline">\(\mathbf{y}\)</span>.</p>
 <p>Model <a href="sns-exponential-random-graph-models.html#eq:04-1">(5.1)</a> may be expanded by replacing <span class="math inline">\(\mathbf{g}(\mathbf{y})\)</span> with <span class="math inline">\(\mathbf{g}(\mathbf{y}, \mathbf{X})\)</span> to allow for additional covariate information <span class="math inline">\(\mathbf{X}\)</span> about the network. The denominator,</p>
 <p><span class="math display">\[
-\kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{z}\in\mathcal{Y}}{\mbox{exp}\left\{\theta^\mbox{T}\mathbf{g}(\mathbf{z})\right\}}}
-\]</span> Is the normalizing factor that ensures that equation <a href="sns-exponential-random-graph-models.html#eq:04-1">(5.1)</a> is a legitimate probability distribution. Even after fixing <span class="math inline">\(\mathcal{Y}\)</span> to be all the networks that have size <span class="math inline">\(n\)</span>, the size of <span class="math inline">\(\mathcal{Y}\)</span> makes this type of models hard to estimate as there are <span class="math inline">\(N = 2^{n(n-1)}\)</span> possible networks! <span class="citation">(Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p> 
+\kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{z}\in\mathcal{Y}}{\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{z})\right\}}
+\]</span></p>
+<p>Is the normalizing factor that ensures that equation <a href="sns-exponential-random-graph-models.html#eq:04-1">(5.1)</a> is a legitimate probability distribution. Even after fixing <span class="math inline">\(\mathcal{Y}\)</span> to be all the networks that have size <span class="math inline">\(n\)</span>, the size of <span class="math inline">\(\mathcal{Y}\)</span> makes this type of models hard to estimate as there are <span class="math inline">\(N = 2^{n(n-1)}\)</span> possible networks! <span class="citation">(Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p> 
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
@@ -225,7 +226,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["appliedsnar.pdf", "appliedsnar.epub"],
 "toc": {
 "collapse": "subsection"
 }

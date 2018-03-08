@@ -22,7 +22,7 @@ the strength of this intra-group effect.  --- [@Hunter2008]
 The distribution of $\mathbf{Y}$ can be parameterized in the form
 
 $$
-\Prcond{\mathbf{Y}=\mathbf{y}}{\theta, \mathcal{Y}} = \frac{\exp{\theta^\mbox{T}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
+\Pr{\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}} = \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
 (\#eq:04-1)
 $$
 
@@ -30,16 +30,20 @@ Where $\theta\in\Omega\subset\mathbb{R}^q$ is the vector of model coefficients a
 
 Model \@ref(eq:04-1) may be expanded by replacing $\mathbf{g}(\mathbf{y})$ with $\mathbf{g}(\mathbf{y}, \mathbf{X})$ to allow for additional covariate information $\mathbf{X}$ about the network. The denominator,
 
+
 $$
-\kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{z}\in\mathcal{Y}}\exp{\theta^\mbox{T}\mathbf{g}(\mathbf{z})}}
+\kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{z}\in\mathcal{Y}}\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{z})}
 $$
+
 Is the normalizing factor that ensures that equation \@ref(eq:04-1) is a legitimate probability distribution. Even after fixing $\mathcal{Y}$ to be all the networks that have size $n$, the size of $\mathcal{Y}$ makes this type of models hard to estimate as there are $N = 2^{n(n-1)}$ possible networks! [@Hunter2008]
 
 ## The `ergm` package
 
+The `ergm` R package [@R-ergm]
+
 From the previous section:^[You can download the 03.rda file from [this link](https://github.com/gvegayon/appliedsnar).]
 
-```{r 04-setup}
+```{r 04-setup, message=FALSE, warning=FALSE}
 library(igraph)
 library(magrittr)
 library(dplyr)
@@ -73,7 +77,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 
 We can get rid of these using the `igraph::-.igraph`. Moreover, just to illustrate how it can be done, let's get rid of the isolates using the same operator
 
-```{r 03-ergms-intergraph2, cache=TRUE, eval=FALSE}
+```{r 03-ergms-intergraph2, cache=TRUE, eval=TRUE}
 # Creating the new network
 network_111 <- ig_year1_111
 
@@ -89,36 +93,54 @@ network_111 <- intergraph::asNetwork(network_111)
 
 Let's rerun the model, now with a couple of extra terms
 
-```{r 04-ergms-intergraph2, cache=TRUE, eval=FALSE}
+1.  Estimate the simplest model, adding one variable at a time
+
+2.  After each estimation, run the `mcmc.diagnostics` function to see how good/bad behaved are the chains
+
+3.  Run the `gof` function to 
+
+`control.ergms`: Maximum number of iteration, seed for Pseudo-RNG, how many cores
+
+`ergm.constraints`: Where to sample the network from. Gives stability as 
+
+`gof`
+
+```{r 04-ergms-intergraph2, cache=TRUE, eval=TRUE}
 # Running a simple ergm (only fitting edge count)
 ans0 <- ergm(
   network_111 ~
     edges +
     nodematch("hispanic") +
-    gwesp(fixed=T),
-  control = control.ergm(seed = 1)
+    nodematch("female1") +
+    nodematch("eversmk1") +
+    mutual
+    ,
+  constraints = ~bd(maxout = 19, maxin = 22),
+  control = control.ergm(
+    seed        = 1,
+    MCMLE.maxit = 10,
+    parallel    = 4,
+    CD.maxit    = 10
+    )
   )
 
+# What did we get
 summary(ans0)
+```
+
+```{r checking-mcmc, cache = TRUE}
 mcmc.diagnostics(ans0)
-library(coda)
-gof(ans0)
-
-ans1 <- ergm(network_111 ~ edges + triangles, control = control.ergm(init = ans0$coef))
-
-ans2 <- ergm(network_111 ~ edges + idegree1.5, control = control.ergm(init = ans1$coef, MCMLE.maxit=40))
-
-ans3 <- ergm(
-  network_111 ~ edges + idegree1.5,
-  control = control.ergm(init = ans2$coef, MCMLE.maxit=40, parallel = 4L)
-  )
-
-summary(ans3)
 ```
 
-Let's make it a bit more complex. 
+From the MCMC diagnostics we see that the chain still hasn't converged propertly. How do we know this? Well, as a rule of thum we should expect that at the end of the distribution all chains go at around the same value.
 
-```{r, eval=FALSE}
-ans1 <- ergm(network_111 ~ edges + nodematch("hispanic") + nodematch("eversmk1"))
-summary(ans1)
+```{r checking-gof, cache = TRUE}
+# Computing and printing GOF estatistics
+ans_gof <- gof(ans0)
+ans_gof
+
+# Plotting GOF statistics
+plot(ans_gof)
 ```
+
+
