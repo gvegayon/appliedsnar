@@ -91,22 +91,23 @@ network_111 <- network_111 - which(degree(network_111, mode = "all") == 0)
 network_111 <- intergraph::asNetwork(network_111)
 ```
 
-Let's rerun the model, now with a couple of extra terms
+Proposed workflow:
 
-1.  Estimate the simplest model, adding one variable at a time
+1.  Estimate the simplest model, adding one variable at a time.
 
-2.  After each estimation, run the `mcmc.diagnostics` function to see how good/bad behaved are the chains
+2.  After each estimation, run the `mcmc.diagnostics` function to see how good/bad behaved are the chains.
 
-3.  Run the `gof` function to 
+3.  Run the `gof` function to see how good is the model at matching the network's structural statistics.
 
-`control.ergms`: Maximum number of iteration, seed for Pseudo-RNG, how many cores
+What to use:
 
-`ergm.constraints`: Where to sample the network from. Gives stability as 
+1.  `control.ergms`: Maximum number of iteration, seed for Pseudo-RNG, how many cores
 
-`gof`
+2.  `ergm.constraints`: Where to sample the network from. Gives stability and (in some cases) faster convergence as by constraining the model you are reducing the sample size.
 
-```{r 04-ergms-intergraph2, cache=TRUE, eval=TRUE}
-# Running a simple ergm (only fitting edge count)
+Here is an example of a couple of models that we could compare^[Notice that this document may not include the usual messages that the `ergm` command generates during the estimation procedure. This is just to make it more printable-friendly.]
+
+```{r 04-ergms-model0, cache=TRUE, eval=TRUE, message=FALSE}
 ans0 <- ergm(
   network_111 ~
     edges +
@@ -114,6 +115,30 @@ ans0 <- ergm(
     nodematch("female1") +
     nodematch("eversmk1") +
     mutual
+    ,
+  constraints = ~bd(maxout = 19),
+  control = control.ergm(
+    seed        = 1,
+    MCMLE.maxit = 10,
+    parallel    = 4,
+    CD.maxit    = 10
+    )
+  )
+```
+
+So what are we doing here:
+1.  The model is controling for: 
+    a.  `edges` Number of edges in the network (as opposed to its density)
+    b.  `nodematch("some-variable-name-here")` Includes a term that controls for homophily/heterophily
+    c.  `mutual` Number of mutual connections between $i$ and $j$. This can be related to, for example, triadic closure.
+
+```{r 04-ergms-model1, cache=TRUE, eval=TRUE, message=FALSE}
+ans1 <- ergm(
+  network_111 ~
+    edges +
+    nodematch("hispanic") +
+    nodematch("female1") +
+    nodematch("eversmk1")
     ,
   constraints = ~bd(maxout = 19, maxin = 22),
   control = control.ergm(
@@ -123,16 +148,55 @@ ans0 <- ergm(
     CD.maxit    = 10
     )
   )
-
-# What did we get
-summary(ans0)
 ```
+
+This example takes longer to compute
+
+```{r 04-ergms-model2, cache=TRUE, eval=TRUE, message=FALSE}
+ans2 <- ergm(
+  network_111 ~
+    edges +
+    nodematch("hispanic") +
+    nodematch("female1") +
+    nodematch("eversmk1") + 
+    mutual +
+    balance
+    ,
+  constraints = ~bd(maxout = 19, maxin = 22),
+  control = control.ergm(
+    seed        = 1,
+    MCMLE.maxit = 10,
+    parallel    = 4,
+    CD.maxit    = 10
+    )
+  )
+```
+
+Now, a nice trick to see all regressions in the same table, we can use the `texreg` package which supports `ergm` ouputs!
+
+```{r 04-ergm-tabulation-screen}
+library(texreg)
+screenreg(list(ans0, ans1, ans2))
+```
+
+Or, if you are using rmarkdown, you can export the results using LaTeX or html, let's try the latter to see how it looks like here:
+
+```{r 04-ergm-tabulation-html}
+library(texreg)
+htmlreg(list(ans0, ans1, ans2))
+```
+
+### Model Goodness-of-Fit
+
+Since `ans0` is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did:
 
 ```{r checking-mcmc, cache = TRUE}
 mcmc.diagnostics(ans0)
 ```
 
-From the MCMC diagnostics we see that the chain still hasn't converged propertly. How do we know this? Well, as a rule of thum we should expect that at the end of the distribution all chains go at around the same value.
+Not that bad! First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.
+
+What would be an indicator of no-convergence? Well, 
 
 ```{r checking-gof, cache = TRUE}
 # Computing and printing GOF estatistics

@@ -122,7 +122,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-03-07}
+  \date{2018-03-09}
 
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -1496,7 +1496,7 @@ with the \texttt{which\_loop} function
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 2c3f50e (vertex names):
+## + 1/2638 edge from c16de63 (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -1520,30 +1520,40 @@ using the same operator
 \end{Highlighting}
 \end{Shaded}
 
-Let's rerun the model, now with a couple of extra terms
+Proposed workflow:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Estimate the simplest model, adding one variable at a time
+  Estimate the simplest model, adding one variable at a time.
 \item
   After each estimation, run the \texttt{mcmc.diagnostics} function to
-  see how good/bad behaved are the chains
+  see how good/bad behaved are the chains.
 \item
-  Run the \texttt{gof} function to
+  Run the \texttt{gof} function to see how good is the model at matching
+  the network's structural statistics.
 \end{enumerate}
 
-\texttt{control.ergms}: Maximum number of iteration, seed for
-Pseudo-RNG, how many cores
+What to use:
 
-\texttt{ergm.constraints}: Where to sample the network from. Gives
-stability as
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \texttt{control.ergms}: Maximum number of iteration, seed for
+  Pseudo-RNG, how many cores
+\item
+  \texttt{ergm.constraints}: Where to sample the network from. Gives
+  stability and (in some cases) faster convergence as by constraining
+  the model you are reducing the sample size.
+\end{enumerate}
 
-\texttt{gof}
+Here is an example of a couple of models that we could compare\footnote{Notice
+  that this document may not include the usual messages that the
+  \texttt{ergm} command generates during the estimation procedure. This
+  is just to make it more printable-friendly.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Running a simple ergm (only fitting edge count)}
 \NormalTok{ans0 <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
 \NormalTok{  network_}\DecValTok{111} \OperatorTok{~}
 \StringTok{    }\NormalTok{edges }\OperatorTok{+}
@@ -1551,6 +1561,30 @@ stability as
 \StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"eversmk1"}\NormalTok{) }\OperatorTok{+}
 \StringTok{    }\NormalTok{mutual}
+\NormalTok{    ,}
+  \DataTypeTok{constraints =} \OperatorTok{~}\KeywordTok{bd}\NormalTok{(}\DataTypeTok{maxout =} \DecValTok{19}\NormalTok{),}
+  \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}
+    \DataTypeTok{seed        =} \DecValTok{1}\NormalTok{,}
+    \DataTypeTok{MCMLE.maxit =} \DecValTok{10}\NormalTok{,}
+    \DataTypeTok{parallel    =} \DecValTok{4}\NormalTok{,}
+    \DataTypeTok{CD.maxit    =} \DecValTok{10}
+\NormalTok{    )}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+So what are we doing here: 1. The model is controling for: a.
+\texttt{edges} Number of edges in the network (as opposed to its
+density) b. \texttt{nodematch("female1")}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ans1 <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
+\NormalTok{  network_}\DecValTok{111} \OperatorTok{~}
+\StringTok{    }\NormalTok{edges }\OperatorTok{+}
+\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"eversmk1"}\NormalTok{)}
 \NormalTok{    ,}
   \DataTypeTok{constraints =} \OperatorTok{~}\KeywordTok{bd}\NormalTok{(}\DataTypeTok{maxout =} \DecValTok{19}\NormalTok{, }\DataTypeTok{maxin =} \DecValTok{22}\NormalTok{),}
   \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}
@@ -1563,219 +1597,61 @@ stability as
 \end{Highlighting}
 \end{Shaded}
 
+This example takes longer to compute
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ans2 <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
+\NormalTok{  network_}\DecValTok{111} \OperatorTok{~}
+\StringTok{    }\NormalTok{edges }\OperatorTok{+}
+\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"eversmk1"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{mutual }\OperatorTok{+}
+\StringTok{    }\NormalTok{balance}
+\NormalTok{    ,}
+  \DataTypeTok{constraints =} \OperatorTok{~}\KeywordTok{bd}\NormalTok{(}\DataTypeTok{maxout =} \DecValTok{19}\NormalTok{, }\DataTypeTok{maxin =} \DecValTok{22}\NormalTok{),}
+  \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}
+    \DataTypeTok{seed        =} \DecValTok{1}\NormalTok{,}
+    \DataTypeTok{MCMLE.maxit =} \DecValTok{10}\NormalTok{,}
+    \DataTypeTok{parallel    =} \DecValTok{4}\NormalTok{,}
+    \DataTypeTok{CD.maxit    =} \DecValTok{10}
+\NormalTok{    )}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Now, a nice trick to see all regressions in the same table, we can use
+the \texttt{texreg} package which supports \texttt{ergm} ouputs!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(texreg)}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
-## Starting contrastive divergence estimation via CD-MCMLE:
+## Version:  1.36.23
+## Date:     2017-03-03
+## Author:   Philip Leifeld (University of Glasgow)
+## 
+## Please cite the JSS article in your publications -- see citation("texreg").
 \end{verbatim}
 
 \begin{verbatim}
-## Iteration 1 of at most 10:
+## 
+## Attaching package: 'texreg'
 \end{verbatim}
 
 \begin{verbatim}
-## Convergence test P-value:0e+00
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by1.735
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 2 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Convergence test P-value:0e+00
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by1.867
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 3 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Convergence test P-value:0e+00
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by1.584
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 4 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Convergence test P-value:5.4e-195
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by0.7262
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 5 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Convergence test P-value:6.4e-56
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by0.1468
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 6 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Convergence test P-value:4.4e-11
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by0.02877
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 7 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Convergence test P-value:8.9e-04
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by0.01025
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 8 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Convergence test P-value:1.1e-01
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by0.004459
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 9 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Convergence test P-value:8.1e-01
-\end{verbatim}
-
-\begin{verbatim}
-## Convergence detected. Stopping.
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by0.001105
-\end{verbatim}
-
-\begin{verbatim}
-## Starting maximum likelihood estimation via MCMLE:
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 1 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Optimizing with step length 0.927769132341318.
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by 2.215.
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 2 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Optimizing with step length 0.298934775640332.
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by 2.493.
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 3 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Optimizing with step length 0.314693064006812.
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by 3.096.
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 4 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Optimizing with step length 0.694716889523959.
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by 1.537.
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 5 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Optimizing with step length 1.
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by 1.141.
-\end{verbatim}
-
-\begin{verbatim}
-## Step length converged once. Increasing MCMC sample size.
-\end{verbatim}
-
-\begin{verbatim}
-## Iteration 6 of at most 10:
-\end{verbatim}
-
-\begin{verbatim}
-## Optimizing with step length 1.
-\end{verbatim}
-
-\begin{verbatim}
-## The log-likelihood improved by 0.6937.
-\end{verbatim}
-
-\begin{verbatim}
-## Step length converged twice. Stopping.
-\end{verbatim}
-
-\begin{verbatim}
-## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.
-\end{verbatim}
-
-\begin{verbatim}
-## Evaluating log-likelihood at the estimate. Using 20 bridges: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 .
-## This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.
+## The following object is masked from 'package:magrittr':
+## 
+##     extract
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# What did we get}
-\KeywordTok{summary}\NormalTok{(ans0)}
+\KeywordTok{screenreg}\NormalTok{(}\KeywordTok{list}\NormalTok{(ans0, ans1, ans2))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1784,33 +1660,162 @@ stability as
 \end{verbatim}
 
 \begin{verbatim}
-## 
-## ==========================
-## Summary of model fit
-## ==========================
-## 
-## Formula:   network_111 ~ edges + nodematch("hispanic") + nodematch("female1") + 
-##     nodematch("eversmk1") + mutual
-## 
-## Iterations:  6 out of 10 
-## 
-## Monte Carlo MLE Results:
-##                    Estimate Std. Error MCMC % p-value    
-## edges              -5.62242    0.05005      0  <1e-04 ***
-## nodematch.hispanic  0.35938    0.03453      0  <1e-04 ***
-## nodematch.female1   0.82255    0.04359      0  <1e-04 ***
-## nodematch.eversmk1  0.33361    0.03844      0  <1e-04 ***
-## mutual              4.09236    0.07035      1  <1e-04 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-##      Null Deviance:      0  on 174306  degrees of freedom
-##  Residual Deviance: -37491  on 174301  degrees of freedom
-##  
-## Note that the null model likelihood and deviance are defined to be 0.
-## 
-## AIC: -37481    BIC: -37430    (Smaller is better.)
+## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.
+## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.
 \end{verbatim}
+
+\begin{verbatim}
+## 
+## ===============================================================
+##                     Model 1        Model 2        Model 3      
+## ---------------------------------------------------------------
+## edges                   -5.63 ***      -5.53 ***      -5.58 ***
+##                         (0.06)         (0.06)         (0.05)   
+## nodematch.hispanic       0.37 ***       0.51 ***       0.40 ***
+##                         (0.04)         (0.04)         (0.03)   
+## nodematch.female1        0.82 ***       1.10 ***       0.83 ***
+##                         (0.04)         (0.05)         (0.04)   
+## nodematch.eversmk1       0.33 ***       0.47 ***       0.36 ***
+##                         (0.04)         (0.04)         (0.04)   
+## mutual                   4.09 ***                     -3.74 ***
+##                         (0.07)                        (0.24)   
+## balance                                                0.02 ***
+##                                                       (0.00)   
+## ---------------------------------------------------------------
+## AIC                 -37835.55      -35513.35      -37544.30    
+## BIC                 -37785.21      -35473.08      -37483.89    
+## Log Likelihood       18922.78       17760.68       18778.15    
+## ===============================================================
+## *** p < 0.001, ** p < 0.01, * p < 0.05
+\end{verbatim}
+
+Or, if you are using rmarkdown, you can export the results using LaTeX
+or html, let's try the latter to see how it looks like here:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(texreg)}
+\KeywordTok{htmlreg}\NormalTok{(}\KeywordTok{list}\NormalTok{(ans0, ans1, ans2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.
+## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.
+## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+## <table cellspacing="0" align="center" style="border: none;">
+## <caption align="bottom" style="margin-top:0.3em;">Statistical models</caption>
+## <tr>
+## <th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"><b></b></th>
+## <th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"><b>Model 1</b></th>
+## <th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"><b>Model 2</b></th>
+## <th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"><b>Model 3</b></th>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;">edges</td>
+## <td style="padding-right: 12px; border: none;">-5.63<sup style="vertical-align: 0px;">***</sup></td>
+## <td style="padding-right: 12px; border: none;">-5.53<sup style="vertical-align: 0px;">***</sup></td>
+## <td style="padding-right: 12px; border: none;">-5.58<sup style="vertical-align: 0px;">***</sup></td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;">(0.06)</td>
+## <td style="padding-right: 12px; border: none;">(0.06)</td>
+## <td style="padding-right: 12px; border: none;">(0.05)</td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;">nodematch.hispanic</td>
+## <td style="padding-right: 12px; border: none;">0.37<sup style="vertical-align: 0px;">***</sup></td>
+## <td style="padding-right: 12px; border: none;">0.51<sup style="vertical-align: 0px;">***</sup></td>
+## <td style="padding-right: 12px; border: none;">0.40<sup style="vertical-align: 0px;">***</sup></td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;">(0.04)</td>
+## <td style="padding-right: 12px; border: none;">(0.04)</td>
+## <td style="padding-right: 12px; border: none;">(0.03)</td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;">nodematch.female1</td>
+## <td style="padding-right: 12px; border: none;">0.82<sup style="vertical-align: 0px;">***</sup></td>
+## <td style="padding-right: 12px; border: none;">1.10<sup style="vertical-align: 0px;">***</sup></td>
+## <td style="padding-right: 12px; border: none;">0.83<sup style="vertical-align: 0px;">***</sup></td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;">(0.04)</td>
+## <td style="padding-right: 12px; border: none;">(0.05)</td>
+## <td style="padding-right: 12px; border: none;">(0.04)</td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;">nodematch.eversmk1</td>
+## <td style="padding-right: 12px; border: none;">0.33<sup style="vertical-align: 0px;">***</sup></td>
+## <td style="padding-right: 12px; border: none;">0.47<sup style="vertical-align: 0px;">***</sup></td>
+## <td style="padding-right: 12px; border: none;">0.36<sup style="vertical-align: 0px;">***</sup></td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;">(0.04)</td>
+## <td style="padding-right: 12px; border: none;">(0.04)</td>
+## <td style="padding-right: 12px; border: none;">(0.04)</td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;">mutual</td>
+## <td style="padding-right: 12px; border: none;">4.09<sup style="vertical-align: 0px;">***</sup></td>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;">-3.74<sup style="vertical-align: 0px;">***</sup></td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;">(0.07)</td>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;">(0.24)</td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;">balance</td>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;">0.02<sup style="vertical-align: 0px;">***</sup></td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;"></td>
+## <td style="padding-right: 12px; border: none;">(0.00)</td>
+## </tr>
+## <tr>
+## <td style="border-top: 1px solid black;">AIC</td>
+## <td style="border-top: 1px solid black;">-37835.55</td>
+## <td style="border-top: 1px solid black;">-35513.35</td>
+## <td style="border-top: 1px solid black;">-37544.30</td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;">BIC</td>
+## <td style="padding-right: 12px; border: none;">-37785.21</td>
+## <td style="padding-right: 12px; border: none;">-35473.08</td>
+## <td style="padding-right: 12px; border: none;">-37483.89</td>
+## </tr>
+## <tr>
+## <td style="border-bottom: 2px solid black;">Log Likelihood</td>
+## <td style="border-bottom: 2px solid black;">18922.78</td>
+## <td style="border-bottom: 2px solid black;">17760.68</td>
+## <td style="border-bottom: 2px solid black;">18778.15</td>
+## </tr>
+## <tr>
+## <td style="padding-right: 12px; border: none;" colspan="5"><span style="font-size:0.8em"><sup style="vertical-align: 0px;">***</sup>p &lt; 0.001, <sup style="vertical-align: 0px;">**</sup>p &lt; 0.01, <sup style="vertical-align: 0px;">*</sup>p &lt; 0.05</span></td>
+## </tr>
+## </table>
+\end{verbatim}
+
+\subsection{Model Goodness-of-Fit}\label{model-goodness-of-fit}
+
+Since \texttt{ans0} is the one model which did best, let's take a look
+at it's GOF statistics. First, lets see how the MCMC did:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2001,10 +2006,14 @@ stability as
 ## MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).
 \end{verbatim}
 
-From the MCMC diagnostics we see that the chain still hasn't converged
-propertly. How do we know this? Well, as a rule of thum we should expect
-that at the end of the distribution all chains go at around the same
-value.
+Not that bad! First, observe that in the plot we see 4 different lines,
+why is that? Well, since we were running in parallel using 4 cores the
+algorithm actually ran 4 different chains of the MCMC algorithm. An
+eyeball test is to see if all the chains moved at about the same place,
+if we have that we can start thinking about model convergence from the
+mcmc perspective.
+
+What would be an indicator of no-convergence? Well,
 
 \begin{Shaded}
 \begin{Highlighting}[]
