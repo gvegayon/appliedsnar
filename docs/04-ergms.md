@@ -97,7 +97,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from c582375 (vertex names):
+## + 1/2638 edge from 226bac7 (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -117,6 +117,11 @@ network_111 <- network_111 - which(degree(network_111, mode = "all") == 0)
 # Converting the network
 network_111 <- intergraph::asNetwork(network_111)
 ```
+
+`asNetwork(simplify(ig_year1_111))`
+`ig_year1_111 %>% simplify %>% asNetwork`
+
+ig_year1_111 %>% simplify %>% asNetwork
 
 Proposed workflow:
 
@@ -157,7 +162,8 @@ ans0 <- ergm(
 So what are we doing here:
 1.  The model is controling for: 
     a.  `edges` Number of edges in the network (as opposed to its density)
-    b.  `nodematch("female1")`
+    b.  `nodematch("some-variable-name-here")` Includes a term that controls for homophily/heterophily
+    c.  `mutual` Number of mutual connections between $i$ and $j$. This can be related to, for example, triadic closure.
 
 
 ```r
@@ -567,7 +573,7 @@ mcmc.diagnostics(ans0)
 ```
 
 ```
-## Warning in formals(fun): argument is not a function
+## Package latticeExtra is not installed. Falling back on coda's default MCMC diagnostic plots.
 ```
 
 <img src="04-ergms_files/figure-html/checking-mcmc-1.png" width="672" /><img src="04-ergms_files/figure-html/checking-mcmc-2.png" width="672" />

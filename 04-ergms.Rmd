@@ -91,6 +91,11 @@ network_111 <- network_111 - which(degree(network_111, mode = "all") == 0)
 network_111 <- intergraph::asNetwork(network_111)
 ```
 
+`asNetwork(simplify(ig_year1_111))`
+`ig_year1_111 %>% simplify %>% asNetwork`
+
+ig_year1_111 %>% simplify %>% asNetwork
+
 Proposed workflow:
 
 1.  Estimate the simplest model, adding one variable at a time.

@@ -411,16 +411,16 @@ these actually look nice:
 ## # A tibble: 2,164 x 100
 ##    photoid school hispanic female1 female2 female3 female4 grades1 grades2
 ##      <int>  <int>    <dbl>   <int>   <int>   <int>   <int>   <dbl>   <dbl>
-##  1       1    111       1.      NA      NA       0       0   NA      NA   
-##  2       2    111       1.       0      NA      NA       0    3.00   NA   
-##  3       7    111       0.       1       1       1       1    5.00    4.50
-##  4      13    111       1.       1       1       1       1    2.50    2.50
-##  5      14    111       1.       1       1       1      NA    3.00    3.50
-##  6      15    111       1.       0       0       0       0    2.50    2.50
-##  7      20    111       1.       1       1       1       1    2.50    2.50
-##  8      22    111       1.      NA      NA       0       0   NA      NA   
-##  9      25    111       0.       1       1      NA       1    4.50    3.50
-## 10      27    111       1.       0      NA       0       0    3.50   NA   
+##  1       1    111     1.00      NA      NA       0       0   NA      NA   
+##  2       2    111     1.00       0      NA      NA       0    3.00   NA   
+##  3       7    111     0          1       1       1       1    5.00    4.50
+##  4      13    111     1.00       1       1       1       1    2.50    2.50
+##  5      14    111     1.00       1       1       1      NA    3.00    3.50
+##  6      15    111     1.00       0       0       0       0    2.50    2.50
+##  7      20    111     1.00       1       1       1       1    2.50    2.50
+##  8      22    111     1.00      NA      NA       0       0   NA      NA   
+##  9      25    111     0          1       1      NA       1    4.50    3.50
+## 10      27    111     1.00       0      NA       0       0    3.50   NA   
 ## # ... with 2,154 more rows, and 91 more variables: grades3 <dbl>,
 ## #   grades4 <dbl>, eversmk1 <int>, eversmk2 <int>, eversmk3 <int>,
 ## #   eversmk4 <int>, everdrk1 <int>, everdrk2 <int>, everdrk3 <int>,
@@ -489,18 +489,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 2,164 x 78
-##          id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
-##       <dbl>  <int>        <int>        <int>        <int>        <int>
-##  1 1110001.    111           NA           NA           NA           NA
-##  2 1110002.    111          424          423          426          289
-##  3 1110007.    111          629          505           NA           NA
-##  4 1110013.    111          232          569           NA           NA
-##  5 1110014.    111          582          134           41          592
-##  6 1110015.    111           26          488           81          138
-##  7 1110020.    111          528           NA          492          395
-##  8 1110022.    111           NA           NA           NA           NA
-##  9 1110025.    111          135          185          553           84
-## 10 1110027.    111          346          168          559            5
+##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
+##      <dbl>  <int>        <int>        <int>        <int>        <int>
+##  1 1110001    111           NA           NA           NA           NA
+##  2 1110002    111          424          423          426          289
+##  3 1110007    111          629          505           NA           NA
+##  4 1110013    111          232          569           NA           NA
+##  5 1110014    111          582          134           41          592
+##  6 1110015    111           26          488           81          138
+##  7 1110020    111          528           NA          492          395
+##  8 1110022    111           NA           NA           NA           NA
+##  9 1110025    111          135          185          553           84
+## 10 1110027    111          346          168          559            5
 ## # ... with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
 ## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
 ## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,
@@ -544,18 +544,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 164,464 x 4
-##          id school varname      content
-##       <dbl>  <int> <chr>          <int>
-##  1 1110001.    111 sch_friend11      NA
-##  2 1110002.    111 sch_friend11     424
-##  3 1110007.    111 sch_friend11     629
-##  4 1110013.    111 sch_friend11     232
-##  5 1110014.    111 sch_friend11     582
-##  6 1110015.    111 sch_friend11      26
-##  7 1110020.    111 sch_friend11     528
-##  8 1110022.    111 sch_friend11      NA
-##  9 1110025.    111 sch_friend11     135
-## 10 1110027.    111 sch_friend11     346
+##         id school varname      content
+##      <dbl>  <int> <chr>          <int>
+##  1 1110001    111 sch_friend11      NA
+##  2 1110002    111 sch_friend11     424
+##  3 1110007    111 sch_friend11     629
+##  4 1110013    111 sch_friend11     232
+##  5 1110014    111 sch_friend11     582
+##  6 1110015    111 sch_friend11      26
+##  7 1110020    111 sch_friend11     528
+##  8 1110022    111 sch_friend11      NA
+##  9 1110025    111 sch_friend11     135
+## 10 1110027    111 sch_friend11     346
 ## # ... with 164,454 more rows
 \end{verbatim}
 
@@ -584,18 +584,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 39,561 x 4
-##          id school varname      content
-##       <dbl>  <int> <chr>          <int>
-##  1 1110002.    111 sch_friend11     424
-##  2 1110007.    111 sch_friend11     629
-##  3 1110013.    111 sch_friend11     232
-##  4 1110014.    111 sch_friend11     582
-##  5 1110015.    111 sch_friend11      26
-##  6 1110020.    111 sch_friend11     528
-##  7 1110025.    111 sch_friend11     135
-##  8 1110027.    111 sch_friend11     346
-##  9 1110029.    111 sch_friend11     369
-## 10 1110030.    111 sch_friend11     462
+##         id school varname      content
+##      <dbl>  <int> <chr>          <int>
+##  1 1110002    111 sch_friend11     424
+##  2 1110007    111 sch_friend11     629
+##  3 1110013    111 sch_friend11     232
+##  4 1110014    111 sch_friend11     582
+##  5 1110015    111 sch_friend11      26
+##  6 1110020    111 sch_friend11     528
+##  7 1110025    111 sch_friend11     135
+##  8 1110027    111 sch_friend11     346
+##  9 1110029    111 sch_friend11     369
+## 10 1110030    111 sch_friend11     462
 ## # ... with 39,551 more rows
 \end{verbatim}
 \item
@@ -619,18 +619,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 39,561 x 7
-##          id school varname      content friendid  year  nnom
-##       <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
-##  1 1110002.    111 sch_friend11     424 1110424.     1     1
-##  2 1110007.    111 sch_friend11     629 1110629.     1     1
-##  3 1110013.    111 sch_friend11     232 1110232.     1     1
-##  4 1110014.    111 sch_friend11     582 1110582.     1     1
-##  5 1110015.    111 sch_friend11      26 1110026.     1     1
-##  6 1110020.    111 sch_friend11     528 1110528.     1     1
-##  7 1110025.    111 sch_friend11     135 1110135.     1     1
-##  8 1110027.    111 sch_friend11     346 1110346.     1     1
-##  9 1110029.    111 sch_friend11     369 1110369.     1     1
-## 10 1110030.    111 sch_friend11     462 1110462.     1     1
+##         id school varname      content friendid  year  nnom
+##      <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
+##  1 1110002    111 sch_friend11     424  1110424     1     1
+##  2 1110007    111 sch_friend11     629  1110629     1     1
+##  3 1110013    111 sch_friend11     232  1110232     1     1
+##  4 1110014    111 sch_friend11     582  1110582     1     1
+##  5 1110015    111 sch_friend11      26  1110026     1     1
+##  6 1110020    111 sch_friend11     528  1110528     1     1
+##  7 1110025    111 sch_friend11     135  1110135     1     1
+##  8 1110027    111 sch_friend11     346  1110346     1     1
+##  9 1110029    111 sch_friend11     369  1110369     1     1
+## 10 1110030    111 sch_friend11     462  1110462     1     1
 ## # ... with 39,551 more rows
 \end{verbatim}
 
@@ -736,11 +736,11 @@ depends on what you need to do! In this case, we will go for the
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH fa9c268 DN-- 2164 9514 -- 
+## IGRAPH ecde38c DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from fa9c268 (vertex names):
+## + edges from ecde38c (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -1321,16 +1321,16 @@ of their peers are more popular
 ## # Groups:   to, to_name [1,561]
 ##       to to_name school indeg nom_avg
 ##    <dbl> <chr>    <int> <int>   <dbl>
-##  1    2. 1110002    111    22   0.222
-##  2    3. 1110007    111     7   0.175
-##  3    4. 1110013    111     6   0.171
-##  4    5. 1110014    111    19   0.134
-##  5    6. 1110015    111     3   0.150
-##  6    7. 1110020    111     6   0.154
-##  7    9. 1110025    111     6   0.214
-##  8   10. 1110027    111    13   0.220
-##  9   11. 1110029    111    14   0.131
-## 10   12. 1110030    111     6   0.222
+##  1  2.00 1110002    111    22   0.222
+##  2  3.00 1110007    111     7   0.175
+##  3  4.00 1110013    111     6   0.171
+##  4  5.00 1110014    111    19   0.134
+##  5  6.00 1110015    111     3   0.150
+##  6  7.00 1110020    111     6   0.154
+##  7  9.00 1110025    111     6   0.214
+##  8 10.0  1110027    111    13   0.220
+##  9 11.0  1110029    111    14   0.131
+## 10 12.0  1110030    111     6   0.222
 ## # ... with 1,551 more rows
 \end{verbatim}
 
@@ -1496,7 +1496,7 @@ with the \texttt{which\_loop} function
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from c16de63 (vertex names):
+## + 1/2638 edge from 2693b63 (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -1519,6 +1519,11 @@ using the same operator
 \NormalTok{network_}\DecValTok{111}\NormalTok{ <-}\StringTok{ }\NormalTok{intergraph}\OperatorTok{::}\KeywordTok{asNetwork}\NormalTok{(network_}\DecValTok{111}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\texttt{asNetwork(simplify(ig\_year1\_111))}
+\texttt{ig\_year1\_111\ \%\textgreater{}\%\ simplify\ \%\textgreater{}\%\ asNetwork}
+
+ig\_year1\_111 \%\textgreater{}\% simplify \%\textgreater{}\% asNetwork
 
 Proposed workflow:
 
@@ -1575,7 +1580,10 @@ Here is an example of a couple of models that we could compare\footnote{Notice
 
 So what are we doing here: 1. The model is controling for: a.
 \texttt{edges} Number of edges in the network (as opposed to its
-density) b. \texttt{nodematch("female1")}
+density) b. \texttt{nodematch("some-variable-name-here")} Includes a
+term that controls for homophily/heterophily c. \texttt{mutual} Number
+of mutual connections between \(i\) and \(j\). This can be related to,
+for example, triadic closure.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1834,168 +1842,183 @@ at it's GOF statistics. First, lets see how the MCMC did:
 ## 1. Empirical mean and standard deviation for each variable,
 ##    plus standard error of the mean:
 ## 
-##                        Mean    SD Naive SE Time-series SE
-## edges                5.2175 54.79   0.8562          4.504
-## nodematch.hispanic -26.8933 46.16   0.7212          4.560
-## nodematch.female1   16.6682 47.28   0.7388          4.372
-## nodematch.eversmk1   6.1863 48.54   0.7584          5.370
-## mutual               0.8477 21.24   0.3319          4.430
+##                      Mean    SD Naive SE Time-series SE
+## edges              -32.32 51.14   0.7990          3.557
+## nodematch.hispanic -26.81 39.08   0.6106          2.879
+## nodematch.female1  -28.03 44.92   0.7018          3.678
+## nodematch.eversmk1 -30.99 45.59   0.7123          3.420
+## mutual             -14.35 20.47   0.3199          3.120
 ## 
 ## 2. Quantiles for each variable:
 ## 
-##                    2.5%    25% 50% 75%  97.5%
-## edges               -98 -32.00   4  41 116.00
-## nodematch.hispanic -118 -56.00 -27   2  66.62
-## nodematch.female1   -75 -14.25  15  48 113.00
-## nodematch.eversmk1  -84 -27.00   4  37 109.00
-## mutual              -46 -12.00  -1  14  43.00
+##                    2.5% 25% 50% 75% 97.5%
+## edges              -128 -68 -35   1    75
+## nodematch.hispanic -100 -54 -27  -2    53
+## nodematch.female1  -115 -59 -29   2    65
+## nodematch.eversmk1 -116 -63 -33   1    59
+## mutual              -55 -27 -16  -1    29
 ## 
 ## 
 ## Sample statistics cross-correlations:
 ##                        edges nodematch.hispanic nodematch.female1
-## edges              1.0000000          0.7703930         0.8702355
-## nodematch.hispanic 0.7703930          1.0000000         0.6691023
-## nodematch.female1  0.8702355          0.6691023         1.0000000
-## nodematch.eversmk1 0.8321525          0.6704200         0.7319416
-## mutual             0.7012887          0.6083908         0.6661004
+## edges              1.0000000          0.7842851         0.8454275
+## nodematch.hispanic 0.7842851          1.0000000         0.6875136
+## nodematch.female1  0.8454275          0.6875136         1.0000000
+## nodematch.eversmk1 0.8278077          0.6009145         0.6802329
+## mutual             0.6761018          0.5362456         0.6581912
 ##                    nodematch.eversmk1    mutual
-## edges                       0.8321525 0.7012887
-## nodematch.hispanic          0.6704200 0.6083908
-## nodematch.female1           0.7319416 0.6661004
-## nodematch.eversmk1          1.0000000 0.6791293
-## mutual                      0.6791293 1.0000000
+## edges                       0.8278077 0.6761018
+## nodematch.hispanic          0.6009145 0.5362456
+## nodematch.female1           0.6802329 0.6581912
+## nodematch.eversmk1          1.0000000 0.6111560
+## mutual                      0.6111560 1.0000000
 ## 
 ## Sample statistics auto-correlation:
 ## Chain 1 
 ##              edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
 ## Lag 0    1.0000000          1.0000000         1.0000000          1.0000000
-## Lag 1024 0.9194094          0.9264455         0.9322242          0.9148191
-## Lag 2048 0.8526321          0.8583709         0.8679994          0.8473601
-## Lag 3072 0.7980086          0.8047307         0.8148158          0.7874674
-## Lag 4096 0.7556384          0.7658891         0.7753939          0.7373127
-## Lag 5120 0.7202209          0.7380723         0.7438670          0.6973020
+## Lag 1024 0.8897580          0.8790036         0.9067042          0.9073188
+## Lag 2048 0.7986333          0.7630187         0.8334292          0.8273800
+## Lag 3072 0.7209919          0.6673172         0.7718927          0.7554744
+## Lag 4096 0.6579708          0.5904216         0.7289345          0.6979948
+## Lag 5120 0.6125344          0.5328138         0.6960912          0.6557095
 ##             mutual
 ## Lag 0    1.0000000
-## Lag 1024 0.9922688
-## Lag 2048 0.9850092
-## Lag 3072 0.9782542
-## Lag 4096 0.9718149
-## Lag 5120 0.9651833
+## Lag 1024 0.9884291
+## Lag 2048 0.9758753
+## Lag 3072 0.9638337
+## Lag 4096 0.9516282
+## Lag 5120 0.9396082
 ## Chain 2 
 ##              edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
 ## Lag 0    1.0000000          1.0000000         1.0000000          1.0000000
-## Lag 1024 0.8937698          0.9320595         0.9003587          0.9090676
-## Lag 2048 0.8058768          0.8732285         0.8200779          0.8353461
-## Lag 3072 0.7329964          0.8234520         0.7531759          0.7755789
-## Lag 4096 0.6738326          0.7817764         0.6904470          0.7207250
-## Lag 5120 0.6359449          0.7538172         0.6430627          0.6829884
+## Lag 1024 0.8959790          0.8964603         0.9110176          0.9203159
+## Lag 2048 0.8058970          0.8100361         0.8359065          0.8460498
+## Lag 3072 0.7334275          0.7337434         0.7777991          0.7886865
+## Lag 4096 0.6726685          0.6679756         0.7322632          0.7354859
+## Lag 5120 0.6254356          0.6185131         0.6977288          0.6928700
 ##             mutual
 ## Lag 0    1.0000000
-## Lag 1024 0.9883401
-## Lag 2048 0.9764278
-## Lag 3072 0.9637258
-## Lag 4096 0.9517826
-## Lag 5120 0.9404211
+## Lag 1024 0.9826734
+## Lag 2048 0.9659460
+## Lag 3072 0.9486344
+## Lag 4096 0.9319218
+## Lag 5120 0.9151384
 ## Chain 3 
 ##              edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
 ## Lag 0    1.0000000          1.0000000         1.0000000          1.0000000
-## Lag 1024 0.8691963          0.8697551         0.8905401          0.8832045
-## Lag 2048 0.7670783          0.7709648         0.8086326          0.7950309
-## Lag 3072 0.6765077          0.6916824         0.7397413          0.7181674
-## Lag 4096 0.5939888          0.6283922         0.6724809          0.6500649
-## Lag 5120 0.5341970          0.5833965         0.6153834          0.5984216
+## Lag 1024 0.8701425          0.8675990         0.8672803          0.8990832
+## Lag 2048 0.7687051          0.7649209         0.7649762          0.8248751
+## Lag 3072 0.6864291          0.6800333         0.6759944          0.7589305
+## Lag 4096 0.6167578          0.6172948         0.6073686          0.7024222
+## Lag 5120 0.5532752          0.5577184         0.5584743          0.6522335
 ##             mutual
 ## Lag 0    1.0000000
-## Lag 1024 0.9742239
-## Lag 2048 0.9505850
-## Lag 3072 0.9285324
-## Lag 4096 0.9067956
-## Lag 5120 0.8879835
+## Lag 1024 0.9873210
+## Lag 2048 0.9742849
+## Lag 3072 0.9609028
+## Lag 4096 0.9474743
+## Lag 5120 0.9341269
 ## Chain 4 
 ##              edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
 ## Lag 0    1.0000000          1.0000000         1.0000000          1.0000000
-## Lag 1024 0.9083130          0.9144195         0.9124920          0.9072684
-## Lag 2048 0.8301639          0.8566684         0.8337887          0.8298152
-## Lag 3072 0.7625395          0.8035036         0.7719743          0.7678617
-## Lag 4096 0.7030654          0.7581905         0.7172222          0.7157227
-## Lag 5120 0.6528153          0.7165866         0.6732486          0.6688953
+## Lag 1024 0.8445223          0.8254552         0.8676058          0.8833914
+## Lag 2048 0.7139073          0.6765448         0.7489365          0.7861150
+## Lag 3072 0.6091256          0.5542943         0.6654736          0.7070910
+## Lag 4096 0.5273214          0.4454991         0.5954670          0.6406128
+## Lag 5120 0.4624535          0.3544722         0.5413447          0.5922046
 ##             mutual
 ## Lag 0    1.0000000
-## Lag 1024 0.9879414
-## Lag 2048 0.9759230
-## Lag 3072 0.9644667
-## Lag 4096 0.9533075
-## Lag 5120 0.9412684
+## Lag 1024 0.9744782
+## Lag 2048 0.9472413
+## Lag 3072 0.9204814
+## Lag 4096 0.8932318
+## Lag 5120 0.8660835
 ## 
 ## Sample statistics burn-in diagnostic (Geweke):
-## Chain 4 
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##             -4.505             -5.054             -6.423 
-## nodematch.eversmk1             mutual 
-##             -7.250             -7.454 
-## 
-## Individual P-values (lower = worse):
-##              edges nodematch.hispanic  nodematch.female1 
-##       6.648201e-06       4.327581e-07       1.340410e-10 
-## nodematch.eversmk1             mutual 
-##       4.152969e-13       9.082950e-14 
-## Joint P-value (lower = worse):  0.0004497061 .
-## Chain 4 
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##              3.065              5.834              2.057 
-## nodematch.eversmk1             mutual 
-##              4.452              1.770 
-## 
-## Individual P-values (lower = worse):
-##              edges nodematch.hispanic  nodematch.female1 
-##       2.179724e-03       5.396178e-09       3.967389e-02 
-## nodematch.eversmk1             mutual 
-##       8.487764e-06       7.678079e-02 
-## Joint P-value (lower = worse):  0.03093665 .
-## Chain 4 
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##             -3.482             -3.076             -6.079 
-## nodematch.eversmk1             mutual 
-##             -3.388             -3.348 
-## 
-## Individual P-values (lower = worse):
-##              edges nodematch.hispanic  nodematch.female1 
-##       4.983811e-04       2.100660e-03       1.212941e-09 
-## nodematch.eversmk1             mutual 
-##       7.037519e-04       8.147796e-04 
-## Joint P-value (lower = worse):  0.1164457 .
-## Chain 4 
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##              4.702              7.223              5.269 
-## nodematch.eversmk1             mutual 
-##              6.900              4.079 
-## 
-## Individual P-values (lower = worse):
-##              edges nodematch.hispanic  nodematch.female1 
-##       2.574907e-06       5.086754e-13       1.372144e-07 
-## nodematch.eversmk1             mutual 
-##       5.194108e-12       4.522375e-05 
-## Joint P-value (lower = worse):  0.002006982 .
 \end{verbatim}
 
 \begin{verbatim}
-## Warning in formals(fun): argument is not a function
+## Warning in approx.hotelling.diff.test(x1, x2, var.equal = TRUE): Effective
+## degrees of freedom (2.78452150708683) must exceed the number of varying
+## parameters (5). P-value will not be computed.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in approx.hotelling.diff.test(x1, x2, var.equal = TRUE): Effective
+## degrees of freedom (3.64975192308324) must exceed the number of varying
+## parameters (5). P-value will not be computed.
+\end{verbatim}
+
+\begin{verbatim}
+## Chain 4 
+## 
+## Fraction in 1st window = 0.1
+## Fraction in 2nd window = 0.5 
+## 
+##              edges nodematch.hispanic  nodematch.female1 
+##             1.2158             1.9078             1.0548 
+## nodematch.eversmk1             mutual 
+##             1.6781             0.4969 
+## 
+## Individual P-values (lower = worse):
+##              edges nodematch.hispanic  nodematch.female1 
+##         0.22405631         0.05642065         0.29149799 
+## nodematch.eversmk1             mutual 
+##         0.09333043         0.61927239 
+## Joint P-value (lower = worse):  0 .
+## Chain 4 
+## 
+## Fraction in 1st window = 0.1
+## Fraction in 2nd window = 0.5 
+## 
+##              edges nodematch.hispanic  nodematch.female1 
+##              1.451              4.109              2.268 
+## nodematch.eversmk1             mutual 
+##              1.108              1.478 
+## 
+## Individual P-values (lower = worse):
+##              edges nodematch.hispanic  nodematch.female1 
+##       1.467461e-01       3.968506e-05       2.333087e-02 
+## nodematch.eversmk1             mutual 
+##       2.679449e-01       1.393792e-01 
+## Joint P-value (lower = worse):  0 .
+## Chain 4 
+## 
+## Fraction in 1st window = 0.1
+## Fraction in 2nd window = 0.5 
+## 
+##              edges nodematch.hispanic  nodematch.female1 
+##             1.1445             0.3823            -1.4859 
+## nodematch.eversmk1             mutual 
+##             1.9638             0.3500 
+## 
+## Individual P-values (lower = worse):
+##              edges nodematch.hispanic  nodematch.female1 
+##         0.25243430         0.70222700         0.13729538 
+## nodematch.eversmk1             mutual 
+##         0.04955904         0.72634315 
+## Joint P-value (lower = worse):  0.459502 .
+## Chain 4 
+## 
+## Fraction in 1st window = 0.1
+## Fraction in 2nd window = 0.5 
+## 
+##              edges nodematch.hispanic  nodematch.female1 
+##           -0.07832            1.71294            0.62034 
+## nodematch.eversmk1             mutual 
+##           -1.35149           -1.05875 
+## 
+## Individual P-values (lower = worse):
+##              edges nodematch.hispanic  nodematch.female1 
+##         0.93757446         0.08672292         0.53503274 
+## nodematch.eversmk1             mutual 
+##         0.17653807         0.28971387 
+## Joint P-value (lower = worse):  0.2058282 .
+\end{verbatim}
+
+\begin{verbatim}
+## Package latticeExtra is not installed. Falling back on coda's default MCMC diagnostic plots.
 \end{verbatim}
 
 \includegraphics{04-ergms_files/figure-latex/checking-mcmc-1.pdf}
@@ -2028,60 +2051,62 @@ What would be an indicator of no-convergence? Well,
 ## Goodness-of-fit for in-degree 
 ## 
 ##    obs min  mean max MC p-value
-## 0   13   0  2.19   6       0.00
-## 1   34   3  8.96  21       0.00
-## 2   37  13 22.17  34       0.00
-## 3   48  29 41.08  58       0.28
-## 4   37  37 56.89  75       0.02
-## 5   47  45 63.96  81       0.02
-## 6   42  41 63.21  83       0.02
-## 7   39  39 53.20  69       0.04
-## 8   35  23 40.26  62       0.52
-## 9   21  20 28.19  39       0.14
-## 10  12   6 18.20  35       0.22
-## 11  19   3  9.98  21       0.04
-## 12   4   0  5.04  12       0.92
-## 13   7   0  2.71   8       0.10
-## 14   6   0  1.16   6       0.02
-## 15   3   0  0.47   3       0.02
-## 16   4   0  0.19   2       0.00
+## 0   13   0  2.05   6       0.00
+## 1   34   1  8.51  17       0.00
+## 2   37   9 21.64  34       0.00
+## 3   48  25 38.73  58       0.16
+## 4   37  36 53.98  69       0.02
+## 5   47  46 64.97  86       0.02
+## 6   42  46 62.93  80       0.00
+## 7   39  31 55.46  75       0.02
+## 8   35  27 41.75  57       0.38
+## 9   21  18 28.76  42       0.16
+## 10  12   8 18.03  31       0.10
+## 11  19   4 10.94  24       0.06
+## 12   4   0  5.19  13       0.78
+## 13   7   0  2.66   7       0.02
+## 14   6   0  1.48   5       0.00
+## 15   3   0  0.55   3       0.04
+## 16   4   0  0.22   2       0.00
 ## 17   3   0  0.10   1       0.00
-## 18   3   0  0.03   1       0.00
+## 18   3   0  0.04   2       0.00
 ## 19   2   0  0.00   0       0.00
-## 20   1   0  0.01   1       0.02
+## 20   1   0  0.00   0       0.00
+## 21   0   0  0.01   1       1.00
 ## 22   1   0  0.00   0       0.00
 ## 
 ## Goodness-of-fit for out-degree 
 ## 
 ##    obs min  mean max MC p-value
-## 0    4   0  2.10   6       0.24
-## 1   28   3  9.45  20       0.00
-## 2   45  11 22.31  35       0.00
-## 3   50  26 40.55  61       0.20
-## 4   54  41 56.40  73       0.90
-## 5   62  51 63.56  82       1.00
-## 6   40  44 63.59  84       0.00
-## 7   28  38 54.11  70       0.00
-## 8   13  28 40.71  56       0.00
-## 9   16  15 28.00  45       0.02
-## 10  20   7 16.90  28       0.64
-## 11   8   2 10.14  17       0.54
-## 12  11   1  5.35  15       0.08
-## 13  13   0  2.95  11       0.00
-## 14   6   0  1.09   4       0.00
-## 15   6   0  0.56   2       0.00
-## 16   7   0  0.17   2       0.00
-## 17   4   0  0.05   1       0.00
-## 18   3   0  0.01   1       0.00
+## 0    4   0  2.12   6       0.26
+## 1   28   2  8.84  18       0.00
+## 2   45  11 21.15  33       0.00
+## 3   50  27 37.98  50       0.02
+## 4   54  37 54.49  72       0.92
+## 5   62  48 63.90  84       0.78
+## 6   40  51 64.48  88       0.00
+## 7   28  42 54.98  70       0.00
+## 8   13  27 42.19  62       0.00
+## 9   16  17 29.46  45       0.00
+## 10  20   8 18.07  29       0.72
+## 11   8   2 10.20  21       0.56
+## 12  11   1  5.32  16       0.06
+## 13  13   0  2.54   6       0.00
+## 14   6   0  1.46   6       0.02
+## 15   6   0  0.47   4       0.00
+## 16   7   0  0.21   2       0.00
+## 17   4   0  0.08   2       0.00
+## 18   3   0  0.04   1       0.00
+## 19   0   0  0.02   1       1.00
 ## 
 ## Goodness-of-fit for edgewise shared partner 
 ## 
 ##       obs  min    mean  max MC p-value
-## esp0 1032 1941 2219.58 2352          0
-## esp1  755  183  232.76  398          0
-## esp2  352    1   14.39   98          0
-## esp3  202    0    0.86   15          0
-## esp4   79    0    0.02    1          0
+## esp0 1032 2024 2244.16 2373          0
+## esp1  755  174  240.27  395          0
+## esp2  352    5   15.08   75          0
+## esp3  202    0    0.50    6          0
+## esp4   79    0    0.00    0          0
 ## esp5   36    0    0.00    0          0
 ## esp6   14    0    0.00    0          0
 ## esp7    4    0    0.00    0          0
@@ -2090,26 +2115,26 @@ What would be an indicator of no-convergence? Well,
 ## Goodness-of-fit for minimum geodesic distance 
 ## 
 ##       obs   min     mean   max MC p-value
-## 1    2475  2249  2467.61  2576          1
-## 2   10672 11817 13956.56 15192          0
-## 3   31134 47358 56761.50 62149          0
-## 4   50673 75548 78943.57 81725          0
-## 5   42563 13798 19146.59 28769          0
-## 6   18719   421  1164.67  2750          0
-## 7    4808     0    38.81   220          0
-## 8     822     0     0.80    22          0
-## 9     100     0     0.00     0          0
-## 10      7     0     0.00     0          0
-## Inf 12333     0  1825.89  4148          0
+## 1    2475  2301  2500.01  2625       0.68
+## 2   10672 12158 14250.49 15716       0.00
+## 3   31134 49068 58045.75 63937       0.00
+## 4   50673 75648 78732.72 80928       0.00
+## 5   42563 12954 17973.98 26706       0.00
+## 6   18719   346  1021.26  2004       0.00
+## 7    4808     1    30.06   182       0.00
+## 8     822     0     0.41     7       0.00
+## 9     100     0     0.01     1       0.00
+## 10      7     0     0.00     0       0.00
+## Inf 12333     0  1751.31  3324       0.00
 ## 
 ## Goodness-of-fit for model statistics 
 ## 
 ##                     obs  min    mean  max MC p-value
-## edges              2475 2249 2467.61 2576       1.00
-## nodematch.hispanic 1615 1482 1599.23 1718       0.74
-## nodematch.female1  1814 1628 1804.96 1909       0.94
-## nodematch.eversmk1 1738 1524 1729.37 1840       0.96
-## mutual              486  403  481.13  528       1.00
+## edges              2475 2301 2500.01 2625       0.68
+## nodematch.hispanic 1615 1511 1627.76 1753       0.84
+## nodematch.female1  1814 1690 1829.15 1959       0.88
+## nodematch.eversmk1 1738 1638 1744.42 1842       0.98
+## mutual              486  449  495.08  554       0.62
 \end{verbatim}
 
 \begin{Shaded}

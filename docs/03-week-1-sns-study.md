@@ -123,16 +123,16 @@ dat
 ## # A tibble: 2,164 x 100
 ##    photoid school hispanic female1 female2 female3 female4 grades1 grades2
 ##      <int>  <int>    <dbl>   <int>   <int>   <int>   <int>   <dbl>   <dbl>
-##  1       1    111       1.      NA      NA       0       0   NA      NA   
-##  2       2    111       1.       0      NA      NA       0    3.00   NA   
-##  3       7    111       0.       1       1       1       1    5.00    4.50
-##  4      13    111       1.       1       1       1       1    2.50    2.50
-##  5      14    111       1.       1       1       1      NA    3.00    3.50
-##  6      15    111       1.       0       0       0       0    2.50    2.50
-##  7      20    111       1.       1       1       1       1    2.50    2.50
-##  8      22    111       1.      NA      NA       0       0   NA      NA   
-##  9      25    111       0.       1       1      NA       1    4.50    3.50
-## 10      27    111       1.       0      NA       0       0    3.50   NA   
+##  1       1    111     1.00      NA      NA       0       0   NA      NA   
+##  2       2    111     1.00       0      NA      NA       0    3.00   NA   
+##  3       7    111     0          1       1       1       1    5.00    4.50
+##  4      13    111     1.00       1       1       1       1    2.50    2.50
+##  5      14    111     1.00       1       1       1      NA    3.00    3.50
+##  6      15    111     1.00       0       0       0       0    2.50    2.50
+##  7      20    111     1.00       1       1       1       1    2.50    2.50
+##  8      22    111     1.00      NA      NA       0       0   NA      NA   
+##  9      25    111     0          1       1      NA       1    4.50    3.50
+## 10      27    111     1.00       0      NA       0       0    3.50   NA   
 ## # ... with 2,154 more rows, and 91 more variables: grades3 <dbl>,
 ## #   grades4 <dbl>, eversmk1 <int>, eversmk2 <int>, eversmk3 <int>,
 ## #   eversmk4 <int>, everdrk1 <int>, everdrk2 <int>, everdrk3 <int>,
@@ -193,18 +193,18 @@ Let's take a look at this step by step:
     
     ```
     ## # A tibble: 2,164 x 78
-    ##          id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
-    ##       <dbl>  <int>        <int>        <int>        <int>        <int>
-    ##  1 1110001.    111           NA           NA           NA           NA
-    ##  2 1110002.    111          424          423          426          289
-    ##  3 1110007.    111          629          505           NA           NA
-    ##  4 1110013.    111          232          569           NA           NA
-    ##  5 1110014.    111          582          134           41          592
-    ##  6 1110015.    111           26          488           81          138
-    ##  7 1110020.    111          528           NA          492          395
-    ##  8 1110022.    111           NA           NA           NA           NA
-    ##  9 1110025.    111          135          185          553           84
-    ## 10 1110027.    111          346          168          559            5
+    ##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
+    ##      <dbl>  <int>        <int>        <int>        <int>        <int>
+    ##  1 1110001    111           NA           NA           NA           NA
+    ##  2 1110002    111          424          423          426          289
+    ##  3 1110007    111          629          505           NA           NA
+    ##  4 1110013    111          232          569           NA           NA
+    ##  5 1110014    111          582          134           41          592
+    ##  6 1110015    111           26          488           81          138
+    ##  7 1110020    111          528           NA          492          395
+    ##  8 1110022    111           NA           NA           NA           NA
+    ##  9 1110025    111          135          185          553           84
+    ## 10 1110027    111          346          168          559            5
     ## # ... with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
     ## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
     ## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,
@@ -243,18 +243,18 @@ Let's take a look at this step by step:
     
     ```
     ## # A tibble: 164,464 x 4
-    ##          id school varname      content
-    ##       <dbl>  <int> <chr>          <int>
-    ##  1 1110001.    111 sch_friend11      NA
-    ##  2 1110002.    111 sch_friend11     424
-    ##  3 1110007.    111 sch_friend11     629
-    ##  4 1110013.    111 sch_friend11     232
-    ##  5 1110014.    111 sch_friend11     582
-    ##  6 1110015.    111 sch_friend11      26
-    ##  7 1110020.    111 sch_friend11     528
-    ##  8 1110022.    111 sch_friend11      NA
-    ##  9 1110025.    111 sch_friend11     135
-    ## 10 1110027.    111 sch_friend11     346
+    ##         id school varname      content
+    ##      <dbl>  <int> <chr>          <int>
+    ##  1 1110001    111 sch_friend11      NA
+    ##  2 1110002    111 sch_friend11     424
+    ##  3 1110007    111 sch_friend11     629
+    ##  4 1110013    111 sch_friend11     232
+    ##  5 1110014    111 sch_friend11     582
+    ##  6 1110015    111 sch_friend11      26
+    ##  7 1110020    111 sch_friend11     528
+    ##  8 1110022    111 sch_friend11      NA
+    ##  9 1110025    111 sch_friend11     135
+    ## 10 1110027    111 sch_friend11     346
     ## # ... with 164,454 more rows
     ```
     
@@ -274,18 +274,18 @@ Let's take a look at this step by step:
     
     ```
     ## # A tibble: 39,561 x 4
-    ##          id school varname      content
-    ##       <dbl>  <int> <chr>          <int>
-    ##  1 1110002.    111 sch_friend11     424
-    ##  2 1110007.    111 sch_friend11     629
-    ##  3 1110013.    111 sch_friend11     232
-    ##  4 1110014.    111 sch_friend11     582
-    ##  5 1110015.    111 sch_friend11      26
-    ##  6 1110020.    111 sch_friend11     528
-    ##  7 1110025.    111 sch_friend11     135
-    ##  8 1110027.    111 sch_friend11     346
-    ##  9 1110029.    111 sch_friend11     369
-    ## 10 1110030.    111 sch_friend11     462
+    ##         id school varname      content
+    ##      <dbl>  <int> <chr>          <int>
+    ##  1 1110002    111 sch_friend11     424
+    ##  2 1110007    111 sch_friend11     629
+    ##  3 1110013    111 sch_friend11     232
+    ##  4 1110014    111 sch_friend11     582
+    ##  5 1110015    111 sch_friend11      26
+    ##  6 1110020    111 sch_friend11     528
+    ##  7 1110025    111 sch_friend11     135
+    ##  8 1110027    111 sch_friend11     346
+    ##  9 1110029    111 sch_friend11     369
+    ## 10 1110030    111 sch_friend11     462
     ## # ... with 39,551 more rows
     ```
     
@@ -306,18 +306,18 @@ Let's take a look at this step by step:
     
     ```
     ## # A tibble: 39,561 x 7
-    ##          id school varname      content friendid  year  nnom
-    ##       <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
-    ##  1 1110002.    111 sch_friend11     424 1110424.     1     1
-    ##  2 1110007.    111 sch_friend11     629 1110629.     1     1
-    ##  3 1110013.    111 sch_friend11     232 1110232.     1     1
-    ##  4 1110014.    111 sch_friend11     582 1110582.     1     1
-    ##  5 1110015.    111 sch_friend11      26 1110026.     1     1
-    ##  6 1110020.    111 sch_friend11     528 1110528.     1     1
-    ##  7 1110025.    111 sch_friend11     135 1110135.     1     1
-    ##  8 1110027.    111 sch_friend11     346 1110346.     1     1
-    ##  9 1110029.    111 sch_friend11     369 1110369.     1     1
-    ## 10 1110030.    111 sch_friend11     462 1110462.     1     1
+    ##         id school varname      content friendid  year  nnom
+    ##      <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
+    ##  1 1110002    111 sch_friend11     424  1110424     1     1
+    ##  2 1110007    111 sch_friend11     629  1110629     1     1
+    ##  3 1110013    111 sch_friend11     232  1110232     1     1
+    ##  4 1110014    111 sch_friend11     582  1110582     1     1
+    ##  5 1110015    111 sch_friend11      26  1110026     1     1
+    ##  6 1110020    111 sch_friend11     528  1110528     1     1
+    ##  7 1110025    111 sch_friend11     135  1110135     1     1
+    ##  8 1110027    111 sch_friend11     346  1110346     1     1
+    ##  9 1110029    111 sch_friend11     369  1110369     1     1
+    ## 10 1110030    111 sch_friend11     462  1110462     1     1
     ## # ... with 39,551 more rows
     ```
     
@@ -390,11 +390,11 @@ ig_year1
 ```
 
 ```
-## IGRAPH d080ab1 DN-- 2164 9514 -- 
+## IGRAPH 09017a7 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from d080ab1 (vertex names):
+## + edges from 09017a7 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -806,16 +806,16 @@ indeg_nom_cor
 ## # Groups:   to, to_name [1,561]
 ##       to to_name school indeg nom_avg
 ##    <dbl> <chr>    <int> <int>   <dbl>
-##  1    2. 1110002    111    22   0.222
-##  2    3. 1110007    111     7   0.175
-##  3    4. 1110013    111     6   0.171
-##  4    5. 1110014    111    19   0.134
-##  5    6. 1110015    111     3   0.150
-##  6    7. 1110020    111     6   0.154
-##  7    9. 1110025    111     6   0.214
-##  8   10. 1110027    111    13   0.220
-##  9   11. 1110029    111    14   0.131
-## 10   12. 1110030    111     6   0.222
+##  1  2.00 1110002    111    22   0.222
+##  2  3.00 1110007    111     7   0.175
+##  3  4.00 1110013    111     6   0.171
+##  4  5.00 1110014    111    19   0.134
+##  5  6.00 1110015    111     3   0.150
+##  6  7.00 1110020    111     6   0.154
+##  7  9.00 1110025    111     6   0.214
+##  8 10.0  1110027    111    13   0.220
+##  9 11.0  1110029    111    14   0.131
+## 10 12.0  1110030    111     6   0.222
 ## # ... with 1,551 more rows
 ```
 
