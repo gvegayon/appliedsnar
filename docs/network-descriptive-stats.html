@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-03-09">
+<meta name="date" content="2018-03-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -128,12 +128,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="sns-exponential-random-graph-models.html"><a href="sns-exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> SNS Exponential Random Graph Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.1</b> The <code>ergm</code> package</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html#model-goodness-of-fit"><i class="fa fa-check"></i><b>5.1.1</b> Model Goodness-of-Fit</a></li>
-</ul></li>
+<li class="chapter" data-level="5.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.1</b> The <code>ergm</code> package</a></li>
+<li class="chapter" data-level="5.2" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Running ERGMs</a></li>
+<li class="chapter" data-level="5.3" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.3</b> Model Goodness-of-Fit</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
 <li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
@@ -141,6 +140,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -180,7 +180,7 @@ ig_year1_<span class="dv">111</span> &lt;-<span class="st"> </span><span class="
   <span class="dt">graph =</span> ig_year1,
   <span class="dt">vids  =</span> school111ids
 )</code></pre></div>
-<p>The <code>which</code> function in R returns a vector of indices indicating which elements are true. In our case it will return a vector of indices of the vertices which have the attribute <code>school</code> equal to 111. Now that we have our subgraph, we can compute different centrality measures<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> for each vertex and store them in the igraph object itself:</p>
+<p>The <code>which</code> function in R returns a vector of indices indicating which elements are true. In our case it will return a vector of indices of the vertices which have the attribute <code>school</code> equal to 111. Now that we have our subgraph, we can compute different centrality measures<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> for each vertex and store them in the igraph object itself:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Computing centrality measures for each vertex</span>
 <span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>indegree   &lt;-<span class="st"> </span><span class="kw">degree</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;in&quot;</span>)
 <span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>outdegree  &lt;-<span class="st"> </span><span class="kw">degree</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;out&quot;</span>)
@@ -230,7 +230,7 @@ triadic</code></pre></div>
 <pre><code>##  [1] 24059676   724389   290849     3619     3383     4401     3219
 ##  [8]     2997      407       33      836      235      163      137
 ## [15]      277       85</code></pre>
-<p>To get a nicer view of this, we can use a table that I retrieved from <code>?triad_census</code>. Moreover, instead of looking a the raw counts, we can normalize the <code>triadic</code> object by its sum so we get proportions instead<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>To get a nicer view of this, we can use a table that I retrieved from <code>?triad_census</code>. Moreover, instead of looking a the raw counts, we can normalize the <code>triadic</code> object by its sum so we get proportions instead<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cbind</span>(
   <span class="dt">Pcent =</span> triadic<span class="op">/</span><span class="kw">sum</span>(triadic)<span class="op">*</span><span class="dv">100</span>,
   <span class="kw">read.csv</span>(<span class="st">&quot;triadic_census.csv&quot;</span>)
@@ -329,9 +329,9 @@ triadic</code></pre></div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="2">
-<li id="fn2"><p>For more information about the different centrality measurements, please take a look at the “Centrality” article on <a href="https://en.wikipedia.org/wiki/Centrality">Wikipedia</a>.<a href="network-descriptive-stats.html#fnref2">↩</a></p></li>
-<li id="fn3"><p>During our workshop, Prof. De la Haye suggested using <span class="math inline">\({n \choose 3}\)</span> as a normalizing constant. It turns out that <code>sum(triadic) = choose(n, 3)</code>! So either approach is correct.<a href="network-descriptive-stats.html#fnref3">↩</a></p></li>
+<ol start="4">
+<li id="fn4"><p>For more information about the different centrality measurements, please take a look at the “Centrality” article on <a href="https://en.wikipedia.org/wiki/Centrality">Wikipedia</a>.<a href="network-descriptive-stats.html#fnref4">↩</a></p></li>
+<li id="fn5"><p>During our workshop, Prof. De la Haye suggested using <span class="math inline">\({n \choose 3}\)</span> as a normalizing constant. It turns out that <code>sum(triadic) = choose(n, 3)</code>! So either approach is correct.<a href="network-descriptive-stats.html#fnref5">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -393,4 +393,4 @@ gitbook.start({
 </script>
 </body>
 
-<!-- </html> -->
+</html>

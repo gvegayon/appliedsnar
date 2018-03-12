@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-03-09">
+<meta name="date" content="2018-03-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="sns-exponential-random-graph-models.html">
-<link rel="next" href="final-words.html">
+<link rel="next" href="running-ergms.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -128,12 +128,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="sns-exponential-random-graph-models.html"><a href="sns-exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> SNS Exponential Random Graph Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.1</b> The <code>ergm</code> package</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html#model-goodness-of-fit"><i class="fa fa-check"></i><b>5.1.1</b> Model Goodness-of-Fit</a></li>
-</ul></li>
+<li class="chapter" data-level="5.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.1</b> The <code>ergm</code> package</a></li>
+<li class="chapter" data-level="5.2" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Running ERGMs</a></li>
+<li class="chapter" data-level="5.3" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.3</b> Model Goodness-of-Fit</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
 <li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
@@ -141,6 +140,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -163,16 +163,25 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="the-ergm-package" class="section level2">
 <h2><span class="header-section-number">5.1</span> The <code>ergm</code> package</h2>
 <p>The <code>ergm</code> R package <span class="citation">(Handcock et al. <a href="#ref-R-ergm">2017</a>)</span></p>
-<p>From the previous section:<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
+<p>From the previous section:<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
 <span class="kw">library</span>(magrittr)
 <span class="kw">library</span>(dplyr)
 
 <span class="kw">load</span>(<span class="st">&quot;03.rda&quot;</span>)</code></pre></div>
-<p>In this section we will use the <code>ergm</code> package (from the <code>statnet</code>) suit, and the <code>intergraph</code> package. The latter provides functions to go back and forth between <code>igraph</code> and <code>network</code> objects from the <code>igraph</code> and <code>network</code> packages respectively<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a></p>
+<p>In this section we will use the <code>ergm</code> package (from the <code>statnet</code> suit of packages <span class="citation">(Handcock et al. <a href="#ref-R-statnet">2016</a>)</span>) suit, and the <code>intergraph</code> <span class="citation">(Bojanowski <a href="#ref-R-intergraph">2015</a>)</span> package. The latter provides functions to go back and forth between <code>igraph</code> and <code>network</code> objects from the <code>igraph</code> and <code>network</code> packages respectively<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ergm)
 <span class="kw">library</span>(intergraph)</code></pre></div>
-<p>Using the <code>asNetwork</code> function, we can coerce the igraph object into a network object so we can use it with the <code>ergm</code> function:</p>
+<p>As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the <code>network</code> package have the same name of some functions in the <code>igraph</code> package. When the <code>ergm</code> package is loaded, since it depends on <code>network</code>, it will load the <code>network</code> package first, which will <em>mask</em> some functions in <code>igraph</code>. This becomes evident once you load <code>ergm</code> after loading <code>igraph</code>:</p>
+<pre><code>The following objects are masked from ‘package:igraph’:
+
+  add.edges, add.vertices, %c%, delete.edges, delete.vertices, get.edge.attribute, get.edges,
+  get.vertex.attribute, is.bipartite, is.directed, list.edge.attributes, list.vertex.attributes, %s%,
+  set.edge.attribute, set.vertex.attribute</code></pre>
+<p>What are the implications of this? If you call the function <code>list.edge.attributes</code> for an object of class <code>igraph</code> R will return an error as the first function that matches that name comes from the <code>network</code> package! To avoid this you can use the double colon notation:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">list.edge.attributes</span>(my_igraph_object)
+network<span class="op">::</span><span class="kw">list.edge.attributes</span>(my_network_object)</code></pre></div>
+<p>Anyway… Using the <code>asNetwork</code> function, we can coerce the igraph object into a network object so we can use it with the <code>ergm</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the new network</span>
 network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<span class="op">::</span><span class="kw">asNetwork</span>(ig_year1_<span class="dv">111</span>)
 
@@ -188,7 +197,7 @@ network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<spa
 ## -4.732</code></pre>
 <p>So what happened here! We got a warning. It turns out that our network has loops (didn’t thought about it before!). Let’s take a look on that with the <code>which_loop</code> function</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(ig_year1_<span class="dv">111</span>)[<span class="kw">which_loop</span>(ig_year1_<span class="dv">111</span>)]</code></pre></div>
-<pre><code>## + 1/2638 edge from c582375 (vertex names):
+<pre><code>## + 1/2638 edge from 56167c4 (vertex names):
 ## [1] 1110111-&gt;1110111</code></pre>
 <p>We can get rid of these using the <code>igraph::-.igraph</code>. Moreover, just to illustrate how it can be done, let’s get rid of the isolates using the same operator</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the new network</span>
@@ -202,502 +211,24 @@ network_<span class="dv">111</span> &lt;-<span class="st"> </span>network_<span 
 
 <span class="co"># Converting the network</span>
 network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<span class="op">::</span><span class="kw">asNetwork</span>(network_<span class="dv">111</span>)</code></pre></div>
-<p>Proposed workflow:</p>
-<ol style="list-style-type: decimal">
-<li><p>Estimate the simplest model, adding one variable at a time.</p></li>
-<li><p>After each estimation, run the <code>mcmc.diagnostics</code> function to see how good/bad behaved are the chains.</p></li>
-<li><p>Run the <code>gof</code> function to see how good is the model at matching the network’s structural statistics.</p></li>
-</ol>
-<p>What to use:</p>
-<ol style="list-style-type: decimal">
-<li><p><code>control.ergms</code>: Maximum number of iteration, seed for Pseudo-RNG, how many cores</p></li>
-<li><p><code>ergm.constraints</code>: Where to sample the network from. Gives stability and (in some cases) faster convergence as by constraining the model you are reducing the sample size.</p></li>
-</ol>
-<p>Here is an example of a couple of models that we could compare<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ans0 &lt;-<span class="st"> </span><span class="kw">ergm</span>(
-  network_<span class="dv">111</span> <span class="op">~</span>
-<span class="st">    </span>edges <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>) <span class="op">+</span>
-<span class="st">    </span>mutual
-    ,
-  <span class="dt">constraints =</span> <span class="op">~</span><span class="kw">bd</span>(<span class="dt">maxout =</span> <span class="dv">19</span>),
-  <span class="dt">control =</span> <span class="kw">control.ergm</span>(
-    <span class="dt">seed        =</span> <span class="dv">1</span>,
-    <span class="dt">MCMLE.maxit =</span> <span class="dv">10</span>,
-    <span class="dt">parallel    =</span> <span class="dv">4</span>,
-    <span class="dt">CD.maxit    =</span> <span class="dv">10</span>
-    )
-  )</code></pre></div>
-<p>So what are we doing here: 1. The model is controling for: a. <code>edges</code> Number of edges in the network (as opposed to its density) b. <code>nodematch(&quot;female1&quot;)</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ans1 &lt;-<span class="st"> </span><span class="kw">ergm</span>(
-  network_<span class="dv">111</span> <span class="op">~</span>
-<span class="st">    </span>edges <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>)
-    ,
-  <span class="dt">constraints =</span> <span class="op">~</span><span class="kw">bd</span>(<span class="dt">maxout =</span> <span class="dv">19</span>, <span class="dt">maxin =</span> <span class="dv">22</span>),
-  <span class="dt">control =</span> <span class="kw">control.ergm</span>(
-    <span class="dt">seed        =</span> <span class="dv">1</span>,
-    <span class="dt">MCMLE.maxit =</span> <span class="dv">10</span>,
-    <span class="dt">parallel    =</span> <span class="dv">4</span>,
-    <span class="dt">CD.maxit    =</span> <span class="dv">10</span>
-    )
-  )</code></pre></div>
-<p>This example takes longer to compute</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ans2 &lt;-<span class="st"> </span><span class="kw">ergm</span>(
-  network_<span class="dv">111</span> <span class="op">~</span>
-<span class="st">    </span>edges <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span>mutual <span class="op">+</span>
-<span class="st">    </span>balance
-    ,
-  <span class="dt">constraints =</span> <span class="op">~</span><span class="kw">bd</span>(<span class="dt">maxout =</span> <span class="dv">19</span>, <span class="dt">maxin =</span> <span class="dv">22</span>),
-  <span class="dt">control =</span> <span class="kw">control.ergm</span>(
-    <span class="dt">seed        =</span> <span class="dv">1</span>,
-    <span class="dt">MCMLE.maxit =</span> <span class="dv">10</span>,
-    <span class="dt">parallel    =</span> <span class="dv">4</span>,
-    <span class="dt">CD.maxit    =</span> <span class="dv">10</span>
-    )
-  )</code></pre></div>
-<p>Now, a nice trick to see all regressions in the same table, we can use the <code>texreg</code> package which supports <code>ergm</code> ouputs!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(texreg)</code></pre></div>
-<pre><code>## Version:  1.36.23
-## Date:     2017-03-03
-## Author:   Philip Leifeld (University of Glasgow)
-## 
-## Please cite the JSS article in your publications -- see citation(&quot;texreg&quot;).</code></pre>
-<pre><code>## 
-## Attaching package: &#39;texreg&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:magrittr&#39;:
-## 
-##     extract</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">screenreg</span>(<span class="kw">list</span>(ans0, ans1, ans2))</code></pre></div>
-<pre><code>## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.</code></pre>
-<pre><code>## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.
-## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.</code></pre>
-<pre><code>## 
-## ===============================================================
-##                     Model 1        Model 2        Model 3      
-## ---------------------------------------------------------------
-## edges                   -5.63 ***      -5.53 ***      -5.58 ***
-##                         (0.06)         (0.06)         (0.05)   
-## nodematch.hispanic       0.37 ***       0.51 ***       0.40 ***
-##                         (0.04)         (0.04)         (0.03)   
-## nodematch.female1        0.82 ***       1.10 ***       0.83 ***
-##                         (0.04)         (0.05)         (0.04)   
-## nodematch.eversmk1       0.33 ***       0.47 ***       0.36 ***
-##                         (0.04)         (0.04)         (0.04)   
-## mutual                   4.09 ***                     -3.74 ***
-##                         (0.07)                        (0.24)   
-## balance                                                0.02 ***
-##                                                       (0.00)   
-## ---------------------------------------------------------------
-## AIC                 -37835.55      -35513.35      -37544.30    
-## BIC                 -37785.21      -35473.08      -37483.89    
-## Log Likelihood       18922.78       17760.68       18778.15    
-## ===============================================================
-## *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05</code></pre>
-<p>Or, if you are using rmarkdown, you can export the results using LaTeX or html, let’s try the latter to see how it looks like here:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(texreg)
-<span class="kw">htmlreg</span>(<span class="kw">list</span>(ans0, ans1, ans2))</code></pre></div>
-<pre><code>## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.
-## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.
-## Note: The constraint on the sample space is not dyad-independent. Null model likelihood is only implemented for dyad-independent constraints at this time. Number of observations is similarly ill-defined.</code></pre>
-<pre><code>## 
-## &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
-## &lt;table cellspacing=&quot;0&quot; align=&quot;center&quot; style=&quot;border: none;&quot;&gt;
-## &lt;caption align=&quot;bottom&quot; style=&quot;margin-top:0.3em;&quot;&gt;Statistical models&lt;/caption&gt;
-## &lt;tr&gt;
-## &lt;th style=&quot;text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;&quot;&gt;&lt;b&gt;&lt;/b&gt;&lt;/th&gt;
-## &lt;th style=&quot;text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;&quot;&gt;&lt;b&gt;Model 1&lt;/b&gt;&lt;/th&gt;
-## &lt;th style=&quot;text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;&quot;&gt;&lt;b&gt;Model 2&lt;/b&gt;&lt;/th&gt;
-## &lt;th style=&quot;text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;&quot;&gt;&lt;b&gt;Model 3&lt;/b&gt;&lt;/th&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;edges&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;-5.63&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;-5.53&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;-5.58&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.06)&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.06)&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.05)&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;nodematch.hispanic&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;0.37&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;0.51&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;0.40&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.04)&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.04)&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.03)&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;nodematch.female1&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;0.82&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;1.10&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;0.83&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.04)&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.05)&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.04)&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;nodematch.eversmk1&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;0.33&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;0.47&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;0.36&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.04)&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.04)&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.04)&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;mutual&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;4.09&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;-3.74&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.07)&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.24)&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;balance&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;0.02&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;(0.00)&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;border-top: 1px solid black;&quot;&gt;AIC&lt;/td&gt;
-## &lt;td style=&quot;border-top: 1px solid black;&quot;&gt;-37835.55&lt;/td&gt;
-## &lt;td style=&quot;border-top: 1px solid black;&quot;&gt;-35513.35&lt;/td&gt;
-## &lt;td style=&quot;border-top: 1px solid black;&quot;&gt;-37544.30&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;BIC&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;-37785.21&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;-35473.08&lt;/td&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot;&gt;-37483.89&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;border-bottom: 2px solid black;&quot;&gt;Log Likelihood&lt;/td&gt;
-## &lt;td style=&quot;border-bottom: 2px solid black;&quot;&gt;18922.78&lt;/td&gt;
-## &lt;td style=&quot;border-bottom: 2px solid black;&quot;&gt;17760.68&lt;/td&gt;
-## &lt;td style=&quot;border-bottom: 2px solid black;&quot;&gt;18778.15&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;tr&gt;
-## &lt;td style=&quot;padding-right: 12px; border: none;&quot; colspan=&quot;5&quot;&gt;&lt;span style=&quot;font-size:0.8em&quot;&gt;&lt;sup style=&quot;vertical-align: 0px;&quot;&gt;***&lt;/sup&gt;p &amp;lt; 0.001, &lt;sup style=&quot;vertical-align: 0px;&quot;&gt;**&lt;/sup&gt;p &amp;lt; 0.01, &lt;sup style=&quot;vertical-align: 0px;&quot;&gt;*&lt;/sup&gt;p &amp;lt; 0.05&lt;/span&gt;&lt;/td&gt;
-## &lt;/tr&gt;
-## &lt;/table&gt;</code></pre>
-<div id="model-goodness-of-fit" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Model Goodness-of-Fit</h3>
-<p>Since <code>ans0</code> is the one model which did best, let’s take a look at it’s GOF statistics. First, lets see how the MCMC did:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc.diagnostics</span>(ans0)</code></pre></div>
-<pre><code>## Sample statistics summary:
-## 
-## Iterations = 16384:1063936
-## Thinning interval = 1024 
-## Number of chains = 4 
-## Sample size per chain = 1024 
-## 
-## 1. Empirical mean and standard deviation for each variable,
-##    plus standard error of the mean:
-## 
-##                        Mean    SD Naive SE Time-series SE
-## edges                5.2175 54.79   0.8562          4.504
-## nodematch.hispanic -26.8933 46.16   0.7212          4.560
-## nodematch.female1   16.6682 47.28   0.7388          4.372
-## nodematch.eversmk1   6.1863 48.54   0.7584          5.370
-## mutual               0.8477 21.24   0.3319          4.430
-## 
-## 2. Quantiles for each variable:
-## 
-##                    2.5%    25% 50% 75%  97.5%
-## edges               -98 -32.00   4  41 116.00
-## nodematch.hispanic -118 -56.00 -27   2  66.62
-## nodematch.female1   -75 -14.25  15  48 113.00
-## nodematch.eversmk1  -84 -27.00   4  37 109.00
-## mutual              -46 -12.00  -1  14  43.00
-## 
-## 
-## Sample statistics cross-correlations:
-##                        edges nodematch.hispanic nodematch.female1
-## edges              1.0000000          0.7703930         0.8702355
-## nodematch.hispanic 0.7703930          1.0000000         0.6691023
-## nodematch.female1  0.8702355          0.6691023         1.0000000
-## nodematch.eversmk1 0.8321525          0.6704200         0.7319416
-## mutual             0.7012887          0.6083908         0.6661004
-##                    nodematch.eversmk1    mutual
-## edges                       0.8321525 0.7012887
-## nodematch.hispanic          0.6704200 0.6083908
-## nodematch.female1           0.7319416 0.6661004
-## nodematch.eversmk1          1.0000000 0.6791293
-## mutual                      0.6791293 1.0000000
-## 
-## Sample statistics auto-correlation:
-## Chain 1 
-##              edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0    1.0000000          1.0000000         1.0000000          1.0000000
-## Lag 1024 0.9194094          0.9264455         0.9322242          0.9148191
-## Lag 2048 0.8526321          0.8583709         0.8679994          0.8473601
-## Lag 3072 0.7980086          0.8047307         0.8148158          0.7874674
-## Lag 4096 0.7556384          0.7658891         0.7753939          0.7373127
-## Lag 5120 0.7202209          0.7380723         0.7438670          0.6973020
-##             mutual
-## Lag 0    1.0000000
-## Lag 1024 0.9922688
-## Lag 2048 0.9850092
-## Lag 3072 0.9782542
-## Lag 4096 0.9718149
-## Lag 5120 0.9651833
-## Chain 2 
-##              edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0    1.0000000          1.0000000         1.0000000          1.0000000
-## Lag 1024 0.8937698          0.9320595         0.9003587          0.9090676
-## Lag 2048 0.8058768          0.8732285         0.8200779          0.8353461
-## Lag 3072 0.7329964          0.8234520         0.7531759          0.7755789
-## Lag 4096 0.6738326          0.7817764         0.6904470          0.7207250
-## Lag 5120 0.6359449          0.7538172         0.6430627          0.6829884
-##             mutual
-## Lag 0    1.0000000
-## Lag 1024 0.9883401
-## Lag 2048 0.9764278
-## Lag 3072 0.9637258
-## Lag 4096 0.9517826
-## Lag 5120 0.9404211
-## Chain 3 
-##              edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0    1.0000000          1.0000000         1.0000000          1.0000000
-## Lag 1024 0.8691963          0.8697551         0.8905401          0.8832045
-## Lag 2048 0.7670783          0.7709648         0.8086326          0.7950309
-## Lag 3072 0.6765077          0.6916824         0.7397413          0.7181674
-## Lag 4096 0.5939888          0.6283922         0.6724809          0.6500649
-## Lag 5120 0.5341970          0.5833965         0.6153834          0.5984216
-##             mutual
-## Lag 0    1.0000000
-## Lag 1024 0.9742239
-## Lag 2048 0.9505850
-## Lag 3072 0.9285324
-## Lag 4096 0.9067956
-## Lag 5120 0.8879835
-## Chain 4 
-##              edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0    1.0000000          1.0000000         1.0000000          1.0000000
-## Lag 1024 0.9083130          0.9144195         0.9124920          0.9072684
-## Lag 2048 0.8301639          0.8566684         0.8337887          0.8298152
-## Lag 3072 0.7625395          0.8035036         0.7719743          0.7678617
-## Lag 4096 0.7030654          0.7581905         0.7172222          0.7157227
-## Lag 5120 0.6528153          0.7165866         0.6732486          0.6688953
-##             mutual
-## Lag 0    1.0000000
-## Lag 1024 0.9879414
-## Lag 2048 0.9759230
-## Lag 3072 0.9644667
-## Lag 4096 0.9533075
-## Lag 5120 0.9412684
-## 
-## Sample statistics burn-in diagnostic (Geweke):
-## Chain 4 
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##             -4.505             -5.054             -6.423 
-## nodematch.eversmk1             mutual 
-##             -7.250             -7.454 
-## 
-## Individual P-values (lower = worse):
-##              edges nodematch.hispanic  nodematch.female1 
-##       6.648201e-06       4.327581e-07       1.340410e-10 
-## nodematch.eversmk1             mutual 
-##       4.152969e-13       9.082950e-14 
-## Joint P-value (lower = worse):  0.0004497061 .
-## Chain 4 
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##              3.065              5.834              2.057 
-## nodematch.eversmk1             mutual 
-##              4.452              1.770 
-## 
-## Individual P-values (lower = worse):
-##              edges nodematch.hispanic  nodematch.female1 
-##       2.179724e-03       5.396178e-09       3.967389e-02 
-## nodematch.eversmk1             mutual 
-##       8.487764e-06       7.678079e-02 
-## Joint P-value (lower = worse):  0.03093665 .
-## Chain 4 
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##             -3.482             -3.076             -6.079 
-## nodematch.eversmk1             mutual 
-##             -3.388             -3.348 
-## 
-## Individual P-values (lower = worse):
-##              edges nodematch.hispanic  nodematch.female1 
-##       4.983811e-04       2.100660e-03       1.212941e-09 
-## nodematch.eversmk1             mutual 
-##       7.037519e-04       8.147796e-04 
-## Joint P-value (lower = worse):  0.1164457 .
-## Chain 4 
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##              4.702              7.223              5.269 
-## nodematch.eversmk1             mutual 
-##              6.900              4.079 
-## 
-## Individual P-values (lower = worse):
-##              edges nodematch.hispanic  nodematch.female1 
-##       2.574907e-06       5.086754e-13       1.372144e-07 
-## nodematch.eversmk1             mutual 
-##       5.194108e-12       4.522375e-05 
-## Joint P-value (lower = worse):  0.002006982 .</code></pre>
-<pre><code>## Warning in formals(fun): argument is not a function</code></pre>
-<p><img src="04-ergms_files/figure-html/checking-mcmc-1.png" width="672" /><img src="04-ergms_files/figure-html/checking-mcmc-2.png" width="672" /></p>
-<pre><code>## 
-## MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).</code></pre>
-<p>Not that bad! First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.</p>
-<p>What would be an indicator of no-convergence? Well,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Computing and printing GOF estatistics</span>
-ans_gof &lt;-<span class="st"> </span><span class="kw">gof</span>(ans0)
-ans_gof</code></pre></div>
-<pre><code>## 
-## Goodness-of-fit for in-degree 
-## 
-##    obs min  mean max MC p-value
-## 0   13   0  2.19   6       0.00
-## 1   34   3  8.96  21       0.00
-## 2   37  13 22.17  34       0.00
-## 3   48  29 41.08  58       0.28
-## 4   37  37 56.89  75       0.02
-## 5   47  45 63.96  81       0.02
-## 6   42  41 63.21  83       0.02
-## 7   39  39 53.20  69       0.04
-## 8   35  23 40.26  62       0.52
-## 9   21  20 28.19  39       0.14
-## 10  12   6 18.20  35       0.22
-## 11  19   3  9.98  21       0.04
-## 12   4   0  5.04  12       0.92
-## 13   7   0  2.71   8       0.10
-## 14   6   0  1.16   6       0.02
-## 15   3   0  0.47   3       0.02
-## 16   4   0  0.19   2       0.00
-## 17   3   0  0.10   1       0.00
-## 18   3   0  0.03   1       0.00
-## 19   2   0  0.00   0       0.00
-## 20   1   0  0.01   1       0.02
-## 22   1   0  0.00   0       0.00
-## 
-## Goodness-of-fit for out-degree 
-## 
-##    obs min  mean max MC p-value
-## 0    4   0  2.10   6       0.24
-## 1   28   3  9.45  20       0.00
-## 2   45  11 22.31  35       0.00
-## 3   50  26 40.55  61       0.20
-## 4   54  41 56.40  73       0.90
-## 5   62  51 63.56  82       1.00
-## 6   40  44 63.59  84       0.00
-## 7   28  38 54.11  70       0.00
-## 8   13  28 40.71  56       0.00
-## 9   16  15 28.00  45       0.02
-## 10  20   7 16.90  28       0.64
-## 11   8   2 10.14  17       0.54
-## 12  11   1  5.35  15       0.08
-## 13  13   0  2.95  11       0.00
-## 14   6   0  1.09   4       0.00
-## 15   6   0  0.56   2       0.00
-## 16   7   0  0.17   2       0.00
-## 17   4   0  0.05   1       0.00
-## 18   3   0  0.01   1       0.00
-## 
-## Goodness-of-fit for edgewise shared partner 
-## 
-##       obs  min    mean  max MC p-value
-## esp0 1032 1941 2219.58 2352          0
-## esp1  755  183  232.76  398          0
-## esp2  352    1   14.39   98          0
-## esp3  202    0    0.86   15          0
-## esp4   79    0    0.02    1          0
-## esp5   36    0    0.00    0          0
-## esp6   14    0    0.00    0          0
-## esp7    4    0    0.00    0          0
-## esp8    1    0    0.00    0          0
-## 
-## Goodness-of-fit for minimum geodesic distance 
-## 
-##       obs   min     mean   max MC p-value
-## 1    2475  2249  2467.61  2576          1
-## 2   10672 11817 13956.56 15192          0
-## 3   31134 47358 56761.50 62149          0
-## 4   50673 75548 78943.57 81725          0
-## 5   42563 13798 19146.59 28769          0
-## 6   18719   421  1164.67  2750          0
-## 7    4808     0    38.81   220          0
-## 8     822     0     0.80    22          0
-## 9     100     0     0.00     0          0
-## 10      7     0     0.00     0          0
-## Inf 12333     0  1825.89  4148          0
-## 
-## Goodness-of-fit for model statistics 
-## 
-##                     obs  min    mean  max MC p-value
-## edges              2475 2249 2467.61 2576       1.00
-## nodematch.hispanic 1615 1482 1599.23 1718       0.74
-## nodematch.female1  1814 1628 1804.96 1909       0.94
-## nodematch.eversmk1 1738 1524 1729.37 1840       0.96
-## mutual              486  403  481.13  528       1.00</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plotting GOF statistics</span>
-<span class="kw">plot</span>(ans_gof)</code></pre></div>
-<p><img src="04-ergms_files/figure-html/checking-gof-1.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-2.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-3.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-4.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-5.png" width="672" /></p>
-
 </div>
-</div>
-<!-- </div> -->
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-R-ergm">
 <p>Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, and Martina Morris. 2017. <em>Ergm: Fit, Simulate and Diagnose Exponential-Family Models for Networks</em>. The Statnet Project (<a href="http://www.statnet.org" class="uri">http://www.statnet.org</a>). <a href="https://CRAN.R-project.org/package=ergm" class="uri">https://CRAN.R-project.org/package=ergm</a>.</p>
 </div>
+<div id="ref-R-statnet">
+<p>Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, Skye Bender-deMoll, and Martina Morris. 2016. <em>Statnet: Software Tools for the Statistical Analysis of Network Data</em>. The Statnet Project (<a href="http://www.statnet.org" class="uri">http://www.statnet.org</a>). <a href="CRAN.R-project.org/package=statnet" class="uri">CRAN.R-project.org/package=statnet</a>.</p>
+</div>
+<div id="ref-R-intergraph">
+<p>Bojanowski, Michal. 2015. <em>Intergraph: Coercion Routines for Network Data Objects</em>. <a href="http://mbojan.github.io/intergraph" class="uri">http://mbojan.github.io/intergraph</a>.</p>
+</div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="5">
-<li id="fn5"><p>You can download the 03.rda file from <a href="https://github.com/gvegayon/appliedsnar">this link</a>.<a href="the-ergm-package.html#fnref5">↩</a></p></li>
-<li id="fn6"><p>Yes, the classes have the same name as the packages.<a href="the-ergm-package.html#fnref6">↩</a></p></li>
-<li id="fn7"><p>Notice that this document may not include the usual messages that the <code>ergm</code> command generates during the estimation procedure. This is just to make it more printable-friendly.<a href="the-ergm-package.html#fnref7">↩</a></p></li>
+<ol start="7">
+<li id="fn7"><p>You can download the 03.rda file from <a href="https://github.com/gvegayon/appliedsnar">this link</a>.<a href="the-ergm-package.html#fnref7">↩</a></p></li>
+<li id="fn8"><p>Yes, the classes have the same name as the packages.<a href="the-ergm-package.html#fnref8">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -706,7 +237,7 @@ ans_gof</code></pre></div>
         </div>
       </div>
 <a href="sns-exponential-random-graph-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="final-words.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="running-ergms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -759,4 +290,4 @@ gitbook.start({
 </script>
 </body>
 
-<!-- </html> -->
+</html>
