@@ -18,11 +18,9 @@ This chapter's goals are:
 
 ### Reading the data into R
 
-R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the [`readr`](https://cran.r-project.org/package=readr) package; or it can be binary files like dta (Stata), Octave, SPSS, for which [`foreign`](https://cran.r-project.org/package=readr) can be used; or it could be excel files in which case you should be using [`readxl`](https://cran.r-project.org/package=readxl). In our case, the data for this session is in Stata format:
+R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the [`readr`](https://cran.r-project.org/package=readr) package [@R-readr]; or it can be binary files like dta (Stata), Octave, SPSS, for which [`foreign`](https://cran.r-project.org/package=readr)  [@R-foreign] can be used; or it could be excel files in which case you should be using [`readxl`](https://cran.r-project.org/package=readxl) [@R-readxl]. In our case, the data for this session is in Stata format:
 
 ```{r 03-read-data, message=FALSE}
-library(dplyr)
-library(magrittr)
 library(foreign)
 
 # Reading the data
@@ -40,9 +38,12 @@ Now suppose that we want to create a unique id using the school and photo id. In
 (photo_id_ran <- range(dat$photoid))
 ```
 
-As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. Again, we use `dplyr` to create this variable, and we will call it... `id` (mind blowing, right?):
+As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. We will use `dplyr` [@R-dplyr] and `magrittr` [@R-magrittr]] (the pipe operator, `%>%`) to create this variable, and we will call it... `id` (mind blowing, right?):
 
 ```{r 03-newid}
+library(dplyr)
+library(magrittr)
+
 (dat %<>% mutate(id = school*10000 + photoid)) %>%
   head %>%
   select(school, photoid, id)
@@ -65,7 +66,7 @@ subset(head(dat_filtered), select = c(school, photoid, id))
 
 ### From survey to edgelist
 
-Let's start by loading a couple of handy R packages for this task.
+Let's start by loading a couple of handy R packages for this task, `tidyr` [@R-tidyr], which we will use to reshape the data, and `stringr` [@R-stringr], which we will use to process strings using _regular expressions_^[Please refer to the help file `?'regular expression'` in R. The R package `rex` [@R-rex] is a very nice companion for writing regular expressions.].
 
 ```{r 03-loading-tidyr-stringr, message=FALSE}
 library(tidyr)
@@ -153,7 +154,7 @@ And finally, the `as.integer` function coerces the returning value from the `str
 
 ### igraph network
 
-For coercing the edgelist into an igraph object, we will be using the `graph_from_data_frame` function in igraph. This function receives a data frame where the two first columns are sorce(ego) and target(alter), whether is it directed or not, and an optional data frame with vertices, in which's first column should contain the vertex ids.
+For coercing the edgelist into an igraph object, we will be using the `graph_from_data_frame` function in igraph [@R-igraph]. This function receives a data frame where the two first columns are sorce(ego) and target(alter), whether is it directed or not, and an optional data frame with vertices, in which's first column should contain the vertex ids.
 
 Using the optional `vertices` argument is a good practice since by doing so you are telling the function what is the set of vertex ids that you are expecting to find. Using the original dataset, we will create a data frame name vertices:
 

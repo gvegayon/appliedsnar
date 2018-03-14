@@ -15,7 +15,9 @@ predictors are things like “propensity for individuals of the same sex to form
 “propensity for individuals to form triangles of partnerships”. In Figure 1(b), for example, it
 is evident that the individual nodes appear to cluster in groups of the same numerical labels
 (which turn out to be students’ grades, 7 through 12); thus, an ERGM can help us quantify
-the strength of this intra-group effect.  --- [@Hunter2008]
+the strength of this intra-group effect.  
+>
+> --- [@Hunter2008]
 
 ![Source: Hunter et al. (2008)](hunter2008.png)
 
@@ -52,14 +54,31 @@ load("03.rda")
 ```
 
 
-In this section we will use the `ergm` package (from the `statnet`) suit, and the `intergraph` package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
+In this section we will use the `ergm` package (from the `statnet` suit of packages [@R-statnet]) suit, and the `intergraph` [@R-intergraph] package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
 
 ```{r 03-ergms-setup, message=FALSE}
 library(ergm)
 library(intergraph)
 ```
 
-Using the `asNetwork` function, we can coerce the igraph object into a network object so we can use it with the `ergm` function:
+As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the `network` package have the same name of some functions in the `igraph` package. When the `ergm` package is loaded, since it depends on `network`, it will load the `network`  package first, which will _mask_ some functions in `igraph`. This becomes evident once you load `ergm` after loading `igraph`:
+  
+```
+The following objects are masked from ‘package:igraph’:
+
+  add.edges, add.vertices, %c%, delete.edges, delete.vertices, get.edge.attribute, get.edges,
+  get.vertex.attribute, is.bipartite, is.directed, list.edge.attributes, list.vertex.attributes, %s%,
+  set.edge.attribute, set.vertex.attribute
+```
+
+What are the implications of this? If you call the function `list.edge.attributes` for an object of class `igraph` R will return an error as the first function that matches that name comes from the `network` package! To avoid this you can use the double colon notation:
+
+```r
+igraph::list.edge.attributes(my_igraph_object)
+network::list.edge.attributes(my_network_object)
+```
+
+Anyway... Using the `asNetwork` function, we can coerce the igraph object into a network object so we can use it with the `ergm` function:
 
 ```{r 03-ergms-intergraph, cache=TRUE}
 # Creating the new network
@@ -91,10 +110,12 @@ network_111 <- network_111 - which(degree(network_111, mode = "all") == 0)
 network_111 <- intergraph::asNetwork(network_111)
 ```
 
+
 `asNetwork(simplify(ig_year1_111))`
 `ig_year1_111 %>% simplify %>% asNetwork`
 
-ig_year1_111 %>% simplify %>% asNetwork
+
+## Running ERGMs
 
 Proposed workflow:
 
@@ -145,7 +166,7 @@ ans1 <- ergm(
     nodematch("female1") +
     nodematch("eversmk1")
     ,
-  constraints = ~bd(maxout = 19, maxin = 22),
+  constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
     MCMLE.maxit = 10,
@@ -167,7 +188,7 @@ ans2 <- ergm(
     mutual +
     balance
     ,
-  constraints = ~bd(maxout = 19, maxin = 22),
+  constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
     MCMLE.maxit = 10,
@@ -177,7 +198,7 @@ ans2 <- ergm(
   )
 ```
 
-Now, a nice trick to see all regressions in the same table, we can use the `texreg` package which supports `ergm` ouputs!
+Now, a nice trick to see all regressions in the same table, we can use the `texreg` package [@R-texreg] which supports `ergm` ouputs!
 
 ```{r 04-ergm-tabulation-screen}
 library(texreg)
@@ -186,22 +207,61 @@ screenreg(list(ans0, ans1, ans2))
 
 Or, if you are using rmarkdown, you can export the results using LaTeX or html, let's try the latter to see how it looks like here:
 
-```{r 04-ergm-tabulation-html}
+```{r 04-ergm-tabulation-html, results='asis', eval=knitr::is_html_output(), echo=knitr::is_html_output()}
 library(texreg)
 htmlreg(list(ans0, ans1, ans2))
 ```
 
-### Model Goodness-of-Fit
-
-Since `ans0` is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did:
-
-```{r checking-mcmc, cache = TRUE}
-mcmc.diagnostics(ans0)
+```{r 04-ergm-tabulation-latex, results='asis', eval=knitr::is_latex_output(), echo=knitr::is_latex_output()}
+library(texreg)
+texreg(list(ans0, ans1, ans2))
 ```
+
+## Model Goodness-of-Fit
+
+Since `ans0` is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did. For this we can use the `mcmc.diagnostics` function including in the package. This function is actually a wrapper of a couple of functions from the `code` package [@R-coda]. This is what is called under the hood:
+
+1.  _Empirical means and sd, and quantiles_: The summary statistics of all chains
+    ```{r coda-summary}
+    summary(ans0$sample)
+    ```
+2.  _Cross correlation_: 
+    ```{r coda-corr}
+    coda::crosscorr(ans0$sample)
+    ```
+3.  _Autocorrelation_: 
+    ```{r coda-autocorr}
+    coda::autocorr(ans0$sample)
+    ```
+4.  _Geweke Diagnostic_: 
+    ```{r coda-geweke.diag}
+    coda::geweke.diag(ans0$sample)
+    ```
+5.  _(not included) Gelman Diagnostic_: 
+    ```{r coda-gelman.diag}
+    coda::gelman.diag(ans0$sample)
+    ```
+ 
+
+```{r coda-plots, fig.align='center', fig.height=10}
+plot(ans0$sample)
+```
+
+
+If we called the function `mcmc.diagnostics` this message appears at the end:
+
+>
+MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).
+>
+> ----`mcmc.diagnostics(ans0)`
 
 Not that bad! First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.
 
-What would be an indicator of no-convergence? Well, 
+What would be an indicator of no-convergence? Well, if you see something like this:
+
+```{r bad-convergence, echo=FALSE, cache=TRUE}
+
+```
 
 ```{r checking-gof, cache = TRUE}
 # Computing and printing GOF estatistics
@@ -212,4 +272,6 @@ ans_gof
 plot(ans_gof)
 ```
 
+## More on MCMC convergence
 
+For more on this issue, I recommend reviewing [chapter 1](http://www.mcmchandbook.net/HandbookChapter1.pdf) and [chapter 6](http://www.mcmchandbook.net/HandbookChapter6.pdf) from the Handbook of MCMC [@brooks2011]. Both chapters are free to download from the [book's website](http://www.mcmchandbook.net/HandbookSampleChapters.html).
