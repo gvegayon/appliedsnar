@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="separable-temporal-exponential-family-random-graph-models.html">
-<link rel="next" href="sns-data.html">
+<link rel="prev" href="statistical-tests.html">
+<link rel="next" href="the-ergm-package.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -170,16 +170,44 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="datasets" class="section level1">
-<h1><span class="header-section-number">A</span> Datasets</h1> 
+<div id="exponential-random-graph-models" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Exponential Random Graph Models</h1>
+<p>I strongly suggest reading the vignette included in the <code>ergm</code> R package</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vignette</span>(<span class="st">&quot;ergm&quot;</span>, <span class="dt">package=</span><span class="st">&quot;ergm&quot;</span>)</code></pre></div>
+<p>So what are ERGMs anyway…</p>
+<blockquote>
+<p>The purpose of ERGMs, in a nutshell, is to describe parsimoniously the local selection forces that shape the global structure of a network. To this end, a network dataset, like those depicted in Figure 1, may be considered like the response in a regression model, where the predictors are things like “propensity for individuals of the same sex to form partnerships” or “propensity for individuals to form triangles of partnerships”. In Figure 1(b), for example, it is evident that the individual nodes appear to cluster in groups of the same numerical labels (which turn out to be students’ grades, 7 through 12); thus, an ERGM can help us quantify the strength of this intra-group effect.</p>
+<p>— <span class="citation">(Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p>
+</blockquote>
+<div class="figure">
+<img src="hunter2008.png" alt="Source: Hunter et al. (2008)" />
+<p class="caption">Source: Hunter et al. (2008)</p>
+</div>
+<p>The distribution of <span class="math inline">\(\mathbf{Y}\)</span> can be parameterized in the form</p>
+<p><span class="math display" id="eq:04-1">\[
+{\mbox{Pr}\left(\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}\right)} = \frac{{\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
+\tag{5.1}
+\]</span></p>
+<p>Where <span class="math inline">\(\theta\in\Omega\subset\mathbb{R}^q\)</span> is the vector of model coefficients and <span class="math inline">\(\mathbf{g}(\mathbf{y})\)</span> is a <em>q</em>-vector of statistics based on the adjacency matrix <span class="math inline">\(\mathbf{y}\)</span>.</p>
+<p>Model <a href="exponential-random-graph-models.html#eq:04-1">(5.1)</a> may be expanded by replacing <span class="math inline">\(\mathbf{g}(\mathbf{y})\)</span> with <span class="math inline">\(\mathbf{g}(\mathbf{y}, \mathbf{X})\)</span> to allow for additional covariate information <span class="math inline">\(\mathbf{X}\)</span> about the network. The denominator,</p>
+<p><span class="math display">\[
+\kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{z}\in\mathcal{Y}}{\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{z})\right\}}
+\]</span></p>
+<p>Is the normalizing factor that ensures that equation <a href="exponential-random-graph-models.html#eq:04-1">(5.1)</a> is a legitimate probability distribution. Even after fixing <span class="math inline">\(\mathcal{Y}\)</span> to be all the networks that have size <span class="math inline">\(n\)</span>, the size of <span class="math inline">\(\mathcal{Y}\)</span> makes this type of models hard to estimate as there are <span class="math inline">\(N = 2^{n(n-1)}\)</span> possible networks! <span class="citation">(Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p> 
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Hunter2008">
+<p>Hunter, David R., Mark S. Handcock, Carter T. Butts, Steven M. Goodreau, and Martina Morris. 2008. “ergm : A Package to Fit, Simulate and Diagnose Exponential-Family Models for Networks.” <em>Journal of Statistical Software</em> 24 (3). doi:<a href="https://doi.org/10.18637/jss.v024.i03">10.18637/jss.v024.i03</a>.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="separable-temporal-exponential-family-random-graph-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sns-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="statistical-tests.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-ergm-package.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

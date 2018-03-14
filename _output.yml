@@ -8,6 +8,8 @@ bookdown::epub_book: default
 bookdown::gitbook:
   split_by: section
   css: style.css
+  includes:
+    in_header: google-analytics.html
   config:
     toc:
       before: |
