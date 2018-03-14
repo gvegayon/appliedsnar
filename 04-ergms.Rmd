@@ -238,6 +238,11 @@ Since `ans0` is the one model which did best, let's take a look at it's GOF stat
     ```
  
 
+```{r coda-plots, fig.align='center', fig.height=10}
+plot(ans0$sample)
+```
+
+
 If we called the function `mcmc.diagnostics` this message appears at the end:
 
 >
@@ -253,7 +258,6 @@ What would be an indicator of no-convergence? Well, if you see something like th
 
 ```
 
-
 ```{r checking-gof, cache = TRUE}
 # Computing and printing GOF estatistics
 ans_gof <- gof(ans0)
@@ -263,4 +267,6 @@ ans_gof
 plot(ans_gof)
 ```
 
+## More on MCMC convergence
 
+For more on this issue, I recommend reviewing [chapter 1](http://www.mcmchandbook.net/HandbookChapter1.pdf) and [chapter 6](http://www.mcmchandbook.net/HandbookChapter6.pdf) from the Handbook of MCMC [@brooks2011]. Both chapters are free to download from the [book's website](http://www.mcmchandbook.net/HandbookSampleChapters.html).

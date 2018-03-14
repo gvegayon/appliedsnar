@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="plotting-the-network-in-igraph.html">
-<link rel="next" href="sns-exponential-random-graph-models.html">
+<link rel="prev" href="model-goodness-of-fit.html">
+<link rel="next" href="final-words.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -161,68 +161,25 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="statistical-tests" class="section level2">
-<h2><span class="header-section-number">4.5</span> Statistical tests</h2>
-<div id="is-nomination-number-correlated-with-indegree" class="section level3">
-<h3><span class="header-section-number">4.5.1</span> Is nomination number correlated with indegree?</h3>
-<p>Hypothesis: Individuals that on average are among the first nominations of their peers are more popular</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Getting all the data in long format</span>
-edgelist &lt;-<span class="st"> </span><span class="kw">as_long_data_frame</span>(ig_year1) <span class="op">%&gt;%</span>
-<span class="st">  </span>as_tibble
+<div id="more-on-mcmc-convergence" class="section level2">
+<h2><span class="header-section-number">5.4</span> More on MCMC convergence</h2>
+<p>For more on this issue, I recommend reviewing <a href="http://www.mcmchandbook.net/HandbookChapter1.pdf">chapter 1</a> and <a href="http://www.mcmchandbook.net/HandbookChapter6.pdf">chapter 6</a> from the Handbook of MCMC <span class="citation">(Brooks et al. <a href="#ref-brooks2011">2011</a>)</span>. Both chapters are free to download from the <a href="http://www.mcmchandbook.net/HandbookSampleChapters.html">book’s website</a>.</p>
 
-<span class="co"># Computing indegree (again) and average nomination number</span>
-<span class="co"># Include &quot;On a scale from one to five how close do you feel&quot;</span>
-<span class="co"># Also for egocentric friends (A. Friends)</span>
-indeg_nom_cor &lt;-<span class="st"> </span><span class="kw">group_by</span>(edgelist, to, to_name, to_school) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(
-    <span class="dt">indeg   =</span> <span class="kw">n</span>(),
-    <span class="dt">nom_avg =</span> <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(nnom)
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">rename</span>(
-    <span class="dt">school =</span> to_school
-  )
-
-indeg_nom_cor</code></pre></div>
-<pre><code>## # A tibble: 1,561 x 5
-## # Groups:   to, to_name [1,561]
-##       to to_name school indeg nom_avg
-##    &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;
-##  1    2. 1110002    111    22   0.222
-##  2    3. 1110007    111     7   0.175
-##  3    4. 1110013    111     6   0.171
-##  4    5. 1110014    111    19   0.134
-##  5    6. 1110015    111     3   0.150
-##  6    7. 1110020    111     6   0.154
-##  7    9. 1110025    111     6   0.214
-##  8   10. 1110027    111    13   0.220
-##  9   11. 1110029    111    14   0.131
-## 10   12. 1110030    111     6   0.222
-## # ... with 1,551 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Using pearson&#39;s correlation</span>
-<span class="kw">with</span>(indeg_nom_cor, <span class="kw">cor.test</span>(indeg, nom_avg))</code></pre></div>
-<pre><code>## 
-##  Pearson&#39;s product-moment correlation
-## 
-## data:  indeg and nom_avg
-## t = -12.254, df = 1559, p-value &lt; 2.2e-16
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  -0.3409964 -0.2504653
-## sample estimates:
-##        cor 
-## -0.2963965</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">save.image</span>(<span class="st">&quot;03.rda&quot;</span>)</code></pre></div>
-
-</div>
 </div>
 <!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-brooks2011">
+<p>Brooks, Steve, Andrew Gelman, Galin Jones, and Xiao-Li Meng. 2011. <em>Handbook of Markov Chain Monte Carlo</em>. CRC press.</p>
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="plotting-the-network-in-igraph.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sns-exponential-random-graph-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="model-goodness-of-fit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-words.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
