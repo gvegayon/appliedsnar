@@ -1,4 +1,4 @@
-# SNS Exponential Random Graph Models
+# Exponential Random Graph Models
 
 I strongly suggest reading the vignette included in the `ergm` R package
 
@@ -38,6 +38,13 @@ $$
 $$
 
 Is the normalizing factor that ensures that equation \@ref(eq:04-1) is a legitimate probability distribution. Even after fixing $\mathcal{Y}$ to be all the networks that have size $n$, the size of $\mathcal{Y}$ makes this type of models hard to estimate as there are $N = 2^{n(n-1)}$ possible networks! [@Hunter2008]
+
+Recent developments include new forms of de-
+pendency structures, to take into account more general neighborhood effects. These models
+relax the one-step Markovian dependence assumptions, allowing investigation of longer range
+configurations, such as longer paths in the network or larger cycles (Pattison and Robins
+2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins
+2000) network structures have also been developed. [@Hunter2008 p. 9]
 
 ## The `ergm` package
 
@@ -217,11 +224,22 @@ library(texreg)
 texreg(list(ans0, ans1, ans2))
 ```
 
+```{r ergm-save-image, echo=FALSE, cache=TRUE}
+save.image("ergm.rda", compress = TRUE)
+```
+
+
 ## Model Goodness-of-Fit
 
-Since `ans0` is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did. For this we can use the `mcmc.diagnostics` function including in the package. This function is actually a wrapper of a couple of functions from the `code` package [@R-coda]. This is what is called under the hood:
+In raw terms, once each chain has reach stationary distribution, we can say that there are no problems with autocorrelation and that each sample point is iid. This implies that, since we are running the model with more than 1 chain, we can use all the samples (chains) as a single dataset.
 
-1.  _Empirical means and sd, and quantiles_: The summary statistics of all chains
+> Recent changes in the ergm estimation algorithm mean that these plots can no longer be used to ensure that the mean statistics from the model match the observed network statistics. For that functionality, please use the GOF command: gof(object, GOF=~model).
+>
+> ---?ergm::mcmc.diagnostics
+
+Since `ans0` is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did. For this we can use the `mcmc.diagnostics` function including in the package. This function is actually a wrapper of a couple of functions from the `coda` package [@R-coda]. This is what is called under the hood:
+
+1.  _Empirical means and sd, and quantiles_: 
     ```{r coda-summary}
     summary(ans0$sample)
     ```
@@ -229,9 +247,9 @@ Since `ans0` is the one model which did best, let's take a look at it's GOF stat
     ```{r coda-corr}
     coda::crosscorr(ans0$sample)
     ```
-3.  _Autocorrelation_: 
+3.  _Autocorrelation_: Just for now, we will only take a look at autocorrelation for chain 1 only. Autocorrelation should be rather low (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no markov property). A way out to solve this is *thinning* the sample.
     ```{r coda-autocorr}
-    coda::autocorr(ans0$sample)
+    coda::autocorr(ans0$sample)[[1]]
     ```
 4.  _Geweke Diagnostic_: 
     ```{r coda-geweke.diag}
@@ -243,7 +261,7 @@ Since `ans0` is the one model which did best, let's take a look at it's GOF stat
     ```
  
 
-```{r coda-plots, fig.align='center', fig.height=10}
+```{r coda-plots, fig.align='center', fig.height=10, cache=FALSE}
 plot(ans0$sample)
 ```
 

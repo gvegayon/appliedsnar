@@ -1,4 +1,4 @@
-# Week 1: SNS Study
+# Network Nomination Data
 
 The data can be downloaded from [here](https://cdn.rawgit.com/gvegayon/appliedsnar/fdc0d26f/03-sns.dta).
 
@@ -66,7 +66,7 @@ subset(head(dat_filtered), select = c(school, photoid, id))
 
 ### From survey to edgelist
 
-Let's start by loading a couple of handy R packages for this task, `tidyr` [@R-tidyr], which we will use to reshape the data, and `stringr` [@R-stringr], which we will use to process strings using _regular expressions_^[Please refer to the help file `?'regular expression'` in R. The R package `rex` [@R-rex] is a very nice companion for writing regular expressions.].
+Let's start by loading a couple of handy R packages for this task, `tidyr` [@R-tidyr], which we will use to reshape the data, and `stringr` [@R-stringr], which we will use to process strings using _regular expressions_^[Please refer to the help file `?'regular expression'` in R. The R package `rex` [@R-rex] is a very nice companion for writing regular expressions. There's also a neat (but experimental) RStudio addin that can be very helpful for understanding how regular expressions work, the [regexplain](https://github.com/gadenbuie/regexplain) addin.].
 
 ```{r 03-loading-tidyr-stringr, message=FALSE}
 library(tidyr)
