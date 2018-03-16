@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied SNA with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied SNA with R" />
   <meta property="og:type" content="book" />
@@ -174,6 +174,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="more-on-mcmc-convergence" class="section level2">
 <h2><span class="header-section-number">5.4</span> More on MCMC convergence</h2>
 <p>For more on this issue, I recommend reviewing <a href="http://www.mcmchandbook.net/HandbookChapter1.pdf">chapter 1</a> and <a href="http://www.mcmchandbook.net/HandbookChapter6.pdf">chapter 6</a> from the Handbook of MCMC <span class="citation">(Brooks et al. <a href="#ref-brooks2011">2011</a>)</span>. Both chapters are free to download from the <a href="http://www.mcmchandbook.net/HandbookSampleChapters.html">book’s website</a>.</p>
+<p>For GOF take a look at section 6 of <a href="https://statnet.csde.washington.edu/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html">ERGM 2016 Sunbelt tutorial</a>, and for a more technical review you can take a look at <span class="citation">(Hunter, Goodreau, and Handcock <a href="#ref-HunterJASA2008">2008</a>)</span>.</p>
 
 </div>
 <!-- </div> -->
@@ -181,6 +182,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="refs" class="references">
 <div id="ref-brooks2011">
 <p>Brooks, Steve, Andrew Gelman, Galin Jones, and Xiao-Li Meng. 2011. <em>Handbook of Markov Chain Monte Carlo</em>. CRC press.</p>
+</div>
+<div id="ref-HunterJASA2008">
+<p>Hunter, David R, Steven M Goodreau, and Mark S Handcock. 2008. “Goodness of Fit of Social Network Models.” <em>Journal of the American Statistical Association</em> 103 (481). Taylor &amp; Francis: 248–58. doi:<a href="https://doi.org/10.1198/016214507000000446">10.1198/016214507000000446</a>.</p>
 </div>
 </div>
             </section>
@@ -207,11 +211,10 @@ gitbook.start({
 "facebook": true,
 "twitter": true,
 "google": false,
-"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -235,11 +238,9 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

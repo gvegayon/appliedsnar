@@ -203,6 +203,9 @@ statnet for our neat network analysis.\footnote{Some of you may be
 
 For this book we need the following
 
+R Core Team
+(\protect\hyperlink{ref-R}{2017}\protect\hyperlink{ref-R}{b})
+
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
@@ -282,9 +285,10 @@ package (Wickham, Hester, and Francois
 \protect\hyperlink{ref-R-readr}{2017}); or it can be binary files like
 dta (Stata), Octave, SPSS, for which
 \href{https://cran.r-project.org/package=readr}{\texttt{foreign}} (R
-Core Team \protect\hyperlink{ref-R-foreign}{2017}) can be used; or it
-could be excel files in which case you should be using
-\href{https://cran.r-project.org/package=readxl}{\texttt{readxl}}
+Core Team
+\protect\hyperlink{ref-R-foreign}{2017}\protect\hyperlink{ref-R-foreign}{a})
+can be used; or it could be excel files in which case you should be
+using \href{https://cran.r-project.org/package=readxl}{\texttt{readxl}}
 (Wickham and Bryan \protect\hyperlink{ref-R-readxl}{2017}). In our case,
 the data for this session is in Stata format:
 
@@ -460,16 +464,16 @@ these actually look nice:
 ## # A tibble: 2,164 x 100
 ##    photoid school hispanic female1 female2 female3 female4 grades1 grades2
 ##      <int>  <int>    <dbl>   <int>   <int>   <int>   <int>   <dbl>   <dbl>
-##  1       1    111       1.      NA      NA       0       0   NA      NA   
-##  2       2    111       1.       0      NA      NA       0    3.00   NA   
-##  3       7    111       0.       1       1       1       1    5.00    4.50
-##  4      13    111       1.       1       1       1       1    2.50    2.50
-##  5      14    111       1.       1       1       1      NA    3.00    3.50
-##  6      15    111       1.       0       0       0       0    2.50    2.50
-##  7      20    111       1.       1       1       1       1    2.50    2.50
-##  8      22    111       1.      NA      NA       0       0   NA      NA   
-##  9      25    111       0.       1       1      NA       1    4.50    3.50
-## 10      27    111       1.       0      NA       0       0    3.50   NA   
+##  1       1    111     1.00      NA      NA       0       0   NA      NA   
+##  2       2    111     1.00       0      NA      NA       0    3.00   NA   
+##  3       7    111     0          1       1       1       1    5.00    4.50
+##  4      13    111     1.00       1       1       1       1    2.50    2.50
+##  5      14    111     1.00       1       1       1      NA    3.00    3.50
+##  6      15    111     1.00       0       0       0       0    2.50    2.50
+##  7      20    111     1.00       1       1       1       1    2.50    2.50
+##  8      22    111     1.00      NA      NA       0       0   NA      NA   
+##  9      25    111     0          1       1      NA       1    4.50    3.50
+## 10      27    111     1.00       0      NA       0       0    3.50   NA   
 ## # ... with 2,154 more rows, and 91 more variables: grades3 <dbl>,
 ## #   grades4 <dbl>, eversmk1 <int>, eversmk2 <int>, eversmk3 <int>,
 ## #   eversmk4 <int>, everdrk1 <int>, everdrk2 <int>, everdrk3 <int>,
@@ -538,18 +542,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 2,164 x 78
-##          id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
-##       <dbl>  <int>        <int>        <int>        <int>        <int>
-##  1 1110001.    111           NA           NA           NA           NA
-##  2 1110002.    111          424          423          426          289
-##  3 1110007.    111          629          505           NA           NA
-##  4 1110013.    111          232          569           NA           NA
-##  5 1110014.    111          582          134           41          592
-##  6 1110015.    111           26          488           81          138
-##  7 1110020.    111          528           NA          492          395
-##  8 1110022.    111           NA           NA           NA           NA
-##  9 1110025.    111          135          185          553           84
-## 10 1110027.    111          346          168          559            5
+##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
+##      <dbl>  <int>        <int>        <int>        <int>        <int>
+##  1 1110001    111           NA           NA           NA           NA
+##  2 1110002    111          424          423          426          289
+##  3 1110007    111          629          505           NA           NA
+##  4 1110013    111          232          569           NA           NA
+##  5 1110014    111          582          134           41          592
+##  6 1110015    111           26          488           81          138
+##  7 1110020    111          528           NA          492          395
+##  8 1110022    111           NA           NA           NA           NA
+##  9 1110025    111          135          185          553           84
+## 10 1110027    111          346          168          559            5
 ## # ... with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
 ## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
 ## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,
@@ -593,18 +597,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 164,464 x 4
-##          id school varname      content
-##       <dbl>  <int> <chr>          <int>
-##  1 1110001.    111 sch_friend11      NA
-##  2 1110002.    111 sch_friend11     424
-##  3 1110007.    111 sch_friend11     629
-##  4 1110013.    111 sch_friend11     232
-##  5 1110014.    111 sch_friend11     582
-##  6 1110015.    111 sch_friend11      26
-##  7 1110020.    111 sch_friend11     528
-##  8 1110022.    111 sch_friend11      NA
-##  9 1110025.    111 sch_friend11     135
-## 10 1110027.    111 sch_friend11     346
+##         id school varname      content
+##      <dbl>  <int> <chr>          <int>
+##  1 1110001    111 sch_friend11      NA
+##  2 1110002    111 sch_friend11     424
+##  3 1110007    111 sch_friend11     629
+##  4 1110013    111 sch_friend11     232
+##  5 1110014    111 sch_friend11     582
+##  6 1110015    111 sch_friend11      26
+##  7 1110020    111 sch_friend11     528
+##  8 1110022    111 sch_friend11      NA
+##  9 1110025    111 sch_friend11     135
+## 10 1110027    111 sch_friend11     346
 ## # ... with 164,454 more rows
 \end{verbatim}
 
@@ -633,18 +637,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 39,561 x 4
-##          id school varname      content
-##       <dbl>  <int> <chr>          <int>
-##  1 1110002.    111 sch_friend11     424
-##  2 1110007.    111 sch_friend11     629
-##  3 1110013.    111 sch_friend11     232
-##  4 1110014.    111 sch_friend11     582
-##  5 1110015.    111 sch_friend11      26
-##  6 1110020.    111 sch_friend11     528
-##  7 1110025.    111 sch_friend11     135
-##  8 1110027.    111 sch_friend11     346
-##  9 1110029.    111 sch_friend11     369
-## 10 1110030.    111 sch_friend11     462
+##         id school varname      content
+##      <dbl>  <int> <chr>          <int>
+##  1 1110002    111 sch_friend11     424
+##  2 1110007    111 sch_friend11     629
+##  3 1110013    111 sch_friend11     232
+##  4 1110014    111 sch_friend11     582
+##  5 1110015    111 sch_friend11      26
+##  6 1110020    111 sch_friend11     528
+##  7 1110025    111 sch_friend11     135
+##  8 1110027    111 sch_friend11     346
+##  9 1110029    111 sch_friend11     369
+## 10 1110030    111 sch_friend11     462
 ## # ... with 39,551 more rows
 \end{verbatim}
 \item
@@ -668,18 +672,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 39,561 x 7
-##          id school varname      content friendid  year  nnom
-##       <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
-##  1 1110002.    111 sch_friend11     424 1110424.     1     1
-##  2 1110007.    111 sch_friend11     629 1110629.     1     1
-##  3 1110013.    111 sch_friend11     232 1110232.     1     1
-##  4 1110014.    111 sch_friend11     582 1110582.     1     1
-##  5 1110015.    111 sch_friend11      26 1110026.     1     1
-##  6 1110020.    111 sch_friend11     528 1110528.     1     1
-##  7 1110025.    111 sch_friend11     135 1110135.     1     1
-##  8 1110027.    111 sch_friend11     346 1110346.     1     1
-##  9 1110029.    111 sch_friend11     369 1110369.     1     1
-## 10 1110030.    111 sch_friend11     462 1110462.     1     1
+##         id school varname      content friendid  year  nnom
+##      <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
+##  1 1110002    111 sch_friend11     424  1110424     1     1
+##  2 1110007    111 sch_friend11     629  1110629     1     1
+##  3 1110013    111 sch_friend11     232  1110232     1     1
+##  4 1110014    111 sch_friend11     582  1110582     1     1
+##  5 1110015    111 sch_friend11      26  1110026     1     1
+##  6 1110020    111 sch_friend11     528  1110528     1     1
+##  7 1110025    111 sch_friend11     135  1110135     1     1
+##  8 1110027    111 sch_friend11     346  1110346     1     1
+##  9 1110029    111 sch_friend11     369  1110369     1     1
+## 10 1110030    111 sch_friend11     462  1110462     1     1
 ## # ... with 39,551 more rows
 \end{verbatim}
 
@@ -786,11 +790,11 @@ depends on what you need to do! In this case, we will go for the
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH 71292f2 DN-- 2164 9514 -- 
+## IGRAPH bb826d2 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from 71292f2 (vertex names):
+## + edges from bb826d2 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -1371,16 +1375,16 @@ of their peers are more popular
 ## # Groups:   to, to_name [1,561]
 ##       to to_name school indeg nom_avg
 ##    <dbl> <chr>    <int> <int>   <dbl>
-##  1    2. 1110002    111    22   0.222
-##  2    3. 1110007    111     7   0.175
-##  3    4. 1110013    111     6   0.171
-##  4    5. 1110014    111    19   0.134
-##  5    6. 1110015    111     3   0.150
-##  6    7. 1110020    111     6   0.154
-##  7    9. 1110025    111     6   0.214
-##  8   10. 1110027    111    13   0.220
-##  9   11. 1110029    111    14   0.131
-## 10   12. 1110030    111     6   0.222
+##  1  2.00 1110002    111    22   0.222
+##  2  3.00 1110007    111     7   0.175
+##  3  4.00 1110013    111     6   0.171
+##  4  5.00 1110014    111    19   0.134
+##  5  6.00 1110015    111     3   0.150
+##  6  7.00 1110020    111     6   0.154
+##  7  9.00 1110025    111     6   0.214
+##  8 10.0  1110027    111    13   0.220
+##  9 11.0  1110029    111    14   0.131
+## 10 12.0  1110030    111     6   0.222
 ## # ... with 1,551 more rows
 \end{verbatim}
 
@@ -1437,7 +1441,7 @@ individual nodes appear to cluster in groups of the same numerical
 labels (which turn out to be students' grades, 7 through 12); thus, an
 ERGM can help us quantify the strength of this intra-group effect.
 
---- (D. R. Hunter et al. \protect\hyperlink{ref-Hunter2008}{2008})
+--- (Hunter et al. \protect\hyperlink{ref-Hunter2008}{2008})
 \end{quote}
 
 \begin{figure}
@@ -1470,7 +1474,7 @@ Is the normalizing factor that ensures that equation \eqref{eq:04-1} is a
 legitimate probability distribution. Even after fixing \(\mathcal{Y}\)
 to be all the networks that have size \(n\), the size of \(\mathcal{Y}\)
 makes this type of models hard to estimate as there are
-\(N = 2^{n(n-1)}\) possible networks! (D. R. Hunter et al.
+\(N = 2^{n(n-1)}\) possible networks! (Hunter et al.
 \protect\hyperlink{ref-Hunter2008}{2008})
 
 Recent developments include new forms of de- pendency structures, to
@@ -1479,7 +1483,7 @@ the one-step Markovian dependence assumptions, allowing investigation of
 longer range configurations, such as longer paths in the network or
 larger cycles (Pattison and Robins 2002). Models for bipartite (Faust
 and Skvoretz 1999) and tripartite (Mische and Robins 2000) network
-structures have also been developed. (D. R. Hunter et al.
+structures have also been developed. (Hunter et al.
 \protect\hyperlink{ref-Hunter2008}{2008}, 9)
 
 \subsection{A naive example}\label{a-naive-example}
@@ -1744,7 +1748,7 @@ with the \texttt{which\_loop} function
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from ddfe2f9 (vertex names):
+## + 1/2638 edge from 07e513d (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2284,15 +2288,18 @@ may understate model performance. To directly assess the performance of
 the final model on in-model statistics, please use the GOF command:
 gof(ergmFitObject, GOF=\textasciitilde{}model).
 
-----\texttt{mcmc.diagnostics(ans0)}
+---\texttt{mcmc.diagnostics(ans0)}
 \end{quote}
 
-Not that bad! First, observe that in the plot we see 4 different lines,
-why is that? Well, since we were running in parallel using 4 cores the
-algorithm actually ran 4 different chains of the MCMC algorithm. An
-eyeball test is to see if all the chains moved at about the same place,
-if we have that we can start thinking about model convergence from the
-mcmc perspective.
+Not that bad!\footnote{The statnet wiki website as a very nice example
+  of (very) bad and good mcmc diagnostics plots
+  \href{https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf}{here}.}
+First, observe that in the plot we see 4 different lines, why is that?
+Well, since we were running in parallel using 4 cores the algorithm
+actually ran 4 different chains of the MCMC algorithm. An eyeball test
+is to see if all the chains moved at about the same place, if we have
+that we can start thinking about model convergence from the mcmc
+perspective.
 
 What would be an indicator of no-convergence? Well, if you see something
 like this:
@@ -2419,6 +2426,12 @@ download from the
 \href{http://www.mcmchandbook.net/HandbookSampleChapters.html}{book's
 website}.
 
+For GOF take a look at section 6 of
+\href{https://statnet.csde.washington.edu/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html}{ERGM
+2016 Sunbelt tutorial}, and for a more technical review you can take a
+look at (Hunter, Goodreau, and Handcock
+\protect\hyperlink{ref-HunterJASA2008}{2008}).
+
 \chapter{(Separable) Temporal Exponential Family Random Graph
 Models}\label{separable-temporal-exponential-family-random-graph-models}
 
@@ -2542,6 +2555,12 @@ Pavel N. Krivitsky, Skye Bender-deMoll, and Martina Morris. 2016.
 Data}. The Statnet Project (\url{http://www.statnet.org}).
 \url{CRAN.R-project.org/package=statnet}.
 
+\hypertarget{ref-HunterJASA2008}{}
+Hunter, David R, Steven M Goodreau, and Mark S Handcock. 2008.
+``Goodness of Fit of Social Network Models.'' \emph{Journal of the
+American Statistical Association} 103 (481). Taylor \& Francis: 248--58.
+doi:\href{https://doi.org/10.1198/016214507000000446}{10.1198/016214507000000446}.
+
 \hypertarget{ref-Hunter2008}{}
 Hunter, David R., Mark S. Handcock, Carter T. Butts, Steven M. Goodreau,
 and Martina Morris. 2008. ``ergm : A Package to Fit, Simulate and
@@ -2571,9 +2590,14 @@ Convergence Diagnosis and Output Analysis for Mcmc.'' \emph{R News} 6
 (1): 7--11. \url{https://journal.r-project.org/archive/}.
 
 \hypertarget{ref-R-foreign}{}
-R Core Team. 2017. \emph{Foreign: Read Data Stored by 'Minitab', 'S',
+R Core Team. 2017a. \emph{Foreign: Read Data Stored by 'Minitab', 'S',
 'Sas', 'Spss', 'Stata', 'Systat', 'Weka', 'dBase', ...}
 \url{https://CRAN.R-project.org/package=foreign}.
+
+\hypertarget{ref-R}{}
+---------. 2017b. \emph{R: A Language and Environment for Statistical
+Computing}. Vienna, Austria: R Foundation for Statistical Computing.
+\url{https://www.R-project.org/}.
 
 \hypertarget{ref-R-rex}{}
 Ushey, Kevin, Jim Hester, and Robert Krzyzanowski. 2017. \emph{Rex:
