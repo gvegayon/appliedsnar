@@ -46,6 +46,28 @@ configurations, such as longer paths in the network or larger cycles (Pattison a
 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins
 2000) network structures have also been developed. [@Hunter2008 p. 9]
 
+### A naive example
+
+In the simplest case, ergm is equivalent to a logistic regression
+
+
+```{r}
+library(ergm)
+
+data("sampson")
+
+samplike
+
+y <- sort(as.vector(as.matrix(samplike)))[-c(1:18)]
+glm(y~1, family=binomial("logit"))
+
+ergm(samplike ~ edges)
+pr <- mean(y)
+log(pr) - log(1-pr) # Logit function
+qlogis(pr)
+```
+
+
 ## The `ergm` package
 
 The `ergm` R package [@R-ergm]
@@ -160,10 +182,16 @@ ans0 <- ergm(
 ```
 
 So what are we doing here:
+
 1.  The model is controling for: 
+    
     a.  `edges` Number of edges in the network (as opposed to its density)
+    
     b.  `nodematch("some-variable-name-here")` Includes a term that controls for homophily/heterophily
-    c.  `mutual` Number of mutual connections between $i$ and $j$. This can be related to, for example, triadic closure.
+    
+    c.  `mutual` Number of mutual connections between $(i, j), (j, i)$. This can be related to, for example, triadic closure.
+    
+For more on control parameters, see [@Morris2008].
 
 ```{r 04-ergms-model1, cache=TRUE, eval=TRUE, message=FALSE}
 ans1 <- ergm(

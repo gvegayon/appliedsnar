@@ -122,12 +122,13 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-03-15}
+  \date{2018-03-16}
 
 \usepackage{booktabs}
 \usepackage{hyperref}
   \hypersetup{allcolors=blue, colorlinks=true}
 
+\usepackage{apacite}
 \usepackage{setspace}
 \doublespacing
 
@@ -459,16 +460,16 @@ these actually look nice:
 ## # A tibble: 2,164 x 100
 ##    photoid school hispanic female1 female2 female3 female4 grades1 grades2
 ##      <int>  <int>    <dbl>   <int>   <int>   <int>   <int>   <dbl>   <dbl>
-##  1       1    111     1.00      NA      NA       0       0   NA      NA   
-##  2       2    111     1.00       0      NA      NA       0    3.00   NA   
-##  3       7    111     0          1       1       1       1    5.00    4.50
-##  4      13    111     1.00       1       1       1       1    2.50    2.50
-##  5      14    111     1.00       1       1       1      NA    3.00    3.50
-##  6      15    111     1.00       0       0       0       0    2.50    2.50
-##  7      20    111     1.00       1       1       1       1    2.50    2.50
-##  8      22    111     1.00      NA      NA       0       0   NA      NA   
-##  9      25    111     0          1       1      NA       1    4.50    3.50
-## 10      27    111     1.00       0      NA       0       0    3.50   NA   
+##  1       1    111       1.      NA      NA       0       0   NA      NA   
+##  2       2    111       1.       0      NA      NA       0    3.00   NA   
+##  3       7    111       0.       1       1       1       1    5.00    4.50
+##  4      13    111       1.       1       1       1       1    2.50    2.50
+##  5      14    111       1.       1       1       1      NA    3.00    3.50
+##  6      15    111       1.       0       0       0       0    2.50    2.50
+##  7      20    111       1.       1       1       1       1    2.50    2.50
+##  8      22    111       1.      NA      NA       0       0   NA      NA   
+##  9      25    111       0.       1       1      NA       1    4.50    3.50
+## 10      27    111       1.       0      NA       0       0    3.50   NA   
 ## # ... with 2,154 more rows, and 91 more variables: grades3 <dbl>,
 ## #   grades4 <dbl>, eversmk1 <int>, eversmk2 <int>, eversmk3 <int>,
 ## #   eversmk4 <int>, everdrk1 <int>, everdrk2 <int>, everdrk3 <int>,
@@ -537,18 +538,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 2,164 x 78
-##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
-##      <dbl>  <int>        <int>        <int>        <int>        <int>
-##  1 1110001    111           NA           NA           NA           NA
-##  2 1110002    111          424          423          426          289
-##  3 1110007    111          629          505           NA           NA
-##  4 1110013    111          232          569           NA           NA
-##  5 1110014    111          582          134           41          592
-##  6 1110015    111           26          488           81          138
-##  7 1110020    111          528           NA          492          395
-##  8 1110022    111           NA           NA           NA           NA
-##  9 1110025    111          135          185          553           84
-## 10 1110027    111          346          168          559            5
+##          id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
+##       <dbl>  <int>        <int>        <int>        <int>        <int>
+##  1 1110001.    111           NA           NA           NA           NA
+##  2 1110002.    111          424          423          426          289
+##  3 1110007.    111          629          505           NA           NA
+##  4 1110013.    111          232          569           NA           NA
+##  5 1110014.    111          582          134           41          592
+##  6 1110015.    111           26          488           81          138
+##  7 1110020.    111          528           NA          492          395
+##  8 1110022.    111           NA           NA           NA           NA
+##  9 1110025.    111          135          185          553           84
+## 10 1110027.    111          346          168          559            5
 ## # ... with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
 ## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
 ## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,
@@ -592,18 +593,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 164,464 x 4
-##         id school varname      content
-##      <dbl>  <int> <chr>          <int>
-##  1 1110001    111 sch_friend11      NA
-##  2 1110002    111 sch_friend11     424
-##  3 1110007    111 sch_friend11     629
-##  4 1110013    111 sch_friend11     232
-##  5 1110014    111 sch_friend11     582
-##  6 1110015    111 sch_friend11      26
-##  7 1110020    111 sch_friend11     528
-##  8 1110022    111 sch_friend11      NA
-##  9 1110025    111 sch_friend11     135
-## 10 1110027    111 sch_friend11     346
+##          id school varname      content
+##       <dbl>  <int> <chr>          <int>
+##  1 1110001.    111 sch_friend11      NA
+##  2 1110002.    111 sch_friend11     424
+##  3 1110007.    111 sch_friend11     629
+##  4 1110013.    111 sch_friend11     232
+##  5 1110014.    111 sch_friend11     582
+##  6 1110015.    111 sch_friend11      26
+##  7 1110020.    111 sch_friend11     528
+##  8 1110022.    111 sch_friend11      NA
+##  9 1110025.    111 sch_friend11     135
+## 10 1110027.    111 sch_friend11     346
 ## # ... with 164,454 more rows
 \end{verbatim}
 
@@ -632,18 +633,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 39,561 x 4
-##         id school varname      content
-##      <dbl>  <int> <chr>          <int>
-##  1 1110002    111 sch_friend11     424
-##  2 1110007    111 sch_friend11     629
-##  3 1110013    111 sch_friend11     232
-##  4 1110014    111 sch_friend11     582
-##  5 1110015    111 sch_friend11      26
-##  6 1110020    111 sch_friend11     528
-##  7 1110025    111 sch_friend11     135
-##  8 1110027    111 sch_friend11     346
-##  9 1110029    111 sch_friend11     369
-## 10 1110030    111 sch_friend11     462
+##          id school varname      content
+##       <dbl>  <int> <chr>          <int>
+##  1 1110002.    111 sch_friend11     424
+##  2 1110007.    111 sch_friend11     629
+##  3 1110013.    111 sch_friend11     232
+##  4 1110014.    111 sch_friend11     582
+##  5 1110015.    111 sch_friend11      26
+##  6 1110020.    111 sch_friend11     528
+##  7 1110025.    111 sch_friend11     135
+##  8 1110027.    111 sch_friend11     346
+##  9 1110029.    111 sch_friend11     369
+## 10 1110030.    111 sch_friend11     462
 ## # ... with 39,551 more rows
 \end{verbatim}
 \item
@@ -667,18 +668,18 @@ Let's take a look at this step by step:
 
 \begin{verbatim}
 ## # A tibble: 39,561 x 7
-##         id school varname      content friendid  year  nnom
-##      <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
-##  1 1110002    111 sch_friend11     424  1110424     1     1
-##  2 1110007    111 sch_friend11     629  1110629     1     1
-##  3 1110013    111 sch_friend11     232  1110232     1     1
-##  4 1110014    111 sch_friend11     582  1110582     1     1
-##  5 1110015    111 sch_friend11      26  1110026     1     1
-##  6 1110020    111 sch_friend11     528  1110528     1     1
-##  7 1110025    111 sch_friend11     135  1110135     1     1
-##  8 1110027    111 sch_friend11     346  1110346     1     1
-##  9 1110029    111 sch_friend11     369  1110369     1     1
-## 10 1110030    111 sch_friend11     462  1110462     1     1
+##          id school varname      content friendid  year  nnom
+##       <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
+##  1 1110002.    111 sch_friend11     424 1110424.     1     1
+##  2 1110007.    111 sch_friend11     629 1110629.     1     1
+##  3 1110013.    111 sch_friend11     232 1110232.     1     1
+##  4 1110014.    111 sch_friend11     582 1110582.     1     1
+##  5 1110015.    111 sch_friend11      26 1110026.     1     1
+##  6 1110020.    111 sch_friend11     528 1110528.     1     1
+##  7 1110025.    111 sch_friend11     135 1110135.     1     1
+##  8 1110027.    111 sch_friend11     346 1110346.     1     1
+##  9 1110029.    111 sch_friend11     369 1110369.     1     1
+## 10 1110030.    111 sch_friend11     462 1110462.     1     1
 ## # ... with 39,551 more rows
 \end{verbatim}
 
@@ -785,11 +786,11 @@ depends on what you need to do! In this case, we will go for the
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH bb826d2 DN-- 2164 9514 -- 
+## IGRAPH 71292f2 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from bb826d2 (vertex names):
+## + edges from 71292f2 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -1370,16 +1371,16 @@ of their peers are more popular
 ## # Groups:   to, to_name [1,561]
 ##       to to_name school indeg nom_avg
 ##    <dbl> <chr>    <int> <int>   <dbl>
-##  1  2.00 1110002    111    22   0.222
-##  2  3.00 1110007    111     7   0.175
-##  3  4.00 1110013    111     6   0.171
-##  4  5.00 1110014    111    19   0.134
-##  5  6.00 1110015    111     3   0.150
-##  6  7.00 1110020    111     6   0.154
-##  7  9.00 1110025    111     6   0.214
-##  8 10.0  1110027    111    13   0.220
-##  9 11.0  1110029    111    14   0.131
-## 10 12.0  1110030    111     6   0.222
+##  1    2. 1110002    111    22   0.222
+##  2    3. 1110007    111     7   0.175
+##  3    4. 1110013    111     6   0.171
+##  4    5. 1110014    111    19   0.134
+##  5    6. 1110015    111     3   0.150
+##  6    7. 1110020    111     6   0.154
+##  7    9. 1110025    111     6   0.214
+##  8   10. 1110027    111    13   0.220
+##  9   11. 1110029    111    14   0.131
+## 10   12. 1110030    111     6   0.222
 ## # ... with 1,551 more rows
 \end{verbatim}
 
@@ -1436,7 +1437,7 @@ individual nodes appear to cluster in groups of the same numerical
 labels (which turn out to be students' grades, 7 through 12); thus, an
 ERGM can help us quantify the strength of this intra-group effect.
 
---- (Hunter et al. \protect\hyperlink{ref-Hunter2008}{2008})
+--- (D. R. Hunter et al. \protect\hyperlink{ref-Hunter2008}{2008})
 \end{quote}
 
 \begin{figure}
@@ -1469,7 +1470,7 @@ Is the normalizing factor that ensures that equation \eqref{eq:04-1} is a
 legitimate probability distribution. Even after fixing \(\mathcal{Y}\)
 to be all the networks that have size \(n\), the size of \(\mathcal{Y}\)
 makes this type of models hard to estimate as there are
-\(N = 2^{n(n-1)}\) possible networks! (Hunter et al.
+\(N = 2^{n(n-1)}\) possible networks! (D. R. Hunter et al.
 \protect\hyperlink{ref-Hunter2008}{2008})
 
 Recent developments include new forms of de- pendency structures, to
@@ -1478,8 +1479,162 @@ the one-step Markovian dependence assumptions, allowing investigation of
 longer range configurations, such as longer paths in the network or
 larger cycles (Pattison and Robins 2002). Models for bipartite (Faust
 and Skvoretz 1999) and tripartite (Mische and Robins 2000) network
-structures have also been developed. (Hunter et al.
+structures have also been developed. (D. R. Hunter et al.
 \protect\hyperlink{ref-Hunter2008}{2008}, 9)
+
+\subsection{A naive example}\label{a-naive-example}
+
+In the simplest case, ergm is equivalent to a logistic regression
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ergm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: statnet.common
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'statnet.common'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:base':
+## 
+##     order
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: network
+\end{verbatim}
+
+\begin{verbatim}
+## network: Classes for Relational Data
+## Version 1.13.0 created on 2015-08-31.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##                     Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Martina Morris, University of Washington
+##                     Skye Bender-deMoll, University of Washington
+##  For citation information, type citation("network").
+##  Type help("network-package") to get started.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## ergm: version 3.8.0, created on 2017-08-18
+## Copyright (c) 2017, Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Carter T. Butts, University of California -- Irvine
+##                     Steven M. Goodreau, University of Washington
+##                     Pavel N. Krivitsky, University of Wollongong
+##                     Martina Morris, University of Washington
+##                     with contributions from
+##                     Li Wang
+##                     Kirk Li, University of Washington
+##                     Skye Bender-deMoll, University of Washington
+## Based on "statnet" project software (statnet.org).
+## For license and citation information see statnet.org/attribution
+## or type citation("ergm").
+\end{verbatim}
+
+\begin{verbatim}
+## NOTE: Versions before 3.6.1 had a bug in the implementation of the
+## bd() constriant which distorted the sampled distribution somewhat.
+## In addition, Sampson's Monks datasets had mislabeled vertices. See
+## the NEWS and the documentation for more details.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"sampson"}\NormalTok{)}
+
+\NormalTok{samplike}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Network attributes:
+##   vertices = 18 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   total edges= 88 
+##     missing edges= 0 
+##     non-missing edges= 88 
+## 
+##  Vertex attribute names: 
+##     cloisterville group vertex.names 
+## 
+##  Edge attribute names: 
+##     nominations
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\KeywordTok{sort}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(samplike)))[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{18}\NormalTok{)]}
+\KeywordTok{glm}\NormalTok{(y}\OperatorTok{~}\DecValTok{1}\NormalTok{, }\DataTypeTok{family=}\KeywordTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:  glm(formula = y ~ 1, family = binomial("logit"))
+## 
+## Coefficients:
+## (Intercept)  
+##     -0.9072  
+## 
+## Degrees of Freedom: 305 Total (i.e. Null);  305 Residual
+## Null Deviance:       367.2 
+## Residual Deviance: 367.2     AIC: 369.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ergm}\NormalTok{(samplike }\OperatorTok{~}\StringTok{ }\NormalTok{edges)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Evaluating log-likelihood at the estimate.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## MLE Coefficients:
+##   edges  
+## -0.9072
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pr <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(y)}
+\KeywordTok{log}\NormalTok{(pr) }\OperatorTok{-}\StringTok{ }\KeywordTok{log}\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{pr) }\CommentTok{# Logit function}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.9071582
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qlogis}\NormalTok{(pr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.9071582
+\end{verbatim}
 
 \section{\texorpdfstring{The \texttt{ergm}
 package}{The ergm package}}\label{the-ergm-package}
@@ -1589,7 +1744,7 @@ with the \texttt{which\_loop} function
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from acb2337 (vertex names):
+## + 1/2638 edge from ddfe2f9 (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -1671,12 +1826,30 @@ Here is an example of a couple of models that we could compare\footnote{Notice
 \end{Highlighting}
 \end{Shaded}
 
-So what are we doing here: 1. The model is controling for: a.
-\texttt{edges} Number of edges in the network (as opposed to its
-density) b. \texttt{nodematch("some-variable-name-here")} Includes a
-term that controls for homophily/heterophily c. \texttt{mutual} Number
-of mutual connections between \(i\) and \(j\). This can be related to,
-for example, triadic closure.
+So what are we doing here:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The model is controling for:
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    \texttt{edges} Number of edges in the network (as opposed to its
+    density)
+  \item
+    \texttt{nodematch("some-variable-name-here")} Includes a term that
+    controls for homophily/heterophily
+  \item
+    \texttt{mutual} Number of mutual connections between
+    \((i, j), (j, i)\). This can be related to, for example, triadic
+    closure.
+  \end{enumerate}
+\end{enumerate}
+
+For more on control parameters, see (Morris, Handcock, and Hunter
+\protect\hyperlink{ref-Morris2008}{2008}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2331,6 +2504,8 @@ school friends:
   the variable \texttt{photoid}.
 \end{itemize}
 
+\bibliographystyle{apacite}
+
 \chapter*{References}\label{references}
 \addcontentsline{toc}{chapter}{References}
 
@@ -2382,6 +2557,13 @@ in R to LaTeX and HTML Tables.'' \emph{Journal of Statistical Software}
 \hypertarget{ref-Matloff2011}{}
 Matloff, Norman. 2011. \emph{The Art of R Programming: A Tour of
 Statistical Software Design}. No Starch Press.
+
+\hypertarget{ref-Morris2008}{}
+Morris, Martina, Mark Handcock, and David Hunter. 2008. ``Specification
+of Exponential-Family Random Graph Models: Terms and Computational
+Aspects.'' \emph{Journal of Statistical Software, Articles} 24 (4):
+1--24.
+doi:\href{https://doi.org/10.18637/jss.v024.i04}{10.18637/jss.v024.i04}.
 
 \hypertarget{ref-R-coda}{}
 Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. ``CODA:

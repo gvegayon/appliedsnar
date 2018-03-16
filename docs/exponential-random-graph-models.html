@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied SNA with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied SNA with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-03-15">
+<meta name="date" content="2018-03-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -137,6 +137,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html#a-naive-example"><i class="fa fa-check"></i><b>5.0.1</b> A naive example</a></li>
 <li class="chapter" data-level="5.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.1</b> The <code>ergm</code> package</a></li>
 <li class="chapter" data-level="5.2" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Running ERGMs</a></li>
 <li class="chapter" data-level="5.3" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.3</b> Model Goodness-of-Fit</a></li>
@@ -177,7 +178,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>So what are ERGMs anyway…</p>
 <blockquote>
 <p>The purpose of ERGMs, in a nutshell, is to describe parsimoniously the local selection forces that shape the global structure of a network. To this end, a network dataset, like those depicted in Figure 1, may be considered like the response in a regression model, where the predictors are things like “propensity for individuals of the same sex to form partnerships” or “propensity for individuals to form triangles of partnerships”. In Figure 1(b), for example, it is evident that the individual nodes appear to cluster in groups of the same numerical labels (which turn out to be students’ grades, 7 through 12); thus, an ERGM can help us quantify the strength of this intra-group effect.</p>
-<p>— <span class="citation">(Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p>
+<p>— <span class="citation">(D. R. Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p>
 </blockquote>
 <div class="figure">
 <img src="hunter2008.png" alt="Source: Hunter et al. (2008)" />
@@ -193,8 +194,84 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><span class="math display">\[
 \kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{z}\in\mathcal{Y}}{\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{z})\right\}}
 \]</span></p>
-<p>Is the normalizing factor that ensures that equation <a href="exponential-random-graph-models.html#eq:04-1">(5.1)</a> is a legitimate probability distribution. Even after fixing <span class="math inline">\(\mathcal{Y}\)</span> to be all the networks that have size <span class="math inline">\(n\)</span>, the size of <span class="math inline">\(\mathcal{Y}\)</span> makes this type of models hard to estimate as there are <span class="math inline">\(N = 2^{n(n-1)}\)</span> possible networks! <span class="citation">(Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p>
-<p>Recent developments include new forms of de- pendency structures, to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. <span class="citation">(Hunter et al. <a href="#ref-Hunter2008">2008</a>, 9)</span></p> 
+<p>Is the normalizing factor that ensures that equation <a href="exponential-random-graph-models.html#eq:04-1">(5.1)</a> is a legitimate probability distribution. Even after fixing <span class="math inline">\(\mathcal{Y}\)</span> to be all the networks that have size <span class="math inline">\(n\)</span>, the size of <span class="math inline">\(\mathcal{Y}\)</span> makes this type of models hard to estimate as there are <span class="math inline">\(N = 2^{n(n-1)}\)</span> possible networks! <span class="citation">(D. R. Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p>
+<p>Recent developments include new forms of de- pendency structures, to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. <span class="citation">(D. R. Hunter et al. <a href="#ref-Hunter2008">2008</a>, 9)</span></p>
+<div id="a-naive-example" class="section level3">
+<h3><span class="header-section-number">5.0.1</span> A naive example</h3>
+<p>In the simplest case, ergm is equivalent to a logistic regression</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ergm)</code></pre></div>
+<pre><code>## Loading required package: network</code></pre>
+<pre><code>## network: Classes for Relational Data
+## Version 1.13.0 created on 2015-08-31.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##                     Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Martina Morris, University of Washington
+##                     Skye Bender-deMoll, University of Washington
+##  For citation information, type citation(&quot;network&quot;).
+##  Type help(&quot;network-package&quot;) to get started.</code></pre>
+<pre><code>## 
+## ergm: version 3.8.0, created on 2017-08-18
+## Copyright (c) 2017, Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Carter T. Butts, University of California -- Irvine
+##                     Steven M. Goodreau, University of Washington
+##                     Pavel N. Krivitsky, University of Wollongong
+##                     Martina Morris, University of Washington
+##                     with contributions from
+##                     Li Wang
+##                     Kirk Li, University of Washington
+##                     Skye Bender-deMoll, University of Washington
+## Based on &quot;statnet&quot; project software (statnet.org).
+## For license and citation information see statnet.org/attribution
+## or type citation(&quot;ergm&quot;).</code></pre>
+<pre><code>## NOTE: Versions before 3.6.1 had a bug in the implementation of the
+## bd() constriant which distorted the sampled distribution somewhat.
+## In addition, Sampson&#39;s Monks datasets had mislabeled vertices. See
+## the NEWS and the documentation for more details.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;sampson&quot;</span>)
+
+samplike</code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 18 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   total edges= 88 
+##     missing edges= 0 
+##     non-missing edges= 88 
+## 
+##  Vertex attribute names: 
+##     cloisterville group vertex.names 
+## 
+##  Edge attribute names: 
+##     nominations</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">as.vector</span>(<span class="kw">as.matrix</span>(samplike)))[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">18</span>)]
+<span class="kw">glm</span>(y<span class="op">~</span><span class="dv">1</span>, <span class="dt">family=</span><span class="kw">binomial</span>(<span class="st">&quot;logit&quot;</span>))</code></pre></div>
+<pre><code>## 
+## Call:  glm(formula = y ~ 1, family = binomial(&quot;logit&quot;))
+## 
+## Coefficients:
+## (Intercept)  
+##     -0.9072  
+## 
+## Degrees of Freedom: 305 Total (i.e. Null);  305 Residual
+## Null Deviance:       367.2 
+## Residual Deviance: 367.2     AIC: 369.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ergm</span>(samplike <span class="op">~</span><span class="st"> </span>edges)</code></pre></div>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre><code>## </code></pre>
+<pre><code>## 
+## MLE Coefficients:
+##   edges  
+## -0.9072</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr &lt;-<span class="st"> </span><span class="kw">mean</span>(y)
+<span class="kw">log</span>(pr) <span class="op">-</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span><span class="op">-</span>pr) <span class="co"># Logit function</span></code></pre></div>
+<pre><code>## [1] -0.9071582</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qlogis</span>(pr)</code></pre></div>
+<pre><code>## [1] -0.9071582</code></pre>
+</div> 
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
@@ -226,10 +303,11 @@ gitbook.start({
 "facebook": true,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -253,9 +331,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
