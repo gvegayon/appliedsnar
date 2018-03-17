@@ -67,6 +67,12 @@ log(pr) - log(1-pr) # Logit function
 qlogis(pr)
 ```
 
+## Estimation of ERGMs
+
+The algorithm goes like this:
+
+1.  ...
+
 
 ## The `ergm` package
 
@@ -265,32 +271,78 @@ In raw terms, once each chain has reach stationary distribution, we can say that
 >
 > ---?ergm::mcmc.diagnostics
 
-Since `ans0` is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did. For this we can use the `mcmc.diagnostics` function including in the package. This function is actually a wrapper of a couple of functions from the `coda` package [@R-coda]. This is what is called under the hood:
+Since `ans0` is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did. For this we can use the `mcmc.diagnostics` function including in the package. This function is actually a wrapper of a couple of functions from the `coda` package [@R-coda] which is called upon the `$sample` object which holds the *centered* statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the `$sample` object since it neither matches the observed statistics, nor the coefficients. 
+
+When calling the function `mcmc.diagnostics(ans0, centered = FALSE)`, you will see a lot of output including a couple of plots showing the trace and posterior distribution of the *uncentered* statistics (`centered = FALSE`). In the next code chunks we will reproduce the output from the `mcmc.diagnostics` function step by step using the coda package. First we need to *uncenter* the sample object:
+
+```{r ergm-uncentering}
+# Getting the centered sample
+sample_centered <- ans0$sample
+
+# Getting the observed statistics and turning it into a matrix so we can add it
+# to the samples
+observed <- summary(ans0$formula)
+observed <- matrix(
+  observed,
+  nrow  = nrow(sample_centered[[1]]),
+  ncol  = length(observed),
+  byrow = TRUE
+  )
+
+# Now we uncenter the sample
+sample_uncentered <- lapply(sample_centered, function(x) {
+  x + observed
+})
+
+# We have to make it an mcmc.list object
+sample_uncentered <- coda::mcmc.list(sample_uncentered)
+```
+
+
+This is what is called under the hood:
 
 1.  _Empirical means and sd, and quantiles_: 
     ```{r coda-summary}
-    summary(ans0$sample)
+    summary(sample_uncentered)
     ```
 2.  _Cross correlation_: 
     ```{r coda-corr}
-    coda::crosscorr(ans0$sample)
+    coda::crosscorr(sample_uncentered)
     ```
 3.  _Autocorrelation_: Just for now, we will only take a look at autocorrelation for chain 1 only. Autocorrelation should be rather low (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no markov property). A way out to solve this is *thinning* the sample.
     ```{r coda-autocorr}
-    coda::autocorr(ans0$sample)[[1]]
+    coda::autocorr(sample_uncentered)[[1]]
     ```
-4.  _Geweke Diagnostic_: 
+4.  _Geweke Diagnostic_: From the function's help file:
+    
+    > "If the samples are drawn from the stationary distribution of the chain, the two means are equal and Geweke's statistic has an asymptotically standard normal distribution. [...]
+    The Z-score is calculated under the assumption that the two parts of the chain are asymptotically independent, which requires that the sum of frac1 and frac2 be strictly less than 1.""
+    >
+    > ---?coda::geweke.diag 
+    
+    Let's take a look at a single chain:
+    
     ```{r coda-geweke.diag}
-    coda::geweke.diag(ans0$sample)
+    coda::geweke.diag(sample_uncentered)[[1]]
     ```
-5.  _(not included) Gelman Diagnostic_: 
+5.  _(not included) Gelman Diagnostic_: From the function's help file:
+    
+    > Gelman and Rubin (1992) propose a general approach to monitoring convergence of MCMC output in which m > 1 parallel chains are run with starting values that are overdispersed relative to the posterior distribution. Convergence is diagnosed when the chains have ‘forgotten’ their initial values, and the output from all chains is indistinguishable. The gelman.diag diagnostic is applied to a single variable from the chain. It is based a comparison of within-chain and between-chain variances, and is similar to a classical analysis of variance.
+    > ---?coda::gelman.diag
+    
+    As a difference from the previous diagnostic statistic, this uses all chains simulatenously:
+    
     ```{r coda-gelman.diag}
-    coda::gelman.diag(ans0$sample)
+    coda::gelman.diag(sample_uncentered)
     ```
+    
+    As a rule of thumb, values that are in the $[.9,1.1]$ are good.
  
+One nice feature of the `mcmc.diagnostics` function is the nice trace and posterior distribution plots that it generates. If you have the R package `latticeExtra` [@R-latticeExtra], the function will override the default plots used by `coda::plot.mcmc` and use lattice instead, creating a nicer looking plots. The next code chunk calls the `mcmc.diagnostic` function, but we suppress the rest of the output (see figure \@ref(fig:coda-plots)).
 
-```{r coda-plots, fig.align='center', fig.height=10, cache=FALSE}
-plot(ans0$sample)
+
+```{r coda-plots, fig.align='center', fig.height=8, cache=FALSE, echo=TRUE, results='hide', warning=FALSE, fig.cap=c("Trace and posterior distribution of sampled network statistics.", "Trace and posterior distribution of sampled network statistics (cont'd)."), fig.pos='!h'}
+mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output
 ```
 
 
@@ -301,15 +353,18 @@ MCMC diagnostics shown here are from the last round of simulation, prior to comp
 >
 > ---`mcmc.diagnostics(ans0)`
 
-Not that bad!^[The statnet wiki website as a very nice example of (very) bad and good mcmc diagnostics plots [here](https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf).] First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.
+Not that bad (although the `mutual` term could do better)!^[The statnet wiki website as a very nice example of (very) bad and good mcmc diagnostics plots [here](https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf).] First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.
 
-What would be an indicator of no-convergence? Well, if you see something like this:
+Once we are sure to have reach convergence on the MCMC algorithm, we can start thinking about how well does our model predicts the observed network's proterties. Besides of the statistics that define our ERGM, the `gof` function's default behavior show GOF for:
 
-```{r bad-convergence, echo=FALSE, cache=TRUE}
+a.  In degree distribution,
+b.  Out degree distribution,
+c.  Edge-wise shared partners, and
+d.  Geodesics
 
-```
+Let's take a look at it
 
-```{r checking-gof, cache = TRUE}
+```{r checking-gof, cache = TRUE, fig.pos='!h'}
 # Computing and printing GOF estatistics
 ans_gof <- gof(ans0)
 ans_gof
@@ -317,6 +372,8 @@ ans_gof
 # Plotting GOF statistics
 plot(ans_gof)
 ```
+
+
 
 ## More on MCMC convergence
 

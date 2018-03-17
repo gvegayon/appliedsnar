@@ -32,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="exponential-random-graph-models.html">
+<link rel="prev" href="estimation-of-ergms.html">
 <link rel="next" href="running-ergms.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -138,10 +138,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html#a-naive-example"><i class="fa fa-check"></i><b>5.0.1</b> A naive example</a></li>
-<li class="chapter" data-level="5.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.1</b> The <code>ergm</code> package</a></li>
-<li class="chapter" data-level="5.2" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Running ERGMs</a></li>
-<li class="chapter" data-level="5.3" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.3</b> Model Goodness-of-Fit</a></li>
-<li class="chapter" data-level="5.4" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.4</b> More on MCMC convergence</a></li>
+<li class="chapter" data-level="5.1" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.1</b> Estimation of ERGMs</a></li>
+<li class="chapter" data-level="5.2" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.2</b> The <code>ergm</code> package</a></li>
+<li class="chapter" data-level="5.3" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.3</b> Running ERGMs</a></li>
+<li class="chapter" data-level="5.4" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.4</b> Model Goodness-of-Fit</a></li>
+<li class="chapter" data-level="5.5" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.5</b> More on MCMC convergence</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -172,7 +173,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="the-ergm-package" class="section level2">
-<h2><span class="header-section-number">5.1</span> The <code>ergm</code> package</h2>
+<h2><span class="header-section-number">5.2</span> The <code>ergm</code> package</h2>
 <p>The <code>ergm</code> R package <span class="citation">(Handcock et al. <a href="#ref-R-ergm">2017</a>)</span></p>
 <p>From the previous section:<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
@@ -208,7 +209,7 @@ network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<spa
 ## -4.732</code></pre>
 <p>So what happened here! We got a warning. It turns out that our network has loops (didn’t thought about it before!). Let’s take a look on that with the <code>which_loop</code> function</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(ig_year1_<span class="dv">111</span>)[<span class="kw">which_loop</span>(ig_year1_<span class="dv">111</span>)]</code></pre></div>
-<pre><code>## + 1/2638 edge from 5b21cd4 (vertex names):
+<pre><code>## + 1/2638 edge from 2009e7d (vertex names):
 ## [1] 1110111-&gt;1110111</code></pre>
 <p>We can get rid of these using the <code>igraph::-.igraph</code>. Moreover, just to illustrate how it can be done, let’s get rid of the isolates using the same operator</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the new network</span>
@@ -248,7 +249,7 @@ network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<spa
           </div>
         </div>
       </div>
-<a href="exponential-random-graph-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="estimation-of-ergms.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="running-ergms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

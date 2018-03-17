@@ -138,10 +138,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html#a-naive-example"><i class="fa fa-check"></i><b>5.0.1</b> A naive example</a></li>
-<li class="chapter" data-level="5.1" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.1</b> The <code>ergm</code> package</a></li>
-<li class="chapter" data-level="5.2" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Running ERGMs</a></li>
-<li class="chapter" data-level="5.3" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.3</b> Model Goodness-of-Fit</a></li>
-<li class="chapter" data-level="5.4" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.4</b> More on MCMC convergence</a></li>
+<li class="chapter" data-level="5.1" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.1</b> Estimation of ERGMs</a></li>
+<li class="chapter" data-level="5.2" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.2</b> The <code>ergm</code> package</a></li>
+<li class="chapter" data-level="5.3" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.3</b> Running ERGMs</a></li>
+<li class="chapter" data-level="5.4" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.4</b> Model Goodness-of-Fit</a></li>
+<li class="chapter" data-level="5.5" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.5</b> More on MCMC convergence</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -172,16 +173,38 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="model-goodness-of-fit" class="section level2">
-<h2><span class="header-section-number">5.3</span> Model Goodness-of-Fit</h2>
+<h2><span class="header-section-number">5.4</span> Model Goodness-of-Fit</h2>
 <p>In raw terms, once each chain has reach stationary distribution, we can say that there are no problems with autocorrelation and that each sample point is iid. This implies that, since we are running the model with more than 1 chain, we can use all the samples (chains) as a single dataset.</p>
 <blockquote>
 <p>Recent changes in the ergm estimation algorithm mean that these plots can no longer be used to ensure that the mean statistics from the model match the observed network statistics. For that functionality, please use the GOF command: gof(object, GOF=~model).</p>
 <p>—?ergm::mcmc.diagnostics</p>
 </blockquote>
-<p>Since <code>ans0</code> is the one model which did best, let’s take a look at it’s GOF statistics. First, lets see how the MCMC did. For this we can use the <code>mcmc.diagnostics</code> function including in the package. This function is actually a wrapper of a couple of functions from the <code>coda</code> package <span class="citation">(Plummer et al. <a href="#ref-R-coda">2006</a>)</span>. This is what is called under the hood:</p>
+<p>Since <code>ans0</code> is the one model which did best, let’s take a look at it’s GOF statistics. First, lets see how the MCMC did. For this we can use the <code>mcmc.diagnostics</code> function including in the package. This function is actually a wrapper of a couple of functions from the <code>coda</code> package <span class="citation">(Plummer et al. <a href="#ref-R-coda">2006</a>)</span> which is called upon the <code>$sample</code> object which holds the <em>centered</em> statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the <code>$sample</code> object since it neither matches the observed statistics, nor the coefficients.</p>
+<p>When calling the function <code>mcmc.diagnostics(ans0, centered = FALSE)</code>, you will see a lot of output including a couple of plots showing the trace and posterior distribution of the <em>uncentered</em> statistics (<code>centered = FALSE</code>). In the next code chunks we will reproduce the output from the <code>mcmc.diagnostics</code> function step by step using the coda package. First we need to <em>uncenter</em> the sample object:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Getting the centered sample</span>
+sample_centered &lt;-<span class="st"> </span>ans0<span class="op">$</span>sample
+
+<span class="co"># Getting the observed statistics and turning it into a matrix so we can add it</span>
+<span class="co"># to the samples</span>
+observed &lt;-<span class="st"> </span><span class="kw">summary</span>(ans0<span class="op">$</span>formula)
+observed &lt;-<span class="st"> </span><span class="kw">matrix</span>(
+  observed,
+  <span class="dt">nrow  =</span> <span class="kw">nrow</span>(sample_centered[[<span class="dv">1</span>]]),
+  <span class="dt">ncol  =</span> <span class="kw">length</span>(observed),
+  <span class="dt">byrow =</span> <span class="ot">TRUE</span>
+  )
+
+<span class="co"># Now we uncenter the sample</span>
+sample_uncentered &lt;-<span class="st"> </span><span class="kw">lapply</span>(sample_centered, <span class="cf">function</span>(x) {
+  x <span class="op">+</span><span class="st"> </span>observed
+})
+
+<span class="co"># We have to make it an mcmc.list object</span>
+sample_uncentered &lt;-<span class="st"> </span>coda<span class="op">::</span><span class="kw">mcmc.list</span>(sample_uncentered)</code></pre></div>
+<p>This is what is called under the hood:</p>
 <ol style="list-style-type: decimal">
 <li><p><em>Empirical means and sd, and quantiles</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(ans0<span class="op">$</span>sample)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sample_uncentered)</code></pre></div>
 <pre><code>## 
 ## Iterations = 16384:1063936
 ## Thinning interval = 1024 
@@ -192,22 +215,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##    plus standard error of the mean:
 ## 
 ##                      Mean    SD Naive SE Time-series SE
-## edges              -32.32 51.14   0.7990          3.557
-## nodematch.hispanic -26.81 39.08   0.6106          2.879
-## nodematch.female1  -28.03 44.92   0.7018          3.678
-## nodematch.eversmk1 -30.99 45.59   0.7123          3.420
-## mutual             -14.35 20.47   0.3199          3.120
+## edges              2442.7 51.14   0.7990          3.557
+## nodematch.hispanic 1588.2 39.08   0.6106          2.879
+## nodematch.female1  1786.0 44.92   0.7018          3.678
+## nodematch.eversmk1 1707.0 45.59   0.7123          3.420
+## mutual              471.6 20.47   0.3199          3.120
 ## 
 ## 2. Quantiles for each variable:
 ## 
-##                    2.5% 25% 50% 75% 97.5%
-## edges              -128 -68 -35   1    75
-## nodematch.hispanic -100 -54 -27  -2    53
-## nodematch.female1  -115 -59 -29   2    65
-## nodematch.eversmk1 -116 -63 -33   1    59
-## mutual              -55 -27 -16  -1    29</code></pre></li>
+##                    2.5%  25%  50%  75% 97.5%
+## edges              2347 2407 2440 2476  2550
+## nodematch.hispanic 1515 1561 1588 1613  1668
+## nodematch.female1  1699 1755 1785 1816  1879
+## nodematch.eversmk1 1622 1675 1705 1739  1797
+## mutual              431  459  470  485   515</code></pre></li>
 <li><p><em>Cross correlation</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">crosscorr</span>(ans0<span class="op">$</span>sample)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">crosscorr</span>(sample_uncentered)</code></pre></div>
 <pre><code>##                        edges nodematch.hispanic nodematch.female1
 ## edges              1.0000000          0.7842851         0.8454275
 ## nodematch.hispanic 0.7842851          1.0000000         0.6875136
@@ -221,7 +244,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## nodematch.eversmk1          1.0000000 0.6111560
 ## mutual                      0.6111560 1.0000000</code></pre></li>
 <li><p><em>Autocorrelation</em>: Just for now, we will only take a look at autocorrelation for chain 1 only. Autocorrelation should be rather low (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no markov property). A way out to solve this is <em>thinning</em> the sample.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">autocorr</span>(ans0<span class="op">$</span>sample)[[<span class="dv">1</span>]]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">autocorr</span>(sample_uncentered)[[<span class="dv">1</span>]]</code></pre></div>
 <pre><code>## , , edges
 ## 
 ##               edges nodematch.hispanic nodematch.female1
@@ -296,52 +319,27 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## Lag 5120           0.5696277 0.9396082
 ## Lag 10240          0.5458346 0.8806506
 ## Lag 51200          0.2897837 0.3673476</code></pre></li>
-<li><p><em>Geweke Diagnostic</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">geweke.diag</span>(ans0<span class="op">$</span>sample)</code></pre></div>
-<pre><code>## [[1]]
-## 
+<li><p><em>Geweke Diagnostic</em>: From the function’s help file:</p>
+<blockquote>
+<p>“If the samples are drawn from the stationary distribution of the chain, the two means are equal and Geweke’s statistic has an asymptotically standard normal distribution. […] The Z-score is calculated under the assumption that the two parts of the chain are asymptotically independent, which requires that the sum of frac1 and frac2 be strictly less than 1.”&quot;</p>
+<p>—?coda::geweke.diag</p>
+</blockquote>
+<p>Let’s take a look at a single chain:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">geweke.diag</span>(sample_uncentered)[[<span class="dv">1</span>]]</code></pre></div>
+<pre><code>## 
 ## Fraction in 1st window = 0.1
 ## Fraction in 2nd window = 0.5 
 ## 
 ##              edges nodematch.hispanic  nodematch.female1 
 ##             1.2158             1.9078             1.0548 
 ## nodematch.eversmk1             mutual 
-##             1.6781             0.4969 
-## 
-## 
-## [[2]]
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##              1.451              4.109              2.268 
-## nodematch.eversmk1             mutual 
-##              1.108              1.478 
-## 
-## 
-## [[3]]
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##             1.1445             0.3823            -1.4859 
-## nodematch.eversmk1             mutual 
-##             1.9638             0.3500 
-## 
-## 
-## [[4]]
-## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 
-##           -0.07832            1.71294            0.62034 
-## nodematch.eversmk1             mutual 
-##           -1.35149           -1.05875</code></pre></li>
-<li><p><em>(not included) Gelman Diagnostic</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">gelman.diag</span>(ans0<span class="op">$</span>sample)</code></pre></div>
+##             1.6781             0.4969</code></pre></li>
+<li><p><em>(not included) Gelman Diagnostic</em>: From the function’s help file:</p>
+<blockquote>
+<p>Gelman and Rubin (1992) propose a general approach to monitoring convergence of MCMC output in which m &gt; 1 parallel chains are run with starting values that are overdispersed relative to the posterior distribution. Convergence is diagnosed when the chains have ‘forgotten’ their initial values, and the output from all chains is indistinguishable. The gelman.diag diagnostic is applied to a single variable from the chain. It is based a comparison of within-chain and between-chain variances, and is similar to a classical analysis of variance. —?coda::gelman.diag</p>
+</blockquote>
+<p>As a difference from the previous diagnostic statistic, this uses all chains simulatenously:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">gelman.diag</span>(sample_uncentered)</code></pre></div>
 <pre><code>## Potential scale reduction factors:
 ## 
 ##                    Point est. Upper C.I.
@@ -353,17 +351,37 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 
 ## Multivariate psrf
 ## 
-## 1.41</code></pre></li>
+## 1.41</code></pre>
+<p>As a rule of thumb, values that are in the <span class="math inline">\([.9,1.1]\)</span> are good.</p></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(ans0<span class="op">$</span>sample)</code></pre></div>
-<p><img src="appliedsnar_files/figure-html/coda-plots-1.png" width="672" style="display: block; margin: auto;" /><img src="appliedsnar_files/figure-html/coda-plots-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>One nice feature of the <code>mcmc.diagnostics</code> function is the nice trace and posterior distribution plots that it generates. If you have the R package <code>latticeExtra</code> <span class="citation">(Sarkar and Andrews <a href="#ref-R-latticeExtra">2016</a>)</span>, the function will override the default plots used by <code>coda::plot.mcmc</code> and use lattice instead, creating a nicer looking plots. The next code chunk calls the <code>mcmc.diagnostic</code> function, but we suppress the rest of the output (see figure <a href="model-goodness-of-fit.html#fig:coda-plots">5.1</a>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc.diagnostics</span>(ans0, <span class="dt">center =</span> <span class="ot">FALSE</span>) <span class="co"># Suppressing all the output</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:coda-plots"></span>
+<img src="appliedsnar_files/figure-html/coda-plots-1.png" alt="Trace and posterior distribution of sampled network statistics." width="672" />
+<p class="caption">
+Figure 5.1: Trace and posterior distribution of sampled network statistics.
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:coda-plots"></span>
+<img src="appliedsnar_files/figure-html/coda-plots-2.png" alt="Trace and posterior distribution of sampled network statistics (cont'd)." width="672" />
+<p class="caption">
+Figure 5.1: Trace and posterior distribution of sampled network statistics (cont’d).
+</p>
+</div>
 <p>If we called the function <code>mcmc.diagnostics</code> this message appears at the end:</p>
 <blockquote>
 <p>MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).</p>
 <p>—<code>mcmc.diagnostics(ans0)</code></p>
 </blockquote>
-<p>Not that bad!<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a> First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.</p>
-<p>What would be an indicator of no-convergence? Well, if you see something like this:</p>
+<p>Not that bad (although the <code>mutual</code> term could do better)!<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a> First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.</p>
+<p>Once we are sure to have reach convergence on the MCMC algorithm, we can start thinking about how well does our model predicts the observed network’s proterties. Besides of the statistics that define our ERGM, the <code>gof</code> function’s default behavior show GOF for:</p>
+<ol style="list-style-type: lower-alpha">
+<li>In degree distribution,</li>
+<li>Out degree distribution,</li>
+<li>Edge-wise shared partners, and</li>
+<li>Geodesics</li>
+</ol>
+<p>Let’s take a look at it</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Computing and printing GOF estatistics</span>
 ans_gof &lt;-<span class="st"> </span><span class="kw">gof</span>(ans0)
 ans_gof</code></pre></div>
@@ -371,61 +389,61 @@ ans_gof</code></pre></div>
 ## Goodness-of-fit for in-degree 
 ## 
 ##    obs min  mean max MC p-value
-## 0   13   0  1.88   6       0.00
-## 1   34   3  9.13  17       0.00
-## 2   37   9 21.57  33       0.00
-## 3   48  27 40.08  58       0.22
-## 4   37  39 57.04  72       0.00
-## 5   47  51 65.97  87       0.00
-## 6   42  46 62.97  86       0.00
-## 7   39  37 53.25  69       0.04
-## 8   35  25 41.38  55       0.24
-## 9   21  17 27.95  41       0.20
-## 10  12   7 16.99  27       0.24
-## 11  19   3 10.43  20       0.02
-## 12   4   0  4.89  11       1.00
-## 13   7   0  2.54   9       0.04
-## 14   6   0  1.05   4       0.00
-## 15   3   0  0.50   3       0.04
-## 16   4   0  0.20   3       0.00
-## 17   3   0  0.12   1       0.00
-## 18   3   0  0.04   1       0.00
+## 0   13   0  1.87   6       0.00
+## 1   34   2  8.25  18       0.00
+## 2   37  11 21.50  31       0.00
+## 3   48  27 39.39  52       0.16
+## 4   37  38 55.15  78       0.00
+## 5   47  47 62.90  84       0.02
+## 6   42  47 63.23  85       0.00
+## 7   39  40 53.80  70       0.00
+## 8   35  25 41.40  59       0.30
+## 9   21  17 29.61  41       0.08
+## 10  12   8 18.62  28       0.24
+## 11  19   4 10.80  19       0.02
+## 12   4   2  6.18  12       0.62
+## 13   7   0  3.14   9       0.16
+## 14   6   0  1.23   5       0.00
+## 15   3   0  0.50   2       0.00
+## 16   4   0  0.32   3       0.00
+## 17   3   0  0.10   2       0.00
+## 18   3   0  0.00   0       0.00
 ## 19   2   0  0.01   1       0.00
-## 20   1   0  0.01   1       0.02
+## 20   1   0  0.00   0       0.00
 ## 22   1   0  0.00   0       0.00
 ## 
 ## Goodness-of-fit for out-degree 
 ## 
 ##    obs min  mean max MC p-value
-## 0    4   0  1.95   5       0.24
-## 1   28   3  8.74  17       0.00
-## 2   45  10 22.41  36       0.00
-## 3   50  26 40.35  56       0.08
-## 4   54  40 56.78  76       0.70
-## 5   62  43 64.59  79       0.88
-## 6   40  46 63.32  82       0.00
-## 7   28  39 53.87  69       0.00
-## 8   13  27 41.03  53       0.00
-## 9   16  15 28.27  40       0.04
-## 10  20   7 16.87  27       0.42
-## 11   8   4  9.87  17       0.68
-## 12  11   1  5.59  11       0.08
-## 13  13   0  2.43   6       0.00
-## 14   6   0  1.13   4       0.00
-## 15   6   0  0.48   3       0.00
-## 16   7   0  0.22   3       0.00
-## 17   4   0  0.09   1       0.00
-## 18   3   0  0.00   0       0.00
-## 19   0   0  0.01   1       1.00
+## 0    4   0  1.73   5       0.18
+## 1   28   1  8.93  16       0.00
+## 2   45  13 20.98  34       0.00
+## 3   50  27 39.60  54       0.12
+## 4   54  38 55.06  69       0.94
+## 5   62  46 62.52  78       0.98
+## 6   40  50 62.49  81       0.00
+## 7   28  37 54.67  72       0.00
+## 8   13  31 42.24  54       0.00
+## 9   16  16 28.97  41       0.02
+## 10  20   6 18.74  28       0.82
+## 11   8   5 10.71  17       0.50
+## 12  11   1  6.09  12       0.10
+## 13  13   0  2.78   7       0.00
+## 14   6   0  1.48   6       0.02
+## 15   6   0  0.57   3       0.00
+## 16   7   0  0.23   2       0.00
+## 17   4   0  0.10   1       0.00
+## 18   3   0  0.08   1       0.00
+## 19   0   0  0.03   1       1.00
 ## 
 ## Goodness-of-fit for edgewise shared partner 
 ## 
 ##       obs  min    mean  max MC p-value
-## esp0 1032 1956 2220.50 2328          0
-## esp1  755  166  232.46  397          0
-## esp2  352    4   14.80   86          0
-## esp3  202    0    0.75   16          0
-## esp4   79    0    0.05    4          0
+## esp0 1032 1996 2252.28 2357          0
+## esp1  755  165  241.97  407          0
+## esp2  352    6   14.98   81          0
+## esp3  202    0    0.66   15          0
+## esp4   79    0    0.01    1          0
 ## esp5   36    0    0.00    0          0
 ## esp6   14    0    0.00    0          0
 ## esp7    4    0    0.00    0          0
@@ -434,26 +452,26 @@ ans_gof</code></pre></div>
 ## Goodness-of-fit for minimum geodesic distance 
 ## 
 ##       obs   min     mean   max MC p-value
-## 1    2475  2348  2468.56  2598       0.88
-## 2   10672 12763 13933.53 15304       0.00
-## 3   31134 51869 56724.28 62405       0.00
-## 4   50673 76195 79277.10 82187       0.00
-## 5   42563 14434 19124.93 24041       0.00
-## 6   18719   466  1125.17  1964       0.00
-## 7    4808     2    33.53   192       0.00
-## 8     822     0     0.58    12       0.00
-## 9     100     0     0.01     1       0.00
+## 1    2475  2374  2509.90  2667       0.58
+## 2   10672 12763 14421.15 16321       0.00
+## 3   31134 51730 58783.98 66543       0.00
+## 4   50673 75774 78515.61 81865       0.00
+## 5   42563 11964 17516.75 24191       0.00
+## 6   18719   303   968.19  1928       0.00
+## 7    4808     0    32.79   346       0.00
+## 8     822     0     1.50    48       0.00
+## 9     100     0     0.08     4       0.00
 ## 10      7     0     0.00     0       0.00
-## Inf 12333     0  1618.31  4147       0.00
+## Inf 12333     0  1556.05  3322       0.00
 ## 
 ## Goodness-of-fit for model statistics 
 ## 
 ##                     obs  min    mean  max MC p-value
-## edges              2475 2348 2468.56 2598       0.88
-## nodematch.hispanic 1615 1504 1588.54 1686       0.48
-## nodematch.female1  1814 1727 1805.55 1905       0.90
-## nodematch.eversmk1 1738 1622 1715.58 1808       0.66
-## mutual              486  436  477.46  522       0.60</code></pre>
+## edges              2475 2374 2509.90 2667       0.58
+## nodematch.hispanic 1615 1545 1641.50 1757       0.64
+## nodematch.female1  1814 1710 1837.83 1927       0.56
+## nodematch.eversmk1 1738 1653 1758.92 1849       0.74
+## mutual              486  449  496.92  542       0.74</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plotting GOF statistics</span>
 <span class="kw">plot</span>(ans_gof)</code></pre></div>
 <p><img src="appliedsnar_files/figure-html/checking-gof-1.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-2.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-3.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-4.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-5.png" width="672" /></p>
@@ -462,6 +480,9 @@ ans_gof</code></pre></div>
 <div id="refs" class="references">
 <div id="ref-R-coda">
 <p>Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. “CODA: Convergence Diagnosis and Output Analysis for Mcmc.” <em>R News</em> 6 (1): 7–11. <a href="https://journal.r-project.org/archive/" class="uri">https://journal.r-project.org/archive/</a>.</p>
+</div>
+<div id="ref-R-latticeExtra">
+<p>Sarkar, Deepayan, and Felix Andrews. 2016. <em>LatticeExtra: Extra Graphical Utilities Based on Lattice</em>. <a href="https://CRAN.R-project.org/package=latticeExtra" class="uri">https://CRAN.R-project.org/package=latticeExtra</a>.</p>
 </div>
 </div>
 <div class="footnotes">
