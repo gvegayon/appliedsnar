@@ -122,7 +122,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-03-16}
+  \date{2018-03-18}
 
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -790,11 +790,11 @@ depends on what you need to do! In this case, we will go for the
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH ba2bab7 DN-- 2164 9514 -- 
+## IGRAPH 71292f2 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from ba2bab7 (vertex names):
+## + edges from 71292f2 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -1646,10 +1646,23 @@ The algorithm goes like this:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
-  \ldots{}
+  Give an initial guess for \(\theta^{(t)}\), and simulate networks with
+  that
+\item
+  With the networks simulated, we can compute the gradient and hessian
+  of the log-likelihood, and hence update the parameter
+  \(\theta^{(t)}\to\theta^{(t+1)}\)
+\item
+  If convergence has been reach (depending on the criteria) stop,
+  otherwise go to step 1.
 \end{enumerate}
+
+For more details see (Snijders
+\protect\hyperlink{ref-Snijders2002}{2002}), and (Wang et al.
+\protect\hyperlink{ref-Wang2009}{2009}) provides a nice comparison
+between the algorithm used in \texttt{ergm} and in \texttt{PNet} (which
+is the same as the one used in \texttt{RSiena}).
 
 \section{\texorpdfstring{The \texttt{ergm}
 package}{The ergm package}}\label{the-ergm-package}
@@ -1759,7 +1772,7 @@ with the \texttt{which\_loop} function
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from d3ff14a (vertex names):
+## + 1/2638 edge from 38739aa (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2501,6 +2514,49 @@ Let's take a look at it
 \includegraphics{appliedsnar_files/figure-latex/checking-gof-4.pdf}
 \includegraphics{appliedsnar_files/figure-latex/checking-gof-5.pdf}
 
+Try the following configuration instead
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ans0_bis <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
+\NormalTok{  network_}\DecValTok{111} \OperatorTok{~}
+\StringTok{    }\NormalTok{edges }\OperatorTok{+}
+\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\NormalTok{mutual }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{esp}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\DecValTok{3}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{idegree}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
+\NormalTok{    ,}
+  \DataTypeTok{constraints =} \OperatorTok{~}\KeywordTok{bd}\NormalTok{(}\DataTypeTok{maxout =} \DecValTok{19}\NormalTok{),}
+  \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}
+    \DataTypeTok{seed        =} \DecValTok{1}\NormalTok{,}
+    \DataTypeTok{MCMLE.maxit =} \DecValTok{15}\NormalTok{,}
+    \DataTypeTok{parallel    =} \DecValTok{4}\NormalTok{,}
+    \DataTypeTok{CD.maxit    =} \DecValTok{15}\NormalTok{,}
+    \DataTypeTok{MCMC.samplesize =} \DecValTok{2048}\OperatorTok{*}\DecValTok{4}\NormalTok{,}
+    \DataTypeTok{MCMC.burnin =} \DecValTok{30000}\NormalTok{,}
+    \DataTypeTok{MCMC.interval =} \DecValTok{2048}\OperatorTok{*}\DecValTok{4}
+\NormalTok{    )}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Increase the sample size so the curves are more smooth, longer intervals
+(thinning) so we reduce the autocorrelation, larger burin. All this
+together to improve the Gelman test statistic. We also added idegree
+from 0 to 10, and esp from 0 to 3 to explicitly match those statistics
+in our model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{include_graphics}\NormalTok{(}\StringTok{"awful-chains.png"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!h]
+\includegraphics[width=9.92in]{awful-chains} \caption{An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful}\label{fig:badconvergence}
+\end{figure}
+
 \section{More on MCMC convergence}\label{more-on-mcmc-convergence}
 
 For more on this issue, I recommend reviewing
@@ -2690,10 +2746,20 @@ Sarkar, Deepayan, and Felix Andrews. 2016. \emph{LatticeExtra: Extra
 Graphical Utilities Based on Lattice}.
 \url{https://CRAN.R-project.org/package=latticeExtra}.
 
+\hypertarget{ref-Snijders2002}{}
+Snijders, Tom AB. 2002. ``Markov Chain Monte Carlo Estimation of
+Exponential Random Graph Models.'' \emph{Journal of Social Structure} 3.
+
 \hypertarget{ref-R-rex}{}
 Ushey, Kevin, Jim Hester, and Robert Krzyzanowski. 2017. \emph{Rex:
 Friendly Regular Expressions}.
 \url{https://CRAN.R-project.org/package=rex}.
+
+\hypertarget{ref-Wang2009}{}
+Wang, Peng, Ken Sharpe, Garry L. Robins, and Philippa E. Pattison. 2009.
+``Exponential Random Graph (P*) Models for Affiliation Networks.''
+\emph{Social Networks} 31 (1): 12--25.
+doi:\href{https://doi.org/https://doi.org/10.1016/j.socnet.2008.08.002}{https://doi.org/10.1016/j.socnet.2008.08.002}.
 
 \hypertarget{ref-R-stringr}{}
 Wickham, Hadley. 2017. \emph{Stringr: Simple, Consistent Wrappers for

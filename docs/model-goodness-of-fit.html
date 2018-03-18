@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied SNA with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied SNA with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-03-16">
+<meta name="date" content="2018-03-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -475,6 +475,35 @@ ans_gof</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plotting GOF statistics</span>
 <span class="kw">plot</span>(ans_gof)</code></pre></div>
 <p><img src="appliedsnar_files/figure-html/checking-gof-1.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-2.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-3.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-4.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-5.png" width="672" /></p>
+<p>Try the following configuration instead</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ans0_bis &lt;-<span class="st"> </span><span class="kw">ergm</span>(
+  network_<span class="dv">111</span> <span class="op">~</span>
+<span class="st">    </span>edges <span class="op">+</span>
+<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="op">+</span>
+<span class="st">    </span>mutual <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">esp</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">idegree</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">10</span>)
+    ,
+  <span class="dt">constraints =</span> <span class="op">~</span><span class="kw">bd</span>(<span class="dt">maxout =</span> <span class="dv">19</span>),
+  <span class="dt">control =</span> <span class="kw">control.ergm</span>(
+    <span class="dt">seed        =</span> <span class="dv">1</span>,
+    <span class="dt">MCMLE.maxit =</span> <span class="dv">15</span>,
+    <span class="dt">parallel    =</span> <span class="dv">4</span>,
+    <span class="dt">CD.maxit    =</span> <span class="dv">15</span>,
+    <span class="dt">MCMC.samplesize =</span> <span class="dv">2048</span><span class="op">*</span><span class="dv">4</span>,
+    <span class="dt">MCMC.burnin =</span> <span class="dv">30000</span>,
+    <span class="dt">MCMC.interval =</span> <span class="dv">2048</span><span class="op">*</span><span class="dv">4</span>
+    )
+  )</code></pre></div>
+<p>Increase the sample size so the curves are more smooth, longer intervals (thinning) so we reduce the autocorrelation, larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;awful-chains.png&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:badconvergence"></span>
+<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="357" />
+<p class="caption">
+Figure 5.2: An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful
+</p>
+</div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
@@ -515,10 +544,11 @@ gitbook.start({
 "facebook": true,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -542,9 +572,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

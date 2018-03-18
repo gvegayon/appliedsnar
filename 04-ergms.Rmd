@@ -71,7 +71,13 @@ qlogis(pr)
 
 The algorithm goes like this:
 
-1.  ...
+1.  Give an initial guess for $\theta^{(t)}$, and simulate networks with that
+
+2.  With the networks simulated, we can compute the gradient and hessian of the log-likelihood, and hence update the parameter $\theta^{(t)}\to\theta^{(t+1)}$
+
+3.  If convergence has been reach (depending on the criteria) stop, otherwise go to step 1.
+
+For more details see [@Snijders2002], and [@Wang2009] provides a nice comparison between the algorithm used in `ergm` and in `PNet` (which is the same as the one used in `RSiena`).
 
 
 ## The `ergm` package
@@ -373,6 +379,36 @@ ans_gof
 plot(ans_gof)
 ```
 
+Try the following configuration instead
+
+```r
+ans0_bis <- ergm(
+  network_111 ~
+    edges +
+    nodematch("hispanic") +
+    nodematch("female1") +
+    mutual + 
+    esp(0:3) + 
+    idegree(0:10)
+    ,
+  constraints = ~bd(maxout = 19),
+  control = control.ergm(
+    seed        = 1,
+    MCMLE.maxit = 15,
+    parallel    = 4,
+    CD.maxit    = 15,
+    MCMC.samplesize = 2048*4,
+    MCMC.burnin = 30000,
+    MCMC.interval = 2048*4
+    )
+  )
+```
+
+Increase the sample size so the curves are more smooth, longer intervals (thinning) so we reduce the autocorrelation, larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.
+
+```{r badconvergence, fig.cap='An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful', fig.pos='!h'}
+knitr::include_graphics("awful-chains.png")
+```
 
 
 ## More on MCMC convergence
