@@ -122,7 +122,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-03-18}
+  \date{2018-03-23}
 
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -1658,11 +1658,13 @@ The algorithm goes like this:
   otherwise go to step 1.
 \end{enumerate}
 
-For more details see (Snijders
-\protect\hyperlink{ref-Snijders2002}{2002}), and (Wang et al.
-\protect\hyperlink{ref-Wang2009}{2009}) provides a nice comparison
-between the algorithm used in \texttt{ergm} and in \texttt{PNet} (which
-is the same as the one used in \texttt{RSiena}).
+For more details see (; Admiraal and Handcock
+\protect\hyperlink{ref-admiraal2006}{2006}). (Snijders
+\protect\hyperlink{ref-Snijders2002}{2002}) provides details on the
+algorithm used by PNet (which is the same as the one used in
+\texttt{RSiena}), and (Wang et al.
+\protect\hyperlink{ref-Wang2009}{2009}) a short discussion on
+differences between \texttt{ergm} and \texttt{PNet}.
 
 \section{\texorpdfstring{The \texttt{ergm}
 package}{The ergm package}}\label{the-ergm-package}
@@ -1772,7 +1774,7 @@ with the \texttt{which\_loop} function
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 38739aa (vertex names):
+## + 1/2638 edge from c69bb8d (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2665,6 +2667,11 @@ school friends:
 \addcontentsline{toc}{chapter}{References}
 
 \hypertarget{refs}{}
+\hypertarget{ref-admiraal2006}{}
+Admiraal, Ryan, and Mark S Handcock. 2006. ``Sequential Importance
+Sampling for Bipartite Graphs with Applications to Likelihood-Based
+Inference.'' Department of Statistics, University of Washington.
+
 \hypertarget{ref-R-magrittr}{}
 Bache, Stefan Milton, and Hadley Wickham. 2014. \emph{Magrittr: A
 Forward-Pipe Operator for R}.

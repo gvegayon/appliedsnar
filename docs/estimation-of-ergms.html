@@ -25,7 +25,7 @@
 <meta name="author" content="George G. Vega Yon">
 
 
-<meta name="date" content="2018-03-18">
+<meta name="date" content="2018-03-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -180,10 +180,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p>With the networks simulated, we can compute the gradient and hessian of the log-likelihood, and hence update the parameter <span class="math inline">\(\theta^{(t)}\to\theta^{(t+1)}\)</span></p></li>
 <li><p>If convergence has been reach (depending on the criteria) stop, otherwise go to step 1.</p></li>
 </ol>
-<p>For more details see <span class="citation">(Snijders <a href="#ref-Snijders2002">2002</a>)</span>, and <span class="citation">(Wang et al. <a href="#ref-Wang2009">2009</a>)</span> provides a nice comparison between the algorithm used in <code>ergm</code> and in <code>PNet</code> (which is the same as the one used in <code>RSiena</code>).</p>
+<p>For more details see <span class="citation">(; Admiraal and Handcock <a href="#ref-admiraal2006">2006</a>)</span>. <span class="citation">(Snijders <a href="#ref-Snijders2002">2002</a>)</span> provides details on the algorithm used by PNet (which is the same as the one used in <code>RSiena</code>), and <span class="citation">(Wang et al. <a href="#ref-Wang2009">2009</a>)</span> a short discussion on differences between <code>ergm</code> and <code>PNet</code>.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-admiraal2006">
+<p>Admiraal, Ryan, and Mark S Handcock. 2006. “Sequential Importance Sampling for Bipartite Graphs with Applications to Likelihood-Based Inference.” Department of Statistics, University of Washington.</p>
+</div>
 <div id="ref-Snijders2002">
 <p>Snijders, Tom AB. 2002. “Markov Chain Monte Carlo Estimation of Exponential Random Graph Models.” <em>Journal of Social Structure</em> 3.</p>
 </div>
