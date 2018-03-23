@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied SNA with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied SNA with R" />
   <meta property="og:type" content="book" />
@@ -174,16 +174,25 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="estimation-of-ergms" class="section level2">
 <h2><span class="header-section-number">5.1</span> Estimation of ERGMs</h2>
-<p>The algorithm goes like this:</p>
+<p>The ultimate goal is to be able to do statistical inference on the proposed model. In a <em>normal</em> setting, we would be able to use Maximum-Likelihood-Estimation (MLE) which basically consists on finding the model parameters <span class="math inline">\(\theta\)</span> that, given the observed data, maximizes the likelihood of the model. Such is usually done by applying <a href="https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization">Newton’s method</a> which requires been able to compute the log-likelihood of the model. This is a bit more complicated in ERGMs.</p>
+<p>In the case of ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straight forward as it is in the regular setting. This is why we rely on simulations.</p>
+<p>In <code>statnet</code>, the default estimation method is based on a method proposed by <span class="citation">(<span class="citeproc-not-found" data-reference-id="Geyer1992"><strong>???</strong></span>)</span>, Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorihm to do the paremeter estimation part. In general terms, the MC-MLE algorithm can be described as follows:</p>
 <ol style="list-style-type: decimal">
-<li><p>Give an initial guess for <span class="math inline">\(\theta^{(t)}\)</span>, and simulate networks with that</p></li>
-<li><p>With the networks simulated, we can compute the gradient and hessian of the log-likelihood, and hence update the parameter <span class="math inline">\(\theta^{(t)}\to\theta^{(t+1)}\)</span></p></li>
-<li><p>If convergence has been reach (depending on the criteria) stop, otherwise go to step 1.</p></li>
+<li><p>Initialize the algorithm with an initial guess of <span class="math inline">\(\theta\)</span>, call it <span class="math inline">\(\theta^{(t)}\)</span></p></li>
+<li><p>While (no convergence) do:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Using <span class="math inline">\(\theta^{(t)}\)</span>, simulate <span class="math inline">\(M\)</span> networks by means of small changes in the <span class="math inline">\(\mathbf{Y}_{obs}\)</span> (the observed network). This part is done by using an importance-sampling method which weights each proposed network by it’s likelihood conditional on <span class="math inline">\(\theta^{(t)}\)</span></p></li>
+<li><p>With the networks simulated, we can do the Newton step to update the parameter <span class="math inline">\(\theta^{(t)}\)</span> (this is the iteration part in the <code>ergm</code> package): <span class="math inline">\(\theta^{(t)}\to\theta^{(t+1)}\)</span></p></li>
+<li><p>If convergence has been reach (which usually means that <span class="math inline">\(\theta^{(t)}\)</span> and <span class="math inline">\(\theta^{(t + 1)}\)</span> are not very different), then stop, otherwise, go to step a.</p></li>
+</ol></li>
 </ol>
-<p>For more details see <span class="citation">(; Admiraal and Handcock <a href="#ref-admiraal2006">2006</a>)</span>. <span class="citation">(Snijders <a href="#ref-Snijders2002">2002</a>)</span> provides details on the algorithm used by PNet (which is the same as the one used in <code>RSiena</code>), and <span class="citation">(Wang et al. <a href="#ref-Wang2009">2009</a>)</span> a short discussion on differences between <code>ergm</code> and <code>PNet</code>.</p>
+<p>For more details see <span class="citation">(Lusher, Koskinen, and Robins <a href="#ref-lusher2012">2012</a>; Admiraal and Handcock <a href="#ref-admiraal2006">2006</a>; Snijders <a href="#ref-Snijders2002">2002</a>; Wang et al. <a href="#ref-Wang2009">2009</a>)</span> provides details on the algorithm used by PNet (which is the same as the one used in <code>RSiena</code>). <span class="citation">(Lusher, Koskinen, and Robins <a href="#ref-lusher2012">2012</a>)</span> provides a short discussion on differences between <code>ergm</code> and <code>PNet</code>.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-lusher2012">
+<p>Lusher, Dean, Johan Koskinen, and Garry Robins. 2012. <em>Exponential Random Graph Models for Social Networks: Theory, Methods, and Applications</em>. Cambridge University Press.</p>
+</div>
 <div id="ref-admiraal2006">
 <p>Admiraal, Ryan, and Mark S Handcock. 2006. “Sequential Importance Sampling for Bipartite Graphs with Applications to Likelihood-Based Inference.” Department of Statistics, University of Washington.</p>
 </div>
@@ -218,11 +227,10 @@ gitbook.start({
 "facebook": true,
 "twitter": true,
 "google": false,
-"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -246,11 +254,9 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

@@ -790,11 +790,11 @@ depends on what you need to do! In this case, we will go for the
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH 71292f2 DN-- 2164 9514 -- 
+## IGRAPH ba2bab7 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from 71292f2 (vertex names):
+## + edges from ba2bab7 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -1642,28 +1642,61 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \section{Estimation of ERGMs}\label{estimation-of-ergms}
 
-The algorithm goes like this:
+The ultimate goal is to be able to do statistical inference on the
+proposed model. In a \emph{normal} setting, we would be able to use
+Maximum-Likelihood-Estimation (MLE) which basically consists on finding
+the model parameters \(\theta\) that, given the observed data, maximizes
+the likelihood of the model. Such is usually done by applying
+\href{https://en.wikipedia.org/wiki/Newton\%27s_method_in_optimization}{Newton's
+method} which requires been able to compute the log-likelihood of the
+model. This is a bit more complicated in ERGMs.
+
+In the case of ERGMs, since part of the likelihood involves a
+normalizing constant that is a function of all possible networks, this
+is not as straight forward as it is in the regular setting. This is why
+we rely on simulations.
+
+In \texttt{statnet}, the default estimation method is based on a method
+proposed by ({\textbf{???}}), Markov-Chain MLE, which uses Markov-Chain
+Monte Carlo for simulating networks and a modified version of the
+Newton-Raphson algorihm to do the paremeter estimation part. In general
+terms, the MC-MLE algorithm can be described as follows:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Give an initial guess for \(\theta^{(t)}\), and simulate networks with
-  that
+  Initialize the algorithm with an initial guess of \(\theta\), call it
+  \(\theta^{(t)}\)
 \item
-  With the networks simulated, we can compute the gradient and hessian
-  of the log-likelihood, and hence update the parameter
-  \(\theta^{(t)}\to\theta^{(t+1)}\)
-\item
-  If convergence has been reach (depending on the criteria) stop,
-  otherwise go to step 1.
+  While (no convergence) do:
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    Using \(\theta^{(t)}\), simulate \(M\) networks by means of small
+    changes in the \(\mathbf{Y}_{obs}\) (the observed network). This
+    part is done by using an importance-sampling method which weights
+    each proposed network by it's likelihood conditional on
+    \(\theta^{(t)}\)
+  \item
+    With the networks simulated, we can do the Newton step to update the
+    parameter \(\theta^{(t)}\) (this is the iteration part in the
+    \texttt{ergm} package): \(\theta^{(t)}\to\theta^{(t+1)}\)
+  \item
+    If convergence has been reach (which usually means that
+    \(\theta^{(t)}\) and \(\theta^{(t + 1)}\) are not very different),
+    then stop, otherwise, go to step a.
+  \end{enumerate}
 \end{enumerate}
 
-For more details see (; Admiraal and Handcock
-\protect\hyperlink{ref-admiraal2006}{2006}). (Snijders
-\protect\hyperlink{ref-Snijders2002}{2002}) provides details on the
+For more details see (Lusher, Koskinen, and Robins
+\protect\hyperlink{ref-lusher2012}{2012}; Admiraal and Handcock
+\protect\hyperlink{ref-admiraal2006}{2006}; Snijders
+\protect\hyperlink{ref-Snijders2002}{2002}; Wang et al.
+\protect\hyperlink{ref-Wang2009}{2009}) provides details on the
 algorithm used by PNet (which is the same as the one used in
-\texttt{RSiena}), and (Wang et al.
-\protect\hyperlink{ref-Wang2009}{2009}) a short discussion on
+\texttt{RSiena}). (Lusher, Koskinen, and Robins
+\protect\hyperlink{ref-lusher2012}{2012}) provides a short discussion on
 differences between \texttt{ergm} and \texttt{PNet}.
 
 \section{\texorpdfstring{The \texttt{ergm}
@@ -1774,7 +1807,7 @@ with the \texttt{which\_loop} function
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from c69bb8d (vertex names):
+## + 1/2638 edge from 4e5c1df (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2721,6 +2754,11 @@ doi:\href{https://doi.org/10.18637/jss.v024.i03}{10.18637/jss.v024.i03}.
 Leifeld, Philip. 2013. ``texreg: Conversion of Statistical Model Output
 in R to LaTeX and HTML Tables.'' \emph{Journal of Statistical Software}
 55 (8): 1--24. \url{http://www.jstatsoft.org/v55/i08/}.
+
+\hypertarget{ref-lusher2012}{}
+Lusher, Dean, Johan Koskinen, and Garry Robins. 2012. \emph{Exponential
+Random Graph Models for Social Networks: Theory, Methods, and
+Applications}. Cambridge University Press.
 
 \hypertarget{ref-Matloff2011}{}
 Matloff, Norman. 2011. \emph{The Art of R Programming: A Tour of

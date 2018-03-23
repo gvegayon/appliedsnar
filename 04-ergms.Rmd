@@ -69,15 +69,23 @@ qlogis(pr)
 
 ## Estimation of ERGMs
 
-The algorithm goes like this:
+The ultimate goal is to be able to do statistical inference on the proposed model. In a *normal* setting, we would be able to use Maximum-Likelihood-Estimation (MLE) which basically consists on finding the model parameters $\theta$ that, given the observed data, maximizes the likelihood of the model. Such is usually done by applying [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization) which requires been able to compute the log-likelihood of the model. This is a bit more complicated in ERGMs.
 
-1.  Give an initial guess for $\theta^{(t)}$, and simulate networks with that
+In the case of ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straight forward as it is in the regular setting. This is why we rely on simulations.
 
-2.  With the networks simulated, we can compute the gradient and hessian of the log-likelihood, and hence update the parameter $\theta^{(t)}\to\theta^{(t+1)}$
+In `statnet`, the default estimation method is based on a method proposed by [@Geyer1992], Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorihm to do the paremeter estimation part. In general terms, the MC-MLE algorithm can be described as follows:
 
-3.  If convergence has been reach (depending on the criteria) stop, otherwise go to step 1.
+1.  Initialize the algorithm with an initial guess of $\theta$, call it $\theta^{(t)}$
 
-For more details see [;@admiraal2006]. [@Snijders2002] provides details on the algorithm used by PNet (which is the same as the one used in `RSiena`), and [@Wang2009] a short discussion on differences between `ergm` and `PNet`. 
+2.  While (no convergence) do:
+    
+    a.  Using $\theta^{(t)}$, simulate $M$ networks by means of small changes in the $\mathbf{Y}_{obs}$ (the observed network). This part is done by using an importance-sampling method which weights each proposed network by it's likelihood conditional on $\theta^{(t)}$
+    
+    b.  With the networks simulated, we can do the Newton step to update the parameter $\theta^{(t)}$ (this is the iteration part in the `ergm` package): $\theta^{(t)}\to\theta^{(t+1)}$
+    
+    c.  If convergence has been reach (which usually means that $\theta^{(t)}$ and $\theta^{(t + 1)}$ are not very different), then stop, otherwise, go to step a.
+
+For more details see [@lusher2012;@admiraal2006;@Snijders2002;@Wang2009] provides details on the algorithm used by PNet (which is the same as the one used in `RSiena`). [@lusher2012] provides a short discussion on differences between `ergm` and `PNet`. 
 
 
 ## The `ergm` package
