@@ -122,7 +122,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-03-23}
+  \date{2018-04-26}
 
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -790,11 +790,11 @@ depends on what you need to do! In this case, we will go for the
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH ba2bab7 DN-- 2164 9514 -- 
+## IGRAPH bb826d2 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from ba2bab7 (vertex names):
+## + edges from bb826d2 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -886,6 +886,16 @@ vertex and store them in the igraph object itself:
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{indegree   <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"in"}\NormalTok{)}
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{outdegree  <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"out"}\NormalTok{)}
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{closeness  <-}\StringTok{ }\KeywordTok{closeness}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"total"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in closeness(ig_year1_111, mode = "total"): At centrality.c:
+## 2784 :closeness centrality is not well-defined for disconnected graphs
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{betweeness <-}\StringTok{ }\KeywordTok{betweenness}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{normalized =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1375,16 +1385,16 @@ of their peers are more popular
 ## # Groups:   to, to_name [1,561]
 ##       to to_name school indeg nom_avg
 ##    <dbl> <chr>    <int> <int>   <dbl>
-##  1    2. 1110002    111    22   0.222
-##  2    3. 1110007    111     7   0.175
-##  3    4. 1110013    111     6   0.171
-##  4    5. 1110014    111    19   0.134
-##  5    6. 1110015    111     3   0.150
-##  6    7. 1110020    111     6   0.154
-##  7    9. 1110025    111     6   0.214
-##  8   10. 1110027    111    13   0.220
-##  9   11. 1110029    111    14   0.131
-## 10   12. 1110030    111     6   0.222
+##  1  2.00 1110002    111    22   0.222
+##  2  3.00 1110007    111     7   0.175
+##  3  4.00 1110013    111     6   0.171
+##  4  5.00 1110014    111    19   0.134
+##  5  6.00 1110015    111     3   0.150
+##  6  7.00 1110020    111     6   0.154
+##  7  9.00 1110025    111     6   0.214
+##  8 10.0  1110027    111    13   0.220
+##  9 11.0  1110029    111    14   0.131
+## 10 12.0  1110030    111     6   0.222
 ## # ... with 1,551 more rows
 \end{verbatim}
 
@@ -1807,7 +1817,7 @@ with the \texttt{which\_loop} function
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 4e5c1df (vertex names):
+## + 1/2638 edge from 5ec22bc (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2614,6 +2624,29 @@ Models}\label{separable-temporal-exponential-family-random-graph-models}
 
 This tutorial is great!
 \url{https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/tergm_tutorial.pdf}
+
+\chapter{Stochastic Actor Oriented
+Models}\label{stochastic-actor-oriented-models}
+
+Stochastic Actor Oriented Models (SOAM), also known as Siena models were
+introduced by CITATION NEEDED.
+
+As a difference from ERGMs, Siena models look at the data generating
+process from the individuals' point of view. Based on McFadden's ideas
+of probabilistic choice, the model is founded in the following equation
+
+\[
+U_i(x) - U_i(x') \sim \mbox{Extreame Value Distribution}
+\]
+
+In other words, individuals choose between states \(x\) and \(x'\) in a
+probabilistic way (with some noise),
+
+\[
+\frac{\exp{f_i^Z(\beta^z,x, z)}}{\sum_{Z'\in\mathcal{C}}\exp{f_i^{Z}(\beta, x, z')}}
+\]
+
+snijders\_(sociological methodology 2001)
 
 \cleardoublepage 
 

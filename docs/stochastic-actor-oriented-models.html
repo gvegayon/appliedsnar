@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="more-on-mcmc-convergence.html">
-<link rel="next" href="stochastic-actor-oriented-models.html">
+<link rel="prev" href="separable-temporal-exponential-family-random-graph-models.html">
+<link rel="next" href="datasets.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -173,18 +173,31 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="separable-temporal-exponential-family-random-graph-models" class="section level1">
-<h1><span class="header-section-number">Chapter 6</span> (Separable) Temporal Exponential Family Random Graph Models</h1>
-<p>This tutorial is great! <a href="https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/tergm_tutorial.pdf" class="uri">https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/tergm_tutorial.pdf</a></p>
+<div id="stochastic-actor-oriented-models" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Stochastic Actor Oriented Models</h1>
+<p>Stochastic Actor Oriented Models (SOAM), also known as Siena models were introduced by CITATION NEEDED.</p>
+<p>As a difference from ERGMs, Siena models look at the data generating process from the individuals’ point of view. Based on McFadden’s ideas of probabilistic choice, the model is founded in the following equation</p>
+<p><span class="math display">\[
+U_i(x) - U_i(x&#39;) \sim \mbox{Extreame Value Distribution}
+\]</span></p>
+<p>In other words, individuals choose between states <span class="math inline">\(x\)</span> and <span class="math inline">\(x&#39;\)</span> in a probabilistic way (with some noise),</p>
+<p><span class="math display">\[
+\frac{{\mbox{exp}\left\{f_i^Z(\beta^z,x, z)\right\}}}{\sum_{Z&#39;\in\mathcal{C}}{\mbox{exp}\left\{f_i^{Z}(\beta, x, z&#39;)\right\}}}
+\]</span></p>
+<p>snijders_(sociological methodology 2001)</p>
+
 
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="more-on-mcmc-convergence.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="stochastic-actor-oriented-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="separable-temporal-exponential-family-random-graph-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="datasets.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
