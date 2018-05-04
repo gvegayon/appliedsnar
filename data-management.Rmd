@@ -1,0 +1,137 @@
+---
+title: "rank"
+author: "George G. Vega Yon"
+date: "May 4, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+
+library(igraph)
+library(dplyr)
+library(netplot)
+
+set.seed(1231)
+n   <- 500
+X   <- cbind(school = sort(rep(1:5, n/5)))
+net <- sample_smallworld(1, n, 4, .05) 
+
+nplot(net)
+
+col <- viridis::viridis(5)
+col <- col[X]
+nplot(net, vertex.color = col)
+
+# Adding X as an igraph attribute
+V(net)$school <- X
+
+```
+
+Computing centrality measures
+
+```{r}
+V(net)$btw_cent <- betweenness(net, normalized = TRUE)
+V(net)$ind_cent <- degree(net, mode="in")
+```
+
+Ranking
+
+```{r}
+dat              <- igraph::as_data_frame(net, what = "vertices")
+dat              <- dplyr::as_tibble(dat)
+dat$original_pos <- 1:nrow(dat)
+
+dat  <- group_by(dat, school)
+
+dat <- arrange(
+  dat,
+  -ind_cent,
+  -btw_cent,
+  .by_group = TRUE
+)
+
+dat <- mutate(
+  dat,
+  pos = 1:n(),
+  is_leader = as.integer(pos <= (n()*0.05))
+  )
+
+dat <- arrange(
+  dat,
+  original_pos
+)
+
+library(magrittr)
+
+group_by(dat, school) %>%
+  arrange(
+    -ind_cent,
+    -btw_cent,
+    .by_group=TRUE) %>%
+  mutate(
+    school_size = n(),
+    pos         = 1:n(),
+    is_leader   = as.integer(pos <= (school_size*.05) )
+  ) %>%
+  arrange(original_pos) %>%
+  View
+
+# In stata, group by: _N, this is equivalent to n() in dplyr
+by(dat, dat$school, function(x) rank(x$ind_cent))
+```
+
+Taggin the leaders in igraph
+
+```{r}
+V(net)$is_leader <- dat$is_leader
+```
+
+Visualizing with netwplot
+
+```{r}
+is_leader_1_2 <- V(net)$is_leader + 1
+nplot(
+  net,
+  vertex.size       = c(1, 2)[is_leader_1_2],
+  vertex.size.range = c(.005, .05),
+  vertex.color      = viridis::inferno(5)[V(net)$school],
+  bg.col            = "black"
+)
+```
+
+
+Example matching positions names in igraph
+
+```{r}
+
+# Creating a ring
+x <- make_ring(5)
+V(x)$name <- letters[1:5]
+
+# Processing data
+set.seed(123)
+dat <- igraph::as_data_frame(x, what = "vertices")
+dat$dummy <- runif(5) > .5
+dat <- dat[order(runif(5)),,drop=FALSE] # Changed the sorting!
+
+V(x)$name
+
+# Getting the original position
+ord <- match(
+  V(x)$name,
+  dat$name
+)
+
+dat <- dat[ord,,drop=FALSE]
+
+V(x)$new_dummy <- dat$dummy
+```
+
+
+
