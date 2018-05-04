@@ -15,3 +15,5 @@ $$
 $$
 
 snijders_(sociological methodology 2001)
+
+[@Snijders2010, @lazega2015, @Ripley2011]

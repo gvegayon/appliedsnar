@@ -122,7 +122,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-04-26}
+  \date{2018-04-27}
 
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -790,11 +790,11 @@ depends on what you need to do! In this case, we will go for the
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH bb826d2 DN-- 2164 9514 -- 
+## IGRAPH ba2bab7 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from bb826d2 (vertex names):
+## + edges from ba2bab7 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -1385,16 +1385,16 @@ of their peers are more popular
 ## # Groups:   to, to_name [1,561]
 ##       to to_name school indeg nom_avg
 ##    <dbl> <chr>    <int> <int>   <dbl>
-##  1  2.00 1110002    111    22   0.222
-##  2  3.00 1110007    111     7   0.175
-##  3  4.00 1110013    111     6   0.171
-##  4  5.00 1110014    111    19   0.134
-##  5  6.00 1110015    111     3   0.150
-##  6  7.00 1110020    111     6   0.154
-##  7  9.00 1110025    111     6   0.214
-##  8 10.0  1110027    111    13   0.220
-##  9 11.0  1110029    111    14   0.131
-## 10 12.0  1110030    111     6   0.222
+##  1    2. 1110002    111    22   0.222
+##  2    3. 1110007    111     7   0.175
+##  3    4. 1110013    111     6   0.171
+##  4    5. 1110014    111    19   0.134
+##  5    6. 1110015    111     3   0.150
+##  6    7. 1110020    111     6   0.154
+##  7    9. 1110025    111     6   0.214
+##  8   10. 1110027    111    13   0.220
+##  9   11. 1110029    111    14   0.131
+## 10   12. 1110030    111     6   0.222
 ## # ... with 1,551 more rows
 \end{verbatim}
 
@@ -1817,7 +1817,7 @@ with the \texttt{which\_loop} function
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 5ec22bc (vertex names):
+## + 1/2638 edge from e5da80f (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2648,6 +2648,11 @@ probabilistic way (with some noise),
 
 snijders\_(sociological methodology 2001)
 
+(Snijders, Bunt, and Steglich
+\protect\hyperlink{ref-Snijders2010}{2010}, Lazega and Snijders
+(\protect\hyperlink{ref-lazega2015}{2015}), Ripley et al.
+(\protect\hyperlink{ref-Ripley2011}{2011}))
+
 \cleardoublepage 
 
 \appendix
@@ -2783,6 +2788,11 @@ Diagnose Exponential-Family Models for Networks.'' \emph{Journal of
 Statistical Software} 24 (3).
 doi:\href{https://doi.org/10.18637/jss.v024.i03}{10.18637/jss.v024.i03}.
 
+\hypertarget{ref-lazega2015}{}
+Lazega, Emmanuel, and Tom AB Snijders. 2015. \emph{Multilevel Network
+Analysis for the Social Sciences: Theory, Methods and Applications}.
+Vol. 12. Springer.
+
 \hypertarget{ref-R-texreg}{}
 Leifeld, Philip. 2013. ``texreg: Conversion of Statistical Model Output
 in R to LaTeX and HTML Tables.'' \emph{Journal of Statistical Software}
@@ -2819,10 +2829,22 @@ R Core Team. 2017a. \emph{Foreign: Read Data Stored by 'Minitab', 'S',
 Computing}. Vienna, Austria: R Foundation for Statistical Computing.
 \url{https://www.R-project.org/}.
 
+\hypertarget{ref-Ripley2011}{}
+Ripley, Ruth M., Tom AB Snijders, Paulina Preciado, and Others. 2011.
+``Manual for RSIENA.'' \emph{University of Oxford: Department of
+Statistics, Nuffield College}, no. 2007.
+\href{https://www.uni-due.de/hummell/sna/R/RSiena\%7B/_\%7DManual.pdf}{https://www.uni-due.de/hummell/sna/R/RSiena\{\textbackslash{}\_\}Manual.pdf}.
+
 \hypertarget{ref-R-latticeExtra}{}
 Sarkar, Deepayan, and Felix Andrews. 2016. \emph{LatticeExtra: Extra
 Graphical Utilities Based on Lattice}.
 \url{https://CRAN.R-project.org/package=latticeExtra}.
+
+\hypertarget{ref-Snijders2010}{}
+Snijders, Tom A B, Gerhard G. van de Bunt, and Christian E G Steglich.
+2010. ``Introduction to stochastic actor-based models for network
+dynamics.'' \emph{Social Networks} 32 (1): 44--60.
+doi:\href{https://doi.org/10.1016/j.socnet.2009.02.004}{10.1016/j.socnet.2009.02.004}.
 
 \hypertarget{ref-Snijders2002}{}
 Snijders, Tom AB. 2002. ``Markov Chain Monte Carlo Estimation of
