@@ -476,7 +476,7 @@ edgelist <- as_long_data_frame(ig_year1) %>%
 # Also for egocentric friends (A. Friends)
 indeg_nom_cor <- group_by(edgelist, to, to_name, to_school) %>%
   summarise(
-    indeg   = n(),
+    indeg   = length(nnom),
     nom_avg = 1/mean(nnom)
   ) %>%
   rename(

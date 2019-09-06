@@ -34,17 +34,12 @@ Model \@ref(eq:04-1) may be expanded by replacing $\mathbf{g}(\mathbf{y})$ with 
 
 
 $$
-\kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{z}\in\mathcal{Y}}\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{z})}
+\kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}
 $$
 
 Is the normalizing factor that ensures that equation \@ref(eq:04-1) is a legitimate probability distribution. Even after fixing $\mathcal{Y}$ to be all the networks that have size $n$, the size of $\mathcal{Y}$ makes this type of models hard to estimate as there are $N = 2^{n(n-1)}$ possible networks! [@Hunter2008]
 
-Recent developments include new forms of de-
-pendency structures, to take into account more general neighborhood effects. These models
-relax the one-step Markovian dependence assumptions, allowing investigation of longer range
-configurations, such as longer paths in the network or larger cycles (Pattison and Robins
-2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins
-2000) network structures have also been developed. [@Hunter2008 p. 9]
+Recent developments include new forms of dependency structures, to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. [@Hunter2008 p. 9]
 
 ### A naive example
 
@@ -73,15 +68,53 @@ The ultimate goal is to be able to do statistical inference on the proposed mode
 
 In the case of ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straight forward as it is in the regular setting. This is why we rely on simulations.
 
-In `statnet`, the default estimation method is based on a method proposed by [@Geyer1992], Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorihm to do the paremeter estimation part. In general terms, the MC-MLE algorithm can be described as follows:
+In `statnet`, the default estimation method is based on a method proposed by [@Geyer1992], Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorihm to do the paremeter estimation part.
 
-1.  Initialize the algorithm with an initial guess of $\theta$, call it $\theta^{(t)}$
+The idea of MC-MLE for this family of statistical models is the fact that the expectation of normalizing constant ratios can be approximated using the law of large numbers. In particular, the following:
+
+$$
+\begin{aligned}
+\frac{\kappa\left(\theta,\mathcal{Y}\right)}{\kappa\left(\theta_0,\mathcal{Y}\right)} & = %
+  \frac{%
+    \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{ %
+    \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\theta_0^{\mbox{T}}\mathbf{g}(\mathbf{y})}
+  } \\
+& = \sum_{\mathbf{y}\in\mathcal{Y}}\left( %
+  \frac{1}{%
+    \sum_{\mathbf{y}\in\mathcal{Y}\exp{\theta_0^{\mbox{T}}\mathbf{g}(\mathbf{y})}}%
+  } \times %
+  \exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})} %
+  \right) \\
+& = \sum_{\mathbf{y}\in\mathcal{Y}}\left( %
+  \frac{\exp{\theta_0^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{%
+    \sum_{\mathbf{y}\in\mathcal{Y}\exp{\theta_0^{\mbox{T}}\mathbf{g}(\mathbf{y})}}%
+  } \times %
+  \exp{(\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y})} %
+  \right) \\
+& = \sum_{\mathbf{y}\in\mathcal{Y}}\left( %
+  \Pr{Y = y|\mathcal{Y}, \theta_0} \times %
+  \exp{(\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y})} %
+  \right) \\
+& = \mbox{E}_{\theta_0}\left(\exp{(\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y})} \right)
+\end{aligned}
+$$
+
+The final line can be approximated by the law of large numbers. In particular, the MC-MLE algorithm uses this fact to maximize the ratio of log-likelihoods. The objective function can be approximated by simulating $m$ networks from the distribution with parameter $\theta_0$:
+
+$$
+l(\theta) - l(\theta_0) \approx (\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y}_{obs}) - 
+\mbox{log}{\left[\frac{1}{m}\sum_{i = 1}^m\exp{(\theta-\theta_0)^{\mbox{T}}}\mathbf{g}(\mathbf{Y}_i)\right]}
+$$
+
+For more details see [@Hunter2008]. A sketch of the algorithm follows:
+
+1.  Initialize the algorithm with an initial guess of $\theta$, call it $\theta^{(t)}$ (must be a rather OK guess)
 
 2.  While (no convergence) do:
     
     a.  Using $\theta^{(t)}$, simulate $M$ networks by means of small changes in the $\mathbf{Y}_{obs}$ (the observed network). This part is done by using an importance-sampling method which weights each proposed network by it's likelihood conditional on $\theta^{(t)}$
     
-    b.  With the networks simulated, we can do the Newton step to update the parameter $\theta^{(t)}$ (this is the iteration part in the `ergm` package): $\theta^{(t)}\to\theta^{(t+1)}$
+    b.  With the networks simulated, we can do the Newton step to update the parameter $\theta^{(t)}$ (this is the iteration part in the `ergm` package): $\theta^{(t)}\to\theta^{(t+1)}$.
     
     c.  If convergence has been reach (which usually means that $\theta^{(t)}$ and $\theta^{(t + 1)}$ are not very different), then stop, otherwise, go to step a.
 

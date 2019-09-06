@@ -6,3 +6,4 @@ language:
 # This is key to start fresh... Knit and Merge, not Merge and Knit
 new_session: false 
 before_chapter_script: "before_chapter.r"
+delete_merged_file: true

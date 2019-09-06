@@ -5,11 +5,11 @@ date: "May 4, 2018"
 output: html_document
 ---
 
+## R Markdown
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-## R Markdown
 
 ```{r}
 
@@ -58,8 +58,9 @@ dat <- arrange(
 
 dat <- mutate(
   dat,
-  pos = 1:n(),
-  is_leader = as.integer(pos <= (n()*0.05))
+  school_size = length(original_pos),
+  pos         = 1:school_size,
+  is_leader   = as.integer(pos <= (school_size*0.05))
   )
 
 dat <- arrange(
@@ -75,8 +76,7 @@ group_by(dat, school) %>%
     -btw_cent,
     .by_group=TRUE) %>%
   mutate(
-    school_size = n(),
-    pos         = 1:n(),
+    pos         = 1:school_size,
     is_leader   = as.integer(pos <= (school_size*.05) )
   ) %>%
   arrange(original_pos) %>%

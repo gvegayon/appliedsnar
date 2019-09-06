@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Applied SNA with R</title>
-  <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.4 Model Goodness-of-Fit | Applied SNA with R</title>
+  <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Applied SNA with R" />
+  <meta property="og:title" content="5.4 Model Goodness-of-Fit | Applied SNA with R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,25 +16,26 @@
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Applied SNA with R" />
+  <meta name="twitter:title" content="5.4 Model Goodness-of-Fit | Applied SNA with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   
 
-<meta name="author" content="George G. Vega Yon">
+<meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2018-04-27">
+<meta name="date" content="2019-09-06" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="running-ergms.html">
 <link rel="next" href="more-on-mcmc-convergence.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -59,41 +59,66 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -182,30 +207,30 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </blockquote>
 <p>Since <code>ans0</code> is the one model which did best, let’s take a look at it’s GOF statistics. First, lets see how the MCMC did. For this we can use the <code>mcmc.diagnostics</code> function including in the package. This function is actually a wrapper of a couple of functions from the <code>coda</code> package <span class="citation">(Plummer et al. <a href="#ref-R-coda">2006</a>)</span> which is called upon the <code>$sample</code> object which holds the <em>centered</em> statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the <code>$sample</code> object since it neither matches the observed statistics, nor the coefficients.</p>
 <p>When calling the function <code>mcmc.diagnostics(ans0, centered = FALSE)</code>, you will see a lot of output including a couple of plots showing the trace and posterior distribution of the <em>uncentered</em> statistics (<code>centered = FALSE</code>). In the next code chunks we will reproduce the output from the <code>mcmc.diagnostics</code> function step by step using the coda package. First we need to <em>uncenter</em> the sample object:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Getting the centered sample</span>
-sample_centered &lt;-<span class="st"> </span>ans0<span class="op">$</span>sample
-
-<span class="co"># Getting the observed statistics and turning it into a matrix so we can add it</span>
-<span class="co"># to the samples</span>
-observed &lt;-<span class="st"> </span><span class="kw">summary</span>(ans0<span class="op">$</span>formula)
-observed &lt;-<span class="st"> </span><span class="kw">matrix</span>(
-  observed,
-  <span class="dt">nrow  =</span> <span class="kw">nrow</span>(sample_centered[[<span class="dv">1</span>]]),
-  <span class="dt">ncol  =</span> <span class="kw">length</span>(observed),
-  <span class="dt">byrow =</span> <span class="ot">TRUE</span>
-  )
-
-<span class="co"># Now we uncenter the sample</span>
-sample_uncentered &lt;-<span class="st"> </span><span class="kw">lapply</span>(sample_centered, <span class="cf">function</span>(x) {
-  x <span class="op">+</span><span class="st"> </span>observed
-})
-
-<span class="co"># We have to make it an mcmc.list object</span>
-sample_uncentered &lt;-<span class="st"> </span>coda<span class="op">::</span><span class="kw">mcmc.list</span>(sample_uncentered)</code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" title="1"><span class="co"># Getting the centered sample</span></a>
+<a class="sourceLine" id="cb118-2" title="2">sample_centered &lt;-<span class="st"> </span>ans0<span class="op">$</span>sample</a>
+<a class="sourceLine" id="cb118-3" title="3"></a>
+<a class="sourceLine" id="cb118-4" title="4"><span class="co"># Getting the observed statistics and turning it into a matrix so we can add it</span></a>
+<a class="sourceLine" id="cb118-5" title="5"><span class="co"># to the samples</span></a>
+<a class="sourceLine" id="cb118-6" title="6">observed &lt;-<span class="st"> </span><span class="kw">summary</span>(ans0<span class="op">$</span>formula)</a>
+<a class="sourceLine" id="cb118-7" title="7">observed &lt;-<span class="st"> </span><span class="kw">matrix</span>(</a>
+<a class="sourceLine" id="cb118-8" title="8">  observed,</a>
+<a class="sourceLine" id="cb118-9" title="9">  <span class="dt">nrow  =</span> <span class="kw">nrow</span>(sample_centered[[<span class="dv">1</span>]]),</a>
+<a class="sourceLine" id="cb118-10" title="10">  <span class="dt">ncol  =</span> <span class="kw">length</span>(observed),</a>
+<a class="sourceLine" id="cb118-11" title="11">  <span class="dt">byrow =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb118-12" title="12">  )</a>
+<a class="sourceLine" id="cb118-13" title="13"></a>
+<a class="sourceLine" id="cb118-14" title="14"><span class="co"># Now we uncenter the sample</span></a>
+<a class="sourceLine" id="cb118-15" title="15">sample_uncentered &lt;-<span class="st"> </span><span class="kw">lapply</span>(sample_centered, <span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb118-16" title="16">  x <span class="op">+</span><span class="st"> </span>observed</a>
+<a class="sourceLine" id="cb118-17" title="17">})</a>
+<a class="sourceLine" id="cb118-18" title="18"></a>
+<a class="sourceLine" id="cb118-19" title="19"><span class="co"># We have to make it an mcmc.list object</span></a>
+<a class="sourceLine" id="cb118-20" title="20">sample_uncentered &lt;-<span class="st"> </span>coda<span class="op">::</span><span class="kw">mcmc.list</span>(sample_uncentered)</a></code></pre></div>
 <p>This is what is called under the hood:</p>
 <ol style="list-style-type: decimal">
 <li><p><em>Empirical means and sd, and quantiles</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sample_uncentered)</code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" title="1"><span class="kw">summary</span>(sample_uncentered)</a></code></pre></div>
 <pre><code>## 
 ## Iterations = 16384:1063936
 ## Thinning interval = 1024 
@@ -216,157 +241,159 @@ sample_uncentered &lt;-<span class="st"> </span>coda<span class="op">::</span><s
 ##    plus standard error of the mean:
 ## 
 ##                      Mean    SD Naive SE Time-series SE
-## edges              2442.7 51.14   0.7990          3.557
-## nodematch.hispanic 1588.2 39.08   0.6106          2.879
-## nodematch.female1  1786.0 44.92   0.7018          3.678
-## nodematch.eversmk1 1707.0 45.59   0.7123          3.420
-## mutual              471.6 20.47   0.3199          3.120
+## edges              2474.3 55.40   0.8656          4.129
+## nodematch.hispanic 1619.5 43.56   0.6806          3.836
+## nodematch.female1  1802.3 49.50   0.7735          4.900
+## nodematch.eversmk1 1738.0 45.32   0.7081          2.926
+## mutual              485.1 20.07   0.3136          3.544
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##                    2.5%  25%  50%  75% 97.5%
-## edges              2347 2407 2440 2476  2550
-## nodematch.hispanic 1515 1561 1588 1613  1668
-## nodematch.female1  1699 1755 1785 1816  1879
-## nodematch.eversmk1 1622 1675 1705 1739  1797
-## mutual              431  459  470  485   515</code></pre></li>
+## edges              2365 2438 2475 2511  2580
+## nodematch.hispanic 1530 1590 1621 1650  1701
+## nodematch.female1  1713 1768 1801 1833  1910
+## nodematch.eversmk1 1647 1709 1738 1767  1824
+## mutual              446  472  485  498   527</code></pre></li>
 <li><p><em>Cross correlation</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">crosscorr</span>(sample_uncentered)</code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1">coda<span class="op">::</span><span class="kw">crosscorr</span>(sample_uncentered)</a></code></pre></div>
 <pre><code>##                        edges nodematch.hispanic nodematch.female1
-## edges              1.0000000          0.7842851         0.8454275
-## nodematch.hispanic 0.7842851          1.0000000         0.6875136
-## nodematch.female1  0.8454275          0.6875136         1.0000000
-## nodematch.eversmk1 0.8278077          0.6009145         0.6802329
-## mutual             0.6761018          0.5362456         0.6581912
+## edges              1.0000000          0.8099803         0.8419023
+## nodematch.hispanic 0.8099803          1.0000000         0.6845240
+## nodematch.female1  0.8419023          0.6845240         1.0000000
+## nodematch.eversmk1 0.8127786          0.6668579         0.6946880
+## mutual             0.7144121          0.6064003         0.6720229
 ##                    nodematch.eversmk1    mutual
-## edges                       0.8278077 0.6761018
-## nodematch.hispanic          0.6009145 0.5362456
-## nodematch.female1           0.6802329 0.6581912
-## nodematch.eversmk1          1.0000000 0.6111560
-## mutual                      0.6111560 1.0000000</code></pre></li>
+## edges                       0.8127786 0.7144121
+## nodematch.hispanic          0.6668579 0.6064003
+## nodematch.female1           0.6946880 0.6720229
+## nodematch.eversmk1          1.0000000 0.5909593
+## mutual                      0.5909593 1.0000000</code></pre></li>
 <li><p><em>Autocorrelation</em>: Just for now, we will only take a look at autocorrelation for chain 1 only. Autocorrelation should be rather low (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no markov property). A way out to solve this is <em>thinning</em> the sample.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">autocorr</span>(sample_uncentered)[[<span class="dv">1</span>]]</code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1">coda<span class="op">::</span><span class="kw">autocorr</span>(sample_uncentered)[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## , , edges
 ## 
 ##               edges nodematch.hispanic nodematch.female1
-## Lag 0     1.0000000          0.8219687         0.8705328
-## Lag 1024  0.8897580          0.7344981         0.7849176
-## Lag 5120  0.6125344          0.5093458         0.5843733
-## Lag 10240 0.4944537          0.4263616         0.5010519
-## Lag 51200 0.2553223          0.2028499         0.2945153
+## Lag 0     1.0000000          0.8139761         0.7795009
+## Lag 1024  0.8868373          0.7222805         0.6971419
+## Lag 5120  0.5948994          0.5251881         0.4922158
+## Lag 10240 0.4600845          0.4504976         0.3755953
+## Lag 51200 0.1982049          0.2079237         0.3221285
 ##           nodematch.eversmk1    mutual
-## Lag 0              0.8679762 0.6494130
-## Lag 1024           0.7854503 0.6389852
-## Lag 5120           0.5671411 0.5952745
-## Lag 10240          0.4775676 0.5432361
-## Lag 51200          0.2399202 0.3539473
+## Lag 0              0.7837272 0.6565207
+## Lag 1024           0.7006181 0.6511008
+## Lag 5120           0.4847903 0.6123226
+## Lag 10240          0.3949433 0.5450916
+## Lag 51200          0.3131978 0.3781621
 ## 
 ## , , nodematch.hispanic
 ## 
 ##               edges nodematch.hispanic nodematch.female1
-## Lag 0     0.8219687          1.0000000         0.7213715
-## Lag 1024  0.7273184          0.8790036         0.6501736
-## Lag 5120  0.4679330          0.5328138         0.4685746
-## Lag 10240 0.3548131          0.3719475         0.3735284
-## Lag 51200 0.2275837          0.2027639         0.2450665
+## Lag 0     0.8139761          1.0000000         0.6678498
+## Lag 1024  0.7368708          0.8947521         0.6118379
+## Lag 5120  0.5294057          0.6364242         0.4658087
+## Lag 10240 0.4054664          0.4877295         0.3715878
+## Lag 51200 0.2058656          0.1750285         0.3230496
 ##           nodematch.eversmk1    mutual
-## Lag 0              0.6933735 0.5332499
-## Lag 1024           0.6242548 0.5214353
-## Lag 5120           0.4278511 0.4686949
-## Lag 10240          0.3486120 0.4199291
-## Lag 51200          0.2193803 0.2047705
+## Lag 0              0.5997413 0.6338096
+## Lag 1024           0.5398809 0.6235126
+## Lag 5120           0.3828159 0.5759901
+## Lag 10240          0.2940047 0.5148339
+## Lag 51200          0.2682960 0.3923427
 ## 
 ## , , nodematch.female1
 ## 
 ##               edges nodematch.hispanic nodematch.female1
-## Lag 0     0.8705328          0.7213715         1.0000000
-## Lag 1024  0.7882288          0.6530082         0.9067042
-## Lag 5120  0.5848867          0.4701031         0.6960912
-## Lag 10240 0.5143759          0.4415248         0.6162009
-## Lag 51200 0.2943576          0.2717081         0.3756573
+## Lag 0     0.7795009          0.6678498         1.0000000
+## Lag 1024  0.6998063          0.6046370         0.9102620
+## Lag 5120  0.4930271          0.4699355         0.6838324
+## Lag 10240 0.3680917          0.3863329         0.5241266
+## Lag 51200 0.1291978          0.1212720         0.3078540
 ##           nodematch.eversmk1    mutual
-## Lag 0              0.7737254 0.6670677
-## Lag 1024           0.7116355 0.6624944
-## Lag 5120           0.5435839 0.6422426
-## Lag 10240          0.4804301 0.6076076
-## Lag 51200          0.2807997 0.3770320
+## Lag 0              0.5886437 0.6480628
+## Lag 1024           0.5273102 0.6419102
+## Lag 5120           0.3701848 0.6093541
+## Lag 10240          0.2933634 0.5327467
+## Lag 51200          0.1884934 0.3444436
 ## 
 ## , , nodematch.eversmk1
 ## 
 ##               edges nodematch.hispanic nodematch.female1
-## Lag 0     0.8679762          0.6933735         0.7737254
-## Lag 1024  0.7848037          0.6274016         0.7117444
-## Lag 5120  0.5581929          0.4628434         0.5535105
-## Lag 10240 0.4779814          0.3987335         0.4923237
-## Lag 51200 0.2846086          0.2285842         0.3260756
+## Lag 0     0.7837272          0.5997413         0.5886437
+## Lag 1024  0.6948882          0.5391618         0.5277555
+## Lag 5120  0.4488066          0.4103141         0.3543596
+## Lag 10240 0.3440736          0.3622540         0.2786189
+## Lag 51200 0.1413846          0.1251185         0.3037022
 ##           nodematch.eversmk1    mutual
-## Lag 0              1.0000000 0.5893853
-## Lag 1024           0.9073188 0.5852995
-## Lag 5120           0.6557095 0.5659845
-## Lag 10240          0.5476628 0.5493667
-## Lag 51200          0.2846972 0.4000402
+## Lag 0              1.0000000 0.5189905
+## Lag 1024           0.9024858 0.5109281
+## Lag 5120           0.6426104 0.4754632
+## Lag 10240          0.5235972 0.4043018
+## Lag 51200          0.3427353 0.2511635
 ## 
 ## , , mutual
 ## 
 ##               edges nodematch.hispanic nodematch.female1
-## Lag 0     0.6494130          0.5332499         0.6670677
-## Lag 1024  0.6513036          0.5378887         0.6639583
-## Lag 5120  0.6380464          0.5446367         0.6412776
-## Lag 10240 0.6214549          0.5353477         0.6214122
-## Lag 51200 0.3647324          0.2297713         0.4240353
+## Lag 0     0.6565207          0.6338096         0.6480628
+## Lag 1024  0.6473638          0.6296240         0.6400673
+## Lag 5120  0.6106484          0.6120531         0.6093092
+## Lag 10240 0.5779115          0.6078153         0.5675734
+## Lag 51200 0.3343059          0.3086253         0.4037995
 ##           nodematch.eversmk1    mutual
-## Lag 0              0.5893853 1.0000000
-## Lag 1024           0.5878446 0.9884291
-## Lag 5120           0.5696277 0.9396082
-## Lag 10240          0.5458346 0.8806506
-## Lag 51200          0.2897837 0.3673476</code></pre></li>
+## Lag 0              0.5189905 1.0000000
+## Lag 1024           0.5133709 0.9825012
+## Lag 5120           0.4949412 0.9123847
+## Lag 10240          0.4953194 0.8212019
+## Lag 51200          0.4237535 0.4968927</code></pre></li>
 <li><p><em>Geweke Diagnostic</em>: From the function’s help file:</p>
 <blockquote>
-<p>“If the samples are drawn from the stationary distribution of the chain, the two means are equal and Geweke’s statistic has an asymptotically standard normal distribution. […] The Z-score is calculated under the assumption that the two parts of the chain are asymptotically independent, which requires that the sum of frac1 and frac2 be strictly less than 1.”&quot;</p>
+<p>“If the samples are drawn from the stationary distribution of the chain, the two means are equal and Geweke’s statistic has an asymptotically standard normal distribution. […]
+The Z-score is calculated under the assumption that the two parts of the chain are asymptotically independent, which requires that the sum of frac1 and frac2 be strictly less than 1.”&quot;</p>
 <p>—?coda::geweke.diag</p>
 </blockquote>
 <p>Let’s take a look at a single chain:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">geweke.diag</span>(sample_uncentered)[[<span class="dv">1</span>]]</code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1">coda<span class="op">::</span><span class="kw">geweke.diag</span>(sample_uncentered)[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## 
 ## Fraction in 1st window = 0.1
 ## Fraction in 2nd window = 0.5 
 ## 
 ##              edges nodematch.hispanic  nodematch.female1 
-##             1.2158             1.9078             1.0548 
+##             0.5295             0.4904             1.6354 
 ## nodematch.eversmk1             mutual 
-##             1.6781             0.4969</code></pre></li>
+##             0.6644             1.1170</code></pre></li>
 <li><p><em>(not included) Gelman Diagnostic</em>: From the function’s help file:</p>
 <blockquote>
-<p>Gelman and Rubin (1992) propose a general approach to monitoring convergence of MCMC output in which m &gt; 1 parallel chains are run with starting values that are overdispersed relative to the posterior distribution. Convergence is diagnosed when the chains have ‘forgotten’ their initial values, and the output from all chains is indistinguishable. The gelman.diag diagnostic is applied to a single variable from the chain. It is based a comparison of within-chain and between-chain variances, and is similar to a classical analysis of variance. —?coda::gelman.diag</p>
+<p>Gelman and Rubin (1992) propose a general approach to monitoring convergence of MCMC output in which m &gt; 1 parallel chains are run with starting values that are overdispersed relative to the posterior distribution. Convergence is diagnosed when the chains have ‘forgotten’ their initial values, and the output from all chains is indistinguishable. The gelman.diag diagnostic is applied to a single variable from the chain. It is based a comparison of within-chain and between-chain variances, and is similar to a classical analysis of variance.
+—?coda::gelman.diag</p>
 </blockquote>
 <p>As a difference from the previous diagnostic statistic, this uses all chains simulatenously:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">gelman.diag</span>(sample_uncentered)</code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1">coda<span class="op">::</span><span class="kw">gelman.diag</span>(sample_uncentered)</a></code></pre></div>
 <pre><code>## Potential scale reduction factors:
 ## 
 ##                    Point est. Upper C.I.
-## edges                    1.23       1.60
-## nodematch.hispanic       1.13       1.36
-## nodematch.female1        1.13       1.35
-## nodematch.eversmk1       1.21       1.58
-## mutual                   1.42       2.08
+## edges                    1.16       1.42
+## nodematch.hispanic       1.10       1.28
+## nodematch.female1        1.28       1.68
+## nodematch.eversmk1       1.34       1.81
+## mutual                   1.32       1.79
 ## 
 ## Multivariate psrf
 ## 
-## 1.41</code></pre>
+## 1.44</code></pre>
 <p>As a rule of thumb, values that are in the <span class="math inline">\([.9,1.1]\)</span> are good.</p></li>
 </ol>
-<p>One nice feature of the <code>mcmc.diagnostics</code> function is the nice trace and posterior distribution plots that it generates. If you have the R package <code>latticeExtra</code> <span class="citation">(Sarkar and Andrews <a href="#ref-R-latticeExtra">2016</a>)</span>, the function will override the default plots used by <code>coda::plot.mcmc</code> and use lattice instead, creating a nicer looking plots. The next code chunk calls the <code>mcmc.diagnostic</code> function, but we suppress the rest of the output (see figure <a href="model-goodness-of-fit.html#fig:coda-plots">5.1</a>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc.diagnostics</span>(ans0, <span class="dt">center =</span> <span class="ot">FALSE</span>) <span class="co"># Suppressing all the output</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:coda-plots"></span>
+<p>One nice feature of the <code>mcmc.diagnostics</code> function is the nice trace and posterior distribution plots that it generates. If you have the R package <code>latticeExtra</code> <span class="citation">(Sarkar and Andrews <a href="#ref-R-latticeExtra">2016</a>)</span>, the function will override the default plots used by <code>coda::plot.mcmc</code> and use lattice instead, creating a nicer looking plots. The next code chunk calls the <code>mcmc.diagnostic</code> function, but we suppress the rest of the output (see figure <a href="#fig:coda-plots"><strong>??</strong></a>).</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" title="1"><span class="kw">mcmc.diagnostics</span>(ans0, <span class="dt">center =</span> <span class="ot">FALSE</span>) <span class="co"># Suppressing all the output</span></a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:coda-plots1"></span>
 <img src="appliedsnar_files/figure-html/coda-plots-1.png" alt="Trace and posterior distribution of sampled network statistics." width="672" />
 <p class="caption">
 Figure 5.1: Trace and posterior distribution of sampled network statistics.
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:coda-plots"></span>
+<div class="figure" style="text-align: center"><span id="fig:coda-plots2"></span>
 <img src="appliedsnar_files/figure-html/coda-plots-2.png" alt="Trace and posterior distribution of sampled network statistics (cont'd)." width="672" />
 <p class="caption">
-Figure 5.1: Trace and posterior distribution of sampled network statistics (cont’d).
+Figure 5.2: Trace and posterior distribution of sampled network statistics (cont’d).
 </p>
 </div>
 <p>If we called the function <code>mcmc.diagnostics</code> this message appears at the end:</p>
@@ -374,7 +401,7 @@ Figure 5.1: Trace and posterior distribution of sampled network statistics (cont
 <p>MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).</p>
 <p>—<code>mcmc.diagnostics(ans0)</code></p>
 </blockquote>
-<p>Not that bad (although the <code>mutual</code> term could do better)!<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a> First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.</p>
+<p>Not that bad (although the <code>mutual</code> term could do better)!<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.</p>
 <p>Once we are sure to have reach convergence on the MCMC algorithm, we can start thinking about how well does our model predicts the observed network’s proterties. Besides of the statistics that define our ERGM, the <code>gof</code> function’s default behavior show GOF for:</p>
 <ol style="list-style-type: lower-alpha">
 <li>In degree distribution,</li>
@@ -383,68 +410,68 @@ Figure 5.1: Trace and posterior distribution of sampled network statistics (cont
 <li>Geodesics</li>
 </ol>
 <p>Let’s take a look at it</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Computing and printing GOF estatistics</span>
-ans_gof &lt;-<span class="st"> </span><span class="kw">gof</span>(ans0)
-ans_gof</code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" title="1"><span class="co"># Computing and printing GOF estatistics</span></a>
+<a class="sourceLine" id="cb130-2" title="2">ans_gof &lt;-<span class="st"> </span><span class="kw">gof</span>(ans0)</a>
+<a class="sourceLine" id="cb130-3" title="3">ans_gof</a></code></pre></div>
 <pre><code>## 
 ## Goodness-of-fit for in-degree 
 ## 
 ##    obs min  mean max MC p-value
-## 0   13   0  1.87   6       0.00
-## 1   34   2  8.25  18       0.00
-## 2   37  11 21.50  31       0.00
-## 3   48  27 39.39  52       0.16
-## 4   37  38 55.15  78       0.00
-## 5   47  47 62.90  84       0.02
-## 6   42  47 63.23  85       0.00
-## 7   39  40 53.80  70       0.00
-## 8   35  25 41.40  59       0.30
-## 9   21  17 29.61  41       0.08
-## 10  12   8 18.62  28       0.24
-## 11  19   4 10.80  19       0.02
-## 12   4   2  6.18  12       0.62
-## 13   7   0  3.14   9       0.16
-## 14   6   0  1.23   5       0.00
-## 15   3   0  0.50   2       0.00
-## 16   4   0  0.32   3       0.00
-## 17   3   0  0.10   2       0.00
+## 0   13   0  1.89   8       0.00
+## 1   34   3  9.04  18       0.00
+## 2   37  11 23.63  33       0.00
+## 3   48  28 41.83  59       0.44
+## 4   37  41 56.87  75       0.00
+## 5   47  44 64.71  84       0.04
+## 6   42  39 63.33  85       0.02
+## 7   39  42 53.78  74       0.00
+## 8   35  25 40.58  60       0.50
+## 9   21  14 26.19  43       0.38
+## 10  12   9 17.37  26       0.16
+## 11  19   2  9.53  17       0.00
+## 12   4   0  4.93  11       0.90
+## 13   7   0  2.35   7       0.04
+## 14   6   0  1.27   5       0.00
+## 15   3   0  0.44   3       0.02
+## 16   4   0  0.21   2       0.00
+## 17   3   0  0.05   1       0.00
 ## 18   3   0  0.00   0       0.00
-## 19   2   0  0.01   1       0.00
+## 19   2   0  0.00   0       0.00
 ## 20   1   0  0.00   0       0.00
 ## 22   1   0  0.00   0       0.00
 ## 
 ## Goodness-of-fit for out-degree 
 ## 
 ##    obs min  mean max MC p-value
-## 0    4   0  1.73   5       0.18
-## 1   28   1  8.93  16       0.00
-## 2   45  13 20.98  34       0.00
-## 3   50  27 39.60  54       0.12
-## 4   54  38 55.06  69       0.94
-## 5   62  46 62.52  78       0.98
-## 6   40  50 62.49  81       0.00
-## 7   28  37 54.67  72       0.00
-## 8   13  31 42.24  54       0.00
-## 9   16  16 28.97  41       0.02
-## 10  20   6 18.74  28       0.82
-## 11   8   5 10.71  17       0.50
-## 12  11   1  6.09  12       0.10
-## 13  13   0  2.78   7       0.00
-## 14   6   0  1.48   6       0.02
-## 15   6   0  0.57   3       0.00
-## 16   7   0  0.23   2       0.00
-## 17   4   0  0.10   1       0.00
-## 18   3   0  0.08   1       0.00
-## 19   0   0  0.03   1       1.00
+## 0    4   0  1.85   5       0.20
+## 1   28   3  8.99  15       0.00
+## 2   45  12 23.25  35       0.00
+## 3   50  24 40.87  52       0.06
+## 4   54  42 57.89  76       0.68
+## 5   62  49 66.04  85       0.70
+## 6   40  41 62.23  79       0.00
+## 7   28  37 54.08  70       0.00
+## 8   13  29 40.05  52       0.00
+## 9   16  17 27.65  41       0.00
+## 10  20   8 16.72  30       0.46
+## 11   8   2  9.30  19       0.76
+## 12  11   1  4.98  11       0.04
+## 13  13   0  2.38   7       0.00
+## 14   6   0  0.97   4       0.00
+## 15   6   0  0.50   3       0.00
+## 16   7   0  0.17   1       0.00
+## 17   4   0  0.06   1       0.00
+## 18   3   0  0.01   1       0.00
+## 19   0   0  0.01   1       1.00
 ## 
 ## Goodness-of-fit for edgewise shared partner 
 ## 
 ##       obs  min    mean  max MC p-value
-## esp0 1032 1996 2252.28 2357          0
-## esp1  755  165  241.97  407          0
-## esp2  352    6   14.98   81          0
-## esp3  202    0    0.66   15          0
-## esp4   79    0    0.01    1          0
+## esp0 1032 2012 2210.11 2303          0
+## esp1  755  156  222.10  441          0
+## esp2  352    4   13.42   93          0
+## esp3  202    0    0.77   19          0
+## esp4   79    0    0.04    3          0
 ## esp5   36    0    0.00    0          0
 ## esp6   14    0    0.00    0          0
 ## esp7    4    0    0.00    0          0
@@ -453,72 +480,72 @@ ans_gof</code></pre></div>
 ## Goodness-of-fit for minimum geodesic distance 
 ## 
 ##       obs   min     mean   max MC p-value
-## 1    2475  2374  2509.90  2667       0.58
-## 2   10672 12763 14421.15 16321       0.00
-## 3   31134 51730 58783.98 66543       0.00
-## 4   50673 75774 78515.61 81865       0.00
-## 5   42563 11964 17516.75 24191       0.00
-## 6   18719   303   968.19  1928       0.00
-## 7    4808     0    32.79   346       0.00
-## 8     822     0     1.50    48       0.00
-## 9     100     0     0.08     4       0.00
-## 10      7     0     0.00     0       0.00
-## Inf 12333     0  1556.05  3322       0.00
+## 1    2475  2301  2446.44  2568       0.56
+## 2   10672 12062 13688.54 14617       0.00
+## 3   31134 48722 55636.04 60092       0.00
+## 4   50673 77284 79447.41 81661       0.00
+## 5   42563 14452 20165.40 26886       0.00
+## 6   18719   325  1274.88  2453       0.00
+## 7    4808     1    51.78   361       0.00
+## 8     822     0     2.13   102       0.00
+## 9     100     0     0.06     4       0.00
+## 10      7     0     0.01     1       0.00
+## Inf 12333     0  1593.31  4558       0.00
 ## 
 ## Goodness-of-fit for model statistics 
 ## 
 ##                     obs  min    mean  max MC p-value
-## edges              2475 2374 2509.90 2667       0.58
-## nodematch.hispanic 1615 1545 1641.50 1757       0.64
-## nodematch.female1  1814 1710 1837.83 1927       0.56
-## nodematch.eversmk1 1738 1653 1758.92 1849       0.74
-## mutual              486  449  496.92  542       0.74</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plotting GOF statistics</span>
-<span class="kw">plot</span>(ans_gof)</code></pre></div>
+## edges              2475 2301 2446.44 2568       0.56
+## nodematch.hispanic 1615 1499 1578.58 1662       0.32
+## nodematch.female1  1814 1690 1791.16 1883       0.54
+## nodematch.eversmk1 1738 1595 1716.19 1834       0.56
+## mutual              486  436  475.48  504       0.50</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1"><span class="co"># Plotting GOF statistics</span></a>
+<a class="sourceLine" id="cb132-2" title="2"><span class="kw">plot</span>(ans_gof)</a></code></pre></div>
 <p><img src="appliedsnar_files/figure-html/checking-gof-1.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-2.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-3.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-4.png" width="672" /><img src="appliedsnar_files/figure-html/checking-gof-5.png" width="672" /></p>
 <p>Try the following configuration instead</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ans0_bis &lt;-<span class="st"> </span><span class="kw">ergm</span>(
-  network_<span class="dv">111</span> <span class="op">~</span>
-<span class="st">    </span>edges <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="op">+</span>
-<span class="st">    </span>mutual <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">esp</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">idegree</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">10</span>)
-    ,
-  <span class="dt">constraints =</span> <span class="op">~</span><span class="kw">bd</span>(<span class="dt">maxout =</span> <span class="dv">19</span>),
-  <span class="dt">control =</span> <span class="kw">control.ergm</span>(
-    <span class="dt">seed        =</span> <span class="dv">1</span>,
-    <span class="dt">MCMLE.maxit =</span> <span class="dv">15</span>,
-    <span class="dt">parallel    =</span> <span class="dv">4</span>,
-    <span class="dt">CD.maxit    =</span> <span class="dv">15</span>,
-    <span class="dt">MCMC.samplesize =</span> <span class="dv">2048</span><span class="op">*</span><span class="dv">4</span>,
-    <span class="dt">MCMC.burnin =</span> <span class="dv">30000</span>,
-    <span class="dt">MCMC.interval =</span> <span class="dv">2048</span><span class="op">*</span><span class="dv">4</span>
-    )
-  )</code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" title="1">ans0_bis &lt;-<span class="st"> </span><span class="kw">ergm</span>(</a>
+<a class="sourceLine" id="cb133-2" title="2">  network_<span class="dv">111</span> <span class="op">~</span></a>
+<a class="sourceLine" id="cb133-3" title="3"><span class="st">    </span>edges <span class="op">+</span></a>
+<a class="sourceLine" id="cb133-4" title="4"><span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb133-5" title="5"><span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb133-6" title="6"><span class="st">    </span>mutual <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb133-7" title="7"><span class="st">    </span><span class="kw">esp</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb133-8" title="8"><span class="st">    </span><span class="kw">idegree</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb133-9" title="9">    ,</a>
+<a class="sourceLine" id="cb133-10" title="10">  <span class="dt">constraints =</span> <span class="op">~</span><span class="kw">bd</span>(<span class="dt">maxout =</span> <span class="dv">19</span>),</a>
+<a class="sourceLine" id="cb133-11" title="11">  <span class="dt">control =</span> <span class="kw">control.ergm</span>(</a>
+<a class="sourceLine" id="cb133-12" title="12">    <span class="dt">seed        =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb133-13" title="13">    <span class="dt">MCMLE.maxit =</span> <span class="dv">15</span>,</a>
+<a class="sourceLine" id="cb133-14" title="14">    <span class="dt">parallel    =</span> <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb133-15" title="15">    <span class="dt">CD.maxit    =</span> <span class="dv">15</span>,</a>
+<a class="sourceLine" id="cb133-16" title="16">    <span class="dt">MCMC.samplesize =</span> <span class="dv">2048</span><span class="op">*</span><span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb133-17" title="17">    <span class="dt">MCMC.burnin =</span> <span class="dv">30000</span>,</a>
+<a class="sourceLine" id="cb133-18" title="18">    <span class="dt">MCMC.interval =</span> <span class="dv">2048</span><span class="op">*</span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb133-19" title="19">    )</a>
+<a class="sourceLine" id="cb133-20" title="20">  )</a></code></pre></div>
 <p>Increase the sample size so the curves are more smooth, longer intervals (thinning) so we reduce the autocorrelation, larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;awful-chains.png&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" title="1">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;awful-chains.png&quot;</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:badconvergence"></span>
 <img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="357" />
 <p class="caption">
-Figure 5.2: An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful
+Figure 5.3: An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful
 </p>
 </div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-R-coda">
-<p>Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. “CODA: Convergence Diagnosis and Output Analysis for Mcmc.” <em>R News</em> 6 (1): 7–11. <a href="https://journal.r-project.org/archive/" class="uri">https://journal.r-project.org/archive/</a>.</p>
+<p>Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. “CODA: Convergence Diagnosis and Output Analysis for Mcmc.” <em>R News</em> 6 (1): 7–11. <a href="https://journal.r-project.org/archive/">https://journal.r-project.org/archive/</a>.</p>
 </div>
 <div id="ref-R-latticeExtra">
-<p>Sarkar, Deepayan, and Felix Andrews. 2016. <em>LatticeExtra: Extra Graphical Utilities Based on Lattice</em>. <a href="https://CRAN.R-project.org/package=latticeExtra" class="uri">https://CRAN.R-project.org/package=latticeExtra</a>.</p>
+<p>Sarkar, Deepayan, and Felix Andrews. 2016. <em>LatticeExtra: Extra Graphical Utilities Based on Lattice</em>. <a href="https://CRAN.R-project.org/package=latticeExtra">https://CRAN.R-project.org/package=latticeExtra</a>.</p>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol start="10">
-<li id="fn10"><p>The statnet wiki website as a very nice example of (very) bad and good mcmc diagnostics plots <a href="https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf">here</a>.<a href="model-goodness-of-fit.html#fnref10">↩</a></p></li>
+<li id="fn10"><p>The statnet wiki website as a very nice example of (very) bad and good mcmc diagnostics plots <a href="https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf">here</a>.<a href="model-goodness-of-fit.html#fnref10" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -547,7 +574,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -557,6 +584,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -573,8 +604,8 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
