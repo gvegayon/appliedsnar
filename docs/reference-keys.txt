@@ -38,6 +38,8 @@ comparing-networks
 network-bootstrap
 when-the-statistic-is-normal
 when-the-statistic-is-not-normal
+examples
+average-of-node-level-stats
 datasets
 sns-data
 about-the-data

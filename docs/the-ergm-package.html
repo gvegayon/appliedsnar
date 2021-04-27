@@ -188,6 +188,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks</a>
 <ul>
 <li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap</a></li>
+<li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal</a></li>
+<li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -260,7 +266,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## -4.734</code></pre>
 <p>So what happened here! We got a warning. It turns out that our network has loops (didn’t thought about it before!). Let’s take a look on that with the <code>which_loop</code> function</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="the-ergm-package.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(ig_year1_111)[<span class="fu">which_loop</span>(ig_year1_111)]</span></code></pre></div>
-<pre><code>## + 1/2638 edge from 96a832b (vertex names):
+<pre><code>## + 1/2638 edge from b389353 (vertex names):
 ## [1] 1110111-&gt;1110111</code></pre>
 <p>We can get rid of these using the <code>igraph::-.igraph</code>. Moreover, just to illustrate how it can be done, let’s get rid of the isolates using the same operator</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="the-ergm-package.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the new network</span></span>

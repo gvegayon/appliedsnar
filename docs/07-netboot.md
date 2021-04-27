@@ -32,7 +32,7 @@ introduced by [@Snijders1999]. The method itself is used to generate standard
 errors for network level statistics. Both methods are implemented in the R
 package [`netdiffuseR`](https://cran.r-project.org/package=netdiffuseR).
 
-#### When the statistic is normal
+### When the statistic is normal
 
 When the we deal with things that are normally distributed, e.g., sample means
 like density[^density-sample-mean],
@@ -48,7 +48,7 @@ $\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
    of the density, $m_i = n_i * (n_i - 1)$. The statistic is then:
 
    $$
-   s(G_1) - s(G_0)\sim \mbox{N}(\mu_1-\mu_0, \sigma_1^2/n_1 + \sigma_1^2/n_2)
+   s(G_1) - s(G_0)\sim \mbox{N}(\mu_1-\mu_0, \sigma_1^2/m_1 + \sigma_1^2/m_2)
    $$
    
    Thus
@@ -96,7 +96,7 @@ $\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
    pt(tstat, df = m1 + m2 - 2)
    ```
 
-#### When the statistic is NOT normal
+### When the statistic is NOT normal
 
 In the case that the statistic is not normally distributed, we cannot use the
 t-statistic any longer. Nevertheless, the Bootstrap can come to help. While
@@ -138,5 +138,44 @@ The procedure is very similar:
 This corresponds to what Efron and Tibshirani call "percentile interval."
 This is easy to compute, but a better approach is using the "BCa" method,
 "Bias Corrected and Accelerated." (TBD)
+
+## Examples
+
+### Average of node-level stats
+
+Supposed that we would like to compare something like average indegree. 
+In particular, for both networks, $G_1$ and $G_2$, we compute the average
+indegree per node:
+
+$$
+s(G_1) = \mbox{AvgIndeg}(G_1) = \frac{1}{n}\sum_{i}\sum_{j\neq i}A^1_{ji}
+$$
+
+\noindent where $A^1_{ji}$ equals one if vertex $j$ sends a tie to $i$. In this
+case, since we are looking at an average, we have that 
+$\mbox{AvgIndeg}(G_1) \sim N(\mu_1, \sigma^2_1/n)$. Thus, taking advantage of
+the normality of the statistic, we can build a test statistic as follows:
+
+$$
+\frac{s(G_1) - s(G_2) - k}{\sqrt{\hat\sigma_{1}^2 + \hat\sigma_{2}^2}} \sim t_{n_1 + n_2 - 2}
+$$
+Where $\hat\sigma_i$ is the bootstrap standard error, and $k = 0$ when we are testing
+equality. This distributes $t$ with
+$n_1+n_2-2$ degrees of freedom. As a difference from the previous example using
+density, the degrees of freedom for this test are less as, instead of having an
+average across all entries of the adjacency matrix, we have an average across all
+vertices.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
