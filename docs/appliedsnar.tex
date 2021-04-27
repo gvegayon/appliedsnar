@@ -1594,7 +1594,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 9e3e3da (vertex names):
+## + 1/2638 edge from eecafe0 (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2515,6 +2515,10 @@ The procedure is very similar:
 \CommentTok{\# Obtain a 1000 replicates}
 \NormalTok{sg1 }\OtherTok{\textless{}{-}} \FunctionTok{bootnet}\NormalTok{(g1, }\ControlFlowTok{function}\NormalTok{(i) }\FunctionTok{range}\NormalTok{(}\FunctionTok{threshold}\NormalTok{(i)), }\AttributeTok{R =} \DecValTok{1000}\NormalTok{)}
 \NormalTok{sg2 }\OtherTok{\textless{}{-}} \FunctionTok{bootnet}\NormalTok{(g2, }\ControlFlowTok{function}\NormalTok{(i) }\FunctionTok{range}\NormalTok{(}\FunctionTok{threshold}\NormalTok{(i)), }\AttributeTok{R =} \DecValTok{1000}\NormalTok{)}
+
+\CommentTok{\# Retrieving the distributions}
+\NormalTok{sg1 }\OtherTok{\textless{}{-}}\NormalTok{ sg1}\SpecialCharTok{$}\NormalTok{boot}\SpecialCharTok{$}\NormalTok{t}
+\NormalTok{sg2 }\OtherTok{\textless{}{-}}\NormalTok{ sg2}\SpecialCharTok{$}\NormalTok{boot}\SpecialCharTok{$}\NormalTok{t}
 
 \CommentTok{\# Define the statistic}
 \NormalTok{sdiff }\OtherTok{\textless{}{-}}\NormalTok{ sg1 }\SpecialCharTok{{-}}\NormalTok{ sg2}

@@ -302,8 +302,12 @@ Building confidence intervals with bootstrap could be more intuitive.</p></li>
 <span id="cb141-2"><a href="comparing-networks.html#cb141-2" aria-hidden="true" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g1, <span class="cf">function</span>(i) <span class="fu">range</span>(<span class="fu">threshold</span>(i)), <span class="at">R =</span> <span class="dv">1000</span>)</span>
 <span id="cb141-3"><a href="comparing-networks.html#cb141-3" aria-hidden="true" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g2, <span class="cf">function</span>(i) <span class="fu">range</span>(<span class="fu">threshold</span>(i)), <span class="at">R =</span> <span class="dv">1000</span>)</span>
 <span id="cb141-4"><a href="comparing-networks.html#cb141-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-5"><a href="comparing-networks.html#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the statistic</span></span>
-<span id="cb141-6"><a href="comparing-networks.html#cb141-6" aria-hidden="true" tabindex="-1"></a>sdiff <span class="ot">&lt;-</span> sg1 <span class="sc">-</span> sg2</span></code></pre></div></li>
+<span id="cb141-5"><a href="comparing-networks.html#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieving the distributions</span></span>
+<span id="cb141-6"><a href="comparing-networks.html#cb141-6" aria-hidden="true" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> sg1<span class="sc">$</span>boot<span class="sc">$</span>t</span>
+<span id="cb141-7"><a href="comparing-networks.html#cb141-7" aria-hidden="true" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> sg2<span class="sc">$</span>boot<span class="sc">$</span>t</span>
+<span id="cb141-8"><a href="comparing-networks.html#cb141-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-9"><a href="comparing-networks.html#cb141-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the statistic</span></span>
+<span id="cb141-10"><a href="comparing-networks.html#cb141-10" aria-hidden="true" tabindex="-1"></a>sdiff <span class="ot">&lt;-</span> sg1 <span class="sc">-</span> sg2</span></code></pre></div></li>
 <li><p>Once we have <code>sdiff</code>, we can proceed and compute the, for example, 95%
 confidence interval, and evaluate whether <span class="math inline">\(k\)</span> falls within. In R:</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="comparing-networks.html#cb142-1" aria-hidden="true" tabindex="-1"></a>diff_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sdiff, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, .<span class="dv">975</span>))</span></code></pre></div></li>

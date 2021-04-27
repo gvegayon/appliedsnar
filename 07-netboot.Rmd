@@ -120,6 +120,10 @@ The procedure is very similar:
    sg1 <- bootnet(g1, function(i) range(threshold(i)), R = 1000)
    sg2 <- bootnet(g2, function(i) range(threshold(i)), R = 1000)
    
+   # Retrieving the distributions
+   sg1 <- sg1$boot$t
+   sg2 <- sg2$boot$t
+   
    # Define the statistic
    sdiff <- sg1 - sg2
    ```
