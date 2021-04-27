@@ -1594,7 +1594,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 12a81b6 (vertex names):
+## + 1/2638 edge from 9e3e3da (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2430,7 +2430,8 @@ for each network:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Since \(s(G_i)\sim \mbox{N}(\mu_i,\sigma_i^2/n_i)\) for \(i\in\{1,2\}\), the statistic
+  Since \(s(G_i)\sim \mbox{N}(\mu_i,\sigma_i^2/m_i)\) for \(i\in\{1,2\}\), in the case
+  of the density, \(m_i = n_i * (n_i - 1)\). The statistic is then:
 
   \[
   s(G_1) - s(G_0)\sim \mbox{N}(\mu_1-\mu_0, \sigma_1^2/n_1 + \sigma_1^2/n_2)
@@ -2439,18 +2440,18 @@ for each network:
   Thus
 
   \[
-  \frac{s(G_1) - s(G_0) - \mu_1 + \mu_2}{\sqrt{\sigma_1^2/{n_1} + \sigma_1^2/{n_2}}} \sim t_{n_1 + n_2 - 2}
+  \frac{s(G_1) - s(G_0) - \mu_1 + \mu_2}{\sqrt{\sigma_1^2/{m_1} + \sigma_1^2/{m_2}}} \sim t_{m_1 + m_2 - 2}
   \]
   But, if we are testing \(H_0: \mu_1 - \mu_2 = k\), then, under the null
 
   \[
-  \frac{s(G_1) - s(G_0) - k}{\sqrt{\sigma_1^2/{n_1} + \sigma_1^2/{n_2}}} \sim t_{n_1 + n_2 - 2}
+  \frac{s(G_1) - s(G_0) - k}{\sqrt{\sigma_1^2/{m_1} + \sigma_1^2/{m_2}}} \sim t_{m_1 + m_2 - 2}
   \]
-  We now proceede to approximate the variances.
+  Where We now proceede to approximate the variances.
 \item
   Using the \emph{plugin principle} (\protect\hyperlink{ref-Efron1994}{Efron and Tibshirani 1994}), we can approximate the variances
-  using Bootstrap/Jackknife, i.e., compute \(\hat\sigma_1^2\approx\sigma_1^2/n_1\) and
-  \(\hat\sigma_2^2\approx\sigma_2^2/n_2\). Using netdiffuseR
+  using Bootstrap/Jackknife, i.e., compute \(\hat\sigma_1^2\approx\sigma_1^2/m_1\) and
+  \(\hat\sigma_2^2\approx\sigma_2^2/m_2\). Using netdiffuseR
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2479,7 +2480,9 @@ for each network:
 \NormalTok{tstat }\OtherTok{\textless{}{-}}\NormalTok{ (sg1 }\SpecialCharTok{{-}}\NormalTok{ sg2 }\SpecialCharTok{{-}}\NormalTok{ k)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(hat\_sigma1 }\SpecialCharTok{+}\NormalTok{ hat\_sigma2))}
 
 \CommentTok{\# Computing the pvalue}
-\FunctionTok{pt}\NormalTok{(tstat)}
+\NormalTok{m1 }\OtherTok{\textless{}{-}} \FunctionTok{nnodes}\NormalTok{(g1)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{nnodes}\NormalTok{(g1) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}
+\NormalTok{m2 }\OtherTok{\textless{}{-}} \FunctionTok{nnodes}\NormalTok{(g2)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{nnodes}\NormalTok{(g2) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}
+\FunctionTok{pt}\NormalTok{(tstat, }\AttributeTok{df =}\NormalTok{ m1 }\SpecialCharTok{+}\NormalTok{ m2 }\SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 \end{enumerate}

@@ -44,7 +44,8 @@ for each network:
 computing the average of a sequence of Bernoulli variables. Formally:
 $\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
 
-1. Since $s(G_i)\sim \mbox{N}(\mu_i,\sigma_i^2/n_i)$ for $i\in\{1,2\}$, the statistic
+1. Since $s(G_i)\sim \mbox{N}(\mu_i,\sigma_i^2/m_i)$ for $i\in\{1,2\}$, in the case
+   of the density, $m_i = n_i * (n_i - 1)$. The statistic is then:
 
    $$
    s(G_1) - s(G_0)\sim \mbox{N}(\mu_1-\mu_0, \sigma_1^2/n_1 + \sigma_1^2/n_2)
@@ -53,18 +54,18 @@ $\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
    Thus
    
    $$
-   \frac{s(G_1) - s(G_0) - \mu_1 + \mu_2}{\sqrt{\sigma_1^2/{n_1} + \sigma_1^2/{n_2}}} \sim t_{n_1 + n_2 - 2}
+   \frac{s(G_1) - s(G_0) - \mu_1 + \mu_2}{\sqrt{\sigma_1^2/{m_1} + \sigma_1^2/{m_2}}} \sim t_{m_1 + m_2 - 2}
    $$
    But, if we are testing $H_0: \mu_1 - \mu_2 = k$, then, under the null
    
    $$
-   \frac{s(G_1) - s(G_0) - k}{\sqrt{\sigma_1^2/{n_1} + \sigma_1^2/{n_2}}} \sim t_{n_1 + n_2 - 2}
+   \frac{s(G_1) - s(G_0) - k}{\sqrt{\sigma_1^2/{m_1} + \sigma_1^2/{m_2}}} \sim t_{m_1 + m_2 - 2}
    $$
-   We now proceede to approximate the variances.
+   Where We now proceede to approximate the variances.
    
 2. Using the *plugin principle* [@Efron1994], we can approximate the variances
-   using Bootstrap/Jackknife, i.e., compute $\hat\sigma_1^2\approx\sigma_1^2/n_1$ and
-   $\hat\sigma_2^2\approx\sigma_2^2/n_2$. Using netdiffuseR
+   using Bootstrap/Jackknife, i.e., compute $\hat\sigma_1^2\approx\sigma_1^2/m_1$ and
+   $\hat\sigma_2^2\approx\sigma_2^2/m_2$. Using netdiffuseR
    
    ```r
    library(netdiffuseR)
@@ -90,7 +91,9 @@ $\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
    tstat <- (sg1 - sg2 - k)/(sqrt(hat_sigma1 + hat_sigma2))
    
    # Computing the pvalue
-   pt(tstat)
+   m1 <- nnodes(g1)*(nnodes(g1) - 1)
+   m2 <- nnodes(g2)*(nnodes(g2) - 1)
+   pt(tstat, df = m1 + m2 - 2)
    ```
 
 #### When the statistic is NOT normal

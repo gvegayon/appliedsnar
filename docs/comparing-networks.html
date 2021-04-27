@@ -241,22 +241,23 @@ we can make use of the Student’s distribution for making inference. In particu
 we can use Bootstrap/Jackknife to approximate the standard errors of the statistic
 for each network:</p>
 <ol style="list-style-type: decimal">
-<li><p>Since <span class="math inline">\(s(G_i)\sim \mbox{N}(\mu_i,\sigma_i^2/n_i)\)</span> for <span class="math inline">\(i\in\{1,2\}\)</span>, the statistic</p>
+<li><p>Since <span class="math inline">\(s(G_i)\sim \mbox{N}(\mu_i,\sigma_i^2/m_i)\)</span> for <span class="math inline">\(i\in\{1,2\}\)</span>, in the case
+of the density, <span class="math inline">\(m_i = n_i * (n_i - 1)\)</span>. The statistic is then:</p>
 <p><span class="math display">\[
 s(G_1) - s(G_0)\sim \mbox{N}(\mu_1-\mu_0, \sigma_1^2/n_1 + \sigma_1^2/n_2)
 \]</span></p>
 <p>Thus</p>
 <p><span class="math display">\[
-\frac{s(G_1) - s(G_0) - \mu_1 + \mu_2}{\sqrt{\sigma_1^2/{n_1} + \sigma_1^2/{n_2}}} \sim t_{n_1 + n_2 - 2}
+\frac{s(G_1) - s(G_0) - \mu_1 + \mu_2}{\sqrt{\sigma_1^2/{m_1} + \sigma_1^2/{m_2}}} \sim t_{m_1 + m_2 - 2}
 \]</span>
 But, if we are testing <span class="math inline">\(H_0: \mu_1 - \mu_2 = k\)</span>, then, under the null</p>
 <p><span class="math display">\[
-\frac{s(G_1) - s(G_0) - k}{\sqrt{\sigma_1^2/{n_1} + \sigma_1^2/{n_2}}} \sim t_{n_1 + n_2 - 2}
+\frac{s(G_1) - s(G_0) - k}{\sqrt{\sigma_1^2/{m_1} + \sigma_1^2/{m_2}}} \sim t_{m_1 + m_2 - 2}
 \]</span>
-We now proceede to approximate the variances.</p></li>
+Where We now proceede to approximate the variances.</p></li>
 <li><p>Using the <em>plugin principle</em> <span class="citation">(<a href="references.html#ref-Efron1994" role="doc-biblioref">Efron and Tibshirani 1994</a>)</span>, we can approximate the variances
-using Bootstrap/Jackknife, i.e., compute <span class="math inline">\(\hat\sigma_1^2\approx\sigma_1^2/n_1\)</span> and
-<span class="math inline">\(\hat\sigma_2^2\approx\sigma_2^2/n_2\)</span>. Using netdiffuseR</p>
+using Bootstrap/Jackknife, i.e., compute <span class="math inline">\(\hat\sigma_1^2\approx\sigma_1^2/m_1\)</span> and
+<span class="math inline">\(\hat\sigma_2^2\approx\sigma_2^2/m_2\)</span>. Using netdiffuseR</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="comparing-networks.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(netdiffuseR)</span>
 <span id="cb139-2"><a href="comparing-networks.html#cb139-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb139-3"><a href="comparing-networks.html#cb139-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain a 100 replicates</span></span>
@@ -276,7 +277,9 @@ retrieve the corresponding value, in R:</p>
 <span id="cb140-2"><a href="comparing-networks.html#cb140-2" aria-hidden="true" tabindex="-1"></a>tstat <span class="ot">&lt;-</span> (sg1 <span class="sc">-</span> sg2 <span class="sc">-</span> k)<span class="sc">/</span>(<span class="fu">sqrt</span>(hat_sigma1 <span class="sc">+</span> hat_sigma2))</span>
 <span id="cb140-3"><a href="comparing-networks.html#cb140-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb140-4"><a href="comparing-networks.html#cb140-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing the pvalue</span></span>
-<span id="cb140-5"><a href="comparing-networks.html#cb140-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(tstat)</span></code></pre></div></li>
+<span id="cb140-5"><a href="comparing-networks.html#cb140-5" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">nnodes</span>(g1)<span class="sc">*</span>(<span class="fu">nnodes</span>(g1) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb140-6"><a href="comparing-networks.html#cb140-6" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">nnodes</span>(g2)<span class="sc">*</span>(<span class="fu">nnodes</span>(g2) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb140-7"><a href="comparing-networks.html#cb140-7" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(tstat, <span class="at">df =</span> m1 <span class="sc">+</span> m2 <span class="sc">-</span> <span class="dv">2</span>)</span></code></pre></div></li>
 </ol>
 </div>
 <div id="when-the-statistic-is-not-normal" class="section level4" number="8.1.1.2">
