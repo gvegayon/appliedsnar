@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Exponential Random Graph Models | Applied SNA with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Exponential Random Graph Models | Applied SNA with R" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,16 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2019-09-06" />
+<meta name="date" content="2021-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="statistical-tests.html">
-<link rel="next" href="estimation-of-ergms.html">
+<link rel="prev" href="statistical-tests.html"/>
+<link rel="next" href="estimation-of-ergms.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +41,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -59,25 +63,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -86,9 +91,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -139,29 +144,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
 <li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a><ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
 <li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
 <li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
 <li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a><ul>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a>
+<ul>
 <li class="chapter" data-level="5.0.1" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html#a-naive-example"><i class="fa fa-check"></i><b>5.0.1</b> A naive example</a></li>
 <li class="chapter" data-level="5.1" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.1</b> Estimation of ERGMs</a></li>
 <li class="chapter" data-level="5.2" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.2</b> The <code>ergm</code> package</a></li>
@@ -171,9 +183,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
 <li class="chapter" data-level="7" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>7</b> Stochastic Actor Oriented Models</a></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap</a></li>
+</ul></li>
+</ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
@@ -198,24 +219,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exponential-random-graph-models" class="section level1">
+<div id="exponential-random-graph-models" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Exponential Random Graph Models</h1>
 <p>I strongly suggest reading the vignette included in the <code>ergm</code> R package</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="kw">vignette</span>(<span class="st">&quot;ergm&quot;</span>, <span class="dt">package=</span><span class="st">&quot;ergm&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="exponential-random-graph-models.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;ergm&quot;</span>, <span class="at">package=</span><span class="st">&quot;ergm&quot;</span>)</span></code></pre></div>
 <p>So what are ERGMs anyway…</p>
 <blockquote>
 <p>The purpose of ERGMs, in a nutshell, is to describe parsimoniously the local selection forces
 that shape the global structure of a network. To this end, a network dataset, like those
 depicted in Figure 1, may be considered like the response in a regression model, where the
 predictors are things like “propensity for individuals of the same sex to form partnerships” or
-“propensity for individuals to form triangles of partnerships”. In Figure 1(b), for example, it
+“propensity for individuals to form triangles of partnerships.” In Figure 1(b), for example, it
 is evident that the individual nodes appear to cluster in groups of the same numerical labels
 (which turn out to be students’ grades, 7 through 12); thus, an ERGM can help us quantify
 the strength of this intra-group effect.</p>
-<p>— <span class="citation">(David R. Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p>
+<p>— <span class="citation">(<a href="references.html#ref-Hunter2008" role="doc-biblioref">David R. Hunter et al. 2008</a>)</span></p>
 </blockquote>
 <div class="figure">
-<img src="hunter2008.png" alt="Source: Hunter et al. (2008)" />
+<img src="hunter2008.png" alt="" />
 <p class="caption">Source: Hunter et al. (2008)</p>
 </div>
 <p>The distribution of <span class="math inline">\(\mathbf{Y}\)</span> can be parameterized in the form</p>
@@ -228,15 +249,15 @@ the strength of this intra-group effect.</p>
 <p><span class="math display">\[
 \kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}
 \]</span></p>
-<p>Is the normalizing factor that ensures that equation <a href="exponential-random-graph-models.html#eq:04-1">(5.1)</a> is a legitimate probability distribution. Even after fixing <span class="math inline">\(\mathcal{Y}\)</span> to be all the networks that have size <span class="math inline">\(n\)</span>, the size of <span class="math inline">\(\mathcal{Y}\)</span> makes this type of models hard to estimate as there are <span class="math inline">\(N = 2^{n(n-1)}\)</span> possible networks! <span class="citation">(David R. Hunter et al. <a href="#ref-Hunter2008">2008</a>)</span></p>
-<p>Recent developments include new forms of dependency structures, to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. <span class="citation">(David R. Hunter et al. <a href="#ref-Hunter2008">2008</a>, 9)</span></p>
-<div id="a-naive-example" class="section level3">
+<p>Is the normalizing factor that ensures that equation <a href="exponential-random-graph-models.html#eq:04-1">(5.1)</a> is a legitimate probability distribution. Even after fixing <span class="math inline">\(\mathcal{Y}\)</span> to be all the networks that have size <span class="math inline">\(n\)</span>, the size of <span class="math inline">\(\mathcal{Y}\)</span> makes this type of models hard to estimate as there are <span class="math inline">\(N = 2^{n(n-1)}\)</span> possible networks! <span class="citation">(<a href="references.html#ref-Hunter2008" role="doc-biblioref">David R. Hunter et al. 2008</a>)</span></p>
+<p>Recent developments include new forms of dependency structures, to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. <span class="citation">(<a href="references.html#ref-Hunter2008" role="doc-biblioref">David R. Hunter et al. 2008, 9</a>)</span></p>
+<div id="a-naive-example" class="section level3" number="5.0.1">
 <h3><span class="header-section-number">5.0.1</span> A naive example</h3>
 <p>In the simplest case, ergm is equivalent to a logistic regression</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw">library</span>(ergm)</a></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="exponential-random-graph-models.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ergm)</span></code></pre></div>
 <pre><code>## Loading required package: network</code></pre>
 <pre><code>## network: Classes for Relational Data
-## Version 1.15 created on 2019-04-01.
+## Version 1.16.1 created on 2020-10-06.
 ## copyright (c) 2005, Carter T. Butts, University of California-Irvine
 ##                     Mark S. Handcock, University of California -- Los Angeles
 ##                     David R. Hunter, Penn State University
@@ -245,32 +266,34 @@ the strength of this intra-group effect.</p>
 ##  For citation information, type citation(&quot;network&quot;).
 ##  Type help(&quot;network-package&quot;) to get started.</code></pre>
 <pre><code>## 
-## ergm: version 3.10.4-5075, created on 2019-06-30
-## Copyright (c) 2019, Mark S. Handcock, University of California -- Los Angeles
+## ergm: version 3.11.0, created on 2020-10-14
+## Copyright (c) 2020, Mark S. Handcock, University of California -- Los Angeles
 ##                     David R. Hunter, Penn State University
 ##                     Carter T. Butts, University of California -- Irvine
 ##                     Steven M. Goodreau, University of Washington
-##                     Pavel N. Krivitsky, University of Wollongong
+##                     Pavel N. Krivitsky, UNSW Sydney
 ##                     Martina Morris, University of Washington
 ##                     with contributions from
 ##                     Li Wang
 ##                     Kirk Li, University of Washington
 ##                     Skye Bender-deMoll, University of Washington
 ##                     Chad Klumb
+##                     Michał Bojanowski, Kozminski University
+##                     Ben Bolker
 ## Based on &quot;statnet&quot; project software (statnet.org).
 ## For license and citation information see statnet.org/attribution
 ## or type citation(&quot;ergm&quot;).</code></pre>
-<pre><code>## NOTE: Versions before 3.6.1 had a bug in the implementation of the
-## bd() constraint which distorted the sampled distribution somewhat.
-## In addition, Sampson&#39;s Monks datasets had mislabeled vertices. See
-## the NEWS and the documentation for more details.</code></pre>
-<pre><code>## NOTE: Some common term arguments pertaining to vertex attribute
-## and level selection have changed in 3.10.0. See terms help for
-## more details. Use &#39;options(ergm.term=list(version=&quot;3.9.4&quot;))&#39; to
-## use old behavior.</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="kw">data</span>(<span class="st">&quot;sampson&quot;</span>)</a>
-<a class="sourceLine" id="cb77-2" title="2"></a>
-<a class="sourceLine" id="cb77-3" title="3">samplike</a></code></pre></div>
+<pre><code>## NOTE: Versions before 3.6.1 had a bug in the implementation of the bd()
+## constraint which distorted the sampled distribution somewhat. In
+## addition, Sampson&#39;s Monks datasets had mislabeled vertices. See the
+## NEWS and the documentation for more details.</code></pre>
+<pre><code>## NOTE: Some common term arguments pertaining to vertex attribute and
+## level selection have changed in 3.10.0. See terms help for more
+## details. Use &#39;options(ergm.term=list(version=&quot;3.9.4&quot;))&#39; to use old
+## behavior.</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="exponential-random-graph-models.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sampson&quot;</span>)</span>
+<span id="cb74-2"><a href="exponential-random-graph-models.html#cb74-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-3"><a href="exponential-random-graph-models.html#cb74-3" aria-hidden="true" tabindex="-1"></a>samplike</span></code></pre></div>
 <pre><code>##  Network attributes:
 ##   vertices = 18 
 ##   directed = TRUE 
@@ -286,8 +309,8 @@ the strength of this intra-group effect.</p>
 ## 
 ##  Edge attribute names: 
 ##     nominations</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">y &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">as.vector</span>(<span class="kw">as.matrix</span>(samplike)))[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">18</span>)]</a>
-<a class="sourceLine" id="cb79-2" title="2"><span class="kw">glm</span>(y<span class="op">~</span><span class="dv">1</span>, <span class="dt">family=</span><span class="kw">binomial</span>(<span class="st">&quot;logit&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="exponential-random-graph-models.html#cb76-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">as.vector</span>(<span class="fu">as.matrix</span>(samplike)))[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>)]</span>
+<span id="cb76-2"><a href="exponential-random-graph-models.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y<span class="sc">~</span><span class="dv">1</span>, <span class="at">family=</span><span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = y ~ 1, family = binomial(&quot;logit&quot;))
 ## 
@@ -298,7 +321,7 @@ the strength of this intra-group effect.</p>
 ## Degrees of Freedom: 305 Total (i.e. Null);  305 Residual
 ## Null Deviance:       367.2 
 ## Residual Deviance: 367.2     AIC: 369.2</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="kw">ergm</span>(samplike <span class="op">~</span><span class="st"> </span>edges)</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="exponential-random-graph-models.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ergm</span>(samplike <span class="sc">~</span> edges)</span></code></pre></div>
 <pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
 <pre><code>## Evaluating the predictor and response matrix.</code></pre>
 <pre><code>## Maximizing the pseudolikelihood.</code></pre>
@@ -306,20 +329,18 @@ the strength of this intra-group effect.</p>
 <pre><code>## Stopping at the initial estimate.</code></pre>
 <pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
 <pre><code>## 
+## Call:
+## ergm(formula = samplike ~ edges)
+## 
+## 
 ## MLE Coefficients:
 ##   edges  
 ## -0.9072</code></pre>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1">pr &lt;-<span class="st"> </span><span class="kw">mean</span>(y)</a>
-<a class="sourceLine" id="cb89-2" title="2"><span class="kw">log</span>(pr) <span class="op">-</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span><span class="op">-</span>pr) <span class="co"># Logit function</span></a></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="exponential-random-graph-models.html#cb86-1" aria-hidden="true" tabindex="-1"></a>pr <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb86-2"><a href="exponential-random-graph-models.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(pr) <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>pr) <span class="co"># Logit function</span></span></code></pre></div>
 <pre><code>## [1] -0.9071582</code></pre>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1"><span class="kw">qlogis</span>(pr)</a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="exponential-random-graph-models.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qlogis</span>(pr)</span></code></pre></div>
 <pre><code>## [1] -0.9071582</code></pre>
-</div> 
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Hunter2008">
-<p>Hunter, David R., Mark S. Handcock, Carter T. Butts, Steven M. Goodreau, and Martina Morris. 2008. “ergm : A Package to Fit, Simulate and Diagnose Exponential-Family Models for Networks.” <em>Journal of Statistical Software</em> 24 (3). <a href="https://doi.org/10.18637/jss.v024.i03">https://doi.org/10.18637/jss.v024.i03</a>.</p>
 </div>
 </div>
             </section>
@@ -333,11 +354,13 @@ the strength of this intra-group effect.</p>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -345,12 +368,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -358,11 +380,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/gvegayon/appliedsnar/edit/master/04-ergms.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/gvegayon/appliedsnar/blob/master/04-ergms.Rmd",
 "text": null
 },
 "download": ["appliedsnar.pdf", "appliedsnar.epub"],
@@ -380,8 +406,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

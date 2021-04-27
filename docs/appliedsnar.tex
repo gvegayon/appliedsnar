@@ -1,33 +1,47 @@
-\documentclass[]{book}
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
+\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\usepackage{hyperref}
-\hypersetup{unicode=true,
-            pdftitle={Applied SNA with R},
-            pdfauthor={George G. Vega Yon},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Applied SNA with R},
+  pdfauthor={George G. Vega Yon},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -69,7 +83,16 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
-\usepackage{graphicx,grffile}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -78,62 +101,54 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-%%% Use protect on footnotes to avoid problems with footnotes in titles
-\let\rmarkdownfootnote\footnote%
-\def\footnote{\protect\rmarkdownfootnote}
-
-%%% Change title format to be more compact
-\usepackage{titling}
-
-% Create subtitle command for use in maketitle
-\providecommand{\subtitle}[1]{
-  \posttitle{
-    \begin{center}\large#1\end{center}
-    }
-}
-
-\setlength{\droptitle}{-2em}
-
-  \title{Applied SNA with R}
-    \pretitle{\vspace{\droptitle}\centering\huge}
-  \posttitle{\par}
-    \author{George G. Vega Yon}
-    \preauthor{\centering\large\emph}
-  \postauthor{\par}
-      \predate{\centering\large\emph}
-  \postdate{\par}
-    \date{2019-09-06}
-
 \usepackage{booktabs}
 \usepackage{hyperref}
   \hypersetup{allcolors=blue, colorlinks=true}
 
 \usepackage{apacite}
 \usepackage{setspace}
-\doublespacing
+\onehalfspacing
 
 \usepackage{arev}
 \usepackage[T1]{fontenc}
+
+\usepackage[margin=1in]{geometry}
+
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\title{Applied SNA with R}
+\author{George G. Vega Yon}
+\date{2021-04-27}
 
 \begin{document}
 \maketitle
@@ -164,14 +179,14 @@ At least in the first version, the book will be organized by session, this is, o
 
 All the book materials can be downloaded from \url{https://github.com/gvegayon/appliedsnar}
 
-In general, we will besides of R itself, we will be using R studio and the following R packages: dplyr for data management, stringr for data cleaning, and of course igraph, netdiffuseR (a bit of a bias here), and statnet for our neat network analysis.\footnote{Some of you may be wondering ``what about ggplot2 and friends? What about \href{https://www.tidyverse.org/}{\texttt{tidyverse}}'', well, my short answer is I jumped into R before all of that was that popular. When I started plots were all about \href{https://CRAN.R-project.org/package=lattice}{\texttt{lattice}}, and after a couple of years on that, about base R graphics. What I'm saying is that so far I have not find a compelling reason to leave my ``old-practices'' and embrace all the \texttt{tidyverse} movement (religion?).}
+In general, we will besides of R itself, we will be using R studio and the following R packages: dplyr for data management, stringr for data cleaning, and of course igraph, netdiffuseR (a bit of a bias here), and statnet for our neat network analysis.\footnote{Some of you may be wondering ``what about ggplot2 and friends? What about \href{https://www.tidyverse.org/}{\texttt{tidyverse}},'' well, my short answer is I jumped into R before all of that was that popular. When I started plots were all about \href{https://CRAN.R-project.org/package=lattice}{\texttt{lattice}}, and after a couple of years on that, about base R graphics. What I'm saying is that so far I have not find a compelling reason to leave my ``old-practices'' and embrace all the \texttt{tidyverse} movement (religion?).}
 
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
 
 For this book we need the following
 
-R Core Team (\protect\hyperlink{ref-R}{2017}\protect\hyperlink{ref-R}{b})
+\protect\hyperlink{ref-R}{R Core Team} (\protect\hyperlink{ref-R}{2017b})
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -189,7 +204,7 @@ While I find RStudio extreamly useful, it is not necesary to use it with R.
 \hypertarget{what-is-r}{%
 \section{What is R}\label{what-is-r}}
 
-A good reference book for both new and advanced user is \href{https://nostarch.com/artofr.htm}{``The Art of R programming''} (Matloff \protect\hyperlink{ref-Matloff2011}{2011})\footnote{\href{http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf}{Here} a free pdf version distributed by the author.}
+A good reference book for both new and advanced user is \href{https://nostarch.com/artofr.htm}{``The Art of R programming''} (\protect\hyperlink{ref-Matloff2011}{Matloff 2011})\footnote{\href{http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf}{Here} a free pdf version distributed by the author.}
 
 \hypertarget{how-to-install-packages}{%
 \section{How to install packages}\label{how-to-install-packages}}
@@ -198,11 +213,11 @@ Nowadays there are two ways of installing R packages (that I'm aware of), either
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# This will install the igraph package from CRAN}
-\OperatorTok{>}\StringTok{ }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"netdiffuseR"}\NormalTok{)}
+\CommentTok{\# This will install the igraph package from CRAN}
+\SpecialCharTok{\textgreater{}} \FunctionTok{install.packages}\NormalTok{(}\StringTok{"netdiffuseR"}\NormalTok{)}
 
-\CommentTok{# This will install the bleeding-edge version from the project's github repo!}
-\OperatorTok{>}\StringTok{ }\NormalTok{devtools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"USCCANA/netdiffuseR"}\NormalTok{)}
+\CommentTok{\# This will install the bleeding{-}edge version from the project\textquotesingle{}s github repo!}
+\SpecialCharTok{\textgreater{}}\NormalTok{ devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"USCCANA/netdiffuseR"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -237,17 +252,17 @@ This chapter's goals are:
 \hypertarget{reading-the-data-into-r}{%
 \subsection{Reading the data into R}\label{reading-the-data-into-r}}
 
-R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the \href{https://cran.r-project.org/package=readr}{\texttt{readr}} package (Wickham, Hester, and Francois \protect\hyperlink{ref-R-readr}{2017}); or it can be binary files like dta (Stata), Octave, SPSS, for which \href{https://cran.r-project.org/package=readr}{\texttt{foreign}} (R Core Team \protect\hyperlink{ref-R-foreign}{2017}\protect\hyperlink{ref-R-foreign}{a}) can be used; or it could be excel files in which case you should be using \href{https://cran.r-project.org/package=readxl}{\texttt{readxl}} (Wickham and Bryan \protect\hyperlink{ref-R-readxl}{2017}). In our case, the data for this session is in Stata format:
+R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the \href{https://cran.r-project.org/package=readr}{\texttt{readr}} package (\protect\hyperlink{ref-R-readr}{Wickham, Hester, and Francois 2017}); or it can be binary files like dta (Stata), Octave, SPSS, for which \href{https://cran.r-project.org/package=readr}{\texttt{foreign}} (\protect\hyperlink{ref-R-foreign}{R Core Team 2017a}) can be used; or it could be excel files in which case you should be using \href{https://cran.r-project.org/package=readxl}{\texttt{readxl}} (\protect\hyperlink{ref-R-readxl}{Wickham and Bryan 2017}). In our case, the data for this session is in Stata format:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(foreign)}
+\FunctionTok{library}\NormalTok{(foreign)}
 
-\CommentTok{# Reading the data}
-\NormalTok{dat <-}\StringTok{ }\NormalTok{foreign}\OperatorTok{::}\KeywordTok{read.dta}\NormalTok{(}\StringTok{"03-sns.dta"}\NormalTok{)}
+\CommentTok{\# Reading the data}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ foreign}\SpecialCharTok{::}\FunctionTok{read.dta}\NormalTok{(}\StringTok{"03{-}sns.dta"}\NormalTok{)}
 
-\CommentTok{# Taking a look at the data's first 5 columns and 5 rows}
-\NormalTok{dat[}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
+\CommentTok{\# Taking a look at the data\textquotesingle{}s first 5 columns and 5 rows}
+\NormalTok{dat[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -273,7 +288,7 @@ Now suppose that we want to create a unique id using the school and photo id. In
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(photo_id_ran <-}\StringTok{ }\KeywordTok{range}\NormalTok{(dat}\OperatorTok{$}\NormalTok{photoid))}
+\NormalTok{(photo\_id\_ran }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{photoid))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -281,11 +296,11 @@ Now suppose that we want to create a unique id using the school and photo id. In
 ## [1]    1 2074
 \end{verbatim}
 
-As the variable spans up to 2074, we need to set the last 4 units of the variable to store the \texttt{photoid}. We will use \texttt{dplyr} (Wickham et al. \protect\hyperlink{ref-R-dplyr}{2017}) and \texttt{magrittr} (Bache and Wickham \protect\hyperlink{ref-R-magrittr}{2014}){]} (the pipe operator, \texttt{\%\textgreater{}\%}) to create this variable, and we will call it\ldots{} \texttt{id} (mind blowing, right?):
+As the variable spans up to 2074, we need to set the last 4 units of the variable to store the \texttt{photoid}. We will use \texttt{dplyr} (\protect\hyperlink{ref-R-dplyr}{Wickham et al. 2017}) and \texttt{magrittr} (\protect\hyperlink{ref-R-magrittr}{Bache and Wickham 2014}){]} (the pipe operator, \texttt{\%\textgreater{}\%}) to create this variable, and we will call it\ldots{} \texttt{id} (mind blowing, right?):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -308,11 +323,11 @@ As the variable spans up to 2074, we need to set the last 4 units of the variabl
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(magrittr)}
+\FunctionTok{library}\NormalTok{(magrittr)}
 
-\NormalTok{(dat }\OperatorTok{%<>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{id =}\NormalTok{ school}\OperatorTok{*}\DecValTok{10000} \OperatorTok{+}\StringTok{ }\NormalTok{photoid)) }\OperatorTok{%>%}
-\StringTok{  }\NormalTok{head }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(school, photoid, id)}
+\NormalTok{(dat }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{id =}\NormalTok{ school}\SpecialCharTok{*}\DecValTok{10000} \SpecialCharTok{+}\NormalTok{ photoid)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  head }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(school, photoid, id)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -330,8 +345,8 @@ Wow, what happend in the last three lines of code! What is that \texttt{\%\textg
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat_filtered}\OperatorTok{$}\NormalTok{id <-}\StringTok{ }\NormalTok{dat_filtered}\OperatorTok{$}\NormalTok{school}\OperatorTok{*}\DecValTok{10000} \OperatorTok{+}\StringTok{ }\NormalTok{dat_filtered}\OperatorTok{$}\NormalTok{photoid}
-\KeywordTok{subset}\NormalTok{(}\KeywordTok{head}\NormalTok{(dat_filtered), }\DataTypeTok{select =} \KeywordTok{c}\NormalTok{(school, photoid, id))}
+\NormalTok{dat\_filtered}\SpecialCharTok{$}\NormalTok{id }\OtherTok{\textless{}{-}}\NormalTok{ dat\_filtered}\SpecialCharTok{$}\NormalTok{school}\SpecialCharTok{*}\DecValTok{10000} \SpecialCharTok{+}\NormalTok{ dat\_filtered}\SpecialCharTok{$}\NormalTok{photoid}
+\FunctionTok{subset}\NormalTok{(}\FunctionTok{head}\NormalTok{(dat\_filtered), }\AttributeTok{select =} \FunctionTok{c}\NormalTok{(school, photoid, id))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -350,12 +365,12 @@ Wow, what happend in the last three lines of code! What is that \texttt{\%\textg
 \hypertarget{from-survey-to-edgelist}{%
 \subsection{From survey to edgelist}\label{from-survey-to-edgelist}}
 
-Let's start by loading a couple of handy R packages for this task, \texttt{tidyr} (Wickham and Henry \protect\hyperlink{ref-R-tidyr}{2017}), which we will use to reshape the data, and \texttt{stringr} (Wickham \protect\hyperlink{ref-R-stringr}{2017}), which we will use to process strings using \emph{regular expressions}\footnote{Please refer to the help file \texttt{?\textquotesingle{}regular\ expression\textquotesingle{}} in R. The R package \texttt{rex} (Ushey, Hester, and Krzyzanowski \protect\hyperlink{ref-R-rex}{2017}) is a very nice companion for writing regular expressions. There's also a neat (but experimental) RStudio addin that can be very helpful for understanding how regular expressions work, the \href{https://github.com/gadenbuie/regexplain}{regexplain} addin.}.
+Let's start by loading a couple of handy R packages for this task, \texttt{tidyr} (\protect\hyperlink{ref-R-tidyr}{Wickham and Henry 2017}), which we will use to reshape the data, and \texttt{stringr} (\protect\hyperlink{ref-R-stringr}{Wickham 2017}), which we will use to process strings using \emph{regular expressions}\footnote{Please refer to the help file \texttt{?\textquotesingle{}regular\ expression\textquotesingle{}} in R. The R package \texttt{rex} (\protect\hyperlink{ref-R-rex}{Ushey, Hester, and Krzyzanowski 2017}) is a very nice companion for writing regular expressions. There's also a neat (but experimental) RStudio addin that can be very helpful for understanding how regular expressions work, the \href{https://github.com/gadenbuie/regexplain}{regexplain} addin.}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(tidyr)}
-\KeywordTok{library}\NormalTok{(stringr)}
+\FunctionTok{library}\NormalTok{(tidyr)}
+\FunctionTok{library}\NormalTok{(stringr)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -363,7 +378,7 @@ Optionally, we can use the \texttt{tibble} type of object which is an alternativ
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(dat)}
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(dat)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -423,15 +438,15 @@ What I like from tibbles is that when you print them on the console these actual
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Maybe too much piping... but its cool!}
-\NormalTok{net <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, school, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"sch_friend"}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{gather}\NormalTok{(}\DataTypeTok{key =} \StringTok{"varname"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"content"}\NormalTok{, }\OperatorTok{-}\NormalTok{id, }\OperatorTok{-}\NormalTok{school) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(content)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
-    \DataTypeTok{friendid =}\NormalTok{ school}\OperatorTok{*}\DecValTok{10000} \OperatorTok{+}\StringTok{ }\NormalTok{content,}
-    \DataTypeTok{year     =} \KeywordTok{as.integer}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z])[0-9]"}\NormalTok{)),}
-    \DataTypeTok{nnom     =} \KeywordTok{as.integer}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z][0-9])[0-9]+"}\NormalTok{))}
+\CommentTok{\# Maybe too much piping... but its cool!}
+\NormalTok{net }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(id, school, }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"sch\_friend"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"varname"}\NormalTok{, }\AttributeTok{value =} \StringTok{"content"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{id, }\SpecialCharTok{{-}}\NormalTok{school) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(content)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{friendid =}\NormalTok{ school}\SpecialCharTok{*}\DecValTok{10000} \SpecialCharTok{+}\NormalTok{ content,}
+    \AttributeTok{year     =} \FunctionTok{as.integer}\NormalTok{(}\FunctionTok{str\_extract}\NormalTok{(varname, }\StringTok{"(?\textless{}=[a{-}z])[0{-}9]"}\NormalTok{)),}
+    \AttributeTok{nnom     =} \FunctionTok{as.integer}\NormalTok{(}\FunctionTok{str\_extract}\NormalTok{(varname, }\StringTok{"(?\textless{}=[a{-}z][0{-}9])[0{-}9]+"}\NormalTok{))}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
@@ -441,12 +456,12 @@ Let's take a look at this step by step:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  First, we subset the data: We want to keep \texttt{id,\ school,\ sch\_friend*}. For the later we use the function \texttt{starts\_with} (from the \texttt{tidyselect} package). This allows us to select all variables that starts with the word ``\texttt{sch\_friend}'', which means that \texttt{sch\_friend11,\ sch\_friend12,\ ...} will all be selected.
+  First, we subset the data: We want to keep \texttt{id,\ school,\ sch\_friend*}. For the later we use the function \texttt{starts\_with} (from the \texttt{tidyselect} package). This allows us to select all variables that starts with the word ``\texttt{sch\_friend},'' which means that \texttt{sch\_friend11,\ sch\_friend12,\ ...} will all be selected.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, school, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"sch_friend"}\NormalTok{))}
+\NormalTok{dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(id, school, }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"sch\_friend"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -495,9 +510,9 @@ Let's take a look at this step by step:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, school, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"sch_friend"}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{gather}\NormalTok{(}\DataTypeTok{key =} \StringTok{"varname"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"content"}\NormalTok{, }\OperatorTok{-}\NormalTok{id, }\OperatorTok{-}\NormalTok{school)}
+\NormalTok{dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(id, school, }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"sch\_friend"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"varname"}\NormalTok{, }\AttributeTok{value =} \StringTok{"content"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{id, }\SpecialCharTok{{-}}\NormalTok{school)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -518,7 +533,7 @@ Let's take a look at this step by step:
 ## # ... with 164,454 more rows
 \end{verbatim}
 
-  In this case the \texttt{key} parameter sets the name of the variable that will contain the name of the variable that was reshaped, while \texttt{value} is the name of the variable that will hold the content of the data (that's why I named those like that). The \texttt{-id,\ -school} bit tells the function to ``drop'' those variables before reshaping, in other words, ``reshape everything but \texttt{id} and \texttt{school}''.
+  In this case the \texttt{key} parameter sets the name of the variable that will contain the name of the variable that was reshaped, while \texttt{value} is the name of the variable that will hold the content of the data (that's why I named those like that). The \texttt{-id,\ -school} bit tells the function to ``drop'' those variables before reshaping, in other words, ``reshape everything but \texttt{id} and \texttt{school}.''
 
   Also, notice that we passed from 2164 rows to 19 (nominations) * 2164 (subjects) * 4 (waves) = 164464 rows, as expected.
 \item
@@ -526,10 +541,10 @@ Let's take a look at this step by step:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, school, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"sch_friend"}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{gather}\NormalTok{(}\DataTypeTok{key =} \StringTok{"varname"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"content"}\NormalTok{, }\OperatorTok{-}\NormalTok{id, }\OperatorTok{-}\NormalTok{school) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(content))}
+\NormalTok{dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(id, school, }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"sch\_friend"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"varname"}\NormalTok{, }\AttributeTok{value =} \StringTok{"content"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{id, }\SpecialCharTok{{-}}\NormalTok{school) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(content))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -554,14 +569,14 @@ Let's take a look at this step by step:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, school, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"sch_friend"}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{gather}\NormalTok{(}\DataTypeTok{key =} \StringTok{"varname"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"content"}\NormalTok{, }\OperatorTok{-}\NormalTok{id, }\OperatorTok{-}\NormalTok{school) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(content)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
-    \DataTypeTok{friendid =}\NormalTok{ school}\OperatorTok{*}\DecValTok{10000} \OperatorTok{+}\StringTok{ }\NormalTok{content,}
-    \DataTypeTok{year     =} \KeywordTok{as.integer}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z])[0-9]"}\NormalTok{)),}
-    \DataTypeTok{nnom     =} \KeywordTok{as.integer}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(varname, }\StringTok{"(?<=[a-z][0-9])[0-9]+"}\NormalTok{))}
+\NormalTok{dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(id, school, }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"sch\_friend"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"varname"}\NormalTok{, }\AttributeTok{value =} \StringTok{"content"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{id, }\SpecialCharTok{{-}}\NormalTok{school) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(content)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{friendid =}\NormalTok{ school}\SpecialCharTok{*}\DecValTok{10000} \SpecialCharTok{+}\NormalTok{ content,}
+    \AttributeTok{year     =} \FunctionTok{as.integer}\NormalTok{(}\FunctionTok{str\_extract}\NormalTok{(varname, }\StringTok{"(?\textless{}=[a{-}z])[0{-}9]"}\NormalTok{)),}
+    \AttributeTok{nnom     =} \FunctionTok{as.integer}\NormalTok{(}\FunctionTok{str\_extract}\NormalTok{(varname, }\StringTok{"(?\textless{}=[a{-}z][0{-}9])[0{-}9]+"}\NormalTok{))}
 \NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
@@ -587,7 +602,7 @@ Let's take a look at this step by step:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_extract}\NormalTok{(}\StringTok{"sch_friend12"}\NormalTok{, }\StringTok{"(?<=[a-z])[0-9]"}\NormalTok{)}
+\FunctionTok{str\_extract}\NormalTok{(}\StringTok{"sch\_friend12"}\NormalTok{, }\StringTok{"(?\textless{}=[a{-}z])[0{-}9]"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -597,7 +612,7 @@ Let's take a look at this step by step:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_extract}\NormalTok{(}\StringTok{"sch_friend12"}\NormalTok{, }\StringTok{"(?<=[a-z][0-9])[0-9]+"}\NormalTok{)}
+\FunctionTok{str\_extract}\NormalTok{(}\StringTok{"sch\_friend12"}\NormalTok{, }\StringTok{"(?\textless{}=[a{-}z][0{-}9])[0{-}9]+"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -611,14 +626,14 @@ Let's take a look at this step by step:
 \hypertarget{igraph-network}{%
 \subsection{igraph network}\label{igraph-network}}
 
-For coercing the edgelist into an igraph object, we will be using the \texttt{graph\_from\_data\_frame} function in igraph (Csardi and Nepusz \protect\hyperlink{ref-R-igraph}{2006}). This function receives a data frame where the two first columns are sorce(ego) and target(alter), whether is it directed or not, and an optional data frame with vertices, in which's first column should contain the vertex ids.
+For coercing the edgelist into an igraph object, we will be using the \texttt{graph\_from\_data\_frame} function in igraph (\protect\hyperlink{ref-R-igraph}{Csardi and Nepusz 2006}). This function receives a data frame where the two first columns are sorce(ego) and target(alter), whether is it directed or not, and an optional data frame with vertices, in which's first column should contain the vertex ids.
 
 Using the optional \texttt{vertices} argument is a good practice since by doing so you are telling the function what is the set of vertex ids that you are expecting to find. Using the original dataset, we will create a data frame name vertices:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{vertex_attrs <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, school, hispanic, female1, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"eversmk"}\NormalTok{))}
+\NormalTok{vertex\_attrs }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(id, school, hispanic, female1, }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"eversmk"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -626,13 +641,13 @@ Now, let's now use the function \texttt{graph\_from\_data\_frame} to create an \
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(igraph)}
+\FunctionTok{library}\NormalTok{(igraph)}
 
-\NormalTok{ig_year1 <-}\StringTok{ }\NormalTok{net }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ "1"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, friendid, nnom) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{graph_from_data_frame}\NormalTok{(}
-    \DataTypeTok{vertices =}\NormalTok{ vertex_attrs}
+\NormalTok{ig\_year1 }\OtherTok{\textless{}{-}}\NormalTok{ net }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \StringTok{"1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(id, friendid, nnom) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{graph\_from\_data\_frame}\NormalTok{(}
+    \AttributeTok{vertices =}\NormalTok{ vertex\_attrs}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
@@ -645,27 +660,27 @@ Ups! It seems that individuals are making nominations to other students that wer
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ig_year1 <-}\StringTok{ }\NormalTok{net }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ "1"}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }
-\StringTok{  }\CommentTok{# Extra line, all nominations must be in ego too.}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(friendid }\OperatorTok{%in%}\StringTok{ }\NormalTok{id) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }
-\StringTok{  }\KeywordTok{select}\NormalTok{(id, friendid, nnom) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{graph_from_data_frame}\NormalTok{(}
-    \DataTypeTok{vertices =}\NormalTok{ vertex_attrs}
+\NormalTok{ig\_year1 }\OtherTok{\textless{}{-}}\NormalTok{ net }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \StringTok{"1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  
+  \CommentTok{\# Extra line, all nominations must be in ego too.}
+  \FunctionTok{filter}\NormalTok{(friendid }\SpecialCharTok{\%in\%}\NormalTok{ id) }\SpecialCharTok{\%\textgreater{}\%} 
+  
+  \FunctionTok{select}\NormalTok{(id, friendid, nnom) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{graph\_from\_data\_frame}\NormalTok{(}
+    \AttributeTok{vertices =}\NormalTok{ vertex\_attrs}
 \NormalTok{    )}
 
-\NormalTok{ig_year1}
+\NormalTok{ig\_year1}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH 23a67a2 DN-- 2164 9514 -- 
+## IGRAPH 71220e9 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from 23a67a2 (vertex names):
+## + edges from 71220e9 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -684,18 +699,18 @@ While we could do all networks at once, in this part we will focus on computing 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{list.vertex.attributes}\NormalTok{(ig_year1)}
+\FunctionTok{list.vertex.attributes}\NormalTok{(ig\_year1)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "name"     "school"   "hispanic" "female1"  "eversmk1" "eversmk2"
-## [7] "eversmk3" "eversmk4"
+## [1] "name"     "school"   "hispanic" "female1"  "eversmk1" "eversmk2" "eversmk3"
+## [8] "eversmk4"
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{list.edge.attributes}\NormalTok{(ig_year1) }
+\FunctionTok{list.edge.attributes}\NormalTok{(ig\_year1) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -707,7 +722,7 @@ Just like we would do with data frames, accessing vertex attributes is done via 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{V}\NormalTok{(ig_year1)}\OperatorTok{$}\NormalTok{hispanic[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
+\FunctionTok{V}\NormalTok{(ig\_year1)}\SpecialCharTok{$}\NormalTok{hispanic[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -719,13 +734,13 @@ Now that you know how to access vertex attributes, we can get the network corres
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Which ids are from school 111?}
-\NormalTok{school111ids <-}\StringTok{ }\KeywordTok{which}\NormalTok{(}\KeywordTok{V}\NormalTok{(ig_year1)}\OperatorTok{$}\NormalTok{school }\OperatorTok{==}\StringTok{ }\DecValTok{111}\NormalTok{)}
+\CommentTok{\# Which ids are from school 111?}
+\NormalTok{school111ids }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{V}\NormalTok{(ig\_year1)}\SpecialCharTok{$}\NormalTok{school }\SpecialCharTok{==} \DecValTok{111}\NormalTok{)}
 
-\CommentTok{# Creating a subgraph}
-\NormalTok{ig_year1_}\DecValTok{111}\NormalTok{ <-}\StringTok{ }\KeywordTok{induced_subgraph}\NormalTok{(}
-  \DataTypeTok{graph =}\NormalTok{ ig_year1,}
-  \DataTypeTok{vids  =}\NormalTok{ school111ids}
+\CommentTok{\# Creating a subgraph}
+\NormalTok{ig\_year1\_111 }\OtherTok{\textless{}{-}} \FunctionTok{induced\_subgraph}\NormalTok{(}
+  \AttributeTok{graph =}\NormalTok{ ig\_year1,}
+  \AttributeTok{vids  =}\NormalTok{ school111ids}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -734,10 +749,10 @@ The \texttt{which} function in R returns a vector of indices indicating which el
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Computing centrality measures for each vertex}
-\KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{indegree   <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"in"}\NormalTok{)}
-\KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{outdegree  <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"out"}\NormalTok{)}
-\KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{closeness  <-}\StringTok{ }\KeywordTok{closeness}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"total"}\NormalTok{)}
+\CommentTok{\# Computing centrality measures for each vertex}
+\FunctionTok{V}\NormalTok{(ig\_year1\_111)}\SpecialCharTok{$}\NormalTok{indegree   }\OtherTok{\textless{}{-}} \FunctionTok{degree}\NormalTok{(ig\_year1\_111, }\AttributeTok{mode =} \StringTok{"in"}\NormalTok{)}
+\FunctionTok{V}\NormalTok{(ig\_year1\_111)}\SpecialCharTok{$}\NormalTok{outdegree  }\OtherTok{\textless{}{-}} \FunctionTok{degree}\NormalTok{(ig\_year1\_111, }\AttributeTok{mode =} \StringTok{"out"}\NormalTok{)}
+\FunctionTok{V}\NormalTok{(ig\_year1\_111)}\SpecialCharTok{$}\NormalTok{closeness  }\OtherTok{\textless{}{-}} \FunctionTok{closeness}\NormalTok{(ig\_year1\_111, }\AttributeTok{mode =} \StringTok{"total"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -748,7 +763,7 @@ The \texttt{which} function in R returns a vector of indices indicating which el
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{betweeness <-}\StringTok{ }\KeywordTok{betweenness}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{normalized =} \OtherTok{TRUE}\NormalTok{)}
+\FunctionTok{V}\NormalTok{(ig\_year1\_111)}\SpecialCharTok{$}\NormalTok{betweeness }\OtherTok{\textless{}{-}} \FunctionTok{betweenness}\NormalTok{(ig\_year1\_111, }\AttributeTok{normalized =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -756,20 +771,20 @@ From here, we can \emph{go back} to our old habits and get the set of vertex att
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Extracting each vectex features as a data.frame}
-\NormalTok{stats <-}\StringTok{ }\KeywordTok{as_data_frame}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{what =} \StringTok{"vertices"}\NormalTok{)}
+\CommentTok{\# Extracting each vectex features as a data.frame}
+\NormalTok{stats }\OtherTok{\textless{}{-}} \FunctionTok{as\_data\_frame}\NormalTok{(ig\_year1\_111, }\AttributeTok{what =} \StringTok{"vertices"}\NormalTok{)}
 
-\CommentTok{# Computing quantiles for each variable}
-\NormalTok{stats_degree <-}\StringTok{ }\KeywordTok{with}\NormalTok{(stats, \{}
- \KeywordTok{cbind}\NormalTok{(}
-   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{))}
+\CommentTok{\# Computing quantiles for each variable}
+\NormalTok{stats\_degree }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(stats, \{}
+ \FunctionTok{cbind}\NormalTok{(}
+   \AttributeTok{indegree   =} \FunctionTok{quantile}\NormalTok{(indegree, }\FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{975}\NormalTok{)),}
+   \AttributeTok{outdegree  =} \FunctionTok{quantile}\NormalTok{(outdegree, }\FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{975}\NormalTok{)),}
+   \AttributeTok{closeness  =} \FunctionTok{quantile}\NormalTok{(closeness, }\FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{975}\NormalTok{)),}
+   \AttributeTok{betweeness =} \FunctionTok{quantile}\NormalTok{(betweeness, }\FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{975}\NormalTok{))}
 \NormalTok{ )}
 \NormalTok{\})}
 
-\NormalTok{stats_degree}
+\NormalTok{stats\_degree}
 \end{Highlighting}
 \end{Shaded}
 
@@ -784,12 +799,12 @@ The \texttt{with} function is somewhat similar to what \texttt{dplyr} allows us 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{stats_degree <-}\StringTok{ }
-\StringTok{ }\KeywordTok{cbind}\NormalTok{(}
-   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{))}
+\NormalTok{stats\_degree }\OtherTok{\textless{}{-}} 
+ \FunctionTok{cbind}\NormalTok{(}
+   \AttributeTok{indegree   =} \FunctionTok{quantile}\NormalTok{(stats}\SpecialCharTok{$}\NormalTok{indegree, }\FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{975}\NormalTok{)),}
+   \AttributeTok{outdegree  =} \FunctionTok{quantile}\NormalTok{(stats}\SpecialCharTok{$}\NormalTok{outdegree, }\FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{975}\NormalTok{)),}
+   \AttributeTok{closeness  =} \FunctionTok{quantile}\NormalTok{(stats}\SpecialCharTok{$}\NormalTok{closeness, }\FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{975}\NormalTok{)),}
+   \AttributeTok{betweeness =} \FunctionTok{quantile}\NormalTok{(stats}\SpecialCharTok{$}\NormalTok{betweeness, }\FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{975}\NormalTok{))}
 \NormalTok{ )}
 \end{Highlighting}
 \end{Shaded}
@@ -798,13 +813,13 @@ Now we will compute some statistics at the graph level:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{cbind}\NormalTok{(}
-  \DataTypeTok{size    =} \KeywordTok{vcount}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{),}
-  \DataTypeTok{nedges  =} \KeywordTok{ecount}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{),}
-  \DataTypeTok{density =} \KeywordTok{edge_density}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{),}
-  \DataTypeTok{recip   =} \KeywordTok{reciprocity}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{),}
-  \DataTypeTok{centr   =} \KeywordTok{centr_betw}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{centralization,}
-  \DataTypeTok{pathLen =} \KeywordTok{mean_distance}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}
+\FunctionTok{cbind}\NormalTok{(}
+  \AttributeTok{size    =} \FunctionTok{vcount}\NormalTok{(ig\_year1\_111),}
+  \AttributeTok{nedges  =} \FunctionTok{ecount}\NormalTok{(ig\_year1\_111),}
+  \AttributeTok{density =} \FunctionTok{edge\_density}\NormalTok{(ig\_year1\_111),}
+  \AttributeTok{recip   =} \FunctionTok{reciprocity}\NormalTok{(ig\_year1\_111),}
+  \AttributeTok{centr   =} \FunctionTok{centr\_betw}\NormalTok{(ig\_year1\_111)}\SpecialCharTok{$}\NormalTok{centralization,}
+  \AttributeTok{pathLen =} \FunctionTok{mean\_distance}\NormalTok{(ig\_year1\_111)}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
@@ -818,25 +833,24 @@ Triadic census
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{triadic <-}\StringTok{ }\KeywordTok{triad_census}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}
+\NormalTok{triadic }\OtherTok{\textless{}{-}} \FunctionTok{triad\_census}\NormalTok{(ig\_year1\_111)}
 \NormalTok{triadic}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 24059676   724389   290849     3619     3383     4401     3219
-##  [8]     2997      407       33      836      235      163      137
-## [15]      277       85
+##  [1] 24059676   724389   290849     3619     3383     4401     3219     2997
+##  [9]      407       33      836      235      163      137      277       85
 \end{verbatim}
 
 To get a nicer view of this, we can use a table that I retrieved from \texttt{?triad\_census}. Moreover, instead of looking a the raw counts, we can normalize the \texttt{triadic} object by its sum so we get proportions instead\footnote{During our workshop, Prof.~De la Haye suggested using \({n \choose 3}\) as a normalizing constant. It turns out that \texttt{sum(triadic)\ =\ choose(n,\ 3)}! So either approach is correct.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(}
-  \DataTypeTok{Pcent =}\NormalTok{ triadic}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(triadic)}\OperatorTok{*}\DecValTok{100}\NormalTok{,}
-  \KeywordTok{read.csv}\NormalTok{(}\StringTok{"triadic_census.csv"}\NormalTok{)}
-\NormalTok{  ), }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(}
+  \AttributeTok{Pcent =}\NormalTok{ triadic}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(triadic)}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}
+  \FunctionTok{read.csv}\NormalTok{(}\StringTok{"triadic\_census.csv"}\NormalTok{)}
+\NormalTok{  ), }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -888,13 +902,13 @@ Let's take a look at how does our network looks like when we use the default par
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(ig_year1)}
+\FunctionTok{plot}\NormalTok{(ig\_year1)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 
-{\centering \includegraphics{appliedsnar_files/figure-latex/03-plot-raw-1} 
+{\centering \includegraphics{03-week-1-sns-study_files/figure-latex/03-plot-raw-1} 
 
 }
 
@@ -917,9 +931,9 @@ Not very nice, right? A couple of things with this plot:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{col_hispanic <-}\StringTok{ }\KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{hispanic }\OperatorTok{+}\StringTok{ }\DecValTok{1}
-\NormalTok{col_hispanic <-}\StringTok{ }\KeywordTok{coalesce}\NormalTok{(col_hispanic, }\DecValTok{3}\NormalTok{) }
-\NormalTok{col_hispanic <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"steelblue"}\NormalTok{, }\StringTok{"tomato"}\NormalTok{, }\StringTok{"white"}\NormalTok{)[col_hispanic]}
+\NormalTok{col\_hispanic }\OtherTok{\textless{}{-}} \FunctionTok{V}\NormalTok{(ig\_year1\_111)}\SpecialCharTok{$}\NormalTok{hispanic }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{col\_hispanic }\OtherTok{\textless{}{-}} \FunctionTok{coalesce}\NormalTok{(col\_hispanic, }\DecValTok{3}\NormalTok{) }
+\NormalTok{col\_hispanic }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"steelblue"}\NormalTok{, }\StringTok{"tomato"}\NormalTok{, }\StringTok{"white"}\NormalTok{)[col\_hispanic]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -939,9 +953,9 @@ To make sure we know we are right, let's print the first 10 elements of our new 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{cbind}\NormalTok{(}
-  \DataTypeTok{original =} \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{hispanic[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{],}
-  \DataTypeTok{colors   =}\NormalTok{ col_hispanic[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
+\FunctionTok{cbind}\NormalTok{(}
+  \AttributeTok{original =} \FunctionTok{V}\NormalTok{(ig\_year1\_111)}\SpecialCharTok{$}\NormalTok{hispanic[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{],}
+  \AttributeTok{colors   =}\NormalTok{ col\_hispanic[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
@@ -964,21 +978,21 @@ With our nice vector of colors, now we can pass it to \texttt{plot.igraph} (whic
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Fancy graph}
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\KeywordTok{plot}\NormalTok{(}
-\NormalTok{  ig_year1_}\DecValTok{111}\NormalTok{,}
-  \DataTypeTok{vertex.size     =} \KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{/}\DecValTok{10} \OperatorTok{+}\DecValTok{1}\NormalTok{,}
-  \DataTypeTok{vertex.label    =} \OtherTok{NA}\NormalTok{,}
-  \DataTypeTok{edge.arrow.size =} \FloatTok{.25}\NormalTok{,}
-  \DataTypeTok{vertex.color    =}\NormalTok{ col_hispanic}
+\CommentTok{\# Fancy graph}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  ig\_year1\_111,}
+  \AttributeTok{vertex.size     =} \FunctionTok{degree}\NormalTok{(ig\_year1\_111)}\SpecialCharTok{/}\DecValTok{10} \SpecialCharTok{+}\DecValTok{1}\NormalTok{,}
+  \AttributeTok{vertex.label    =} \ConstantTok{NA}\NormalTok{,}
+  \AttributeTok{edge.arrow.size =}\NormalTok{ .}\DecValTok{25}\NormalTok{,}
+  \AttributeTok{vertex.color    =}\NormalTok{ col\_hispanic}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 \centering
-\includegraphics{appliedsnar_files/figure-latex/03-plot-neat1-1.pdf}
+\includegraphics{03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf}
 \caption{\label{fig:03-plot-neat1}Friends network in time 1 for school 111.}
 \end{figure}
 
@@ -986,34 +1000,34 @@ Nice! So it does look better. The only problem is that we have a lot of isolates
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Which vertices are not isolates?}
-\NormalTok{which_ids <-}\StringTok{ }\KeywordTok{which}\NormalTok{(}\KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"total"}\NormalTok{) }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\CommentTok{\# Which vertices are not isolates?}
+\NormalTok{which\_ids }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{degree}\NormalTok{(ig\_year1\_111, }\AttributeTok{mode =} \StringTok{"total"}\NormalTok{) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)}
 
-\CommentTok{# Getting the subgraph}
-\NormalTok{ig_year1_}\DecValTok{111}\NormalTok{_sub <-}\StringTok{ }\KeywordTok{induced_subgraph}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, which_ids)}
+\CommentTok{\# Getting the subgraph}
+\NormalTok{ig\_year1\_111\_sub }\OtherTok{\textless{}{-}} \FunctionTok{induced\_subgraph}\NormalTok{(ig\_year1\_111, which\_ids)}
 
-\CommentTok{# We need to get the same subset in col_hispanic}
-\NormalTok{col_hispanic <-}\StringTok{ }\NormalTok{col_hispanic[which_ids]}
+\CommentTok{\# We need to get the same subset in col\_hispanic}
+\NormalTok{col\_hispanic }\OtherTok{\textless{}{-}}\NormalTok{ col\_hispanic[which\_ids]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Fancy graph}
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\KeywordTok{plot}\NormalTok{(}
-\NormalTok{  ig_year1_}\DecValTok{111}\NormalTok{_sub,}
-  \DataTypeTok{vertex.size     =} \KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{_sub)}\OperatorTok{/}\DecValTok{5} \OperatorTok{+}\DecValTok{1}\NormalTok{,}
-  \DataTypeTok{vertex.label    =} \OtherTok{NA}\NormalTok{,}
-  \DataTypeTok{edge.arrow.size =} \FloatTok{.25}\NormalTok{,}
-  \DataTypeTok{vertex.color    =}\NormalTok{ col_hispanic}
+\CommentTok{\# Fancy graph}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  ig\_year1\_111\_sub,}
+  \AttributeTok{vertex.size     =} \FunctionTok{degree}\NormalTok{(ig\_year1\_111\_sub)}\SpecialCharTok{/}\DecValTok{5} \SpecialCharTok{+}\DecValTok{1}\NormalTok{,}
+  \AttributeTok{vertex.label    =} \ConstantTok{NA}\NormalTok{,}
+  \AttributeTok{edge.arrow.size =}\NormalTok{ .}\DecValTok{25}\NormalTok{,}
+  \AttributeTok{vertex.color    =}\NormalTok{ col\_hispanic}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 \centering
-\includegraphics{appliedsnar_files/figure-latex/03-plot-neat2-1.pdf}
+\includegraphics{03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf}
 \caption{\label{fig:03-plot-neat2}Friends network in time 1 for school 111. The graph excludes isolates.}
 \end{figure}
 
@@ -1028,27 +1042,27 @@ When you are repeating yourself over and over again, it is a good idea to write 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{myplot <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}
+\NormalTok{myplot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}
 \NormalTok{  net,}
 \NormalTok{  schoolid,}
-  \DataTypeTok{mindgr =} \DecValTok{1}\NormalTok{,}
-  \DataTypeTok{vcol   =} \StringTok{"tomato"}\NormalTok{,}
+  \AttributeTok{mindgr =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{vcol   =} \StringTok{"tomato"}\NormalTok{,}
 \NormalTok{  ...) \{}
   
-  \CommentTok{# Creating a subgraph}
-\NormalTok{  subnet <-}\StringTok{ }\KeywordTok{induced_subgraph}\NormalTok{(}
+  \CommentTok{\# Creating a subgraph}
+\NormalTok{  subnet }\OtherTok{\textless{}{-}} \FunctionTok{induced\_subgraph}\NormalTok{(}
 \NormalTok{    net,}
-    \KeywordTok{which}\NormalTok{(}\KeywordTok{degree}\NormalTok{(net, }\DataTypeTok{mode =} \StringTok{"all"}\NormalTok{) }\OperatorTok{>=}\StringTok{ }\NormalTok{mindgr }\OperatorTok{&}\StringTok{ }\KeywordTok{V}\NormalTok{(net)}\OperatorTok{$}\NormalTok{school }\OperatorTok{==}\StringTok{ }\NormalTok{schoolid)}
+    \FunctionTok{which}\NormalTok{(}\FunctionTok{degree}\NormalTok{(net, }\AttributeTok{mode =} \StringTok{"all"}\NormalTok{) }\SpecialCharTok{\textgreater{}=}\NormalTok{ mindgr }\SpecialCharTok{\&} \FunctionTok{V}\NormalTok{(net)}\SpecialCharTok{$}\NormalTok{school }\SpecialCharTok{==}\NormalTok{ schoolid)}
 \NormalTok{  )}
   
-  \CommentTok{# Fancy graph}
-  \KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-  \KeywordTok{plot}\NormalTok{(}
+  \CommentTok{\# Fancy graph}
+  \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+  \FunctionTok{plot}\NormalTok{(}
 \NormalTok{    subnet,}
-    \DataTypeTok{vertex.size     =} \KeywordTok{degree}\NormalTok{(subnet)}\OperatorTok{/}\DecValTok{5}\NormalTok{,}
-    \DataTypeTok{vertex.label    =} \OtherTok{NA}\NormalTok{,}
-    \DataTypeTok{edge.arrow.size =} \FloatTok{.25}\NormalTok{,}
-    \DataTypeTok{vertex.color    =}\NormalTok{ vcol,}
+    \AttributeTok{vertex.size     =} \FunctionTok{degree}\NormalTok{(subnet)}\SpecialCharTok{/}\DecValTok{5}\NormalTok{,}
+    \AttributeTok{vertex.label    =} \ConstantTok{NA}\NormalTok{,}
+    \AttributeTok{edge.arrow.size =}\NormalTok{ .}\DecValTok{25}\NormalTok{,}
+    \AttributeTok{vertex.color    =}\NormalTok{ vcol,}
 \NormalTok{    ...}
 \NormalTok{    )}
 \NormalTok{\}}
@@ -1071,32 +1085,32 @@ In the following lines of code, using our new function, we will plot each school
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Plotting all together}
-\NormalTok{oldpar <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{no.readonly =} \OtherTok{TRUE}\NormalTok{)}
-\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), }\DataTypeTok{mai =} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{4}\NormalTok{), }\DataTypeTok{oma=} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
-\KeywordTok{myplot}\NormalTok{(ig_year1, }\DecValTok{111}\NormalTok{, }\DataTypeTok{vcol =} \StringTok{"tomato"}\NormalTok{)}
-\KeywordTok{myplot}\NormalTok{(ig_year1, }\DecValTok{112}\NormalTok{, }\DataTypeTok{vcol =} \StringTok{"steelblue"}\NormalTok{)}
-\KeywordTok{myplot}\NormalTok{(ig_year1, }\DecValTok{113}\NormalTok{, }\DataTypeTok{vcol =} \StringTok{"black"}\NormalTok{)}
-\KeywordTok{myplot}\NormalTok{(ig_year1, }\DecValTok{114}\NormalTok{, }\DataTypeTok{vcol =} \StringTok{"gold"}\NormalTok{)}
-\KeywordTok{myplot}\NormalTok{(ig_year1, }\DecValTok{115}\NormalTok{, }\DataTypeTok{vcol =} \StringTok{"white"}\NormalTok{)}
-\KeywordTok{par}\NormalTok{(oldpar)}
+\CommentTok{\# Plotting all together}
+\NormalTok{oldpar }\OtherTok{\textless{}{-}} \FunctionTok{par}\NormalTok{(}\AttributeTok{no.readonly =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{mai =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{4}\NormalTok{), }\AttributeTok{oma=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\FunctionTok{myplot}\NormalTok{(ig\_year1, }\DecValTok{111}\NormalTok{, }\AttributeTok{vcol =} \StringTok{"tomato"}\NormalTok{)}
+\FunctionTok{myplot}\NormalTok{(ig\_year1, }\DecValTok{112}\NormalTok{, }\AttributeTok{vcol =} \StringTok{"steelblue"}\NormalTok{)}
+\FunctionTok{myplot}\NormalTok{(ig\_year1, }\DecValTok{113}\NormalTok{, }\AttributeTok{vcol =} \StringTok{"black"}\NormalTok{)}
+\FunctionTok{myplot}\NormalTok{(ig\_year1, }\DecValTok{114}\NormalTok{, }\AttributeTok{vcol =} \StringTok{"gold"}\NormalTok{)}
+\FunctionTok{myplot}\NormalTok{(ig\_year1, }\DecValTok{115}\NormalTok{, }\AttributeTok{vcol =} \StringTok{"white"}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(oldpar)}
 
-\CommentTok{# A fancy legend}
-\KeywordTok{legend}\NormalTok{(}
+\CommentTok{\# A fancy legend}
+\FunctionTok{legend}\NormalTok{(}
   \StringTok{"bottomright"}\NormalTok{,}
-  \DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\DecValTok{111}\NormalTok{, }\DecValTok{112}\NormalTok{, }\DecValTok{113}\NormalTok{, }\DecValTok{114}\NormalTok{, }\DecValTok{115}\NormalTok{),}
-  \DataTypeTok{pt.bg  =} \KeywordTok{c}\NormalTok{(}\StringTok{"tomato"}\NormalTok{, }\StringTok{"steelblue"}\NormalTok{, }\StringTok{"black"}\NormalTok{, }\StringTok{"gold"}\NormalTok{, }\StringTok{"white"}\NormalTok{),}
-  \DataTypeTok{pch    =} \DecValTok{21}\NormalTok{,}
-  \DataTypeTok{cex    =} \DecValTok{1}\NormalTok{,}
-  \DataTypeTok{bty    =} \StringTok{"n"}\NormalTok{,}
-  \DataTypeTok{title  =} \StringTok{"School"}
+  \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\DecValTok{111}\NormalTok{, }\DecValTok{112}\NormalTok{, }\DecValTok{113}\NormalTok{, }\DecValTok{114}\NormalTok{, }\DecValTok{115}\NormalTok{),}
+  \AttributeTok{pt.bg  =} \FunctionTok{c}\NormalTok{(}\StringTok{"tomato"}\NormalTok{, }\StringTok{"steelblue"}\NormalTok{, }\StringTok{"black"}\NormalTok{, }\StringTok{"gold"}\NormalTok{, }\StringTok{"white"}\NormalTok{),}
+  \AttributeTok{pch    =} \DecValTok{21}\NormalTok{,}
+  \AttributeTok{cex    =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{bty    =} \StringTok{"n"}\NormalTok{,}
+  \AttributeTok{title  =} \StringTok{"School"}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 \centering
-\includegraphics{appliedsnar_files/figure-latex/03-myplot-call-1.pdf}
+\includegraphics{03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf}
 \caption{\label{fig:03-myplot-call}All 5 schools in time 1. Again, the graphs exclude isolates.}
 \end{figure}
 
@@ -1125,23 +1139,23 @@ Hypothesis: Individuals that on average are among the first nominations of their
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Getting all the data in long format}
-\NormalTok{edgelist <-}\StringTok{ }\KeywordTok{as_long_data_frame}\NormalTok{(ig_year1) }\OperatorTok{%>%}
-\StringTok{  }\NormalTok{as_tibble}
+\CommentTok{\# Getting all the data in long format}
+\NormalTok{edgelist }\OtherTok{\textless{}{-}} \FunctionTok{as\_long\_data\_frame}\NormalTok{(ig\_year1) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  as\_tibble}
 
-\CommentTok{# Computing indegree (again) and average nomination number}
-\CommentTok{# Include "On a scale from one to five how close do you feel"}
-\CommentTok{# Also for egocentric friends (A. Friends)}
-\NormalTok{indeg_nom_cor <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(edgelist, to, to_name, to_school) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
-    \DataTypeTok{indeg   =} \KeywordTok{length}\NormalTok{(nnom),}
-    \DataTypeTok{nom_avg =} \DecValTok{1}\OperatorTok{/}\KeywordTok{mean}\NormalTok{(nnom)}
-\NormalTok{  ) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{rename}\NormalTok{(}
-    \DataTypeTok{school =}\NormalTok{ to_school}
+\CommentTok{\# Computing indegree (again) and average nomination number}
+\CommentTok{\# Include "On a scale from one to five how close do you feel"}
+\CommentTok{\# Also for egocentric friends (A. Friends)}
+\NormalTok{indeg\_nom\_cor }\OtherTok{\textless{}{-}} \FunctionTok{group\_by}\NormalTok{(edgelist, to, to\_name, to\_school) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{indeg   =} \FunctionTok{length}\NormalTok{(nnom),}
+    \AttributeTok{nom\_avg =} \DecValTok{1}\SpecialCharTok{/}\FunctionTok{mean}\NormalTok{(nnom)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}
+    \AttributeTok{school =}\NormalTok{ to\_school}
 \NormalTok{  )}
 
-\NormalTok{indeg_nom_cor}
+\NormalTok{indeg\_nom\_cor}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1165,8 +1179,8 @@ Hypothesis: Individuals that on average are among the first nominations of their
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Using pearson's correlation}
-\KeywordTok{with}\NormalTok{(indeg_nom_cor, }\KeywordTok{cor.test}\NormalTok{(indeg, nom_avg))}
+\CommentTok{\# Using pearson\textquotesingle{}s correlation}
+\FunctionTok{with}\NormalTok{(indeg\_nom\_cor, }\FunctionTok{cor.test}\NormalTok{(indeg, nom\_avg))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1186,7 +1200,7 @@ Hypothesis: Individuals that on average are among the first nominations of their
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{save.image}\NormalTok{(}\StringTok{"03.rda"}\NormalTok{)}
+\FunctionTok{save.image}\NormalTok{(}\StringTok{"03.rda"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1197,7 +1211,7 @@ I strongly suggest reading the vignette included in the \texttt{ergm} R package
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{vignette}\NormalTok{(}\StringTok{"ergm"}\NormalTok{, }\DataTypeTok{package=}\StringTok{"ergm"}\NormalTok{)}
+\FunctionTok{vignette}\NormalTok{(}\StringTok{"ergm"}\NormalTok{, }\AttributeTok{package=}\StringTok{"ergm"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1208,12 +1222,12 @@ The purpose of ERGMs, in a nutshell, is to describe parsimoniously the local sel
 that shape the global structure of a network. To this end, a network dataset, like those
 depicted in Figure 1, may be considered like the response in a regression model, where the
 predictors are things like ``propensity for individuals of the same sex to form partnerships'' or
-``propensity for individuals to form triangles of partnerships''. In Figure 1(b), for example, it
+``propensity for individuals to form triangles of partnerships.'' In Figure 1(b), for example, it
 is evident that the individual nodes appear to cluster in groups of the same numerical labels
 (which turn out to be students' grades, 7 through 12); thus, an ERGM can help us quantify
 the strength of this intra-group effect.
 
---- (David R. Hunter et al. \protect\hyperlink{ref-Hunter2008}{2008})
+--- (\protect\hyperlink{ref-Hunter2008}{David R. Hunter et al. 2008})
 \end{quote}
 
 \begin{figure}
@@ -1237,9 +1251,9 @@ Model \eqref{eq:04-1} may be expanded by replacing \(\mathbf{g}(\mathbf{y})\) wi
 \kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}
 \]
 
-Is the normalizing factor that ensures that equation \eqref{eq:04-1} is a legitimate probability distribution. Even after fixing \(\mathcal{Y}\) to be all the networks that have size \(n\), the size of \(\mathcal{Y}\) makes this type of models hard to estimate as there are \(N = 2^{n(n-1)}\) possible networks! (David R. Hunter et al. \protect\hyperlink{ref-Hunter2008}{2008})
+Is the normalizing factor that ensures that equation \eqref{eq:04-1} is a legitimate probability distribution. Even after fixing \(\mathcal{Y}\) to be all the networks that have size \(n\), the size of \(\mathcal{Y}\) makes this type of models hard to estimate as there are \(N = 2^{n(n-1)}\) possible networks! (\protect\hyperlink{ref-Hunter2008}{David R. Hunter et al. 2008})
 
-Recent developments include new forms of dependency structures, to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. (David R. Hunter et al. \protect\hyperlink{ref-Hunter2008}{2008}, 9)
+Recent developments include new forms of dependency structures, to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. (\protect\hyperlink{ref-Hunter2008}{David R. Hunter et al. 2008, 9})
 
 \hypertarget{a-naive-example}{%
 \subsection{A naive example}\label{a-naive-example}}
@@ -1248,7 +1262,7 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ergm)}
+\FunctionTok{library}\NormalTok{(ergm)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1258,7 +1272,7 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{verbatim}
 ## network: Classes for Relational Data
-## Version 1.15 created on 2019-04-01.
+## Version 1.16.1 created on 2020-10-06.
 ## copyright (c) 2005, Carter T. Butts, University of California-Irvine
 ##                     Mark S. Handcock, University of California -- Los Angeles
 ##                     David R. Hunter, Penn State University
@@ -1270,40 +1284,42 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{verbatim}
 ## 
-## ergm: version 3.10.4-5075, created on 2019-06-30
-## Copyright (c) 2019, Mark S. Handcock, University of California -- Los Angeles
+## ergm: version 3.11.0, created on 2020-10-14
+## Copyright (c) 2020, Mark S. Handcock, University of California -- Los Angeles
 ##                     David R. Hunter, Penn State University
 ##                     Carter T. Butts, University of California -- Irvine
 ##                     Steven M. Goodreau, University of Washington
-##                     Pavel N. Krivitsky, University of Wollongong
+##                     Pavel N. Krivitsky, UNSW Sydney
 ##                     Martina Morris, University of Washington
 ##                     with contributions from
 ##                     Li Wang
 ##                     Kirk Li, University of Washington
 ##                     Skye Bender-deMoll, University of Washington
 ##                     Chad Klumb
+##                     Michał Bojanowski, Kozminski University
+##                     Ben Bolker
 ## Based on "statnet" project software (statnet.org).
 ## For license and citation information see statnet.org/attribution
 ## or type citation("ergm").
 \end{verbatim}
 
 \begin{verbatim}
-## NOTE: Versions before 3.6.1 had a bug in the implementation of the
-## bd() constraint which distorted the sampled distribution somewhat.
-## In addition, Sampson's Monks datasets had mislabeled vertices. See
-## the NEWS and the documentation for more details.
+## NOTE: Versions before 3.6.1 had a bug in the implementation of the bd()
+## constraint which distorted the sampled distribution somewhat. In
+## addition, Sampson's Monks datasets had mislabeled vertices. See the
+## NEWS and the documentation for more details.
 \end{verbatim}
 
 \begin{verbatim}
-## NOTE: Some common term arguments pertaining to vertex attribute
-## and level selection have changed in 3.10.0. See terms help for
-## more details. Use 'options(ergm.term=list(version="3.9.4"))' to
-## use old behavior.
+## NOTE: Some common term arguments pertaining to vertex attribute and
+## level selection have changed in 3.10.0. See terms help for more
+## details. Use 'options(ergm.term=list(version="3.9.4"))' to use old
+## behavior.
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{data}\NormalTok{(}\StringTok{"sampson"}\NormalTok{)}
+\FunctionTok{data}\NormalTok{(}\StringTok{"sampson"}\NormalTok{)}
 
 \NormalTok{samplike}
 \end{Highlighting}
@@ -1329,8 +1345,8 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{y <-}\StringTok{ }\KeywordTok{sort}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(samplike)))[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{18}\NormalTok{)]}
-\KeywordTok{glm}\NormalTok{(y}\OperatorTok{~}\DecValTok{1}\NormalTok{, }\DataTypeTok{family=}\KeywordTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(samplike)))[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{18}\NormalTok{)]}
+\FunctionTok{glm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{, }\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1349,7 +1365,7 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ergm}\NormalTok{(samplike }\OperatorTok{~}\StringTok{ }\NormalTok{edges)}
+\FunctionTok{ergm}\NormalTok{(samplike }\SpecialCharTok{\textasciitilde{}}\NormalTok{ edges)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1379,6 +1395,10 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{verbatim}
 ## 
+## Call:
+## ergm(formula = samplike ~ edges)
+## 
+## 
 ## MLE Coefficients:
 ##   edges  
 ## -0.9072
@@ -1386,8 +1406,8 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pr <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(y)}
-\KeywordTok{log}\NormalTok{(pr) }\OperatorTok{-}\StringTok{ }\KeywordTok{log}\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{pr) }\CommentTok{# Logit function}
+\NormalTok{pr }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(y)}
+\FunctionTok{log}\NormalTok{(pr) }\SpecialCharTok{{-}} \FunctionTok{log}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{pr) }\CommentTok{\# Logit function}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1397,7 +1417,7 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{qlogis}\NormalTok{(pr)}
+\FunctionTok{qlogis}\NormalTok{(pr)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1412,7 +1432,7 @@ The ultimate goal is to be able to do statistical inference on the proposed mode
 
 In the case of ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straight forward as it is in the regular setting. This is why we rely on simulations.
 
-In \texttt{statnet}, the default estimation method is based on a method proposed by (Geyer and Thompson \protect\hyperlink{ref-Geyer1992}{1992}), Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorihm to do the paremeter estimation part.
+In \texttt{statnet}, the default estimation method is based on a method proposed by (\protect\hyperlink{ref-Geyer1992}{Geyer and Thompson 1992}), Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorihm to do the paremeter estimation part.
 
 The idea of MC-MLE for this family of statistical models is the fact that the expectation of normalizing constant ratios can be approximated using the law of large numbers. In particular, the following:
 
@@ -1450,7 +1470,7 @@ l(\theta) - l(\theta_0) \approx (\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf
 \mbox{log}{\left[\frac{1}{m}\sum_{i = 1}^m\mbox{exp}\left\{(\theta-\theta_0)^{\mbox{T}}\right\}\mathbf{g}(\mathbf{Y}_i)\right]}
 \]
 
-For more details see (David R. Hunter et al. \protect\hyperlink{ref-Hunter2008}{2008}). A sketch of the algorithm follows:
+For more details see (\protect\hyperlink{ref-Hunter2008}{David R. Hunter et al. 2008}). A sketch of the algorithm follows:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1470,31 +1490,31 @@ For more details see (David R. Hunter et al. \protect\hyperlink{ref-Hunter2008}{
   \end{enumerate}
 \end{enumerate}
 
-For more details see (Lusher, Koskinen, and Robins \protect\hyperlink{ref-lusher2012}{2012}; Admiraal and Handcock \protect\hyperlink{ref-admiraal2006}{2006}; Snijders \protect\hyperlink{ref-Snijders2002}{2002}; Wang et al. \protect\hyperlink{ref-Wang2009}{2009}) provides details on the algorithm used by PNet (which is the same as the one used in \texttt{RSiena}). (Lusher, Koskinen, and Robins \protect\hyperlink{ref-lusher2012}{2012}) provides a short discussion on differences between \texttt{ergm} and \texttt{PNet}.
+For more details see (\protect\hyperlink{ref-lusher2012}{Lusher, Koskinen, and Robins 2012}; \protect\hyperlink{ref-admiraal2006}{Admiraal and Handcock 2006}; \protect\hyperlink{ref-Snijders2002}{T. A. Snijders 2002}; \protect\hyperlink{ref-Wang2009}{Wang et al. 2009}) provides details on the algorithm used by PNet (which is the same as the one used in \texttt{RSiena}). (\protect\hyperlink{ref-lusher2012}{Lusher, Koskinen, and Robins 2012}) provides a short discussion on differences between \texttt{ergm} and \texttt{PNet}.
 
 \hypertarget{the-ergm-package}{%
 \section{\texorpdfstring{The \texttt{ergm} package}{The ergm package}}\label{the-ergm-package}}
 
-The \texttt{ergm} R package (Handcock et al. \protect\hyperlink{ref-R-ergm}{2017})
+The \texttt{ergm} R package (\protect\hyperlink{ref-R-ergm}{Handcock et al. 2017})
 
 From the previous section:\footnote{You can download the 03.rda file from \href{https://github.com/gvegayon/appliedsnar}{this link}.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(igraph)}
-\KeywordTok{library}\NormalTok{(magrittr)}
-\KeywordTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(igraph)}
+\FunctionTok{library}\NormalTok{(magrittr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
 
-\KeywordTok{load}\NormalTok{(}\StringTok{"03.rda"}\NormalTok{)}
+\FunctionTok{load}\NormalTok{(}\StringTok{"03.rda"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-In this section we will use the \texttt{ergm} package (from the \texttt{statnet} suit of packages (Handcock et al. \protect\hyperlink{ref-R-statnet}{2016})) suit, and the \texttt{intergraph} (Bojanowski \protect\hyperlink{ref-R-intergraph}{2015}) package. The latter provides functions to go back and forth between \texttt{igraph} and \texttt{network} objects from the \texttt{igraph} and \texttt{network} packages respectively\footnote{Yes, the classes have the same name as the packages.}
+In this section we will use the \texttt{ergm} package (from the \texttt{statnet} suit of packages (\protect\hyperlink{ref-R-statnet}{Handcock et al. 2016})) suit, and the \texttt{intergraph} (\protect\hyperlink{ref-R-intergraph}{Bojanowski 2015}) package. The latter provides functions to go back and forth between \texttt{igraph} and \texttt{network} objects from the \texttt{igraph} and \texttt{network} packages respectively\footnote{Yes, the classes have the same name as the packages.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ergm)}
-\KeywordTok{library}\NormalTok{(intergraph)}
+\FunctionTok{library}\NormalTok{(ergm)}
+\FunctionTok{library}\NormalTok{(intergraph)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1512,8 +1532,8 @@ What are the implications of this? If you call the function \texttt{list.edge.at
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{igraph}\OperatorTok{::}\KeywordTok{list.edge.attributes}\NormalTok{(my_igraph_object)}
-\NormalTok{network}\OperatorTok{::}\KeywordTok{list.edge.attributes}\NormalTok{(my_network_object)}
+\NormalTok{igraph}\SpecialCharTok{::}\FunctionTok{list.edge.attributes}\NormalTok{(my\_igraph\_object)}
+\NormalTok{network}\SpecialCharTok{::}\FunctionTok{list.edge.attributes}\NormalTok{(my\_network\_object)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1521,11 +1541,11 @@ Anyway\ldots{} Using the \texttt{asNetwork} function, we can coerce the igraph o
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Creating the new network}
-\NormalTok{network_}\DecValTok{111}\NormalTok{ <-}\StringTok{ }\NormalTok{intergraph}\OperatorTok{::}\KeywordTok{asNetwork}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}
+\CommentTok{\# Creating the new network}
+\NormalTok{network\_111 }\OtherTok{\textless{}{-}}\NormalTok{ intergraph}\SpecialCharTok{::}\FunctionTok{asNetwork}\NormalTok{(ig\_year1\_111)}
 
-\CommentTok{# Running a simple ergm (only fitting edge count)}
-\KeywordTok{ergm}\NormalTok{(network_}\DecValTok{111} \OperatorTok{~}\StringTok{ }\NormalTok{edges)}
+\CommentTok{\# Running a simple ergm (only fitting edge count)}
+\FunctionTok{ergm}\NormalTok{(network\_111 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ edges)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1569,12 +1589,12 @@ So what happened here! We got a warning. It turns out that our network has loops
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{E}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)[}\KeywordTok{which_loop}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)]}
+\FunctionTok{E}\NormalTok{(ig\_year1\_111)[}\FunctionTok{which\_loop}\NormalTok{(ig\_year1\_111)]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 963da40 (vertex names):
+## + 1/2638 edge from 12a81b6 (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -1582,22 +1602,36 @@ We can get rid of these using the \texttt{igraph::-.igraph}. Moreover, just to i
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Creating the new network}
-\NormalTok{network_}\DecValTok{111}\NormalTok{ <-}\StringTok{ }\NormalTok{ig_year1_}\DecValTok{111}
+\CommentTok{\# Creating the new network}
+\NormalTok{network\_111 }\OtherTok{\textless{}{-}}\NormalTok{ ig\_year1\_111}
 
-\CommentTok{# Removing loops}
-\NormalTok{network_}\DecValTok{111}\NormalTok{ <-}\StringTok{ }\NormalTok{network_}\DecValTok{111} \OperatorTok{-}\StringTok{ }\KeywordTok{E}\NormalTok{(network_}\DecValTok{111}\NormalTok{)[}\KeywordTok{which}\NormalTok{(}\KeywordTok{which_loop}\NormalTok{(network_}\DecValTok{111}\NormalTok{))]}
+\CommentTok{\# Removing loops}
+\NormalTok{network\_111 }\OtherTok{\textless{}{-}}\NormalTok{ network\_111 }\SpecialCharTok{{-}} \FunctionTok{E}\NormalTok{(network\_111)[}\FunctionTok{which}\NormalTok{(}\FunctionTok{which\_loop}\NormalTok{(network\_111))]}
 
-\CommentTok{# Removing isolates}
-\NormalTok{network_}\DecValTok{111}\NormalTok{ <-}\StringTok{ }\NormalTok{network_}\DecValTok{111} \OperatorTok{-}\StringTok{ }\KeywordTok{which}\NormalTok{(}\KeywordTok{degree}\NormalTok{(network_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"all"}\NormalTok{) }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\CommentTok{\# Removing isolates}
+\NormalTok{network\_111 }\OtherTok{\textless{}{-}}\NormalTok{ network\_111 }\SpecialCharTok{{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{degree}\NormalTok{(network\_111, }\AttributeTok{mode =} \StringTok{"all"}\NormalTok{) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{)}
 
-\CommentTok{# Converting the network}
-\NormalTok{network_}\DecValTok{111}\NormalTok{ <-}\StringTok{ }\NormalTok{intergraph}\OperatorTok{::}\KeywordTok{asNetwork}\NormalTok{(network_}\DecValTok{111}\NormalTok{)}
+\CommentTok{\# Converting the network}
+\NormalTok{network\_111 }\OtherTok{\textless{}{-}}\NormalTok{ intergraph}\SpecialCharTok{::}\FunctionTok{asNetwork}\NormalTok{(network\_111)}
 \end{Highlighting}
 \end{Shaded}
 
 \texttt{asNetwork(simplify(ig\_year1\_111))}
 \texttt{ig\_year1\_111\ \%\textgreater{}\%\ simplify\ \%\textgreater{}\%\ asNetwork}
+
+A problem that we have on this data is the fact that some vertices have
+missing values in the variables \texttt{hispanic}, \texttt{female1}, and \texttt{eversmk1}. For now,
+we will proceed by imputing values based on the avareges:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (v }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{, }\StringTok{"female1"}\NormalTok{, }\StringTok{"eversmk1"}\NormalTok{)) \{}
+\NormalTok{  tmpv }\OtherTok{\textless{}{-}}\NormalTok{ network\_111 }\SpecialCharTok{\%v\%}\NormalTok{ v}
+\NormalTok{  tmpv[}\FunctionTok{is.na}\NormalTok{(tmpv)] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(tmpv, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\textgreater{}}\NormalTok{ .}\DecValTok{5}
+\NormalTok{  network\_111 }\SpecialCharTok{\%v\%}\NormalTok{ v }\OtherTok{\textless{}{-}}\NormalTok{ tmpv}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{running-ergms}{%
 \section{Running ERGMs}\label{running-ergms}}
@@ -1628,20 +1662,20 @@ Here is an example of a couple of models that we could compare\footnote{Notice t
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ans0 <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
-\NormalTok{  network_}\DecValTok{111} \OperatorTok{~}
-\StringTok{    }\NormalTok{edges }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"eversmk1"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\NormalTok{mutual}
+\NormalTok{ans0 }\OtherTok{\textless{}{-}} \FunctionTok{ergm}\NormalTok{(}
+\NormalTok{  network\_111 }\SpecialCharTok{\textasciitilde{}}
+\NormalTok{    edges }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"eversmk1"}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{    mutual}
 \NormalTok{    ,}
-  \DataTypeTok{constraints =} \OperatorTok{~}\KeywordTok{bd}\NormalTok{(}\DataTypeTok{maxout =} \DecValTok{19}\NormalTok{),}
-  \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}
-    \DataTypeTok{seed        =} \DecValTok{1}\NormalTok{,}
-    \DataTypeTok{MCMLE.maxit =} \DecValTok{10}\NormalTok{,}
-    \DataTypeTok{parallel    =} \DecValTok{4}\NormalTok{,}
-    \DataTypeTok{CD.maxit    =} \DecValTok{10}
+  \AttributeTok{constraints =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{bd}\NormalTok{(}\AttributeTok{maxout =} \DecValTok{19}\NormalTok{),}
+  \AttributeTok{control =} \FunctionTok{control.ergm}\NormalTok{(}
+    \AttributeTok{seed        =} \DecValTok{1}\NormalTok{,}
+    \AttributeTok{MCMLE.maxit =} \DecValTok{10}\NormalTok{,}
+    \AttributeTok{parallel    =} \DecValTok{4}\NormalTok{,}
+    \AttributeTok{CD.maxit    =} \DecValTok{10}
 \NormalTok{    )}
 \NormalTok{  )}
 \end{Highlighting}
@@ -1675,23 +1709,23 @@ So what are we doing here:
   \end{enumerate}
 \end{enumerate}
 
-For more on control parameters, see (Morris, Handcock, and Hunter \protect\hyperlink{ref-Morris2008}{2008}).
+For more on control parameters, see (\protect\hyperlink{ref-Morris2008}{Morris, Handcock, and Hunter 2008}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ans1 <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
-\NormalTok{  network_}\DecValTok{111} \OperatorTok{~}
-\StringTok{    }\NormalTok{edges }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"eversmk1"}\NormalTok{)}
+\NormalTok{ans1 }\OtherTok{\textless{}{-}} \FunctionTok{ergm}\NormalTok{(}
+\NormalTok{  network\_111 }\SpecialCharTok{\textasciitilde{}}
+\NormalTok{    edges }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"eversmk1"}\NormalTok{)}
 \NormalTok{    ,}
-  \DataTypeTok{constraints =} \OperatorTok{~}\KeywordTok{bd}\NormalTok{(}\DataTypeTok{maxout =} \DecValTok{19}\NormalTok{),}
-  \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}
-    \DataTypeTok{seed        =} \DecValTok{1}\NormalTok{,}
-    \DataTypeTok{MCMLE.maxit =} \DecValTok{10}\NormalTok{,}
-    \DataTypeTok{parallel    =} \DecValTok{4}\NormalTok{,}
-    \DataTypeTok{CD.maxit    =} \DecValTok{10}
+  \AttributeTok{constraints =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{bd}\NormalTok{(}\AttributeTok{maxout =} \DecValTok{19}\NormalTok{),}
+  \AttributeTok{control =} \FunctionTok{control.ergm}\NormalTok{(}
+    \AttributeTok{seed        =} \DecValTok{1}\NormalTok{,}
+    \AttributeTok{MCMLE.maxit =} \DecValTok{10}\NormalTok{,}
+    \AttributeTok{parallel    =} \DecValTok{4}\NormalTok{,}
+    \AttributeTok{CD.maxit    =} \DecValTok{10}
 \NormalTok{    )}
 \NormalTok{  )}
 \end{Highlighting}
@@ -1711,21 +1745,21 @@ This example takes longer to compute
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ans2 <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
-\NormalTok{  network_}\DecValTok{111} \OperatorTok{~}
-\StringTok{    }\NormalTok{edges }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"eversmk1"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{    }\NormalTok{mutual }\OperatorTok{+}
-\StringTok{    }\NormalTok{balance}
+\NormalTok{ans2 }\OtherTok{\textless{}{-}} \FunctionTok{ergm}\NormalTok{(}
+\NormalTok{  network\_111 }\SpecialCharTok{\textasciitilde{}}
+\NormalTok{    edges }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"eversmk1"}\NormalTok{) }\SpecialCharTok{+} 
+\NormalTok{    mutual }\SpecialCharTok{+}
+\NormalTok{    balance}
 \NormalTok{    ,}
-  \DataTypeTok{constraints =} \OperatorTok{~}\KeywordTok{bd}\NormalTok{(}\DataTypeTok{maxout =} \DecValTok{19}\NormalTok{),}
-  \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}
-    \DataTypeTok{seed        =} \DecValTok{1}\NormalTok{,}
-    \DataTypeTok{MCMLE.maxit =} \DecValTok{10}\NormalTok{,}
-    \DataTypeTok{parallel    =} \DecValTok{4}\NormalTok{,}
-    \DataTypeTok{CD.maxit    =} \DecValTok{10}
+  \AttributeTok{constraints =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{bd}\NormalTok{(}\AttributeTok{maxout =} \DecValTok{19}\NormalTok{),}
+  \AttributeTok{control =} \FunctionTok{control.ergm}\NormalTok{(}
+    \AttributeTok{seed        =} \DecValTok{1}\NormalTok{,}
+    \AttributeTok{MCMLE.maxit =} \DecValTok{10}\NormalTok{,}
+    \AttributeTok{parallel    =} \DecValTok{4}\NormalTok{,}
+    \AttributeTok{CD.maxit    =} \DecValTok{10}
 \NormalTok{    )}
 \NormalTok{  )}
 \end{Highlighting}
@@ -1741,19 +1775,20 @@ This example takes longer to compute
 ## Disable this warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
 \end{verbatim}
 
-Now, a nice trick to see all regressions in the same table, we can use the \texttt{texreg} package (Leifeld \protect\hyperlink{ref-R-texreg}{2013}) which supports \texttt{ergm} ouputs!
+Now, a nice trick to see all regressions in the same table, we can use the \texttt{texreg} package (\protect\hyperlink{ref-R-texreg}{Leifeld 2013}) which supports \texttt{ergm} ouputs!
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(texreg)}
+\FunctionTok{library}\NormalTok{(texreg)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## Version:  1.36.24
-## Date:     2019-04-07
+## Version:  1.37.5
+## Date:     2020-06-17
 ## Author:   Philip Leifeld (University of Essex)
 ## 
+## Consider submitting praise using the praise or praise_interactive functions.
 ## Please cite the JSS article in your publications -- see citation("texreg").
 \end{verbatim}
 
@@ -1770,9 +1805,20 @@ Now, a nice trick to see all regressions in the same table, we can use the \text
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{screenreg}\NormalTok{(}\KeywordTok{list}\NormalTok{(ans0, ans1, ans2))}
+\FunctionTok{screenreg}\NormalTok{(}\FunctionTok{list}\NormalTok{(ans0, ans1, ans2))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
+## Summarizing it with version 3.11 or later may return incorrect results or fail.
+
+## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
+## Summarizing it with version 3.11 or later may return incorrect results or fail.
+
+## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
+## Summarizing it with version 3.11 or later may return incorrect results or fail.
+\end{verbatim}
 
 \begin{verbatim}
 ## 
@@ -1803,10 +1849,21 @@ Or, if you are using rmarkdown, you can export the results using LaTeX or html, 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(texreg)}
-\KeywordTok{texreg}\NormalTok{(}\KeywordTok{list}\NormalTok{(ans0, ans1, ans2))}
+\FunctionTok{library}\NormalTok{(texreg)}
+\FunctionTok{texreg}\NormalTok{(}\FunctionTok{list}\NormalTok{(ans0, ans1, ans2))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
+## Summarizing it with version 3.11 or later may return incorrect results or fail.
+
+## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
+## Summarizing it with version 3.11 or later may return incorrect results or fail.
+
+## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
+## Summarizing it with version 3.11 or later may return incorrect results or fail.
+\end{verbatim}
 
 \begin{table}
 \begin{center}
@@ -1844,37 +1901,37 @@ Log Likelihood     & $16498.33$    & $15703.55$    & $16523.66$    \\
 In raw terms, once each chain has reach stationary distribution, we can say that there are no problems with autocorrelation and that each sample point is iid. This implies that, since we are running the model with more than 1 chain, we can use all the samples (chains) as a single dataset.
 
 \begin{quote}
-Recent changes in the ergm estimation algorithm mean that these plots can no longer be used to ensure that the mean statistics from the model match the observed network statistics. For that functionality, please use the GOF command: gof(object, GOF=\textasciitilde{}model).
+Recent changes in the ergm estimation algorithm mean that these plots can no longer be used to ensure that the mean statistics from the model match the observed network statistics. For that functionality, please use the GOF command: gof(object, GOF=\textasciitilde model).
 
 ---?ergm::mcmc.diagnostics
 \end{quote}
 
-Since \texttt{ans0} is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did. For this we can use the \texttt{mcmc.diagnostics} function including in the package. This function is actually a wrapper of a couple of functions from the \texttt{coda} package (Plummer et al. \protect\hyperlink{ref-R-coda}{2006}) which is called upon the \texttt{\$sample} object which holds the \emph{centered} statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the \texttt{\$sample} object since it neither matches the observed statistics, nor the coefficients.
+Since \texttt{ans0} is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did. For this we can use the \texttt{mcmc.diagnostics} function including in the package. This function is actually a wrapper of a couple of functions from the \texttt{coda} package (\protect\hyperlink{ref-R-coda}{Plummer et al. 2006}) which is called upon the \texttt{\$sample} object which holds the \emph{centered} statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the \texttt{\$sample} object since it neither matches the observed statistics, nor the coefficients.
 
 When calling the function \texttt{mcmc.diagnostics(ans0,\ centered\ =\ FALSE)}, you will see a lot of output including a couple of plots showing the trace and posterior distribution of the \emph{uncentered} statistics (\texttt{centered\ =\ FALSE}). In the next code chunks we will reproduce the output from the \texttt{mcmc.diagnostics} function step by step using the coda package. First we need to \emph{uncenter} the sample object:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Getting the centered sample}
-\NormalTok{sample_centered <-}\StringTok{ }\NormalTok{ans0}\OperatorTok{$}\NormalTok{sample}
+\CommentTok{\# Getting the centered sample}
+\NormalTok{sample\_centered }\OtherTok{\textless{}{-}}\NormalTok{ ans0}\SpecialCharTok{$}\NormalTok{sample}
 
-\CommentTok{# Getting the observed statistics and turning it into a matrix so we can add it}
-\CommentTok{# to the samples}
-\NormalTok{observed <-}\StringTok{ }\KeywordTok{summary}\NormalTok{(ans0}\OperatorTok{$}\NormalTok{formula)}
-\NormalTok{observed <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}
+\CommentTok{\# Getting the observed statistics and turning it into a matrix so we can add it}
+\CommentTok{\# to the samples}
+\NormalTok{observed }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(ans0}\SpecialCharTok{$}\NormalTok{formula)}
+\NormalTok{observed }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}
 \NormalTok{  observed,}
-  \DataTypeTok{nrow  =} \KeywordTok{nrow}\NormalTok{(sample_centered[[}\DecValTok{1}\NormalTok{]]),}
-  \DataTypeTok{ncol  =} \KeywordTok{length}\NormalTok{(observed),}
-  \DataTypeTok{byrow =} \OtherTok{TRUE}
+  \AttributeTok{nrow  =} \FunctionTok{nrow}\NormalTok{(sample\_centered[[}\DecValTok{1}\NormalTok{]]),}
+  \AttributeTok{ncol  =} \FunctionTok{length}\NormalTok{(observed),}
+  \AttributeTok{byrow =} \ConstantTok{TRUE}
 \NormalTok{  )}
 
-\CommentTok{# Now we uncenter the sample}
-\NormalTok{sample_uncentered <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(sample_centered, }\ControlFlowTok{function}\NormalTok{(x) \{}
-\NormalTok{  x }\OperatorTok{+}\StringTok{ }\NormalTok{observed}
+\CommentTok{\# Now we uncenter the sample}
+\NormalTok{sample\_uncentered }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(sample\_centered, }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  x }\SpecialCharTok{+}\NormalTok{ observed}
 \NormalTok{\})}
 
-\CommentTok{# We have to make it an mcmc.list object}
-\NormalTok{sample_uncentered <-}\StringTok{ }\NormalTok{coda}\OperatorTok{::}\KeywordTok{mcmc.list}\NormalTok{(sample_uncentered)}
+\CommentTok{\# We have to make it an mcmc.list object}
+\NormalTok{sample\_uncentered }\OtherTok{\textless{}{-}}\NormalTok{ coda}\SpecialCharTok{::}\FunctionTok{mcmc.list}\NormalTok{(sample\_uncentered)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1887,7 +1944,7 @@ This is what is called under the hood:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(sample_uncentered)}
+\FunctionTok{summary}\NormalTok{(sample\_uncentered)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1903,18 +1960,18 @@ This is what is called under the hood:
 ## 
 ##                      Mean    SD Naive SE Time-series SE
 ## edges              2474.3 55.40   0.8656          4.129
-## nodematch.hispanic 1619.5 43.56   0.6806          3.836
-## nodematch.female1  1802.3 49.50   0.7735          4.900
-## nodematch.eversmk1 1738.0 45.32   0.7081          2.926
+## nodematch.hispanic 1836.5 43.56   0.6806          3.836
+## nodematch.female1  1867.3 49.50   0.7735          4.900
+## nodematch.eversmk1 1755.0 45.32   0.7081          2.926
 ## mutual              485.1 20.07   0.3136          3.544
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##                    2.5%  25%  50%  75% 97.5%
 ## edges              2365 2438 2475 2511  2580
-## nodematch.hispanic 1530 1590 1621 1650  1701
-## nodematch.female1  1713 1768 1801 1833  1910
-## nodematch.eversmk1 1647 1709 1738 1767  1824
+## nodematch.hispanic 1747 1807 1838 1867  1918
+## nodematch.female1  1778 1833 1866 1898  1975
+## nodematch.eversmk1 1664 1726 1755 1784  1841
 ## mutual              446  472  485  498   527
 \end{verbatim}
 \item
@@ -1922,7 +1979,7 @@ This is what is called under the hood:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{coda}\OperatorTok{::}\KeywordTok{crosscorr}\NormalTok{(sample_uncentered)}
+\NormalTok{coda}\SpecialCharTok{::}\FunctionTok{crosscorr}\NormalTok{(sample\_uncentered)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1945,91 +2002,91 @@ This is what is called under the hood:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{coda}\OperatorTok{::}\KeywordTok{autocorr}\NormalTok{(sample_uncentered)[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{coda}\SpecialCharTok{::}\FunctionTok{autocorr}\NormalTok{(sample\_uncentered)[[}\DecValTok{1}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## , , edges
 ## 
-##               edges nodematch.hispanic nodematch.female1
-## Lag 0     1.0000000          0.8139761         0.7795009
-## Lag 1024  0.8868373          0.7222805         0.6971419
-## Lag 5120  0.5948994          0.5251881         0.4922158
-## Lag 10240 0.4600845          0.4504976         0.3755953
-## Lag 51200 0.1982049          0.2079237         0.3221285
-##           nodematch.eversmk1    mutual
-## Lag 0              0.7837272 0.6565207
-## Lag 1024           0.7006181 0.6511008
-## Lag 5120           0.4847903 0.6123226
-## Lag 10240          0.3949433 0.5450916
-## Lag 51200          0.3131978 0.3781621
+##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0     1.0000000          0.8139761         0.7795009          0.7837272
+## Lag 1024  0.8868373          0.7222805         0.6971419          0.7006181
+## Lag 5120  0.5948994          0.5251881         0.4922158          0.4847903
+## Lag 10240 0.4600845          0.4504976         0.3755953          0.3949433
+## Lag 51200 0.1982049          0.2079237         0.3221285          0.3131978
+##              mutual
+## Lag 0     0.6565207
+## Lag 1024  0.6511008
+## Lag 5120  0.6123226
+## Lag 10240 0.5450916
+## Lag 51200 0.3781621
 ## 
 ## , , nodematch.hispanic
 ## 
-##               edges nodematch.hispanic nodematch.female1
-## Lag 0     0.8139761          1.0000000         0.6678498
-## Lag 1024  0.7368708          0.8947521         0.6118379
-## Lag 5120  0.5294057          0.6364242         0.4658087
-## Lag 10240 0.4054664          0.4877295         0.3715878
-## Lag 51200 0.2058656          0.1750285         0.3230496
-##           nodematch.eversmk1    mutual
-## Lag 0              0.5997413 0.6338096
-## Lag 1024           0.5398809 0.6235126
-## Lag 5120           0.3828159 0.5759901
-## Lag 10240          0.2940047 0.5148339
-## Lag 51200          0.2682960 0.3923427
+##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0     0.8139761          1.0000000         0.6678498          0.5997413
+## Lag 1024  0.7368708          0.8947521         0.6118379          0.5398809
+## Lag 5120  0.5294057          0.6364242         0.4658087          0.3828159
+## Lag 10240 0.4054664          0.4877295         0.3715878          0.2940047
+## Lag 51200 0.2058656          0.1750285         0.3230496          0.2682960
+##              mutual
+## Lag 0     0.6338096
+## Lag 1024  0.6235126
+## Lag 5120  0.5759901
+## Lag 10240 0.5148339
+## Lag 51200 0.3923427
 ## 
 ## , , nodematch.female1
 ## 
-##               edges nodematch.hispanic nodematch.female1
-## Lag 0     0.7795009          0.6678498         1.0000000
-## Lag 1024  0.6998063          0.6046370         0.9102620
-## Lag 5120  0.4930271          0.4699355         0.6838324
-## Lag 10240 0.3680917          0.3863329         0.5241266
-## Lag 51200 0.1291978          0.1212720         0.3078540
-##           nodematch.eversmk1    mutual
-## Lag 0              0.5886437 0.6480628
-## Lag 1024           0.5273102 0.6419102
-## Lag 5120           0.3701848 0.6093541
-## Lag 10240          0.2933634 0.5327467
-## Lag 51200          0.1884934 0.3444436
+##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0     0.7795009          0.6678498         1.0000000          0.5886437
+## Lag 1024  0.6998063          0.6046370         0.9102620          0.5273102
+## Lag 5120  0.4930271          0.4699355         0.6838324          0.3701848
+## Lag 10240 0.3680917          0.3863329         0.5241266          0.2933634
+## Lag 51200 0.1291978          0.1212720         0.3078540          0.1884934
+##              mutual
+## Lag 0     0.6480628
+## Lag 1024  0.6419102
+## Lag 5120  0.6093541
+## Lag 10240 0.5327467
+## Lag 51200 0.3444436
 ## 
 ## , , nodematch.eversmk1
 ## 
-##               edges nodematch.hispanic nodematch.female1
-## Lag 0     0.7837272          0.5997413         0.5886437
-## Lag 1024  0.6948882          0.5391618         0.5277555
-## Lag 5120  0.4488066          0.4103141         0.3543596
-## Lag 10240 0.3440736          0.3622540         0.2786189
-## Lag 51200 0.1413846          0.1251185         0.3037022
-##           nodematch.eversmk1    mutual
-## Lag 0              1.0000000 0.5189905
-## Lag 1024           0.9024858 0.5109281
-## Lag 5120           0.6426104 0.4754632
-## Lag 10240          0.5235972 0.4043018
-## Lag 51200          0.3427353 0.2511635
+##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0     0.7837272          0.5997413         0.5886437          1.0000000
+## Lag 1024  0.6948882          0.5391618         0.5277555          0.9024858
+## Lag 5120  0.4488066          0.4103141         0.3543596          0.6426104
+## Lag 10240 0.3440736          0.3622540         0.2786189          0.5235972
+## Lag 51200 0.1413846          0.1251185         0.3037022          0.3427353
+##              mutual
+## Lag 0     0.5189905
+## Lag 1024  0.5109281
+## Lag 5120  0.4754632
+## Lag 10240 0.4043018
+## Lag 51200 0.2511635
 ## 
 ## , , mutual
 ## 
-##               edges nodematch.hispanic nodematch.female1
-## Lag 0     0.6565207          0.6338096         0.6480628
-## Lag 1024  0.6473638          0.6296240         0.6400673
-## Lag 5120  0.6106484          0.6120531         0.6093092
-## Lag 10240 0.5779115          0.6078153         0.5675734
-## Lag 51200 0.3343059          0.3086253         0.4037995
-##           nodematch.eversmk1    mutual
-## Lag 0              0.5189905 1.0000000
-## Lag 1024           0.5133709 0.9825012
-## Lag 5120           0.4949412 0.9123847
-## Lag 10240          0.4953194 0.8212019
-## Lag 51200          0.4237535 0.4968927
+##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0     0.6565207          0.6338096         0.6480628          0.5189905
+## Lag 1024  0.6473638          0.6296240         0.6400673          0.5133709
+## Lag 5120  0.6106484          0.6120531         0.6093092          0.4949412
+## Lag 10240 0.5779115          0.6078153         0.5675734          0.4953194
+## Lag 51200 0.3343059          0.3086253         0.4037995          0.4237535
+##              mutual
+## Lag 0     1.0000000
+## Lag 1024  0.9825012
+## Lag 5120  0.9123847
+## Lag 10240 0.8212019
+## Lag 51200 0.4968927
 \end{verbatim}
 \item
   \emph{Geweke Diagnostic}: From the function's help file:
 
   \begin{quote}
-  ``If the samples are drawn from the stationary distribution of the chain, the two means are equal and Geweke's statistic has an asymptotically standard normal distribution. {[}\ldots{}{]}
+  ``If the samples are drawn from the stationary distribution of the chain, the two means are equal and Geweke's statistic has an asymptotically standard normal distribution. {[}\ldots{]}
   The Z-score is calculated under the assumption that the two parts of the chain are asymptotically independent, which requires that the sum of frac1 and frac2 be strictly less than 1.''"
 
   ---?coda::geweke.diag
@@ -2039,7 +2096,7 @@ This is what is called under the hood:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{coda}\OperatorTok{::}\KeywordTok{geweke.diag}\NormalTok{(sample_uncentered)[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{coda}\SpecialCharTok{::}\FunctionTok{geweke.diag}\NormalTok{(sample\_uncentered)[[}\DecValTok{1}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2048,10 +2105,10 @@ This is what is called under the hood:
 ## Fraction in 1st window = 0.1
 ## Fraction in 2nd window = 0.5 
 ## 
-##              edges nodematch.hispanic  nodematch.female1 
-##             0.5295             0.4904             1.6354 
-## nodematch.eversmk1             mutual 
-##             0.6644             1.1170
+##              edges nodematch.hispanic  nodematch.female1 nodematch.eversmk1 
+##             0.5295             0.4904             1.6354             0.6644 
+##             mutual 
+##             1.1170
 \end{verbatim}
 \item
   \emph{(not included) Gelman Diagnostic}: From the function's help file:
@@ -2065,7 +2122,7 @@ This is what is called under the hood:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{coda}\OperatorTok{::}\KeywordTok{gelman.diag}\NormalTok{(sample_uncentered)}
+\NormalTok{coda}\SpecialCharTok{::}\FunctionTok{gelman.diag}\NormalTok{(sample\_uncentered)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2087,35 +2144,35 @@ This is what is called under the hood:
   As a rule of thumb, values that are in the \([.9,1.1]\) are good.
 \end{enumerate}
 
-One nice feature of the \texttt{mcmc.diagnostics} function is the nice trace and posterior distribution plots that it generates. If you have the R package \texttt{latticeExtra} (Sarkar and Andrews \protect\hyperlink{ref-R-latticeExtra}{2016}), the function will override the default plots used by \texttt{coda::plot.mcmc} and use lattice instead, creating a nicer looking plots. The next code chunk calls the \texttt{mcmc.diagnostic} function, but we suppress the rest of the output (see figure \ref{fig:coda-plots}).
+One nice feature of the \texttt{mcmc.diagnostics} function is the nice trace and posterior distribution plots that it generates. If you have the R package \texttt{latticeExtra} (\protect\hyperlink{ref-R-latticeExtra}{Sarkar and Andrews 2016}), the function will override the default plots used by \texttt{coda::plot.mcmc} and use lattice instead, creating a nicer looking plots. The next code chunk calls the \texttt{mcmc.diagnostic} function, but we suppress the rest of the output (see figure \ref{fig:coda-plots}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mcmc.diagnostics}\NormalTok{(ans0, }\DataTypeTok{center =} \OtherTok{FALSE}\NormalTok{) }\CommentTok{# Suppressing all the output}
+\FunctionTok{mcmc.diagnostics}\NormalTok{(ans0, }\AttributeTok{center =} \ConstantTok{FALSE}\NormalTok{) }\CommentTok{\# Suppressing all the output}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[!h]
 
-{\centering \includegraphics{appliedsnar_files/figure-latex/coda-plots-1} 
+{\centering \includegraphics{04-ergms_files/figure-latex/coda-plots-1} 
 
 }
 
-\caption{Trace and posterior distribution of sampled network statistics.}\label{fig:coda-plots1}
+\caption{Trace and posterior distribution of sampled network statistics.}\label{fig:coda-plots-1}
 \end{figure}
 \begin{figure}[!h]
 
-{\centering \includegraphics{appliedsnar_files/figure-latex/coda-plots-2} 
+{\centering \includegraphics{04-ergms_files/figure-latex/coda-plots-2} 
 
 }
 
-\caption{Trace and posterior distribution of sampled network statistics (cont'd).}\label{fig:coda-plots2}
+\caption{Trace and posterior distribution of sampled network statistics (cont'd).}\label{fig:coda-plots-2}
 \end{figure}
 
 If we called the function \texttt{mcmc.diagnostics} this message appears at the end:
 
 \begin{quote}
-MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=\textasciitilde{}model).
+MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=\textasciitilde model).
 
 ---\texttt{mcmc.diagnostics(ans0)}
 \end{quote}
@@ -2141,9 +2198,9 @@ Let's take a look at it
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Computing and printing GOF estatistics}
-\NormalTok{ans_gof <-}\StringTok{ }\KeywordTok{gof}\NormalTok{(ans0)}
-\NormalTok{ans_gof}
+\CommentTok{\# Computing and printing GOF estatistics}
+\NormalTok{ans\_gof }\OtherTok{\textless{}{-}} \FunctionTok{gof}\NormalTok{(ans0)}
+\NormalTok{ans\_gof}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2239,35 +2296,35 @@ Let's take a look at it
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Plotting GOF statistics}
-\KeywordTok{plot}\NormalTok{(ans_gof)}
+\CommentTok{\# Plotting GOF statistics}
+\FunctionTok{plot}\NormalTok{(ans\_gof)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{appliedsnar_files/figure-latex/checking-gof-1.pdf} \includegraphics{appliedsnar_files/figure-latex/checking-gof-2.pdf} \includegraphics{appliedsnar_files/figure-latex/checking-gof-3.pdf} \includegraphics{appliedsnar_files/figure-latex/checking-gof-4.pdf} \includegraphics{appliedsnar_files/figure-latex/checking-gof-5.pdf}
+\includegraphics{04-ergms_files/figure-latex/checking-gof-1.pdf} \includegraphics{04-ergms_files/figure-latex/checking-gof-2.pdf} \includegraphics{04-ergms_files/figure-latex/checking-gof-3.pdf} \includegraphics{04-ergms_files/figure-latex/checking-gof-4.pdf} \includegraphics{04-ergms_files/figure-latex/checking-gof-5.pdf}
 
 Try the following configuration instead
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ans0_bis <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
-\NormalTok{  network_}\DecValTok{111} \OperatorTok{~}
-\StringTok{    }\NormalTok{edges }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\NormalTok{mutual }\OperatorTok{+}\StringTok{ }
-\StringTok{    }\KeywordTok{esp}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\DecValTok{3}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{    }\KeywordTok{idegree}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
+\NormalTok{ans0\_bis }\OtherTok{\textless{}{-}} \FunctionTok{ergm}\NormalTok{(}
+\NormalTok{  network\_111 }\SpecialCharTok{\textasciitilde{}}
+\NormalTok{    edges }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"hispanic"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{nodematch}\NormalTok{(}\StringTok{"female1"}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{    mutual }\SpecialCharTok{+} 
+    \FunctionTok{esp}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+    \FunctionTok{idegree}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
 \NormalTok{    ,}
-  \DataTypeTok{constraints =} \OperatorTok{~}\KeywordTok{bd}\NormalTok{(}\DataTypeTok{maxout =} \DecValTok{19}\NormalTok{),}
-  \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}
-    \DataTypeTok{seed        =} \DecValTok{1}\NormalTok{,}
-    \DataTypeTok{MCMLE.maxit =} \DecValTok{15}\NormalTok{,}
-    \DataTypeTok{parallel    =} \DecValTok{4}\NormalTok{,}
-    \DataTypeTok{CD.maxit    =} \DecValTok{15}\NormalTok{,}
-    \DataTypeTok{MCMC.samplesize =} \DecValTok{2048}\OperatorTok{*}\DecValTok{4}\NormalTok{,}
-    \DataTypeTok{MCMC.burnin =} \DecValTok{30000}\NormalTok{,}
-    \DataTypeTok{MCMC.interval =} \DecValTok{2048}\OperatorTok{*}\DecValTok{4}
+  \AttributeTok{constraints =} \SpecialCharTok{\textasciitilde{}}\FunctionTok{bd}\NormalTok{(}\AttributeTok{maxout =} \DecValTok{19}\NormalTok{),}
+  \AttributeTok{control =} \FunctionTok{control.ergm}\NormalTok{(}
+    \AttributeTok{seed        =} \DecValTok{1}\NormalTok{,}
+    \AttributeTok{MCMLE.maxit =} \DecValTok{15}\NormalTok{,}
+    \AttributeTok{parallel    =} \DecValTok{4}\NormalTok{,}
+    \AttributeTok{CD.maxit    =} \DecValTok{15}\NormalTok{,}
+    \AttributeTok{MCMC.samplesize =} \DecValTok{2048}\SpecialCharTok{*}\DecValTok{4}\NormalTok{,}
+    \AttributeTok{MCMC.burnin =} \DecValTok{30000}\NormalTok{,}
+    \AttributeTok{MCMC.interval =} \DecValTok{2048}\SpecialCharTok{*}\DecValTok{4}
 \NormalTok{    )}
 \NormalTok{  )}
 \end{Highlighting}
@@ -2277,7 +2334,7 @@ Increase the sample size so the curves are more smooth, longer intervals (thinni
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{include_graphics}\NormalTok{(}\StringTok{"awful-chains.png"}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{include\_graphics}\NormalTok{(}\StringTok{"awful{-}chains.png"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2288,9 +2345,9 @@ Increase the sample size so the curves are more smooth, longer intervals (thinni
 \hypertarget{more-on-mcmc-convergence}{%
 \section{More on MCMC convergence}\label{more-on-mcmc-convergence}}
 
-For more on this issue, I recommend reviewing \href{http://www.mcmchandbook.net/HandbookChapter1.pdf}{chapter 1} and \href{http://www.mcmchandbook.net/HandbookChapter6.pdf}{chapter 6} from the Handbook of MCMC (Brooks et al. \protect\hyperlink{ref-brooks2011}{2011}). Both chapters are free to download from the \href{http://www.mcmchandbook.net/HandbookSampleChapters.html}{book's website}.
+For more on this issue, I recommend reviewing \href{http://www.mcmchandbook.net/HandbookChapter1.pdf}{chapter 1} and \href{http://www.mcmchandbook.net/HandbookChapter6.pdf}{chapter 6} from the Handbook of MCMC (\protect\hyperlink{ref-brooks2011}{Brooks et al. 2011}). Both chapters are free to download from the \href{http://www.mcmchandbook.net/HandbookSampleChapters.html}{book's website}.
 
-For GOF take a look at section 6 of \href{https://statnet.csde.washington.edu/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html}{ERGM 2016 Sunbelt tutorial}, and for a more technical review you can take a look at (David R Hunter, Goodreau, and Handcock \protect\hyperlink{ref-HunterJASA2008}{2008}).
+For GOF take a look at section 6 of \href{https://statnet.csde.washington.edu/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html}{ERGM 2016 Sunbelt tutorial}, and for a more technical review you can take a look at (\protect\hyperlink{ref-HunterJASA2008}{David R. Hunter, Goodreau, and Handcock 2008}).
 
 \hypertarget{separable-temporal-exponential-family-random-graph-models}{%
 \chapter{(Separable) Temporal Exponential Family Random Graph Models}\label{separable-temporal-exponential-family-random-graph-models}}
@@ -2316,7 +2373,164 @@ In other words, individuals choose between states \(x\) and \(x'\) in a probabil
 
 snijders\_(sociological methodology 2001)
 
-(Snijders, Bunt, and Steglich \protect\hyperlink{ref-Snijders2010}{2010}, @lazega2015, @Ripley2011)
+\protect\hyperlink{ref-Ripley2011}{Ripley et al.} (\protect\hyperlink{ref-Ripley2011}{2011})
+
+\hypertarget{hypothesis-testing-in-networks}{%
+\chapter{Hypothesis testing in networks}\label{hypothesis-testing-in-networks}}
+
+Overall, there are many ways in which we can see hypothesis testing within
+the networks context:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Comparing two or more networks}, e.g., we want to see if the density of
+  two networks are \emph{equal}.
+\item
+  \textbf{Prevalence of a motif/pattern}, e.g., check whether the observed number
+  of transitive triads is different from that expected as of by chance.
+\item
+  \textbf{Multivariate using ERGMs}, e.g., jointly test whether homophily and
+  two stars are the motifs that drive network structure.
+\end{enumerate}
+
+The latter we already review in the ERGM chapter. In this part, we will look
+at types one and two; both using non-parametric methods.
+
+\hypertarget{comparing-networks}{%
+\section{Comparing networks}\label{comparing-networks}}
+
+Imagine that we have two graphs, \((G_1,G_2) \in \mathcal{G}\), and we would like
+to assess whether a given statistic \(s(\cdot)\), e.g., density, is equal in both of them.
+Formally, we would like to asses whether \(H_0: s(G_1) - s(G_2) = k\) vs
+\(H_a: s(G_1) - s(G_2) \neq k\).
+
+As usual, the true distribution of \(s(\cdot)\) is unknown, thus, one approach that
+we could use is a non-parametric bootstrap test.
+
+\hypertarget{network-bootstrap}{%
+\subsection{Network bootstrap}\label{network-bootstrap}}
+
+The non parametric bootstrap and jackknife methods for social networks were
+introduced by (\protect\hyperlink{ref-Snijders1999}{T. A. B. Snijders and Borgatti 1999}). The method itself is used to generate standard
+errors for network level statistics. Both methods are implemented in the R
+package \href{https://cran.r-project.org/package=netdiffuseR}{\texttt{netdiffuseR}}.
+
+\hypertarget{when-the-statistic-is-normal}{%
+\subsubsection{When the statistic is normal}\label{when-the-statistic-is-normal}}
+
+When the we deal with things that are normally distributed, e.g., sample means
+like density\footnote{Density is indeed a sample mean as we are, in principle
+  computing the average of a sequence of Bernoulli variables. Formally:
+  \(\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}\).},
+we can make use of the Student's distribution for making inference. In particular,
+we can use Bootstrap/Jackknife to approximate the standard errors of the statistic
+for each network:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Since \(s(G_i)\sim \mbox{N}(\mu_i,\sigma_i^2/n_i)\) for \(i\in\{1,2\}\), the statistic
+
+  \[
+  s(G_1) - s(G_0)\sim \mbox{N}(\mu_1-\mu_0, \sigma_1^2/n_1 + \sigma_1^2/n_2)
+  \]
+
+  Thus
+
+  \[
+  \frac{s(G_1) - s(G_0) - \mu_1 + \mu_2}{\sqrt{\sigma_1^2/{n_1} + \sigma_1^2/{n_2}}} \sim t_{n_1 + n_2 - 2}
+  \]
+  But, if we are testing \(H_0: \mu_1 - \mu_2 = k\), then, under the null
+
+  \[
+  \frac{s(G_1) - s(G_0) - k}{\sqrt{\sigma_1^2/{n_1} + \sigma_1^2/{n_2}}} \sim t_{n_1 + n_2 - 2}
+  \]
+  We now proceede to approximate the variances.
+\item
+  Using the \emph{plugin principle} (\protect\hyperlink{ref-Efron1994}{Efron and Tibshirani 1994}), we can approximate the variances
+  using Bootstrap/Jackknife, i.e., compute \(\hat\sigma_1^2\approx\sigma_1^2/n_1\) and
+  \(\hat\sigma_2^2\approx\sigma_2^2/n_2\). Using netdiffuseR
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(netdiffuseR)}
+
+\CommentTok{\# Obtain a 100 replicates}
+\NormalTok{sg1 }\OtherTok{\textless{}{-}} \FunctionTok{bootnet}\NormalTok{(g1, }\ControlFlowTok{function}\NormalTok{(i) }\FunctionTok{sum}\NormalTok{(i)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{nnodes}\NormalTok{(i) }\SpecialCharTok{*}\NormalTok{ (}\FunctionTok{nnodes}\NormalTok{(i) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)), }\AttributeTok{R =} \DecValTok{100}\NormalTok{)}
+\NormalTok{sg2 }\OtherTok{\textless{}{-}} \FunctionTok{bootnet}\NormalTok{(g2, }\ControlFlowTok{function}\NormalTok{(i) }\FunctionTok{sum}\NormalTok{(i)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{nnodes}\NormalTok{(i) }\SpecialCharTok{*}\NormalTok{ (}\FunctionTok{nnodes}\NormalTok{(i) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)), }\AttributeTok{R =} \DecValTok{100}\NormalTok{)}
+
+\CommentTok{\# Retrieving the variances}
+\NormalTok{hat\_sigma1 }\OtherTok{\textless{}{-}}\NormalTok{ sg1}\SpecialCharTok{$}\NormalTok{var\_t}
+\NormalTok{hat\_sigma2 }\OtherTok{\textless{}{-}}\NormalTok{ sg2}\SpecialCharTok{$}\NormalTok{var\_t}
+
+\CommentTok{\# And the actual values}
+\NormalTok{sg1 }\OtherTok{\textless{}{-}}\NormalTok{ sg1}\SpecialCharTok{$}\NormalTok{t0}
+\NormalTok{sg2 }\OtherTok{\textless{}{-}}\NormalTok{ sg2}\SpecialCharTok{$}\NormalTok{t0}
+\end{Highlighting}
+\end{Shaded}
+\item
+  With the approximates in hand, we can then use the the ``t-test table'' to
+  retrieve the corresponding value, in R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Building the statistic}
+\NormalTok{tstat }\OtherTok{\textless{}{-}}\NormalTok{ (sg1 }\SpecialCharTok{{-}}\NormalTok{ sg2 }\SpecialCharTok{{-}}\NormalTok{ k)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(hat\_sigma1 }\SpecialCharTok{+}\NormalTok{ hat\_sigma2))}
+
+\CommentTok{\# Computing the pvalue}
+\FunctionTok{pt}\NormalTok{(tstat)}
+\end{Highlighting}
+\end{Shaded}
+\end{enumerate}
+
+\hypertarget{when-the-statistic-is-not-normal}{%
+\subsubsection{When the statistic is NOT normal}\label{when-the-statistic-is-not-normal}}
+
+In the case that the statistic is not normally distributed, we cannot use the
+t-statistic any longer. Nevertheless, the Bootstrap can come to help. While
+in general it is better to use distributions of pivot statistics (see (\protect\hyperlink{ref-Efron1994}{Efron and Tibshirani 1994})),
+we can still leverage the power of this method to make inferences. For this
+example, \(s(\cdot)\) will be the range of the threshold in a diffusion graph.
+
+As before, imagine that we are dealing with an statistic \(s(\cdot)\) for two
+different networks, and we would like to asses whether we can reject \(H_0\)
+or \href{https://www.thoughtco.com/fail-to-reject-in-a-hypothesis-test-3126424}{fail to reject} it.
+The procedure is very similar:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  One approach that we can test is whether \(k \in \mbox{ConfInt}(s(G_1) - s(G_2))\).
+  Building confidence intervals with bootstrap could be more intuitive.
+\item
+  Like before, we use bootstrap to generate a distribution of \(s(G_1)\) and
+  \(s(G_2)\), in R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Obtain a 1000 replicates}
+\NormalTok{sg1 }\OtherTok{\textless{}{-}} \FunctionTok{bootnet}\NormalTok{(g1, }\ControlFlowTok{function}\NormalTok{(i) }\FunctionTok{range}\NormalTok{(}\FunctionTok{threshold}\NormalTok{(i)), }\AttributeTok{R =} \DecValTok{1000}\NormalTok{)}
+\NormalTok{sg2 }\OtherTok{\textless{}{-}} \FunctionTok{bootnet}\NormalTok{(g2, }\ControlFlowTok{function}\NormalTok{(i) }\FunctionTok{range}\NormalTok{(}\FunctionTok{threshold}\NormalTok{(i)), }\AttributeTok{R =} \DecValTok{1000}\NormalTok{)}
+
+\CommentTok{\# Define the statistic}
+\NormalTok{sdiff }\OtherTok{\textless{}{-}}\NormalTok{ sg1 }\SpecialCharTok{{-}}\NormalTok{ sg2}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Once we have \texttt{sdiff}, we can proceed and compute the, for example, 95\%
+  confidence interval, and evaluate whether \(k\) falls within. In R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diff\_ci }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(sdiff, }\AttributeTok{probs =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, .}\DecValTok{975}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+\end{enumerate}
+
+This corresponds to what Efron and Tibshirani call ``percentile interval.''
+This is easy to compute, but a better approach is using the ``BCa'' method,
+``Bias Corrected and Accelerated.'' (TBD)
 
 \cleardoublepage
 
@@ -2336,10 +2550,10 @@ snijders\_(sociological methodology 2001)
 \begin{itemize}
 \item
   This data is part of the NIH Challenge grant \# RC 1RC1AA019239 ``Social
-  Networks and Networking That Puts Adolescents at High Risk''.
+  Networks and Networking That Puts Adolescents at High Risk.''
 \item
   In general terms, the SNS's goal was(is) ``Understand the network effects on
-  risk behaviors such as smoking initiation and substance use''.
+  risk behaviors such as smoking initiation and substance use.''
 \end{itemize}
 
 \hypertarget{variables}{%
@@ -2357,20 +2571,20 @@ and that dynamic attributes are represented as one column per time.
   \texttt{hispanic} Indicator variable that equals 1 if the indivual ever reported
   himself as hispanic.
 \item
-  \texttt{female1}, \ldots{}, \texttt{female4} Indicator variable that equals 1 if the individual
+  \texttt{female1}, \ldots, \texttt{female4} Indicator variable that equals 1 if the individual
   reported to be female at the particular wave.
 \item
-  \texttt{grades1},\ldots{}, \texttt{grades4} Academic grades by wave. Values from 1 to 5, with 5
+  \texttt{grades1},\ldots, \texttt{grades4} Academic grades by wave. Values from 1 to 5, with 5
   been the best.
 \item
-  \texttt{eversmk1}, \ldots{}, \texttt{eversmk4} Indicator variable of ever smoking by wave. A one
+  \texttt{eversmk1}, \ldots, \texttt{eversmk4} Indicator variable of ever smoking by wave. A one
   indicated that the individual had smoked at the time of the survey.
 \item
-  \texttt{everdrk1}, \ldots{}, \texttt{everdrk4} Indicator variable of ever drinking by wave.
+  \texttt{everdrk1}, \ldots, \texttt{everdrk4} Indicator variable of ever drinking by wave.
   A one indicated that the individual had drink at the time of the survey.
 \item
-  \texttt{home1}, \ldots{}, \texttt{home4} Factor variable for home status by wave. A one
-  indicates home ownership, a 2 rent, and a 3 a ``I don't know''.
+  \texttt{home1}, \ldots, \texttt{home4} Factor variable for home status by wave. A one
+  indicates home ownership, a 2 rent, and a 3 a ``I don't know.''
 \end{itemize}
 
 During the survey, participants were asked to name up to 19 of their school
@@ -2378,16 +2592,16 @@ friends:
 
 \begin{itemize}
 \item
-  \texttt{sch\_friend11}, \ldots{}, \texttt{sch\_friend119} School friends nominations (19 in total)
+  \texttt{sch\_friend11}, \ldots, \texttt{sch\_friend119} School friends nominations (19 in total)
   for wave 1. The codes are mapped to the variable \texttt{photoid}.
 \item
-  \texttt{sch\_friend21}, \ldots{}, \texttt{sch\_friend219} School friends nominations (19 in total)
+  \texttt{sch\_friend21}, \ldots, \texttt{sch\_friend219} School friends nominations (19 in total)
   for wave 2. The codes are mapped to the variable \texttt{photoid}.
 \item
-  \texttt{sch\_friend31}, \ldots{}, \texttt{sch\_friend319} School friends nominations (19 in total)
+  \texttt{sch\_friend31}, \ldots, \texttt{sch\_friend319} School friends nominations (19 in total)
   for wave 3. The codes are mapped to the variable \texttt{photoid}.
 \item
-  \texttt{sch\_friend41}, \ldots{}, \texttt{sch\_friend419} School friends nominations (19 in total)
+  \texttt{sch\_friend41}, \ldots, \texttt{sch\_friend419} School friends nominations (19 in total)
   for wave 4. The codes are mapped to the variable \texttt{photoid}.
 \end{itemize}
 
@@ -2398,11 +2612,12 @@ friends:
 \addcontentsline{toc}{chapter}{References}
 
 \hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
 \leavevmode\hypertarget{ref-admiraal2006}{}%
-Admiraal, Ryan, and Mark S Handcock. 2006. ``Sequential Importance Sampling for Bipartite Graphs with Applications to Likelihood-Based Inference.'' Department of Statistics, University of Washington.
+Admiraal, Ryan, and Mark S Handcock. 2006. {``Sequential Importance Sampling for Bipartite Graphs with Applications to Likelihood-Based Inference.''} Department of Statistics, University of Washington.
 
 \leavevmode\hypertarget{ref-R-magrittr}{}%
-Bache, Stefan Milton, and Hadley Wickham. 2014. \emph{Magrittr: A Forward-Pipe Operator for R}. \url{https://CRAN.R-project.org/package=magrittr}.
+Bache, Stefan Milton, and Hadley Wickham. 2014. \emph{Magrittr: A Forward-Pipe Operator for r}. \url{https://CRAN.R-project.org/package=magrittr}.
 
 \leavevmode\hypertarget{ref-R-intergraph}{}%
 Bojanowski, Michal. 2015. \emph{Intergraph: Coercion Routines for Network Data Objects}. \url{http://mbojan.github.io/intergraph}.
@@ -2411,64 +2626,70 @@ Bojanowski, Michal. 2015. \emph{Intergraph: Coercion Routines for Network Data O
 Brooks, Steve, Andrew Gelman, Galin Jones, and Xiao-Li Meng. 2011. \emph{Handbook of Markov Chain Monte Carlo}. CRC press.
 
 \leavevmode\hypertarget{ref-R-igraph}{}%
-Csardi, Gabor, and Tamas Nepusz. 2006. ``The Igraph Software Package for Complex Network Research.'' \emph{InterJournal} Complex Systems: 1695. \url{http://igraph.org}.
+Csardi, Gabor, and Tamas Nepusz. 2006. {``The Igraph Software Package for Complex Network Research.''} \emph{InterJournal} Complex Systems: 1695. \url{http://igraph.org}.
+
+\leavevmode\hypertarget{ref-Efron1994}{}%
+Efron, Bradley, and Robert J Tibshirani. 1994. \emph{An Introduction to the Bootstrap}. CRC press.
 
 \leavevmode\hypertarget{ref-Geyer1992}{}%
-Geyer, Charles J., and Elizabeth A. Thompson. 1992. ``Constrained Monte Carlo Maximum Likelihood for Dependent Data.'' \emph{Journal of the Royal Statistical Society. Series B (Methodological)} 54 (3): 657--99. \url{http://www.jstor.org/stable/2345852}.
+Geyer, Charles J., and Elizabeth A. Thompson. 1992. {``Constrained Monte Carlo Maximum Likelihood for Dependent Data.''} \emph{Journal of the Royal Statistical Society. Series B (Methodological)} 54 (3): 657--99. \url{http://www.jstor.org/stable/2345852}.
 
 \leavevmode\hypertarget{ref-R-statnet}{}%
-Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, Skye Bender-deMoll, and Martina Morris. 2016. \emph{Statnet: Software Tools for the Statistical Analysis of Network Data}. The Statnet Project (\url{http://www.statnet.org}). \url{CRAN.R-project.org/package=statnet}.
+Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, Skye Bender-deMoll, and Martina Morris. 2016. \emph{Statnet: Software Tools for the Statistical Analysis of Network Data}. The Statnet Project (\url{http://www.statnet.org}). \href{https://CRAN.R-project.org/package=statnet}{CRAN.R-project.org/package=statnet}.
 
 \leavevmode\hypertarget{ref-R-ergm}{}%
 Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, and Martina Morris. 2017. \emph{Ergm: Fit, Simulate and Diagnose Exponential-Family Models for Networks}. The Statnet Project (\url{http://www.statnet.org}). \url{https://CRAN.R-project.org/package=ergm}.
 
-\leavevmode\hypertarget{ref-HunterJASA2008}{}%
-Hunter, David R, Steven M Goodreau, and Mark S Handcock. 2008. ``Goodness of Fit of Social Network Models.'' \emph{Journal of the American Statistical Association} 103 (481): 248--58. \url{https://doi.org/10.1198/016214507000000446}.
-
 \leavevmode\hypertarget{ref-Hunter2008}{}%
-Hunter, David R., Mark S. Handcock, Carter T. Butts, Steven M. Goodreau, and Martina Morris. 2008. ``ergm : A Package to Fit, Simulate and Diagnose Exponential-Family Models for Networks.'' \emph{Journal of Statistical Software} 24 (3). \url{https://doi.org/10.18637/jss.v024.i03}.
+Hunter, David R., Mark S. Handcock, Carter T. Butts, Steven M. Goodreau, and Martina Morris. 2008. {``{ergm : A Package to Fit, Simulate and Diagnose Exponential-Family Models for Networks}.''} \emph{Journal of Statistical Software} 24 (3). \url{https://doi.org/10.18637/jss.v024.i03}.
+
+\leavevmode\hypertarget{ref-HunterJASA2008}{}%
+Hunter, David R, Steven M Goodreau, and Mark S Handcock. 2008. {``Goodness of Fit of Social Network Models.''} \emph{Journal of the American Statistical Association} 103 (481): 248--58. \url{https://doi.org/10.1198/016214507000000446}.
 
 \leavevmode\hypertarget{ref-lazega2015}{}%
 Lazega, Emmanuel, and Tom AB Snijders. 2015. \emph{Multilevel Network Analysis for the Social Sciences: Theory, Methods and Applications}. Vol. 12. Springer.
 
 \leavevmode\hypertarget{ref-R-texreg}{}%
-Leifeld, Philip. 2013. ``texreg: Conversion of Statistical Model Output in R to LaTeX and HTML Tables.'' \emph{Journal of Statistical Software} 55 (8): 1--24. \url{http://www.jstatsoft.org/v55/i08/}.
+Leifeld, Philip. 2013. {``{texreg}: Conversion of Statistical Model Output in {R} to {LaTeX} and {HTML} Tables.''} \emph{Journal of Statistical Software} 55 (8): 1--24. \url{http://www.jstatsoft.org/v55/i08/}.
 
 \leavevmode\hypertarget{ref-lusher2012}{}%
 Lusher, Dean, Johan Koskinen, and Garry Robins. 2012. \emph{Exponential Random Graph Models for Social Networks: Theory, Methods, and Applications}. Cambridge University Press.
 
 \leavevmode\hypertarget{ref-Matloff2011}{}%
-Matloff, Norman. 2011. \emph{The Art of R Programming: A Tour of Statistical Software Design}. No Starch Press.
+Matloff, Norman. 2011. \emph{The Art of r Programming: A Tour of Statistical Software Design}. No Starch Press.
 
 \leavevmode\hypertarget{ref-Morris2008}{}%
-Morris, Martina, Mark Handcock, and David Hunter. 2008. ``Specification of Exponential-Family Random Graph Models: Terms and Computational Aspects.'' \emph{Journal of Statistical Software, Articles} 24 (4): 1--24. \url{https://doi.org/10.18637/jss.v024.i04}.
+Morris, Martina, Mark Handcock, and David Hunter. 2008. {``Specification of Exponential-Family Random Graph Models: Terms and Computational Aspects.''} \emph{Journal of Statistical Software, Articles} 24 (4): 1--24. \url{https://doi.org/10.18637/jss.v024.i04}.
 
 \leavevmode\hypertarget{ref-R-coda}{}%
-Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. ``CODA: Convergence Diagnosis and Output Analysis for Mcmc.'' \emph{R News} 6 (1): 7--11. \url{https://journal.r-project.org/archive/}.
+Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. {``{CODA}: Convergence Diagnosis and Output Analysis for MCMC.''} \emph{R News} 6 (1): 7--11. \url{https://journal.r-project.org/archive/}.
 
 \leavevmode\hypertarget{ref-R-foreign}{}%
-R Core Team. 2017a. \emph{Foreign: Read Data Stored by 'Minitab', 'S', 'Sas', 'Spss', 'Stata', 'Systat', 'Weka', 'dBase', ...} \url{https://CRAN.R-project.org/package=foreign}.
+R Core Team. 2017a. \emph{Foreign: Read Data Stored by 'Minitab', 's', 'SAS', 'SPSS', 'Stata', 'Systat', 'Weka', 'dBase', ...} \url{https://CRAN.R-project.org/package=foreign}.
 
 \leavevmode\hypertarget{ref-R}{}%
 ---------. 2017b. \emph{R: A Language and Environment for Statistical Computing}. Vienna, Austria: R Foundation for Statistical Computing. \url{https://www.R-project.org/}.
 
 \leavevmode\hypertarget{ref-Ripley2011}{}%
-Ripley, Ruth M., Tom AB Snijders, Paulina Preciado, and Others. 2011. ``Manual for RSIENA.'' \emph{University of Oxford: Department of Statistics, Nuffield College}, no. 2007. \href{https://www.uni-due.de/hummell/sna/R/RSiena\%7B/_\%7DManual.pdf}{https://www.uni-due.de/hummell/sna/R/RSiena\{\textbackslash{}\_\}Manual.pdf}.
+Ripley, Ruth M., Tom AB Snijders, Paulina Preciado, and Others. 2011. {``{Manual for RSIENA}.''} \emph{University of Oxford: Department of Statistics, Nuffield College}, no. 2007. \url{https://www.uni-due.de/hummell/sna/R/RSiena_Manual.pdf}.
 
 \leavevmode\hypertarget{ref-R-latticeExtra}{}%
-Sarkar, Deepayan, and Felix Andrews. 2016. \emph{LatticeExtra: Extra Graphical Utilities Based on Lattice}. \url{https://CRAN.R-project.org/package=latticeExtra}.
+Sarkar, Deepayan, and Felix Andrews. 2016. \emph{latticeExtra: Extra Graphical Utilities Based on Lattice}. \url{https://CRAN.R-project.org/package=latticeExtra}.
 
-\leavevmode\hypertarget{ref-Snijders2002}{}%
-Snijders, Tom AB. 2002. ``Markov Chain Monte Carlo Estimation of Exponential Random Graph Models.'' \emph{Journal of Social Structure} 3.
+\leavevmode\hypertarget{ref-Snijders1999}{}%
+Snijders, Tom A B, and Stephen P Borgatti. 1999. {``{Non-Parametric Standard Errors and Tests for Network Statistics}.''} \emph{Connections} 22 (2): 1--10. \url{https://insna.org/PDF/Connections/v22/1999_I-2_61-70.pdf}.
 
 \leavevmode\hypertarget{ref-Snijders2010}{}%
-Snijders, Tom A B, Gerhard G. van de Bunt, and Christian E G Steglich. 2010. ``Introduction to stochastic actor-based models for network dynamics.'' \emph{Social Networks} 32 (1): 44--60. \url{https://doi.org/10.1016/j.socnet.2009.02.004}.
+Snijders, Tom A B, Gerhard G. van de Bunt, and Christian E G Steglich. 2010. {``{Introduction to stochastic actor-based models for network dynamics}.''} \emph{Social Networks} 32 (1): 44--60. \url{https://doi.org/10.1016/j.socnet.2009.02.004}.
+
+\leavevmode\hypertarget{ref-Snijders2002}{}%
+Snijders, Tom AB. 2002. {``Markov Chain Monte Carlo Estimation of Exponential Random Graph Models.''} \emph{Journal of Social Structure} 3.
 
 \leavevmode\hypertarget{ref-R-rex}{}%
 Ushey, Kevin, Jim Hester, and Robert Krzyzanowski. 2017. \emph{Rex: Friendly Regular Expressions}. \url{https://CRAN.R-project.org/package=rex}.
 
 \leavevmode\hypertarget{ref-Wang2009}{}%
-Wang, Peng, Ken Sharpe, Garry L. Robins, and Philippa E. Pattison. 2009. ``Exponential Random Graph (P*) Models for Affiliation Networks.'' \emph{Social Networks} 31 (1): 12--25. \url{https://doi.org/https://doi.org/10.1016/j.socnet.2008.08.002}.
+Wang, Peng, Ken Sharpe, Garry L. Robins, and Philippa E. Pattison. 2009. {``Exponential Random Graph (p*) Models for Affiliation Networks.''} \emph{Social Networks} 31 (1): 12--25. https://doi.org/\url{https://doi.org/10.1016/j.socnet.2008.08.002}.
 
 \leavevmode\hypertarget{ref-R-stringr}{}%
 Wickham, Hadley. 2017. \emph{Stringr: Simple, Consistent Wrappers for Common String Operations}. \url{https://CRAN.R-project.org/package=stringr}.
@@ -2485,5 +2706,6 @@ Wickham, Hadley, and Lionel Henry. 2017. \emph{Tidyr: Easily Tidy Data with 'Spr
 \leavevmode\hypertarget{ref-R-readr}{}%
 Wickham, Hadley, Jim Hester, and Romain Francois. 2017. \emph{Readr: Read Rectangular Text Data}. \url{https://CRAN.R-project.org/package=readr}.
 
+\end{CSLReferences}
 
 \end{document}

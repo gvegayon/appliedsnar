@@ -4,6 +4,8 @@ language:
   ui:
     chapter_name: "Chapter "
 # This is key to start fresh... Knit and Merge, not Merge and Knit
-new_session: false 
+new_session: yes 
 before_chapter_script: "before_chapter.r"
 delete_merged_file: true
+view: https://github.com/gvegayon/appliedsnar/blob/master/%s
+edit: https://github.com/gvegayon/appliedsnar/edit/master/%s

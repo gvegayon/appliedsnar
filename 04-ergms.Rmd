@@ -196,6 +196,18 @@ network_111 <- intergraph::asNetwork(network_111)
 `asNetwork(simplify(ig_year1_111))`
 `ig_year1_111 %>% simplify %>% asNetwork`
 
+A problem that we have on this data is the fact that some vertices have
+missing values in the variables `hispanic`, `female1`, and `eversmk1`. For now,
+we will proceed by imputing values based on the avareges:
+
+```{r 04-impute-values}
+for (v in c("hispanic", "female1", "eversmk1")) {
+  tmpv <- network_111 %v% v
+  tmpv[is.na(tmpv)] <- mean(tmpv, na.rm = TRUE) > .5
+  network_111 %v% v <- tmpv
+}
+```
+
 
 ## Running ERGMs
 

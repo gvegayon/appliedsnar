@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>References | Applied SNA with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="References | Applied SNA with R" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,16 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2019-09-06" />
+<meta name="date" content="2021-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="sns-data.html">
+<link rel="prev" href="sns-data.html"/>
 
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +41,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -59,25 +63,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -86,9 +91,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -139,29 +144,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
 <li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a><ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
 <li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
 <li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
 <li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a><ul>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a>
+<ul>
 <li class="chapter" data-level="5.0.1" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html#a-naive-example"><i class="fa fa-check"></i><b>5.0.1</b> A naive example</a></li>
 <li class="chapter" data-level="5.1" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.1</b> Estimation of ERGMs</a></li>
 <li class="chapter" data-level="5.2" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.2</b> The <code>ergm</code> package</a></li>
@@ -171,9 +183,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
 <li class="chapter" data-level="7" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>7</b> Stochastic Actor Oriented Models</a></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap</a></li>
+</ul></li>
+</ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
@@ -201,96 +222,105 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 
-<div id="refs" class="references">
-<div>
-<p>Admiraal, Ryan, and Mark S Handcock. 2006. “Sequential Importance Sampling for Bipartite Graphs with Applications to Likelihood-Based Inference.” Department of Statistics, University of Washington.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-admiraal2006" class="csl-entry">
+Admiraal, Ryan, and Mark S Handcock. 2006. <span>“Sequential Importance Sampling for Bipartite Graphs with Applications to Likelihood-Based Inference.”</span> Department of Statistics, University of Washington.
 </div>
-<div>
-<p>Bache, Stefan Milton, and Hadley Wickham. 2014. <em>Magrittr: A Forward-Pipe Operator for R</em>. <a href="https://CRAN.R-project.org/package=magrittr">https://CRAN.R-project.org/package=magrittr</a>.</p>
+<div id="ref-R-magrittr" class="csl-entry">
+Bache, Stefan Milton, and Hadley Wickham. 2014. <em>Magrittr: A Forward-Pipe Operator for r</em>. <a href="https://CRAN.R-project.org/package=magrittr">https://CRAN.R-project.org/package=magrittr</a>.
 </div>
-<div>
-<p>Bojanowski, Michal. 2015. <em>Intergraph: Coercion Routines for Network Data Objects</em>. <a href="http://mbojan.github.io/intergraph">http://mbojan.github.io/intergraph</a>.</p>
+<div id="ref-R-intergraph" class="csl-entry">
+Bojanowski, Michal. 2015. <em>Intergraph: Coercion Routines for Network Data Objects</em>. <a href="http://mbojan.github.io/intergraph">http://mbojan.github.io/intergraph</a>.
 </div>
-<div>
-<p>Brooks, Steve, Andrew Gelman, Galin Jones, and Xiao-Li Meng. 2011. <em>Handbook of Markov Chain Monte Carlo</em>. CRC press.</p>
+<div id="ref-brooks2011" class="csl-entry">
+Brooks, Steve, Andrew Gelman, Galin Jones, and Xiao-Li Meng. 2011. <em>Handbook of Markov Chain Monte Carlo</em>. CRC press.
 </div>
-<div>
-<p>Csardi, Gabor, and Tamas Nepusz. 2006. “The Igraph Software Package for Complex Network Research.” <em>InterJournal</em> Complex Systems: 1695. <a href="http://igraph.org">http://igraph.org</a>.</p>
+<div id="ref-R-igraph" class="csl-entry">
+Csardi, Gabor, and Tamas Nepusz. 2006. <span>“The Igraph Software Package for Complex Network Research.”</span> <em>InterJournal</em> Complex Systems: 1695. <a href="http://igraph.org">http://igraph.org</a>.
 </div>
-<div>
-<p>Geyer, Charles J., and Elizabeth A. Thompson. 1992. “Constrained Monte Carlo Maximum Likelihood for Dependent Data.” <em>Journal of the Royal Statistical Society. Series B (Methodological)</em> 54 (3): 657–99. <a href="http://www.jstor.org/stable/2345852">http://www.jstor.org/stable/2345852</a>.</p>
+<div id="ref-Efron1994" class="csl-entry">
+Efron, Bradley, and Robert J Tibshirani. 1994. <em>An Introduction to the Bootstrap</em>. CRC press.
 </div>
-<div>
-<p>Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, Skye Bender-deMoll, and Martina Morris. 2016. <em>Statnet: Software Tools for the Statistical Analysis of Network Data</em>. The Statnet Project (<a href="http://www.statnet.org">http://www.statnet.org</a>). <a href="CRAN.R-project.org/package=statnet">CRAN.R-project.org/package=statnet</a>.</p>
+<div id="ref-Geyer1992" class="csl-entry">
+Geyer, Charles J., and Elizabeth A. Thompson. 1992. <span>“Constrained Monte Carlo Maximum Likelihood for Dependent Data.”</span> <em>Journal of the Royal Statistical Society. Series B (Methodological)</em> 54 (3): 657–99. <a href="http://www.jstor.org/stable/2345852">http://www.jstor.org/stable/2345852</a>.
 </div>
-<div>
-<p>Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, and Martina Morris. 2017. <em>Ergm: Fit, Simulate and Diagnose Exponential-Family Models for Networks</em>. The Statnet Project (<a href="http://www.statnet.org">http://www.statnet.org</a>). <a href="https://CRAN.R-project.org/package=ergm">https://CRAN.R-project.org/package=ergm</a>.</p>
+<div id="ref-R-statnet" class="csl-entry">
+Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, Skye Bender-deMoll, and Martina Morris. 2016. <em>Statnet: Software Tools for the Statistical Analysis of Network Data</em>. The Statnet Project (<a href="http://www.statnet.org">http://www.statnet.org</a>). <a href="https://CRAN.R-project.org/package=statnet">CRAN.R-project.org/package=statnet</a>.
 </div>
-<div>
-<p>Hunter, David R, Steven M Goodreau, and Mark S Handcock. 2008. “Goodness of Fit of Social Network Models.” <em>Journal of the American Statistical Association</em> 103 (481): 248–58. <a href="https://doi.org/10.1198/016214507000000446">https://doi.org/10.1198/016214507000000446</a>.</p>
+<div id="ref-R-ergm" class="csl-entry">
+Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, and Martina Morris. 2017. <em>Ergm: Fit, Simulate and Diagnose Exponential-Family Models for Networks</em>. The Statnet Project (<a href="http://www.statnet.org">http://www.statnet.org</a>). <a href="https://CRAN.R-project.org/package=ergm">https://CRAN.R-project.org/package=ergm</a>.
 </div>
-<div>
-<p>Hunter, David R., Mark S. Handcock, Carter T. Butts, Steven M. Goodreau, and Martina Morris. 2008. “ergm : A Package to Fit, Simulate and Diagnose Exponential-Family Models for Networks.” <em>Journal of Statistical Software</em> 24 (3). <a href="https://doi.org/10.18637/jss.v024.i03">https://doi.org/10.18637/jss.v024.i03</a>.</p>
+<div id="ref-Hunter2008" class="csl-entry">
+Hunter, David R., Mark S. Handcock, Carter T. Butts, Steven M. Goodreau, and Martina Morris. 2008. <span>“<span class="nocase">ergm : A Package to Fit, Simulate and Diagnose Exponential-Family Models for Networks</span>.”</span> <em>Journal of Statistical Software</em> 24 (3). <a href="https://doi.org/10.18637/jss.v024.i03">https://doi.org/10.18637/jss.v024.i03</a>.
 </div>
-<div>
-<p>Lazega, Emmanuel, and Tom AB Snijders. 2015. <em>Multilevel Network Analysis for the Social Sciences: Theory, Methods and Applications</em>. Vol. 12. Springer.</p>
+<div id="ref-HunterJASA2008" class="csl-entry">
+Hunter, David R, Steven M Goodreau, and Mark S Handcock. 2008. <span>“Goodness of Fit of Social Network Models.”</span> <em>Journal of the American Statistical Association</em> 103 (481): 248–58. <a href="https://doi.org/10.1198/016214507000000446">https://doi.org/10.1198/016214507000000446</a>.
 </div>
-<div>
-<p>Leifeld, Philip. 2013. “texreg: Conversion of Statistical Model Output in R to LaTeX and HTML Tables.” <em>Journal of Statistical Software</em> 55 (8): 1–24. <a href="http://www.jstatsoft.org/v55/i08/">http://www.jstatsoft.org/v55/i08/</a>.</p>
+<div id="ref-lazega2015" class="csl-entry">
+Lazega, Emmanuel, and Tom AB Snijders. 2015. <em>Multilevel Network Analysis for the Social Sciences: Theory, Methods and Applications</em>. Vol. 12. Springer.
 </div>
-<div>
-<p>Lusher, Dean, Johan Koskinen, and Garry Robins. 2012. <em>Exponential Random Graph Models for Social Networks: Theory, Methods, and Applications</em>. Cambridge University Press.</p>
+<div id="ref-R-texreg" class="csl-entry">
+Leifeld, Philip. 2013. <span>“<span class="nocase">texreg</span>: Conversion of Statistical Model Output in <span>R</span> to <span>LaTeX</span> and <span>HTML</span> Tables.”</span> <em>Journal of Statistical Software</em> 55 (8): 1–24. <a href="http://www.jstatsoft.org/v55/i08/">http://www.jstatsoft.org/v55/i08/</a>.
 </div>
-<div>
-<p>Matloff, Norman. 2011. <em>The Art of R Programming: A Tour of Statistical Software Design</em>. No Starch Press.</p>
+<div id="ref-lusher2012" class="csl-entry">
+Lusher, Dean, Johan Koskinen, and Garry Robins. 2012. <em>Exponential Random Graph Models for Social Networks: Theory, Methods, and Applications</em>. Cambridge University Press.
 </div>
-<div>
-<p>Morris, Martina, Mark Handcock, and David Hunter. 2008. “Specification of Exponential-Family Random Graph Models: Terms and Computational Aspects.” <em>Journal of Statistical Software, Articles</em> 24 (4): 1–24. <a href="https://doi.org/10.18637/jss.v024.i04">https://doi.org/10.18637/jss.v024.i04</a>.</p>
+<div id="ref-Matloff2011" class="csl-entry">
+Matloff, Norman. 2011. <em>The Art of r Programming: A Tour of Statistical Software Design</em>. No Starch Press.
 </div>
-<div>
-<p>Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. “CODA: Convergence Diagnosis and Output Analysis for Mcmc.” <em>R News</em> 6 (1): 7–11. <a href="https://journal.r-project.org/archive/">https://journal.r-project.org/archive/</a>.</p>
+<div id="ref-Morris2008" class="csl-entry">
+Morris, Martina, Mark Handcock, and David Hunter. 2008. <span>“Specification of Exponential-Family Random Graph Models: Terms and Computational Aspects.”</span> <em>Journal of Statistical Software, Articles</em> 24 (4): 1–24. <a href="https://doi.org/10.18637/jss.v024.i04">https://doi.org/10.18637/jss.v024.i04</a>.
 </div>
-<div>
-<p>R Core Team. 2017a. <em>Foreign: Read Data Stored by ’Minitab’, ’S’, ’Sas’, ’Spss’, ’Stata’, ’Systat’, ’Weka’, ’dBase’, ...</em> <a href="https://CRAN.R-project.org/package=foreign">https://CRAN.R-project.org/package=foreign</a>.</p>
+<div id="ref-R-coda" class="csl-entry">
+Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. <span>“<span>CODA</span>: Convergence Diagnosis and Output Analysis for MCMC.”</span> <em>R News</em> 6 (1): 7–11. <a href="https://journal.r-project.org/archive/">https://journal.r-project.org/archive/</a>.
 </div>
-<div>
-<p>———. 2017b. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
+<div id="ref-R-foreign" class="csl-entry">
+R Core Team. 2017a. <em>Foreign: Read Data Stored by ’Minitab’, ’s’, ’SAS’, ’SPSS’, ’Stata’, ’Systat’, ’Weka’, ’dBase’, ...</em> <a href="https://CRAN.R-project.org/package=foreign">https://CRAN.R-project.org/package=foreign</a>.
 </div>
-<div>
-<p>Ripley, Ruth M., Tom AB Snijders, Paulina Preciado, and Others. 2011. “Manual for RSIENA.” <em>University of Oxford: Department of Statistics, Nuffield College</em>, no. 2007. <a href="https://www.uni-due.de/hummell/sna/R/RSiena{\_}Manual.pdf">https://www.uni-due.de/hummell/sna/R/RSiena{\_}Manual.pdf</a>.</p>
+<div id="ref-R" class="csl-entry">
+———. 2017b. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
 </div>
-<div>
-<p>Sarkar, Deepayan, and Felix Andrews. 2016. <em>LatticeExtra: Extra Graphical Utilities Based on Lattice</em>. <a href="https://CRAN.R-project.org/package=latticeExtra">https://CRAN.R-project.org/package=latticeExtra</a>.</p>
+<div id="ref-Ripley2011" class="csl-entry">
+Ripley, Ruth M., Tom AB Snijders, Paulina Preciado, and Others. 2011. <span>“<span class="nocase">Manual for RSIENA</span>.”</span> <em>University of Oxford: Department of Statistics, Nuffield College</em>, no. 2007. <a href="https://www.uni-due.de/hummell/sna/R/RSiena_Manual.pdf">https://www.uni-due.de/hummell/sna/R/RSiena_Manual.pdf</a>.
 </div>
-<div>
-<p>Snijders, Tom AB. 2002. “Markov Chain Monte Carlo Estimation of Exponential Random Graph Models.” <em>Journal of Social Structure</em> 3.</p>
+<div id="ref-R-latticeExtra" class="csl-entry">
+Sarkar, Deepayan, and Felix Andrews. 2016. <em>latticeExtra: Extra Graphical Utilities Based on Lattice</em>. <a href="https://CRAN.R-project.org/package=latticeExtra">https://CRAN.R-project.org/package=latticeExtra</a>.
 </div>
-<div>
-<p>Snijders, Tom A B, Gerhard G. van de Bunt, and Christian E G Steglich. 2010. “Introduction to stochastic actor-based models for network dynamics.” <em>Social Networks</em> 32 (1): 44–60. <a href="https://doi.org/10.1016/j.socnet.2009.02.004">https://doi.org/10.1016/j.socnet.2009.02.004</a>.</p>
+<div id="ref-Snijders1999" class="csl-entry">
+Snijders, Tom A B, and Stephen P Borgatti. 1999. <span>“<span class="nocase">Non-Parametric Standard Errors and Tests for Network Statistics</span>.”</span> <em>Connections</em> 22 (2): 1–10. <a href="https://insna.org/PDF/Connections/v22/1999_I-2_61-70.pdf">https://insna.org/PDF/Connections/v22/1999_I-2_61-70.pdf</a>.
 </div>
-<div>
-<p>Ushey, Kevin, Jim Hester, and Robert Krzyzanowski. 2017. <em>Rex: Friendly Regular Expressions</em>. <a href="https://CRAN.R-project.org/package=rex">https://CRAN.R-project.org/package=rex</a>.</p>
+<div id="ref-Snijders2010" class="csl-entry">
+Snijders, Tom A B, Gerhard G. van de Bunt, and Christian E G Steglich. 2010. <span>“<span class="nocase">Introduction to stochastic actor-based models for network dynamics</span>.”</span> <em>Social Networks</em> 32 (1): 44–60. <a href="https://doi.org/10.1016/j.socnet.2009.02.004">https://doi.org/10.1016/j.socnet.2009.02.004</a>.
 </div>
-<div>
-<p>Wang, Peng, Ken Sharpe, Garry L. Robins, and Philippa E. Pattison. 2009. “Exponential Random Graph (P*) Models for Affiliation Networks.” <em>Social Networks</em> 31 (1): 12–25. <a href="https://doi.org/https://doi.org/10.1016/j.socnet.2008.08.002">https://doi.org/https://doi.org/10.1016/j.socnet.2008.08.002</a>.</p>
+<div id="ref-Snijders2002" class="csl-entry">
+Snijders, Tom AB. 2002. <span>“Markov Chain Monte Carlo Estimation of Exponential Random Graph Models.”</span> <em>Journal of Social Structure</em> 3.
 </div>
-<div>
-<p>Wickham, Hadley. 2017. <em>Stringr: Simple, Consistent Wrappers for Common String Operations</em>. <a href="https://CRAN.R-project.org/package=stringr">https://CRAN.R-project.org/package=stringr</a>.</p>
+<div id="ref-R-rex" class="csl-entry">
+Ushey, Kevin, Jim Hester, and Robert Krzyzanowski. 2017. <em>Rex: Friendly Regular Expressions</em>. <a href="https://CRAN.R-project.org/package=rex">https://CRAN.R-project.org/package=rex</a>.
 </div>
-<div>
-<p>Wickham, Hadley, and Jennifer Bryan. 2017. <em>Readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.</p>
+<div id="ref-Wang2009" class="csl-entry">
+Wang, Peng, Ken Sharpe, Garry L. Robins, and Philippa E. Pattison. 2009. <span>“Exponential Random Graph (p*) Models for Affiliation Networks.”</span> <em>Social Networks</em> 31 (1): 12–25. https://doi.org/<a href="https://doi.org/10.1016/j.socnet.2008.08.002">https://doi.org/10.1016/j.socnet.2008.08.002</a>.
 </div>
-<div>
-<p>Wickham, Hadley, Romain Francois, Lionel Henry, and Kirill Müller. 2017. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.</p>
+<div id="ref-R-stringr" class="csl-entry">
+Wickham, Hadley. 2017. <em>Stringr: Simple, Consistent Wrappers for Common String Operations</em>. <a href="https://CRAN.R-project.org/package=stringr">https://CRAN.R-project.org/package=stringr</a>.
 </div>
-<div>
-<p>Wickham, Hadley, and Lionel Henry. 2017. <em>Tidyr: Easily Tidy Data with ’Spread()’ and ’Gather()’ Functions</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.</p>
+<div id="ref-R-readxl" class="csl-entry">
+Wickham, Hadley, and Jennifer Bryan. 2017. <em>Readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
 </div>
-<div>
-<p>Wickham, Hadley, Jim Hester, and Romain Francois. 2017. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.</p>
+<div id="ref-R-dplyr" class="csl-entry">
+Wickham, Hadley, Romain Francois, Lionel Henry, and Kirill Müller. 2017. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-R-tidyr" class="csl-entry">
+Wickham, Hadley, and Lionel Henry. 2017. <em>Tidyr: Easily Tidy Data with ’Spread()’ and ’Gather()’ Functions</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.
+</div>
+<div id="ref-R-readr" class="csl-entry">
+Wickham, Hadley, Jim Hester, and Romain Francois. 2017. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
 </div>
 </div>
 </div>
+
+
+
 
 
 
@@ -317,11 +347,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -329,12 +361,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -342,11 +373,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/gvegayon/appliedsnar/edit/master/09-references.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/gvegayon/appliedsnar/blob/master/09-references.Rmd",
 "text": null
 },
 "download": ["appliedsnar.pdf", "appliedsnar.epub"],
@@ -364,8 +399,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

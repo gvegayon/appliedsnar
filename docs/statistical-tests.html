@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.5 Statistical tests | Applied SNA with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.5 Statistical tests | Applied SNA with R" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,16 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2019-09-06" />
+<meta name="date" content="2021-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="plotting-the-network-in-igraph.html">
-<link rel="next" href="exponential-random-graph-models.html">
+<link rel="prev" href="plotting-the-network-in-igraph.html"/>
+<link rel="next" href="exponential-random-graph-models.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +41,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -59,25 +63,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -86,9 +91,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -139,29 +144,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
 <li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a><ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
 <li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
 <li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
 <li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a><ul>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a>
+<ul>
 <li class="chapter" data-level="5.0.1" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html#a-naive-example"><i class="fa fa-check"></i><b>5.0.1</b> A naive example</a></li>
 <li class="chapter" data-level="5.1" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.1</b> Estimation of ERGMs</a></li>
 <li class="chapter" data-level="5.2" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.2</b> The <code>ergm</code> package</a></li>
@@ -171,9 +183,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
 <li class="chapter" data-level="7" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>7</b> Stochastic Actor Oriented Models</a></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap</a></li>
+</ul></li>
+</ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
@@ -198,28 +219,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="statistical-tests" class="section level2">
+<div id="statistical-tests" class="section level2" number="4.5">
 <h2><span class="header-section-number">4.5</span> Statistical tests</h2>
-<div id="is-nomination-number-correlated-with-indegree" class="section level3">
+<div id="is-nomination-number-correlated-with-indegree" class="section level3" number="4.5.1">
 <h3><span class="header-section-number">4.5.1</span> Is nomination number correlated with indegree?</h3>
 <p>Hypothesis: Individuals that on average are among the first nominations of their peers are more popular</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1"><span class="co"># Getting all the data in long format</span></a>
-<a class="sourceLine" id="cb65-2" title="2">edgelist &lt;-<span class="st"> </span><span class="kw">as_long_data_frame</span>(ig_year1) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb65-3" title="3"><span class="st">  </span>as_tibble</a>
-<a class="sourceLine" id="cb65-4" title="4"></a>
-<a class="sourceLine" id="cb65-5" title="5"><span class="co"># Computing indegree (again) and average nomination number</span></a>
-<a class="sourceLine" id="cb65-6" title="6"><span class="co"># Include &quot;On a scale from one to five how close do you feel&quot;</span></a>
-<a class="sourceLine" id="cb65-7" title="7"><span class="co"># Also for egocentric friends (A. Friends)</span></a>
-<a class="sourceLine" id="cb65-8" title="8">indeg_nom_cor &lt;-<span class="st"> </span><span class="kw">group_by</span>(edgelist, to, to_name, to_school) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb65-9" title="9"><span class="st">  </span><span class="kw">summarise</span>(</a>
-<a class="sourceLine" id="cb65-10" title="10">    <span class="dt">indeg   =</span> <span class="kw">length</span>(nnom),</a>
-<a class="sourceLine" id="cb65-11" title="11">    <span class="dt">nom_avg =</span> <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(nnom)</a>
-<a class="sourceLine" id="cb65-12" title="12">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb65-13" title="13"><span class="st">  </span><span class="kw">rename</span>(</a>
-<a class="sourceLine" id="cb65-14" title="14">    <span class="dt">school =</span> to_school</a>
-<a class="sourceLine" id="cb65-15" title="15">  )</a>
-<a class="sourceLine" id="cb65-16" title="16"></a>
-<a class="sourceLine" id="cb65-17" title="17">indeg_nom_cor</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="statistical-tests.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting all the data in long format</span></span>
+<span id="cb62-2"><a href="statistical-tests.html#cb62-2" aria-hidden="true" tabindex="-1"></a>edgelist <span class="ot">&lt;-</span> <span class="fu">as_long_data_frame</span>(ig_year1) <span class="sc">%&gt;%</span></span>
+<span id="cb62-3"><a href="statistical-tests.html#cb62-3" aria-hidden="true" tabindex="-1"></a>  as_tibble</span>
+<span id="cb62-4"><a href="statistical-tests.html#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="statistical-tests.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing indegree (again) and average nomination number</span></span>
+<span id="cb62-6"><a href="statistical-tests.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Include &quot;On a scale from one to five how close do you feel&quot;</span></span>
+<span id="cb62-7"><a href="statistical-tests.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Also for egocentric friends (A. Friends)</span></span>
+<span id="cb62-8"><a href="statistical-tests.html#cb62-8" aria-hidden="true" tabindex="-1"></a>indeg_nom_cor <span class="ot">&lt;-</span> <span class="fu">group_by</span>(edgelist, to, to_name, to_school) <span class="sc">%&gt;%</span></span>
+<span id="cb62-9"><a href="statistical-tests.html#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb62-10"><a href="statistical-tests.html#cb62-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">indeg   =</span> <span class="fu">length</span>(nnom),</span>
+<span id="cb62-11"><a href="statistical-tests.html#cb62-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">nom_avg =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">mean</span>(nnom)</span>
+<span id="cb62-12"><a href="statistical-tests.html#cb62-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb62-13"><a href="statistical-tests.html#cb62-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb62-14"><a href="statistical-tests.html#cb62-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">school =</span> to_school</span>
+<span id="cb62-15"><a href="statistical-tests.html#cb62-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb62-16"><a href="statistical-tests.html#cb62-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-17"><a href="statistical-tests.html#cb62-17" aria-hidden="true" tabindex="-1"></a>indeg_nom_cor</span></code></pre></div>
 <pre><code>## # A tibble: 1,561 x 5
 ## # Groups:   to, to_name [1,561]
 ##       to to_name school indeg nom_avg
@@ -235,8 +256,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9    11 1110029    111    14   0.131
 ## 10    12 1110030    111     6   0.222
 ## # … with 1,551 more rows</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="co"># Using pearson&#39;s correlation</span></a>
-<a class="sourceLine" id="cb67-2" title="2"><span class="kw">with</span>(indeg_nom_cor, <span class="kw">cor.test</span>(indeg, nom_avg))</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="statistical-tests.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using pearson&#39;s correlation</span></span>
+<span id="cb64-2"><a href="statistical-tests.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(indeg_nom_cor, <span class="fu">cor.test</span>(indeg, nom_avg))</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
@@ -248,7 +269,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## sample estimates:
 ##        cor 
 ## -0.2963965</code></pre>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1"><span class="kw">save.image</span>(<span class="st">&quot;03.rda&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="statistical-tests.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">&quot;03.rda&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>
@@ -264,11 +285,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -276,12 +299,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -289,11 +311,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/gvegayon/appliedsnar/edit/master/03-week-1-sns-study.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/gvegayon/appliedsnar/blob/master/03-week-1-sns-study.Rmd",
 "text": null
 },
 "download": ["appliedsnar.pdf", "appliedsnar.epub"],
@@ -311,8 +337,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
