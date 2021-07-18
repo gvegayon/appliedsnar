@@ -14,13 +14,18 @@ for (pkg in pkgs)
     error = function(e) e)
 ```
 
-For this book we need the following
+Social Network Analysis and Network Science, have a long scholarly tradition.
+From social diffusion models to protein-interaction networks, these complex-systems
+disciplines cover a wide range of problems across scientific fields. Yet, although
+these could be seen as wildly different, the object under the microscope is the
+same, networks. 
 
-@R
+With a long history (and insufficient levels of inter-discipline collaboration,
+if you allow me to say) of scientific advances happing in a somewhat isolated
+fashion, the potential of cross-pollination between disciplines within network
+science is immense.
 
-1.  Install R  from CRAN: https://www.r-project.org/
-
-2.  (optional) Install Rstudio: https://rstudio.org
-
-While I find RStudio extreamly useful, it is not necesary to use it with R.
+This book is an attempt to compile the many methods available in the realm of
+complexity sciences, provide an in-depth mathematical examination--when possible--,
+and provide a few examples illustrating their usage. 
 

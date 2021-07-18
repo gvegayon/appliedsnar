@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 The ergm package | Applied SNA with R</title>
+  <title>5.3 The ergm package | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 The ergm package | Applied SNA with R" />
+  <meta property="og:title" content="5.3 The ergm package | Applied Network Science with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 The ergm package | Applied SNA with R" />
+  <meta name="twitter:title" content="5.3 The ergm package | Applied Network Science with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2021-04-27" />
+<meta name="date" content="2021-07-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,6 @@
   
 <link rel="prev" href="estimation-of-ergms.html"/>
 <link rel="next" href="running-ergms.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,6 +50,9 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40608305-4"></script>
 <script>
@@ -63,17 +65,18 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -93,7 +96,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -126,6 +129,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -142,65 +146,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Applied SNA with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
+<li class="chapter" data-level="1.1" data-path="the-book.html"><a href="the-book.html"><i class="fa fa-check"></i><b>1.1</b> The Book</a></li>
+<li class="chapter" data-level="1.2" data-path="the-author.html"><a href="the-author.html"><i class="fa fa-check"></i><b>1.2</b> The author</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a>
-<ul>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
 <li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
 <li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
+<li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits</a></li>
+<li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a>
-<ul>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a><ul>
 <li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
 <li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a>
-<ul>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
 <li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a>
-<ul>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
 <li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a>
-<ul>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a>
-<ul>
-<li class="chapter" data-level="5.0.1" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html#a-naive-example"><i class="fa fa-check"></i><b>5.0.1</b> A naive example</a></li>
-<li class="chapter" data-level="5.1" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.1</b> Estimation of ERGMs</a></li>
-<li class="chapter" data-level="5.2" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.2</b> The <code>ergm</code> package</a></li>
-<li class="chapter" data-level="5.3" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.3</b> Running ERGMs</a></li>
-<li class="chapter" data-level="5.4" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.4</b> Model Goodness-of-Fit</a></li>
-<li class="chapter" data-level="5.5" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.5</b> More on MCMC convergence</a></li>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs</a></li>
+<li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package</a></li>
+<li class="chapter" data-level="5.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.4</b> Running ERGMs</a></li>
+<li class="chapter" data-level="5.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.5</b> Model Goodness-of-Fit</a></li>
+<li class="chapter" data-level="5.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.6</b> More on MCMC convergence</a></li>
+<li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
 <li class="chapter" data-level="7" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>7</b> Stochastic Actor Oriented Models</a></li>
-<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks</a>
-<ul>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks</a><ul>
+<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks</a><ul>
 <li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap</a></li>
 <li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal</a></li>
 <li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples</a>
-<ul>
+<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
-<ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
-<ul>
+<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
@@ -217,7 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied SNA with R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Network Science with R</a>
           </h1>
         </div>
 
@@ -225,18 +223,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="the-ergm-package" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> The <code>ergm</code> package</h2>
-<p>The <code>ergm</code> R package <span class="citation">(<a href="references.html#ref-R-ergm" role="doc-biblioref">Handcock et al. 2017</a>)</span></p>
+<div id="the-ergm-package" class="section level2">
+<h2><span class="header-section-number">5.3</span> The <code>ergm</code> package</h2>
+<p>The <code>ergm</code> R package <span class="citation">(Handcock et al. <a href="#ref-R-ergm" role="doc-biblioref">2017</a>)</span></p>
 <p>From the previous section:<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="the-ergm-package.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb90-2"><a href="the-ergm-package.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb90-3"><a href="the-ergm-package.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb90-4"><a href="the-ergm-package.html#cb90-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-5"><a href="the-ergm-package.html#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;03.rda&quot;</span>)</span></code></pre></div>
-<p>In this section we will use the <code>ergm</code> package (from the <code>statnet</code> suit of packages <span class="citation">(<a href="references.html#ref-R-statnet" role="doc-biblioref">Handcock et al. 2016</a>)</span>) suit, and the <code>intergraph</code> <span class="citation">(<a href="references.html#ref-R-intergraph" role="doc-biblioref">Bojanowski 2015</a>)</span> package. The latter provides functions to go back and forth between <code>igraph</code> and <code>network</code> objects from the <code>igraph</code> and <code>network</code> packages respectively<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="the-ergm-package.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ergm)</span>
-<span id="cb91-2"><a href="the-ergm-package.html#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="the-ergm-package.html#cb152-1"></a><span class="kw">library</span>(igraph)</span>
+<span id="cb152-2"><a href="the-ergm-package.html#cb152-2"></a><span class="kw">library</span>(magrittr)</span>
+<span id="cb152-3"><a href="the-ergm-package.html#cb152-3"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb152-4"><a href="the-ergm-package.html#cb152-4"></a></span>
+<span id="cb152-5"><a href="the-ergm-package.html#cb152-5"></a><span class="kw">load</span>(<span class="st">&quot;03.rda&quot;</span>)</span></code></pre></div>
+<p>In this section we will use the <code>ergm</code> package (from the <code>statnet</code> suit of packages <span class="citation">(Handcock et al. <a href="#ref-R-statnet" role="doc-biblioref">2016</a>)</span>) suit, and the <code>intergraph</code> <span class="citation">(Bojanowski <a href="#ref-R-intergraph" role="doc-biblioref">2015</a>)</span> package. The latter provides functions to go back and forth between <code>igraph</code> and <code>network</code> objects from the <code>igraph</code> and <code>network</code> packages respectively<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="the-ergm-package.html#cb153-1"></a><span class="kw">library</span>(ergm)</span>
+<span id="cb153-2"><a href="the-ergm-package.html#cb153-2"></a><span class="kw">library</span>(intergraph)</span></code></pre></div>
 <p>As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the <code>network</code> package have the same name of some functions in the <code>igraph</code> package. When the <code>ergm</code> package is loaded, since it depends on <code>network</code>, it will load the <code>network</code> package first, which will <em>mask</em> some functions in <code>igraph</code>. This becomes evident once you load <code>ergm</code> after loading <code>igraph</code>:</p>
 <pre><code>The following objects are masked from ‘package:igraph’:
 
@@ -244,14 +242,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   get.vertex.attribute, is.bipartite, is.directed, list.edge.attributes, list.vertex.attributes, %s%,
   set.edge.attribute, set.vertex.attribute</code></pre>
 <p>What are the implications of this? If you call the function <code>list.edge.attributes</code> for an object of class <code>igraph</code> R will return an error as the first function that matches that name comes from the <code>network</code> package! To avoid this you can use the double colon notation:</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="the-ergm-package.html#cb93-1" aria-hidden="true" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">list.edge.attributes</span>(my_igraph_object)</span>
-<span id="cb93-2"><a href="the-ergm-package.html#cb93-2" aria-hidden="true" tabindex="-1"></a>network<span class="sc">::</span><span class="fu">list.edge.attributes</span>(my_network_object)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="the-ergm-package.html#cb155-1"></a>igraph<span class="op">::</span><span class="kw">list.edge.attributes</span>(my_igraph_object)</span>
+<span id="cb155-2"><a href="the-ergm-package.html#cb155-2"></a>network<span class="op">::</span><span class="kw">list.edge.attributes</span>(my_network_object)</span></code></pre></div>
 <p>Anyway… Using the <code>asNetwork</code> function, we can coerce the igraph object into a network object so we can use it with the <code>ergm</code> function:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="the-ergm-package.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the new network</span></span>
-<span id="cb94-2"><a href="the-ergm-package.html#cb94-2" aria-hidden="true" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> intergraph<span class="sc">::</span><span class="fu">asNetwork</span>(ig_year1_111)</span>
-<span id="cb94-3"><a href="the-ergm-package.html#cb94-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-4"><a href="the-ergm-package.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Running a simple ergm (only fitting edge count)</span></span>
-<span id="cb94-5"><a href="the-ergm-package.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ergm</span>(network_111 <span class="sc">~</span> edges)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="the-ergm-package.html#cb156-1"></a><span class="co"># Creating the new network</span></span>
+<span id="cb156-2"><a href="the-ergm-package.html#cb156-2"></a>network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<span class="op">::</span><span class="kw">asNetwork</span>(ig_year1_<span class="dv">111</span>)</span>
+<span id="cb156-3"><a href="the-ergm-package.html#cb156-3"></a></span>
+<span id="cb156-4"><a href="the-ergm-package.html#cb156-4"></a><span class="co"># Running a simple ergm (only fitting edge count)</span></span>
+<span id="cb156-5"><a href="the-ergm-package.html#cb156-5"></a><span class="kw">ergm</span>(network_<span class="dv">111</span> <span class="op">~</span><span class="st"> </span>edges)</span></code></pre></div>
 <pre><code>## [1] &quot;Warning:  This network contains loops&quot;
 ## [1] &quot;Warning:  This network contains loops&quot;</code></pre>
 <pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
@@ -265,31 +263,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  edges  
 ## -4.734</code></pre>
 <p>So what happened here! We got a warning. It turns out that our network has loops (didn’t thought about it before!). Let’s take a look on that with the <code>which_loop</code> function</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="the-ergm-package.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(ig_year1_111)[<span class="fu">which_loop</span>(ig_year1_111)]</span></code></pre></div>
-<pre><code>## + 1/2638 edge from b389353 (vertex names):
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="the-ergm-package.html#cb165-1"></a><span class="kw">E</span>(ig_year1_<span class="dv">111</span>)[<span class="kw">which_loop</span>(ig_year1_<span class="dv">111</span>)]</span></code></pre></div>
+<pre><code>## + 1/2638 edge from 402020c (vertex names):
 ## [1] 1110111-&gt;1110111</code></pre>
 <p>We can get rid of these using the <code>igraph::-.igraph</code>. Moreover, just to illustrate how it can be done, let’s get rid of the isolates using the same operator</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="the-ergm-package.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the new network</span></span>
-<span id="cb105-2"><a href="the-ergm-package.html#cb105-2" aria-hidden="true" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> ig_year1_111</span>
-<span id="cb105-3"><a href="the-ergm-package.html#cb105-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-4"><a href="the-ergm-package.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing loops</span></span>
-<span id="cb105-5"><a href="the-ergm-package.html#cb105-5" aria-hidden="true" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> network_111 <span class="sc">-</span> <span class="fu">E</span>(network_111)[<span class="fu">which</span>(<span class="fu">which_loop</span>(network_111))]</span>
-<span id="cb105-6"><a href="the-ergm-package.html#cb105-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-7"><a href="the-ergm-package.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing isolates</span></span>
-<span id="cb105-8"><a href="the-ergm-package.html#cb105-8" aria-hidden="true" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> network_111 <span class="sc">-</span> <span class="fu">which</span>(<span class="fu">degree</span>(network_111, <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb105-9"><a href="the-ergm-package.html#cb105-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-10"><a href="the-ergm-package.html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting the network</span></span>
-<span id="cb105-11"><a href="the-ergm-package.html#cb105-11" aria-hidden="true" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> intergraph<span class="sc">::</span><span class="fu">asNetwork</span>(network_111)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="the-ergm-package.html#cb167-1"></a><span class="co"># Creating the new network</span></span>
+<span id="cb167-2"><a href="the-ergm-package.html#cb167-2"></a>network_<span class="dv">111</span> &lt;-<span class="st"> </span>ig_year1_<span class="dv">111</span></span>
+<span id="cb167-3"><a href="the-ergm-package.html#cb167-3"></a></span>
+<span id="cb167-4"><a href="the-ergm-package.html#cb167-4"></a><span class="co"># Removing loops</span></span>
+<span id="cb167-5"><a href="the-ergm-package.html#cb167-5"></a>network_<span class="dv">111</span> &lt;-<span class="st"> </span>network_<span class="dv">111</span> <span class="op">-</span><span class="st"> </span><span class="kw">E</span>(network_<span class="dv">111</span>)[<span class="kw">which</span>(<span class="kw">which_loop</span>(network_<span class="dv">111</span>))]</span>
+<span id="cb167-6"><a href="the-ergm-package.html#cb167-6"></a></span>
+<span id="cb167-7"><a href="the-ergm-package.html#cb167-7"></a><span class="co"># Removing isolates</span></span>
+<span id="cb167-8"><a href="the-ergm-package.html#cb167-8"></a>network_<span class="dv">111</span> &lt;-<span class="st"> </span>network_<span class="dv">111</span> <span class="op">-</span><span class="st"> </span><span class="kw">which</span>(<span class="kw">degree</span>(network_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</span>
+<span id="cb167-9"><a href="the-ergm-package.html#cb167-9"></a></span>
+<span id="cb167-10"><a href="the-ergm-package.html#cb167-10"></a><span class="co"># Converting the network</span></span>
+<span id="cb167-11"><a href="the-ergm-package.html#cb167-11"></a>network_<span class="dv">111</span> &lt;-<span class="st"> </span>intergraph<span class="op">::</span><span class="kw">asNetwork</span>(network_<span class="dv">111</span>)</span></code></pre></div>
 <p><code>asNetwork(simplify(ig_year1_111))</code>
 <code>ig_year1_111 %&gt;% simplify %&gt;% asNetwork</code></p>
 <p>A problem that we have on this data is the fact that some vertices have
 missing values in the variables <code>hispanic</code>, <code>female1</code>, and <code>eversmk1</code>. For now,
 we will proceed by imputing values based on the avareges:</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="the-ergm-package.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> <span class="fu">c</span>(<span class="st">&quot;hispanic&quot;</span>, <span class="st">&quot;female1&quot;</span>, <span class="st">&quot;eversmk1&quot;</span>)) {</span>
-<span id="cb106-2"><a href="the-ergm-package.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  tmpv <span class="ot">&lt;-</span> network_111 <span class="sc">%v%</span> v</span>
-<span id="cb106-3"><a href="the-ergm-package.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  tmpv[<span class="fu">is.na</span>(tmpv)] <span class="ot">&lt;-</span> <span class="fu">mean</span>(tmpv, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&gt;</span> .<span class="dv">5</span></span>
-<span id="cb106-4"><a href="the-ergm-package.html#cb106-4" aria-hidden="true" tabindex="-1"></a>  network_111 <span class="sc">%v%</span> v <span class="ot">&lt;-</span> tmpv</span>
-<span id="cb106-5"><a href="the-ergm-package.html#cb106-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="the-ergm-package.html#cb168-1"></a><span class="cf">for</span> (v <span class="cf">in</span> <span class="kw">c</span>(<span class="st">&quot;hispanic&quot;</span>, <span class="st">&quot;female1&quot;</span>, <span class="st">&quot;eversmk1&quot;</span>)) {</span>
+<span id="cb168-2"><a href="the-ergm-package.html#cb168-2"></a>  tmpv &lt;-<span class="st"> </span>network_<span class="dv">111</span> <span class="op">%v%</span><span class="st"> </span>v</span>
+<span id="cb168-3"><a href="the-ergm-package.html#cb168-3"></a>  tmpv[<span class="kw">is.na</span>(tmpv)] &lt;-<span class="st"> </span><span class="kw">mean</span>(tmpv, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">.5</span></span>
+<span id="cb168-4"><a href="the-ergm-package.html#cb168-4"></a>  network_<span class="dv">111</span> <span class="op">%v%</span><span class="st"> </span>v &lt;-<span class="st"> </span>tmpv</span>
+<span id="cb168-5"><a href="the-ergm-package.html#cb168-5"></a>}</span></code></pre></div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-intergraph">
+<p>Bojanowski, Michal. 2015. <em>Intergraph: Coercion Routines for Network Data Objects</em>. <a href="http://mbojan.github.io/intergraph">http://mbojan.github.io/intergraph</a>.</p>
+</div>
+<div id="ref-R-statnet">
+<p>Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, Skye Bender-deMoll, and Martina Morris. 2016. <em>Statnet: Software Tools for the Statistical Analysis of Network Data</em>. The Statnet Project (<a href="http://www.statnet.org">http://www.statnet.org</a>). <a href="CRAN.R-project.org/package=statnet">CRAN.R-project.org/package=statnet</a>.</p>
+</div>
+<div id="ref-R-ergm">
+<p>Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, and Martina Morris. 2017. <em>Ergm: Fit, Simulate and Diagnose Exponential-Family Models for Networks</em>. The Statnet Project (<a href="http://www.statnet.org">http://www.statnet.org</a>). <a href="https://CRAN.R-project.org/package=ergm">https://CRAN.R-project.org/package=ergm</a>.</p>
+</div>
 </div>
 <div class="footnotes">
 <hr />
@@ -327,6 +337,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

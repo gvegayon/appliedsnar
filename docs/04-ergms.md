@@ -6,22 +6,21 @@ I strongly suggest reading the vignette included in the `ergm` R package
 vignette("ergm", package="ergm")
 ```
 
-So what are ERGMs anyway...
-
 > The purpose of ERGMs, in a nutshell, is to describe parsimoniously the local selection forces
 that shape the global structure of a network. To this end, a network dataset, like those
-depicted in Figure 1, may be considered like the response in a regression model, where the
-predictors are things like “propensity for individuals of the same sex to form partnerships” or
-“propensity for individuals to form triangles of partnerships”. In Figure 1(b), for example, it
+depicted in Figure 1, may be considered as the response in a regression model, where the
+predictors are things like "propensity for individuals of the same sex to form partnerships" or
+"propensity for individuals to form triangles of partnerships". In Figure 1(b), for example, it
 is evident that the individual nodes appear to cluster in groups of the same numerical labels
-(which turn out to be students’ grades, 7 through 12); thus, an ERGM can help us quantify
+(which turn out to be students' grades, 7 through 12); thus, an ERGM can help us quantify
 the strength of this intra-group effect.  
 >
 > --- [@Hunter2008]
 
 ![Source: Hunter et al. (2008)](hunter2008.png)
 
-The distribution of $\mathbf{Y}$ can be parameterized in the form
+In a nutshell, we use ERGMs as a parametric interpretation of the distribution of $\mathbf{Y}$,
+which takes the canonical form:
 
 $$
 \Pr{\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}} = \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
@@ -37,11 +36,11 @@ $$
 \kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}
 $$
 
-Is the normalizing factor that ensures that equation \@ref(eq:04-1) is a legitimate probability distribution. Even after fixing $\mathcal{Y}$ to be all the networks that have size $n$, the size of $\mathcal{Y}$ makes this type of models hard to estimate as there are $N = 2^{n(n-1)}$ possible networks! [@Hunter2008]
+Is the normalizing factor that ensures that equation \@ref(eq:04-1) is a legitimate probability distribution. Even after fixing $\mathcal{Y}$ to be all the networks that have size $n$, the size of $\mathcal{Y}$ makes this type of statistical models hard to estimate as there are $N = 2^{n(n-1)}$ possible networks! [@Hunter2008]
 
-Recent developments include new forms of dependency structures, to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. [@Hunter2008 p. 9]
+Recent developments include new forms of dependency structures to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer-range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. [@Hunter2008 p. 9]
 
-### A naive example
+## A naïve example
 
 In the simplest case, ergm is equivalent to a logistic regression
 
@@ -355,7 +354,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from b389353 (vertex names):
+## + 1/2638 edge from 402020c (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -1106,7 +1105,7 @@ ans0_bis <- ergm(
   )
 ```
 
-Increase the sample size so the curves are more smooth, longer intervals (thinning) so we reduce the autocorrelation, larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.
+Increase the sample size, so the curves are smoother, longer intervals (thinning), which reduces autocorrelation, and a larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.
 
 
 ```r
@@ -1114,7 +1113,7 @@ knitr::include_graphics("awful-chains.png")
 ```
 
 <div class="figure">
-<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="357" />
+<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful"  />
 <p class="caption">(\#fig:badconvergence)An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful</p>
 </div>
 
@@ -1123,4 +1122,85 @@ knitr::include_graphics("awful-chains.png")
 
 For more on this issue, I recommend reviewing [chapter 1](http://www.mcmchandbook.net/HandbookChapter1.pdf) and [chapter 6](http://www.mcmchandbook.net/HandbookChapter6.pdf) from the Handbook of MCMC [@brooks2011]. Both chapters are free to download from the [book's website](http://www.mcmchandbook.net/HandbookSampleChapters.html).
 
-For GOF take a look at section 6 of [ERGM 2016 Sunbelt tutorial](https://statnet.csde.washington.edu/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html), and for a more technical review you can take a look at [@HunterJASA2008].
+For GOF take a look at section 6 of [ERGM 2016 Sunbelt tutorial](https://statnet.csde.washington.edu/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html), and for a more technical review, you can take a look at [@HunterJASA2008].
+
+
+## Mathematical Interpretation
+
+One of the most critical parts of statistical modeling is interpreting the results,
+if not the most important. In the case of ERGMs, a key aspect is based on change
+statistics. Suppose that we would like to know how likely the tie $y_{ij}$ is to
+happen, given the rest of the network. We can compute such probabilities using what
+literature sometimes describes as the Gibbs-sampler. 
+
+In particular, the log-odds of the $ij$ tie ocurring conditional on the rest of
+the network can be written as:
+
+\newcommand{\sufstats}[1]{s\left(#1\right)}
+\renewcommand{\exp}[1]{\mbox{exp}\left\{#1\right\}}
+\renewcommand{\log}[1]{\mbox{log}\left\{#1\right\}}
+\newcommand{\transpose}[1]{{#1}^\mathbf{t}}
+\renewcommand{\t}[1]{\transpose{#1}}
+
+\newcommand{\s}[1]{\sufstats{#1}}
+\newcommand{\SUFF}{\mathcal{S}}
+\newcommand{\Suff}{\mathbf{S}}
+\newcommand{\suff}{\mathbf{s}}
+
+\newcommand{\isone}[1]{{\boldsymbol{1}\left( #1 \right)}}
+\renewcommand{\Pr}[1]{{\mathbb{P}\left(#1\right) }}
+\newcommand{\f}[1]{{f\left(#1\right) }}
+\newcommand{\Prcond}[2]{{\mathbb{P}\left(#1\vphantom{#2}\;\right|\left.\vphantom{#1}#2\right)}}
+\newcommand{\fcond}[2]{{f\left(#1|#2\right) }}
+\newcommand{\Expected}[1]{{\mathbb{E}\left\{#1\right\}}}
+\newcommand{\ExpectedCond}[2]{{\mathbb{E}\left\{#1\vphantom{#2}\right|\left.\vphantom{#1}#2\right\}}}
+\renewcommand{\exp}[1]{\mbox{exp}\left\{#1\right\}}
+
+\newcommand{\Likelihood}[2]{\text{L}\left(#1 \left|\vphantom{#1}#2\right.\right)}
+
+\newcommand{\loglik}[1]{l\left(#1\right)}
+\newcommand{\logit}[1]{\mbox{logit}\left(#1\right)}
+\newcommand{\chng}[1]{\delta\left(y_{#1}:0\to1\right)}
+
+\newcommand{\pgraph}{\mathbf{x}}
+\newcommand{\snamed}[2]{\s{#1}_{\mbox{#2}}}
+
+
+\begin{equation}
+	\logit{\Pr{y_{ij} = 1|y_{-ij}}} = \transpose{\theta}\Delta\chng{ij},
+\end{equation}
+
+\noindent with $\chng{ij}\equiv \snamed{\mathbf{y}}{ij}^+ - \snamed{\mathbf{y}}{ij}^-$ as
+the vector of change statistics, in other words, the difference between the
+sufficient statistics when $y_{ij}=1$ and its value when $y_{ij} = 0$. To show
+this, we write the following:
+
+\begin{align*}
+	\Pr{y_{ij} = 1|y_{-ij}} & = %
+		\frac{\Pr{y_{ij} = 1, x_{-ij}}}{%
+			\Pr{y_{ij} = 1, y_{-ij}} + \Pr{y_{ij} = 0, y_{-ij}}} \\
+		& = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}}{%
+			\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + \exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}
+\end{align*}
+
+Applying the logit function to the previous equation, we obtain:
+
+\begin{align*}
+& = \log{\frac{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}}{%
+		\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + %
+		\exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}} - %
+	\log{ %
+		\frac{\exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}{%
+			\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + \exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}%
+	 } \\
+ & = \log{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}} - \log{\exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}} \\
+ & = \transpose{\theta}\left(\s{\mathbf{y}}^+_{ij} - \s{\mathbf{y}}^-_{ij}\right) \\
+ & = \transpose{\theta}\Delta\chng{ij}
+\end{align*}
+\noindent Henceforth, the conditional probability of node $n$ gaining function $k$ can be written as:
+
+\begin{equation}
+	\Pr{y_{ij} = 1|y_{-ij}} = \frac{1}{1 + \exp{-\transpose{\theta}\Delta\chng{ij}}}
+\end{equation}
+
+\noindent i.e., a logistic probability.

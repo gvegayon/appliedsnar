@@ -213,18 +213,18 @@ Let's take a look at this step by step:
     
     ```
     ## # A tibble: 2,164 x 78
-    ##        id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
-    ##     <dbl>  <int>        <int>        <int>        <int>        <int>
-    ##  1 1.11e6    111           NA           NA           NA           NA
-    ##  2 1.11e6    111          424          423          426          289
-    ##  3 1.11e6    111          629          505           NA           NA
-    ##  4 1.11e6    111          232          569           NA           NA
-    ##  5 1.11e6    111          582          134           41          592
-    ##  6 1.11e6    111           26          488           81          138
-    ##  7 1.11e6    111          528           NA          492          395
-    ##  8 1.11e6    111           NA           NA           NA           NA
-    ##  9 1.11e6    111          135          185          553           84
-    ## 10 1.11e6    111          346          168          559            5
+    ##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
+    ##      <dbl>  <int>        <int>        <int>        <int>        <int>
+    ##  1 1110001    111           NA           NA           NA           NA
+    ##  2 1110002    111          424          423          426          289
+    ##  3 1110007    111          629          505           NA           NA
+    ##  4 1110013    111          232          569           NA           NA
+    ##  5 1110014    111          582          134           41          592
+    ##  6 1110015    111           26          488           81          138
+    ##  7 1110020    111          528           NA          492          395
+    ##  8 1110022    111           NA           NA           NA           NA
+    ##  9 1110025    111          135          185          553           84
+    ## 10 1110027    111          346          168          559            5
     ## # … with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
     ## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
     ## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,

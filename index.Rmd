@@ -1,5 +1,5 @@
 --- 
-title: "Applied SNA with R"
+title: "Applied Network Science with R"
 author: "George G. Vega Yon"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -11,22 +11,45 @@ github-repo: gvegayon/appliedsnar
 description: "An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC's Center for Applied Network Analysis (CANA)"
 ---
 
-# About this book 
+# About
 
 \renewcommand{\Pr}[1]{\mbox{Pr}\left(#1\right)}
 \renewcommand{\exp}[1]{\mbox{exp}\left\{#1\right\}}
 
-This book will be build as part of a workshop on Applied Social Network Analysis with R. Its contents will be populated as the sessions take place, and for now there is particular program that we will follow, instead, we have the following workflow:
+## The Book
 
-1.  Participants will share their data and what they need to do with it.
+Statistical methods for networked systems are present in most disciplines.
+Nonetheless, the "language barrier" we may face when communicating with our
+fellow scientists, many of the methods developed to study specific types
+of problems can indeed be helpful outside of their original context.
 
-2.  Based on their data, I'll be preparing the sessions trying to show attendees how would I approach the problem, and at the same time, teach by example about the R language.
+This project began as a part of a workshop that took place at USC's
+[Center for Applied Network Analysis](https://cana.usc.edu). Now, it is a personal
+project that I use to gather and study statistical methods used
+for analyzing networks, emphasizing social and biological systems.
+Moreover, the book will use statistical computing methods as a core component
+when developing these topics.
 
-3.  Materials will be published on this website and, hopefully, video recordings of the sessions.
+In general, we will, besides R itself, we will be using R studio and the following
+R packages: dplyr for data management, stringr for data cleaning, and of course
+igraph, netdiffuseR (a bit of a bias here), and statnet for our neat network
+analysis.^[Some of you may be wondering "what about ggplot2 and friends? What about [`tidyverse`](https://www.tidyverse.org/)", well, my short answer is I jumped into R before all of that was that popular. When I started, plots were all about [`lattice`](https://CRAN.R-project.org/package=lattice), and after a couple of years on that, about base R graphics. What I'm saying is that so far, I have not found a compelling reason to leave my "old practices" and embrace all the `tidyverse` movement (religion?).]
 
-At least in the first version, the book will be organized by session, this is, one chapter per session.
+You can access the book's source code at https://github.com/gvegayon/appliedsnar.
 
-All the book materials can be downloaded from https://github.com/gvegayon/appliedsnar
+## The author
 
-In general, we will besides of R itself, we will be using R studio and the following R packages: dplyr for data management, stringr for data cleaning, and of course igraph, netdiffuseR (a bit of a bias here), and statnet for our neat network analysis.^[Some of you may be wondering "what about ggplot2 and friends? What about [`tidyverse`](https://www.tidyverse.org/)", well, my short answer is I jumped into R before all of that was that popular. When I started plots were all about [`lattice`](https://CRAN.R-project.org/package=lattice), and after a couple of years on that, about base R graphics. What I'm saying is that so far I have not find a compelling reason to leave my "old-practices" and embrace all the `tidyverse` movement (religion?).]
+I am a Research Programmer at USC's Department of Population and Public Health
+Sciences, where I work on studying Complex Systems using Statistical Computing.
+I have over ten years of experience developing scientific software focusing on
+high-performance computing, data visualization, and social network analysis.
+My training is in Public Policy (M.A. UAI, 2011), Economics (M.Sc. Caltech,
+2015), and Biostatistics (Ph.D. USC, 2020).
+
+I obtained my Ph.D. in Biostatistics under the supervision of Prof. Paul
+Marjoram and Prof. Kayla de la Haye, with my dissertation titled "Essays on
+Bioinformatics and Social Network Analysis: Statistical and Computational Methods
+for Complex Systems."
+
+If you'd like to learn more about me, please visit my website at https://ggvy.cl.
 

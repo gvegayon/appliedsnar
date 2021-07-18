@@ -71,8 +71,8 @@ $\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
    library(netdiffuseR)
    
    # Obtain a 100 replicates
-   sg1 <- bootnet(g1, function(i) sum(i)/(nnodes(i) * (nnodes(i) - 1)), R = 100)
-   sg2 <- bootnet(g2, function(i) sum(i)/(nnodes(i) * (nnodes(i) - 1)), R = 100)
+   sg1 <- bootnet(g1, function(i, ...) sum(i)/(nnodes(i) * (nnodes(i) - 1)), R = 100)
+   sg2 <- bootnet(g2, function(i, ...) sum(i)/(nnodes(i) * (nnodes(i) - 1)), R = 100)
    
    # Retrieving the variances
    hat_sigma1 <- sg1$var_t
@@ -88,6 +88,7 @@ $\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
    
    ```r
    # Building the statistic
+   k <- 0 # For equal variances
    tstat <- (sg1 - sg2 - k)/(sqrt(hat_sigma1 + hat_sigma2))
    
    # Computing the pvalue
@@ -117,8 +118,8 @@ The procedure is very similar:
    
    ```r
    # Obtain a 1000 replicates
-   sg1 <- bootnet(g1, function(i) range(threshold(i)), R = 1000)
-   sg2 <- bootnet(g2, function(i) range(threshold(i)), R = 1000)
+   sg1 <- bootnet(g1, function(i, ...) range(threshold(i)), R = 1000)
+   sg2 <- bootnet(g2, function(i, ...) range(threshold(i)), R = 1000)
    
    # Retrieving the distributions
    sg1 <- sg1$boot$t
