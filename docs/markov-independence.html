@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>A.1 SNS data | Applied Network Science with R</title>
+  <title>5.8 Markov independence | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="A.1 SNS data | Applied Network Science with R" />
+  <meta property="og:title" content="5.8 Markov independence | Applied Network Science with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A.1 SNS data | Applied Network Science with R" />
+  <meta name="twitter:title" content="5.8 Markov independence | Applied Network Science with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="datasets.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="mathematical-interpretation.html"/>
+<link rel="next" href="separable-temporal-exponential-family-random-graph-models.html"/>
 <script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -259,52 +259,29 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sns-data" class="section level2" number="9.1">
-<h2><span class="header-section-number">A.1</span> SNS data</h2>
-<div id="about-the-data" class="section level3" number="9.1.1">
-<h3><span class="header-section-number">A.1.1</span> About the data</h3>
-<ul>
-<li><p>This data is part of the NIH Challenge grant # RC 1RC1AA019239 “Social
-Networks and Networking That Puts Adolescents at High Risk.”</p></li>
-<li><p>In general terms, the SNS’s goal was(is) “Understand the network effects on
-risk behaviors such as smoking initiation and substance use.”</p></li>
-</ul>
-</div>
-<div id="variables" class="section level3" number="9.1.2">
-<h3><span class="header-section-number">A.1.2</span> Variables</h3>
-<p>The data has a <em>wide</em> structure, which means that there is one row per individual,
-and that dynamic attributes are represented as one column per time.</p>
-<ul>
-<li><p><code>photoid</code> Photo id at the school level (can be repeated across schools).</p></li>
-<li><p><code>school</code> School id.</p></li>
-<li><p><code>hispanic</code> Indicator variable that equals 1 if the indivual ever reported
-himself as hispanic.</p></li>
-<li><p><code>female1</code>, …, <code>female4</code> Indicator variable that equals 1 if the individual
-reported to be female at the particular wave.</p></li>
-<li><p><code>grades1</code>,…, <code>grades4</code> Academic grades by wave. Values from 1 to 5, with 5
-been the best.</p></li>
-<li><p><code>eversmk1</code>, …, <code>eversmk4</code> Indicator variable of ever smoking by wave. A one
-indicated that the individual had smoked at the time of the survey.</p></li>
-<li><p><code>everdrk1</code>, …, <code>everdrk4</code> Indicator variable of ever drinking by wave.
-A one indicated that the individual had drink at the time of the survey.</p></li>
-<li><p><code>home1</code>, …, <code>home4</code> Factor variable for home status by wave. A one
-indicates home ownership, a 2 rent, and a 3 a “I don’t know.”</p></li>
-</ul>
-<p>During the survey, participants were asked to name up to 19 of their school
-friends:</p>
-<ul>
-<li><p><code>sch_friend11</code>, …, <code>sch_friend119</code> School friends nominations (19 in total)
-for wave 1. The codes are mapped to the variable <code>photoid</code>.</p></li>
-<li><p><code>sch_friend21</code>, …, <code>sch_friend219</code> School friends nominations (19 in total)
-for wave 2. The codes are mapped to the variable <code>photoid</code>.</p></li>
-<li><p><code>sch_friend31</code>, …, <code>sch_friend319</code> School friends nominations (19 in total)
-for wave 3. The codes are mapped to the variable <code>photoid</code>.</p></li>
-<li><p><code>sch_friend41</code>, …, <code>sch_friend419</code> School friends nominations (19 in total)
-for wave 4. The codes are mapped to the variable <code>photoid</code>.</p></li>
-</ul>
+<div id="markov-independence" class="section level2" number="5.8">
+<h2><span class="header-section-number">5.8</span> Markov independence</h2>
+<p>The challenge of analyzing networks is their interdependent nature. Nonetheless, in the absence of such interdependence, ERGMs are equivalent to logistic regression. Conceptually, if all the statistics included in the model do not involve two or more dyads, then the model is non-Markovian in the sense of Markov graphs.</p>
+<p>Mathematically, to see this, it suffices to show that the ERGM probability can be written as the product of each dyads’ probabilities.</p>
+<p><span class="math display">\[\begin{equation*}
+{\mathbb{P}\left(\mathbf{y} | \theta\right) } = \frac{\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)\right\}}{\sum_{y}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)\right\}} 
+= \frac{\prod_{ij}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{ij}\right\}}{\sum_{y}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)\right\}}
+\end{equation*}\]</span></p>
+<p>Where <span class="math inline">\(s\left(\right)_{ij}\)</span> is a function such that <span class="math inline">\(s\left(\mathbf{y}\right) = \sum_{ij}{s\left(\mathbf{y}\right)_{ij}}\)</span>. We now need to deal with the normalizing constant. To see how that can be saparated, let’s start from the result:</p>
+<p><span class="math display">\[\begin{align*}
+&amp; =\prod_{ij}\left(1 + \mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{ij}\right\}\right) \\
+&amp; = \left(1 + \mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{11}\right\}\right)\left(1 + \mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{12}\right\}\right)\dots\left(1 + \mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{nn}\right\}\right) \\
+&amp; = 1 + \mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{11}\right\} + \mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{11}\right\}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{12}\right\} + \dots + \prod_{ij}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{ij}\right\} \\
+&amp; = 1 + \mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{11}\right\} + \mbox{exp}\left\{{\theta}^\mathbf{t}\left(s\left(\mathbf{y}\right)_{11} + s\left(\mathbf{y}\right)_{12}\right)\right\} + \dots + \prod_{ij}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{ij}\right\} \\
+&amp; = \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)\right\}
+\end{align*}\]</span></p>
+<p>Where the last equality follows from <span class="math inline">\(s\left(\mathbf{y}\right) = \sum_{ij}{s\left(\mathbf{y}\right)_{ij}}\)</span>. This way, we can now write:</p>
+<p><span class="math display">\[\begin{equation}
+\frac{\prod_{ij}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{ij}\right\}}{\sum_{y}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)\right\}} = 
+\prod_{ij}\frac{\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{ij}\right\}}{1 + \mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{ij}\right\}}
+\end{equation}\]</span></p>
+<div style="page-break-after: always;"></div>
 
-<!-- # References {-}-->
-</div>
 </div>
 <!-- </div> -->
             </section>
@@ -312,8 +289,8 @@ for wave 4. The codes are mapped to the variable <code>photoid</code>.</p></li>
           </div>
         </div>
       </div>
-<a href="datasets.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="mathematical-interpretation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="separable-temporal-exponential-family-random-graph-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -345,7 +322,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/gvegayon/appliedsnar/edit/master/08-data-appendix.Rmd",
+"link": "https://github.com/gvegayon/appliedsnar/edit/master/04-ergms.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -353,7 +330,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/gvegayon/appliedsnar/blob/master/08-data-appendix.Rmd",
+"link": "https://github.com/gvegayon/appliedsnar/blob/master/04-ergms.Rmd",
 "text": null
 },
 "download": ["appliedsnar.pdf", "appliedsnar.epub"],

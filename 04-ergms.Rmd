@@ -36,9 +36,9 @@ $$
 \kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}
 $$
 
-Is the normalizing factor that ensures that equation \@ref(eq:04-1) is a legitimate probability distribution. Even after fixing $\mathcal{Y}$ to be all the networks that have size $n$, the size of $\mathcal{Y}$ makes this type of statistical models hard to estimate as there are $N = 2^{n(n-1)}$ possible networks! [@Hunter2008]
+,is the normalizing factor that ensures that equation \@ref(eq:04-1) is a legitimate probability distribution. Even after fixing $\mathcal{Y}$ to be all the networks that have size $n$, the size of $\mathcal{Y}$ makes this type of statistical model hard to estimate as there are $N = 2^{n(n-1)}$ possible networks! [@Hunter2008]
 
-Recent developments include new forms of dependency structures to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer-range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have also been developed. [@Hunter2008 p. 9]
+Recent developments include new forms of dependency structures to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer-range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have been developed. [@Hunter2008 p. 9]
 
 ## A naïve example
 
@@ -63,13 +63,13 @@ qlogis(pr)
 
 ## Estimation of ERGMs
 
-The ultimate goal is to be able to do statistical inference on the proposed model. In a *normal* setting, we would be able to use Maximum-Likelihood-Estimation (MLE) which basically consists on finding the model parameters $\theta$ that, given the observed data, maximizes the likelihood of the model. Such is usually done by applying [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization) which requires been able to compute the log-likelihood of the model. This is a bit more complicated in ERGMs.
+The ultimate goal is to perform statistical inference on the proposed model. In a *standard* setting, we would be able to use Maximum-Likelihood-Estimation (MLE), which consists of finding the model parameters $\theta$ that, given the observed data, maximize the likelihood of the model. For the latter, we generally use [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization). Newton's method requires been able to compute the log-likelihood of the model, which in ERGMs can be challenging.
 
-In the case of ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straight forward as it is in the regular setting. This is why we rely on simulations.
+For ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straightforward as in the regular setting. Because of it, most estimation methods rely on simulations.
 
-In `statnet`, the default estimation method is based on a method proposed by [@Geyer1992], Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorihm to do the paremeter estimation part.
+In `statnet`, the default estimation method is based on a method proposed by [@Geyer1992], Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorithm to estimate the parameters.
 
-The idea of MC-MLE for this family of statistical models is the fact that the expectation of normalizing constant ratios can be approximated using the law of large numbers. In particular, the following:
+The idea of MC-MLE for this family of statistical models is that we can approximate the expectation of normalizing constant ratios using the law of large numbers. In particular, the following:
 
 $$
 \begin{aligned}
@@ -98,14 +98,14 @@ $$
 \end{aligned}
 $$
 
-The final line can be approximated by the law of large numbers. In particular, the MC-MLE algorithm uses this fact to maximize the ratio of log-likelihoods. The objective function can be approximated by simulating $m$ networks from the distribution with parameter $\theta_0$:
+In particular, the MC-MLE algorithm uses this fact to maximize the ratio of log-likelihoods. The objective function itself can be approximated by simulating $m$ networks from the distribution with parameter $\theta_0$:
 
 $$
 l(\theta) - l(\theta_0) \approx (\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y}_{obs}) - 
 \mbox{log}{\left[\frac{1}{m}\sum_{i = 1}^m\exp{(\theta-\theta_0)^{\mbox{T}}}\mathbf{g}(\mathbf{Y}_i)\right]}
 $$
 
-For more details see [@Hunter2008]. A sketch of the algorithm follows:
+For more details, see [@Hunter2008]. A sketch of the algorithm follows:
 
 1.  Initialize the algorithm with an initial guess of $\theta$, call it $\theta^{(t)}$ (must be a rather OK guess)
 
@@ -115,7 +115,7 @@ For more details see [@Hunter2008]. A sketch of the algorithm follows:
     
     b.  With the networks simulated, we can do the Newton step to update the parameter $\theta^{(t)}$ (this is the iteration part in the `ergm` package): $\theta^{(t)}\to\theta^{(t+1)}$.
     
-    c.  If convergence has been reach (which usually means that $\theta^{(t)}$ and $\theta^{(t + 1)}$ are not very different), then stop, otherwise, go to step a.
+    c.  If convergence has been reached (which usually means that $\theta^{(t)}$ and $\theta^{(t + 1)}$ are not very different), then stop; otherwise, go to step a.
 
 For more details see [@lusher2012;@admiraal2006;@Snijders2002;@Wang2009] provides details on the algorithm used by PNet (which is the same as the one used in `RSiena`). [@lusher2012] provides a short discussion on differences between `ergm` and `PNet`. 
 
@@ -169,13 +169,13 @@ network_111 <- intergraph::asNetwork(ig_year1_111)
 ergm(network_111 ~ edges)
 ```
 
-So what happened here! We got a warning. It turns out that our network has loops (didn't thought about it before!). Let's take a look on that with the `which_loop` function
+So what happened here! We got a warning. It turns out that our network has loops (didn't thought about it before!). Let's take a look at that with the `which_loop` function
 
 ```{r 03-ergms-which-loop}
 E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
-We can get rid of these using the `igraph::-.igraph`. Moreover, just to illustrate how it can be done, let's get rid of the isolates using the same operator
+We can get rid of these using the `igraph::-.igraph`. Let's remove the isolates using the same operator
 
 ```{r 03-ergms-intergraph2, cache=TRUE, eval=TRUE}
 # Creating the new network
@@ -214,9 +214,9 @@ Proposed workflow:
 
 1.  Estimate the simplest model, adding one variable at a time.
 
-2.  After each estimation, run the `mcmc.diagnostics` function to see how good/bad behaved are the chains.
+2.  After each estimation, run the `mcmc.diagnostics` function to see how good (or bad) behaved the chains are.
 
-3.  Run the `gof` function to see how good is the model at matching the network's structural statistics.
+3.  Run the `gof` function and verify how good the model matches the network's structural statistics.
 
 What to use:
 
@@ -247,7 +247,7 @@ ans0 <- ergm(
 
 So what are we doing here:
 
-1.  The model is controling for: 
+1.  The model is controlling for: 
     
     a.  `edges` Number of edges in the network (as opposed to its density)
     
@@ -356,8 +356,7 @@ sample_uncentered <- lapply(sample_centered, function(x) {
 sample_uncentered <- coda::mcmc.list(sample_uncentered)
 ```
 
-
-This is what is called under the hood:
+Under the hood:
 
 1.  _Empirical means and sd, and quantiles_: 
     ```{r coda-summary}
@@ -367,7 +366,7 @@ This is what is called under the hood:
     ```{r coda-corr}
     coda::crosscorr(sample_uncentered)
     ```
-3.  _Autocorrelation_: Just for now, we will only take a look at autocorrelation for chain 1 only. Autocorrelation should be rather low (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no markov property). A way out to solve this is *thinning* the sample.
+3.  _Autocorrelation_: For now, we will only look at autocorrelation for chain one. Autocorrelation should be small (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no Markov property). A way out to solve this is *thinning* the sample.
     ```{r coda-autocorr}
     coda::autocorr(sample_uncentered)[[1]]
     ```
@@ -404,16 +403,16 @@ mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output
 ```
 
 
-If we called the function `mcmc.diagnostics` this message appears at the end:
+If we called the function `mcmc.diagnostics`, this message appears at the end:
 
 >
 MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).
 >
 > ---`mcmc.diagnostics(ans0)`
 
-Not that bad (although the `mutual` term could do better)!^[The statnet wiki website as a very nice example of (very) bad and good mcmc diagnostics plots [here](https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf).] First, observe that in the plot we see 4 different lines, why is that? Well, since we were running in parallel using 4 cores the algorithm actually ran 4 different chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place, if we have that we can start thinking about model convergence from the mcmc perspective.
+Not that bad (although the `mutual` term could do better)!^[The statnet wiki website as a very nice example of (very) bad and good MCMC diagnostics plots [here](https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf).] First, observe that in the figure we see four different lines; why is that? Since we were running in parallel using four cores, the algorithm ran four chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place; in such a case, we can start thinking about model convergence from the MCMC perspective.
 
-Once we are sure to have reach convergence on the MCMC algorithm, we can start thinking about how well does our model predicts the observed network's proterties. Besides of the statistics that define our ERGM, the `gof` function's default behavior show GOF for:
+Once we are sure to have reach convergence on the MCMC algorithm, we can start thinking about how well does our model predicts the observed network's proterties. Besides the statistics that define our ERGM, the `gof` function's default behavior show GOF for:
 
 a.  In degree distribution,
 b.  Out degree distribution,
@@ -549,3 +548,35 @@ Applying the logit function to the previous equation, we obtain:
 \end{equation}
 
 \noindent i.e., a logistic probability.
+
+## Markov independence
+
+The challenge of analyzing networks is their interdependent nature. Nonetheless, in the absence of such interdependence, ERGMs are equivalent to logistic regression. Conceptually, if all the statistics included in the model do not involve two or more dyads, then the model is non-Markovian in the sense of Markov graphs.
+
+Mathematically, to see this, it suffices to show that the ERGM probability can be written as the product of each dyads' probabilities. 
+
+\begin{equation*}
+\Pr{\mathbf{y} | \theta} = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} 
+= \frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}}
+\end{equation*}
+
+Where $\s{}_{ij}$ is a function such that $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. We now need to deal with the normalizing constant. To see how that can be saparated, let's start from the result:
+
+\newcommand{\thetaS}[1]{\exp{\transpose{\theta}\s{\mathbf{y}}_{#1}}}
+
+\begin{align*}
+& =\prod_{ij}\left(1 + \thetaS{ij}\right) \\
+& = \left(1 + \thetaS{11}\right)\left(1 + \thetaS{12}\right)\dots\left(1 + \thetaS{nn}\right) \\
+& = 1 + \thetaS{11} + \thetaS{11}\thetaS{12} + \dots + \prod_{ij}\thetaS{ij} \\
+& = 1 + \thetaS{11} + \exp{\transpose{\theta}\left(\s{\mathbf{y}}_{11} + \s{\mathbf{y}}_{12}\right)} + \dots + \prod_{ij}\thetaS{ij} \\
+& = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\transpose{\theta}\s{\mathbf{y}}}
+\end{align*}
+
+Where the last equality follows from $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. This way, we can now write:
+
+\begin{equation}
+\frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} = 
+\prod_{ij}\frac{\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{1 + \exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}
+\end{equation}
+
+\pagebreak

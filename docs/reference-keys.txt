@@ -36,6 +36,7 @@ running-ergms
 model-goodness-of-fit
 more-on-mcmc-convergence
 mathematical-interpretation
+markov-independence
 separable-temporal-exponential-family-random-graph-models
 stochastic-actor-oriented-models
 hypothesis-testing-in-networks
