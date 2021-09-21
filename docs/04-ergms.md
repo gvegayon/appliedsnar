@@ -354,7 +354,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from 44e92ea (vertex names):
+## + 1/2638 edge from 6f34d4e (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -585,9 +585,11 @@ screenreg(list(ans0, ans1, ans2))
 Or, if you are using rmarkdown, you can export the results using LaTeX or html, let's try the latter to see how it looks like here:
 
 
+
+
 ```r
 library(texreg)
-htmlreg(list(ans0, ans1, ans2))
+texreg(list(ans0, ans1, ans2))
 ```
 
 ```
@@ -601,116 +603,36 @@ htmlreg(list(ans0, ans1, ans2))
 ## Summarizing it with version 3.11 or later may return incorrect results or fail.
 ```
 
-<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
-<caption>Statistical models</caption>
-<thead>
-<tr>
-<th style="padding-left: 5px;padding-right: 5px;">&nbsp;</th>
-<th style="padding-left: 5px;padding-right: 5px;">Model 1</th>
-<th style="padding-left: 5px;padding-right: 5px;">Model 2</th>
-<th style="padding-left: 5px;padding-right: 5px;">Model 3</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-top: 1px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">edges</td>
-<td style="padding-left: 5px;padding-right: 5px;">-5.64<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">-5.52<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">-5.58<sup>***</sup></td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.05)</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.06)</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.06)</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">nodematch.hispanic</td>
-<td style="padding-left: 5px;padding-right: 5px;">0.36<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.50<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.40<sup>***</sup></td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">nodematch.female1</td>
-<td style="padding-left: 5px;padding-right: 5px;">0.83<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">1.10<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.83<sup>***</sup></td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.05)</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">nodematch.eversmk1</td>
-<td style="padding-left: 5px;padding-right: 5px;">0.35<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.46<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.36<sup>***</sup></td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.05)</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">mutual</td>
-<td style="padding-left: 5px;padding-right: 5px;">4.09<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">-3.55<sup>***</sup></td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.07)</td>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.25)</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">balance</td>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">0.02<sup>***</sup></td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">(0.00)</td>
-</tr>
-<tr style="border-top: 1px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">AIC</td>
-<td style="padding-left: 5px;padding-right: 5px;">-32986.67</td>
-<td style="padding-left: 5px;padding-right: 5px;">-31399.10</td>
-<td style="padding-left: 5px;padding-right: 5px;">-33035.32</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">BIC</td>
-<td style="padding-left: 5px;padding-right: 5px;">-32936.32</td>
-<td style="padding-left: 5px;padding-right: 5px;">-31358.82</td>
-<td style="padding-left: 5px;padding-right: 5px;">-32974.91</td>
-</tr>
-<tr style="border-bottom: 2px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">Log Likelihood</td>
-<td style="padding-left: 5px;padding-right: 5px;">16498.33</td>
-<td style="padding-left: 5px;padding-right: 5px;">15703.55</td>
-<td style="padding-left: 5px;padding-right: 5px;">16523.66</td>
-</tr>
-</tbody>
-<tfoot>
-<tr>
-<td style="font-size: 0.8em;" colspan="4"><sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05</td>
-</tr>
-</tfoot>
-</table>
 
-
+\begin{table}
+\begin{center}
+\begin{tabular}{l c c c}
+\hline
+ & Model 1 & Model 2 & Model 3 \\
+\hline
+edges              & $-5.64^{***}$ & $-5.52^{***}$ & $-5.58^{***}$ \\
+                   & $(0.05)$      & $(0.06)$      & $(0.06)$      \\
+nodematch.hispanic & $0.36^{***}$  & $0.50^{***}$  & $0.40^{***}$  \\
+                   & $(0.04)$      & $(0.04)$      & $(0.04)$      \\
+nodematch.female1  & $0.83^{***}$  & $1.10^{***}$  & $0.83^{***}$  \\
+                   & $(0.04)$      & $(0.05)$      & $(0.04)$      \\
+nodematch.eversmk1 & $0.35^{***}$  & $0.46^{***}$  & $0.36^{***}$  \\
+                   & $(0.04)$      & $(0.05)$      & $(0.04)$      \\
+mutual             & $4.09^{***}$  &               & $-3.55^{***}$ \\
+                   & $(0.07)$      &               & $(0.25)$      \\
+balance            &               &               & $0.02^{***}$  \\
+                   &               &               & $(0.00)$      \\
+\hline
+AIC                & $-32986.67$   & $-31399.10$   & $-33035.32$   \\
+BIC                & $-32936.32$   & $-31358.82$   & $-32974.91$   \\
+Log Likelihood     & $16498.33$    & $15703.55$    & $16523.66$    \\
+\hline
+\multicolumn{4}{l}{\scriptsize{$^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$}}
+\end{tabular}
+\caption{Statistical models}
+\label{table:coefficients}
+\end{center}
+\end{table}
 
 
 
@@ -948,13 +870,22 @@ One nice feature of the `mcmc.diagnostics` function is the nice trace and poster
 mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-ergms_files/figure-html/coda-plots-1.png" alt="Trace and posterior distribution of sampled network statistics." width="672" />
-<p class="caption">(\#fig:coda-plots-1)Trace and posterior distribution of sampled network statistics.</p>
-</div><div class="figure" style="text-align: center">
-<img src="04-ergms_files/figure-html/coda-plots-2.png" alt="Trace and posterior distribution of sampled network statistics (cont'd)." width="672" />
-<p class="caption">(\#fig:coda-plots-2)Trace and posterior distribution of sampled network statistics (cont'd).</p>
-</div>
+\begin{figure}[!h]
+
+{\centering \includegraphics{04-ergms_files/figure-latex/coda-plots-1} 
+
+}
+
+\caption{Trace and posterior distribution of sampled network statistics.}(\#fig:coda-plots-1)
+\end{figure}
+\begin{figure}[!h]
+
+{\centering \includegraphics{04-ergms_files/figure-latex/coda-plots-2} 
+
+}
+
+\caption{Trace and posterior distribution of sampled network statistics (cont'd).}(\#fig:coda-plots-2)
+\end{figure}
 
 
 If we called the function `mcmc.diagnostics`, this message appears at the end:
@@ -1077,7 +1008,7 @@ ans_gof
 plot(ans_gof)
 ```
 
-<img src="04-ergms_files/figure-html/checking-gof-1.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-2.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-3.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-4.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-5.png" width="672" />
+![](04-ergms_files/figure-latex/checking-gof-1.pdf)<!-- --> ![](04-ergms_files/figure-latex/checking-gof-2.pdf)<!-- --> ![](04-ergms_files/figure-latex/checking-gof-3.pdf)<!-- --> ![](04-ergms_files/figure-latex/checking-gof-4.pdf)<!-- --> ![](04-ergms_files/figure-latex/checking-gof-5.pdf)<!-- --> 
 
 Try the following configuration instead
 
@@ -1111,10 +1042,9 @@ Increase the sample size, so the curves are smoother, longer intervals (thinning
 knitr::include_graphics("awful-chains.png")
 ```
 
-<div class="figure">
-<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="357" />
-<p class="caption">(\#fig:badconvergence)An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful</p>
-</div>
+\begin{figure}[!h]
+\includegraphics[width=9.92in]{awful-chains} \caption{An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful}(\#fig:badconvergence)
+\end{figure}
 
 
 ## More on MCMC convergence
@@ -1234,4 +1164,6 @@ Where the last equality follows from $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_
 \prod_{ij}\frac{\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{1 + \exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}
 \end{equation}
 
-\pagebreak
+Related to this, block-diagonal ERGMs can be estimated as independent models, one per block. To see more about this, read [@Snijders2010margin]. Likewise, since independence depends--pun intended--on partitioning the objective function, as pointed by Snijders, non-linear functions make the model dependent, e.g., $\s{\mathbf{y}} = \sqrt{\sum_{ij}y_{ij}}$, the square root of the edgecount is no longer a bernoulli graph.
+
+

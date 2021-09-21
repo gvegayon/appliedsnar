@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.5 Statistical tests | Applied Network Science with R</title>
+  <title>5.9 Conditional Marginalization | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.5 Statistical tests | Applied Network Science with R" />
+  <meta property="og:title" content="5.9 Conditional Marginalization | Applied Network Science with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.5 Statistical tests | Applied Network Science with R" />
+  <meta name="twitter:title" content="5.9 Conditional Marginalization | Applied Network Science with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="plotting-the-network-in-igraph.html"/>
-<link rel="next" href="exponential-random-graph-models.html"/>
+<link rel="prev" href="markov-independence.html"/>
+<link rel="next" href="separable-temporal-exponential-family-random-graph-models.html"/>
 <script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -260,68 +260,25 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="statistical-tests" class="section level2" number="4.5">
-<h2><span class="header-section-number">4.5</span> Statistical tests</h2>
-<div id="is-nomination-number-correlated-with-indegree" class="section level3" number="4.5.1">
-<h3><span class="header-section-number">4.5.1</span> Is nomination number correlated with indegree?</h3>
-<p>Hypothesis: Individuals that on average are among the first nominations of their peers are more popular</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="statistical-tests.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting all the data in long format</span></span>
-<span id="cb121-2"><a href="statistical-tests.html#cb121-2" aria-hidden="true" tabindex="-1"></a>edgelist <span class="ot">&lt;-</span> <span class="fu">as_long_data_frame</span>(ig_year1) <span class="sc">%&gt;%</span></span>
-<span id="cb121-3"><a href="statistical-tests.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  as_tibble</span>
-<span id="cb121-4"><a href="statistical-tests.html#cb121-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb121-5"><a href="statistical-tests.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing indegree (again) and average nomination number</span></span>
-<span id="cb121-6"><a href="statistical-tests.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Include &quot;On a scale from one to five how close do you feel&quot;</span></span>
-<span id="cb121-7"><a href="statistical-tests.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Also for egocentric friends (A. Friends)</span></span>
-<span id="cb121-8"><a href="statistical-tests.html#cb121-8" aria-hidden="true" tabindex="-1"></a>indeg_nom_cor <span class="ot">&lt;-</span> <span class="fu">group_by</span>(edgelist, to, to_name, to_school) <span class="sc">%&gt;%</span></span>
-<span id="cb121-9"><a href="statistical-tests.html#cb121-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb121-10"><a href="statistical-tests.html#cb121-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">indeg   =</span> <span class="fu">length</span>(nnom),</span>
-<span id="cb121-11"><a href="statistical-tests.html#cb121-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">nom_avg =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">mean</span>(nnom)</span>
-<span id="cb121-12"><a href="statistical-tests.html#cb121-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb121-13"><a href="statistical-tests.html#cb121-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb121-14"><a href="statistical-tests.html#cb121-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">school =</span> to_school</span>
-<span id="cb121-15"><a href="statistical-tests.html#cb121-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb121-16"><a href="statistical-tests.html#cb121-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb121-17"><a href="statistical-tests.html#cb121-17" aria-hidden="true" tabindex="-1"></a>indeg_nom_cor</span></code></pre></div>
-<pre><code>## # A tibble: 1,561 x 5
-## # Groups:   to, to_name [1,561]
-##       to to_name school indeg nom_avg
-##    &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;
-##  1     2 1110002    111    22   0.222
-##  2     3 1110007    111     7   0.175
-##  3     4 1110013    111     6   0.171
-##  4     5 1110014    111    19   0.134
-##  5     6 1110015    111     3   0.15 
-##  6     7 1110020    111     6   0.154
-##  7     9 1110025    111     6   0.214
-##  8    10 1110027    111    13   0.220
-##  9    11 1110029    111    14   0.131
-## 10    12 1110030    111     6   0.222
-## # … with 1,551 more rows</code></pre>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="statistical-tests.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using pearson&#39;s correlation</span></span>
-<span id="cb123-2"><a href="statistical-tests.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(indeg_nom_cor, <span class="fu">cor.test</span>(indeg, nom_avg))</span></code></pre></div>
-<pre><code>## 
-##  Pearson&#39;s product-moment correlation
-## 
-## data:  indeg and nom_avg
-## t = -12.254, df = 1559, p-value &lt; 2.2e-16
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  -0.3409964 -0.2504653
-## sample estimates:
-##        cor 
-## -0.2963965</code></pre>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="statistical-tests.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">&quot;03.rda&quot;</span>)</span></code></pre></div>
+<div id="conditional-marginalization" class="section level2" number="5.9">
+<h2><span class="header-section-number">5.9</span> Conditional Marginalization</h2>
+<p>Related to the previous section, block-diagonal ERGMs can be estimated as independent models, one per block. To see more about this, read <span class="citation">(<a href="#ref-Snijders2010margin" role="doc-biblioref">SNIJDERS 2010</a>)</span>.</p>
 
 </div>
-</div>
 <!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Snijders2010margin" class="csl-entry">
+SNIJDERS, TOM A. B. 2010. <span>“<span class="nocase">Conditional Marginalization for Exponential Random Graph Models</span>.”</span> <em>The Journal of Mathematical Sociology</em> 34 (4): 239–52. <a href="https://doi.org/10.1080/0022250X.2010.485707">https://doi.org/10.1080/0022250X.2010.485707</a>.
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="plotting-the-network-in-igraph.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="exponential-random-graph-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="markov-independence.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="separable-temporal-exponential-family-random-graph-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -353,7 +310,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/gvegayon/appliedsnar/edit/master/03-week-1-sns-study.Rmd",
+"link": "https://github.com/gvegayon/appliedsnar/edit/master/04-ergms.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -361,7 +318,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/gvegayon/appliedsnar/blob/master/03-week-1-sns-study.Rmd",
+"link": "https://github.com/gvegayon/appliedsnar/blob/master/04-ergms.Rmd",
 "text": null
 },
 "download": ["appliedsnar.pdf", "appliedsnar.epub"],

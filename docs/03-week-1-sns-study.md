@@ -1,10 +1,10 @@
 # Network Nomination Data
 
-The data can be downloaded from [here](https://cdn.rawgit.com/gvegayon/appliedsnar/fdc0d26f/03-sns.dta).
+You can download the data for this chapter [here](https://cdn.rawgit.com/gvegayon/appliedsnar/fdc0d26f/03-sns.dta).
 
 The codebook for the data provided here is in [the appendix](#sns-data).
 
-This chapter's goals are:
+The goals for this chapter are:
 
 1.  Read the data into R,
 
@@ -18,7 +18,7 @@ This chapter's goals are:
 
 ### Reading the data into R
 
-R has several ways of reading data in. You data can be Raw plain files like CSV, tab delimited or specified by column width, for which you can use the [`readr`](https://cran.r-project.org/package=readr) package [@R-readr]; or it can be binary files like dta (Stata), Octave, SPSS, for which [`foreign`](https://cran.r-project.org/package=readr)  [@R-foreign] can be used; or it could be excel files in which case you should be using [`readxl`](https://cran.r-project.org/package=readxl) [@R-readxl]. In our case, the data for this session is in Stata format:
+R has several ways of reading data. Your data can be Raw plain files like CSV, tab-delimited, or specified by column width. To read plain-text data, you can use the [`readr`](https://cran.r-project.org/package=readr) package [@R-readr]. In the case of binary files, like Stata, Octave, or SPSS files, you can use the R package [`foreign`](https://cran.r-project.org/package=readr) [@R-foreign]. If your data is formatted as Microsoft spreadsheets, the [`readxl`](https://cran.r-project.org/package=readxl) R package [@R-readxl] is the alternative to use. In our case, the data for this session is in Stata format:
 
 
 ```r
@@ -48,7 +48,7 @@ dat[1:5, 1:10]
 
 ### Creating a unique id for each participant
 
-Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id such that, for example, the last three `x` numbers are the photoid and the first ones are the school id. To do this we need to take into account the range of the variables. Here, `photoid` has the following range:
+Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id. For example, the last three numbers are the photoid and the first ones are the school id. To do this, we need to take into account the range of the variables:
 
 
 ```r
@@ -101,7 +101,7 @@ library(magrittr)
 ## 6    111      15 1110015
 ```
 
-Wow, what happend in the last three lines of code! What is that `%>%`? Well, that's the [piping operator](http://r4ds.had.co.nz/pipes.html), and it is a very nice way of writing nested function calls. In this case, instead of having write something like
+Wow, what happened in the last three lines of code! What is that `%>%`? Well, that's the [pipe operator](http://r4ds.had.co.nz/pipes.html), and it is an appealing way of writing nested function calls. In this case, instead of writing something like:
 
 ```r
 dat_filtered$id <- dat_filtered$school*10000 + dat_filtered$photoid
@@ -112,13 +112,13 @@ subset(head(dat_filtered), select = c(school, photoid, id))
 
 *   We want to build a social network. For that, we either use an adjacency matrix or an edgelist.
 
-*   Each individual of the SNS data nomitated 19 friends from school. We will use those nominations to create the social network.
+*   Each individual of the SNS data nominated 19 friends from school. We will use those nominations to create the social network.
 
 *   In this case, we will create the network by coercing the dataset into an edgelist.
 
 ### From survey to edgelist
 
-Let's start by loading a couple of handy R packages for this task, `tidyr` [@R-tidyr], which we will use to reshape the data, and `stringr` [@R-stringr], which we will use to process strings using _regular expressions_^[Please refer to the help file `?'regular expression'` in R. The R package `rex` [@R-rex] is a very nice companion for writing regular expressions. There's also a neat (but experimental) RStudio addin that can be very helpful for understanding how regular expressions work, the [regexplain](https://github.com/gadenbuie/regexplain) addin.].
+Let's start by loading a couple of handy R packages. We will load `tidyr` [@R-tidyr] and `stringr` [@R-stringr]. We will use the first, `tidyr`, to reshape the data. The second, `stringr`, will help us processing strings using _regular expressions_^[Please refer to the help file `?'regular expression'` in R. The R package `rex` [@R-rex] is a very nice companion for writing regular expressions. There's also a neat (but experimental) RStudio add-in that can be very helpful for understanding how regular expressions work, the [regexplain](https://github.com/gadenbuie/regexplain) add-in.].
 
 
 ```r
@@ -126,14 +126,14 @@ library(tidyr)
 library(stringr)
 ```
 
-Optionally, we can use the `tibble` type of object which is an alternative to the actual `data.frame`. This object is claimed to provide _more efficient methods for matrices and data frames_.
+Optionally, we can use the `tibble` type of object, which is an alternative to the actual `data.frame`. This object is said to provide _more efficient methods for matrices and data frames_.
 
 
 ```r
 dat <- as_tibble(dat)
 ```
 
-What I like from tibbles is that when you print them on the console these actually look nice:
+What I like from `tibbles` is that when you print them on the console, these actually look nice:
  
 
 ```r
@@ -154,35 +154,36 @@ dat
 ##  8      22    111        1      NA      NA       0       0    NA      NA  
 ##  9      25    111        0       1       1      NA       1     4.5     3.5
 ## 10      27    111        1       0      NA       0       0     3.5    NA  
-## # … with 2,154 more rows, and 91 more variables: grades3 <dbl>, grades4 <dbl>,
-## #   eversmk1 <int>, eversmk2 <int>, eversmk3 <int>, eversmk4 <int>,
-## #   everdrk1 <int>, everdrk2 <int>, everdrk3 <int>, everdrk4 <int>,
-## #   home1 <int>, home2 <int>, home3 <int>, home4 <int>, sch_friend11 <int>,
-## #   sch_friend12 <int>, sch_friend13 <int>, sch_friend14 <int>,
-## #   sch_friend15 <int>, sch_friend16 <int>, sch_friend17 <int>,
-## #   sch_friend18 <int>, sch_friend19 <int>, sch_friend110 <int>,
-## #   sch_friend111 <int>, sch_friend112 <int>, sch_friend113 <int>,
-## #   sch_friend114 <int>, sch_friend115 <int>, sch_friend116 <int>,
-## #   sch_friend117 <int>, sch_friend118 <int>, sch_friend119 <int>,
-## #   sch_friend21 <int>, sch_friend22 <int>, sch_friend23 <int>,
-## #   sch_friend24 <int>, sch_friend25 <int>, sch_friend26 <int>,
-## #   sch_friend27 <int>, sch_friend28 <int>, sch_friend29 <int>,
-## #   sch_friend210 <int>, sch_friend211 <int>, sch_friend212 <int>,
-## #   sch_friend213 <int>, sch_friend214 <int>, sch_friend215 <int>,
-## #   sch_friend216 <int>, sch_friend217 <int>, sch_friend218 <int>,
-## #   sch_friend219 <int>, sch_friend31 <int>, sch_friend32 <int>,
-## #   sch_friend33 <int>, sch_friend34 <int>, sch_friend35 <int>,
-## #   sch_friend36 <int>, sch_friend37 <int>, sch_friend38 <int>,
-## #   sch_friend39 <int>, sch_friend310 <int>, sch_friend311 <int>,
-## #   sch_friend312 <int>, sch_friend313 <int>, sch_friend314 <int>,
-## #   sch_friend315 <int>, sch_friend316 <int>, sch_friend317 <int>,
-## #   sch_friend318 <int>, sch_friend319 <int>, sch_friend41 <int>,
-## #   sch_friend42 <int>, sch_friend43 <int>, sch_friend44 <int>,
-## #   sch_friend45 <int>, sch_friend46 <int>, sch_friend47 <int>,
-## #   sch_friend48 <int>, sch_friend49 <int>, sch_friend410 <int>,
-## #   sch_friend411 <int>, sch_friend412 <int>, sch_friend413 <int>,
-## #   sch_friend414 <int>, sch_friend415 <int>, sch_friend416 <int>,
-## #   sch_friend417 <int>, sch_friend418 <int>, sch_friend419 <int>, id <dbl>
+## # ... with 2,154 more rows, and 91 more variables: grades3 <dbl>,
+## #   grades4 <dbl>, eversmk1 <int>, eversmk2 <int>, eversmk3 <int>,
+## #   eversmk4 <int>, everdrk1 <int>, everdrk2 <int>, everdrk3 <int>,
+## #   everdrk4 <int>, home1 <int>, home2 <int>, home3 <int>, home4 <int>,
+## #   sch_friend11 <int>, sch_friend12 <int>, sch_friend13 <int>,
+## #   sch_friend14 <int>, sch_friend15 <int>, sch_friend16 <int>,
+## #   sch_friend17 <int>, sch_friend18 <int>, sch_friend19 <int>,
+## #   sch_friend110 <int>, sch_friend111 <int>, sch_friend112 <int>,
+## #   sch_friend113 <int>, sch_friend114 <int>, sch_friend115 <int>,
+## #   sch_friend116 <int>, sch_friend117 <int>, sch_friend118 <int>,
+## #   sch_friend119 <int>, sch_friend21 <int>, sch_friend22 <int>,
+## #   sch_friend23 <int>, sch_friend24 <int>, sch_friend25 <int>,
+## #   sch_friend26 <int>, sch_friend27 <int>, sch_friend28 <int>,
+## #   sch_friend29 <int>, sch_friend210 <int>, sch_friend211 <int>,
+## #   sch_friend212 <int>, sch_friend213 <int>, sch_friend214 <int>,
+## #   sch_friend215 <int>, sch_friend216 <int>, sch_friend217 <int>,
+## #   sch_friend218 <int>, sch_friend219 <int>, sch_friend31 <int>,
+## #   sch_friend32 <int>, sch_friend33 <int>, sch_friend34 <int>,
+## #   sch_friend35 <int>, sch_friend36 <int>, sch_friend37 <int>,
+## #   sch_friend38 <int>, sch_friend39 <int>, sch_friend310 <int>,
+## #   sch_friend311 <int>, sch_friend312 <int>, sch_friend313 <int>,
+## #   sch_friend314 <int>, sch_friend315 <int>, sch_friend316 <int>,
+## #   sch_friend317 <int>, sch_friend318 <int>, sch_friend319 <int>,
+## #   sch_friend41 <int>, sch_friend42 <int>, sch_friend43 <int>,
+## #   sch_friend44 <int>, sch_friend45 <int>, sch_friend46 <int>,
+## #   sch_friend47 <int>, sch_friend48 <int>, sch_friend49 <int>,
+## #   sch_friend410 <int>, sch_friend411 <int>, sch_friend412 <int>,
+## #   sch_friend413 <int>, sch_friend414 <int>, sch_friend415 <int>,
+## #   sch_friend416 <int>, sch_friend417 <int>, sch_friend418 <int>,
+## #   sch_friend419 <int>, id <dbl>
 ```
 
 
@@ -203,7 +204,7 @@ net <- dat %>%
 
 Let's take a look at this step by step:
 
-1.  First, we subset the data: We want to keep `id, school, sch_friend*`. For the later we use the function `starts_with` (from the `tidyselect` package). This allows us to select all variables that starts with the word "`sch_friend`", which means that `sch_friend11, sch_friend12, ...` will all be selected.
+1.  First, we subset the data: We want to keep `id, school, sch_friend*.` For the later, we use the function `starts_with` (from the `tidyselect` package). The latter allows us to select all variables that start with the word "`sch_friend`", which means that `sch_friend11, sch_friend12, ...` will be selected.
 
     
     ```r
@@ -225,7 +226,7 @@ Let's take a look at this step by step:
     ##  8 1110022    111           NA           NA           NA           NA
     ##  9 1110025    111          135          185          553           84
     ## 10 1110027    111          346          168          559            5
-    ## # … with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
+    ## # ... with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
     ## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
     ## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,
     ## #   sch_friend112 <int>, sch_friend113 <int>, sch_friend114 <int>,
@@ -252,7 +253,7 @@ Let's take a look at this step by step:
     ## #   sch_friend418 <int>, sch_friend419 <int>
     ```
     
-2.  Then, we reshape it to _long_ format: By transposing all the `sch_friend*` to long. We do this by means of the function `gather` (from the `tidyr` package). This is an alternative to the `reshape` function, and I personally find it easier to use. Let's see how it works:
+2.  Then, we reshape it to _long_ format: By transposing all the `sch_friend*` to long format. We do this using the function `gather` (from the `tidyr` package); an alternative to the `reshape` function, which I find easier to use. Let's see how it works:
 
     
     ```r
@@ -275,10 +276,10 @@ Let's take a look at this step by step:
     ##  8 1110022    111 sch_friend11      NA
     ##  9 1110025    111 sch_friend11     135
     ## 10 1110027    111 sch_friend11     346
-    ## # … with 164,454 more rows
+    ## # ... with 164,454 more rows
     ```
     
-    In this case the `key` parameter sets the name of the variable that will contain the name of the variable that was reshaped, while `value` is the name of the variable that will hold the content of the data (that's why I named those like that). The `-id, -school` bit tells the function to "drop" those variables before reshaping, in other words, "reshape everything but `id` and `school`".
+    In this case, the `key` parameter sets the name of the variable that will contain the name of the variable that was reshaped, while `value` is the name of the variable that will hold the content of the data (that's why I named those like that). The `-id, -school` bit tells the function to "drop" those variables before reshaping. In other words, "reshape everything but `id` and `school.`"
     
     Also, notice that we passed from 2164 rows to 19 (nominations) * 2164 (subjects) * 4 (waves) = 164464 rows, as expected.
     
@@ -306,10 +307,10 @@ Let's take a look at this step by step:
     ##  8 1110027    111 sch_friend11     346
     ##  9 1110029    111 sch_friend11     369
     ## 10 1110030    111 sch_friend11     462
-    ## # … with 39,551 more rows
+    ## # ... with 39,551 more rows
     ```
     
-4.  And finally, we create three new variables from this dataset: `friendid`, `year`, and `nom_num` (nomination number). All this using regular expressions:
+4.  And finally, we create three new variables from this dataset: `friendid,`, `year`, and `nom_num` (nomination number). All using regular expressions:
     
     
     ```r
@@ -338,10 +339,10 @@ Let's take a look at this step by step:
     ##  8 1110027    111 sch_friend11     346  1110346     1     1
     ##  9 1110029    111 sch_friend11     369  1110369     1     1
     ## 10 1110030    111 sch_friend11     462  1110462     1     1
-    ## # … with 39,551 more rows
+    ## # ... with 39,551 more rows
     ```
     
-    The regular expression `(?<=[a-z])` matches a string that is preceeded by any letter from _a_ to _z_, whereas the expression `[0-9]` matches a single number. Hence, from the string `"sch_friend12"`, the regular expression will only match the `1`, as it is the only number followed by a letter. On the other hand, the expression `(?<=[a-z][0-9])` matches a string that is preceeded by a letter from _a_ to _z_ and a number from _0_ to _9_; and the expression `[0-9]+` matches a string of numbers--so it could be more than one. Hence, from the string `"sch_friend12"`, we will get `2`. We can actually se this 
+    The regular expression `(?<=[a-z])` matches a string preceded by any letter from _a_ to _z_. In contrast, the expression `[0-9]` matches a single number. Hence, from the string `"sch_friend12"`, the regular expression will only match the `1`, as it is the only number followed by a letter. The expression `(?<=[a-z][0-9])` matches a string preceded by a lower case letter and a one-digit number. Finally, the expression `[0-9]+` matches a string of numbers--so it could be more than one. Hence, from the string `"sch_friend12"`, we will get `2`:
     
     
     ```r
@@ -363,9 +364,9 @@ And finally, the `as.integer` function coerces the returning value from the `str
 
 ### igraph network
 
-For coercing the edgelist into an igraph object, we will be using the `graph_from_data_frame` function in igraph [@R-igraph]. This function receives a data frame where the two first columns are sorce(ego) and target(alter), whether is it directed or not, and an optional data frame with vertices, in which's first column should contain the vertex ids.
+For coercing the edgelist into an igraph object, we will be using the `graph_from_data_frame` function in igraph [@R-igraph]. This function receives the following arguments: a data frame where the two first columns are "source" (ego) and "target" (alter), an indicator of whether the network is directed or not, and an optional data frame with vertices, in which's first column should contain the vertex ids.
 
-Using the optional `vertices` argument is a good practice since by doing so you are telling the function what is the set of vertex ids that you are expecting to find. Using the original dataset, we will create a data frame name vertices:
+Using the optional `vertices` argument is a good practice since, by doing so, you are telling the function what ids that you are expecting to find. Using the original dataset, we will create a data frame name vertices:
 
 
 ```r
@@ -391,7 +392,7 @@ ig_year1 <- net %>%
 ## Error in graph_from_data_frame(., vertices = vertex_attrs): Some vertex names in edge list are not listed in vertex data frame
 ```
 
-Ups! It seems that individuals are making nominations to other students that were not included on the survery. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
+Ups! It seems that individuals are making nominations to other students not included in the survey. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
 
 
 ```r
@@ -410,11 +411,11 @@ ig_year1
 ```
 
 ```
-## IGRAPH d5062c8 DN-- 2164 9514 -- 
+## IGRAPH 71220e9 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
 ## | nnom (e/n)
-## + edges from d5062c8 (vertex names):
+## + edges from 71220e9 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -424,11 +425,11 @@ ig_year1
 ## + ... omitted several edges
 ```
 
-So there we have, our network with 2164 nodes and 9514 edges. The next steps: get some descriptive stats and visualize our network.
+So there we have our network with 2164 nodes and 9514 edges. The following steps: get some descriptive stats and visualize our network.
 
 ## Network descriptive stats
 
-While we could do all networks at once, in this part we will focus on computing some network statistics for one of the schools only. We start by school 111. The first question that you should be asking your self now is, "how can I get that information from the igraph object?." Well, vertex attributes and edges attributes can be accessed via the `V` and `E` functions respectively; moreover, we can list what vertex/edge attributes are available:
+While we could do all networks at once, in this part, we will focus on computing some network statistics for one of the schools only. We start by school 111. The first question that you should be asking yourself now is, "how can I get that information from the igraph object?." Vertex and edges attributes can be accessed via the `V` and `E` functions, respectively; moreover, we can list what vertex/edge attributes are available:
 
 
 ```r
@@ -448,7 +449,7 @@ list.edge.attributes(ig_year1)
 ## [1] "nnom"
 ```
 
-Just like we would do with data frames, accessing vertex attributes is done via the dollar sign operator `$` together with the `V` function, for example, accessing the first 10 elements of the variable `hispanic` can be done as follows:
+Just like we would do with data frames, accessing vertex attributes is done via the dollar sign operator `$`. Together with the `V` function; for example, accessing the first ten elements of the variable `hispanic` can be done as follows:
 
 
 ```r
@@ -473,7 +474,7 @@ ig_year1_111 <- induced_subgraph(
 )
 ```
 
-The `which` function in R returns a vector of indices indicating which elements are true. In our case it will return a vector of indices of the vertices which have the attribute `school` equal to 111. Now that we have our subgraph, we can compute different centrality measures^[For more information about the different centrality measurements, please take a look at the "Centrality" article on [Wikipedia](https://en.wikipedia.org/wiki/Centrality).] for each vertex and store them in the igraph object itself:
+The `which` function in R returns a vector of indices indicating which elements pass the test, returning true and false, otherwise. In our case, it will result in a vector of indices of the vertices which have the attribute `school` equal to 111. With the subgraph, we can compute different centrality measures^[For more information about the different centrality measurements, please take a look at the "Centrality" article on [Wikipedia](https://en.wikipedia.org/wiki/Centrality).] for each vertex and store them in the igraph object itself:
 
 
 ```r
@@ -564,7 +565,7 @@ triadic
 ##  [9]      407       33      836      235      163      137      277       85
 ```
 
-To get a nicer view of this, we can use a table that I retrieved from `?triad_census`. Moreover, instead of looking a the raw counts, we can normalize the `triadic` object by its sum so we get proportions instead^[During our workshop, Prof. De la Haye suggested using ${n \choose 3}$ as a normalizing constant. It turns out that `sum(triadic) = choose(n, 3)`! So either approach is correct.]
+To get a nicer view of this, we can use a table that I retrieved from `?triad_census`. Moreover, we can normalize the `triadic` object by its sum instead of looking at raw counts. That way, we get proportions instead^[During our workshop, Prof. De la Haye suggested using ${n \choose 3}$ as a normalizing constant. It turns out that `sum(triadic) = choose(n, 3)`! So either approach is correct.]
 
 
 ```r
@@ -575,25 +576,43 @@ knitr::kable(cbind(
 ```
 
 
-
-| Pcent|code |description                                                        |
-|-----:|:----|:------------------------------------------------------------------|
-| 95.88|003  |A,B,C, the empty graph.                                            |
-|  2.89|012  |A->B, C, the graph with a single directed edge.                    |
-|  1.16|102  |A<->B, C, the graph with a mutual connection between two vertices. |
-|  0.01|021D |A<-B->C, the out-star.                                             |
-|  0.01|021U |A->B<-C, the in-star.                                              |
-|  0.02|021C |A->B->C, directed line.                                            |
-|  0.01|111D |A<->B<-C.                                                          |
-|  0.01|111U |A<->B->C.                                                          |
-|  0.00|030T |A->B<-C, A->C.                                                     |
-|  0.00|030C |A<-B<-C, A->C.                                                     |
-|  0.00|201  |A<->B<->C.                                                         |
-|  0.00|120D |A<-B->C, A<->C.                                                    |
-|  0.00|120U |A->B<-C, A<->C.                                                    |
-|  0.00|120C |A->B->C, A<->C.                                                    |
-|  0.00|210  |A->B<->C, A<->C.                                                   |
-|  0.00|300  |A<->B<->C, A<->C, the complete graph.                              |
+\begin{tabular}{r|l|l}
+\hline
+Pcent & code & description\\
+\hline
+95.88 & 003 & A,B,C, the empty graph.\\
+\hline
+2.89 & 012 & A->B, C, the graph with a single directed edge.\\
+\hline
+1.16 & 102 & A<->B, C, the graph with a mutual connection between two vertices.\\
+\hline
+0.01 & 021D & A<-B->C, the out-star.\\
+\hline
+0.01 & 021U & A->B<-C, the in-star.\\
+\hline
+0.02 & 021C & A->B->C, directed line.\\
+\hline
+0.01 & 111D & A<->B<-C.\\
+\hline
+0.01 & 111U & A<->B->C.\\
+\hline
+0.00 & 030T & A->B<-C, A->C.\\
+\hline
+0.00 & 030C & A<-B<-C, A->C.\\
+\hline
+0.00 & 201 & A<->B<->C.\\
+\hline
+0.00 & 120D & A<-B->C, A<->C.\\
+\hline
+0.00 & 120U & A->B<-C, A<->C.\\
+\hline
+0.00 & 120C & A->B->C, A<->C.\\
+\hline
+0.00 & 210 & A->B<->C, A<->C.\\
+\hline
+0.00 & 300 & A<->B<->C, A<->C, the complete graph.\\
+\hline
+\end{tabular}
 
 
 ## Plotting the network in igraph
@@ -607,20 +626,24 @@ Let's take a look at how does our network looks like when we use the default par
 plot(ig_year1)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-week-1-sns-study_files/figure-html/03-plot-raw-1.png" alt="A not very nice network plot. This is what we get with the default parameters in igraph." width="672" />
-<p class="caption">(\#fig:03-plot-raw)A not very nice network plot. This is what we get with the default parameters in igraph.</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{03-week-1-sns-study_files/figure-latex/03-plot-raw-1} 
+
+}
+
+\caption{A not very nice network plot. This is what we get with the default parameters in igraph.}(\#fig:03-plot-raw)
+\end{figure}
 
 Not very nice, right? A couple of things with this plot:
 
 1.  We are looking at all schools simultaneously, which does not make sense. So, instead of plotting `ig_year1`, we will focus on `ig_year1_111`.
 
-2.  All the vertices have the same size, and more over, are overalaping. So, instead of using the default size, we will size the vertices by indegree using the `degree` function, and passing the vector of degrees to `vertex.size`.^[Figuring out what is the optimal vertex size is a bit tricky. Without getting too technical, there's no other way of getting _nice_ vertex size other than just playing with different values of it. A nice solution to this is using [`netdiffuseR::igraph_vertex_rescale`](https://www.rdocumentation.org/packages/netdiffuseR/versions/1.17.0/topics/rescale_vertex_igraph) which rescales the vertices so that these keep their aspect ratio to a predefined proportion of the screen.]
+2.  All the vertices have the same size and are overlapping. Instead of using the default size, we will size the vertices by indegree using the `degree` function and passing the vector of degrees to `vertex.size`.^[Figuring out what is the optimal vertex size is a bit tricky. Without getting too technical, there's no other way of getting _nice_ vertex size other than just playing with different values of it. A nice solution to this is using [`netdiffuseR::igraph_vertex_rescale`](https://www.rdocumentation.org/packages/netdiffuseR/versions/1.17.0/topics/rescale_vertex_igraph) which rescales the vertices so that these keep their aspect ratio to a predefined proportion of the screen.]
 
 3.  Given the number of vertices in these networks, the labels are not useful here. So we will remove them by setting `vertex.label = NA`. Moreover, we will reduce the size of the arrows' tip by setting `edge.arrow.size = 0.25`.
 
-4.  And finally, we will set the color of each vertex to be a function of whether the individual is hispanic or not. For this last bit we need to go a bit more of programming:
+4.  And finally, we will set the color of each vertex to be a function of whether the individual is Hispanic or not. For this last bit we need to go a bit more of programming:
 
 
 ```r
@@ -631,11 +654,11 @@ col_hispanic <- c("steelblue", "tomato", "white")[col_hispanic]
 
 Line by line, we did the following:
 
-1.  The first line added one to all no `NA` values, so that the 0s (non-hispanic) turned to 1s and the 1s (hispanic) turned to 2s.
+1.  The first line added one to all no `NA` values so that the 0s (non-Hispanic) turned to 1s and the 1s (Hispanic) turned to 2s.
 
-2.  The second line replaced all `NA`s with the number 3, so that our vector `col_hispanic` now ranges from 1 to 3 with no `NA`s in it.
+2.  The second line replaced all `NA`s with the number three so that our vector `col_hispanic` now ranges from one to three with no `NA`s in it.
 
-3.  In the last line we created a vector of colors. Essentially, what we are doing here is telling R to create a vector of length `length(col_hispanic)` by selecting elements by index from the vector `c("steelblue", "tomato", "white")`. This way, if, for example, the first element of the vector `col_hispanic` was a 3, our new vector of colors would have a `"white"` in it.
+3.  In the last line, we created a vector of colors. Essentially, what we are doing here is telling R to create a vector of length `length(col_hispanic)` by selecting elements by index from the vector `c("steelblue", "tomato", "white")`. This way, if, for example, the first element of the vector `col_hispanic` was a 3, our new vector of colors would have a `"white"` in it.
 
 To make sure we know we are right, let's print the first 10 elements of our new vector of colors together with the original `hispanic` column:
 
@@ -676,12 +699,9 @@ plot(
   )
 ```
 
-<div class="figure">
-<img src="03-week-1-sns-study_files/figure-html/03-plot-neat1-1.png" alt="Friends network in time 1 for school 111. " width="672" />
-<p class="caption">(\#fig:03-plot-neat1)Friends network in time 1 for school 111. </p>
-</div>
+![(\#fig:03-plot-neat1)Friends network in time 1 for school 111. ](03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf) 
 
-Nice! So it does look better. The only problem is that we have a lot of isolates. Let's try again by drawing the same plot without isolates. To do so we need to filter the graph, for which we will use the function `induced_subgraph`
+Nice! So it does look better. The only problem is that we have a lot of isolates. Let's try again by drawing the same plot without isolates. To do so, we need to filter the graph, for which we will use the function `induced_subgraph`
 
 
 ```r
@@ -708,18 +728,15 @@ plot(
   )
 ```
 
-<div class="figure">
-<img src="03-week-1-sns-study_files/figure-html/03-plot-neat2-1.png" alt="Friends network in time 1 for school 111. The graph excludes isolates." width="672" />
-<p class="caption">(\#fig:03-plot-neat2)Friends network in time 1 for school 111. The graph excludes isolates.</p>
-</div>
+![(\#fig:03-plot-neat2)Friends network in time 1 for school 111. The graph excludes isolates.](03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf) 
 
-Now that's better! An interesting pattern that shows up is that individuals seem to cluster by whether they are hispanic or not. 
+Now that's better! An interesting pattern that shows up is that individuals seem to cluster by whether they are Hispanic or not. 
 
-We can actually write this as a function so that, instead of us copying and pasting the code $n$ times (supposing that we want to crate a plot similar to this $n$ times). The next subsection does that.
+We can write this as a function to avoid copying and pasting the code $n$ times (supposing that we want to create a plot similar to this $n$ times). We do the latter in the following subsection.
 
 ### Multiple plots
 
-When you are repeating yourself over and over again, it is a good idea to write down a sequence of commands as a function. In this case, since we will be running the same type of plot for all schools/waves, we write a function in which the only things that changes are: (a) the school id, and (b) the color of the nodes. 
+When you are repeating yourself repeatedly, it is a good idea to write down a sequence of commands as a function. In this case, since we will be running the same type of plot for all schools/waves, we write a function in which the only things that change are: (a) the school id, and (b) the color of the nodes. 
 
 
 ```r
@@ -753,9 +770,9 @@ The function definition:
 
 1.  The `myplot <- function([arguments]) {[body of the function]}` tells R that we are going to create a function called `myplot`.
 
-2.  In the arguments part, we are declaring 4 specific arguments: `net`, `schoolid`, `mindgr`, and `vcol`. These are an igraph object, the school id, the minimum degree that a vertex must have to be included in the plot, and the color of the vertices. Notice that, as a difference from other programming languages, in R we don't need to declare the types that these objects are.
+2.  We declare four specific arguments: `net`, `schoolid`, `mindgr`, and `vcol`. These are an igraph object, the school id, the minimum degree that vertices must have to be included in the figure, and the color of the vertices. Observe that, compared to other programming languages, R does not require declaring the data types.
 
-3.  The elipsis object, `...`, is a special object in R that allows us passing other arguments without us specifying which. In our case, if you take a look at the `plot` bit of the body of the function, you will see that we also added `...`; this means that whatever other arguments (different from the ones that we explicitly defined) are passed to the function, these will be passed to the function `plot`, moreover, to the `plot.gexf` function (since the `subnet` object is actually an igraph object). In practice, this implies that we can, for example, set the argument `edge.arrow.size` when calling `myplot`, even though we did not included it in the function definition! (See `?dotsMethods` in R for more details).
+3.  The ellipsis object, `...`, is an especial object in R that allows us to pass other arguments without specifying which. If you take a look at the `plot` bit in the function body, you will see that we also added `...`. We use the ellipsis to pass extra arguments (different from the ones that we explicitly defined) directly to `plot`. In practice, this implies that we can, for example, set the argument `edge.arrow.size` when calling `myplot`, even though we did not include it in the function definition! (See `?dotsMethods` in R for more details).
 
 In the following lines of code, using our new function, we will plot each schools' network in the same plotting device (window) with the help of the `par` function, and add legend with the `legend`:
 
@@ -783,18 +800,15 @@ legend(
   )
 ```
 
-<div class="figure">
-<img src="03-week-1-sns-study_files/figure-html/03-myplot-call-1.png" alt="All 5 schools in time 1. Again, the graphs exclude isolates." width="672" />
-<p class="caption">(\#fig:03-myplot-call)All 5 schools in time 1. Again, the graphs exclude isolates.</p>
-</div>
+![(\#fig:03-myplot-call)All 5 schools in time 1. Again, the graphs exclude isolates.](03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf) 
 
-So what happend here?
+So what happened here?
 
 *   `oldpar <- par(no.readonly = TRUE)` This line stores the current parameters for plotting. Since we are going to be changing them, we better make sure we are able to go back!.
 
-*   `par(mfrow = c(2, 3), mai = rep(0, 4), oma=rep(0, 4))` Here we are setting various things at the same time. `mfrow` specifies how many _figures_ will be drawn and in what order, in particular, we are asking the plotting device to allow for 2*3 = 6 plots organized in 2 rows and 3 columns, and these will be drawn by row.
+*   `par(mfrow = c(2, 3), mai = rep(0, 4), oma=rep(0, 4))` Here we are setting various things at the same time. `mfrow` specifies how many _figures_ will be drawn, and in what order. In particular, we are asking the plotting device to make room for 2*3 = 6 figures organized in two rows and three columns drawn by row.
     
-    `mai` specifies the size of the margins in inches. Setting all margins equal to zero (which is what we are doing now) gives more space to the network itself. The same is true for `oma`. See `?par` for more info.
+    `mai` specifies the size of the margins in inches, setting all margins equal to zero (which is what we are doing now) gives more space to the graph. The same is true for `oma`. See `?par` for more info.
     
 
 *   `myplot(ig_year1, ...)` This is simply calling our plotting function. The neat part of this is that, since we set `mfrow = c(2, 3)`, R takes care of _distributing_ the plots in the device.
@@ -805,7 +819,7 @@ So what happend here?
 
 ### Is nomination number correlated with indegree?
 
-Hypothesis: Individuals that on average are among the first nominations of their peers are more popular
+Hypothesis: Individuals that, on average, are among the first nominations of their peers are more popular
 
 
 ```r
@@ -843,7 +857,7 @@ indeg_nom_cor
 ##  8    10 1110027    111    13   0.220
 ##  9    11 1110029    111    14   0.131
 ## 10    12 1110030    111     6   0.222
-## # … with 1,551 more rows
+## # ... with 1,551 more rows
 ```
 
 ```r
