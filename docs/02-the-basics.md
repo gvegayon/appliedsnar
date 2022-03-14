@@ -382,7 +382,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](02-the-basics_files/figure-latex/random-numbers-1.pdf)<!-- --> 
+    <img src="02-the-basics_files/figure-html/random-numbers-1.png" width="672" />
     
     ```r
     # 100,000 N(0,1) numbers
@@ -390,7 +390,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](02-the-basics_files/figure-latex/random-numbers-2.pdf)<!-- --> 
+    <img src="02-the-basics_files/figure-html/random-numbers-2.png" width="672" />
     
     ```r
     # 100,000 N(10,25) numbers
@@ -398,7 +398,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](02-the-basics_files/figure-latex/random-numbers-3.pdf)<!-- --> 
+    <img src="02-the-basics_files/figure-html/random-numbers-3.png" width="672" />
     
     ```r
     # 100,000 Poisson(5) numbers
@@ -406,7 +406,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](02-the-basics_files/figure-latex/random-numbers-4.pdf)<!-- --> 
+    <img src="02-the-basics_files/figure-html/random-numbers-4.png" width="672" />
     
     ```r
     # 100,000 rexp(5) numbers
@@ -414,7 +414,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](02-the-basics_files/figure-latex/random-numbers-5.pdf)<!-- --> 
+    <img src="02-the-basics_files/figure-html/random-numbers-5.png" width="672" />
     
     More distributions available at `??Distributions`.
 

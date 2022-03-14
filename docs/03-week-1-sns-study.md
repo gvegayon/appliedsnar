@@ -141,7 +141,7 @@ dat
 ```
 
 ```
-## # A tibble: 2,164 x 100
+## # A tibble: 2,164 × 100
 ##    photoid school hispanic female1 female2 female3 female4 grades1 grades2
 ##      <int>  <int>    <dbl>   <int>   <int>   <int>   <int>   <dbl>   <dbl>
 ##  1       1    111        1      NA      NA       0       0    NA      NA  
@@ -154,36 +154,13 @@ dat
 ##  8      22    111        1      NA      NA       0       0    NA      NA  
 ##  9      25    111        0       1       1      NA       1     4.5     3.5
 ## 10      27    111        1       0      NA       0       0     3.5    NA  
-## # ... with 2,154 more rows, and 91 more variables: grades3 <dbl>,
-## #   grades4 <dbl>, eversmk1 <int>, eversmk2 <int>, eversmk3 <int>,
-## #   eversmk4 <int>, everdrk1 <int>, everdrk2 <int>, everdrk3 <int>,
-## #   everdrk4 <int>, home1 <int>, home2 <int>, home3 <int>, home4 <int>,
-## #   sch_friend11 <int>, sch_friend12 <int>, sch_friend13 <int>,
-## #   sch_friend14 <int>, sch_friend15 <int>, sch_friend16 <int>,
-## #   sch_friend17 <int>, sch_friend18 <int>, sch_friend19 <int>,
-## #   sch_friend110 <int>, sch_friend111 <int>, sch_friend112 <int>,
-## #   sch_friend113 <int>, sch_friend114 <int>, sch_friend115 <int>,
-## #   sch_friend116 <int>, sch_friend117 <int>, sch_friend118 <int>,
-## #   sch_friend119 <int>, sch_friend21 <int>, sch_friend22 <int>,
-## #   sch_friend23 <int>, sch_friend24 <int>, sch_friend25 <int>,
-## #   sch_friend26 <int>, sch_friend27 <int>, sch_friend28 <int>,
-## #   sch_friend29 <int>, sch_friend210 <int>, sch_friend211 <int>,
-## #   sch_friend212 <int>, sch_friend213 <int>, sch_friend214 <int>,
-## #   sch_friend215 <int>, sch_friend216 <int>, sch_friend217 <int>,
-## #   sch_friend218 <int>, sch_friend219 <int>, sch_friend31 <int>,
-## #   sch_friend32 <int>, sch_friend33 <int>, sch_friend34 <int>,
-## #   sch_friend35 <int>, sch_friend36 <int>, sch_friend37 <int>,
-## #   sch_friend38 <int>, sch_friend39 <int>, sch_friend310 <int>,
-## #   sch_friend311 <int>, sch_friend312 <int>, sch_friend313 <int>,
-## #   sch_friend314 <int>, sch_friend315 <int>, sch_friend316 <int>,
-## #   sch_friend317 <int>, sch_friend318 <int>, sch_friend319 <int>,
-## #   sch_friend41 <int>, sch_friend42 <int>, sch_friend43 <int>,
-## #   sch_friend44 <int>, sch_friend45 <int>, sch_friend46 <int>,
-## #   sch_friend47 <int>, sch_friend48 <int>, sch_friend49 <int>,
-## #   sch_friend410 <int>, sch_friend411 <int>, sch_friend412 <int>,
-## #   sch_friend413 <int>, sch_friend414 <int>, sch_friend415 <int>,
-## #   sch_friend416 <int>, sch_friend417 <int>, sch_friend418 <int>,
-## #   sch_friend419 <int>, id <dbl>
+## # … with 2,154 more rows, and 91 more variables: grades3 <dbl>, grades4 <dbl>,
+## #   eversmk1 <int>, eversmk2 <int>, eversmk3 <int>, eversmk4 <int>,
+## #   everdrk1 <int>, everdrk2 <int>, everdrk3 <int>, everdrk4 <int>,
+## #   home1 <int>, home2 <int>, home3 <int>, home4 <int>, sch_friend11 <int>,
+## #   sch_friend12 <int>, sch_friend13 <int>, sch_friend14 <int>,
+## #   sch_friend15 <int>, sch_friend16 <int>, sch_friend17 <int>,
+## #   sch_friend18 <int>, sch_friend19 <int>, sch_friend110 <int>, …
 ```
 
 
@@ -213,7 +190,7 @@ Let's take a look at this step by step:
     ```
     
     ```
-    ## # A tibble: 2,164 x 78
+    ## # A tibble: 2,164 × 78
     ##         id school sch_friend11 sch_friend12 sch_friend13 sch_friend14
     ##      <dbl>  <int>        <int>        <int>        <int>        <int>
     ##  1 1110001    111           NA           NA           NA           NA
@@ -226,31 +203,13 @@ Let's take a look at this step by step:
     ##  8 1110022    111           NA           NA           NA           NA
     ##  9 1110025    111          135          185          553           84
     ## 10 1110027    111          346          168          559            5
-    ## # ... with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
+    ## # … with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
     ## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
     ## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,
     ## #   sch_friend112 <int>, sch_friend113 <int>, sch_friend114 <int>,
     ## #   sch_friend115 <int>, sch_friend116 <int>, sch_friend117 <int>,
     ## #   sch_friend118 <int>, sch_friend119 <int>, sch_friend21 <int>,
-    ## #   sch_friend22 <int>, sch_friend23 <int>, sch_friend24 <int>,
-    ## #   sch_friend25 <int>, sch_friend26 <int>, sch_friend27 <int>,
-    ## #   sch_friend28 <int>, sch_friend29 <int>, sch_friend210 <int>,
-    ## #   sch_friend211 <int>, sch_friend212 <int>, sch_friend213 <int>,
-    ## #   sch_friend214 <int>, sch_friend215 <int>, sch_friend216 <int>,
-    ## #   sch_friend217 <int>, sch_friend218 <int>, sch_friend219 <int>,
-    ## #   sch_friend31 <int>, sch_friend32 <int>, sch_friend33 <int>,
-    ## #   sch_friend34 <int>, sch_friend35 <int>, sch_friend36 <int>,
-    ## #   sch_friend37 <int>, sch_friend38 <int>, sch_friend39 <int>,
-    ## #   sch_friend310 <int>, sch_friend311 <int>, sch_friend312 <int>,
-    ## #   sch_friend313 <int>, sch_friend314 <int>, sch_friend315 <int>,
-    ## #   sch_friend316 <int>, sch_friend317 <int>, sch_friend318 <int>,
-    ## #   sch_friend319 <int>, sch_friend41 <int>, sch_friend42 <int>,
-    ## #   sch_friend43 <int>, sch_friend44 <int>, sch_friend45 <int>,
-    ## #   sch_friend46 <int>, sch_friend47 <int>, sch_friend48 <int>,
-    ## #   sch_friend49 <int>, sch_friend410 <int>, sch_friend411 <int>,
-    ## #   sch_friend412 <int>, sch_friend413 <int>, sch_friend414 <int>,
-    ## #   sch_friend415 <int>, sch_friend416 <int>, sch_friend417 <int>,
-    ## #   sch_friend418 <int>, sch_friend419 <int>
+    ## #   sch_friend22 <int>, sch_friend23 <int>, sch_friend24 <int>, …
     ```
     
 2.  Then, we reshape it to _long_ format: By transposing all the `sch_friend*` to long format. We do this using the function `gather` (from the `tidyr` package); an alternative to the `reshape` function, which I find easier to use. Let's see how it works:
@@ -263,7 +222,7 @@ Let's take a look at this step by step:
     ```
     
     ```
-    ## # A tibble: 164,464 x 4
+    ## # A tibble: 164,464 × 4
     ##         id school varname      content
     ##      <dbl>  <int> <chr>          <int>
     ##  1 1110001    111 sch_friend11      NA
@@ -276,7 +235,7 @@ Let's take a look at this step by step:
     ##  8 1110022    111 sch_friend11      NA
     ##  9 1110025    111 sch_friend11     135
     ## 10 1110027    111 sch_friend11     346
-    ## # ... with 164,454 more rows
+    ## # … with 164,454 more rows
     ```
     
     In this case, the `key` parameter sets the name of the variable that will contain the name of the variable that was reshaped, while `value` is the name of the variable that will hold the content of the data (that's why I named those like that). The `-id, -school` bit tells the function to "drop" those variables before reshaping. In other words, "reshape everything but `id` and `school.`"
@@ -294,7 +253,7 @@ Let's take a look at this step by step:
     ```
     
     ```
-    ## # A tibble: 39,561 x 4
+    ## # A tibble: 39,561 × 4
     ##         id school varname      content
     ##      <dbl>  <int> <chr>          <int>
     ##  1 1110002    111 sch_friend11     424
@@ -307,7 +266,7 @@ Let's take a look at this step by step:
     ##  8 1110027    111 sch_friend11     346
     ##  9 1110029    111 sch_friend11     369
     ## 10 1110030    111 sch_friend11     462
-    ## # ... with 39,551 more rows
+    ## # … with 39,551 more rows
     ```
     
 4.  And finally, we create three new variables from this dataset: `friendid,`, `year`, and `nom_num` (nomination number). All using regular expressions:
@@ -326,7 +285,7 @@ Let's take a look at this step by step:
     ```
     
     ```
-    ## # A tibble: 39,561 x 7
+    ## # A tibble: 39,561 × 7
     ##         id school varname      content friendid  year  nnom
     ##      <dbl>  <int> <chr>          <int>    <dbl> <int> <int>
     ##  1 1110002    111 sch_friend11     424  1110424     1     1
@@ -339,7 +298,7 @@ Let's take a look at this step by step:
     ##  8 1110027    111 sch_friend11     346  1110346     1     1
     ##  9 1110029    111 sch_friend11     369  1110369     1     1
     ## 10 1110030    111 sch_friend11     462  1110462     1     1
-    ## # ... with 39,551 more rows
+    ## # … with 39,551 more rows
     ```
     
     The regular expression `(?<=[a-z])` matches a string preceded by any letter from _a_ to _z_. In contrast, the expression `[0-9]` matches a single number. Hence, from the string `"sch_friend12"`, the regular expression will only match the `1`, as it is the only number followed by a letter. The expression `(?<=[a-z][0-9])` matches a string preceded by a lower case letter and a one-digit number. Finally, the expression `[0-9]+` matches a string of numbers--so it could be more than one. Hence, from the string `"sch_friend12"`, we will get `2`:
@@ -411,11 +370,11 @@ ig_year1
 ```
 
 ```
-## IGRAPH 71220e9 DN-- 2164 9514 -- 
+## IGRAPH bdeb582 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
-## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n),
-## | nnom (e/n)
-## + edges from 71220e9 (vertex names):
+## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n), nnom
+## | (e/n)
+## + edges from bdeb582 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -485,8 +444,9 @@ V(ig_year1_111)$closeness  <- closeness(ig_year1_111, mode = "total")
 ```
 
 ```
-## Warning in closeness(ig_year1_111, mode = "total"): At centrality.c:
-## 2784 :closeness centrality is not well-defined for disconnected graphs
+## Warning in closeness(ig_year1_111, mode = "total"): At
+## centrality.c:2874 :closeness centrality is not well-defined for disconnected
+## graphs
 ```
 
 ```r
@@ -576,43 +536,25 @@ knitr::kable(cbind(
 ```
 
 
-\begin{tabular}{r|l|l}
-\hline
-Pcent & code & description\\
-\hline
-95.88 & 003 & A,B,C, the empty graph.\\
-\hline
-2.89 & 012 & A->B, C, the graph with a single directed edge.\\
-\hline
-1.16 & 102 & A<->B, C, the graph with a mutual connection between two vertices.\\
-\hline
-0.01 & 021D & A<-B->C, the out-star.\\
-\hline
-0.01 & 021U & A->B<-C, the in-star.\\
-\hline
-0.02 & 021C & A->B->C, directed line.\\
-\hline
-0.01 & 111D & A<->B<-C.\\
-\hline
-0.01 & 111U & A<->B->C.\\
-\hline
-0.00 & 030T & A->B<-C, A->C.\\
-\hline
-0.00 & 030C & A<-B<-C, A->C.\\
-\hline
-0.00 & 201 & A<->B<->C.\\
-\hline
-0.00 & 120D & A<-B->C, A<->C.\\
-\hline
-0.00 & 120U & A->B<-C, A<->C.\\
-\hline
-0.00 & 120C & A->B->C, A<->C.\\
-\hline
-0.00 & 210 & A->B<->C, A<->C.\\
-\hline
-0.00 & 300 & A<->B<->C, A<->C, the complete graph.\\
-\hline
-\end{tabular}
+
+| Pcent|code |description                                                        |
+|-----:|:----|:------------------------------------------------------------------|
+| 95.88|003  |A,B,C, the empty graph.                                            |
+|  2.89|012  |A->B, C, the graph with a single directed edge.                    |
+|  1.16|102  |A<->B, C, the graph with a mutual connection between two vertices. |
+|  0.01|021D |A<-B->C, the out-star.                                             |
+|  0.01|021U |A->B<-C, the in-star.                                              |
+|  0.02|021C |A->B->C, directed line.                                            |
+|  0.01|111D |A<->B<-C.                                                          |
+|  0.01|111U |A<->B->C.                                                          |
+|  0.00|030T |A->B<-C, A->C.                                                     |
+|  0.00|030C |A<-B<-C, A->C.                                                     |
+|  0.00|201  |A<->B<->C.                                                         |
+|  0.00|120D |A<-B->C, A<->C.                                                    |
+|  0.00|120U |A->B<-C, A<->C.                                                    |
+|  0.00|120C |A->B->C, A<->C.                                                    |
+|  0.00|210  |A->B<->C, A<->C.                                                   |
+|  0.00|300  |A<->B<->C, A<->C, the complete graph.                              |
 
 
 ## Plotting the network in igraph
@@ -626,14 +568,10 @@ Let's take a look at how does our network looks like when we use the default par
 plot(ig_year1)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{03-week-1-sns-study_files/figure-latex/03-plot-raw-1} 
-
-}
-
-\caption{A not very nice network plot. This is what we get with the default parameters in igraph.}(\#fig:03-plot-raw)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-week-1-sns-study_files/figure-html/03-plot-raw-1.png" alt="A not very nice network plot. This is what we get with the default parameters in igraph." width="672" />
+<p class="caption">(\#fig:03-plot-raw)A not very nice network plot. This is what we get with the default parameters in igraph.</p>
+</div>
 
 Not very nice, right? A couple of things with this plot:
 
@@ -699,7 +637,10 @@ plot(
   )
 ```
 
-![(\#fig:03-plot-neat1)Friends network in time 1 for school 111. ](03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf) 
+<div class="figure">
+<img src="03-week-1-sns-study_files/figure-html/03-plot-neat1-1.png" alt="Friends network in time 1 for school 111. " width="672" />
+<p class="caption">(\#fig:03-plot-neat1)Friends network in time 1 for school 111. </p>
+</div>
 
 Nice! So it does look better. The only problem is that we have a lot of isolates. Let's try again by drawing the same plot without isolates. To do so, we need to filter the graph, for which we will use the function `induced_subgraph`
 
@@ -728,7 +669,10 @@ plot(
   )
 ```
 
-![(\#fig:03-plot-neat2)Friends network in time 1 for school 111. The graph excludes isolates.](03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf) 
+<div class="figure">
+<img src="03-week-1-sns-study_files/figure-html/03-plot-neat2-1.png" alt="Friends network in time 1 for school 111. The graph excludes isolates." width="672" />
+<p class="caption">(\#fig:03-plot-neat2)Friends network in time 1 for school 111. The graph excludes isolates.</p>
+</div>
 
 Now that's better! An interesting pattern that shows up is that individuals seem to cluster by whether they are Hispanic or not. 
 
@@ -800,7 +744,10 @@ legend(
   )
 ```
 
-![(\#fig:03-myplot-call)All 5 schools in time 1. Again, the graphs exclude isolates.](03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf) 
+<div class="figure">
+<img src="03-week-1-sns-study_files/figure-html/03-myplot-call-1.png" alt="All 5 schools in time 1. Again, the graphs exclude isolates." width="672" />
+<p class="caption">(\#fig:03-myplot-call)All 5 schools in time 1. Again, the graphs exclude isolates.</p>
+</div>
 
 So what happened here?
 
@@ -838,12 +785,18 @@ indeg_nom_cor <- group_by(edgelist, to, to_name, to_school) %>%
   rename(
     school = to_school
   )
+```
 
+```
+## `summarise()` has grouped output by 'to', 'to_name'. You can override using the `.groups` argument.
+```
+
+```r
 indeg_nom_cor
 ```
 
 ```
-## # A tibble: 1,561 x 5
+## # A tibble: 1,561 × 5
 ## # Groups:   to, to_name [1,561]
 ##       to to_name school indeg nom_avg
 ##    <dbl> <chr>    <int> <int>   <dbl>
@@ -857,7 +810,7 @@ indeg_nom_cor
 ##  8    10 1110027    111    13   0.220
 ##  9    11 1110029    111    14   0.131
 ## 10    12 1110030    111     6   0.222
-## # ... with 1,551 more rows
+## # … with 1,551 more rows
 ```
 
 ```r

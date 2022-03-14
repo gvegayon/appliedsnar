@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.2 Estimation of ERGMs | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.2 Estimation of ERGMs | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2021-09-15" />
+<meta name="date" content="2022-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="a-naïve-example.html"/>
 <link rel="next" href="the-ergm-package.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +51,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40608305-4"></script>
 <script>
@@ -168,79 +169,111 @@ div.csl-indent {
 <li><a href="./">Applied SNA with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="the-book.html"><a href="the-book.html"><i class="fa fa-check"></i><b>1.1</b> The Book</a></li>
-<li class="chapter" data-level="1.2" data-path="the-author.html"><a href="the-author.html"><i class="fa fa-check"></i><b>1.2</b> The author</a></li>
+<li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#the-book"><i class="fa fa-check"></i><b>1.0.1</b> The Book<span></span></a></li>
+<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#the-author"><i class="fa fa-check"></i><b>1.0.2</b> The author<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
-<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
-<li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits</a></li>
-<li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
+<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages<span></span></a></li>
+<li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits<span></span></a></li>
+<li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
-<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
+<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R<span></span></a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
-<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
+<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a>
+<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats<span></span></a></li>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
-<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
+<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot<span></span></a></li>
+<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a>
 <ul>
-<li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example</a></li>
-<li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs</a></li>
-<li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package</a></li>
-<li class="chapter" data-level="5.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.4</b> Running ERGMs</a></li>
-<li class="chapter" data-level="5.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.5</b> Model Goodness-of-Fit</a></li>
-<li class="chapter" data-level="5.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.6</b> More on MCMC convergence</a></li>
-<li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation</a></li>
-<li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence</a></li>
-<li class="chapter" data-level="5.9" data-path="conditional-marginalization.html"><a href="conditional-marginalization.html"><i class="fa fa-check"></i><b>5.9</b> Conditional Marginalization</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
-<li class="chapter" data-level="7" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>7</b> Stochastic Actor Oriented Models</a></li>
-<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks</a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap</a></li>
-<li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal</a></li>
-<li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal</a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats</a></li>
+<li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a>
 <ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package<span></span></a></li>
+<li class="chapter" data-level="5.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.4</b> Running ERGMs<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.5</b> Model Goodness-of-Fit<span></span></a></li>
+<li class="chapter" data-level="5.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.6</b> More on MCMC convergence<span></span></a></li>
+<li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation<span></span></a></li>
+<li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
+<li class="chapter" data-level="7" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing in networks<span></span></a>
 <ul>
-<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
-<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
+<li class="chapter" data-level="7.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>7.1</b> Comparing networks<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>7.1.1</b> Network bootstrap<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>7.1.2</b> When the statistic is normal<span></span></a></li>
+<li class="chapter" data-level="7.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>7.1.3</b> When the statistic is NOT normal<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7.2</b> Examples<span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>7.2.1</b> Average of node-level stats<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="8" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>8</b> Network diffussion with <code>netdiffuseR</code><span></span></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>8.1</b> Network diffusion of innovation<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>8.1.1</b> Diffusion networks<span></span></a></li>
+<li class="chapter" data-level="8.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>8.1.2</b> Thresholds<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>8.2</b> The netdiffuseR R package<span></span></a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>8.2.1</b> Overview<span></span></a></li>
+<li class="chapter" data-level="8.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>8.2.2</b> Datasets<span></span></a></li>
+<li class="chapter" data-level="8.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>8.2.3</b> Visualization methods<span></span></a></li>
+<li class="chapter" data-level="8.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>8.2.4</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>8.3</b> Simulation of diffusion processes<span></span></a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>8.3.1</b> Simulating diffusion networks<span></span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>8.3.2</b> Rumor spreading<span></span></a></li>
+<li class="chapter" data-level="8.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>8.3.3</b> Difussion<span></span></a></li>
+<li class="chapter" data-level="8.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>8.3.4</b> Mentor Matching<span></span></a></li>
+<li class="chapter" data-level="8.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>8.3.5</b> Example by changing threshold<span></span></a></li>
+<li class="chapter" data-level="8.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>8.3.6</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>8.4</b> Statistical inference<span></span></a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>8.4.1</b> Moran’s I<span></span></a></li>
+<li class="chapter" data-level="8.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>8.4.2</b> Using geodesics<span></span></a></li>
+<li class="chapter" data-level="8.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>8.4.3</b> Structural dependence and permutation tests<span></span></a></li>
+<li class="chapter" data-level="8.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>8.4.4</b> Idea<span></span></a></li>
+<li class="chapter" data-level="8.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>8.4.5</b> Regression analysis<span></span></a></li>
+<li class="chapter" data-level="8.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>8.4.6</b> Problems<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>9</b> Stochastic Actor Oriented Models<span></span></a></li>
+<li class="appendix"><span><b>Appendix<span></span></b></span></li>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data<span></span></a></li>
+<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables<span></span></a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references">References<span></span></a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -260,8 +293,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="estimation-of-ergms" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Estimation of ERGMs</h2>
+<div id="estimation-of-ergms" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Estimation of ERGMs<a href="estimation-of-ergms.html#estimation-of-ergms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The ultimate goal is to perform statistical inference on the proposed model. In a <em>standard</em> setting, we would be able to use Maximum-Likelihood-Estimation (MLE), which consists of finding the model parameters <span class="math inline">\(\theta\)</span> that, given the observed data, maximize the likelihood of the model. For the latter, we generally use <a href="https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization">Newton’s method</a>. Newton’s method requires been able to compute the log-likelihood of the model, which in ERGMs can be challenging.</p>
 <p>For ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straightforward as in the regular setting. Because of it, most estimation methods rely on simulations.</p>
 <p>In <code>statnet</code>, the default estimation method is based on a method proposed by <span class="citation">(<a href="#ref-Geyer1992" role="doc-biblioref">Geyer and Thompson 1992</a>)</span>, Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorithm to estimate the parameters.</p>
@@ -309,7 +342,7 @@ l(\theta) - l(\theta_0) \approx (\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf
 </ol>
 <p>For more details see <span class="citation">(<a href="#ref-lusher2012" role="doc-biblioref">Lusher, Koskinen, and Robins 2012</a>; <a href="#ref-admiraal2006" role="doc-biblioref">Admiraal and Handcock 2006</a>; <a href="#ref-Snijders2002" role="doc-biblioref">T. A. Snijders 2002</a>; <a href="#ref-Wang2009" role="doc-biblioref">Wang et al. 2009</a>)</span> provides details on the algorithm used by PNet (which is the same as the one used in <code>RSiena</code>). <span class="citation">(<a href="#ref-lusher2012" role="doc-biblioref">Lusher, Koskinen, and Robins 2012</a>)</span> provides a short discussion on differences between <code>ergm</code> and <code>PNet</code>.</p>
 </div>
-<h3>References</h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-admiraal2006" class="csl-entry">
 Admiraal, Ryan, and Mark S Handcock. 2006. <span>“Sequential Importance Sampling for Bipartite Graphs with Applications to Likelihood-Based Inference.”</span> Department of Statistics, University of Washington.
@@ -340,7 +373,6 @@ Wang, Peng, Ken Sharpe, Garry L. Robins, and Philippa E. Pattison. 2009. <span>�
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -380,6 +412,10 @@ gitbook.start({
 "text": null
 },
 "download": ["appliedsnar.pdf", "appliedsnar.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

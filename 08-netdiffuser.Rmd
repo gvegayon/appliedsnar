@@ -10,7 +10,7 @@ and [George G. Vega Yon](https://ggvy.cl) (author of this book), is available [h
 
 ### Diffusion networks
 
-```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+```{r setup-netdiffuseR, echo=FALSE, message=FALSE, warning=FALSE}
 library(netdiffuseR)
 ```
 
@@ -27,7 +27,7 @@ library(netdiffuseR)
 
 ### Thresholds
 
-*   One of the canonical concepts is the network threshold. Network thresholds (Valente, 1995; 1996), $\tau$, are defined as the required proportion or number of neighbors that lead you to adopt a particular behavior (innovation), $a=1$. In (very) general terms\pause
+*   One of the canonical concepts is the network threshold. Network thresholds (Valente, 1995; 1996), $\tau$, are defined as the required proportion or number of neighbors that lead you to adopt a particular behavior (innovation), $a=1$. In (very) general terms
     
     $$
     a_i = \left\{\begin{array}{ll}
@@ -103,7 +103,7 @@ plot_hazard(x)
 
 ## Simulation of diffusion processes
 
-```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+```{r setup-sim, echo=FALSE, message=FALSE, warning=FALSE}
 library(netdiffuseR)
 ```
 
@@ -401,7 +401,7 @@ legend(
       netdiffuseR = netdiffuseR::approx_geodesic(dgc),
       igraph = igraph::distances(ig),
       sna = sna::geodist(mat),
-      times = 50, unit="relative"
+      times = 50, unit="ms"
     )
     ```
     

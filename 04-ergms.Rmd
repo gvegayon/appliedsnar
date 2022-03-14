@@ -2,6 +2,15 @@
 
 I strongly suggest reading the vignette included in the `ergm` R package
 
+```{r echo=FALSE}
+if (file.exists("ergm.rda")) {
+  load("ergm.rda")
+  chapter_cached <- TRUE
+} else {
+  chapter_cached <- FALSE
+}
+```
+
 ```r
 vignette("ergm", package="ergm")
 ```
@@ -226,7 +235,7 @@ What to use:
 
 Here is an example of a couple of models that we could compare^[Notice that this document may not include the usual messages that the `ergm` command generates during the estimation procedure. This is just to make it more printable-friendly.]
 
-```{r 04-ergms-model0, cache=TRUE, eval=TRUE, message=FALSE}
+```{r 04-ergms-model0, cache=TRUE, eval=!chapter_cached, message=FALSE}
 ans0 <- ergm(
   network_111 ~
     edges +
@@ -257,7 +266,7 @@ So what are we doing here:
     
 For more on control parameters, see [@Morris2008].
 
-```{r 04-ergms-model1, cache=TRUE, eval=TRUE, message=FALSE}
+```{r 04-ergms-model1, cache=TRUE, eval=!chapter_cached, message=FALSE}
 ans1 <- ergm(
   network_111 ~
     edges +
@@ -277,7 +286,7 @@ ans1 <- ergm(
 
 This example takes longer to compute
 
-```{r 04-ergms-model2, cache=TRUE, eval=TRUE, message=FALSE}
+```{r 04-ergms-model2, cache=TRUE, eval=!chapter_cached, message=FALSE}
 ans2 <- ergm(
   network_111 ~
     edges +
@@ -399,7 +408,8 @@ One nice feature of the `mcmc.diagnostics` function is the nice trace and poster
 
 
 ```{r coda-plots, fig.align='center', fig.height=8, cache=FALSE, echo=TRUE, results='hide', warning=FALSE, fig.cap=c("Trace and posterior distribution of sampled network statistics.", "Trace and posterior distribution of sampled network statistics (cont'd)."), fig.pos='!h'}
-mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output
+# [2022-03-13] This line is failing for what it could be an ergm bug
+# mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output
 ```
 
 

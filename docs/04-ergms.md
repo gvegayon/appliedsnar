@@ -2,6 +2,8 @@
 
 I strongly suggest reading the vignette included in the `ergm` R package
 
+
+
 ```r
 vignette("ergm", package="ergm")
 ```
@@ -55,50 +57,25 @@ library(ergm)
 ```
 
 ```
-## network: Classes for Relational Data
-## Version 1.16.1 created on 2020-10-06.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##                     Mark S. Handcock, University of California -- Los Angeles
-##                     David R. Hunter, Penn State University
-##                     Martina Morris, University of Washington
-##                     Skye Bender-deMoll, University of Washington
-##  For citation information, type citation("network").
-##  Type help("network-package") to get started.
+## 
+## 'network' 1.17.1 (2021-06-12), part of the Statnet Project
+## * 'news(package="network")' for changes since last version
+## * 'citation("network")' for citation information
+## * 'https://statnet.org' for help, support, and other information
 ```
 
 ```
 ## 
-## ergm: version 3.11.0, created on 2020-10-14
-## Copyright (c) 2020, Mark S. Handcock, University of California -- Los Angeles
-##                     David R. Hunter, Penn State University
-##                     Carter T. Butts, University of California -- Irvine
-##                     Steven M. Goodreau, University of Washington
-##                     Pavel N. Krivitsky, UNSW Sydney
-##                     Martina Morris, University of Washington
-##                     with contributions from
-##                     Li Wang
-##                     Kirk Li, University of Washington
-##                     Skye Bender-deMoll, University of Washington
-##                     Chad Klumb
-##                     Michał Bojanowski, Kozminski University
-##                     Ben Bolker
-## Based on "statnet" project software (statnet.org).
-## For license and citation information see statnet.org/attribution
-## or type citation("ergm").
+## 'ergm' 4.1.2 (2021-07-26), part of the Statnet Project
+## * 'news(package="ergm")' for changes since last version
+## * 'citation("ergm")' for citation information
+## * 'https://statnet.org' for help, support, and other information
 ```
 
 ```
-## NOTE: Versions before 3.6.1 had a bug in the implementation of the bd()
-## constraint which distorted the sampled distribution somewhat. In
-## addition, Sampson's Monks datasets had mislabeled vertices. See the
-## NEWS and the documentation for more details.
-```
-
-```
-## NOTE: Some common term arguments pertaining to vertex attribute and
-## level selection have changed in 3.10.0. See terms help for more
-## details. Use 'options(ergm.term=list(version="3.9.4"))' to use old
-## behavior.
+## 'ergm' 4 is a major update that introduces some backwards-incompatible
+## changes. Please type 'news(package="ergm")' for a list of major
+## changes.
 ```
 
 ```r
@@ -176,8 +153,7 @@ ergm(samplike ~ edges)
 ## Call:
 ## ergm(formula = samplike ~ edges)
 ## 
-## 
-## MLE Coefficients:
+## Maximum Likelihood Coefficients:
 ##   edges  
 ## -0.9072
 ```
@@ -312,7 +288,6 @@ ergm(network_111 ~ edges)
 
 ```
 ## [1] "Warning:  This network contains loops"
-## [1] "Warning:  This network contains loops"
 ```
 
 ```
@@ -341,7 +316,10 @@ ergm(network_111 ~ edges)
 
 ```
 ## 
-## MLE Coefficients:
+## Call:
+## ergm(formula = network_111 ~ edges)
+## 
+## Maximum Likelihood Coefficients:
 ##  edges  
 ## -4.734
 ```
@@ -354,7 +332,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from 6f34d4e (vertex names):
+## + 1/2638 edge from 0082447 (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -431,16 +409,6 @@ ans0 <- ergm(
   )
 ```
 
-```
-## Warning in nobs.ergm(object, ...): The number of observed dyads in this
-## network is ill-defined due to complex constraints on the sample space.
-## Disable this warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
-
-## Warning in nobs.ergm(object, ...): The number of observed dyads in this
-## network is ill-defined due to complex constraints on the sample space.
-## Disable this warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
-```
-
 So what are we doing here:
 
 1.  The model is controlling for: 
@@ -472,16 +440,6 @@ ans1 <- ergm(
   )
 ```
 
-```
-## Warning in nobs.ergm(object, ...): The number of observed dyads in this
-## network is ill-defined due to complex constraints on the sample space.
-## Disable this warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
-
-## Warning in nobs.ergm(object, ...): The number of observed dyads in this
-## network is ill-defined due to complex constraints on the sample space.
-## Disable this warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
-```
-
 This example takes longer to compute
 
 
@@ -503,16 +461,6 @@ ans2 <- ergm(
     CD.maxit    = 10
     )
   )
-```
-
-```
-## Warning in nobs.ergm(object, ...): The number of observed dyads in this
-## network is ill-defined due to complex constraints on the sample space.
-## Disable this warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
-
-## Warning in nobs.ergm(object, ...): The number of observed dyads in this
-## network is ill-defined due to complex constraints on the sample space.
-## Disable this warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
 ```
 
 Now, a nice trick to see all regressions in the same table, we can use the `texreg` package [@R-texreg] which supports `ergm` ouputs!
@@ -547,37 +495,26 @@ screenreg(list(ans0, ans1, ans2))
 ```
 
 ```
-## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
-## Summarizing it with version 3.11 or later may return incorrect results or fail.
-
-## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
-## Summarizing it with version 3.11 or later may return incorrect results or fail.
-
-## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
-## Summarizing it with version 3.11 or later may return incorrect results or fail.
-```
-
-```
 ## 
 ## ===============================================================
 ##                     Model 1        Model 2        Model 3      
 ## ---------------------------------------------------------------
-## edges                   -5.64 ***      -5.52 ***      -5.58 ***
+## edges                   -5.63 ***      -5.49 ***      -5.60 ***
 ##                         (0.05)         (0.06)         (0.06)   
-## nodematch.hispanic       0.36 ***       0.50 ***       0.40 ***
+## nodematch.hispanic       0.22 ***       0.30 ***       0.22 ***
+##                         (0.04)         (0.05)         (0.04)   
+## nodematch.female1        0.87 ***       1.17 ***       0.87 ***
+##                         (0.04)         (0.05)         (0.04)   
+## nodematch.eversmk1       0.33 ***       0.45 ***       0.34 ***
 ##                         (0.04)         (0.04)         (0.04)   
-## nodematch.female1        0.83 ***       1.10 ***       0.83 ***
-##                         (0.04)         (0.05)         (0.04)   
-## nodematch.eversmk1       0.35 ***       0.46 ***       0.36 ***
-##                         (0.04)         (0.05)         (0.04)   
-## mutual                   4.09 ***                     -3.55 ***
-##                         (0.07)                        (0.25)   
-## balance                                                0.02 ***
+## mutual                   4.10 ***                      1.75 ***
+##                         (0.07)                        (0.14)   
+## balance                                                0.01 ***
 ##                                                       (0.00)   
 ## ---------------------------------------------------------------
-## AIC                 -32986.67      -31399.10      -33035.32    
-## BIC                 -32936.32      -31358.82      -32974.91    
-## Log Likelihood       16498.33       15703.55       16523.66    
+## AIC                 -40017.80      -37511.87      -39989.59    
+## BIC                 -39967.46      -37471.60      -39929.18    
+## Log Likelihood       20013.90       18759.94       20000.79    
 ## ===============================================================
 ## *** p < 0.001; ** p < 0.01; * p < 0.05
 ```
@@ -585,54 +522,121 @@ screenreg(list(ans0, ans1, ans2))
 Or, if you are using rmarkdown, you can export the results using LaTeX or html, let's try the latter to see how it looks like here:
 
 
-
-
 ```r
 library(texreg)
-texreg(list(ans0, ans1, ans2))
+htmlreg(list(ans0, ans1, ans2))
 ```
 
-```
-## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
-## Summarizing it with version 3.11 or later may return incorrect results or fail.
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>Statistical models</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">&nbsp;</th>
+<th style="padding-left: 5px;padding-right: 5px;">Model 1</th>
+<th style="padding-left: 5px;padding-right: 5px;">Model 2</th>
+<th style="padding-left: 5px;padding-right: 5px;">Model 3</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">edges</td>
+<td style="padding-left: 5px;padding-right: 5px;">-5.63<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">-5.49<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">-5.60<sup>***</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.05)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.06)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.06)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">nodematch.hispanic</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.22<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.30<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.22<sup>***</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.05)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">nodematch.female1</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.87<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">1.17<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.87<sup>***</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.05)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">nodematch.eversmk1</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.33<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.45<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.34<sup>***</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">mutual</td>
+<td style="padding-left: 5px;padding-right: 5px;">4.10<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">1.75<sup>***</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.07)</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.14)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">balance</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.01<sup>***</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.00)</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">AIC</td>
+<td style="padding-left: 5px;padding-right: 5px;">-40017.80</td>
+<td style="padding-left: 5px;padding-right: 5px;">-37511.87</td>
+<td style="padding-left: 5px;padding-right: 5px;">-39989.59</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">BIC</td>
+<td style="padding-left: 5px;padding-right: 5px;">-39967.46</td>
+<td style="padding-left: 5px;padding-right: 5px;">-37471.60</td>
+<td style="padding-left: 5px;padding-right: 5px;">-39929.18</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">Log Likelihood</td>
+<td style="padding-left: 5px;padding-right: 5px;">20013.90</td>
+<td style="padding-left: 5px;padding-right: 5px;">18759.94</td>
+<td style="padding-left: 5px;padding-right: 5px;">20000.79</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="4"><sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05</td>
+</tr>
+</tfoot>
+</table>
 
-## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
-## Summarizing it with version 3.11 or later may return incorrect results or fail.
 
-## Warning: This object was fit with 'ergm' version 3.10.4.5075 or earlier.
-## Summarizing it with version 3.11 or later may return incorrect results or fail.
-```
-
-
-\begin{table}
-\begin{center}
-\begin{tabular}{l c c c}
-\hline
- & Model 1 & Model 2 & Model 3 \\
-\hline
-edges              & $-5.64^{***}$ & $-5.52^{***}$ & $-5.58^{***}$ \\
-                   & $(0.05)$      & $(0.06)$      & $(0.06)$      \\
-nodematch.hispanic & $0.36^{***}$  & $0.50^{***}$  & $0.40^{***}$  \\
-                   & $(0.04)$      & $(0.04)$      & $(0.04)$      \\
-nodematch.female1  & $0.83^{***}$  & $1.10^{***}$  & $0.83^{***}$  \\
-                   & $(0.04)$      & $(0.05)$      & $(0.04)$      \\
-nodematch.eversmk1 & $0.35^{***}$  & $0.46^{***}$  & $0.36^{***}$  \\
-                   & $(0.04)$      & $(0.05)$      & $(0.04)$      \\
-mutual             & $4.09^{***}$  &               & $-3.55^{***}$ \\
-                   & $(0.07)$      &               & $(0.25)$      \\
-balance            &               &               & $0.02^{***}$  \\
-                   &               &               & $(0.00)$      \\
-\hline
-AIC                & $-32986.67$   & $-31399.10$   & $-33035.32$   \\
-BIC                & $-32936.32$   & $-31358.82$   & $-32974.91$   \\
-Log Likelihood     & $16498.33$    & $15703.55$    & $16523.66$    \\
-\hline
-\multicolumn{4}{l}{\scriptsize{$^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$}}
-\end{tabular}
-\caption{Statistical models}
-\label{table:coefficients}
-\end{center}
-\end{table}
 
 
 
@@ -683,29 +687,29 @@ Under the hood:
     
     ```
     ## 
-    ## Iterations = 16384:1063936
-    ## Thinning interval = 1024 
+    ## Iterations = 1769472:10944512
+    ## Thinning interval = 65536 
     ## Number of chains = 4 
-    ## Sample size per chain = 1024 
+    ## Sample size per chain = 141 
     ## 
     ## 1. Empirical mean and standard deviation for each variable,
     ##    plus standard error of the mean:
     ## 
-    ##                      Mean    SD Naive SE Time-series SE
-    ## edges              2474.3 55.40   0.8656          4.129
-    ## nodematch.hispanic 1836.5 43.56   0.6806          3.836
-    ## nodematch.female1  1867.3 49.50   0.7735          4.900
-    ## nodematch.eversmk1 1755.0 45.32   0.7081          2.926
-    ## mutual              485.1 20.07   0.3136          3.544
+    ##                    Mean    SD Naive SE Time-series SE
+    ## edges              2485 60.26   2.5372          3.753
+    ## nodematch.hispanic 1838 51.25   2.1578          3.662
+    ## nodematch.female1  1888 52.78   2.2224          3.779
+    ## nodematch.eversmk1 1759 50.82   2.1400          3.072
+    ## mutual              493 23.40   0.9855          1.967
     ## 
     ## 2. Quantiles for each variable:
     ## 
     ##                    2.5%  25%  50%  75% 97.5%
-    ## edges              2365 2438 2475 2511  2580
-    ## nodematch.hispanic 1747 1807 1838 1867  1918
-    ## nodematch.female1  1778 1833 1866 1898  1975
-    ## nodematch.eversmk1 1664 1726 1755 1784  1841
-    ## mutual              446  472  485  498   527
+    ## edges              2373 2444 2482 2530  2612
+    ## nodematch.hispanic 1736 1803 1839 1872  1947
+    ## nodematch.female1  1791 1851 1885 1923  1993
+    ## nodematch.eversmk1 1662 1725 1758 1794  1858
+    ## mutual              449  476  493  509   537
     ```
 2.  _Cross correlation_: 
     
@@ -715,17 +719,17 @@ Under the hood:
     
     ```
     ##                        edges nodematch.hispanic nodematch.female1
-    ## edges              1.0000000          0.8099803         0.8419023
-    ## nodematch.hispanic 0.8099803          1.0000000         0.6845240
-    ## nodematch.female1  0.8419023          0.6845240         1.0000000
-    ## nodematch.eversmk1 0.8127786          0.6668579         0.6946880
-    ## mutual             0.7144121          0.6064003         0.6720229
+    ## edges              1.0000000          0.8657369         0.8851587
+    ## nodematch.hispanic 0.8657369          1.0000000         0.7713632
+    ## nodematch.female1  0.8851587          0.7713632         1.0000000
+    ## nodematch.eversmk1 0.8445651          0.7122693         0.7572735
+    ## mutual             0.7726517          0.6801783         0.7482026
     ##                    nodematch.eversmk1    mutual
-    ## edges                       0.8127786 0.7144121
-    ## nodematch.hispanic          0.6668579 0.6064003
-    ## nodematch.female1           0.6946880 0.6720229
-    ## nodematch.eversmk1          1.0000000 0.5909593
-    ## mutual                      0.5909593 1.0000000
+    ## edges                       0.8445651 0.7726517
+    ## nodematch.hispanic          0.7122693 0.6801783
+    ## nodematch.female1           0.7572735 0.7482026
+    ## nodematch.eversmk1          1.0000000 0.6873242
+    ## mutual                      0.6873242 1.0000000
     ```
 3.  _Autocorrelation_: For now, we will only look at autocorrelation for chain one. Autocorrelation should be small (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no Markov property). A way out to solve this is *thinning* the sample.
     
@@ -736,78 +740,78 @@ Under the hood:
     ```
     ## , , edges
     ## 
-    ##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-    ## Lag 0     1.0000000          0.8139761         0.7795009          0.7837272
-    ## Lag 1024  0.8868373          0.7222805         0.6971419          0.7006181
-    ## Lag 5120  0.5948994          0.5251881         0.4922158          0.4847903
-    ## Lag 10240 0.4600845          0.4504976         0.3755953          0.3949433
-    ## Lag 51200 0.1982049          0.2079237         0.3221285          0.3131978
-    ##              mutual
-    ## Lag 0     0.6565207
-    ## Lag 1024  0.6511008
-    ## Lag 5120  0.6123226
-    ## Lag 10240 0.5450916
-    ## Lag 51200 0.3781621
+    ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+    ## Lag 0       1.000000000        0.861920590        0.90235072         0.86215333
+    ## Lag 65536   0.415060923        0.326775063        0.43751588         0.38274418
+    ## Lag 327680  0.063993999        0.002238453        0.09094189         0.05143792
+    ## Lag 655360  0.002497326       -0.105210070       -0.02414091         0.00143358
+    ## Lag 3276800 0.026845190        0.068616366        0.03686125         0.03652383
+    ##                  mutual
+    ## Lag 0       0.785264416
+    ## Lag 65536   0.428519050
+    ## Lag 327680  0.074020671
+    ## Lag 655360  0.009422505
+    ## Lag 3276800 0.018126669
     ## 
     ## , , nodematch.hispanic
     ## 
-    ##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-    ## Lag 0     0.8139761          1.0000000         0.6678498          0.5997413
-    ## Lag 1024  0.7368708          0.8947521         0.6118379          0.5398809
-    ## Lag 5120  0.5294057          0.6364242         0.4658087          0.3828159
-    ## Lag 10240 0.4054664          0.4877295         0.3715878          0.2940047
-    ## Lag 51200 0.2058656          0.1750285         0.3230496          0.2682960
-    ##              mutual
-    ## Lag 0     0.6338096
-    ## Lag 1024  0.6235126
-    ## Lag 5120  0.5759901
-    ## Lag 10240 0.5148339
-    ## Lag 51200 0.3923427
+    ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+    ## Lag 0        0.86192059        1.000000000        0.76137201         0.74623272
+    ## Lag 65536    0.32680263        0.336764054        0.30353156         0.32690588
+    ## Lag 327680   0.05778076        0.004465856        0.07267341         0.03757479
+    ## Lag 655360   0.07704457        0.024226503        0.03252125         0.08420548
+    ## Lag 3276800 -0.02970399        0.021278122       -0.02753467        -0.03018601
+    ##                  mutual
+    ## Lag 0        0.70578514
+    ## Lag 65536    0.35558587
+    ## Lag 327680   0.05282736
+    ## Lag 655360   0.08176601
+    ## Lag 3276800 -0.07743174
     ## 
     ## , , nodematch.female1
     ## 
-    ##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-    ## Lag 0     0.7795009          0.6678498         1.0000000          0.5886437
-    ## Lag 1024  0.6998063          0.6046370         0.9102620          0.5273102
-    ## Lag 5120  0.4930271          0.4699355         0.6838324          0.3701848
-    ## Lag 10240 0.3680917          0.3863329         0.5241266          0.2933634
-    ## Lag 51200 0.1291978          0.1212720         0.3078540          0.1884934
-    ##              mutual
-    ## Lag 0     0.6480628
-    ## Lag 1024  0.6419102
-    ## Lag 5120  0.6093541
-    ## Lag 10240 0.5327467
-    ## Lag 51200 0.3444436
+    ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+    ## Lag 0       0.902350724         0.76137201        1.00000000         0.77769826
+    ## Lag 65536   0.453418914         0.37756721        0.51290498         0.41954866
+    ## Lag 327680  0.055464012        -0.01058737        0.09841770         0.04272154
+    ## Lag 655360  0.009910833        -0.06123858       -0.03186870         0.04679847
+    ## Lag 3276800 0.004163166         0.04057544        0.01548719        -0.01288236
+    ##                  mutual
+    ## Lag 0        0.76981085
+    ## Lag 65536    0.46327442
+    ## Lag 327680   0.03629824
+    ## Lag 655360   0.01987496
+    ## Lag 3276800 -0.00949882
     ## 
     ## , , nodematch.eversmk1
     ## 
-    ##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-    ## Lag 0     0.7837272          0.5997413         0.5886437          1.0000000
-    ## Lag 1024  0.6948882          0.5391618         0.5277555          0.9024858
-    ## Lag 5120  0.4488066          0.4103141         0.3543596          0.6426104
-    ## Lag 10240 0.3440736          0.3622540         0.2786189          0.5235972
-    ## Lag 51200 0.1413846          0.1251185         0.3037022          0.3427353
-    ##              mutual
-    ## Lag 0     0.5189905
-    ## Lag 1024  0.5109281
-    ## Lag 5120  0.4754632
-    ## Lag 10240 0.4043018
-    ## Lag 51200 0.2511635
+    ##                  edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+    ## Lag 0       0.86215333        0.746232721        0.77769826        1.000000000
+    ## Lag 65536   0.37539678        0.297591397        0.41717478        0.448697559
+    ## Lag 327680  0.02105523       -0.040132752        0.03760486        0.019124328
+    ## Lag 655360  0.04566425        0.003387581        0.04761067       -0.006388743
+    ## Lag 3276800 0.05048735        0.084790008        0.07108989        0.045582057
+    ##                   mutual
+    ## Lag 0       0.7053009595
+    ## Lag 65536   0.4020746950
+    ## Lag 327680  0.0183308894
+    ## Lag 655360  0.0840948296
+    ## Lag 3276800 0.0009713556
     ## 
     ## , , mutual
     ## 
-    ##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-    ## Lag 0     0.6565207          0.6338096         0.6480628          0.5189905
-    ## Lag 1024  0.6473638          0.6296240         0.6400673          0.5133709
-    ## Lag 5120  0.6106484          0.6120531         0.6093092          0.4949412
-    ## Lag 10240 0.5779115          0.6078153         0.5675734          0.4953194
-    ## Lag 51200 0.3343059          0.3086253         0.4037995          0.4237535
-    ##              mutual
-    ## Lag 0     1.0000000
-    ## Lag 1024  0.9825012
-    ## Lag 5120  0.9123847
-    ## Lag 10240 0.8212019
-    ## Lag 51200 0.4968927
+    ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+    ## Lag 0        0.78526442         0.70578514       0.769810849         0.70530096
+    ## Lag 65536    0.50645801         0.44741607       0.532817503         0.47751208
+    ## Lag 327680   0.12979152         0.06061696       0.147380566         0.10930214
+    ## Lag 655360  -0.06393205        -0.13217821      -0.008121728        -0.03814393
+    ## Lag 3276800 -0.01707605         0.03244214      -0.023750630         0.02781638
+    ##                   mutual
+    ## Lag 0        1.000000000
+    ## Lag 65536    0.580271013
+    ## Lag 327680   0.091309576
+    ## Lag 655360  -0.003521212
+    ## Lag 3276800 -0.025558756
     ```
 4.  _Geweke Diagnostic_: From the function's help file:
     
@@ -829,9 +833,9 @@ Under the hood:
     ## Fraction in 2nd window = 0.5 
     ## 
     ##              edges nodematch.hispanic  nodematch.female1 nodematch.eversmk1 
-    ##             0.5295             0.4904             1.6354             0.6644 
+    ##            -0.7115            -1.7204            -0.1841             0.6952 
     ##             mutual 
-    ##             1.1170
+    ##            -1.2891
     ```
 5.  _(not included) Gelman Diagnostic_: From the function's help file:
     
@@ -849,15 +853,15 @@ Under the hood:
     ## Potential scale reduction factors:
     ## 
     ##                    Point est. Upper C.I.
-    ## edges                    1.16       1.42
-    ## nodematch.hispanic       1.10       1.28
-    ## nodematch.female1        1.28       1.68
-    ## nodematch.eversmk1       1.34       1.81
-    ## mutual                   1.32       1.79
+    ## edges                    1.03       1.10
+    ## nodematch.hispanic       1.03       1.10
+    ## nodematch.female1        1.05       1.14
+    ## nodematch.eversmk1       1.04       1.12
+    ## mutual                   1.05       1.14
     ## 
     ## Multivariate psrf
     ## 
-    ## 1.44
+    ## 1.05
     ```
     
     As a rule of thumb, values that are in the $[.9,1.1]$ are good.
@@ -867,25 +871,9 @@ One nice feature of the `mcmc.diagnostics` function is the nice trace and poster
 
 
 ```r
-mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output
+# [2022-03-13] This line is failing for what it could be an ergm bug
+# mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output
 ```
-
-\begin{figure}[!h]
-
-{\centering \includegraphics{04-ergms_files/figure-latex/coda-plots-1} 
-
-}
-
-\caption{Trace and posterior distribution of sampled network statistics.}(\#fig:coda-plots-1)
-\end{figure}
-\begin{figure}[!h]
-
-{\centering \includegraphics{04-ergms_files/figure-latex/coda-plots-2} 
-
-}
-
-\caption{Trace and posterior distribution of sampled network statistics (cont'd).}(\#fig:coda-plots-2)
-\end{figure}
 
 
 If we called the function `mcmc.diagnostics`, this message appears at the end:
@@ -917,62 +905,62 @@ ans_gof
 ## 
 ## Goodness-of-fit for in-degree 
 ## 
-##    obs min  mean max MC p-value
-## 0   13   0  1.89   8       0.00
-## 1   34   3  9.04  18       0.00
-## 2   37  11 23.63  33       0.00
-## 3   48  28 41.83  59       0.44
-## 4   37  41 56.87  75       0.00
-## 5   47  44 64.71  84       0.04
-## 6   42  39 63.33  85       0.02
-## 7   39  42 53.78  74       0.00
-## 8   35  25 40.58  60       0.50
-## 9   21  14 26.19  43       0.38
-## 10  12   9 17.37  26       0.16
-## 11  19   2  9.53  17       0.00
-## 12   4   0  4.93  11       0.90
-## 13   7   0  2.35   7       0.04
-## 14   6   0  1.27   5       0.00
-## 15   3   0  0.44   3       0.02
-## 16   4   0  0.21   2       0.00
-## 17   3   0  0.05   1       0.00
-## 18   3   0  0.00   0       0.00
-## 19   2   0  0.00   0       0.00
-## 20   1   0  0.00   0       0.00
-## 22   1   0  0.00   0       0.00
+##           obs min  mean max MC p-value
+## idegree0   13   0  1.43   5       0.00
+## idegree1   34   2  8.47  16       0.00
+## idegree2   37  13 22.53  33       0.00
+## idegree3   48  29 42.25  60       0.38
+## idegree4   37  45 57.78  76       0.00
+## idegree5   47  44 66.51  88       0.02
+## idegree6   42  44 64.18  79       0.00
+## idegree7   39  40 53.58  68       0.00
+## idegree8   35  23 39.58  53       0.50
+## idegree9   21  18 27.43  40       0.28
+## idegree10  12   9 16.38  23       0.34
+## idegree11  19   1  8.82  16       0.00
+## idegree12   4   0  4.63  12       1.00
+## idegree13   7   0  2.12   7       0.02
+## idegree14   6   0  1.26   5       0.00
+## idegree15   3   0  0.44   2       0.00
+## idegree16   4   0  0.37   2       0.00
+## idegree17   3   0  0.14   1       0.00
+## idegree18   3   0  0.06   1       0.00
+## idegree19   2   0  0.02   1       0.00
+## idegree20   1   0  0.00   0       0.00
+## idegree21   0   0  0.02   1       1.00
+## idegree22   1   0  0.00   0       0.00
 ## 
 ## Goodness-of-fit for out-degree 
 ## 
-##    obs min  mean max MC p-value
-## 0    4   0  1.85   5       0.20
-## 1   28   3  8.99  15       0.00
-## 2   45  12 23.25  35       0.00
-## 3   50  24 40.87  52       0.06
-## 4   54  42 57.89  76       0.68
-## 5   62  49 66.04  85       0.70
-## 6   40  41 62.23  79       0.00
-## 7   28  37 54.08  70       0.00
-## 8   13  29 40.05  52       0.00
-## 9   16  17 27.65  41       0.00
-## 10  20   8 16.72  30       0.46
-## 11   8   2  9.30  19       0.76
-## 12  11   1  4.98  11       0.04
-## 13  13   0  2.38   7       0.00
-## 14   6   0  0.97   4       0.00
-## 15   6   0  0.50   3       0.00
-## 16   7   0  0.17   1       0.00
-## 17   4   0  0.06   1       0.00
-## 18   3   0  0.01   1       0.00
-## 19   0   0  0.01   1       1.00
+##           obs min  mean max MC p-value
+## odegree0    4   0  1.56   5       0.10
+## odegree1   28   2  8.23  17       0.00
+## odegree2   45  11 22.52  33       0.00
+## odegree3   50  23 40.11  56       0.10
+## odegree4   54  43 59.27  76       0.52
+## odegree5   62  50 67.39  93       0.48
+## odegree6   40  45 63.79  79       0.00
+## odegree7   28  32 54.74  73       0.00
+## odegree8   13  27 39.88  50       0.00
+## odegree9   16  14 26.17  43       0.04
+## odegree10  20   5 16.30  25       0.36
+## odegree11   8   4  8.99  17       0.76
+## odegree12  11   1  4.73  10       0.00
+## odegree13  13   0  2.54   8       0.00
+## odegree14   6   0  1.00   3       0.00
+## odegree15   6   0  0.45   3       0.00
+## odegree16   7   0  0.21   2       0.00
+## odegree17   4   0  0.10   2       0.00
+## odegree18   3   0  0.02   1       0.00
 ## 
 ## Goodness-of-fit for edgewise shared partner 
 ## 
 ##       obs  min    mean  max MC p-value
-## esp0 1032 2012 2210.11 2303          0
-## esp1  755  156  222.10  441          0
-## esp2  352    4   13.42   93          0
-## esp3  202    0    0.77   19          0
-## esp4   79    0    0.04    3          0
+## esp0 1032 1979 2193.78 2313          0
+## esp1  755  166  235.04  423          0
+## esp2  352    2   16.24   83          0
+## esp3  202    0    0.88    5          0
+## esp4   79    0    0.02    1          0
 ## esp5   36    0    0.00    0          0
 ## esp6   14    0    0.00    0          0
 ## esp7    4    0    0.00    0          0
@@ -981,26 +969,26 @@ ans_gof
 ## Goodness-of-fit for minimum geodesic distance 
 ## 
 ##       obs   min     mean   max MC p-value
-## 1    2475  2301  2446.44  2568       0.56
-## 2   10672 12062 13688.54 14617       0.00
-## 3   31134 48722 55636.04 60092       0.00
-## 4   50673 77284 79447.41 81661       0.00
-## 5   42563 14452 20165.40 26886       0.00
-## 6   18719   325  1274.88  2453       0.00
-## 7    4808     1    51.78   361       0.00
-## 8     822     0     2.13   102       0.00
-## 9     100     0     0.06     4       0.00
-## 10      7     0     0.01     1       0.00
-## Inf 12333     0  1593.31  4558       0.00
+## 1    2475  2329  2445.96  2573       0.52
+## 2   10672 12419 13611.54 15000       0.00
+## 3   31134 49756 55207.67 60888       0.00
+## 4   50673 77398 79886.41 81893       0.00
+## 5   42563 15561 20575.07 26629       0.00
+## 6   18719   491  1265.91  2285       0.00
+## 7    4808     4    38.99   178       0.00
+## 8     822     0     0.77    14       0.00
+## 9     100     0     0.03     1       0.00
+## 10      7     0     0.00     0       0.00
+## Inf 12333     0  1273.65  3321       0.00
 ## 
 ## Goodness-of-fit for model statistics 
 ## 
 ##                     obs  min    mean  max MC p-value
-## edges              2475 2301 2446.44 2568       0.56
-## nodematch.hispanic 1615 1499 1578.58 1662       0.32
-## nodematch.female1  1814 1690 1791.16 1883       0.54
-## nodematch.eversmk1 1738 1595 1716.19 1834       0.56
-## mutual              486  436  475.48  504       0.50
+## edges              2475 2329 2445.96 2573       0.52
+## nodematch.hispanic 1832 1740 1826.07 1978       0.86
+## nodematch.female1  1879 1760 1860.64 1958       0.76
+## nodematch.eversmk1 1755 1646 1733.50 1814       0.46
+## mutual              486  434  472.02  498       0.42
 ```
 
 ```r
@@ -1008,7 +996,7 @@ ans_gof
 plot(ans_gof)
 ```
 
-![](04-ergms_files/figure-latex/checking-gof-1.pdf)<!-- --> ![](04-ergms_files/figure-latex/checking-gof-2.pdf)<!-- --> ![](04-ergms_files/figure-latex/checking-gof-3.pdf)<!-- --> ![](04-ergms_files/figure-latex/checking-gof-4.pdf)<!-- --> ![](04-ergms_files/figure-latex/checking-gof-5.pdf)<!-- --> 
+<img src="04-ergms_files/figure-html/checking-gof-1.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-2.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-3.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-4.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-5.png" width="672" />
 
 Try the following configuration instead
 
@@ -1042,9 +1030,10 @@ Increase the sample size, so the curves are smoother, longer intervals (thinning
 knitr::include_graphics("awful-chains.png")
 ```
 
-\begin{figure}[!h]
-\includegraphics[width=9.92in]{awful-chains} \caption{An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful}(\#fig:badconvergence)
-\end{figure}
+<div class="figure">
+<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful"  />
+<p class="caption">(\#fig:badconvergence)An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful</p>
+</div>
 
 
 ## More on MCMC convergence

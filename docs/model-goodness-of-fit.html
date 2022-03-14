@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.5 Model Goodness-of-Fit | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.5 Model Goodness-of-Fit | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2021-09-15" />
+<meta name="date" content="2022-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="running-ergms.html"/>
 <link rel="next" href="more-on-mcmc-convergence.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +51,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40608305-4"></script>
 <script>
@@ -168,79 +169,111 @@ div.csl-indent {
 <li><a href="./">Applied SNA with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="the-book.html"><a href="the-book.html"><i class="fa fa-check"></i><b>1.1</b> The Book</a></li>
-<li class="chapter" data-level="1.2" data-path="the-author.html"><a href="the-author.html"><i class="fa fa-check"></i><b>1.2</b> The author</a></li>
+<li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#the-book"><i class="fa fa-check"></i><b>1.0.1</b> The Book<span></span></a></li>
+<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#the-author"><i class="fa fa-check"></i><b>1.0.2</b> The author<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
-<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
-<li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits</a></li>
-<li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
+<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages<span></span></a></li>
+<li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits<span></span></a></li>
+<li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
-<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
+<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R<span></span></a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
-<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
+<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a>
+<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats<span></span></a></li>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
-<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
+<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot<span></span></a></li>
+<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a>
 <ul>
-<li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example</a></li>
-<li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs</a></li>
-<li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package</a></li>
-<li class="chapter" data-level="5.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.4</b> Running ERGMs</a></li>
-<li class="chapter" data-level="5.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.5</b> Model Goodness-of-Fit</a></li>
-<li class="chapter" data-level="5.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.6</b> More on MCMC convergence</a></li>
-<li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation</a></li>
-<li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence</a></li>
-<li class="chapter" data-level="5.9" data-path="conditional-marginalization.html"><a href="conditional-marginalization.html"><i class="fa fa-check"></i><b>5.9</b> Conditional Marginalization</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
-<li class="chapter" data-level="7" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>7</b> Stochastic Actor Oriented Models</a></li>
-<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks</a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap</a></li>
-<li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal</a></li>
-<li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal</a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats</a></li>
+<li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a>
 <ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package<span></span></a></li>
+<li class="chapter" data-level="5.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.4</b> Running ERGMs<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.5</b> Model Goodness-of-Fit<span></span></a></li>
+<li class="chapter" data-level="5.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.6</b> More on MCMC convergence<span></span></a></li>
+<li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation<span></span></a></li>
+<li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
+<li class="chapter" data-level="7" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing in networks<span></span></a>
 <ul>
-<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
-<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
+<li class="chapter" data-level="7.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>7.1</b> Comparing networks<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>7.1.1</b> Network bootstrap<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>7.1.2</b> When the statistic is normal<span></span></a></li>
+<li class="chapter" data-level="7.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>7.1.3</b> When the statistic is NOT normal<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7.2</b> Examples<span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>7.2.1</b> Average of node-level stats<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="8" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>8</b> Network diffussion with <code>netdiffuseR</code><span></span></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>8.1</b> Network diffusion of innovation<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>8.1.1</b> Diffusion networks<span></span></a></li>
+<li class="chapter" data-level="8.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>8.1.2</b> Thresholds<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>8.2</b> The netdiffuseR R package<span></span></a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>8.2.1</b> Overview<span></span></a></li>
+<li class="chapter" data-level="8.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>8.2.2</b> Datasets<span></span></a></li>
+<li class="chapter" data-level="8.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>8.2.3</b> Visualization methods<span></span></a></li>
+<li class="chapter" data-level="8.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>8.2.4</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>8.3</b> Simulation of diffusion processes<span></span></a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>8.3.1</b> Simulating diffusion networks<span></span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>8.3.2</b> Rumor spreading<span></span></a></li>
+<li class="chapter" data-level="8.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>8.3.3</b> Difussion<span></span></a></li>
+<li class="chapter" data-level="8.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>8.3.4</b> Mentor Matching<span></span></a></li>
+<li class="chapter" data-level="8.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>8.3.5</b> Example by changing threshold<span></span></a></li>
+<li class="chapter" data-level="8.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>8.3.6</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>8.4</b> Statistical inference<span></span></a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>8.4.1</b> Moran’s I<span></span></a></li>
+<li class="chapter" data-level="8.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>8.4.2</b> Using geodesics<span></span></a></li>
+<li class="chapter" data-level="8.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>8.4.3</b> Structural dependence and permutation tests<span></span></a></li>
+<li class="chapter" data-level="8.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>8.4.4</b> Idea<span></span></a></li>
+<li class="chapter" data-level="8.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>8.4.5</b> Regression analysis<span></span></a></li>
+<li class="chapter" data-level="8.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>8.4.6</b> Problems<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>9</b> Stochastic Actor Oriented Models<span></span></a></li>
+<li class="appendix"><span><b>Appendix<span></span></b></span></li>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data<span></span></a></li>
+<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables<span></span></a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references">References<span></span></a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -260,8 +293,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-goodness-of-fit" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Model Goodness-of-Fit</h2>
+<div id="model-goodness-of-fit" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Model Goodness-of-Fit<a href="model-goodness-of-fit.html#model-goodness-of-fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In raw terms, once each chain has reach stationary distribution, we can say that there are no problems with autocorrelation and that each sample point is iid. This implies that, since we are running the model with more than 1 chain, we can use all the samples (chains) as a single dataset.</p>
 <blockquote>
 <p>Recent changes in the ergm estimation algorithm mean that these plots can no longer be used to ensure that the mean statistics from the model match the observed network statistics. For that functionality, please use the GOF command: gof(object, GOF=~model).</p>
@@ -269,195 +302,184 @@ div.csl-indent {
 </blockquote>
 <p>Since <code>ans0</code> is the one model which did best, let’s take a look at it’s GOF statistics. First, lets see how the MCMC did. For this we can use the <code>mcmc.diagnostics</code> function including in the package. This function is actually a wrapper of a couple of functions from the <code>coda</code> package <span class="citation">(<a href="#ref-R-coda" role="doc-biblioref">Plummer et al. 2006</a>)</span> which is called upon the <code>$sample</code> object which holds the <em>centered</em> statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the <code>$sample</code> object since it neither matches the observed statistics, nor the coefficients.</p>
 <p>When calling the function <code>mcmc.diagnostics(ans0, centered = FALSE)</code>, you will see a lot of output including a couple of plots showing the trace and posterior distribution of the <em>uncentered</em> statistics (<code>centered = FALSE</code>). In the next code chunks we will reproduce the output from the <code>mcmc.diagnostics</code> function step by step using the coda package. First we need to <em>uncenter</em> the sample object:</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="model-goodness-of-fit.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting the centered sample</span></span>
-<span id="cb181-2"><a href="model-goodness-of-fit.html#cb181-2" aria-hidden="true" tabindex="-1"></a>sample_centered <span class="ot">&lt;-</span> ans0<span class="sc">$</span>sample</span>
-<span id="cb181-3"><a href="model-goodness-of-fit.html#cb181-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb181-4"><a href="model-goodness-of-fit.html#cb181-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting the observed statistics and turning it into a matrix so we can add it</span></span>
-<span id="cb181-5"><a href="model-goodness-of-fit.html#cb181-5" aria-hidden="true" tabindex="-1"></a><span class="co"># to the samples</span></span>
-<span id="cb181-6"><a href="model-goodness-of-fit.html#cb181-6" aria-hidden="true" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">summary</span>(ans0<span class="sc">$</span>formula)</span>
-<span id="cb181-7"><a href="model-goodness-of-fit.html#cb181-7" aria-hidden="true" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb181-8"><a href="model-goodness-of-fit.html#cb181-8" aria-hidden="true" tabindex="-1"></a>  observed,</span>
-<span id="cb181-9"><a href="model-goodness-of-fit.html#cb181-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow  =</span> <span class="fu">nrow</span>(sample_centered[[<span class="dv">1</span>]]),</span>
-<span id="cb181-10"><a href="model-goodness-of-fit.html#cb181-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol  =</span> <span class="fu">length</span>(observed),</span>
-<span id="cb181-11"><a href="model-goodness-of-fit.html#cb181-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
-<span id="cb181-12"><a href="model-goodness-of-fit.html#cb181-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb181-13"><a href="model-goodness-of-fit.html#cb181-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb181-14"><a href="model-goodness-of-fit.html#cb181-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we uncenter the sample</span></span>
-<span id="cb181-15"><a href="model-goodness-of-fit.html#cb181-15" aria-hidden="true" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sample_centered, <span class="cf">function</span>(x) {</span>
-<span id="cb181-16"><a href="model-goodness-of-fit.html#cb181-16" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> observed</span>
-<span id="cb181-17"><a href="model-goodness-of-fit.html#cb181-17" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb181-18"><a href="model-goodness-of-fit.html#cb181-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb181-19"><a href="model-goodness-of-fit.html#cb181-19" aria-hidden="true" tabindex="-1"></a><span class="co"># We have to make it an mcmc.list object</span></span>
-<span id="cb181-20"><a href="model-goodness-of-fit.html#cb181-20" aria-hidden="true" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> coda<span class="sc">::</span><span class="fu">mcmc.list</span>(sample_uncentered)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="model-goodness-of-fit.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting the centered sample</span></span>
+<span id="cb177-2"><a href="model-goodness-of-fit.html#cb177-2" aria-hidden="true" tabindex="-1"></a>sample_centered <span class="ot">&lt;-</span> ans0<span class="sc">$</span>sample</span>
+<span id="cb177-3"><a href="model-goodness-of-fit.html#cb177-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-4"><a href="model-goodness-of-fit.html#cb177-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting the observed statistics and turning it into a matrix so we can add it</span></span>
+<span id="cb177-5"><a href="model-goodness-of-fit.html#cb177-5" aria-hidden="true" tabindex="-1"></a><span class="co"># to the samples</span></span>
+<span id="cb177-6"><a href="model-goodness-of-fit.html#cb177-6" aria-hidden="true" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">summary</span>(ans0<span class="sc">$</span>formula)</span>
+<span id="cb177-7"><a href="model-goodness-of-fit.html#cb177-7" aria-hidden="true" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb177-8"><a href="model-goodness-of-fit.html#cb177-8" aria-hidden="true" tabindex="-1"></a>  observed,</span>
+<span id="cb177-9"><a href="model-goodness-of-fit.html#cb177-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow  =</span> <span class="fu">nrow</span>(sample_centered[[<span class="dv">1</span>]]),</span>
+<span id="cb177-10"><a href="model-goodness-of-fit.html#cb177-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol  =</span> <span class="fu">length</span>(observed),</span>
+<span id="cb177-11"><a href="model-goodness-of-fit.html#cb177-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
+<span id="cb177-12"><a href="model-goodness-of-fit.html#cb177-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb177-13"><a href="model-goodness-of-fit.html#cb177-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-14"><a href="model-goodness-of-fit.html#cb177-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we uncenter the sample</span></span>
+<span id="cb177-15"><a href="model-goodness-of-fit.html#cb177-15" aria-hidden="true" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sample_centered, <span class="cf">function</span>(x) {</span>
+<span id="cb177-16"><a href="model-goodness-of-fit.html#cb177-16" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> observed</span>
+<span id="cb177-17"><a href="model-goodness-of-fit.html#cb177-17" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb177-18"><a href="model-goodness-of-fit.html#cb177-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-19"><a href="model-goodness-of-fit.html#cb177-19" aria-hidden="true" tabindex="-1"></a><span class="co"># We have to make it an mcmc.list object</span></span>
+<span id="cb177-20"><a href="model-goodness-of-fit.html#cb177-20" aria-hidden="true" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> coda<span class="sc">::</span><span class="fu">mcmc.list</span>(sample_uncentered)</span></code></pre></div>
 <p>Under the hood:</p>
 <ol style="list-style-type: decimal">
 <li><p><em>Empirical means and sd, and quantiles</em>:</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="model-goodness-of-fit.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sample_uncentered)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="model-goodness-of-fit.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sample_uncentered)</span></code></pre></div>
 <pre><code>## 
-## Iterations = 16384:1063936
-## Thinning interval = 1024 
+## Iterations = 1769472:10944512
+## Thinning interval = 65536 
 ## Number of chains = 4 
-## Sample size per chain = 1024 
+## Sample size per chain = 141 
 ## 
 ## 1. Empirical mean and standard deviation for each variable,
 ##    plus standard error of the mean:
 ## 
-##                      Mean    SD Naive SE Time-series SE
-## edges              2474.3 55.40   0.8656          4.129
-## nodematch.hispanic 1836.5 43.56   0.6806          3.836
-## nodematch.female1  1867.3 49.50   0.7735          4.900
-## nodematch.eversmk1 1755.0 45.32   0.7081          2.926
-## mutual              485.1 20.07   0.3136          3.544
+##                    Mean    SD Naive SE Time-series SE
+## edges              2485 60.26   2.5372          3.753
+## nodematch.hispanic 1838 51.25   2.1578          3.662
+## nodematch.female1  1888 52.78   2.2224          3.779
+## nodematch.eversmk1 1759 50.82   2.1400          3.072
+## mutual              493 23.40   0.9855          1.967
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##                    2.5%  25%  50%  75% 97.5%
-## edges              2365 2438 2475 2511  2580
-## nodematch.hispanic 1747 1807 1838 1867  1918
-## nodematch.female1  1778 1833 1866 1898  1975
-## nodematch.eversmk1 1664 1726 1755 1784  1841
-## mutual              446  472  485  498   527</code></pre></li>
+## edges              2373 2444 2482 2530  2612
+## nodematch.hispanic 1736 1803 1839 1872  1947
+## nodematch.female1  1791 1851 1885 1923  1993
+## nodematch.eversmk1 1662 1725 1758 1794  1858
+## mutual              449  476  493  509   537</code></pre></li>
 <li><p><em>Cross correlation</em>:</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="model-goodness-of-fit.html#cb184-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">crosscorr</span>(sample_uncentered)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="model-goodness-of-fit.html#cb180-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">crosscorr</span>(sample_uncentered)</span></code></pre></div>
 <pre><code>##                        edges nodematch.hispanic nodematch.female1
-## edges              1.0000000          0.8099803         0.8419023
-## nodematch.hispanic 0.8099803          1.0000000         0.6845240
-## nodematch.female1  0.8419023          0.6845240         1.0000000
-## nodematch.eversmk1 0.8127786          0.6668579         0.6946880
-## mutual             0.7144121          0.6064003         0.6720229
+## edges              1.0000000          0.8657369         0.8851587
+## nodematch.hispanic 0.8657369          1.0000000         0.7713632
+## nodematch.female1  0.8851587          0.7713632         1.0000000
+## nodematch.eversmk1 0.8445651          0.7122693         0.7572735
+## mutual             0.7726517          0.6801783         0.7482026
 ##                    nodematch.eversmk1    mutual
-## edges                       0.8127786 0.7144121
-## nodematch.hispanic          0.6668579 0.6064003
-## nodematch.female1           0.6946880 0.6720229
-## nodematch.eversmk1          1.0000000 0.5909593
-## mutual                      0.5909593 1.0000000</code></pre></li>
+## edges                       0.8445651 0.7726517
+## nodematch.hispanic          0.7122693 0.6801783
+## nodematch.female1           0.7572735 0.7482026
+## nodematch.eversmk1          1.0000000 0.6873242
+## mutual                      0.6873242 1.0000000</code></pre></li>
 <li><p><em>Autocorrelation</em>: For now, we will only look at autocorrelation for chain one. Autocorrelation should be small (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no Markov property). A way out to solve this is <em>thinning</em> the sample.</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="model-goodness-of-fit.html#cb186-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">autocorr</span>(sample_uncentered)[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="model-goodness-of-fit.html#cb182-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">autocorr</span>(sample_uncentered)[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>## , , edges
 ## 
-##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0     1.0000000          0.8139761         0.7795009          0.7837272
-## Lag 1024  0.8868373          0.7222805         0.6971419          0.7006181
-## Lag 5120  0.5948994          0.5251881         0.4922158          0.4847903
-## Lag 10240 0.4600845          0.4504976         0.3755953          0.3949433
-## Lag 51200 0.1982049          0.2079237         0.3221285          0.3131978
-##              mutual
-## Lag 0     0.6565207
-## Lag 1024  0.6511008
-## Lag 5120  0.6123226
-## Lag 10240 0.5450916
-## Lag 51200 0.3781621
+##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0       1.000000000        0.861920590        0.90235072         0.86215333
+## Lag 65536   0.415060923        0.326775063        0.43751588         0.38274418
+## Lag 327680  0.063993999        0.002238453        0.09094189         0.05143792
+## Lag 655360  0.002497326       -0.105210070       -0.02414091         0.00143358
+## Lag 3276800 0.026845190        0.068616366        0.03686125         0.03652383
+##                  mutual
+## Lag 0       0.785264416
+## Lag 65536   0.428519050
+## Lag 327680  0.074020671
+## Lag 655360  0.009422505
+## Lag 3276800 0.018126669
 ## 
 ## , , nodematch.hispanic
 ## 
-##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0     0.8139761          1.0000000         0.6678498          0.5997413
-## Lag 1024  0.7368708          0.8947521         0.6118379          0.5398809
-## Lag 5120  0.5294057          0.6364242         0.4658087          0.3828159
-## Lag 10240 0.4054664          0.4877295         0.3715878          0.2940047
-## Lag 51200 0.2058656          0.1750285         0.3230496          0.2682960
-##              mutual
-## Lag 0     0.6338096
-## Lag 1024  0.6235126
-## Lag 5120  0.5759901
-## Lag 10240 0.5148339
-## Lag 51200 0.3923427
+##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0        0.86192059        1.000000000        0.76137201         0.74623272
+## Lag 65536    0.32680263        0.336764054        0.30353156         0.32690588
+## Lag 327680   0.05778076        0.004465856        0.07267341         0.03757479
+## Lag 655360   0.07704457        0.024226503        0.03252125         0.08420548
+## Lag 3276800 -0.02970399        0.021278122       -0.02753467        -0.03018601
+##                  mutual
+## Lag 0        0.70578514
+## Lag 65536    0.35558587
+## Lag 327680   0.05282736
+## Lag 655360   0.08176601
+## Lag 3276800 -0.07743174
 ## 
 ## , , nodematch.female1
 ## 
-##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0     0.7795009          0.6678498         1.0000000          0.5886437
-## Lag 1024  0.6998063          0.6046370         0.9102620          0.5273102
-## Lag 5120  0.4930271          0.4699355         0.6838324          0.3701848
-## Lag 10240 0.3680917          0.3863329         0.5241266          0.2933634
-## Lag 51200 0.1291978          0.1212720         0.3078540          0.1884934
-##              mutual
-## Lag 0     0.6480628
-## Lag 1024  0.6419102
-## Lag 5120  0.6093541
-## Lag 10240 0.5327467
-## Lag 51200 0.3444436
+##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0       0.902350724         0.76137201        1.00000000         0.77769826
+## Lag 65536   0.453418914         0.37756721        0.51290498         0.41954866
+## Lag 327680  0.055464012        -0.01058737        0.09841770         0.04272154
+## Lag 655360  0.009910833        -0.06123858       -0.03186870         0.04679847
+## Lag 3276800 0.004163166         0.04057544        0.01548719        -0.01288236
+##                  mutual
+## Lag 0        0.76981085
+## Lag 65536    0.46327442
+## Lag 327680   0.03629824
+## Lag 655360   0.01987496
+## Lag 3276800 -0.00949882
 ## 
 ## , , nodematch.eversmk1
 ## 
-##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0     0.7837272          0.5997413         0.5886437          1.0000000
-## Lag 1024  0.6948882          0.5391618         0.5277555          0.9024858
-## Lag 5120  0.4488066          0.4103141         0.3543596          0.6426104
-## Lag 10240 0.3440736          0.3622540         0.2786189          0.5235972
-## Lag 51200 0.1413846          0.1251185         0.3037022          0.3427353
-##              mutual
-## Lag 0     0.5189905
-## Lag 1024  0.5109281
-## Lag 5120  0.4754632
-## Lag 10240 0.4043018
-## Lag 51200 0.2511635
+##                  edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0       0.86215333        0.746232721        0.77769826        1.000000000
+## Lag 65536   0.37539678        0.297591397        0.41717478        0.448697559
+## Lag 327680  0.02105523       -0.040132752        0.03760486        0.019124328
+## Lag 655360  0.04566425        0.003387581        0.04761067       -0.006388743
+## Lag 3276800 0.05048735        0.084790008        0.07108989        0.045582057
+##                   mutual
+## Lag 0       0.7053009595
+## Lag 65536   0.4020746950
+## Lag 327680  0.0183308894
+## Lag 655360  0.0840948296
+## Lag 3276800 0.0009713556
 ## 
 ## , , mutual
 ## 
-##               edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0     0.6565207          0.6338096         0.6480628          0.5189905
-## Lag 1024  0.6473638          0.6296240         0.6400673          0.5133709
-## Lag 5120  0.6106484          0.6120531         0.6093092          0.4949412
-## Lag 10240 0.5779115          0.6078153         0.5675734          0.4953194
-## Lag 51200 0.3343059          0.3086253         0.4037995          0.4237535
-##              mutual
-## Lag 0     1.0000000
-## Lag 1024  0.9825012
-## Lag 5120  0.9123847
-## Lag 10240 0.8212019
-## Lag 51200 0.4968927</code></pre></li>
+##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
+## Lag 0        0.78526442         0.70578514       0.769810849         0.70530096
+## Lag 65536    0.50645801         0.44741607       0.532817503         0.47751208
+## Lag 327680   0.12979152         0.06061696       0.147380566         0.10930214
+## Lag 655360  -0.06393205        -0.13217821      -0.008121728        -0.03814393
+## Lag 3276800 -0.01707605         0.03244214      -0.023750630         0.02781638
+##                   mutual
+## Lag 0        1.000000000
+## Lag 65536    0.580271013
+## Lag 327680   0.091309576
+## Lag 655360  -0.003521212
+## Lag 3276800 -0.025558756</code></pre></li>
 <li><p><em>Geweke Diagnostic</em>: From the function’s help file:</p>
 <blockquote>
 <p>“If the samples are drawn from the stationary distribution of the chain, the two means are equal and Geweke’s statistic has an asymptotically standard normal distribution. […]
-The Z-score is calculated under the assumption that the two parts of the chain are asymptotically independent, which requires that the sum of frac1 and frac2 be strictly less than 1.”"</p>
+The Z-score is calculated under the assumption that the two parts of the chain are asymptotically independent, which requires that the sum of frac1 and frac2 be strictly less than 1.””</p>
 <p>—?coda::geweke.diag</p>
 </blockquote>
 <p>Let’s take a look at a single chain:</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="model-goodness-of-fit.html#cb188-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">geweke.diag</span>(sample_uncentered)[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="model-goodness-of-fit.html#cb184-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">geweke.diag</span>(sample_uncentered)[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>## 
 ## Fraction in 1st window = 0.1
 ## Fraction in 2nd window = 0.5 
 ## 
 ##              edges nodematch.hispanic  nodematch.female1 nodematch.eversmk1 
-##             0.5295             0.4904             1.6354             0.6644 
+##            -0.7115            -1.7204            -0.1841             0.6952 
 ##             mutual 
-##             1.1170</code></pre></li>
+##            -1.2891</code></pre></li>
 <li><p><em>(not included) Gelman Diagnostic</em>: From the function’s help file:</p>
 <blockquote>
 <p>Gelman and Rubin (1992) propose a general approach to monitoring convergence of MCMC output in which m &gt; 1 parallel chains are run with starting values that are overdispersed relative to the posterior distribution. Convergence is diagnosed when the chains have ‘forgotten’ their initial values, and the output from all chains is indistinguishable. The gelman.diag diagnostic is applied to a single variable from the chain. It is based a comparison of within-chain and between-chain variances, and is similar to a classical analysis of variance.
 —?coda::gelman.diag</p>
 </blockquote>
 <p>As a difference from the previous diagnostic statistic, this uses all chains simulatenously:</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="model-goodness-of-fit.html#cb190-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">gelman.diag</span>(sample_uncentered)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="model-goodness-of-fit.html#cb186-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">gelman.diag</span>(sample_uncentered)</span></code></pre></div>
 <pre><code>## Potential scale reduction factors:
 ## 
 ##                    Point est. Upper C.I.
-## edges                    1.16       1.42
-## nodematch.hispanic       1.10       1.28
-## nodematch.female1        1.28       1.68
-## nodematch.eversmk1       1.34       1.81
-## mutual                   1.32       1.79
+## edges                    1.03       1.10
+## nodematch.hispanic       1.03       1.10
+## nodematch.female1        1.05       1.14
+## nodematch.eversmk1       1.04       1.12
+## mutual                   1.05       1.14
 ## 
 ## Multivariate psrf
 ## 
-## 1.44</code></pre>
+## 1.05</code></pre>
 <p>As a rule of thumb, values that are in the <span class="math inline">\([.9,1.1]\)</span> are good.</p></li>
 </ol>
 <p>One nice feature of the <code>mcmc.diagnostics</code> function is the nice trace and posterior distribution plots that it generates. If you have the R package <code>latticeExtra</code> <span class="citation">(<a href="#ref-R-latticeExtra" role="doc-biblioref">Sarkar and Andrews 2016</a>)</span>, the function will override the default plots used by <code>coda::plot.mcmc</code> and use lattice instead, creating a nicer looking plots. The next code chunk calls the <code>mcmc.diagnostic</code> function, but we suppress the rest of the output (see figure <a href="#fig:coda-plots"><strong>??</strong></a>).</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="model-goodness-of-fit.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc.diagnostics</span>(ans0, <span class="at">center =</span> <span class="cn">FALSE</span>) <span class="co"># Suppressing all the output</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:coda-plots-1"></span>
-<img src="04-ergms_files/figure-html/coda-plots-1.png" alt="Trace and posterior distribution of sampled network statistics." width="672" />
-<p class="caption">
-Figure 5.1: Trace and posterior distribution of sampled network statistics.
-</p>
-</div>
-<div class="figure" style="text-align: center"><span id="fig:coda-plots-2"></span>
-<img src="04-ergms_files/figure-html/coda-plots-2.png" alt="Trace and posterior distribution of sampled network statistics (cont'd)." width="672" />
-<p class="caption">
-Figure 5.2: Trace and posterior distribution of sampled network statistics (cont’d).
-</p>
-</div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="model-goodness-of-fit.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [2022-03-13] This line is failing for what it could be an ergm bug</span></span>
+<span id="cb188-2"><a href="model-goodness-of-fit.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output</span></span></code></pre></div>
 <p>If we called the function <code>mcmc.diagnostics</code>, this message appears at the end:</p>
 <blockquote>
 <p>MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).</p>
@@ -472,68 +494,68 @@ Figure 5.2: Trace and posterior distribution of sampled network statistics (cont
 <li>Geodesics</li>
 </ol>
 <p>Let’s take a look at it</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="model-goodness-of-fit.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing and printing GOF estatistics</span></span>
-<span id="cb193-2"><a href="model-goodness-of-fit.html#cb193-2" aria-hidden="true" tabindex="-1"></a>ans_gof <span class="ot">&lt;-</span> <span class="fu">gof</span>(ans0)</span>
-<span id="cb193-3"><a href="model-goodness-of-fit.html#cb193-3" aria-hidden="true" tabindex="-1"></a>ans_gof</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="model-goodness-of-fit.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing and printing GOF estatistics</span></span>
+<span id="cb189-2"><a href="model-goodness-of-fit.html#cb189-2" aria-hidden="true" tabindex="-1"></a>ans_gof <span class="ot">&lt;-</span> <span class="fu">gof</span>(ans0)</span>
+<span id="cb189-3"><a href="model-goodness-of-fit.html#cb189-3" aria-hidden="true" tabindex="-1"></a>ans_gof</span></code></pre></div>
 <pre><code>## 
 ## Goodness-of-fit for in-degree 
 ## 
-##    obs min  mean max MC p-value
-## 0   13   0  1.89   8       0.00
-## 1   34   3  9.04  18       0.00
-## 2   37  11 23.63  33       0.00
-## 3   48  28 41.83  59       0.44
-## 4   37  41 56.87  75       0.00
-## 5   47  44 64.71  84       0.04
-## 6   42  39 63.33  85       0.02
-## 7   39  42 53.78  74       0.00
-## 8   35  25 40.58  60       0.50
-## 9   21  14 26.19  43       0.38
-## 10  12   9 17.37  26       0.16
-## 11  19   2  9.53  17       0.00
-## 12   4   0  4.93  11       0.90
-## 13   7   0  2.35   7       0.04
-## 14   6   0  1.27   5       0.00
-## 15   3   0  0.44   3       0.02
-## 16   4   0  0.21   2       0.00
-## 17   3   0  0.05   1       0.00
-## 18   3   0  0.00   0       0.00
-## 19   2   0  0.00   0       0.00
-## 20   1   0  0.00   0       0.00
-## 22   1   0  0.00   0       0.00
+##           obs min  mean max MC p-value
+## idegree0   13   0  1.43   5       0.00
+## idegree1   34   2  8.47  16       0.00
+## idegree2   37  13 22.53  33       0.00
+## idegree3   48  29 42.25  60       0.38
+## idegree4   37  45 57.78  76       0.00
+## idegree5   47  44 66.51  88       0.02
+## idegree6   42  44 64.18  79       0.00
+## idegree7   39  40 53.58  68       0.00
+## idegree8   35  23 39.58  53       0.50
+## idegree9   21  18 27.43  40       0.28
+## idegree10  12   9 16.38  23       0.34
+## idegree11  19   1  8.82  16       0.00
+## idegree12   4   0  4.63  12       1.00
+## idegree13   7   0  2.12   7       0.02
+## idegree14   6   0  1.26   5       0.00
+## idegree15   3   0  0.44   2       0.00
+## idegree16   4   0  0.37   2       0.00
+## idegree17   3   0  0.14   1       0.00
+## idegree18   3   0  0.06   1       0.00
+## idegree19   2   0  0.02   1       0.00
+## idegree20   1   0  0.00   0       0.00
+## idegree21   0   0  0.02   1       1.00
+## idegree22   1   0  0.00   0       0.00
 ## 
 ## Goodness-of-fit for out-degree 
 ## 
-##    obs min  mean max MC p-value
-## 0    4   0  1.85   5       0.20
-## 1   28   3  8.99  15       0.00
-## 2   45  12 23.25  35       0.00
-## 3   50  24 40.87  52       0.06
-## 4   54  42 57.89  76       0.68
-## 5   62  49 66.04  85       0.70
-## 6   40  41 62.23  79       0.00
-## 7   28  37 54.08  70       0.00
-## 8   13  29 40.05  52       0.00
-## 9   16  17 27.65  41       0.00
-## 10  20   8 16.72  30       0.46
-## 11   8   2  9.30  19       0.76
-## 12  11   1  4.98  11       0.04
-## 13  13   0  2.38   7       0.00
-## 14   6   0  0.97   4       0.00
-## 15   6   0  0.50   3       0.00
-## 16   7   0  0.17   1       0.00
-## 17   4   0  0.06   1       0.00
-## 18   3   0  0.01   1       0.00
-## 19   0   0  0.01   1       1.00
+##           obs min  mean max MC p-value
+## odegree0    4   0  1.56   5       0.10
+## odegree1   28   2  8.23  17       0.00
+## odegree2   45  11 22.52  33       0.00
+## odegree3   50  23 40.11  56       0.10
+## odegree4   54  43 59.27  76       0.52
+## odegree5   62  50 67.39  93       0.48
+## odegree6   40  45 63.79  79       0.00
+## odegree7   28  32 54.74  73       0.00
+## odegree8   13  27 39.88  50       0.00
+## odegree9   16  14 26.17  43       0.04
+## odegree10  20   5 16.30  25       0.36
+## odegree11   8   4  8.99  17       0.76
+## odegree12  11   1  4.73  10       0.00
+## odegree13  13   0  2.54   8       0.00
+## odegree14   6   0  1.00   3       0.00
+## odegree15   6   0  0.45   3       0.00
+## odegree16   7   0  0.21   2       0.00
+## odegree17   4   0  0.10   2       0.00
+## odegree18   3   0  0.02   1       0.00
 ## 
 ## Goodness-of-fit for edgewise shared partner 
 ## 
 ##       obs  min    mean  max MC p-value
-## esp0 1032 2012 2210.11 2303          0
-## esp1  755  156  222.10  441          0
-## esp2  352    4   13.42   93          0
-## esp3  202    0    0.77   19          0
-## esp4   79    0    0.04    3          0
+## esp0 1032 1979 2193.78 2313          0
+## esp1  755  166  235.04  423          0
+## esp2  352    2   16.24   83          0
+## esp3  202    0    0.88    5          0
+## esp4   79    0    0.02    1          0
 ## esp5   36    0    0.00    0          0
 ## esp6   14    0    0.00    0          0
 ## esp7    4    0    0.00    0          0
@@ -542,60 +564,60 @@ Figure 5.2: Trace and posterior distribution of sampled network statistics (cont
 ## Goodness-of-fit for minimum geodesic distance 
 ## 
 ##       obs   min     mean   max MC p-value
-## 1    2475  2301  2446.44  2568       0.56
-## 2   10672 12062 13688.54 14617       0.00
-## 3   31134 48722 55636.04 60092       0.00
-## 4   50673 77284 79447.41 81661       0.00
-## 5   42563 14452 20165.40 26886       0.00
-## 6   18719   325  1274.88  2453       0.00
-## 7    4808     1    51.78   361       0.00
-## 8     822     0     2.13   102       0.00
-## 9     100     0     0.06     4       0.00
-## 10      7     0     0.01     1       0.00
-## Inf 12333     0  1593.31  4558       0.00
+## 1    2475  2329  2445.96  2573       0.52
+## 2   10672 12419 13611.54 15000       0.00
+## 3   31134 49756 55207.67 60888       0.00
+## 4   50673 77398 79886.41 81893       0.00
+## 5   42563 15561 20575.07 26629       0.00
+## 6   18719   491  1265.91  2285       0.00
+## 7    4808     4    38.99   178       0.00
+## 8     822     0     0.77    14       0.00
+## 9     100     0     0.03     1       0.00
+## 10      7     0     0.00     0       0.00
+## Inf 12333     0  1273.65  3321       0.00
 ## 
 ## Goodness-of-fit for model statistics 
 ## 
 ##                     obs  min    mean  max MC p-value
-## edges              2475 2301 2446.44 2568       0.56
-## nodematch.hispanic 1615 1499 1578.58 1662       0.32
-## nodematch.female1  1814 1690 1791.16 1883       0.54
-## nodematch.eversmk1 1738 1595 1716.19 1834       0.56
-## mutual              486  436  475.48  504       0.50</code></pre>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="model-goodness-of-fit.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting GOF statistics</span></span>
-<span id="cb195-2"><a href="model-goodness-of-fit.html#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ans_gof)</span></code></pre></div>
+## edges              2475 2329 2445.96 2573       0.52
+## nodematch.hispanic 1832 1740 1826.07 1978       0.86
+## nodematch.female1  1879 1760 1860.64 1958       0.76
+## nodematch.eversmk1 1755 1646 1733.50 1814       0.46
+## mutual              486  434  472.02  498       0.42</code></pre>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="model-goodness-of-fit.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting GOF statistics</span></span>
+<span id="cb191-2"><a href="model-goodness-of-fit.html#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ans_gof)</span></code></pre></div>
 <p><img src="04-ergms_files/figure-html/checking-gof-1.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-2.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-3.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-4.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-5.png" width="672" /></p>
 <p>Try the following configuration instead</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="model-goodness-of-fit.html#cb196-1" aria-hidden="true" tabindex="-1"></a>ans0_bis <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
-<span id="cb196-2"><a href="model-goodness-of-fit.html#cb196-2" aria-hidden="true" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
-<span id="cb196-3"><a href="model-goodness-of-fit.html#cb196-3" aria-hidden="true" tabindex="-1"></a>    edges <span class="sc">+</span></span>
-<span id="cb196-4"><a href="model-goodness-of-fit.html#cb196-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
-<span id="cb196-5"><a href="model-goodness-of-fit.html#cb196-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb196-6"><a href="model-goodness-of-fit.html#cb196-6" aria-hidden="true" tabindex="-1"></a>    mutual <span class="sc">+</span> </span>
-<span id="cb196-7"><a href="model-goodness-of-fit.html#cb196-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">esp</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb196-8"><a href="model-goodness-of-fit.html#cb196-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">idegree</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb196-9"><a href="model-goodness-of-fit.html#cb196-9" aria-hidden="true" tabindex="-1"></a>    ,</span>
-<span id="cb196-10"><a href="model-goodness-of-fit.html#cb196-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
-<span id="cb196-11"><a href="model-goodness-of-fit.html#cb196-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
-<span id="cb196-12"><a href="model-goodness-of-fit.html#cb196-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
-<span id="cb196-13"><a href="model-goodness-of-fit.html#cb196-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">15</span>,</span>
-<span id="cb196-14"><a href="model-goodness-of-fit.html#cb196-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
-<span id="cb196-15"><a href="model-goodness-of-fit.html#cb196-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">15</span>,</span>
-<span id="cb196-16"><a href="model-goodness-of-fit.html#cb196-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMC.samplesize =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span>,</span>
-<span id="cb196-17"><a href="model-goodness-of-fit.html#cb196-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMC.burnin =</span> <span class="dv">30000</span>,</span>
-<span id="cb196-18"><a href="model-goodness-of-fit.html#cb196-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMC.interval =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span></span>
-<span id="cb196-19"><a href="model-goodness-of-fit.html#cb196-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb196-20"><a href="model-goodness-of-fit.html#cb196-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="model-goodness-of-fit.html#cb192-1" aria-hidden="true" tabindex="-1"></a>ans0_bis <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb192-2"><a href="model-goodness-of-fit.html#cb192-2" aria-hidden="true" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
+<span id="cb192-3"><a href="model-goodness-of-fit.html#cb192-3" aria-hidden="true" tabindex="-1"></a>    edges <span class="sc">+</span></span>
+<span id="cb192-4"><a href="model-goodness-of-fit.html#cb192-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
+<span id="cb192-5"><a href="model-goodness-of-fit.html#cb192-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb192-6"><a href="model-goodness-of-fit.html#cb192-6" aria-hidden="true" tabindex="-1"></a>    mutual <span class="sc">+</span> </span>
+<span id="cb192-7"><a href="model-goodness-of-fit.html#cb192-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">esp</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb192-8"><a href="model-goodness-of-fit.html#cb192-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">idegree</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb192-9"><a href="model-goodness-of-fit.html#cb192-9" aria-hidden="true" tabindex="-1"></a>    ,</span>
+<span id="cb192-10"><a href="model-goodness-of-fit.html#cb192-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
+<span id="cb192-11"><a href="model-goodness-of-fit.html#cb192-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
+<span id="cb192-12"><a href="model-goodness-of-fit.html#cb192-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
+<span id="cb192-13"><a href="model-goodness-of-fit.html#cb192-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">15</span>,</span>
+<span id="cb192-14"><a href="model-goodness-of-fit.html#cb192-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
+<span id="cb192-15"><a href="model-goodness-of-fit.html#cb192-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">15</span>,</span>
+<span id="cb192-16"><a href="model-goodness-of-fit.html#cb192-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMC.samplesize =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span>,</span>
+<span id="cb192-17"><a href="model-goodness-of-fit.html#cb192-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMC.burnin =</span> <span class="dv">30000</span>,</span>
+<span id="cb192-18"><a href="model-goodness-of-fit.html#cb192-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMC.interval =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span></span>
+<span id="cb192-19"><a href="model-goodness-of-fit.html#cb192-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb192-20"><a href="model-goodness-of-fit.html#cb192-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Increase the sample size, so the curves are smoother, longer intervals (thinning), which reduces autocorrelation, and a larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="model-goodness-of-fit.html#cb197-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;awful-chains.png&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:badconvergence"></span>
-<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="357" />
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="model-goodness-of-fit.html#cb193-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;awful-chains.png&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:badconvergence"></span>
+<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful"  />
 <p class="caption">
-Figure 5.3: An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful
+Figure 5.1: An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful
 </p>
 </div>
 </div>
-<h3>References</h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-R-coda" class="csl-entry">
 Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. <span>“<span>CODA</span>: Convergence Diagnosis and Output Analysis for MCMC.”</span> <em>R News</em> 6 (1): 7–11. <a href="https://journal.r-project.org/archive/">https://journal.r-project.org/archive/</a>.
@@ -620,7 +642,6 @@ Sarkar, Deepayan, and Felix Andrews. 2016. <em>latticeExtra: Extra Graphical Uti
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -660,6 +681,10 @@ gitbook.start({
 "text": null
 },
 "download": ["appliedsnar.pdf", "appliedsnar.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
