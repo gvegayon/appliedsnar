@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.5 Model Goodness-of-Fit | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.5 Model Goodness-of-Fit | Applied Network Science with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="github-repo" content="gvegayon/appliedsnar" />
@@ -24,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-03-14" />
+<meta name="date" content="2022-04-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="running-ergms.html"/>
 <link rel="next" href="more-on-mcmc-convergence.html"/>
-<script src="libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -66,27 +64,25 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -95,9 +91,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -130,28 +126,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -169,44 +143,36 @@ div.csl-indent {
 <li><a href="./">Applied SNA with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a>
-<ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a><ul>
 <li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#the-book"><i class="fa fa-check"></i><b>1.0.1</b> The Book<span></span></a></li>
 <li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#the-author"><i class="fa fa-check"></i><b>1.0.2</b> The author<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction<span></span></a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a>
-<ul>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a><ul>
 <li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R<span></span></a></li>
 <li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages<span></span></a></li>
 <li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits<span></span></a></li>
 <li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a>
-<ul>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a><ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a><ul>
 <li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R<span></span></a></li>
 <li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a>
-<ul>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a><ul>
 <li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist<span></span></a></li>
 <li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats<span></span></a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a>
-<ul>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a><ul>
 <li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot<span></span></a></li>
 <li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a>
-<ul>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a><ul>
 <li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a>
-<ul>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a><ul>
 <li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example<span></span></a></li>
 <li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs<span></span></a></li>
 <li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package<span></span></a></li>
@@ -216,59 +182,52 @@ div.csl-indent {
 <li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation<span></span></a></li>
 <li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
-<li class="chapter" data-level="7" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing in networks<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>7.1</b> Comparing networks<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>7.1.1</b> Network bootstrap<span></span></a></li>
-<li class="chapter" data-level="7.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>7.1.2</b> When the statistic is normal<span></span></a></li>
-<li class="chapter" data-level="7.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>7.1.3</b> When the statistic is NOT normal<span></span></a></li>
+<li class="chapter" data-level="6" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>6</b> Using constraints in ERGMs<span></span></a><ul>
+<li class="chapter" data-level="6.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>6.1</b> Example 1: Interlocking egos and disconnected alters<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7.2</b> Examples<span></span></a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>7.2.1</b> Average of node-level stats<span></span></a></li>
+<li class="chapter" data-level="7" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>7</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks<span></span></a><ul>
+<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks<span></span></a><ul>
+<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap<span></span></a></li>
+<li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal<span></span></a></li>
+<li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal<span></span></a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>8</b> Network diffussion with <code>netdiffuseR</code><span></span></a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>8.1</b> Network diffusion of innovation<span></span></a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>8.1.1</b> Diffusion networks<span></span></a></li>
-<li class="chapter" data-level="8.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>8.1.2</b> Thresholds<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>8.2</b> The netdiffuseR R package<span></span></a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>8.2.1</b> Overview<span></span></a></li>
-<li class="chapter" data-level="8.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>8.2.2</b> Datasets<span></span></a></li>
-<li class="chapter" data-level="8.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>8.2.3</b> Visualization methods<span></span></a></li>
-<li class="chapter" data-level="8.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>8.2.4</b> Problems<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>8.3</b> Simulation of diffusion processes<span></span></a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>8.3.1</b> Simulating diffusion networks<span></span></a></li>
-<li class="chapter" data-level="8.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>8.3.2</b> Rumor spreading<span></span></a></li>
-<li class="chapter" data-level="8.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>8.3.3</b> Difussion<span></span></a></li>
-<li class="chapter" data-level="8.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>8.3.4</b> Mentor Matching<span></span></a></li>
-<li class="chapter" data-level="8.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>8.3.5</b> Example by changing threshold<span></span></a></li>
-<li class="chapter" data-level="8.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>8.3.6</b> Problems<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>8.4</b> Statistical inference<span></span></a>
-<ul>
-<li class="chapter" data-level="8.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>8.4.1</b> Moran’s I<span></span></a></li>
-<li class="chapter" data-level="8.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>8.4.2</b> Using geodesics<span></span></a></li>
-<li class="chapter" data-level="8.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>8.4.3</b> Structural dependence and permutation tests<span></span></a></li>
-<li class="chapter" data-level="8.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>8.4.4</b> Idea<span></span></a></li>
-<li class="chapter" data-level="8.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>8.4.5</b> Regression analysis<span></span></a></li>
-<li class="chapter" data-level="8.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>8.4.6</b> Problems<span></span></a></li>
+<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples<span></span></a><ul>
+<li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>9</b> Stochastic Actor Oriented Models<span></span></a></li>
+<li class="chapter" data-level="9" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>9</b> Network diffussion with <code>netdiffuseR</code><span></span></a><ul>
+<li class="chapter" data-level="9.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>9.1</b> Network diffusion of innovation<span></span></a><ul>
+<li class="chapter" data-level="9.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>9.1.1</b> Diffusion networks<span></span></a></li>
+<li class="chapter" data-level="9.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>9.1.2</b> Thresholds<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>9.2</b> The netdiffuseR R package<span></span></a><ul>
+<li class="chapter" data-level="9.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>9.2.1</b> Overview<span></span></a></li>
+<li class="chapter" data-level="9.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>9.2.2</b> Datasets<span></span></a></li>
+<li class="chapter" data-level="9.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>9.2.3</b> Visualization methods<span></span></a></li>
+<li class="chapter" data-level="9.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>9.2.4</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>9.3</b> Simulation of diffusion processes<span></span></a><ul>
+<li class="chapter" data-level="9.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>9.3.1</b> Simulating diffusion networks<span></span></a></li>
+<li class="chapter" data-level="9.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>9.3.2</b> Rumor spreading<span></span></a></li>
+<li class="chapter" data-level="9.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>9.3.3</b> Difussion<span></span></a></li>
+<li class="chapter" data-level="9.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>9.3.4</b> Mentor Matching<span></span></a></li>
+<li class="chapter" data-level="9.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>9.3.5</b> Example by changing threshold<span></span></a></li>
+<li class="chapter" data-level="9.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>9.3.6</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>9.4</b> Statistical inference<span></span></a><ul>
+<li class="chapter" data-level="9.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>9.4.1</b> Moran’s I<span></span></a></li>
+<li class="chapter" data-level="9.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>9.4.2</b> Using geodesics<span></span></a></li>
+<li class="chapter" data-level="9.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>9.4.3</b> Structural dependence and permutation tests<span></span></a></li>
+<li class="chapter" data-level="9.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>9.4.4</b> Idea<span></span></a></li>
+<li class="chapter" data-level="9.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>9.4.5</b> Regression analysis<span></span></a></li>
+<li class="chapter" data-level="9.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>9.4.6</b> Problems<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>10</b> Stochastic Actor Oriented Models<span></span></a></li>
 <li class="appendix"><span><b>Appendix<span></span></b></span></li>
-<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a>
-<ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a>
-<ul>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a><ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a><ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data<span></span></a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables<span></span></a></li>
 </ul></li>
@@ -293,39 +252,39 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-goodness-of-fit" class="section level2 hasAnchor" number="5.5">
+<div id="model-goodness-of-fit" class="section level2 hasAnchor">
 <h2><span class="header-section-number">5.5</span> Model Goodness-of-Fit<a href="model-goodness-of-fit.html#model-goodness-of-fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In raw terms, once each chain has reach stationary distribution, we can say that there are no problems with autocorrelation and that each sample point is iid. This implies that, since we are running the model with more than 1 chain, we can use all the samples (chains) as a single dataset.</p>
 <blockquote>
 <p>Recent changes in the ergm estimation algorithm mean that these plots can no longer be used to ensure that the mean statistics from the model match the observed network statistics. For that functionality, please use the GOF command: gof(object, GOF=~model).</p>
 <p>—?ergm::mcmc.diagnostics</p>
 </blockquote>
-<p>Since <code>ans0</code> is the one model which did best, let’s take a look at it’s GOF statistics. First, lets see how the MCMC did. For this we can use the <code>mcmc.diagnostics</code> function including in the package. This function is actually a wrapper of a couple of functions from the <code>coda</code> package <span class="citation">(<a href="#ref-R-coda" role="doc-biblioref">Plummer et al. 2006</a>)</span> which is called upon the <code>$sample</code> object which holds the <em>centered</em> statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the <code>$sample</code> object since it neither matches the observed statistics, nor the coefficients.</p>
+<p>Since <code>ans0</code> is the one model which did best, let’s take a look at it’s GOF statistics. First, lets see how the MCMC did. For this we can use the <code>mcmc.diagnostics</code> function including in the package. This function is actually a wrapper of a couple of functions from the <code>coda</code> package <span class="citation">(Plummer et al. <a href="#ref-R-coda">2006</a>)</span> which is called upon the <code>$sample</code> object which holds the <em>centered</em> statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the <code>$sample</code> object since it neither matches the observed statistics, nor the coefficients.</p>
 <p>When calling the function <code>mcmc.diagnostics(ans0, centered = FALSE)</code>, you will see a lot of output including a couple of plots showing the trace and posterior distribution of the <em>uncentered</em> statistics (<code>centered = FALSE</code>). In the next code chunks we will reproduce the output from the <code>mcmc.diagnostics</code> function step by step using the coda package. First we need to <em>uncenter</em> the sample object:</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="model-goodness-of-fit.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting the centered sample</span></span>
-<span id="cb177-2"><a href="model-goodness-of-fit.html#cb177-2" aria-hidden="true" tabindex="-1"></a>sample_centered <span class="ot">&lt;-</span> ans0<span class="sc">$</span>sample</span>
-<span id="cb177-3"><a href="model-goodness-of-fit.html#cb177-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb177-4"><a href="model-goodness-of-fit.html#cb177-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting the observed statistics and turning it into a matrix so we can add it</span></span>
-<span id="cb177-5"><a href="model-goodness-of-fit.html#cb177-5" aria-hidden="true" tabindex="-1"></a><span class="co"># to the samples</span></span>
-<span id="cb177-6"><a href="model-goodness-of-fit.html#cb177-6" aria-hidden="true" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">summary</span>(ans0<span class="sc">$</span>formula)</span>
-<span id="cb177-7"><a href="model-goodness-of-fit.html#cb177-7" aria-hidden="true" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb177-8"><a href="model-goodness-of-fit.html#cb177-8" aria-hidden="true" tabindex="-1"></a>  observed,</span>
-<span id="cb177-9"><a href="model-goodness-of-fit.html#cb177-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow  =</span> <span class="fu">nrow</span>(sample_centered[[<span class="dv">1</span>]]),</span>
-<span id="cb177-10"><a href="model-goodness-of-fit.html#cb177-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol  =</span> <span class="fu">length</span>(observed),</span>
-<span id="cb177-11"><a href="model-goodness-of-fit.html#cb177-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
-<span id="cb177-12"><a href="model-goodness-of-fit.html#cb177-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb177-13"><a href="model-goodness-of-fit.html#cb177-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb177-14"><a href="model-goodness-of-fit.html#cb177-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we uncenter the sample</span></span>
-<span id="cb177-15"><a href="model-goodness-of-fit.html#cb177-15" aria-hidden="true" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sample_centered, <span class="cf">function</span>(x) {</span>
-<span id="cb177-16"><a href="model-goodness-of-fit.html#cb177-16" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> observed</span>
-<span id="cb177-17"><a href="model-goodness-of-fit.html#cb177-17" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb177-18"><a href="model-goodness-of-fit.html#cb177-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb177-19"><a href="model-goodness-of-fit.html#cb177-19" aria-hidden="true" tabindex="-1"></a><span class="co"># We have to make it an mcmc.list object</span></span>
-<span id="cb177-20"><a href="model-goodness-of-fit.html#cb177-20" aria-hidden="true" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> coda<span class="sc">::</span><span class="fu">mcmc.list</span>(sample_uncentered)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" title="1"><span class="co"># Getting the centered sample</span></a>
+<a class="sourceLine" id="cb180-2" title="2">sample_centered &lt;-<span class="st"> </span>ans0<span class="op">$</span>sample</a>
+<a class="sourceLine" id="cb180-3" title="3"></a>
+<a class="sourceLine" id="cb180-4" title="4"><span class="co"># Getting the observed statistics and turning it into a matrix so we can add it</span></a>
+<a class="sourceLine" id="cb180-5" title="5"><span class="co"># to the samples</span></a>
+<a class="sourceLine" id="cb180-6" title="6">observed &lt;-<span class="st"> </span><span class="kw">summary</span>(ans0<span class="op">$</span>formula)</a>
+<a class="sourceLine" id="cb180-7" title="7">observed &lt;-<span class="st"> </span><span class="kw">matrix</span>(</a>
+<a class="sourceLine" id="cb180-8" title="8">  observed,</a>
+<a class="sourceLine" id="cb180-9" title="9">  <span class="dt">nrow  =</span> <span class="kw">nrow</span>(sample_centered[[<span class="dv">1</span>]]),</a>
+<a class="sourceLine" id="cb180-10" title="10">  <span class="dt">ncol  =</span> <span class="kw">length</span>(observed),</a>
+<a class="sourceLine" id="cb180-11" title="11">  <span class="dt">byrow =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb180-12" title="12">  )</a>
+<a class="sourceLine" id="cb180-13" title="13"></a>
+<a class="sourceLine" id="cb180-14" title="14"><span class="co"># Now we uncenter the sample</span></a>
+<a class="sourceLine" id="cb180-15" title="15">sample_uncentered &lt;-<span class="st"> </span><span class="kw">lapply</span>(sample_centered, <span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb180-16" title="16">  x <span class="op">+</span><span class="st"> </span>observed</a>
+<a class="sourceLine" id="cb180-17" title="17">})</a>
+<a class="sourceLine" id="cb180-18" title="18"></a>
+<a class="sourceLine" id="cb180-19" title="19"><span class="co"># We have to make it an mcmc.list object</span></a>
+<a class="sourceLine" id="cb180-20" title="20">sample_uncentered &lt;-<span class="st"> </span>coda<span class="op">::</span><span class="kw">mcmc.list</span>(sample_uncentered)</a></code></pre></div>
 <p>Under the hood:</p>
 <ol style="list-style-type: decimal">
 <li><p><em>Empirical means and sd, and quantiles</em>:</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="model-goodness-of-fit.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sample_uncentered)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" title="1"><span class="kw">summary</span>(sample_uncentered)</a></code></pre></div>
 <pre><code>## 
 ## Iterations = 1769472:10944512
 ## Thinning interval = 65536 
@@ -351,7 +310,7 @@ div.csl-indent {
 ## nodematch.eversmk1 1662 1725 1758 1794  1858
 ## mutual              449  476  493  509   537</code></pre></li>
 <li><p><em>Cross correlation</em>:</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="model-goodness-of-fit.html#cb180-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">crosscorr</span>(sample_uncentered)</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" title="1">coda<span class="op">::</span><span class="kw">crosscorr</span>(sample_uncentered)</a></code></pre></div>
 <pre><code>##                        edges nodematch.hispanic nodematch.female1
 ## edges              1.0000000          0.8657369         0.8851587
 ## nodematch.hispanic 0.8657369          1.0000000         0.7713632
@@ -365,7 +324,7 @@ div.csl-indent {
 ## nodematch.eversmk1          1.0000000 0.6873242
 ## mutual                      0.6873242 1.0000000</code></pre></li>
 <li><p><em>Autocorrelation</em>: For now, we will only look at autocorrelation for chain one. Autocorrelation should be small (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no Markov property). A way out to solve this is <em>thinning</em> the sample.</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="model-goodness-of-fit.html#cb182-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">autocorr</span>(sample_uncentered)[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" title="1">coda<span class="op">::</span><span class="kw">autocorr</span>(sample_uncentered)[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## , , edges
 ## 
 ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
@@ -443,11 +402,11 @@ div.csl-indent {
 <li><p><em>Geweke Diagnostic</em>: From the function’s help file:</p>
 <blockquote>
 <p>“If the samples are drawn from the stationary distribution of the chain, the two means are equal and Geweke’s statistic has an asymptotically standard normal distribution. […]
-The Z-score is calculated under the assumption that the two parts of the chain are asymptotically independent, which requires that the sum of frac1 and frac2 be strictly less than 1.””</p>
+The Z-score is calculated under the assumption that the two parts of the chain are asymptotically independent, which requires that the sum of frac1 and frac2 be strictly less than 1.”"</p>
 <p>—?coda::geweke.diag</p>
 </blockquote>
 <p>Let’s take a look at a single chain:</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="model-goodness-of-fit.html#cb184-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">geweke.diag</span>(sample_uncentered)[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" title="1">coda<span class="op">::</span><span class="kw">geweke.diag</span>(sample_uncentered)[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## 
 ## Fraction in 1st window = 0.1
 ## Fraction in 2nd window = 0.5 
@@ -462,7 +421,7 @@ The Z-score is calculated under the assumption that the two parts of the chain a
 —?coda::gelman.diag</p>
 </blockquote>
 <p>As a difference from the previous diagnostic statistic, this uses all chains simulatenously:</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="model-goodness-of-fit.html#cb186-1" aria-hidden="true" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">gelman.diag</span>(sample_uncentered)</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" title="1">coda<span class="op">::</span><span class="kw">gelman.diag</span>(sample_uncentered)</a></code></pre></div>
 <pre><code>## Potential scale reduction factors:
 ## 
 ##                    Point est. Upper C.I.
@@ -477,9 +436,9 @@ The Z-score is calculated under the assumption that the two parts of the chain a
 ## 1.05</code></pre>
 <p>As a rule of thumb, values that are in the <span class="math inline">\([.9,1.1]\)</span> are good.</p></li>
 </ol>
-<p>One nice feature of the <code>mcmc.diagnostics</code> function is the nice trace and posterior distribution plots that it generates. If you have the R package <code>latticeExtra</code> <span class="citation">(<a href="#ref-R-latticeExtra" role="doc-biblioref">Sarkar and Andrews 2016</a>)</span>, the function will override the default plots used by <code>coda::plot.mcmc</code> and use lattice instead, creating a nicer looking plots. The next code chunk calls the <code>mcmc.diagnostic</code> function, but we suppress the rest of the output (see figure <a href="#fig:coda-plots"><strong>??</strong></a>).</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="model-goodness-of-fit.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [2022-03-13] This line is failing for what it could be an ergm bug</span></span>
-<span id="cb188-2"><a href="model-goodness-of-fit.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output</span></span></code></pre></div>
+<p>One nice feature of the <code>mcmc.diagnostics</code> function is the nice trace and posterior distribution plots that it generates. If you have the R package <code>latticeExtra</code> <span class="citation">(Sarkar and Andrews <a href="#ref-R-latticeExtra">2016</a>)</span>, the function will override the default plots used by <code>coda::plot.mcmc</code> and use lattice instead, creating a nicer looking plots. The next code chunk calls the <code>mcmc.diagnostic</code> function, but we suppress the rest of the output (see figure <a href="#fig:coda-plots"><strong>??</strong></a>).</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" title="1"><span class="co"># [2022-03-13] This line is failing for what it could be an ergm bug</span></a>
+<a class="sourceLine" id="cb191-2" title="2"><span class="co"># mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output</span></a></code></pre></div>
 <p>If we called the function <code>mcmc.diagnostics</code>, this message appears at the end:</p>
 <blockquote>
 <p>MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).</p>
@@ -494,9 +453,9 @@ The Z-score is calculated under the assumption that the two parts of the chain a
 <li>Geodesics</li>
 </ol>
 <p>Let’s take a look at it</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="model-goodness-of-fit.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing and printing GOF estatistics</span></span>
-<span id="cb189-2"><a href="model-goodness-of-fit.html#cb189-2" aria-hidden="true" tabindex="-1"></a>ans_gof <span class="ot">&lt;-</span> <span class="fu">gof</span>(ans0)</span>
-<span id="cb189-3"><a href="model-goodness-of-fit.html#cb189-3" aria-hidden="true" tabindex="-1"></a>ans_gof</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" title="1"><span class="co"># Computing and printing GOF estatistics</span></a>
+<a class="sourceLine" id="cb192-2" title="2">ans_gof &lt;-<span class="st"> </span><span class="kw">gof</span>(ans0)</a>
+<a class="sourceLine" id="cb192-3" title="3">ans_gof</a></code></pre></div>
 <pre><code>## 
 ## Goodness-of-fit for in-degree 
 ## 
@@ -584,32 +543,32 @@ The Z-score is calculated under the assumption that the two parts of the chain a
 ## nodematch.female1  1879 1760 1860.64 1958       0.76
 ## nodematch.eversmk1 1755 1646 1733.50 1814       0.46
 ## mutual              486  434  472.02  498       0.42</code></pre>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="model-goodness-of-fit.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting GOF statistics</span></span>
-<span id="cb191-2"><a href="model-goodness-of-fit.html#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ans_gof)</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" title="1"><span class="co"># Plotting GOF statistics</span></a>
+<a class="sourceLine" id="cb194-2" title="2"><span class="kw">plot</span>(ans_gof)</a></code></pre></div>
 <p><img src="04-ergms_files/figure-html/checking-gof-1.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-2.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-3.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-4.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-5.png" width="672" /></p>
 <p>Try the following configuration instead</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="model-goodness-of-fit.html#cb192-1" aria-hidden="true" tabindex="-1"></a>ans0_bis <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
-<span id="cb192-2"><a href="model-goodness-of-fit.html#cb192-2" aria-hidden="true" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
-<span id="cb192-3"><a href="model-goodness-of-fit.html#cb192-3" aria-hidden="true" tabindex="-1"></a>    edges <span class="sc">+</span></span>
-<span id="cb192-4"><a href="model-goodness-of-fit.html#cb192-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
-<span id="cb192-5"><a href="model-goodness-of-fit.html#cb192-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb192-6"><a href="model-goodness-of-fit.html#cb192-6" aria-hidden="true" tabindex="-1"></a>    mutual <span class="sc">+</span> </span>
-<span id="cb192-7"><a href="model-goodness-of-fit.html#cb192-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">esp</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb192-8"><a href="model-goodness-of-fit.html#cb192-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">idegree</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb192-9"><a href="model-goodness-of-fit.html#cb192-9" aria-hidden="true" tabindex="-1"></a>    ,</span>
-<span id="cb192-10"><a href="model-goodness-of-fit.html#cb192-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
-<span id="cb192-11"><a href="model-goodness-of-fit.html#cb192-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
-<span id="cb192-12"><a href="model-goodness-of-fit.html#cb192-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
-<span id="cb192-13"><a href="model-goodness-of-fit.html#cb192-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">15</span>,</span>
-<span id="cb192-14"><a href="model-goodness-of-fit.html#cb192-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
-<span id="cb192-15"><a href="model-goodness-of-fit.html#cb192-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">15</span>,</span>
-<span id="cb192-16"><a href="model-goodness-of-fit.html#cb192-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMC.samplesize =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span>,</span>
-<span id="cb192-17"><a href="model-goodness-of-fit.html#cb192-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMC.burnin =</span> <span class="dv">30000</span>,</span>
-<span id="cb192-18"><a href="model-goodness-of-fit.html#cb192-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">MCMC.interval =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span></span>
-<span id="cb192-19"><a href="model-goodness-of-fit.html#cb192-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb192-20"><a href="model-goodness-of-fit.html#cb192-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" title="1">ans0_bis &lt;-<span class="st"> </span><span class="kw">ergm</span>(</a>
+<a class="sourceLine" id="cb195-2" title="2">  network_<span class="dv">111</span> <span class="op">~</span></a>
+<a class="sourceLine" id="cb195-3" title="3"><span class="st">    </span>edges <span class="op">+</span></a>
+<a class="sourceLine" id="cb195-4" title="4"><span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb195-5" title="5"><span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb195-6" title="6"><span class="st">    </span>mutual <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb195-7" title="7"><span class="st">    </span><span class="kw">esp</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb195-8" title="8"><span class="st">    </span><span class="kw">idegree</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb195-9" title="9">    ,</a>
+<a class="sourceLine" id="cb195-10" title="10">  <span class="dt">constraints =</span> <span class="op">~</span><span class="kw">bd</span>(<span class="dt">maxout =</span> <span class="dv">19</span>),</a>
+<a class="sourceLine" id="cb195-11" title="11">  <span class="dt">control =</span> <span class="kw">control.ergm</span>(</a>
+<a class="sourceLine" id="cb195-12" title="12">    <span class="dt">seed        =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb195-13" title="13">    <span class="dt">MCMLE.maxit =</span> <span class="dv">15</span>,</a>
+<a class="sourceLine" id="cb195-14" title="14">    <span class="dt">parallel    =</span> <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb195-15" title="15">    <span class="dt">CD.maxit    =</span> <span class="dv">15</span>,</a>
+<a class="sourceLine" id="cb195-16" title="16">    <span class="dt">MCMC.samplesize =</span> <span class="dv">2048</span><span class="op">*</span><span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb195-17" title="17">    <span class="dt">MCMC.burnin =</span> <span class="dv">30000</span>,</a>
+<a class="sourceLine" id="cb195-18" title="18">    <span class="dt">MCMC.interval =</span> <span class="dv">2048</span><span class="op">*</span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb195-19" title="19">    )</a>
+<a class="sourceLine" id="cb195-20" title="20">  )</a></code></pre></div>
 <p>Increase the sample size, so the curves are smoother, longer intervals (thinning), which reduces autocorrelation, and a larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="model-goodness-of-fit.html#cb193-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;awful-chains.png&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" title="1">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;awful-chains.png&quot;</span>)</a></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:badconvergence"></span>
 <img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful"  />
 <p class="caption">
@@ -618,18 +577,18 @@ Figure 5.1: An example of a terrible ERGM (no convergence at all). Also, a good 
 </div>
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-R-coda" class="csl-entry">
-Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. <span>“<span>CODA</span>: Convergence Diagnosis and Output Analysis for MCMC.”</span> <em>R News</em> 6 (1): 7–11. <a href="https://journal.r-project.org/archive/">https://journal.r-project.org/archive/</a>.
+<div id="refs" class="references">
+<div id="ref-R-coda">
+<p>Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. “CODA: Convergence Diagnosis and Output Analysis for Mcmc.” <em>R News</em> 6 (1): 7–11. <a href="https://journal.r-project.org/archive/">https://journal.r-project.org/archive/</a>.</p>
 </div>
-<div id="ref-R-latticeExtra" class="csl-entry">
-Sarkar, Deepayan, and Felix Andrews. 2016. <em>latticeExtra: Extra Graphical Utilities Based on Lattice</em>. <a href="https://CRAN.R-project.org/package=latticeExtra">https://CRAN.R-project.org/package=latticeExtra</a>.
+<div id="ref-R-latticeExtra">
+<p>Sarkar, Deepayan, and Felix Andrews. 2016. <em>LatticeExtra: Extra Graphical Utilities Based on Lattice</em>. <a href="https://CRAN.R-project.org/package=latticeExtra">https://CRAN.R-project.org/package=latticeExtra</a>.</p>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol start="10">
-<li id="fn10"><p>The statnet wiki website as a very nice example of (very) bad and good MCMC diagnostics plots <a href="https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf">here</a>.<a href="model-goodness-of-fit.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>The statnet wiki website as a very nice example of (very) bad and good MCMC diagnostics plots <a href="https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf">here</a>.<a href="model-goodness-of-fit.html#fnref10" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>

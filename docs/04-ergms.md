@@ -332,7 +332,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from 0082447 (vertex names):
+## + 1/2638 edge from ce68f58 (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -471,8 +471,8 @@ library(texreg)
 ```
 
 ```
-## Version:  1.37.5
-## Date:     2020-06-17
+## Version:  1.38.5
+## Date:     2022-03-03
 ## Author:   Philip Leifeld (University of Essex)
 ## 
 ## Consider submitting praise using the praise or praise_interactive functions.
@@ -540,9 +540,9 @@ htmlreg(list(ans0, ans1, ans2))
 <tbody>
 <tr style="border-top: 1px solid #000000;">
 <td style="padding-left: 5px;padding-right: 5px;">edges</td>
-<td style="padding-left: 5px;padding-right: 5px;">-5.63<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">-5.49<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">-5.60<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">-5.63<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">-5.49<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">-5.60<sup>&#42;&#42;&#42;</sup></td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
@@ -552,9 +552,9 @@ htmlreg(list(ans0, ans1, ans2))
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">nodematch.hispanic</td>
-<td style="padding-left: 5px;padding-right: 5px;">0.22<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.30<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.22<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.22<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.30<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.22<sup>&#42;&#42;&#42;</sup></td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
@@ -564,9 +564,9 @@ htmlreg(list(ans0, ans1, ans2))
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">nodematch.female1</td>
-<td style="padding-left: 5px;padding-right: 5px;">0.87<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">1.17<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.87<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.87<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">1.17<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.87<sup>&#42;&#42;&#42;</sup></td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
@@ -576,9 +576,9 @@ htmlreg(list(ans0, ans1, ans2))
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">nodematch.eversmk1</td>
-<td style="padding-left: 5px;padding-right: 5px;">0.33<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.45<sup>***</sup></td>
-<td style="padding-left: 5px;padding-right: 5px;">0.34<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.33<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.45<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.34<sup>&#42;&#42;&#42;</sup></td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
@@ -588,9 +588,9 @@ htmlreg(list(ans0, ans1, ans2))
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">mutual</td>
-<td style="padding-left: 5px;padding-right: 5px;">4.10<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">4.10<sup>&#42;&#42;&#42;</sup></td>
 <td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">1.75<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">1.75<sup>&#42;&#42;&#42;</sup></td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
@@ -602,7 +602,7 @@ htmlreg(list(ans0, ans1, ans2))
 <td style="padding-left: 5px;padding-right: 5px;">balance</td>
 <td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
 <td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
-<td style="padding-left: 5px;padding-right: 5px;">0.01<sup>***</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.01<sup>&#42;&#42;&#42;</sup></td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
@@ -631,7 +631,7 @@ htmlreg(list(ans0, ans1, ans2))
 </tbody>
 <tfoot>
 <tr>
-<td style="font-size: 0.8em;" colspan="4"><sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05</td>
+<td style="font-size: 0.8em;" colspan="4"><sup>&#42;&#42;&#42;</sup>p &lt; 0.001; <sup>&#42;&#42;</sup>p &lt; 0.01; <sup>&#42;</sup>p &lt; 0.05</td>
 </tr>
 </tfoot>
 </table>

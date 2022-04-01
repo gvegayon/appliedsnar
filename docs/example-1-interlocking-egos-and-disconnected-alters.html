@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6.1 Example 1: Interlocking egos and disconnected alters | Applied Network Science with R</title>
+  <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6.1 Example 1: Interlocking egos and disconnected alters | Applied Network Science with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  <meta name="github-repo" content="gvegayon/appliedsnar" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6.1 Example 1: Interlocking egos and disconnected alters | Applied Network Science with R" />
+  
+  <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
+  
+
+<meta name="author" content="George G. Vega Yon" />
+
+
+<meta name="date" content="2022-04-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="using-constraints-in-ergms.html"/>
+<link rel="next" href="separable-temporal-exponential-family-random-graph-models.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-40608305-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-40608305-4');
+</script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied SNA with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a><ul>
+<li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#the-book"><i class="fa fa-check"></i><b>1.0.1</b> The Book<span></span></a></li>
+<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#the-author"><i class="fa fa-check"></i><b>1.0.2</b> The author<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a><ul>
+<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages<span></span></a></li>
+<li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits<span></span></a></li>
+<li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a><ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R<span></span></a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats<span></span></a></li>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a><ul>
+<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot<span></span></a></li>
+<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a><ul>
+<li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a><ul>
+<li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package<span></span></a></li>
+<li class="chapter" data-level="5.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.4</b> Running ERGMs<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.5</b> Model Goodness-of-Fit<span></span></a></li>
+<li class="chapter" data-level="5.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.6</b> More on MCMC convergence<span></span></a></li>
+<li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation<span></span></a></li>
+<li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>6</b> Using constraints in ERGMs<span></span></a><ul>
+<li class="chapter" data-level="6.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>6.1</b> Example 1: Interlocking egos and disconnected alters<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>7</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks<span></span></a><ul>
+<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks<span></span></a><ul>
+<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap<span></span></a></li>
+<li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal<span></span></a></li>
+<li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples<span></span></a><ul>
+<li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>9</b> Network diffussion with <code>netdiffuseR</code><span></span></a><ul>
+<li class="chapter" data-level="9.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>9.1</b> Network diffusion of innovation<span></span></a><ul>
+<li class="chapter" data-level="9.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>9.1.1</b> Diffusion networks<span></span></a></li>
+<li class="chapter" data-level="9.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>9.1.2</b> Thresholds<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>9.2</b> The netdiffuseR R package<span></span></a><ul>
+<li class="chapter" data-level="9.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>9.2.1</b> Overview<span></span></a></li>
+<li class="chapter" data-level="9.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>9.2.2</b> Datasets<span></span></a></li>
+<li class="chapter" data-level="9.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>9.2.3</b> Visualization methods<span></span></a></li>
+<li class="chapter" data-level="9.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>9.2.4</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>9.3</b> Simulation of diffusion processes<span></span></a><ul>
+<li class="chapter" data-level="9.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>9.3.1</b> Simulating diffusion networks<span></span></a></li>
+<li class="chapter" data-level="9.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>9.3.2</b> Rumor spreading<span></span></a></li>
+<li class="chapter" data-level="9.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>9.3.3</b> Difussion<span></span></a></li>
+<li class="chapter" data-level="9.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>9.3.4</b> Mentor Matching<span></span></a></li>
+<li class="chapter" data-level="9.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>9.3.5</b> Example by changing threshold<span></span></a></li>
+<li class="chapter" data-level="9.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>9.3.6</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>9.4</b> Statistical inference<span></span></a><ul>
+<li class="chapter" data-level="9.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>9.4.1</b> Moran’s I<span></span></a></li>
+<li class="chapter" data-level="9.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>9.4.2</b> Using geodesics<span></span></a></li>
+<li class="chapter" data-level="9.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>9.4.3</b> Structural dependence and permutation tests<span></span></a></li>
+<li class="chapter" data-level="9.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>9.4.4</b> Idea<span></span></a></li>
+<li class="chapter" data-level="9.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>9.4.5</b> Regression analysis<span></span></a></li>
+<li class="chapter" data-level="9.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>9.4.6</b> Problems<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>10</b> Stochastic Actor Oriented Models<span></span></a></li>
+<li class="appendix"><span><b>Appendix<span></span></b></span></li>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a><ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a><ul>
+<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data<span></span></a></li>
+<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables<span></span></a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references">References<span></span></a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Network Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="example-1-interlocking-egos-and-disconnected-alters" class="section level2 hasAnchor">
+<h2><span class="header-section-number">6.1</span> Example 1: Interlocking egos and disconnected alters<a href="example-1-interlocking-egos-and-disconnected-alters.html#example-1-interlocking-egos-and-disconnected-alters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Imagine that we have two sets of vertices. The first, group <code>E</code>, are egos part of
+an egocentric study. The second group, called <code>A</code>, is composed of people mentioned by egos in <code>E</code> but
+were not surveyed. Assume that individuals in <code>A</code> can only connect
+to individuals in <code>E</code>; moreover, individuals in <code>E</code> have no restrictions connecting to each other.
+In other words, only two types of ties exist: <code>A-A</code> and <code>A-E</code>. The question is
+now, how can we enforce such a constraint in an ERGM?</p>
+<p>Using offsets, and in particular, setting coefficients to <code>-Inf</code> provides
+an easy way to restrict the support set of ERGMs. For example, if we wanted
+to constrain the support to include networks with no triangles, we would
+add the term <code>offset(triangle)</code> and use the option <code>offset.coef = -Inf</code> to
+indicate that realizations including triangles are not possible. Using R:</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" title="1"><span class="kw">ergm</span>(net <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(triangle), <span class="dt">offset.coef =</span> <span class="op">-</span><span class="ot">Inf</span>)</a></code></pre></div>
+<p>In this model, a Bernoulli graph, we reduce the sample space to networks
+with no triangles. In our example, such statistic should only take non-zero
+values whenever ties within the <code>A</code> class happen. We can use
+the <code>nodematch()</code> term to do that. Formally</p>
+<p><span class="math display">\[
+\text{NodeMatch}(x) = \sum_{i,j} y_{ij} \mathbf{1}({x_{i} = x_{j}})
+\]</span></p>
+<p>This statistic will sum over all ties in which source (<span class="math inline">\(i\)</span>) and target (<span class="math inline">\(j\)</span>)’s
+<span class="math inline">\(X\)</span> attribute is equal. One way to make this happen is by creating an auxiliary
+variable that equals, e.g., 0 for all vertices in <code>A</code>, and a unique value
+different from zero otherwise. For example, if we had 2 <code>A</code>s and three <code>E</code>s,
+the data would look something like this: <span class="math inline">\(\{0,0,1,2,3\}\)</span>. The following code
+block creates an empty graph with 50 nodes, 10 of which are in group <code>E</code> (ego).</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" title="1"><span class="kw">library</span>(ergm)</a></code></pre></div>
+<pre><code>## Loading required package: network</code></pre>
+<pre><code>## 
+## &#39;network&#39; 1.17.1 (2021-06-12), part of the Statnet Project
+## * &#39;news(package=&quot;network&quot;)&#39; for changes since last version
+## * &#39;citation(&quot;network&quot;)&#39; for citation information
+## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
+<pre><code>## 
+## &#39;ergm&#39; 4.1.2 (2021-07-26), part of the Statnet Project
+## * &#39;news(package=&quot;ergm&quot;)&#39; for changes since last version
+## * &#39;citation(&quot;ergm&quot;)&#39; for citation information
+## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
+<pre><code>## &#39;ergm&#39; 4 is a major update that introduces some backwards-incompatible
+## changes. Please type &#39;news(package=&quot;ergm&quot;)&#39; for a list of major
+## changes.</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" title="1"><span class="kw">library</span>(sna)</a></code></pre></div>
+<pre><code>## Loading required package: statnet.common</code></pre>
+<pre><code>## 
+## Attaching package: &#39;statnet.common&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     attr, order</code></pre>
+<pre><code>## sna: Tools for Social Network Analysis
+## Version 2.6 created on 2020-10-5.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##  For citation information, type citation(&quot;sna&quot;).
+##  Type help(package=&quot;sna&quot;) to get started.</code></pre>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb208-1" title="1">n &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb208-2" title="2">n_egos &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb208-3" title="3">net &lt;-<span class="st"> </span><span class="kw">as.network</span>(<span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dt">ncol =</span> n, <span class="dt">nrow =</span> n), <span class="dt">directed =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb208-4" title="4"></a>
+<a class="sourceLine" id="cb208-5" title="5"><span class="co"># Let&#39;s assing the groups</span></a>
+<a class="sourceLine" id="cb208-6" title="6">net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="ot">TRUE</span>, n_egos), <span class="kw">rep</span>(<span class="ot">FALSE</span>, n <span class="op">-</span><span class="st"> </span>n_egos))</a>
+<a class="sourceLine" id="cb208-7" title="7">net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span></a></code></pre></div>
+<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
+## [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [49] FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" title="1"><span class="kw">gplot</span>(net, <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>)</a></code></pre></div>
+<p><img src="05-ergms-constrains_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>To create the auxiliary variable, we will use the following function:</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" title="1"><span class="co"># Function that creates an aux variable for the ergm model</span></a>
+<a class="sourceLine" id="cb211-2" title="2">make_aux_var &lt;-<span class="st"> </span><span class="cf">function</span>(my_net, is_ego_dummy) {</a>
+<a class="sourceLine" id="cb211-3" title="3">  </a>
+<a class="sourceLine" id="cb211-4" title="4">  n_vertex &lt;-<span class="st"> </span><span class="kw">length</span>(my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy)</a>
+<a class="sourceLine" id="cb211-5" title="5">  n_ego_   &lt;-<span class="st"> </span><span class="kw">sum</span>(my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy)</a>
+<a class="sourceLine" id="cb211-6" title="6">  </a>
+<a class="sourceLine" id="cb211-7" title="7">  <span class="co"># Creating an auxiliary variable to identify the non-informant non-informant ties</span></a>
+<a class="sourceLine" id="cb211-8" title="8">  my_net <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(</a>
+<a class="sourceLine" id="cb211-9" title="9">    <span class="op">!</span>my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy, <span class="dv">0</span>, <span class="dv">1</span><span class="op">:</span>(n_vertex <span class="op">-</span><span class="st"> </span>n_ego_)</a>
+<a class="sourceLine" id="cb211-10" title="10">    )</a>
+<a class="sourceLine" id="cb211-11" title="11"></a>
+<a class="sourceLine" id="cb211-12" title="12">  my_net</a>
+<a class="sourceLine" id="cb211-13" title="13">}</a></code></pre></div>
+<p>Calling the function in our data results in the following:</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" title="1">net &lt;-<span class="st"> </span><span class="kw">make_aux_var</span>(net, <span class="st">&quot;is.ego&quot;</span>)</a>
+<a class="sourceLine" id="cb212-2" title="2"></a>
+<a class="sourceLine" id="cb212-3" title="3"><span class="co"># Taking a look over the first 15 rows of data</span></a>
+<a class="sourceLine" id="cb212-4" title="4"><span class="kw">cbind</span>(</a>
+<a class="sourceLine" id="cb212-5" title="5">  <span class="dt">Is_Ego =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>,</a>
+<a class="sourceLine" id="cb212-6" title="6">  <span class="dt">Aux    =</span> net <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>  </a>
+<a class="sourceLine" id="cb212-7" title="7">) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span><span class="kw">head</span>(<span class="dt">n =</span> <span class="dv">15</span>)</a></code></pre></div>
+<pre><code>##       Is_Ego Aux
+##  [1,]      1   1
+##  [2,]      1   2
+##  [3,]      1   3
+##  [4,]      1   4
+##  [5,]      1   5
+##  [6,]      1   6
+##  [7,]      1   7
+##  [8,]      1   8
+##  [9,]      1   9
+## [10,]      1  10
+## [11,]      0   0
+## [12,]      0   0
+## [13,]      0   0
+## [14,]      0   0
+## [15,]      0   0</code></pre>
+<p>We can now use this data to simulate a network in which ties between
+<code>A</code>-class vertices are not possible:</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" title="1"><span class="kw">set.seed</span>(<span class="dv">2828</span>)</a>
+<a class="sourceLine" id="cb214-2" title="2">net_sim &lt;-<span class="st"> </span><span class="kw">simulate</span>(net <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>), <span class="dt">coef =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">3.0</span>, <span class="op">-</span><span class="ot">Inf</span>))</a>
+<a class="sourceLine" id="cb214-3" title="3"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.col =</span> net_sim <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>)</a></code></pre></div>
+<p><img src="05-ergms-constrains_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>As you can see, this network has only ties of the type <code>E-E</code> and <code>A-E</code>. We can
+double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph
+separately:</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" title="1"><span class="kw">summary</span>(net_sim <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
+<pre><code>##             edges nodematch.aux_var 
+##                49                 0</code></pre>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" title="1">net_of_alters &lt;-<span class="st"> </span><span class="kw">get.inducedSubgraph</span>(</a>
+<a class="sourceLine" id="cb217-2" title="2">  net_sim, <span class="kw">which</span>((net_sim <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb217-3" title="3">  )</a>
+<a class="sourceLine" id="cb217-4" title="4"></a>
+<a class="sourceLine" id="cb217-5" title="5">net_of_egos &lt;-<span class="st"> </span><span class="kw">get.inducedSubgraph</span>(</a>
+<a class="sourceLine" id="cb217-6" title="6">  net_sim, <span class="kw">which</span>((net_sim <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>) <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb217-7" title="7">  )</a>
+<a class="sourceLine" id="cb217-8" title="8"></a>
+<a class="sourceLine" id="cb217-9" title="9"><span class="co"># Counts</span></a>
+<a class="sourceLine" id="cb217-10" title="10"><span class="kw">summary</span>(net_of_alters <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
+<pre><code>##             edges nodematch.aux_var 
+##                 0                 0</code></pre>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" title="1"><span class="kw">summary</span>(net_of_egos <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
+<pre><code>##             edges nodematch.aux_var 
+##                 1                 0</code></pre>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" title="1"><span class="co"># Figures</span></a>
+<a class="sourceLine" id="cb221-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb221-3" title="3"><span class="kw">gplot</span>(net_of_alters, <span class="dt">vertex.col =</span> net_of_alters <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;A&quot;</span>)</a>
+<a class="sourceLine" id="cb221-4" title="4"><span class="kw">gplot</span>(net_of_egos, <span class="dt">vertex.col =</span> net_of_egos <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;E&quot;</span>)</a></code></pre></div>
+<p><img src="05-ergms-constrains_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
+<p>Now, to fit an ERGM with this constraint, we simply need to make use of
+the offset terms. Here is an example:</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1">ans &lt;-<span class="st"> </span><span class="kw">ergm</span>(</a>
+<a class="sourceLine" id="cb223-2" title="2">  net_sim <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(<span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>)), <span class="co"># The model (notice the offset)</span></a>
+<a class="sourceLine" id="cb223-3" title="3">  <span class="dt">offset.coef =</span> <span class="op">-</span><span class="ot">Inf</span>                              <span class="co"># The offset coefficient</span></a>
+<a class="sourceLine" id="cb223-4" title="4">  )</a></code></pre></div>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" title="1"><span class="kw">summary</span>(ans)</a></code></pre></div>
+<pre><code>## Call:
+## ergm(formula = net_sim ~ edges + offset(nodematch(&quot;aux_var&quot;)), 
+##     offset.coef = -Inf)
+## 
+## Maximum Likelihood Results:
+## 
+##                           Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges                       -2.843      0.147      0  -19.34   &lt;1e-04 ***
+## offset(nodematch.aux_var)     -Inf      0.000      0    -Inf   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 3396  on 2450  degrees of freedom
+##  Residual Deviance: 2542  on 2448  degrees of freedom
+##  
+## AIC: 2544  BIC: 2550  (Smaller is better. MC Std. Err. = 0)
+## 
+##  The following terms are fixed by offset and are not estimated:
+##   offset(nodematch.aux_var)</code></pre>
+<p>This ERGM model–which by the way only featured dyadic-independent terms, and
+thus can be reduced to a logistic regression–restricts the support by excluding
+all networks in which ties within the class <code>A</code> exists. To finalize, let’s look
+at a few simulations based on this model:</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1323</span>)</a>
+<a class="sourceLine" id="cb232-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb232-3" title="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</a>
+<a class="sourceLine" id="cb232-4" title="4">  <span class="kw">gplot</span>(<span class="kw">simulate</span>(ans), <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">vertex.cex =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb232-5" title="5">  <span class="kw">box</span>()</a>
+<a class="sourceLine" id="cb232-6" title="6">}</a></code></pre></div>
+<p><img src="05-ergms-constrains_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
+<p>All networks with no ties between <code>A</code> nodes.</p>
+
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="using-constraints-in-ergms.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="separable-temporal-exponential-family-random-graph-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/gvegayon/appliedsnar/edit/master/05-ergms-constrains.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/gvegayon/appliedsnar/blob/master/05-ergms-constrains.Rmd",
+"text": null
+},
+"download": ["appliedsnar.pdf", "appliedsnar.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

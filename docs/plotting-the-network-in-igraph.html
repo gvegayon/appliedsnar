@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.4 Plotting the network in igraph | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.4 Plotting the network in igraph | Applied Network Science with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="github-repo" content="gvegayon/appliedsnar" />
@@ -24,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-03-14" />
+<meta name="date" content="2022-04-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="network-descriptive-stats.html"/>
 <link rel="next" href="statistical-tests.html"/>
-<script src="libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -66,27 +64,25 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -95,9 +91,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -130,28 +126,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -169,44 +143,36 @@ div.csl-indent {
 <li><a href="./">Applied SNA with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a>
-<ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a><ul>
 <li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#the-book"><i class="fa fa-check"></i><b>1.0.1</b> The Book<span></span></a></li>
 <li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#the-author"><i class="fa fa-check"></i><b>1.0.2</b> The author<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction<span></span></a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a>
-<ul>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a><ul>
 <li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R<span></span></a></li>
 <li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages<span></span></a></li>
 <li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits<span></span></a></li>
 <li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a>
-<ul>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a><ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a><ul>
 <li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R<span></span></a></li>
 <li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a>
-<ul>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a><ul>
 <li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist<span></span></a></li>
 <li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats<span></span></a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a>
-<ul>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a><ul>
 <li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot<span></span></a></li>
 <li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a>
-<ul>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a><ul>
 <li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a>
-<ul>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a><ul>
 <li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example<span></span></a></li>
 <li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs<span></span></a></li>
 <li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package<span></span></a></li>
@@ -216,59 +182,52 @@ div.csl-indent {
 <li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation<span></span></a></li>
 <li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
-<li class="chapter" data-level="7" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing in networks<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>7.1</b> Comparing networks<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>7.1.1</b> Network bootstrap<span></span></a></li>
-<li class="chapter" data-level="7.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>7.1.2</b> When the statistic is normal<span></span></a></li>
-<li class="chapter" data-level="7.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>7.1.3</b> When the statistic is NOT normal<span></span></a></li>
+<li class="chapter" data-level="6" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>6</b> Using constraints in ERGMs<span></span></a><ul>
+<li class="chapter" data-level="6.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>6.1</b> Example 1: Interlocking egos and disconnected alters<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7.2</b> Examples<span></span></a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>7.2.1</b> Average of node-level stats<span></span></a></li>
+<li class="chapter" data-level="7" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>7</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks<span></span></a><ul>
+<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks<span></span></a><ul>
+<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap<span></span></a></li>
+<li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal<span></span></a></li>
+<li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal<span></span></a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>8</b> Network diffussion with <code>netdiffuseR</code><span></span></a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>8.1</b> Network diffusion of innovation<span></span></a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>8.1.1</b> Diffusion networks<span></span></a></li>
-<li class="chapter" data-level="8.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>8.1.2</b> Thresholds<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>8.2</b> The netdiffuseR R package<span></span></a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>8.2.1</b> Overview<span></span></a></li>
-<li class="chapter" data-level="8.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>8.2.2</b> Datasets<span></span></a></li>
-<li class="chapter" data-level="8.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>8.2.3</b> Visualization methods<span></span></a></li>
-<li class="chapter" data-level="8.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>8.2.4</b> Problems<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>8.3</b> Simulation of diffusion processes<span></span></a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>8.3.1</b> Simulating diffusion networks<span></span></a></li>
-<li class="chapter" data-level="8.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>8.3.2</b> Rumor spreading<span></span></a></li>
-<li class="chapter" data-level="8.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>8.3.3</b> Difussion<span></span></a></li>
-<li class="chapter" data-level="8.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>8.3.4</b> Mentor Matching<span></span></a></li>
-<li class="chapter" data-level="8.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>8.3.5</b> Example by changing threshold<span></span></a></li>
-<li class="chapter" data-level="8.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>8.3.6</b> Problems<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>8.4</b> Statistical inference<span></span></a>
-<ul>
-<li class="chapter" data-level="8.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>8.4.1</b> Moran’s I<span></span></a></li>
-<li class="chapter" data-level="8.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>8.4.2</b> Using geodesics<span></span></a></li>
-<li class="chapter" data-level="8.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>8.4.3</b> Structural dependence and permutation tests<span></span></a></li>
-<li class="chapter" data-level="8.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>8.4.4</b> Idea<span></span></a></li>
-<li class="chapter" data-level="8.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>8.4.5</b> Regression analysis<span></span></a></li>
-<li class="chapter" data-level="8.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>8.4.6</b> Problems<span></span></a></li>
+<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples<span></span></a><ul>
+<li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>9</b> Stochastic Actor Oriented Models<span></span></a></li>
+<li class="chapter" data-level="9" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>9</b> Network diffussion with <code>netdiffuseR</code><span></span></a><ul>
+<li class="chapter" data-level="9.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>9.1</b> Network diffusion of innovation<span></span></a><ul>
+<li class="chapter" data-level="9.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>9.1.1</b> Diffusion networks<span></span></a></li>
+<li class="chapter" data-level="9.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>9.1.2</b> Thresholds<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>9.2</b> The netdiffuseR R package<span></span></a><ul>
+<li class="chapter" data-level="9.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>9.2.1</b> Overview<span></span></a></li>
+<li class="chapter" data-level="9.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>9.2.2</b> Datasets<span></span></a></li>
+<li class="chapter" data-level="9.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>9.2.3</b> Visualization methods<span></span></a></li>
+<li class="chapter" data-level="9.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>9.2.4</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>9.3</b> Simulation of diffusion processes<span></span></a><ul>
+<li class="chapter" data-level="9.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>9.3.1</b> Simulating diffusion networks<span></span></a></li>
+<li class="chapter" data-level="9.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>9.3.2</b> Rumor spreading<span></span></a></li>
+<li class="chapter" data-level="9.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>9.3.3</b> Difussion<span></span></a></li>
+<li class="chapter" data-level="9.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>9.3.4</b> Mentor Matching<span></span></a></li>
+<li class="chapter" data-level="9.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>9.3.5</b> Example by changing threshold<span></span></a></li>
+<li class="chapter" data-level="9.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>9.3.6</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>9.4</b> Statistical inference<span></span></a><ul>
+<li class="chapter" data-level="9.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>9.4.1</b> Moran’s I<span></span></a></li>
+<li class="chapter" data-level="9.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>9.4.2</b> Using geodesics<span></span></a></li>
+<li class="chapter" data-level="9.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>9.4.3</b> Structural dependence and permutation tests<span></span></a></li>
+<li class="chapter" data-level="9.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>9.4.4</b> Idea<span></span></a></li>
+<li class="chapter" data-level="9.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>9.4.5</b> Regression analysis<span></span></a></li>
+<li class="chapter" data-level="9.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>9.4.6</b> Problems<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>10</b> Stochastic Actor Oriented Models<span></span></a></li>
 <li class="appendix"><span><b>Appendix<span></span></b></span></li>
-<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a>
-<ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a>
-<ul>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a><ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a><ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data<span></span></a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables<span></span></a></li>
 </ul></li>
@@ -293,12 +252,12 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="plotting-the-network-in-igraph" class="section level2 hasAnchor" number="4.4">
+<div id="plotting-the-network-in-igraph" class="section level2 hasAnchor">
 <h2><span class="header-section-number">4.4</span> Plotting the network in igraph<a href="plotting-the-network-in-igraph.html#plotting-the-network-in-igraph" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="single-plot" class="section level3 hasAnchor" number="4.4.1">
+<div id="single-plot" class="section level3 hasAnchor">
 <h3><span class="header-section-number">4.4.1</span> Single plot<a href="plotting-the-network-in-igraph.html#single-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s take a look at how does our network looks like when we use the default parameters in the plot method of the igraph object:</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="plotting-the-network-in-igraph.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ig_year1)</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" title="1"><span class="kw">plot</span>(ig_year1)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:03-plot-raw"></span>
 <img src="03-week-1-sns-study_files/figure-html/03-plot-raw-1.png" alt="A not very nice network plot. This is what we get with the default parameters in igraph." width="672" />
 <p class="caption">
@@ -312,9 +271,9 @@ Figure 4.1: A not very nice network plot. This is what we get with the default p
 <li><p>Given the number of vertices in these networks, the labels are not useful here. So we will remove them by setting <code>vertex.label = NA</code>. Moreover, we will reduce the size of the arrows’ tip by setting <code>edge.arrow.size = 0.25</code>.</p></li>
 <li><p>And finally, we will set the color of each vertex to be a function of whether the individual is Hispanic or not. For this last bit we need to go a bit more of programming:</p></li>
 </ol>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="plotting-the-network-in-igraph.html#cb113-1" aria-hidden="true" tabindex="-1"></a>col_hispanic <span class="ot">&lt;-</span> <span class="fu">V</span>(ig_year1_111)<span class="sc">$</span>hispanic <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb113-2"><a href="plotting-the-network-in-igraph.html#cb113-2" aria-hidden="true" tabindex="-1"></a>col_hispanic <span class="ot">&lt;-</span> <span class="fu">coalesce</span>(col_hispanic, <span class="dv">3</span>) </span>
-<span id="cb113-3"><a href="plotting-the-network-in-igraph.html#cb113-3" aria-hidden="true" tabindex="-1"></a>col_hispanic <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;white&quot;</span>)[col_hispanic]</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1">col_hispanic &lt;-<span class="st"> </span><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>hispanic <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb116-2" title="2">col_hispanic &lt;-<span class="st"> </span><span class="kw">coalesce</span>(col_hispanic, <span class="dv">3</span>) </a>
+<a class="sourceLine" id="cb116-3" title="3">col_hispanic &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;white&quot;</span>)[col_hispanic]</a></code></pre></div>
 <p>Line by line, we did the following:</p>
 <ol style="list-style-type: decimal">
 <li><p>The first line added one to all no <code>NA</code> values so that the 0s (non-Hispanic) turned to 1s and the 1s (Hispanic) turned to 2s.</p></li>
@@ -322,10 +281,10 @@ Figure 4.1: A not very nice network plot. This is what we get with the default p
 <li><p>In the last line, we created a vector of colors. Essentially, what we are doing here is telling R to create a vector of length <code>length(col_hispanic)</code> by selecting elements by index from the vector <code>c("steelblue", "tomato", "white")</code>. This way, if, for example, the first element of the vector <code>col_hispanic</code> was a 3, our new vector of colors would have a <code>"white"</code> in it.</p></li>
 </ol>
 <p>To make sure we know we are right, let’s print the first 10 elements of our new vector of colors together with the original <code>hispanic</code> column:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="plotting-the-network-in-igraph.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(</span>
-<span id="cb114-2"><a href="plotting-the-network-in-igraph.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">original =</span> <span class="fu">V</span>(ig_year1_111)<span class="sc">$</span>hispanic[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
-<span id="cb114-3"><a href="plotting-the-network-in-igraph.html#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">colors   =</span> col_hispanic[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb114-4"><a href="plotting-the-network-in-igraph.html#cb114-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" title="1"><span class="kw">cbind</span>(</a>
+<a class="sourceLine" id="cb117-2" title="2">  <span class="dt">original =</span> <span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>hispanic[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],</a>
+<a class="sourceLine" id="cb117-3" title="3">  <span class="dt">colors   =</span> col_hispanic[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb117-4" title="4">  )</a></code></pre></div>
 <pre><code>##       original colors     
 ##  [1,] &quot;1&quot;      &quot;tomato&quot;   
 ##  [2,] &quot;1&quot;      &quot;tomato&quot;   
@@ -338,15 +297,15 @@ Figure 4.1: A not very nice network plot. This is what we get with the default p
 ##  [9,] &quot;0&quot;      &quot;steelblue&quot;
 ## [10,] &quot;1&quot;      &quot;tomato&quot;</code></pre>
 <p>With our nice vector of colors, now we can pass it to <code>plot.igraph</code> (which we call implicitly by just calling <code>plot</code>), via the <code>vertex.color</code> argument:</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="plotting-the-network-in-igraph.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fancy graph</span></span>
-<span id="cb116-2"><a href="plotting-the-network-in-igraph.html#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb116-3"><a href="plotting-the-network-in-igraph.html#cb116-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb116-4"><a href="plotting-the-network-in-igraph.html#cb116-4" aria-hidden="true" tabindex="-1"></a>  ig_year1_111,</span>
-<span id="cb116-5"><a href="plotting-the-network-in-igraph.html#cb116-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.size     =</span> <span class="fu">degree</span>(ig_year1_111)<span class="sc">/</span><span class="dv">10</span> <span class="sc">+</span><span class="dv">1</span>,</span>
-<span id="cb116-6"><a href="plotting-the-network-in-igraph.html#cb116-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.label    =</span> <span class="cn">NA</span>,</span>
-<span id="cb116-7"><a href="plotting-the-network-in-igraph.html#cb116-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge.arrow.size =</span> .<span class="dv">25</span>,</span>
-<span id="cb116-8"><a href="plotting-the-network-in-igraph.html#cb116-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.color    =</span> col_hispanic</span>
-<span id="cb116-9"><a href="plotting-the-network-in-igraph.html#cb116-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" title="1"><span class="co"># Fancy graph</span></a>
+<a class="sourceLine" id="cb119-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb119-3" title="3"><span class="kw">plot</span>(</a>
+<a class="sourceLine" id="cb119-4" title="4">  ig_year1_<span class="dv">111</span>,</a>
+<a class="sourceLine" id="cb119-5" title="5">  <span class="dt">vertex.size     =</span> <span class="kw">degree</span>(ig_year1_<span class="dv">111</span>)<span class="op">/</span><span class="dv">10</span> <span class="op">+</span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb119-6" title="6">  <span class="dt">vertex.label    =</span> <span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb119-7" title="7">  <span class="dt">edge.arrow.size =</span> <span class="fl">.25</span>,</a>
+<a class="sourceLine" id="cb119-8" title="8">  <span class="dt">vertex.color    =</span> col_hispanic</a>
+<a class="sourceLine" id="cb119-9" title="9">  )</a></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:03-plot-neat1"></span>
 <img src="03-week-1-sns-study_files/figure-html/03-plot-neat1-1.png" alt="Friends network in time 1 for school 111. " width="672" />
 <p class="caption">
@@ -354,23 +313,23 @@ Figure 4.2: Friends network in time 1 for school 111.
 </p>
 </div>
 <p>Nice! So it does look better. The only problem is that we have a lot of isolates. Let’s try again by drawing the same plot without isolates. To do so, we need to filter the graph, for which we will use the function <code>induced_subgraph</code></p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="plotting-the-network-in-igraph.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Which vertices are not isolates?</span></span>
-<span id="cb117-2"><a href="plotting-the-network-in-igraph.html#cb117-2" aria-hidden="true" tabindex="-1"></a>which_ids <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">degree</span>(ig_year1_111, <span class="at">mode =</span> <span class="st">&quot;total&quot;</span>) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb117-3"><a href="plotting-the-network-in-igraph.html#cb117-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-4"><a href="plotting-the-network-in-igraph.html#cb117-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting the subgraph</span></span>
-<span id="cb117-5"><a href="plotting-the-network-in-igraph.html#cb117-5" aria-hidden="true" tabindex="-1"></a>ig_year1_111_sub <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(ig_year1_111, which_ids)</span>
-<span id="cb117-6"><a href="plotting-the-network-in-igraph.html#cb117-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-7"><a href="plotting-the-network-in-igraph.html#cb117-7" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to get the same subset in col_hispanic</span></span>
-<span id="cb117-8"><a href="plotting-the-network-in-igraph.html#cb117-8" aria-hidden="true" tabindex="-1"></a>col_hispanic <span class="ot">&lt;-</span> col_hispanic[which_ids]</span></code></pre></div>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="plotting-the-network-in-igraph.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fancy graph</span></span>
-<span id="cb118-2"><a href="plotting-the-network-in-igraph.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb118-3"><a href="plotting-the-network-in-igraph.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb118-4"><a href="plotting-the-network-in-igraph.html#cb118-4" aria-hidden="true" tabindex="-1"></a>  ig_year1_111_sub,</span>
-<span id="cb118-5"><a href="plotting-the-network-in-igraph.html#cb118-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.size     =</span> <span class="fu">degree</span>(ig_year1_111_sub)<span class="sc">/</span><span class="dv">5</span> <span class="sc">+</span><span class="dv">1</span>,</span>
-<span id="cb118-6"><a href="plotting-the-network-in-igraph.html#cb118-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.label    =</span> <span class="cn">NA</span>,</span>
-<span id="cb118-7"><a href="plotting-the-network-in-igraph.html#cb118-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge.arrow.size =</span> .<span class="dv">25</span>,</span>
-<span id="cb118-8"><a href="plotting-the-network-in-igraph.html#cb118-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.color    =</span> col_hispanic</span>
-<span id="cb118-9"><a href="plotting-the-network-in-igraph.html#cb118-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1"><span class="co"># Which vertices are not isolates?</span></a>
+<a class="sourceLine" id="cb120-2" title="2">which_ids &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">degree</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;total&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb120-3" title="3"></a>
+<a class="sourceLine" id="cb120-4" title="4"><span class="co"># Getting the subgraph</span></a>
+<a class="sourceLine" id="cb120-5" title="5">ig_year1_<span class="dv">111</span>_sub &lt;-<span class="st"> </span><span class="kw">induced_subgraph</span>(ig_year1_<span class="dv">111</span>, which_ids)</a>
+<a class="sourceLine" id="cb120-6" title="6"></a>
+<a class="sourceLine" id="cb120-7" title="7"><span class="co"># We need to get the same subset in col_hispanic</span></a>
+<a class="sourceLine" id="cb120-8" title="8">col_hispanic &lt;-<span class="st"> </span>col_hispanic[which_ids]</a></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1"><span class="co"># Fancy graph</span></a>
+<a class="sourceLine" id="cb121-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb121-3" title="3"><span class="kw">plot</span>(</a>
+<a class="sourceLine" id="cb121-4" title="4">  ig_year1_<span class="dv">111</span>_sub,</a>
+<a class="sourceLine" id="cb121-5" title="5">  <span class="dt">vertex.size     =</span> <span class="kw">degree</span>(ig_year1_<span class="dv">111</span>_sub)<span class="op">/</span><span class="dv">5</span> <span class="op">+</span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb121-6" title="6">  <span class="dt">vertex.label    =</span> <span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb121-7" title="7">  <span class="dt">edge.arrow.size =</span> <span class="fl">.25</span>,</a>
+<a class="sourceLine" id="cb121-8" title="8">  <span class="dt">vertex.color    =</span> col_hispanic</a>
+<a class="sourceLine" id="cb121-9" title="9">  )</a></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:03-plot-neat2"></span>
 <img src="03-week-1-sns-study_files/figure-html/03-plot-neat2-1.png" alt="Friends network in time 1 for school 111. The graph excludes isolates." width="672" />
 <p class="caption">
@@ -380,33 +339,33 @@ Figure 4.3: Friends network in time 1 for school 111. The graph excludes isolate
 <p>Now that’s better! An interesting pattern that shows up is that individuals seem to cluster by whether they are Hispanic or not.</p>
 <p>We can write this as a function to avoid copying and pasting the code <span class="math inline">\(n\)</span> times (supposing that we want to create a plot similar to this <span class="math inline">\(n\)</span> times). We do the latter in the following subsection.</p>
 </div>
-<div id="multiple-plots" class="section level3 hasAnchor" number="4.4.2">
+<div id="multiple-plots" class="section level3 hasAnchor">
 <h3><span class="header-section-number">4.4.2</span> Multiple plots<a href="plotting-the-network-in-igraph.html#multiple-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When you are repeating yourself repeatedly, it is a good idea to write down a sequence of commands as a function. In this case, since we will be running the same type of plot for all schools/waves, we write a function in which the only things that change are: (a) the school id, and (b) the color of the nodes.</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="plotting-the-network-in-igraph.html#cb119-1" aria-hidden="true" tabindex="-1"></a>myplot <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
-<span id="cb119-2"><a href="plotting-the-network-in-igraph.html#cb119-2" aria-hidden="true" tabindex="-1"></a>  net,</span>
-<span id="cb119-3"><a href="plotting-the-network-in-igraph.html#cb119-3" aria-hidden="true" tabindex="-1"></a>  schoolid,</span>
-<span id="cb119-4"><a href="plotting-the-network-in-igraph.html#cb119-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mindgr =</span> <span class="dv">1</span>,</span>
-<span id="cb119-5"><a href="plotting-the-network-in-igraph.html#cb119-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">vcol   =</span> <span class="st">&quot;tomato&quot;</span>,</span>
-<span id="cb119-6"><a href="plotting-the-network-in-igraph.html#cb119-6" aria-hidden="true" tabindex="-1"></a>  ...) {</span>
-<span id="cb119-7"><a href="plotting-the-network-in-igraph.html#cb119-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb119-8"><a href="plotting-the-network-in-igraph.html#cb119-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Creating a subgraph</span></span>
-<span id="cb119-9"><a href="plotting-the-network-in-igraph.html#cb119-9" aria-hidden="true" tabindex="-1"></a>  subnet <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(</span>
-<span id="cb119-10"><a href="plotting-the-network-in-igraph.html#cb119-10" aria-hidden="true" tabindex="-1"></a>    net,</span>
-<span id="cb119-11"><a href="plotting-the-network-in-igraph.html#cb119-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">which</span>(<span class="fu">degree</span>(net, <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">&gt;=</span> mindgr <span class="sc">&amp;</span> <span class="fu">V</span>(net)<span class="sc">$</span>school <span class="sc">==</span> schoolid)</span>
-<span id="cb119-12"><a href="plotting-the-network-in-igraph.html#cb119-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb119-13"><a href="plotting-the-network-in-igraph.html#cb119-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb119-14"><a href="plotting-the-network-in-igraph.html#cb119-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fancy graph</span></span>
-<span id="cb119-15"><a href="plotting-the-network-in-igraph.html#cb119-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb119-16"><a href="plotting-the-network-in-igraph.html#cb119-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(</span>
-<span id="cb119-17"><a href="plotting-the-network-in-igraph.html#cb119-17" aria-hidden="true" tabindex="-1"></a>    subnet,</span>
-<span id="cb119-18"><a href="plotting-the-network-in-igraph.html#cb119-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">vertex.size     =</span> <span class="fu">degree</span>(subnet)<span class="sc">/</span><span class="dv">5</span>,</span>
-<span id="cb119-19"><a href="plotting-the-network-in-igraph.html#cb119-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">vertex.label    =</span> <span class="cn">NA</span>,</span>
-<span id="cb119-20"><a href="plotting-the-network-in-igraph.html#cb119-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">edge.arrow.size =</span> .<span class="dv">25</span>,</span>
-<span id="cb119-21"><a href="plotting-the-network-in-igraph.html#cb119-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">vertex.color    =</span> vcol,</span>
-<span id="cb119-22"><a href="plotting-the-network-in-igraph.html#cb119-22" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb119-23"><a href="plotting-the-network-in-igraph.html#cb119-23" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb119-24"><a href="plotting-the-network-in-igraph.html#cb119-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1">myplot &lt;-<span class="st"> </span><span class="cf">function</span>(</a>
+<a class="sourceLine" id="cb122-2" title="2">  net,</a>
+<a class="sourceLine" id="cb122-3" title="3">  schoolid,</a>
+<a class="sourceLine" id="cb122-4" title="4">  <span class="dt">mindgr =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb122-5" title="5">  <span class="dt">vcol   =</span> <span class="st">&quot;tomato&quot;</span>,</a>
+<a class="sourceLine" id="cb122-6" title="6">  ...) {</a>
+<a class="sourceLine" id="cb122-7" title="7">  </a>
+<a class="sourceLine" id="cb122-8" title="8">  <span class="co"># Creating a subgraph</span></a>
+<a class="sourceLine" id="cb122-9" title="9">  subnet &lt;-<span class="st"> </span><span class="kw">induced_subgraph</span>(</a>
+<a class="sourceLine" id="cb122-10" title="10">    net,</a>
+<a class="sourceLine" id="cb122-11" title="11">    <span class="kw">which</span>(<span class="kw">degree</span>(net, <span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="op">&gt;=</span><span class="st"> </span>mindgr <span class="op">&amp;</span><span class="st"> </span><span class="kw">V</span>(net)<span class="op">$</span>school <span class="op">==</span><span class="st"> </span>schoolid)</a>
+<a class="sourceLine" id="cb122-12" title="12">  )</a>
+<a class="sourceLine" id="cb122-13" title="13">  </a>
+<a class="sourceLine" id="cb122-14" title="14">  <span class="co"># Fancy graph</span></a>
+<a class="sourceLine" id="cb122-15" title="15">  <span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb122-16" title="16">  <span class="kw">plot</span>(</a>
+<a class="sourceLine" id="cb122-17" title="17">    subnet,</a>
+<a class="sourceLine" id="cb122-18" title="18">    <span class="dt">vertex.size     =</span> <span class="kw">degree</span>(subnet)<span class="op">/</span><span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb122-19" title="19">    <span class="dt">vertex.label    =</span> <span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb122-20" title="20">    <span class="dt">edge.arrow.size =</span> <span class="fl">.25</span>,</a>
+<a class="sourceLine" id="cb122-21" title="21">    <span class="dt">vertex.color    =</span> vcol,</a>
+<a class="sourceLine" id="cb122-22" title="22">    ...</a>
+<a class="sourceLine" id="cb122-23" title="23">    )</a>
+<a class="sourceLine" id="cb122-24" title="24">}</a></code></pre></div>
 <p>The function definition:</p>
 <ol style="list-style-type: decimal">
 <li><p>The <code>myplot &lt;- function([arguments]) {[body of the function]}</code> tells R that we are going to create a function called <code>myplot</code>.</p></li>
@@ -414,26 +373,26 @@ Figure 4.3: Friends network in time 1 for school 111. The graph excludes isolate
 <li><p>The ellipsis object, <code>...</code>, is an especial object in R that allows us to pass other arguments without specifying which. If you take a look at the <code>plot</code> bit in the function body, you will see that we also added <code>...</code>. We use the ellipsis to pass extra arguments (different from the ones that we explicitly defined) directly to <code>plot</code>. In practice, this implies that we can, for example, set the argument <code>edge.arrow.size</code> when calling <code>myplot</code>, even though we did not include it in the function definition! (See <code>?dotsMethods</code> in R for more details).</p></li>
 </ol>
 <p>In the following lines of code, using our new function, we will plot each schools’ network in the same plotting device (window) with the help of the <code>par</code> function, and add legend with the <code>legend</code>:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="plotting-the-network-in-igraph.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting all together</span></span>
-<span id="cb120-2"><a href="plotting-the-network-in-igraph.html#cb120-2" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">no.readonly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb120-3"><a href="plotting-the-network-in-igraph.html#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">mai =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>), <span class="at">oma=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb120-4"><a href="plotting-the-network-in-igraph.html#cb120-4" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(ig_year1, <span class="dv">111</span>, <span class="at">vcol =</span> <span class="st">&quot;tomato&quot;</span>)</span>
-<span id="cb120-5"><a href="plotting-the-network-in-igraph.html#cb120-5" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(ig_year1, <span class="dv">112</span>, <span class="at">vcol =</span> <span class="st">&quot;steelblue&quot;</span>)</span>
-<span id="cb120-6"><a href="plotting-the-network-in-igraph.html#cb120-6" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(ig_year1, <span class="dv">113</span>, <span class="at">vcol =</span> <span class="st">&quot;black&quot;</span>)</span>
-<span id="cb120-7"><a href="plotting-the-network-in-igraph.html#cb120-7" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(ig_year1, <span class="dv">114</span>, <span class="at">vcol =</span> <span class="st">&quot;gold&quot;</span>)</span>
-<span id="cb120-8"><a href="plotting-the-network-in-igraph.html#cb120-8" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(ig_year1, <span class="dv">115</span>, <span class="at">vcol =</span> <span class="st">&quot;white&quot;</span>)</span>
-<span id="cb120-9"><a href="plotting-the-network-in-igraph.html#cb120-9" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span>
-<span id="cb120-10"><a href="plotting-the-network-in-igraph.html#cb120-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb120-11"><a href="plotting-the-network-in-igraph.html#cb120-11" aria-hidden="true" tabindex="-1"></a><span class="co"># A fancy legend</span></span>
-<span id="cb120-12"><a href="plotting-the-network-in-igraph.html#cb120-12" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
-<span id="cb120-13"><a href="plotting-the-network-in-igraph.html#cb120-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;bottomright&quot;</span>,</span>
-<span id="cb120-14"><a href="plotting-the-network-in-igraph.html#cb120-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">c</span>(<span class="dv">111</span>, <span class="dv">112</span>, <span class="dv">113</span>, <span class="dv">114</span>, <span class="dv">115</span>),</span>
-<span id="cb120-15"><a href="plotting-the-network-in-igraph.html#cb120-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">pt.bg  =</span> <span class="fu">c</span>(<span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;gold&quot;</span>, <span class="st">&quot;white&quot;</span>),</span>
-<span id="cb120-16"><a href="plotting-the-network-in-igraph.html#cb120-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch    =</span> <span class="dv">21</span>,</span>
-<span id="cb120-17"><a href="plotting-the-network-in-igraph.html#cb120-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex    =</span> <span class="dv">1</span>,</span>
-<span id="cb120-18"><a href="plotting-the-network-in-igraph.html#cb120-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb120-19"><a href="plotting-the-network-in-igraph.html#cb120-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;School&quot;</span></span>
-<span id="cb120-20"><a href="plotting-the-network-in-igraph.html#cb120-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1"><span class="co"># Plotting all together</span></a>
+<a class="sourceLine" id="cb123-2" title="2">oldpar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">no.readonly =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb123-3" title="3"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">mai =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>), <span class="dt">oma=</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb123-4" title="4"><span class="kw">myplot</span>(ig_year1, <span class="dv">111</span>, <span class="dt">vcol =</span> <span class="st">&quot;tomato&quot;</span>)</a>
+<a class="sourceLine" id="cb123-5" title="5"><span class="kw">myplot</span>(ig_year1, <span class="dv">112</span>, <span class="dt">vcol =</span> <span class="st">&quot;steelblue&quot;</span>)</a>
+<a class="sourceLine" id="cb123-6" title="6"><span class="kw">myplot</span>(ig_year1, <span class="dv">113</span>, <span class="dt">vcol =</span> <span class="st">&quot;black&quot;</span>)</a>
+<a class="sourceLine" id="cb123-7" title="7"><span class="kw">myplot</span>(ig_year1, <span class="dv">114</span>, <span class="dt">vcol =</span> <span class="st">&quot;gold&quot;</span>)</a>
+<a class="sourceLine" id="cb123-8" title="8"><span class="kw">myplot</span>(ig_year1, <span class="dv">115</span>, <span class="dt">vcol =</span> <span class="st">&quot;white&quot;</span>)</a>
+<a class="sourceLine" id="cb123-9" title="9"><span class="kw">par</span>(oldpar)</a>
+<a class="sourceLine" id="cb123-10" title="10"></a>
+<a class="sourceLine" id="cb123-11" title="11"><span class="co"># A fancy legend</span></a>
+<a class="sourceLine" id="cb123-12" title="12"><span class="kw">legend</span>(</a>
+<a class="sourceLine" id="cb123-13" title="13">  <span class="st">&quot;bottomright&quot;</span>,</a>
+<a class="sourceLine" id="cb123-14" title="14">  <span class="dt">legend =</span> <span class="kw">c</span>(<span class="dv">111</span>, <span class="dv">112</span>, <span class="dv">113</span>, <span class="dv">114</span>, <span class="dv">115</span>),</a>
+<a class="sourceLine" id="cb123-15" title="15">  <span class="dt">pt.bg  =</span> <span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;gold&quot;</span>, <span class="st">&quot;white&quot;</span>),</a>
+<a class="sourceLine" id="cb123-16" title="16">  <span class="dt">pch    =</span> <span class="dv">21</span>,</a>
+<a class="sourceLine" id="cb123-17" title="17">  <span class="dt">cex    =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb123-18" title="18">  <span class="dt">bty    =</span> <span class="st">&quot;n&quot;</span>,</a>
+<a class="sourceLine" id="cb123-19" title="19">  <span class="dt">title  =</span> <span class="st">&quot;School&quot;</span></a>
+<a class="sourceLine" id="cb123-20" title="20">  )</a></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:03-myplot-call"></span>
 <img src="03-week-1-sns-study_files/figure-html/03-myplot-call-1.png" alt="All 5 schools in time 1. Again, the graphs exclude isolates." width="672" />
 <p class="caption">
@@ -453,7 +412,7 @@ Figure 4.4: All 5 schools in time 1. Again, the graphs exclude isolates.
 <div class="footnotes">
 <hr />
 <ol start="6">
-<li id="fn6"><p>Figuring out what is the optimal vertex size is a bit tricky. Without getting too technical, there’s no other way of getting <em>nice</em> vertex size other than just playing with different values of it. A nice solution to this is using <a href="https://www.rdocumentation.org/packages/netdiffuseR/versions/1.17.0/topics/rescale_vertex_igraph"><code>netdiffuseR::igraph_vertex_rescale</code></a> which rescales the vertices so that these keep their aspect ratio to a predefined proportion of the screen.<a href="plotting-the-network-in-igraph.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Figuring out what is the optimal vertex size is a bit tricky. Without getting too technical, there’s no other way of getting <em>nice</em> vertex size other than just playing with different values of it. A nice solution to this is using <a href="https://www.rdocumentation.org/packages/netdiffuseR/versions/1.17.0/topics/rescale_vertex_igraph"><code>netdiffuseR::igraph_vertex_rescale</code></a> which rescales the vertices so that these keep their aspect ratio to a predefined proportion of the screen.<a href="plotting-the-network-in-igraph.html#fnref6" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.4 A gentle Quick n’ Dirty Introduction to R | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.4 A gentle Quick n’ Dirty Introduction to R | Applied Network Science with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="github-repo" content="gvegayon/appliedsnar" />
@@ -24,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-03-14" />
+<meta name="date" content="2022-04-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="prerequisits.html"/>
 <link rel="next" href="network-nomination-data.html"/>
-<script src="libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -66,27 +64,25 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -95,9 +91,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -130,28 +126,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -169,44 +143,36 @@ div.csl-indent {
 <li><a href="./">Applied SNA with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a>
-<ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a><ul>
 <li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#the-book"><i class="fa fa-check"></i><b>1.0.1</b> The Book<span></span></a></li>
 <li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#the-author"><i class="fa fa-check"></i><b>1.0.2</b> The author<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction<span></span></a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a>
-<ul>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a><ul>
 <li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R<span></span></a></li>
 <li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages<span></span></a></li>
 <li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits<span></span></a></li>
 <li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a>
-<ul>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a><ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a><ul>
 <li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R<span></span></a></li>
 <li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a>
-<ul>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a><ul>
 <li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist<span></span></a></li>
 <li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats<span></span></a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a>
-<ul>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a><ul>
 <li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot<span></span></a></li>
 <li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a>
-<ul>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a><ul>
 <li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a>
-<ul>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a><ul>
 <li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example<span></span></a></li>
 <li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs<span></span></a></li>
 <li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package<span></span></a></li>
@@ -216,59 +182,52 @@ div.csl-indent {
 <li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation<span></span></a></li>
 <li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
-<li class="chapter" data-level="7" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing in networks<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>7.1</b> Comparing networks<span></span></a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>7.1.1</b> Network bootstrap<span></span></a></li>
-<li class="chapter" data-level="7.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>7.1.2</b> When the statistic is normal<span></span></a></li>
-<li class="chapter" data-level="7.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>7.1.3</b> When the statistic is NOT normal<span></span></a></li>
+<li class="chapter" data-level="6" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>6</b> Using constraints in ERGMs<span></span></a><ul>
+<li class="chapter" data-level="6.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>6.1</b> Example 1: Interlocking egos and disconnected alters<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7.2</b> Examples<span></span></a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>7.2.1</b> Average of node-level stats<span></span></a></li>
+<li class="chapter" data-level="7" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>7</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks<span></span></a><ul>
+<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks<span></span></a><ul>
+<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap<span></span></a></li>
+<li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal<span></span></a></li>
+<li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal<span></span></a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>8</b> Network diffussion with <code>netdiffuseR</code><span></span></a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>8.1</b> Network diffusion of innovation<span></span></a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>8.1.1</b> Diffusion networks<span></span></a></li>
-<li class="chapter" data-level="8.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>8.1.2</b> Thresholds<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>8.2</b> The netdiffuseR R package<span></span></a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>8.2.1</b> Overview<span></span></a></li>
-<li class="chapter" data-level="8.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>8.2.2</b> Datasets<span></span></a></li>
-<li class="chapter" data-level="8.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>8.2.3</b> Visualization methods<span></span></a></li>
-<li class="chapter" data-level="8.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>8.2.4</b> Problems<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>8.3</b> Simulation of diffusion processes<span></span></a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>8.3.1</b> Simulating diffusion networks<span></span></a></li>
-<li class="chapter" data-level="8.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>8.3.2</b> Rumor spreading<span></span></a></li>
-<li class="chapter" data-level="8.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>8.3.3</b> Difussion<span></span></a></li>
-<li class="chapter" data-level="8.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>8.3.4</b> Mentor Matching<span></span></a></li>
-<li class="chapter" data-level="8.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>8.3.5</b> Example by changing threshold<span></span></a></li>
-<li class="chapter" data-level="8.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>8.3.6</b> Problems<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>8.4</b> Statistical inference<span></span></a>
-<ul>
-<li class="chapter" data-level="8.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>8.4.1</b> Moran’s I<span></span></a></li>
-<li class="chapter" data-level="8.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>8.4.2</b> Using geodesics<span></span></a></li>
-<li class="chapter" data-level="8.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>8.4.3</b> Structural dependence and permutation tests<span></span></a></li>
-<li class="chapter" data-level="8.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>8.4.4</b> Idea<span></span></a></li>
-<li class="chapter" data-level="8.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>8.4.5</b> Regression analysis<span></span></a></li>
-<li class="chapter" data-level="8.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>8.4.6</b> Problems<span></span></a></li>
+<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples<span></span></a><ul>
+<li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>9</b> Stochastic Actor Oriented Models<span></span></a></li>
+<li class="chapter" data-level="9" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>9</b> Network diffussion with <code>netdiffuseR</code><span></span></a><ul>
+<li class="chapter" data-level="9.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>9.1</b> Network diffusion of innovation<span></span></a><ul>
+<li class="chapter" data-level="9.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>9.1.1</b> Diffusion networks<span></span></a></li>
+<li class="chapter" data-level="9.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>9.1.2</b> Thresholds<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>9.2</b> The netdiffuseR R package<span></span></a><ul>
+<li class="chapter" data-level="9.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>9.2.1</b> Overview<span></span></a></li>
+<li class="chapter" data-level="9.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>9.2.2</b> Datasets<span></span></a></li>
+<li class="chapter" data-level="9.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>9.2.3</b> Visualization methods<span></span></a></li>
+<li class="chapter" data-level="9.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>9.2.4</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>9.3</b> Simulation of diffusion processes<span></span></a><ul>
+<li class="chapter" data-level="9.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>9.3.1</b> Simulating diffusion networks<span></span></a></li>
+<li class="chapter" data-level="9.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>9.3.2</b> Rumor spreading<span></span></a></li>
+<li class="chapter" data-level="9.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>9.3.3</b> Difussion<span></span></a></li>
+<li class="chapter" data-level="9.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>9.3.4</b> Mentor Matching<span></span></a></li>
+<li class="chapter" data-level="9.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>9.3.5</b> Example by changing threshold<span></span></a></li>
+<li class="chapter" data-level="9.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>9.3.6</b> Problems<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>9.4</b> Statistical inference<span></span></a><ul>
+<li class="chapter" data-level="9.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>9.4.1</b> Moran’s I<span></span></a></li>
+<li class="chapter" data-level="9.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>9.4.2</b> Using geodesics<span></span></a></li>
+<li class="chapter" data-level="9.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>9.4.3</b> Structural dependence and permutation tests<span></span></a></li>
+<li class="chapter" data-level="9.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>9.4.4</b> Idea<span></span></a></li>
+<li class="chapter" data-level="9.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>9.4.5</b> Regression analysis<span></span></a></li>
+<li class="chapter" data-level="9.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>9.4.6</b> Problems<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>10</b> Stochastic Actor Oriented Models<span></span></a></li>
 <li class="appendix"><span><b>Appendix<span></span></b></span></li>
-<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a>
-<ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a>
-<ul>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a><ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a><ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data<span></span></a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables<span></span></a></li>
 </ul></li>
@@ -293,50 +252,55 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="a-gentle-quick-n-dirty-introduction-to-r" class="section level2 hasAnchor" number="3.4">
+<div id="a-gentle-quick-n-dirty-introduction-to-r" class="section level2 hasAnchor">
 <h2><span class="header-section-number">3.4</span> A <del>gentle</del> Quick n’ Dirty Introduction to R<a href="a-gentle-quick-n-dirty-introduction-to-r.html#a-gentle-quick-n-dirty-introduction-to-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Some common tasks in R</p>
 <ol start="0" style="list-style-type: decimal">
-<li><p>Getting help (and reading the manual) is <em>THE MOST IMPORTANT</em> thing you should know about. For example, if you want to read the manual (help file) of the <code>read.csv</code> function, you can type either of these:
-<code>r     ?read.csv     ?"read.csv"     help(read.csv)     help("read.csv")</code>
-If you are not fully aware of what is the name of the function, you can always use the <em>fuzzy search</em>
-<code>r     help.search("linear regression")     ??"linear regression"</code></p></li>
-<li><p>In R you can create new objects by either using the assign operator (<code>&lt;-</code>) or the equal sign <code>=</code>, for example, the following 2 are equivalent:
-<code>r     a &lt;- 1     a =  1</code>
-Historically the assign operator is the most common used.</p></li>
+<li><p>Getting help (and reading the manual) is <em>THE MOST IMPORTANT</em> thing you should know about. For example, if you want to read the manual (help file) of the <code>read.csv</code> function, you can type either of these:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">?read.csv</a>
+<a class="sourceLine" id="cb2-2" title="2">?<span class="st">&quot;read.csv&quot;</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">help</span>(read.csv)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">help</span>(<span class="st">&quot;read.csv&quot;</span>)</a></code></pre></div>
+<p>If you are not fully aware of what is the name of the function, you can always use the <em>fuzzy search</em></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">help.search</span>(<span class="st">&quot;linear regression&quot;</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2">??<span class="st">&quot;linear regression&quot;</span></a></code></pre></div></li>
+<li><p>In R you can create new objects by either using the assign operator (<code>&lt;-</code>) or the equal sign <code>=</code>, for example, the following 2 are equivalent:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">a &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb4-2" title="2">a =<span class="st">  </span><span class="dv">1</span></a></code></pre></div>
+<p>Historically the assign operator is the most common used.</p></li>
 <li><p>R has several type of objects, the most basic structures in R are <code>vectors</code>, <code>matrix</code>, <code>list</code>, <code>data.frame</code>. Here is an example creating several of these (each line is enclosed with parenthesis so that R prints the resulting element):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb2-1" aria-hidden="true" tabindex="-1"></a>(a_vector     <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">(a_vector     &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span>)</a></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a>(another_vect <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">(another_vect &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>))</a></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb6-1" aria-hidden="true" tabindex="-1"></a>(a_string_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;like&quot;</span>, <span class="st">&quot;netdiffuseR&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">(a_string_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;like&quot;</span>, <span class="st">&quot;netdiffuseR&quot;</span>))</a></code></pre></div>
 <pre><code>## [1] &quot;I&quot;           &quot;like&quot;        &quot;netdiffuseR&quot;</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb8-1" aria-hidden="true" tabindex="-1"></a>(a_matrix     <span class="ot">&lt;-</span> <span class="fu">matrix</span>(a_vector, <span class="at">ncol =</span> <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">(a_matrix     &lt;-<span class="st"> </span><span class="kw">matrix</span>(a_vector, <span class="dt">ncol =</span> <span class="dv">3</span>))</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    4    7
 ## [2,]    2    5    8
 ## [3,]    3    6    9</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb10-1" aria-hidden="true" tabindex="-1"></a>(a_string_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">ncol=</span><span class="dv">3</span>)) <span class="co"># Matrices can be of strings too</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">(a_string_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>], <span class="dt">ncol=</span><span class="dv">3</span>)) <span class="co"># Matrices can be of strings too</span></a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,] &quot;a&quot;  &quot;d&quot;  &quot;g&quot; 
 ## [2,] &quot;b&quot;  &quot;e&quot;  &quot;h&quot; 
 ## [3,] &quot;c&quot;  &quot;f&quot;  &quot;i&quot;</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb12-1" aria-hidden="true" tabindex="-1"></a>(another_mat  <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">11</span><span class="sc">:</span><span class="dv">14</span>)) <span class="co"># The `cbind` operator does &quot;column bind&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">(another_mat  &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">11</span><span class="op">:</span><span class="dv">14</span>)) <span class="co"># The `cbind` operator does &quot;column bind&quot;</span></a></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]    1   11
 ## [2,]    2   12
 ## [3,]    3   13
 ## [4,]    4   14</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb14-1" aria-hidden="true" tabindex="-1"></a>(another_mat2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">11</span><span class="sc">:</span><span class="dv">14</span>)) <span class="co"># The `rbind` operator does &quot;row bind&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">(another_mat2 &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">11</span><span class="op">:</span><span class="dv">14</span>)) <span class="co"># The `rbind` operator does &quot;row bind&quot;</span></a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
 ## [1,]    1    2    3    4
 ## [2,]   11   12   13   14</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb16-1" aria-hidden="true" tabindex="-1"></a>(a_string_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">ncol =</span> <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">(a_string_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>], <span class="dt">ncol =</span> <span class="dv">3</span>))</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,] &quot;a&quot;  &quot;d&quot;  &quot;g&quot; 
 ## [2,] &quot;b&quot;  &quot;e&quot;  &quot;h&quot; 
 ## [3,] &quot;c&quot;  &quot;f&quot;  &quot;i&quot;</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb18-1" aria-hidden="true" tabindex="-1"></a>(a_list       <span class="ot">&lt;-</span> <span class="fu">list</span>(a_vector, a_matrix))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">(a_list       &lt;-<span class="st"> </span><span class="kw">list</span>(a_vector, a_matrix))</a></code></pre></div>
 <pre><code>## [[1]]
 ## [1] 1 2 3 4 5 6 7 8 9
 ## 
@@ -345,7 +309,7 @@ Historically the assign operator is the most common used.</p></li>
 ## [1,]    1    4    7
 ## [2,]    2    5    8
 ## [3,]    3    6    9</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb20-1" aria-hidden="true" tabindex="-1"></a>(another_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">my_vec =</span> a_vector, <span class="at">my_mat =</span> a_matrix)) <span class="co"># same but with names!</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">(another_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">my_vec =</span> a_vector, <span class="dt">my_mat =</span> a_matrix)) <span class="co"># same but with names!</span></a></code></pre></div>
 <pre><code>## $my_vec
 ## [1] 1 2 3 4 5 6 7 8 9
 ## 
@@ -354,8 +318,8 @@ Historically the assign operator is the most common used.</p></li>
 ## [1,]    1    4    7
 ## [2,]    2    5    8
 ## [3,]    3    6    9</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frames can have multiple types of elements, it is a collection of lists</span></span>
-<span id="cb22-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb22-2" aria-hidden="true" tabindex="-1"></a>(a_data_frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">y =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co"># Data frames can have multiple types of elements, it is a collection of lists</span></a>
+<a class="sourceLine" id="cb25-2" title="2">(a_data_frame &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]))</a></code></pre></div>
 <pre><code>##     x y
 ## 1   1 a
 ## 2   2 b
@@ -368,41 +332,41 @@ Historically the assign operator is the most common used.</p></li>
 ## 9   9 i
 ## 10 10 j</code></pre></li>
 <li><p>Depending on the type of object, we can access to its components using indexing:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a>a_vector[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="co"># First 3 elements</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">a_vector[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] <span class="co"># First 3 elements</span></a></code></pre></div>
 <pre><code>## [1] 1 2 3</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb26-1" aria-hidden="true" tabindex="-1"></a>a_string_vec[<span class="dv">3</span>] <span class="co"># Third element</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">a_string_vec[<span class="dv">3</span>] <span class="co"># Third element</span></a></code></pre></div>
 <pre><code>## [1] &quot;netdiffuseR&quot;</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb28-1" aria-hidden="true" tabindex="-1"></a>a_matrix[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="co"># A sub matrix</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">a_matrix[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] <span class="co"># A sub matrix</span></a></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]    1    4
 ## [2,]    2    5</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb30-1" aria-hidden="true" tabindex="-1"></a>a_matrix[,<span class="dv">3</span>] <span class="co"># Third column</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">a_matrix[,<span class="dv">3</span>] <span class="co"># Third column</span></a></code></pre></div>
 <pre><code>## [1] 7 8 9</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb32-1" aria-hidden="true" tabindex="-1"></a>a_matrix[<span class="dv">3</span>,] <span class="co"># Third row</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">a_matrix[<span class="dv">3</span>,] <span class="co"># Third row</span></a></code></pre></div>
 <pre><code>## [1] 3 6 9</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb34-1" aria-hidden="true" tabindex="-1"></a>a_string_mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="co"># First 6 elements of the matrix. R stores matrices by column.</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">a_string_mat[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>] <span class="co"># First 6 elements of the matrix. R stores matrices by column.</span></a></code></pre></div>
 <pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot;</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># These three are equivalent</span></span>
-<span id="cb36-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb36-2" aria-hidden="true" tabindex="-1"></a>another_list[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="co"># These three are equivalent</span></a>
+<a class="sourceLine" id="cb39-2" title="2">another_list[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb38-1" aria-hidden="true" tabindex="-1"></a>another_list<span class="sc">$</span>my_vec</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">another_list<span class="op">$</span>my_vec</a></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb40-1" aria-hidden="true" tabindex="-1"></a>another_list[[<span class="st">&quot;my_vec&quot;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">another_list[[<span class="st">&quot;my_vec&quot;</span>]]</a></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frames are just like lists</span></span>
-<span id="cb42-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb42-2" aria-hidden="true" tabindex="-1"></a>a_data_frame[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="co"># Data frames are just like lists</span></a>
+<a class="sourceLine" id="cb45-2" title="2">a_data_frame[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb44-1" aria-hidden="true" tabindex="-1"></a>a_data_frame[,<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">a_data_frame[,<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb46-1" aria-hidden="true" tabindex="-1"></a>a_data_frame[[<span class="st">&quot;x&quot;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">a_data_frame[[<span class="st">&quot;x&quot;</span>]]</a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb48-1" aria-hidden="true" tabindex="-1"></a>a_data_frame<span class="sc">$</span>x</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">a_data_frame<span class="op">$</span>x</a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre></li>
 <li><p>Control-flow statements</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The oldfashion forloop</span></span>
-<span id="cb50-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb50-3"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;I&#39;m step&quot;</span>, i, <span class="st">&quot;/&quot;</span>, <span class="dv">10</span>))</span>
-<span id="cb50-4"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb50-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1"><span class="co"># The oldfashion forloop</span></a>
+<a class="sourceLine" id="cb53-2" title="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb53-3" title="3">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;I&#39;m step&quot;</span>, i, <span class="st">&quot;/&quot;</span>, <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb53-4" title="4">}</a></code></pre></div>
 <pre><code>## [1] &quot;I&#39;m step 1 / 10&quot;
 ## [1] &quot;I&#39;m step 2 / 10&quot;
 ## [1] &quot;I&#39;m step 3 / 10&quot;
@@ -413,16 +377,16 @@ Historically the assign operator is the most common used.</p></li>
 ## [1] &quot;I&#39;m step 8 / 10&quot;
 ## [1] &quot;I&#39;m step 9 / 10&quot;
 ## [1] &quot;I&#39;m step 10 / 10&quot;</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A nice ifelse</span></span>
-<span id="cb52-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-3"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb52-4"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-5"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">%%</span> <span class="dv">2</span>) <span class="co"># Modulus operand</span></span>
-<span id="cb52-6"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;I&#39;m step&quot;</span>, i, <span class="st">&quot;/&quot;</span>, <span class="dv">10</span>, <span class="st">&quot;(and I&#39;m odd)&quot;</span>))</span>
-<span id="cb52-7"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
-<span id="cb52-8"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;I&#39;m step&quot;</span>, i, <span class="st">&quot;/&quot;</span>, <span class="dv">10</span>, <span class="st">&quot;(and I&#39;m even)&quot;</span>))</span>
-<span id="cb52-9"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-10"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb52-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="co"># A nice ifelse</span></a>
+<a class="sourceLine" id="cb55-2" title="2"></a>
+<a class="sourceLine" id="cb55-3" title="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb55-4" title="4"></a>
+<a class="sourceLine" id="cb55-5" title="5">  <span class="cf">if</span> (i <span class="op">%%</span><span class="st"> </span><span class="dv">2</span>) <span class="co"># Modulus operand</span></a>
+<a class="sourceLine" id="cb55-6" title="6">    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;I&#39;m step&quot;</span>, i, <span class="st">&quot;/&quot;</span>, <span class="dv">10</span>, <span class="st">&quot;(and I&#39;m odd)&quot;</span>))</a>
+<a class="sourceLine" id="cb55-7" title="7">  <span class="cf">else</span></a>
+<a class="sourceLine" id="cb55-8" title="8">    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;I&#39;m step&quot;</span>, i, <span class="st">&quot;/&quot;</span>, <span class="dv">10</span>, <span class="st">&quot;(and I&#39;m even)&quot;</span>))</a>
+<a class="sourceLine" id="cb55-9" title="9"></a>
+<a class="sourceLine" id="cb55-10" title="10">}</a></code></pre></div>
 <pre><code>## [1] &quot;I&#39;m step 1 / 10 (and I&#39;m odd)&quot;
 ## [1] &quot;I&#39;m step 2 / 10 (and I&#39;m even)&quot;
 ## [1] &quot;I&#39;m step 3 / 10 (and I&#39;m odd)&quot;
@@ -433,12 +397,12 @@ Historically the assign operator is the most common used.</p></li>
 ## [1] &quot;I&#39;m step 8 / 10 (and I&#39;m even)&quot;
 ## [1] &quot;I&#39;m step 9 / 10 (and I&#39;m odd)&quot;
 ## [1] &quot;I&#39;m step 10 / 10 (and I&#39;m even)&quot;</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A while</span></span>
-<span id="cb54-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb54-2" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb54-3"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (i <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb54-4"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;I&#39;m step&quot;</span>, i, <span class="st">&quot;/&quot;</span>, <span class="dv">10</span>))</span>
-<span id="cb54-5"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb54-5" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> i <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb54-6"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb54-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># A while</span></a>
+<a class="sourceLine" id="cb57-2" title="2">i &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb57-3" title="3"><span class="cf">while</span> (i <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb57-4" title="4">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;I&#39;m step&quot;</span>, i, <span class="st">&quot;/&quot;</span>, <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb57-5" title="5">  i &lt;-<span class="st"> </span>i <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb57-6" title="6">}</a></code></pre></div>
 <pre><code>## [1] &quot;I&#39;m step 10 / 10&quot;
 ## [1] &quot;I&#39;m step 9 / 10&quot;
 ## [1] &quot;I&#39;m step 8 / 10&quot;
@@ -449,7 +413,7 @@ Historically the assign operator is the most common used.</p></li>
 ## [1] &quot;I&#39;m step 3 / 10&quot;
 ## [1] &quot;I&#39;m step 2 / 10&quot;
 ## [1] &quot;I&#39;m step 1 / 10&quot;</code></pre></li>
-<li><p>R has a very nice set of pseudo random number generation functions. In general, distribution functions have the following name structure:</p>
+<li>R has a very nice set of pseudo random number generation functions. In general, distribution functions have the following name structure:
 <ol style="list-style-type: lower-alpha">
 <li>Random Number Generation: <code>r[name-of-the-distribution]</code>, e.g. <code>rnorm</code> for normal, <code>runif</code> for uniform.</li>
 <li>Density function: <code>d[name-of-the-distribution]</code>, e.g. <code>dnorm</code> for normal, <code>dunif</code> for uniform.</li>
@@ -457,34 +421,34 @@ Historically the assign operator is the most common used.</p></li>
 <li>Inverse (quantile) function: <code>q[name-of-the-distribution]</code>, e.g. <code>qnorm</code> for the normal, <code>qunif</code> for the uniform.</li>
 </ol>
 <p>Here are some examples:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To ensure reproducibility</span></span>
-<span id="cb56-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1231</span>)</span>
-<span id="cb56-3"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-4"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 100,000 Unif(0,1) numbers</span></span>
-<span id="cb56-5"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb56-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fl">1e5</span>)</span>
-<span id="cb56-6"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="co"># To ensure reproducibility</span></a>
+<a class="sourceLine" id="cb59-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1231</span>)</a>
+<a class="sourceLine" id="cb59-3" title="3"></a>
+<a class="sourceLine" id="cb59-4" title="4"><span class="co"># 100,000 Unif(0,1) numbers</span></a>
+<a class="sourceLine" id="cb59-5" title="5">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="fl">1e5</span>)</a>
+<a class="sourceLine" id="cb59-6" title="6"><span class="kw">hist</span>(x)</a></code></pre></div>
 <p><img src="02-the-basics_files/figure-html/random-numbers-1.png" width="672" /></p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 100,000 N(0,1) numbers</span></span>
-<span id="cb57-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb57-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fl">1e5</span>)</span>
-<span id="cb57-3"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="co"># 100,000 N(0,1) numbers</span></a>
+<a class="sourceLine" id="cb60-2" title="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="fl">1e5</span>)</a>
+<a class="sourceLine" id="cb60-3" title="3"><span class="kw">hist</span>(x)</a></code></pre></div>
 <p><img src="02-the-basics_files/figure-html/random-numbers-2.png" width="672" /></p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 100,000 N(10,25) numbers</span></span>
-<span id="cb58-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb58-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fl">1e5</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb58-3"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="co"># 100,000 N(10,25) numbers</span></a>
+<a class="sourceLine" id="cb61-2" title="2">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="fl">1e5</span>, <span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb61-3" title="3"><span class="kw">hist</span>(x)</a></code></pre></div>
 <p><img src="02-the-basics_files/figure-html/random-numbers-3.png" width="672" /></p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 100,000 Poisson(5) numbers</span></span>
-<span id="cb59-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb59-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="fl">1e5</span>, <span class="at">lambda =</span> <span class="dv">5</span>)</span>
-<span id="cb59-3"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="co"># 100,000 Poisson(5) numbers</span></a>
+<a class="sourceLine" id="cb62-2" title="2">x &lt;-<span class="st"> </span><span class="kw">rpois</span>(<span class="fl">1e5</span>, <span class="dt">lambda =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb62-3" title="3"><span class="kw">hist</span>(x)</a></code></pre></div>
 <p><img src="02-the-basics_files/figure-html/random-numbers-4.png" width="672" /></p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 100,000 rexp(5) numbers</span></span>
-<span id="cb60-2"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb60-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="fl">1e5</span>, <span class="dv">5</span>)</span>
-<span id="cb60-3"><a href="a-gentle-quick-n-dirty-introduction-to-r.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="co"># 100,000 rexp(5) numbers</span></a>
+<a class="sourceLine" id="cb63-2" title="2">x &lt;-<span class="st"> </span><span class="kw">rexp</span>(<span class="fl">1e5</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb63-3" title="3"><span class="kw">hist</span>(x)</a></code></pre></div>
 <p><img src="02-the-basics_files/figure-html/random-numbers-5.png" width="672" /></p>
 <p>More distributions available at <code>??Distributions</code>.</p></li>
 </ol>
 <p>For a nice intro to R, take a look at <a href="https://nostarch.com/artofr.htm">“The Art of R Programming” by Norman Matloff</a>. For more advanced users, take a look at <a href="http://adv-r.had.co.nz/">“Advanced R” by Hadley Wickham</a>.</p>
 <p>For this book, we need the following</p>
-<p><span class="citation"><a href="#ref-R" role="doc-biblioref">R Core Team</a> (<a href="#ref-R" role="doc-biblioref">2017b</a>)</span></p>
+<p><span class="citation">R Core Team (<a href="#ref-R">2017</a><a href="#ref-R">b</a>)</span></p>
 <ol style="list-style-type: decimal">
 <li><p>Install R from CRAN: <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a></p></li>
 <li><p>(optional) Install Rstudio: <a href="https://rstudio.org" class="uri">https://rstudio.org</a></p></li>
@@ -494,9 +458,9 @@ Historically the assign operator is the most common used.</p></li>
 </div>
 <!-- </div> -->
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-R" class="csl-entry">
-———. 2017b. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+<div id="refs" class="references">
+<div id="ref-R">
+<p>R Core Team. 2017b. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
 </div>
 </div>
             </section>

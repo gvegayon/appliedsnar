@@ -35,6 +35,8 @@ model-goodness-of-fit
 more-on-mcmc-convergence
 mathematical-interpretation
 markov-independence
+using-constraints-in-ergms
+example-1-interlocking-egos-and-disconnected-alters
 separable-temporal-exponential-family-random-graph-models
 hypothesis-testing-in-networks
 comparing-networks
