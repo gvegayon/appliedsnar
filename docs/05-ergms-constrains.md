@@ -23,7 +23,7 @@ Imagine that we have two sets of vertices. The first, group `E`, are egos part o
 an egocentric study. The second group, called `A`, is composed of people mentioned by egos in `E` but
 were not surveyed. Assume that individuals in `A` can only connect
 to individuals in `E`; moreover, individuals in `E` have no restrictions connecting to each other. 
-In other words, only two types of ties exist: `A-A` and `A-E`. The question is
+In other words, only two types of ties exist: `E-E` and `A-E`. The question is
 now, how can we enforce such a constraint in an ERGM?
 
 Using offsets, and in particular, setting coefficients to `-Inf` provides
@@ -55,63 +55,9 @@ block creates an empty graph with 50 nodes, 10 of which are in group `E` (ego).
 
 
 ```r
-library(ergm)
-```
+library(ergm, quietly =  TRUE)
+library(sna, quietly =  TRUE)
 
-```
-## Loading required package: network
-```
-
-```
-## 
-## 'network' 1.17.1 (2021-06-12), part of the Statnet Project
-## * 'news(package="network")' for changes since last version
-## * 'citation("network")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-```
-
-```
-## 
-## 'ergm' 4.1.2 (2021-07-26), part of the Statnet Project
-## * 'news(package="ergm")' for changes since last version
-## * 'citation("ergm")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-```
-
-```
-## 'ergm' 4 is a major update that introduces some backwards-incompatible
-## changes. Please type 'news(package="ergm")' for a list of major
-## changes.
-```
-
-```r
-library(sna)
-```
-
-```
-## Loading required package: statnet.common
-```
-
-```
-## 
-## Attaching package: 'statnet.common'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     attr, order
-```
-
-```
-## sna: Tools for Social Network Analysis
-## Version 2.6 created on 2020-10-5.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##  For citation information, type citation("sna").
-##  Type help(package="sna") to get started.
-```
-
-```r
 n <- 50
 n_egos <- 10
 net <- as.network(matrix(0, ncol = n, nrow = n), directed = TRUE)

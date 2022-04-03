@@ -23,7 +23,7 @@ Imagine that we have two sets of vertices. The first, group `E`, are egos part o
 an egocentric study. The second group, called `A`, is composed of people mentioned by egos in `E` but
 were not surveyed. Assume that individuals in `A` can only connect
 to individuals in `E`; moreover, individuals in `E` have no restrictions connecting to each other. 
-In other words, only two types of ties exist: `A-A` and `A-E`. The question is
+In other words, only two types of ties exist: `E-E` and `A-E`. The question is
 now, how can we enforce such a constraint in an ERGM?
 
 Using offsets, and in particular, setting coefficients to `-Inf` provides
@@ -53,9 +53,9 @@ different from zero otherwise. For example, if we had 2 `A`s and three `E`s,
 the data would look something like this: $\{0,0,1,2,3\}$. The following code
 block creates an empty graph with 50 nodes, 10 of which are in group `E` (ego).
 
-```{r}
-library(ergm)
-library(sna)
+```{r, message=FALSE, warning=FALSE}
+library(ergm, quietly =  TRUE)
+library(sna, quietly =  TRUE)
 
 n <- 50
 n_egos <- 10

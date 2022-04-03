@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-04-01" />
+<meta name="date" content="2022-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -279,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>brfarmersDiffNet</code> Brazilian farmers and the innovation of Hybrid Corn Seed (1966).</li>
 <li><code>kfamilyDiffNet</code> Korean women and Family Planning methods (1973).</li>
 </ul>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" title="1">brfarmersDiffNet</a></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" title="1">brfarmersDiffNet</a></code></pre></div>
 <pre><code>## Dynamic network of class -diffnet-
 ##  Name               : Brazilian Farmers
 ##  Behavior           : Adoption of Hybrid Corn Seeds
@@ -289,7 +289,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Final prevalence   : 1.00
 ##  Static attributes  : village, idold, age, liveout, visits, contact, coo... (146)
 ##  Dynamic attributes : -</code></pre>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" title="1">medInnovationsDiffNet</a></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" title="1">medInnovationsDiffNet</a></code></pre></div>
 <pre><code>## Dynamic network of class -diffnet-
 ##  Name               : Medical Innovation
 ##  Behavior           : Adoption of Tetracycline
@@ -299,7 +299,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Final prevalence   : 1.00
 ##  Static attributes  : city, detail, meet, coll, attend, proage, length, ... (58)
 ##  Dynamic attributes : -</code></pre>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" title="1">kfamilyDiffNet</a></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" title="1">kfamilyDiffNet</a></code></pre></div>
 <pre><code>## Dynamic network of class -diffnet-
 ##  Name               : Korean Family Planning
 ##  Behavior           : Family Planning Methods
@@ -313,27 +313,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="visualization-methods" class="section level3 hasAnchor">
 <h3><span class="header-section-number">9.2.3</span> Visualization methods<a href="the-netdiffuser-r-package.html#visualization-methods" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb244-1" title="1"><span class="kw">set.seed</span>(<span class="dv">12315</span>)</a>
-<a class="sourceLine" id="cb244-2" title="2">x &lt;-<span class="st"> </span><span class="kw">rdiffnet</span>(</a>
-<a class="sourceLine" id="cb244-3" title="3">  <span class="dv">400</span>, <span class="dt">t =</span> <span class="dv">6</span>, <span class="dt">rgraph.args =</span> <span class="kw">list</span>(<span class="dt">k=</span><span class="dv">6</span>, <span class="dt">p=</span>.<span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb244-4" title="4">  <span class="dt">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>,</a>
-<a class="sourceLine" id="cb244-5" title="5">  <span class="dt">seed.nodes =</span> <span class="st">&quot;central&quot;</span>, <span class="dt">rewire =</span> <span class="ot">FALSE</span>, <span class="dt">threshold.dist =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">4</span></a>
-<a class="sourceLine" id="cb244-6" title="6">  )</a>
-<a class="sourceLine" id="cb244-7" title="7"><span class="kw">plot</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" title="1"><span class="kw">set.seed</span>(<span class="dv">12315</span>)</a>
+<a class="sourceLine" id="cb234-2" title="2">x &lt;-<span class="st"> </span><span class="kw">rdiffnet</span>(</a>
+<a class="sourceLine" id="cb234-3" title="3">  <span class="dv">400</span>, <span class="dt">t =</span> <span class="dv">6</span>, <span class="dt">rgraph.args =</span> <span class="kw">list</span>(<span class="dt">k=</span><span class="dv">6</span>, <span class="dt">p=</span>.<span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb234-4" title="4">  <span class="dt">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>,</a>
+<a class="sourceLine" id="cb234-5" title="5">  <span class="dt">seed.nodes =</span> <span class="st">&quot;central&quot;</span>, <span class="dt">rewire =</span> <span class="ot">FALSE</span>, <span class="dt">threshold.dist =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb234-6" title="6">  )</a>
+<a class="sourceLine" id="cb234-7" title="7"><span class="kw">plot</span>(x)</a></code></pre></div>
 <p><img src="08-netdiffuser_files/figure-html/viz-1.png" width="672" /></p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb245-1" title="1"><span class="kw">plot_diffnet</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb235-1" title="1"><span class="kw">plot_diffnet</span>(x)</a></code></pre></div>
 <p><img src="08-netdiffuser_files/figure-html/viz-2.png" width="672" /></p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb246-1" title="1"><span class="kw">plot_diffnet2</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" title="1"><span class="kw">plot_diffnet2</span>(x)</a></code></pre></div>
 <p><img src="08-netdiffuser_files/figure-html/viz-3.png" width="672" /></p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" title="1"><span class="kw">plot_adopters</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb237-1" title="1"><span class="kw">plot_adopters</span>(x)</a></code></pre></div>
 <p><img src="08-netdiffuser_files/figure-html/viz-4.png" width="672" /></p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" title="1"><span class="kw">plot_threshold</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" title="1"><span class="kw">plot_threshold</span>(x)</a></code></pre></div>
 <p><img src="08-netdiffuser_files/figure-html/viz-5.png" width="672" /></p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb249-1" title="1"><span class="kw">plot_infectsuscep</span>(x, <span class="dt">K=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" title="1"><span class="kw">plot_infectsuscep</span>(x, <span class="dt">K=</span><span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## Warning in plot_infectsuscep.list(graph$graph, graph$toa, t0, normalize, : When
 ## applying logscale some observations are missing.</code></pre>
 <p><img src="08-netdiffuser_files/figure-html/viz-6.png" width="672" /></p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" title="1"><span class="kw">plot_hazard</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" title="1"><span class="kw">plot_hazard</span>(x)</a></code></pre></div>
 <p><img src="08-netdiffuser_files/figure-html/viz-7.png" width="672" /></p>
 </div>
 <div id="problems" class="section level3 hasAnchor">

@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-04-01" />
+<meta name="date" content="2022-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -273,28 +273,28 @@ it is more convenient to calculate the distance matrix taking this into account.
 <li><p><strong>netdiffuseR</strong> has a function to do so, the <code>approx_geodesic</code> function, which,
 using graph powers, computes the shortest path up to <code>n</code> steps. This could be
 faster (if you only care up to <code>n</code> steps) than <code>igraph</code> or <code>sns</code>:</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb270-1" title="1"><span class="co"># Extracting the large adjacency matrix (stacked)</span></a>
-<a class="sourceLine" id="cb270-2" title="2">dgc &lt;-<span class="st"> </span><span class="kw">diag_expand</span>(medInnovationsDiffNet<span class="op">$</span>graph)</a>
-<a class="sourceLine" id="cb270-3" title="3">ig  &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_adjacency_matrix</span>(dgc)</a>
-<a class="sourceLine" id="cb270-4" title="4">mat &lt;-<span class="st"> </span>network<span class="op">::</span><span class="kw">as.network</span>(<span class="kw">as.matrix</span>(dgc))</a>
-<a class="sourceLine" id="cb270-5" title="5"></a>
-<a class="sourceLine" id="cb270-6" title="6"><span class="co"># Measuring times</span></a>
-<a class="sourceLine" id="cb270-7" title="7">times &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb270-8" title="8">  <span class="dt">netdiffuseR =</span> netdiffuseR<span class="op">::</span><span class="kw">approx_geodesic</span>(dgc),</a>
-<a class="sourceLine" id="cb270-9" title="9">  <span class="dt">igraph =</span> igraph<span class="op">::</span><span class="kw">distances</span>(ig),</a>
-<a class="sourceLine" id="cb270-10" title="10">  <span class="dt">sna =</span> sna<span class="op">::</span><span class="kw">geodist</span>(mat),</a>
-<a class="sourceLine" id="cb270-11" title="11">  <span class="dt">times =</span> <span class="dv">50</span>, <span class="dt">unit=</span><span class="st">&quot;ms&quot;</span></a>
-<a class="sourceLine" id="cb270-12" title="12">)</a></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" title="1"><span class="co"># Extracting the large adjacency matrix (stacked)</span></a>
+<a class="sourceLine" id="cb260-2" title="2">dgc &lt;-<span class="st"> </span><span class="kw">diag_expand</span>(medInnovationsDiffNet<span class="op">$</span>graph)</a>
+<a class="sourceLine" id="cb260-3" title="3">ig  &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_adjacency_matrix</span>(dgc)</a>
+<a class="sourceLine" id="cb260-4" title="4">mat &lt;-<span class="st"> </span>network<span class="op">::</span><span class="kw">as.network</span>(<span class="kw">as.matrix</span>(dgc))</a>
+<a class="sourceLine" id="cb260-5" title="5"></a>
+<a class="sourceLine" id="cb260-6" title="6"><span class="co"># Measuring times</span></a>
+<a class="sourceLine" id="cb260-7" title="7">times &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</a>
+<a class="sourceLine" id="cb260-8" title="8">  <span class="dt">netdiffuseR =</span> netdiffuseR<span class="op">::</span><span class="kw">approx_geodesic</span>(dgc),</a>
+<a class="sourceLine" id="cb260-9" title="9">  <span class="dt">igraph =</span> igraph<span class="op">::</span><span class="kw">distances</span>(ig),</a>
+<a class="sourceLine" id="cb260-10" title="10">  <span class="dt">sna =</span> sna<span class="op">::</span><span class="kw">geodist</span>(mat),</a>
+<a class="sourceLine" id="cb260-11" title="11">  <span class="dt">times =</span> <span class="dv">50</span>, <span class="dt">unit=</span><span class="st">&quot;ms&quot;</span></a>
+<a class="sourceLine" id="cb260-12" title="12">)</a></code></pre></div>
 <p><img src="08-netdiffuser_files/figure-html/geodesic_speed-box-1.png" width="672" /></p></li>
 <li><p>The <code>summary.diffnet</code> method already runs Moran’s for you. What happens under the hood is:</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" title="1"><span class="co"># For each time point we compute the geodesic distances matrix</span></a>
-<a class="sourceLine" id="cb271-2" title="2">W &lt;-<span class="st"> </span><span class="kw">approx_geodesic</span>(medInnovationsDiffNet<span class="op">$</span>graph[[<span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb271-3" title="3"></a>
-<a class="sourceLine" id="cb271-4" title="4"><span class="co"># We get the element-wise inverse</span></a>
-<a class="sourceLine" id="cb271-5" title="5">W<span class="op">@</span>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>W<span class="op">@</span>x</a>
-<a class="sourceLine" id="cb271-6" title="6"></a>
-<a class="sourceLine" id="cb271-7" title="7"><span class="co"># And then compute moran</span></a>
-<a class="sourceLine" id="cb271-8" title="8"><span class="kw">moran</span>(medInnovationsDiffNet<span class="op">$</span>cumadopt[,<span class="dv">1</span>], W)</a></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" title="1"><span class="co"># For each time point we compute the geodesic distances matrix</span></a>
+<a class="sourceLine" id="cb261-2" title="2">W &lt;-<span class="st"> </span><span class="kw">approx_geodesic</span>(medInnovationsDiffNet<span class="op">$</span>graph[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb261-3" title="3"></a>
+<a class="sourceLine" id="cb261-4" title="4"><span class="co"># We get the element-wise inverse</span></a>
+<a class="sourceLine" id="cb261-5" title="5">W<span class="op">@</span>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>W<span class="op">@</span>x</a>
+<a class="sourceLine" id="cb261-6" title="6"></a>
+<a class="sourceLine" id="cb261-7" title="7"><span class="co"># And then compute moran</span></a>
+<a class="sourceLine" id="cb261-8" title="8"><span class="kw">moran</span>(medInnovationsDiffNet<span class="op">$</span>cumadopt[,<span class="dv">1</span>], W)</a></code></pre></div>
 <pre><code>## $observed
 ## [1] 0.06624028
 ## 
@@ -332,20 +332,20 @@ faster (if you only care up to <code>n</code> steps) than <code>igraph</code> or
 <ul>
 <li><pre><code>To use this test, __netdiffuseR__ has the `struct_test` function.</code></pre></li>
 <li><pre><code>It simulates networks with the same density, and computes a particular statistic every time, generating an EDF (Empirical Distribution Function) under the Null hypothesis (p-values).</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" title="1"><span class="co"># Simulating network</span></a>
-<a class="sourceLine" id="cb275-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1123</span>)</a>
-<a class="sourceLine" id="cb275-3" title="3">net &lt;-<span class="st"> </span><span class="kw">rdiffnet</span>(<span class="dt">n=</span><span class="dv">500</span>, <span class="dt">t=</span><span class="dv">10</span>, <span class="dt">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>)</a>
-<a class="sourceLine" id="cb275-4" title="4"></a>
-<a class="sourceLine" id="cb275-5" title="5"><span class="co"># Running the test</span></a>
-<a class="sourceLine" id="cb275-6" title="6">test &lt;-<span class="st"> </span><span class="kw">struct_test</span>(</a>
-<a class="sourceLine" id="cb275-7" title="7">  <span class="dt">graph     =</span> net, </a>
-<a class="sourceLine" id="cb275-8" title="8">  <span class="dt">statistic =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">threshold</span>(x), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb275-9" title="9">  <span class="dt">R         =</span> <span class="fl">1e3</span>,</a>
-<a class="sourceLine" id="cb275-10" title="10">  <span class="dt">ncpus=</span><span class="dv">4</span>, <span class="dt">parallel=</span><span class="st">&quot;multicore&quot;</span></a>
-<a class="sourceLine" id="cb275-11" title="11">  )</a>
-<a class="sourceLine" id="cb275-12" title="12"></a>
-<a class="sourceLine" id="cb275-13" title="13"><span class="co"># See the output</span></a>
-<a class="sourceLine" id="cb275-14" title="14">test</a></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" title="1"><span class="co"># Simulating network</span></a>
+<a class="sourceLine" id="cb265-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1123</span>)</a>
+<a class="sourceLine" id="cb265-3" title="3">net &lt;-<span class="st"> </span><span class="kw">rdiffnet</span>(<span class="dt">n=</span><span class="dv">500</span>, <span class="dt">t=</span><span class="dv">10</span>, <span class="dt">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>)</a>
+<a class="sourceLine" id="cb265-4" title="4"></a>
+<a class="sourceLine" id="cb265-5" title="5"><span class="co"># Running the test</span></a>
+<a class="sourceLine" id="cb265-6" title="6">test &lt;-<span class="st"> </span><span class="kw">struct_test</span>(</a>
+<a class="sourceLine" id="cb265-7" title="7">  <span class="dt">graph     =</span> net, </a>
+<a class="sourceLine" id="cb265-8" title="8">  <span class="dt">statistic =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">threshold</span>(x), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb265-9" title="9">  <span class="dt">R         =</span> <span class="fl">1e3</span>,</a>
+<a class="sourceLine" id="cb265-10" title="10">  <span class="dt">ncpus=</span><span class="dv">4</span>, <span class="dt">parallel=</span><span class="st">&quot;multicore&quot;</span></a>
+<a class="sourceLine" id="cb265-11" title="11">  )</a>
+<a class="sourceLine" id="cb265-12" title="12"></a>
+<a class="sourceLine" id="cb265-13" title="13"><span class="co"># See the output</span></a>
+<a class="sourceLine" id="cb265-14" title="14">test</a></code></pre></div>
 <pre><code>## 
 ## Structure dependence test
 ## # Simulations     : 1,000
@@ -359,19 +359,19 @@ faster (if you only care up to <code>n</code> steps) than <code>igraph</code> or
 <p><img src="08-netdiffuser_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <ul>
 <li><p>Now we shuffle times of adoption, so that is random</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" title="1"><span class="co"># Resetting TOAs (now will be completely random)</span></a>
-<a class="sourceLine" id="cb277-2" title="2"><span class="kw">diffnet.toa</span>(net) &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">diffnet.toa</span>(net), <span class="kw">nnodes</span>(net), <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb277-3" title="3"></a>
-<a class="sourceLine" id="cb277-4" title="4"><span class="co"># Running the test</span></a>
-<a class="sourceLine" id="cb277-5" title="5">test &lt;-<span class="st"> </span><span class="kw">struct_test</span>(</a>
-<a class="sourceLine" id="cb277-6" title="6">  <span class="dt">graph     =</span> net, </a>
-<a class="sourceLine" id="cb277-7" title="7">  <span class="dt">statistic =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">threshold</span>(x), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb277-8" title="8">  <span class="dt">R         =</span> <span class="fl">1e3</span>,</a>
-<a class="sourceLine" id="cb277-9" title="9">  <span class="dt">ncpus=</span><span class="dv">4</span>, <span class="dt">parallel=</span><span class="st">&quot;multicore&quot;</span></a>
-<a class="sourceLine" id="cb277-10" title="10">  )</a>
-<a class="sourceLine" id="cb277-11" title="11"></a>
-<a class="sourceLine" id="cb277-12" title="12"><span class="co"># See the output</span></a>
-<a class="sourceLine" id="cb277-13" title="13">test</a></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" title="1"><span class="co"># Resetting TOAs (now will be completely random)</span></a>
+<a class="sourceLine" id="cb267-2" title="2"><span class="kw">diffnet.toa</span>(net) &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">diffnet.toa</span>(net), <span class="kw">nnodes</span>(net), <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb267-3" title="3"></a>
+<a class="sourceLine" id="cb267-4" title="4"><span class="co"># Running the test</span></a>
+<a class="sourceLine" id="cb267-5" title="5">test &lt;-<span class="st"> </span><span class="kw">struct_test</span>(</a>
+<a class="sourceLine" id="cb267-6" title="6">  <span class="dt">graph     =</span> net, </a>
+<a class="sourceLine" id="cb267-7" title="7">  <span class="dt">statistic =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">threshold</span>(x), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb267-8" title="8">  <span class="dt">R         =</span> <span class="fl">1e3</span>,</a>
+<a class="sourceLine" id="cb267-9" title="9">  <span class="dt">ncpus=</span><span class="dv">4</span>, <span class="dt">parallel=</span><span class="st">&quot;multicore&quot;</span></a>
+<a class="sourceLine" id="cb267-10" title="10">  )</a>
+<a class="sourceLine" id="cb267-11" title="11"></a>
+<a class="sourceLine" id="cb267-12" title="12"><span class="co"># See the output</span></a>
+<a class="sourceLine" id="cb267-13" title="13">test</a></code></pre></div>
 <pre><code>## 
 ## Structure dependence test
 ## # Simulations     : 1,000
@@ -415,27 +415,27 @@ y_{it} = \left\{
 \right.
 \]</span></p></li>
 <li><p>In netdiffuseR is as easy as doing the following:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" title="1"><span class="co"># fakedata</span></a>
-<a class="sourceLine" id="cb279-2" title="2"><span class="kw">set.seed</span>(<span class="dv">121</span>)</a>
-<a class="sourceLine" id="cb279-3" title="3"></a>
-<a class="sourceLine" id="cb279-4" title="4">W   &lt;-<span class="st"> </span><span class="kw">rgraph_ws</span>(<span class="fl">1e3</span>, <span class="dv">8</span>, <span class="fl">.2</span>)</a>
-<a class="sourceLine" id="cb279-5" title="5">X   &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">var1 =</span> <span class="kw">rnorm</span>(<span class="fl">1e3</span>))</a>
-<a class="sourceLine" id="cb279-6" title="6">toa &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">NA</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="fl">1e3</span>, <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb279-7" title="7"></a>
-<a class="sourceLine" id="cb279-8" title="8">dn  &lt;-<span class="st"> </span><span class="kw">new_diffnet</span>(W, <span class="dt">toa=</span>toa, <span class="dt">vertex.static.attrs =</span> X)</a></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" title="1"><span class="co"># fakedata</span></a>
+<a class="sourceLine" id="cb269-2" title="2"><span class="kw">set.seed</span>(<span class="dv">121</span>)</a>
+<a class="sourceLine" id="cb269-3" title="3"></a>
+<a class="sourceLine" id="cb269-4" title="4">W   &lt;-<span class="st"> </span><span class="kw">rgraph_ws</span>(<span class="fl">1e3</span>, <span class="dv">8</span>, <span class="fl">.2</span>)</a>
+<a class="sourceLine" id="cb269-5" title="5">X   &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">var1 =</span> <span class="kw">rnorm</span>(<span class="fl">1e3</span>))</a>
+<a class="sourceLine" id="cb269-6" title="6">toa &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">NA</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="fl">1e3</span>, <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb269-7" title="7"></a>
+<a class="sourceLine" id="cb269-8" title="8">dn  &lt;-<span class="st"> </span><span class="kw">new_diffnet</span>(W, <span class="dt">toa=</span>toa, <span class="dt">vertex.static.attrs =</span> X)</a></code></pre></div>
 <pre><code>## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is static
 ## and will be recycled (see ?new_diffnet).</code></pre>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" title="1"><span class="co"># Computing exposure and adoption for regression</span></a>
-<a class="sourceLine" id="cb281-2" title="2">dn[[<span class="st">&quot;cohesive_expo&quot;</span>]] &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="ot">NA</span>, <span class="kw">exposure</span>(dn)[,<span class="op">-</span><span class="kw">nslices</span>(dn)])</a>
-<a class="sourceLine" id="cb281-3" title="3">dn[[<span class="st">&quot;adopt&quot;</span>]]         &lt;-<span class="st"> </span>dn<span class="op">$</span>cumadopt</a>
-<a class="sourceLine" id="cb281-4" title="4"></a>
-<a class="sourceLine" id="cb281-5" title="5"><span class="co"># Generating the data and running the model</span></a>
-<a class="sourceLine" id="cb281-6" title="6">dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(dn)</a>
-<a class="sourceLine" id="cb281-7" title="7">ans &lt;-<span class="st"> </span><span class="kw">glm</span>(adopt <span class="op">~</span><span class="st"> </span>cohesive_expo <span class="op">+</span><span class="st"> </span>var1 <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(per),</a>
-<a class="sourceLine" id="cb281-8" title="8">           <span class="dt">data =</span> dat,</a>
-<a class="sourceLine" id="cb281-9" title="9">           <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&quot;probit&quot;</span>),</a>
-<a class="sourceLine" id="cb281-10" title="10">           <span class="dt">subset =</span> <span class="kw">is.na</span>(toa) <span class="op">|</span><span class="st"> </span>(per <span class="op">&lt;=</span><span class="st"> </span>toa))</a>
-<a class="sourceLine" id="cb281-11" title="11"><span class="kw">summary</span>(ans)</a></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" title="1"><span class="co"># Computing exposure and adoption for regression</span></a>
+<a class="sourceLine" id="cb271-2" title="2">dn[[<span class="st">&quot;cohesive_expo&quot;</span>]] &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="ot">NA</span>, <span class="kw">exposure</span>(dn)[,<span class="op">-</span><span class="kw">nslices</span>(dn)])</a>
+<a class="sourceLine" id="cb271-3" title="3">dn[[<span class="st">&quot;adopt&quot;</span>]]         &lt;-<span class="st"> </span>dn<span class="op">$</span>cumadopt</a>
+<a class="sourceLine" id="cb271-4" title="4"></a>
+<a class="sourceLine" id="cb271-5" title="5"><span class="co"># Generating the data and running the model</span></a>
+<a class="sourceLine" id="cb271-6" title="6">dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(dn)</a>
+<a class="sourceLine" id="cb271-7" title="7">ans &lt;-<span class="st"> </span><span class="kw">glm</span>(adopt <span class="op">~</span><span class="st"> </span>cohesive_expo <span class="op">+</span><span class="st"> </span>var1 <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(per),</a>
+<a class="sourceLine" id="cb271-8" title="8">           <span class="dt">data =</span> dat,</a>
+<a class="sourceLine" id="cb271-9" title="9">           <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&quot;probit&quot;</span>),</a>
+<a class="sourceLine" id="cb271-10" title="10">           <span class="dt">subset =</span> <span class="kw">is.na</span>(toa) <span class="op">|</span><span class="st"> </span>(per <span class="op">&lt;=</span><span class="st"> </span>toa))</a>
+<a class="sourceLine" id="cb271-11" title="11"><span class="kw">summary</span>(ans)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = adopt ~ cohesive_expo + var1 + factor(per), family = binomial(link = &quot;probit&quot;), 
@@ -465,8 +465,8 @@ y_{it} = \left\{
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
 <p>Alternatively, we could have used the new function <code>diffreg</code></p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" title="1">ans &lt;-<span class="st"> </span><span class="kw">diffreg</span>(dn <span class="op">~</span><span class="st"> </span>exposure <span class="op">+</span><span class="st"> </span>var1 <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(per), <span class="dt">type =</span> <span class="st">&quot;probit&quot;</span>)</a>
-<a class="sourceLine" id="cb283-2" title="2"><span class="kw">summary</span>(ans)</a></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb273-1" title="1">ans &lt;-<span class="st"> </span><span class="kw">diffreg</span>(dn <span class="op">~</span><span class="st"> </span>exposure <span class="op">+</span><span class="st"> </span>var1 <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(per), <span class="dt">type =</span> <span class="st">&quot;probit&quot;</span>)</a>
+<a class="sourceLine" id="cb273-2" title="2"><span class="kw">summary</span>(ans)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Adopt ~ exposure + var1 + factor(per), family = binomial(link = &quot;probit&quot;), 

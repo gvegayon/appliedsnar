@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-04-01" />
+<meta name="date" content="2022-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,7 +258,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 an egocentric study. The second group, called <code>A</code>, is composed of people mentioned by egos in <code>E</code> but
 were not surveyed. Assume that individuals in <code>A</code> can only connect
 to individuals in <code>E</code>; moreover, individuals in <code>E</code> have no restrictions connecting to each other.
-In other words, only two types of ties exist: <code>A-A</code> and <code>A-E</code>. The question is
+In other words, only two types of ties exist: <code>E-E</code> and <code>A-E</code>. The question is
 now, how can we enforce such a constraint in an ERGM?</p>
 <p>Using offsets, and in particular, setting coefficients to <code>-Inf</code> provides
 an easy way to restrict the support set of ERGMs. For example, if we wanted
@@ -279,69 +279,45 @@ variable that equals, e.g., 0 for all vertices in <code>A</code>, and a unique v
 different from zero otherwise. For example, if we had 2 <code>A</code>s and three <code>E</code>s,
 the data would look something like this: <span class="math inline">\(\{0,0,1,2,3\}\)</span>. The following code
 block creates an empty graph with 50 nodes, 10 of which are in group <code>E</code> (ego).</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" title="1"><span class="kw">library</span>(ergm)</a></code></pre></div>
-<pre><code>## Loading required package: network</code></pre>
-<pre><code>## 
-## &#39;network&#39; 1.17.1 (2021-06-12), part of the Statnet Project
-## * &#39;news(package=&quot;network&quot;)&#39; for changes since last version
-## * &#39;citation(&quot;network&quot;)&#39; for citation information
-## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
-<pre><code>## 
-## &#39;ergm&#39; 4.1.2 (2021-07-26), part of the Statnet Project
-## * &#39;news(package=&quot;ergm&quot;)&#39; for changes since last version
-## * &#39;citation(&quot;ergm&quot;)&#39; for citation information
-## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
-<pre><code>## &#39;ergm&#39; 4 is a major update that introduces some backwards-incompatible
-## changes. Please type &#39;news(package=&quot;ergm&quot;)&#39; for a list of major
-## changes.</code></pre>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" title="1"><span class="kw">library</span>(sna)</a></code></pre></div>
-<pre><code>## Loading required package: statnet.common</code></pre>
-<pre><code>## 
-## Attaching package: &#39;statnet.common&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     attr, order</code></pre>
-<pre><code>## sna: Tools for Social Network Analysis
-## Version 2.6 created on 2020-10-5.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##  For citation information, type citation(&quot;sna&quot;).
-##  Type help(package=&quot;sna&quot;) to get started.</code></pre>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb208-1" title="1">n &lt;-<span class="st"> </span><span class="dv">50</span></a>
-<a class="sourceLine" id="cb208-2" title="2">n_egos &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb208-3" title="3">net &lt;-<span class="st"> </span><span class="kw">as.network</span>(<span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dt">ncol =</span> n, <span class="dt">nrow =</span> n), <span class="dt">directed =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb208-4" title="4"></a>
-<a class="sourceLine" id="cb208-5" title="5"><span class="co"># Let&#39;s assing the groups</span></a>
-<a class="sourceLine" id="cb208-6" title="6">net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="ot">TRUE</span>, n_egos), <span class="kw">rep</span>(<span class="ot">FALSE</span>, n <span class="op">-</span><span class="st"> </span>n_egos))</a>
-<a class="sourceLine" id="cb208-7" title="7">net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" title="1"><span class="kw">library</span>(ergm, <span class="dt">quietly =</span>  <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb198-2" title="2"><span class="kw">library</span>(sna, <span class="dt">quietly =</span>  <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb198-3" title="3"></a>
+<a class="sourceLine" id="cb198-4" title="4">n &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb198-5" title="5">n_egos &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb198-6" title="6">net &lt;-<span class="st"> </span><span class="kw">as.network</span>(<span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dt">ncol =</span> n, <span class="dt">nrow =</span> n), <span class="dt">directed =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb198-7" title="7"></a>
+<a class="sourceLine" id="cb198-8" title="8"><span class="co"># Let&#39;s assing the groups</span></a>
+<a class="sourceLine" id="cb198-9" title="9">net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="ot">TRUE</span>, n_egos), <span class="kw">rep</span>(<span class="ot">FALSE</span>, n <span class="op">-</span><span class="st"> </span>n_egos))</a>
+<a class="sourceLine" id="cb198-10" title="10">net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span></a></code></pre></div>
 <pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
 ## [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [49] FALSE FALSE</code></pre>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" title="1"><span class="kw">gplot</span>(net, <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" title="1"><span class="kw">gplot</span>(net, <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>)</a></code></pre></div>
 <p><img src="05-ergms-constrains_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>To create the auxiliary variable, we will use the following function:</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" title="1"><span class="co"># Function that creates an aux variable for the ergm model</span></a>
-<a class="sourceLine" id="cb211-2" title="2">make_aux_var &lt;-<span class="st"> </span><span class="cf">function</span>(my_net, is_ego_dummy) {</a>
-<a class="sourceLine" id="cb211-3" title="3">  </a>
-<a class="sourceLine" id="cb211-4" title="4">  n_vertex &lt;-<span class="st"> </span><span class="kw">length</span>(my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy)</a>
-<a class="sourceLine" id="cb211-5" title="5">  n_ego_   &lt;-<span class="st"> </span><span class="kw">sum</span>(my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy)</a>
-<a class="sourceLine" id="cb211-6" title="6">  </a>
-<a class="sourceLine" id="cb211-7" title="7">  <span class="co"># Creating an auxiliary variable to identify the non-informant non-informant ties</span></a>
-<a class="sourceLine" id="cb211-8" title="8">  my_net <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(</a>
-<a class="sourceLine" id="cb211-9" title="9">    <span class="op">!</span>my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy, <span class="dv">0</span>, <span class="dv">1</span><span class="op">:</span>(n_vertex <span class="op">-</span><span class="st"> </span>n_ego_)</a>
-<a class="sourceLine" id="cb211-10" title="10">    )</a>
-<a class="sourceLine" id="cb211-11" title="11"></a>
-<a class="sourceLine" id="cb211-12" title="12">  my_net</a>
-<a class="sourceLine" id="cb211-13" title="13">}</a></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" title="1"><span class="co"># Function that creates an aux variable for the ergm model</span></a>
+<a class="sourceLine" id="cb201-2" title="2">make_aux_var &lt;-<span class="st"> </span><span class="cf">function</span>(my_net, is_ego_dummy) {</a>
+<a class="sourceLine" id="cb201-3" title="3">  </a>
+<a class="sourceLine" id="cb201-4" title="4">  n_vertex &lt;-<span class="st"> </span><span class="kw">length</span>(my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy)</a>
+<a class="sourceLine" id="cb201-5" title="5">  n_ego_   &lt;-<span class="st"> </span><span class="kw">sum</span>(my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy)</a>
+<a class="sourceLine" id="cb201-6" title="6">  </a>
+<a class="sourceLine" id="cb201-7" title="7">  <span class="co"># Creating an auxiliary variable to identify the non-informant non-informant ties</span></a>
+<a class="sourceLine" id="cb201-8" title="8">  my_net <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(</a>
+<a class="sourceLine" id="cb201-9" title="9">    <span class="op">!</span>my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy, <span class="dv">0</span>, <span class="dv">1</span><span class="op">:</span>(n_vertex <span class="op">-</span><span class="st"> </span>n_ego_)</a>
+<a class="sourceLine" id="cb201-10" title="10">    )</a>
+<a class="sourceLine" id="cb201-11" title="11"></a>
+<a class="sourceLine" id="cb201-12" title="12">  my_net</a>
+<a class="sourceLine" id="cb201-13" title="13">}</a></code></pre></div>
 <p>Calling the function in our data results in the following:</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" title="1">net &lt;-<span class="st"> </span><span class="kw">make_aux_var</span>(net, <span class="st">&quot;is.ego&quot;</span>)</a>
-<a class="sourceLine" id="cb212-2" title="2"></a>
-<a class="sourceLine" id="cb212-3" title="3"><span class="co"># Taking a look over the first 15 rows of data</span></a>
-<a class="sourceLine" id="cb212-4" title="4"><span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb212-5" title="5">  <span class="dt">Is_Ego =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>,</a>
-<a class="sourceLine" id="cb212-6" title="6">  <span class="dt">Aux    =</span> net <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>  </a>
-<a class="sourceLine" id="cb212-7" title="7">) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span><span class="kw">head</span>(<span class="dt">n =</span> <span class="dv">15</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" title="1">net &lt;-<span class="st"> </span><span class="kw">make_aux_var</span>(net, <span class="st">&quot;is.ego&quot;</span>)</a>
+<a class="sourceLine" id="cb202-2" title="2"></a>
+<a class="sourceLine" id="cb202-3" title="3"><span class="co"># Taking a look over the first 15 rows of data</span></a>
+<a class="sourceLine" id="cb202-4" title="4"><span class="kw">cbind</span>(</a>
+<a class="sourceLine" id="cb202-5" title="5">  <span class="dt">Is_Ego =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>,</a>
+<a class="sourceLine" id="cb202-6" title="6">  <span class="dt">Aux    =</span> net <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>  </a>
+<a class="sourceLine" id="cb202-7" title="7">) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span><span class="kw">head</span>(<span class="dt">n =</span> <span class="dv">15</span>)</a></code></pre></div>
 <pre><code>##       Is_Ego Aux
 ##  [1,]      1   1
 ##  [2,]      1   2
@@ -360,50 +336,50 @@ block creates an empty graph with 50 nodes, 10 of which are in group <code>E</co
 ## [15,]      0   0</code></pre>
 <p>We can now use this data to simulate a network in which ties between
 <code>A</code>-class vertices are not possible:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" title="1"><span class="kw">set.seed</span>(<span class="dv">2828</span>)</a>
-<a class="sourceLine" id="cb214-2" title="2">net_sim &lt;-<span class="st"> </span><span class="kw">simulate</span>(net <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>), <span class="dt">coef =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">3.0</span>, <span class="op">-</span><span class="ot">Inf</span>))</a>
-<a class="sourceLine" id="cb214-3" title="3"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.col =</span> net_sim <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" title="1"><span class="kw">set.seed</span>(<span class="dv">2828</span>)</a>
+<a class="sourceLine" id="cb204-2" title="2">net_sim &lt;-<span class="st"> </span><span class="kw">simulate</span>(net <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>), <span class="dt">coef =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">3.0</span>, <span class="op">-</span><span class="ot">Inf</span>))</a>
+<a class="sourceLine" id="cb204-3" title="3"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.col =</span> net_sim <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>)</a></code></pre></div>
 <p><img src="05-ergms-constrains_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>As you can see, this network has only ties of the type <code>E-E</code> and <code>A-E</code>. We can
 double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph
 separately:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" title="1"><span class="kw">summary</span>(net_sim <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" title="1"><span class="kw">summary</span>(net_sim <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
 <pre><code>##             edges nodematch.aux_var 
 ##                49                 0</code></pre>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" title="1">net_of_alters &lt;-<span class="st"> </span><span class="kw">get.inducedSubgraph</span>(</a>
-<a class="sourceLine" id="cb217-2" title="2">  net_sim, <span class="kw">which</span>((net_sim <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb217-3" title="3">  )</a>
-<a class="sourceLine" id="cb217-4" title="4"></a>
-<a class="sourceLine" id="cb217-5" title="5">net_of_egos &lt;-<span class="st"> </span><span class="kw">get.inducedSubgraph</span>(</a>
-<a class="sourceLine" id="cb217-6" title="6">  net_sim, <span class="kw">which</span>((net_sim <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>) <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb217-7" title="7">  )</a>
-<a class="sourceLine" id="cb217-8" title="8"></a>
-<a class="sourceLine" id="cb217-9" title="9"><span class="co"># Counts</span></a>
-<a class="sourceLine" id="cb217-10" title="10"><span class="kw">summary</span>(net_of_alters <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" title="1">net_of_alters &lt;-<span class="st"> </span><span class="kw">get.inducedSubgraph</span>(</a>
+<a class="sourceLine" id="cb207-2" title="2">  net_sim, <span class="kw">which</span>((net_sim <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb207-3" title="3">  )</a>
+<a class="sourceLine" id="cb207-4" title="4"></a>
+<a class="sourceLine" id="cb207-5" title="5">net_of_egos &lt;-<span class="st"> </span><span class="kw">get.inducedSubgraph</span>(</a>
+<a class="sourceLine" id="cb207-6" title="6">  net_sim, <span class="kw">which</span>((net_sim <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>) <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb207-7" title="7">  )</a>
+<a class="sourceLine" id="cb207-8" title="8"></a>
+<a class="sourceLine" id="cb207-9" title="9"><span class="co"># Counts</span></a>
+<a class="sourceLine" id="cb207-10" title="10"><span class="kw">summary</span>(net_of_alters <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
 <pre><code>##             edges nodematch.aux_var 
 ##                 0                 0</code></pre>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" title="1"><span class="kw">summary</span>(net_of_egos <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" title="1"><span class="kw">summary</span>(net_of_egos <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
 <pre><code>##             edges nodematch.aux_var 
 ##                 1                 0</code></pre>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" title="1"><span class="co"># Figures</span></a>
-<a class="sourceLine" id="cb221-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb221-3" title="3"><span class="kw">gplot</span>(net_of_alters, <span class="dt">vertex.col =</span> net_of_alters <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;A&quot;</span>)</a>
-<a class="sourceLine" id="cb221-4" title="4"><span class="kw">gplot</span>(net_of_egos, <span class="dt">vertex.col =</span> net_of_egos <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;E&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" title="1"><span class="co"># Figures</span></a>
+<a class="sourceLine" id="cb211-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb211-3" title="3"><span class="kw">gplot</span>(net_of_alters, <span class="dt">vertex.col =</span> net_of_alters <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;A&quot;</span>)</a>
+<a class="sourceLine" id="cb211-4" title="4"><span class="kw">gplot</span>(net_of_egos, <span class="dt">vertex.col =</span> net_of_egos <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;E&quot;</span>)</a></code></pre></div>
 <p><img src="05-ergms-constrains_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
 <p>Now, to fit an ERGM with this constraint, we simply need to make use of
 the offset terms. Here is an example:</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1">ans &lt;-<span class="st"> </span><span class="kw">ergm</span>(</a>
-<a class="sourceLine" id="cb223-2" title="2">  net_sim <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(<span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>)), <span class="co"># The model (notice the offset)</span></a>
-<a class="sourceLine" id="cb223-3" title="3">  <span class="dt">offset.coef =</span> <span class="op">-</span><span class="ot">Inf</span>                              <span class="co"># The offset coefficient</span></a>
-<a class="sourceLine" id="cb223-4" title="4">  )</a></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" title="1">ans &lt;-<span class="st"> </span><span class="kw">ergm</span>(</a>
+<a class="sourceLine" id="cb213-2" title="2">  net_sim <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(<span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>)), <span class="co"># The model (notice the offset)</span></a>
+<a class="sourceLine" id="cb213-3" title="3">  <span class="dt">offset.coef =</span> <span class="op">-</span><span class="ot">Inf</span>                              <span class="co"># The offset coefficient</span></a>
+<a class="sourceLine" id="cb213-4" title="4">  )</a></code></pre></div>
 <pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
 <pre><code>## Evaluating the predictor and response matrix.</code></pre>
 <pre><code>## Maximizing the pseudolikelihood.</code></pre>
 <pre><code>## Finished MPLE.</code></pre>
 <pre><code>## Stopping at the initial estimate.</code></pre>
 <pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" title="1"><span class="kw">summary</span>(ans)</a></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" title="1"><span class="kw">summary</span>(ans)</a></code></pre></div>
 <pre><code>## Call:
 ## ergm(formula = net_sim ~ edges + offset(nodematch(&quot;aux_var&quot;)), 
 ##     offset.coef = -Inf)
@@ -427,14 +403,14 @@ the offset terms. Here is an example:</p>
 thus can be reduced to a logistic regression–restricts the support by excluding
 all networks in which ties within the class <code>A</code> exists. To finalize, let’s look
 at a few simulations based on this model:</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1323</span>)</a>
-<a class="sourceLine" id="cb232-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb232-3" title="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</a>
-<a class="sourceLine" id="cb232-4" title="4">  <span class="kw">gplot</span>(<span class="kw">simulate</span>(ans), <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">vertex.cex =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb232-5" title="5">  <span class="kw">box</span>()</a>
-<a class="sourceLine" id="cb232-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1323</span>)</a>
+<a class="sourceLine" id="cb222-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb222-3" title="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</a>
+<a class="sourceLine" id="cb222-4" title="4">  <span class="kw">gplot</span>(<span class="kw">simulate</span>(ans), <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">vertex.cex =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb222-5" title="5">  <span class="kw">box</span>()</a>
+<a class="sourceLine" id="cb222-6" title="6">}</a></code></pre></div>
 <p><img src="05-ergms-constrains_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
 <p>All networks with no ties between <code>A</code> nodes.</p>
 
 </div>

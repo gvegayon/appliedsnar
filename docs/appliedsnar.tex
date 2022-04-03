@@ -123,7 +123,7 @@
 
 \title{Applied Network Science with R}
 \author{George G. Vega Yon}
-\date{2022-04-01}
+\date{2022-04-03}
 
 \begin{document}
 \maketitle
@@ -2035,7 +2035,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 9aca0cf (vertex names):
+## + 1/2638 edge from c7501ee (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2863,7 +2863,7 @@ Imagine that we have two sets of vertices. The first, group \texttt{E}, are egos
 an egocentric study. The second group, called \texttt{A}, is composed of people mentioned by egos in \texttt{E} but
 were not surveyed. Assume that individuals in \texttt{A} can only connect
 to individuals in \texttt{E}; moreover, individuals in \texttt{E} have no restrictions connecting to each other.
-In other words, only two types of ties exist: \texttt{A-A} and \texttt{A-E}. The question is
+In other words, only two types of ties exist: \texttt{E-E} and \texttt{A-E}. The question is
 now, how can we enforce such a constraint in an ERGM?
 
 Using offsets, and in particular, setting coefficients to \texttt{-Inf} provides
@@ -2896,67 +2896,9 @@ block creates an empty graph with 50 nodes, 10 of which are in group \texttt{E} 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ergm)}
-\end{Highlighting}
-\end{Shaded}
+\KeywordTok{library}\NormalTok{(ergm, }\DataTypeTok{quietly =}  \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(sna, }\DataTypeTok{quietly =}  \OtherTok{TRUE}\NormalTok{)}
 
-\begin{verbatim}
-## Loading required package: network
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## 'network' 1.17.1 (2021-06-12), part of the Statnet Project
-## * 'news(package="network")' for changes since last version
-## * 'citation("network")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## 'ergm' 4.1.2 (2021-07-26), part of the Statnet Project
-## * 'news(package="ergm")' for changes since last version
-## * 'citation("ergm")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-\end{verbatim}
-
-\begin{verbatim}
-## 'ergm' 4 is a major update that introduces some backwards-incompatible
-## changes. Please type 'news(package="ergm")' for a list of major
-## changes.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(sna)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Loading required package: statnet.common
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'statnet.common'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     attr, order
-\end{verbatim}
-
-\begin{verbatim}
-## sna: Tools for Social Network Analysis
-## Version 2.6 created on 2020-10-5.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##  For citation information, type citation("sna").
-##  Type help(package="sna") to get started.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{n <-}\StringTok{ }\DecValTok{50}
 \NormalTok{n_egos <-}\StringTok{ }\DecValTok{10}
 \NormalTok{net <-}\StringTok{ }\KeywordTok{as.network}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DataTypeTok{ncol =}\NormalTok{ n, }\DataTypeTok{nrow =}\NormalTok{ n), }\DataTypeTok{directed =} \OtherTok{TRUE}\NormalTok{)}
