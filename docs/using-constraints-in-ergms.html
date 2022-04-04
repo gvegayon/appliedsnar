@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-04-03" />
+<meta name="date" content="2022-04-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -255,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="using-constraints-in-ergms" class="section level1 hasAnchor">
 <h1><span class="header-section-number">Chapter 6</span> Using constraints in ERGMs<a href="using-constraints-in-ergms.html#using-constraints-in-ergms" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Exponential Random Graph Models [ERGMs] can represent a variety of
-network classes. We often look at ``regular’’ social networks
+network classes. We often look at “regular” social networks
 like students in schools, colleagues in a workplace, or families. Nonetheless,
 some social networks we study have features that restrict how connections can
 occur. Typical examples are <a href="https://en.wikipedia.org/wiki/Bipartite_graph">bi-partite graphs</a>
@@ -265,7 +265,17 @@ occur between classes. On the other hand, Multilevel networks may feature
 multiple classes with inter-class ties somewhat restricted. In both cases,
 structural constraints exist, meaning that some configurations may not
 be plausible.</p>
-<p>The <code>ergm</code> R package has built-in capabilities to deal with some of these
+<p>Mathematically, what we are trying to do is, instead of assuming that
+all network configurations are possible:</p>
+<p><span class="math display">\[
+\left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j\right\}
+\]</span></p>
+<p>we want to go a bit further avoiding loops, namely:</p>
+<p><span class="math display">\[
+\left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j; \mathbf{y} \in C\right\}
+\]</span>,</p>
+<p>where <span class="math inline">\(C\)</span> is a constraint, for example, only networks with no triangles.
+The <code>ergm</code> R package has built-in capabilities to deal with some of these
 cases. Nonetheless, we can specify models with arbitrary
 structural constraints built into the model. The key is in using offset terms.</p>
 </div>

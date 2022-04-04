@@ -2,7 +2,7 @@
 
 
 Exponential Random Graph Models [ERGMs] can represent a variety of
-network classes. We often look at ``regular'' social networks
+network classes. We often look at "regular" social networks
 like students in schools, colleagues in a workplace, or families. Nonetheless,
 some social networks we study have features that restrict how connections can
 occur. Typical examples are [bi-partite graphs](https://en.wikipedia.org/wiki/Bipartite_graph)
@@ -13,6 +13,21 @@ multiple classes with inter-class ties somewhat restricted. In both cases,
 structural constraints exist, meaning that some configurations may not
 be plausible.
 
+Mathematically, what we are trying to do is, instead of assuming that
+all network configurations are possible:
+
+$$
+\left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j\right\}
+$$
+
+\noindent we want to go a bit further avoiding loops, namely:
+
+
+$$
+\left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j; \mathbf{y} \in C\right\}
+$$,
+
+\noindent where $C$ is a constraint, for example, only networks with no triangles.
 The `ergm` R package has built-in capabilities to deal with some of these
 cases. Nonetheless, we can specify models with arbitrary
 structural constraints built into the model. The key is in using offset terms.
@@ -137,7 +152,7 @@ par(op)
 Now, to fit an ERGM with this constraint, we simply need to make use of
 the offset terms. Here is an example:
 
-```{r}
+```{r collapse = TRUE}
 ans <- ergm(
   net_sim ~ edges + offset(nodematch("aux_var")), # The model (notice the offset)
   offset.coef = -Inf                              # The offset coefficient

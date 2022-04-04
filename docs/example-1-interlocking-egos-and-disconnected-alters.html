@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-04-03" />
+<meta name="date" content="2022-04-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -372,45 +372,45 @@ the offset terms. Here is an example:</p>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" title="1">ans &lt;-<span class="st"> </span><span class="kw">ergm</span>(</a>
 <a class="sourceLine" id="cb213-2" title="2">  net_sim <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(<span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>)), <span class="co"># The model (notice the offset)</span></a>
 <a class="sourceLine" id="cb213-3" title="3">  <span class="dt">offset.coef =</span> <span class="op">-</span><span class="ot">Inf</span>                              <span class="co"># The offset coefficient</span></a>
-<a class="sourceLine" id="cb213-4" title="4">  )</a></code></pre></div>
-<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
-<pre><code>## Evaluating the predictor and response matrix.</code></pre>
-<pre><code>## Maximizing the pseudolikelihood.</code></pre>
-<pre><code>## Finished MPLE.</code></pre>
-<pre><code>## Stopping at the initial estimate.</code></pre>
-<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" title="1"><span class="kw">summary</span>(ans)</a></code></pre></div>
-<pre><code>## Call:
-## ergm(formula = net_sim ~ edges + offset(nodematch(&quot;aux_var&quot;)), 
-##     offset.coef = -Inf)
-## 
-## Maximum Likelihood Results:
-## 
-##                           Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
-## edges                       -2.843      0.147      0  -19.34   &lt;1e-04 ***
-## offset(nodematch.aux_var)     -Inf      0.000      0    -Inf   &lt;1e-04 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-##      Null Deviance: 3396  on 2450  degrees of freedom
-##  Residual Deviance: 2542  on 2448  degrees of freedom
-##  
-## AIC: 2544  BIC: 2550  (Smaller is better. MC Std. Err. = 0)
-## 
-##  The following terms are fixed by offset and are not estimated:
-##   offset(nodematch.aux_var)</code></pre>
+<a class="sourceLine" id="cb213-4" title="4">  )</a>
+<a class="sourceLine" id="cb213-5" title="5"><span class="co">## Starting maximum pseudolikelihood estimation (MPLE):</span></a>
+<a class="sourceLine" id="cb213-6" title="6"><span class="co">## Evaluating the predictor and response matrix.</span></a>
+<a class="sourceLine" id="cb213-7" title="7"><span class="co">## Maximizing the pseudolikelihood.</span></a>
+<a class="sourceLine" id="cb213-8" title="8"><span class="co">## Finished MPLE.</span></a>
+<a class="sourceLine" id="cb213-9" title="9"><span class="co">## Stopping at the initial estimate.</span></a>
+<a class="sourceLine" id="cb213-10" title="10"><span class="co">## Evaluating log-likelihood at the estimate.</span></a>
+<a class="sourceLine" id="cb213-11" title="11"><span class="kw">summary</span>(ans)</a>
+<a class="sourceLine" id="cb213-12" title="12"><span class="co">## Call:</span></a>
+<a class="sourceLine" id="cb213-13" title="13"><span class="co">## ergm(formula = net_sim ~ edges + offset(nodematch(&quot;aux_var&quot;)), </span></a>
+<a class="sourceLine" id="cb213-14" title="14"><span class="co">##     offset.coef = -Inf)</span></a>
+<a class="sourceLine" id="cb213-15" title="15"><span class="co">## </span></a>
+<a class="sourceLine" id="cb213-16" title="16"><span class="co">## Maximum Likelihood Results:</span></a>
+<a class="sourceLine" id="cb213-17" title="17"><span class="co">## </span></a>
+<a class="sourceLine" id="cb213-18" title="18"><span class="co">##                           Estimate Std. Error MCMC % z value Pr(&gt;|z|)    </span></a>
+<a class="sourceLine" id="cb213-19" title="19"><span class="co">## edges                       -2.843      0.147      0  -19.34   &lt;1e-04 ***</span></a>
+<a class="sourceLine" id="cb213-20" title="20"><span class="co">## offset(nodematch.aux_var)     -Inf      0.000      0    -Inf   &lt;1e-04 ***</span></a>
+<a class="sourceLine" id="cb213-21" title="21"><span class="co">## ---</span></a>
+<a class="sourceLine" id="cb213-22" title="22"><span class="co">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></a>
+<a class="sourceLine" id="cb213-23" title="23"><span class="co">## </span></a>
+<a class="sourceLine" id="cb213-24" title="24"><span class="co">##      Null Deviance: 3396  on 2450  degrees of freedom</span></a>
+<a class="sourceLine" id="cb213-25" title="25"><span class="co">##  Residual Deviance: 2542  on 2448  degrees of freedom</span></a>
+<a class="sourceLine" id="cb213-26" title="26"><span class="co">##  </span></a>
+<a class="sourceLine" id="cb213-27" title="27"><span class="co">## AIC: 2544  BIC: 2550  (Smaller is better. MC Std. Err. = 0)</span></a>
+<a class="sourceLine" id="cb213-28" title="28"><span class="co">## </span></a>
+<a class="sourceLine" id="cb213-29" title="29"><span class="co">##  The following terms are fixed by offset and are not estimated:</span></a>
+<a class="sourceLine" id="cb213-30" title="30"><span class="co">##   offset(nodematch.aux_var)</span></a></code></pre></div>
 <p>This ERGM model–which by the way only featured dyadic-independent terms, and
 thus can be reduced to a logistic regression–restricts the support by excluding
 all networks in which ties within the class <code>A</code> exists. To finalize, let’s look
 at a few simulations based on this model:</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1323</span>)</a>
-<a class="sourceLine" id="cb222-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb222-3" title="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</a>
-<a class="sourceLine" id="cb222-4" title="4">  <span class="kw">gplot</span>(<span class="kw">simulate</span>(ans), <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">vertex.cex =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb222-5" title="5">  <span class="kw">box</span>()</a>
-<a class="sourceLine" id="cb222-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1323</span>)</a>
+<a class="sourceLine" id="cb214-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb214-3" title="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</a>
+<a class="sourceLine" id="cb214-4" title="4">  <span class="kw">gplot</span>(<span class="kw">simulate</span>(ans), <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">vertex.cex =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb214-5" title="5">  <span class="kw">box</span>()</a>
+<a class="sourceLine" id="cb214-6" title="6">}</a></code></pre></div>
 <p><img src="05-ergms-constrains_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
 <p>All networks with no ties between <code>A</code> nodes.</p>
 
 </div>

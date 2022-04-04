@@ -123,7 +123,7 @@
 
 \title{Applied Network Science with R}
 \author{George G. Vega Yon}
-\date{2022-04-03}
+\date{2022-04-04}
 
 \begin{document}
 \maketitle
@@ -2035,7 +2035,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from c7501ee (vertex names):
+## + 1/2638 edge from 70255b2 (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2852,6 +2852,20 @@ multiple classes with inter-class ties somewhat restricted. In both cases,
 structural constraints exist, meaning that some configurations may not
 be plausible.
 
+Mathematically, what we are trying to do is, instead of assuming that
+all network configurations are possible:
+
+\[
+\left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j\right\}
+\]
+
+\noindent we want to go a bit further avoiding loops, namely:
+
+\[
+\left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j; \mathbf{y} \in C\right\}
+\],
+
+\noindent where \(C\) is a constraint, for example, only networks with no triangles.
 The \texttt{ergm} R package has built-in capabilities to deal with some of these
 cases. Nonetheless, we can specify models with arbitrary
 structural constraints built into the model. The key is in using offset terms.
@@ -3063,60 +3077,34 @@ the offset terms. Here is an example:
 \NormalTok{  net_sim }\OperatorTok{~}\StringTok{ }\NormalTok{edges }\OperatorTok{+}\StringTok{ }\KeywordTok{offset}\NormalTok{(}\KeywordTok{nodematch}\NormalTok{(}\StringTok{"aux_var"}\NormalTok{)), }\CommentTok{# The model (notice the offset)}
   \DataTypeTok{offset.coef =} \OperatorTok{-}\OtherTok{Inf}                              \CommentTok{# The offset coefficient}
 \NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Starting maximum pseudolikelihood estimation (MPLE):
-\end{verbatim}
-
-\begin{verbatim}
-## Evaluating the predictor and response matrix.
-\end{verbatim}
-
-\begin{verbatim}
-## Maximizing the pseudolikelihood.
-\end{verbatim}
-
-\begin{verbatim}
-## Finished MPLE.
-\end{verbatim}
-
-\begin{verbatim}
-## Stopping at the initial estimate.
-\end{verbatim}
-
-\begin{verbatim}
-## Evaluating log-likelihood at the estimate.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{## Starting maximum pseudolikelihood estimation (MPLE):}
+\CommentTok{## Evaluating the predictor and response matrix.}
+\CommentTok{## Maximizing the pseudolikelihood.}
+\CommentTok{## Finished MPLE.}
+\CommentTok{## Stopping at the initial estimate.}
+\CommentTok{## Evaluating log-likelihood at the estimate.}
 \KeywordTok{summary}\NormalTok{(ans)}
+\CommentTok{## Call:}
+\CommentTok{## ergm(formula = net_sim ~ edges + offset(nodematch("aux_var")), }
+\CommentTok{##     offset.coef = -Inf)}
+\CommentTok{## }
+\CommentTok{## Maximum Likelihood Results:}
+\CommentTok{## }
+\CommentTok{##                           Estimate Std. Error MCMC % z value Pr(>|z|)    }
+\CommentTok{## edges                       -2.843      0.147      0  -19.34   <1e-04 ***}
+\CommentTok{## offset(nodematch.aux_var)     -Inf      0.000      0    -Inf   <1e-04 ***}
+\CommentTok{## ---}
+\CommentTok{## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1}
+\CommentTok{## }
+\CommentTok{##      Null Deviance: 3396  on 2450  degrees of freedom}
+\CommentTok{##  Residual Deviance: 2542  on 2448  degrees of freedom}
+\CommentTok{##  }
+\CommentTok{## AIC: 2544  BIC: 2550  (Smaller is better. MC Std. Err. = 0)}
+\CommentTok{## }
+\CommentTok{##  The following terms are fixed by offset and are not estimated:}
+\CommentTok{##   offset(nodematch.aux_var)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Call:
-## ergm(formula = net_sim ~ edges + offset(nodematch("aux_var")), 
-##     offset.coef = -Inf)
-## 
-## Maximum Likelihood Results:
-## 
-##                           Estimate Std. Error MCMC % z value Pr(>|z|)    
-## edges                       -2.843      0.147      0  -19.34   <1e-04 ***
-## offset(nodematch.aux_var)     -Inf      0.000      0    -Inf   <1e-04 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-##      Null Deviance: 3396  on 2450  degrees of freedom
-##  Residual Deviance: 2542  on 2448  degrees of freedom
-##  
-## AIC: 2544  BIC: 2550  (Smaller is better. MC Std. Err. = 0)
-## 
-##  The following terms are fixed by offset and are not estimated:
-##   offset(nodematch.aux_var)
-\end{verbatim}
 
 This ERGM model--which by the way only featured dyadic-independent terms, and
 thus can be reduced to a logistic regression--restricts the support by excluding
