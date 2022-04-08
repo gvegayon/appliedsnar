@@ -176,3 +176,5 @@ par(op)
 ```
 
 All networks with no ties between `A` nodes.
+
+### Example 2
