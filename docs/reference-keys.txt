@@ -4,6 +4,7 @@ fig:03-plot-neat2
 fig:03-myplot-call
 eq:04-1
 fig:badconvergence
+tab:05-example2-post-dist
 about
 the-book
 the-author
@@ -37,6 +38,7 @@ mathematical-interpretation
 markov-independence
 using-constraints-in-ergms
 example-1-interlocking-egos-and-disconnected-alters
+example-2-bi-partite-networks
 separable-temporal-exponential-family-random-graph-models
 hypothesis-testing-in-networks
 comparing-networks

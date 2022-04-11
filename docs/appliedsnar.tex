@@ -123,7 +123,7 @@
 
 \title{Applied Network Science with R}
 \author{George G. Vega Yon}
-\date{2022-04-04}
+\date{2022-04-11}
 
 \begin{document}
 \maketitle
@@ -2035,7 +2035,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 70255b2 (vertex names):
+## + 1/2638 edge from aba784e (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -3131,6 +3131,266 @@ at a few simulations based on this model:
 \end{Shaded}
 
 All networks with no ties between \texttt{A} nodes.
+
+\hypertarget{example-2-bi-partite-networks}{%
+\section{Example 2: Bi-partite networks}\label{example-2-bi-partite-networks}}
+
+In the case of bipartite networks (sometimes called affiliation networks,) we can
+use \texttt{ergm}'s terms for bipartite graphs to corroborate what we discussed
+here. For example, the two-star term. Let's start simulating a bipartite
+network using the \texttt{edges} and \texttt{two-star} parameters. Since the \texttt{k-star} term
+is usually complex to fit (tends to generate degenerate models,) we will
+take advantage of the \texttt{Log()} transformation function in the \texttt{ergm} package
+to smooth the term.
+
+The bipartite network that we will be simulating will have 100 actors and
+50 entities. Actors, which we will map to the first level of the \texttt{ergm} terms,
+this is, \texttt{b1star} \texttt{b1nodematch}, etc. will send ties to the entities,
+the second level of the bipartite ERGM. To create a bipartite network, we will
+create an empty matrix of size \texttt{nactors\ x\ nentitites}; thus, actors are
+represented by rows and entities by columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Parameters for the simulation}
+\NormalTok{nactors   <-}\StringTok{ }\DecValTok{100}
+\NormalTok{nentities <-}\StringTok{ }\KeywordTok{floor}\NormalTok{(nactors}\OperatorTok{/}\DecValTok{2}\NormalTok{)}
+\NormalTok{n         <-}\StringTok{ }\NormalTok{nactors }\OperatorTok{+}\StringTok{ }\NormalTok{nentities}
+
+\CommentTok{# Creating an empty bipartite network (baseline)}
+\NormalTok{net_b <-}\StringTok{ }\KeywordTok{network}\NormalTok{(}
+  \KeywordTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DataTypeTok{nrow =}\NormalTok{ nactors, }\DataTypeTok{ncol =}\NormalTok{ nentities), }\DataTypeTok{bipartite =} \OtherTok{TRUE}
+\NormalTok{)}
+
+\CommentTok{# Simulating the bipartite ERGM,}
+\NormalTok{net_b <-}\StringTok{ }\KeywordTok{simulate}\NormalTok{(net_b }\OperatorTok{~}\StringTok{ }\NormalTok{edges }\OperatorTok{+}\StringTok{ }\KeywordTok{Log}\NormalTok{(}\OperatorTok{~}\KeywordTok{b1star}\NormalTok{(}\DecValTok{2}\NormalTok{)), }\DataTypeTok{coef =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{3}\NormalTok{, }\FloatTok{1.5}\NormalTok{), }\DataTypeTok{seed =} \DecValTok{55}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Let's see what we got here:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(net_b }\OperatorTok{~}\StringTok{ }\NormalTok{edges }\OperatorTok{+}\StringTok{ }\KeywordTok{Log}\NormalTok{(}\OperatorTok{~}\KeywordTok{b1star}\NormalTok{(}\DecValTok{2}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       edges Log~b1star2 
+##  245.000000    5.746203
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{netplot}\OperatorTok{::}\KeywordTok{nplot}\NormalTok{(net_b, }\DataTypeTok{vertex.col =}\NormalTok{ (}\DecValTok{1}\OperatorTok{:}\NormalTok{n }\OperatorTok{<=}\StringTok{ }\NormalTok{nactors) }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{05-ergms-constrains_files/figure-latex/05-example2-simulated-graph-1.pdf}
+
+Notice that the first \texttt{nactors} vertices in the network are the actors, and
+the remaining are the entities. Now, although the \texttt{ergm} package features
+bipartite network terms, we can still fit a bipartite ERGM without explicitly
+declaring the graph as such. In such case, the \texttt{b1star(2)} term of a bipartite
+network is equivalent to an \texttt{ostar(2)} in a directed graph. Likewise, \texttt{b2star(2)}
+in a bipartite graph matches the \texttt{istar(2)} term in a directed graph. This
+information will be relevant when fitting the ERGM. Let's transform the bipartite
+network into a directed graph. The following code block does so:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Identifying the edges}
+\NormalTok{net_not_b <-}\StringTok{ }\KeywordTok{which}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(net_b) }\OperatorTok{!=}\StringTok{ }\DecValTok{0}\NormalTok{, }\DataTypeTok{arr.ind =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# We need to offset the endpoint of the ties by nactors}
+\CommentTok{# so that the ids go from 1 through (nactors + nentitites)}
+\NormalTok{net_not_b[,}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\NormalTok{net_not_b[,}\DecValTok{2}\NormalTok{] }\OperatorTok{+}\StringTok{ }\NormalTok{nactors}
+
+\CommentTok{# The resulting graph is a directed network}
+\NormalTok{net_not_b <-}\StringTok{ }\KeywordTok{network}\NormalTok{(net_not_b, }\DataTypeTok{directed =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we are almost done. As before, we need to use node-level covariates
+to put the constraints in our model. For this ERGM to reflect an ERGM on
+a bipartite network, we need two constraints:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Only ties from actors to entities are allowed, and
+\item
+  entities can only receive ties.
+\end{enumerate}
+
+The corresponding offset terms for this model are: \texttt{nodematch("is.actor")\ \textasciitilde{}\ -Inf},
+and \texttt{nodeocov("isnot.actor")\ \textasciitilde{}\ -Inf}. Mathematically:
+
+\begin{align*}
+\text{NodeMatch(x = "is.actor")} &= \sum_{i<j} y_{ij}\mathbb{1}\left(x_i = x_j\right) \\
+\text{NodeOCov(x = "isnot.actor")} &= \sum_{i} x_i \times \sum_{j<i} y_{ij} 
+\end{align*}
+
+In other words, we are setting that ties between nodes of the same class are
+forbidden, and outgoing ties are forbidden for entities. Let's create the
+vertex attributes needed to use the aforementioned terms:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{net_not_b }\OperatorTok{%v%}\StringTok{ "is.actor"}\NormalTok{ <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{n }\OperatorTok{<=}\StringTok{ }\NormalTok{nactors)}
+\NormalTok{net_not_b }\OperatorTok{%v%}\StringTok{ "isnot.actor"}\NormalTok{ <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{n }\OperatorTok{>}\StringTok{ }\NormalTok{nactors)}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, to make sure we have done all well, let's look how both networks--bipartite
+and unimodal--look side by side:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# First, let's get the layout}
+\NormalTok{fig <-}\StringTok{ }\NormalTok{netplot}\OperatorTok{::}\KeywordTok{nplot}\NormalTok{(net_b, }\DataTypeTok{vertex.col =}\NormalTok{ (}\DecValTok{1}\OperatorTok{:}\NormalTok{n }\OperatorTok{<=}\StringTok{ }\NormalTok{nactors) }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{gridExtra}\OperatorTok{::}\KeywordTok{grid.arrange}\NormalTok{(}
+\NormalTok{  fig,}
+\NormalTok{  netplot}\OperatorTok{::}\KeywordTok{nplot}\NormalTok{(}
+\NormalTok{    net_not_b, }\DataTypeTok{vertex.col =}\NormalTok{ (}\DecValTok{1}\OperatorTok{:}\NormalTok{n }\OperatorTok{<=}\StringTok{ }\NormalTok{nactors) }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{,}
+    \DataTypeTok{layout =}\NormalTok{ fig}\OperatorTok{$}\NormalTok{.layout}
+\NormalTok{     ),}
+  \DataTypeTok{ncol =} \DecValTok{2}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{1}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{05-ergms-constrains_files/figure-latex/05-example2-side-by-side-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Looking at the counts}
+\KeywordTok{summary}\NormalTok{(net_b }\OperatorTok{~}\StringTok{ }\NormalTok{edges }\OperatorTok{+}\StringTok{ }\KeywordTok{b1star}\NormalTok{(}\DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{b2star}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   edges b1star2 b2star2 
+##     245     313     645
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(net_not_b }\OperatorTok{~}\StringTok{ }\NormalTok{edges }\OperatorTok{+}\StringTok{ }\KeywordTok{ostar}\NormalTok{(}\DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{istar}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  edges ostar2 istar2 
+##    245    313    645
+\end{verbatim}
+
+With the two networks matching, we can now fit the ERGMs with and without
+offset terms and compare the results between the two models:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# ERGM with a bipartite graph}
+\NormalTok{res_b     <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
+  \CommentTok{# Main formula}
+\NormalTok{  net_b }\OperatorTok{~}\StringTok{ }\NormalTok{edges }\OperatorTok{+}\StringTok{ }\KeywordTok{Log}\NormalTok{(}\OperatorTok{~}\KeywordTok{b1star}\NormalTok{(}\DecValTok{2}\NormalTok{)),}
+
+  \CommentTok{# Control parameters}
+  \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+
+\CommentTok{# ERGM with a digraph with constraints}
+\NormalTok{res_not_b <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
+  \CommentTok{# Main formula}
+\NormalTok{  net_not_b }\OperatorTok{~}\StringTok{ }\NormalTok{edges }\OperatorTok{+}\StringTok{ }\KeywordTok{Log}\NormalTok{(}\OperatorTok{~}\KeywordTok{ostar}\NormalTok{(}\DecValTok{2}\NormalTok{)) }\OperatorTok{+}
+
+\StringTok{  }\CommentTok{# Offset terms }
+\StringTok{  }\KeywordTok{offset}\NormalTok{(}\KeywordTok{nodematch}\NormalTok{(}\StringTok{"is.actor"}\NormalTok{)) }\OperatorTok{+}\StringTok{ }\KeywordTok{offset}\NormalTok{(}\KeywordTok{nodeocov}\NormalTok{(}\StringTok{"isnot.actor"}\NormalTok{)),}
+  \DataTypeTok{offset.coef =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\OtherTok{Inf}\NormalTok{, }\OperatorTok{-}\OtherTok{Inf}\NormalTok{),}
+
+  \CommentTok{# Control parameters}
+  \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Here are the estimates (using the \texttt{texreg} R package for a prettier output)\footnote{After writing this example, it became apparent the presence of
+  a couple of bugs in the ERGM package. First, the parameter estimate of the
+  \texttt{Log(\textasciitilde{}b1star(2))} term is significantly off from the simulated value. And second,
+  the likelihood approximates using offset terms are also very out compared to
+  those obtained fitting the bipartite graph without them.}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{texreg}\OperatorTok{::}\KeywordTok{screenreg}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{Bipartite =}\NormalTok{ res_b, }\DataTypeTok{Directed =}\NormalTok{ res_not_b))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ======================================================================
+##                               Bipartite    Directed                   
+## ----------------------------------------------------------------------
+## edges                           -3.14 ***                    -3.14 ***
+##                                 (0.15)                       (0.14)   
+## Log~b1star2                     21.86                                 
+##                                (16.92)                                
+## Log~ostar2                                                   21.62    
+##                                                             (16.42)   
+## offset(nodematch.is.actor)                                    -Inf    
+##                                                                       
+## offset(nodeocov.isnot.actor)                                  -Inf    
+##                                                                       
+## ----------------------------------------------------------------------
+## AIC                           1958.11      -2134192392760919552.00    
+## BIC                           1971.15      -2134192392760919552.00    
+## Log Likelihood                -977.06       1067096196380459776.00    
+## ======================================================================
+## *** p < 0.001; ** p < 0.01; * p < 0.05
+\end{verbatim}
+
+As expected, both models yield the ``same'' estimate. The minor differences
+observed between the models are how the \texttt{ergm} package performs
+the sampling. In particular, in the bipartite case, \texttt{ergm} has special
+routines for making the sampling more efficient, having a higher acceptance
+rate than that of the model in which the bipartite graph was not explicitly
+declared. We can tell this by inspecting rejection rates:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data.frame}\NormalTok{(}
+  \DataTypeTok{Bipartite =}\NormalTok{ coda}\OperatorTok{::}\KeywordTok{rejectionRate}\NormalTok{(res_b}\OperatorTok{$}\NormalTok{sample[[}\DecValTok{1}\NormalTok{]]) }\OperatorTok{*}\StringTok{ }\DecValTok{100}\NormalTok{,}
+  \DataTypeTok{Directed  =}\NormalTok{ coda}\OperatorTok{::}\KeywordTok{rejectionRate}\NormalTok{(res_not_b}\OperatorTok{$}\NormalTok{sample[[}\DecValTok{1}\NormalTok{]][, }\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)]) }\OperatorTok{*}\StringTok{ }\DecValTok{100}
+\NormalTok{) }\OperatorTok{|}\ErrorTok{>}\StringTok{ }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{2}\NormalTok{, }\DataTypeTok{caption =} \StringTok{"Rejection rate (%)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbackslash{}begin\{table\}
+
+\textbackslash{}caption\{\label{tab:05-example2-post-dist}Rejection rate (\%)\}
+\centering
+
+\begin{tabular}[t]{l|r|r}
+\hline
+  & Bipartite & Directed\\
+\hline
+edges & 2.53 & 4.62\\
+\hline
+Log\textasciitilde{}b1star2 & 0.84 & 2.82\\
+\hline
+\end{tabular}
+
+\textbackslash{}end\{table\}
+
+The ERGM fitted with the offset terms has a much higher rejection rate
+than that of the ERGM fitted with the bipartite ERGM.
+
+Finally, the fact that we can fit ERGMs using offset does not mean that
+we need to use it ALL the time. Unless there is a very good reason to
+go around \texttt{ergm}'s capabilities, I wouldn't recommend fitting bipartite
+ERGMs as we just did, as the authors of the package have included (MANY)
+features to make our job easier.
 
 \hypertarget{separable-temporal-exponential-family-random-graph-models}{%
 \chapter{(Separable) Temporal Exponential Family Random Graph Models}\label{separable-temporal-exponential-family-random-graph-models}}
