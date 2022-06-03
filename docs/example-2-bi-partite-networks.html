@@ -261,7 +261,7 @@ here. For example, the two-star term. Let’s start simulating a bipartite
 network using the <code>edges</code> and <code>two-star</code> parameters. Since the <code>k-star</code> term
 is usually complex to fit (tends to generate degenerate models,) we will
 take advantage of the <code>Log()</code> transformation function in the <code>ergm</code> package
-to smooth the term.</p>
+to smooth the term.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p>
 <p>The bipartite network that we will be simulating will have 100 actors and
 50 entities. Actors, which we will map to the first level of the <code>ergm</code> terms,
 this is, <code>b1star</code> <code>b1nodematch</code>, etc. will send ties to the entities,
@@ -364,7 +364,7 @@ offset terms and compare the results between the two models:</p>
 <a class="sourceLine" id="cb227-19" title="19">  <span class="co"># Control parameters</span></a>
 <a class="sourceLine" id="cb227-20" title="20">  <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">seed =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb227-21" title="21">  )</a></code></pre></div>
-<p>Here are the estimates (using the <code>texreg</code> R package for a prettier output)<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>:</p>
+<p>Here are the estimates (using the <code>texreg</code> R package for a prettier output):</p>
 <div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" title="1">texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">list</span>(<span class="dt">Bipartite =</span> res_b, <span class="dt">Directed =</span> res_not_b))</a></code></pre></div>
 <pre><code>## 
 ## ======================================================================
@@ -431,11 +431,15 @@ features to make our job easier.</p>
 <div class="footnotes">
 <hr />
 <ol start="11">
-<li id="fn11"><p>After writing this example, it became apparent the presence of
-a couple of bugs in the ERGM package. First, the parameter estimate of the
-<code>Log(~b1star(2))</code> term is significantly off from the simulated value. And second,
-the likelihood approximates using offset terms are also very out compared to
-those obtained fitting the bipartite graph without them.<a href="example-2-bi-partite-networks.html#fnref11" class="footnote-back">↩</a></p></li>
+<li id="fn11"><p>After writing this example, it became apparent the use of
+the <code>Log()</code> transformation function may not be ideal. Since many terms used
+in ERGMs can be zero, e.g., triangles, the term <code>Log(~ ostar(2))</code> is undefined
+when <code>ostar(2) = 0</code>. In practice, the ERGM package sets a lower limit for the
+log of 0, so, instead of having <code>Log(0) ~ -Inf</code>, they set it to be a really
+large negative number. This causes all sorts of issues to the estimates; in
+our example, an over estimation of the population parameter and a really
+negative likelihood function. With that said, I wouldn’t recommend using
+this transformation too often.<a href="example-2-bi-partite-networks.html#fnref11" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>

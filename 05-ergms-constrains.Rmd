@@ -185,7 +185,17 @@ here. For example, the two-star term. Let's start simulating a bipartite
 network using the `edges` and `two-star` parameters. Since the `k-star` term
 is usually complex to fit (tends to generate degenerate models,) we will
 take advantage of the `Log()` transformation function in the `ergm` package
-to smooth the term. 
+to smooth the term.[^notprettyaic]
+
+[^notprettyaic]: After writing this example, it became apparent the use of
+the `Log()` transformation function may not be ideal. Since many terms used
+in ERGMs can be zero, e.g., triangles, the term `Log(~ ostar(2))` is undefined
+when `ostar(2) = 0`. In practice, the ERGM package sets a lower limit for the
+log of 0, so, instead of having `Log(0) ~ -Inf`, they set it to be a really
+large negative number. This causes all sorts of issues to the estimates; in
+our example, an over estimation of the population parameter and a positive
+log-likelihood. With that said, I wouldn't recommend using
+this transformation too often.  
 
 The bipartite network that we will be simulating will have 100 actors and
 50 entities. Actors, which we will map to the first level of the `ergm` terms,
@@ -308,13 +318,7 @@ res_not_b <- ergm(
   )
 ```
 
-Here are the estimates (using the `texreg` R package for a prettier output)[^notprettyaic]:
-
-[^notprettyaic]: After writing this example, it became apparent the presence of
-a couple of bugs in the ERGM package. First, the parameter estimate of the
-`Log(~b1star(2))` term is significantly off from the simulated value. And second,
-the likelihood approximates using offset terms are also very out compared to
-those obtained fitting the bipartite graph without them.
+Here are the estimates (using the `texreg` R package for a prettier output):
 
 ```{r 05-bipartite-ergm-res}
 texreg::screenreg(list(Bipartite = res_b, Directed = res_not_b))
