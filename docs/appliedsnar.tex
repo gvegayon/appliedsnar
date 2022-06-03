@@ -123,7 +123,7 @@
 
 \title{Applied Network Science with R}
 \author{George G. Vega Yon}
-\date{2022-04-11}
+\date{2022-06-03}
 
 \begin{document}
 \maketitle
@@ -175,6 +175,9 @@ Bioinformatics and Social Network Analysis: Statistical and Computational Method
 for Complex Systems.''
 
 If you'd like to learn more about me, please visit my website at \url{https://ggvy.cl}.
+
+\hypertarget{part-applications}{%
+\part{Applications}\label{part-applications}}
 
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
@@ -1210,17 +1213,6 @@ The \texttt{which} function in R returns a vector of indices indicating which el
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{indegree   <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"in"}\NormalTok{)}
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{outdegree  <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"out"}\NormalTok{)}
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{closeness  <-}\StringTok{ }\KeywordTok{closeness}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"total"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in closeness(ig_year1_111, mode = "total"): At
-## centrality.c:2874 :closeness centrality is not well-defined for disconnected
-## graphs
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{betweeness <-}\StringTok{ }\KeywordTok{betweenness}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{normalized =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1235,10 +1227,10 @@ From here, we can \emph{go back} to our old habits and get the set of vertex att
 \CommentTok{# Computing quantiles for each variable}
 \NormalTok{stats_degree <-}\StringTok{ }\KeywordTok{with}\NormalTok{(stats, \{}
  \KeywordTok{cbind}\NormalTok{(}
-   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{))}
+   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
 \NormalTok{ )}
 \NormalTok{\})}
 
@@ -1248,9 +1240,9 @@ From here, we can \emph{go back} to our old habits and get the set of vertex att
 
 \begin{verbatim}
 ##       indegree outdegree    closeness  betweeness
-## 2.5%         0         0 3.526640e-06 0.000000000
-## 50%          4         4 1.595431e-05 0.001879006
-## 97.5%       16        16 1.601822e-05 0.016591048
+## 2.5%         0         0 0.0005915148 0.000000000
+## 50%          4         4 0.0007487833 0.001879006
+## 97.5%       16        16 0.0008838413 0.016591048
 \end{verbatim}
 
 The \texttt{with} function is somewhat similar to what \texttt{dplyr} allows us to do when we want to work with the dataset but without mentioning its name everytime that we ask for a variable. Without using the \texttt{with} function, the previous could have been done as follows:
@@ -1259,10 +1251,10 @@ The \texttt{with} function is somewhat similar to what \texttt{dplyr} allows us 
 \begin{Highlighting}[]
 \NormalTok{stats_degree <-}\StringTok{ }
 \StringTok{ }\KeywordTok{cbind}\NormalTok{(}
-   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{))}
+   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
 \NormalTok{ )}
 \end{Highlighting}
 \end{Shaded}
@@ -1737,7 +1729,7 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{verbatim}
 ## 
-## 'network' 1.17.1 (2021-06-12), part of the Statnet Project
+## 'network' 1.17.2 (2022-05-20), part of the Statnet Project
 ## * 'news(package="network")' for changes since last version
 ## * 'citation("network")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -1745,7 +1737,7 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{verbatim}
 ## 
-## 'ergm' 4.1.2 (2021-07-26), part of the Statnet Project
+## 'ergm' 4.2.1 (2022-05-10), part of the Statnet Project
 ## * 'news(package="ergm")' for changes since last version
 ## * 'citation("ergm")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -2035,7 +2027,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from 8342b47 (vertex names):
+## + 1/2638 edge from af8fcdb (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2195,8 +2187,8 @@ Now, a nice trick to see all regressions in the same table, we can use the \text
 \end{Shaded}
 
 \begin{verbatim}
-## Version:  1.38.5
-## Date:     2022-03-03
+## Version:  1.38.6
+## Date:     2022-04-06
 ## Author:   Philip Leifeld (University of Essex)
 ## 
 ## Consider submitting praise using the praise or praise_interactive functions.
@@ -2219,6 +2211,12 @@ Now, a nice trick to see all regressions in the same table, we can use the \text
 \KeywordTok{screenreg}\NormalTok{(}\KeywordTok{list}\NormalTok{(ans0, ans1, ans2))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+\end{verbatim}
 
 \begin{verbatim}
 ## 
@@ -2253,6 +2251,12 @@ Or, if you are using rmarkdown, you can export the results using LaTeX or html, 
 \KeywordTok{texreg}\NormalTok{(}\KeywordTok{list}\NormalTok{(ans0, ans1, ans2))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+\end{verbatim}
 
 \begin{table}
 \begin{center}
@@ -2711,10 +2715,8 @@ Increase the sample size, so the curves are smoother, longer intervals (thinning
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{awful-chains.png}
-\caption{\label{fig:badconvergence}An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful}
+\begin{figure}[!h]
+\includegraphics[width=9.92in]{awful-chains} \caption{An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful}\label{fig:badconvergence}
 \end{figure}
 
 \hypertarget{more-on-mcmc-convergence}{%
@@ -3096,10 +3098,10 @@ the offset terms. Here is an example:
 \CommentTok{## ---}
 \CommentTok{## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1}
 \CommentTok{## }
-\CommentTok{##      Null Deviance: 3396  on 2450  degrees of freedom}
-\CommentTok{##  Residual Deviance: 2542  on 2448  degrees of freedom}
+\CommentTok{##      Null Deviance: 1233.8  on 2450  degrees of freedom}
+\CommentTok{##  Residual Deviance:  379.4  on 2448  degrees of freedom}
 \CommentTok{##  }
-\CommentTok{## AIC: 2544  BIC: 2550  (Smaller is better. MC Std. Err. = 0)}
+\CommentTok{## AIC: 381.4  BIC: 386.2  (Smaller is better. MC Std. Err. = 0)}
 \CommentTok{## }
 \CommentTok{##  The following terms are fixed by offset and are not estimated:}
 \CommentTok{##   offset(nodematch.aux_var)}
@@ -3147,8 +3149,8 @@ to smooth the term.\footnote{After writing this example, it became apparent the 
   when \texttt{ostar(2)\ =\ 0}. In practice, the ERGM package sets a lower limit for the
   log of 0, so, instead of having \texttt{Log(0)\ \textasciitilde{}\ -Inf}, they set it to be a really
   large negative number. This causes all sorts of issues to the estimates; in
-  our example, an over estimation of the population parameter and a really
-  negative likelihood function. With that said, I wouldn't recommend using
+  our example, an over estimation of the population parameter and a positive
+  log-likelihood. With that said, I wouldn't recommend using
   this transformation too often.}
 
 The bipartite network that we will be simulating will have 100 actors and
@@ -3307,7 +3309,17 @@ offset terms and compare the results between the two models:
   \CommentTok{# Control parameters}
   \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{1}\NormalTok{)}
 \NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{verbatim}
+## Warning: 'glpk' selected as the solver, but package 'Rglpk' is not available;
+## falling back to 'lpSolveAPI'. This should be fine unless the sample size and/or
+## the number of parameters is very big.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{# ERGM with a digraph with constraints}
 \NormalTok{res_not_b <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
   \CommentTok{# Main formula}
@@ -3336,20 +3348,20 @@ Here are the estimates (using the \texttt{texreg} R package for a prettier outpu
 ## ======================================================================
 ##                               Bipartite    Directed                   
 ## ----------------------------------------------------------------------
-## edges                           -3.14 ***                    -3.14 ***
+## edges                           -3.14 ***                    -3.11 ***
 ##                                 (0.15)                       (0.14)   
-## Log~b1star2                     21.86                                 
-##                                (16.92)                                
-## Log~ostar2                                                   21.62    
-##                                                             (16.42)   
+## Log~b1star2                     21.89                                 
+##                                (17.13)                                
+## Log~ostar2                                                   19.66    
+##                                                             (16.75)   
 ## offset(nodematch.is.actor)                                    -Inf    
 ##                                                                       
 ## offset(nodeocov.isnot.actor)                                  -Inf    
 ##                                                                       
 ## ----------------------------------------------------------------------
-## AIC                           1958.11      -2134192392760919552.00    
-## BIC                           1971.15      -2134192392760919552.00    
-## Log Likelihood                -977.06       1067096196380459776.00    
+## AIC                           1958.00      -2134192392498171136.00    
+## BIC                           1971.03      -2134192392498171136.00    
+## Log Likelihood                -977.00       1067096196249085568.00    
 ## ======================================================================
 ## *** p < 0.001; ** p < 0.01; * p < 0.05
 \end{verbatim}
@@ -3379,9 +3391,9 @@ declared. We can tell this by inspecting rejection rates:
 \hline
   & Bipartite & Directed\\
 \hline
-edges & 2.53 & 4.62\\
+edges & 2.48 & 3.67\\
 \hline
-Log\textasciitilde{}b1star2 & 0.84 & 2.82\\
+Log\textasciitilde{}b1star2 & 1.24 & 2.04\\
 \hline
 \end{tabular}
 
@@ -4657,6 +4669,100 @@ In other words, individuals choose between states \(x\) and \(x'\) in a probabil
 snijders\_(sociological methodology 2001)
 
 (Snijders, Bunt, and Steglich \protect\hyperlink{ref-Snijders2010}{2010}, @lazega2015, @Ripley2011)
+
+\hypertarget{part-statistical-foundations}{%
+\part{Statistical Foundations}\label{part-statistical-foundations}}
+
+\hypertarget{bayes-rule}{%
+\section{Bayes' Rule}\label{bayes-rule}}
+
+\begin{equation}
+{\mathbb{P}\left(X=x\vphantom{Y=y}\;\right|\left.\vphantom{X=x}Y=y\right)} = \frac{{\mathbb{P}\left(Y=y\vphantom{X=y}\;\right|\left.\vphantom{Y=y}X=y\right)}{\mathbb{P}\left(X=x\right) }}{{\mathbb{P}\left(Y=y\right) }}
+\end{equation}
+
+\hypertarget{markov-chain}{%
+\section{Markov Chain}\label{markov-chain}}
+
+A Markov Chain is a sequence of random variables in which the conditional distribution of the \(n\)-th element only depends on \(n-1\).
+
+\hypertarget{metropolis-algorithm}{%
+\subsection{Metropolis Algorithm}\label{metropolis-algorithm}}
+
+In the Metropolis Algorithm, or Metropolis MCMC, builds a Markov Chain that
+under certain conditions converges to the target distribution. The key of the
+Algorithm is in accepting a proposed move from \(\theta\) to \(\theta'\) with
+probability equal to:
+
+\begin{equation}
+r = \min\left(1, \frac{{\mathbb{P}\left(\theta'\vphantom{D}\;\right|\left.\vphantom{\theta'}D\right)}}{{\mathbb{P}\left(\theta\vphantom{D}\;\right|\left.\vphantom{\theta}D\right)}}\right)
+\end{equation}
+
+The resulting sequence converges to the target distribution. We can prove
+convergence by showing that (a) the sequence is ergodic, and (b) the posterior
+distribution matches the target distribution. Ergodicity describes three
+propoerties of a chain:
+
+\begin{itemize}
+\item
+  Irreducibility: There is no zero probability of transitioning between any pair of states.
+\item
+  Aperiodicity: As the term suggests, the chain has no repetitive periods/sequences.
+\item
+  Non transient: Transient refers to a chain having non-zero probability of
+  never returning to a starting state.
+\end{itemize}
+
+The three properties are reached by any random walk based on a well defined
+probability distribution, so we will focus on showing that the posterior matches
+the target distribution. The following proof was adapted from ``Bayesian Data
+Analysis:''
+
+\hypertarget{metropolis-hastings}{%
+\subsection{Metropolis-Hastings}\label{metropolis-hastings}}
+
+\[
+\min\left(1, \frac{{\mathbb{P}\left(D\vphantom{\theta'}\;\right|\left.\vphantom{D}\theta'\right)}{\mathbb{P}\left(\theta'\right) }{\mathbb{P}\left(\theta'\vphantom{\theta}\;\right|\left.\vphantom{\theta'}\theta\right)}}{{\mathbb{P}\left(D\vphantom{\theta}\;\right|\left.\vphantom{D}\theta\right)}{\mathbb{P}\left(\theta\right) }{\mathbb{P}\left(\theta\vphantom{\theta'}\;\right|\left.\vphantom{\theta}\theta'\right)}}\right)
+\]
+
+If the transittion probability is symmetric, then the previous equation reduces
+to the Metropolis probability.
+
+\hypertarget{likelihood-free-mcmc}{%
+\subsection{Likelihood-free MCMC}\label{likelihood-free-mcmc}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Initialize the algorithm with \(\theta_0\), \(\theta^* =\theta_0\)--the current accepted
+  state,--and observed summary statistic \(s_0 = S(D_{observed})\):
+\item
+  For \(t = 1\) to \(T\) do:
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    Draw \(\theta_t\) from the proposal distribution \(J(\theta_t|\theta^*)\)
+  \item
+    Draw a simulated data \(D_t\) from model \(M(\theta_t)\)
+  \item
+    Calculate the summary statistics \(s_t = S(D_t)\)
+  \item
+    Accept the proposed state with probability
+    \[
+     r = \min\left(1, \frac{{\mathbb{P}\left(s_0\vphantom{s_t,\theta_t}\;\right|\left.\vphantom{s_0}s_t,\theta_t\right)}{\mathbb{P}\left(\theta_t\right) }{\mathbb{P}\left(\theta^*\to\theta_t\right) }}{{\mathbb{P}\left(s_0\vphantom{s_{t-1},\theta_{t-1}}\;\right|\left.\vphantom{s_0}s_{t-1},\theta_{t-1}\right)}{\mathbb{P}\left(\theta_{t-1}\right) }{\mathbb{P}\left(\theta_{t}\to\theta^*\right) }}\right)
+     \]
+  \end{enumerate}
+
+  If accepted, set \(\theta^* = \theta_t\).
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \setcounter{enumii}{4}
+  \tightlist
+  \item
+    Next \(t\)
+  \end{enumerate}
+\end{enumerate}
 
 \cleardoublepage
 

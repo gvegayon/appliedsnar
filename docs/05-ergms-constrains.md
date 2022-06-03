@@ -242,10 +242,10 @@ summary(ans)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-##      Null Deviance: 3396  on 2450  degrees of freedom
-##  Residual Deviance: 2542  on 2448  degrees of freedom
+##      Null Deviance: 1233.8  on 2450  degrees of freedom
+##  Residual Deviance:  379.4  on 2448  degrees of freedom
 ##  
-## AIC: 2544  BIC: 2550  (Smaller is better. MC Std. Err. = 0)
+## AIC: 381.4  BIC: 386.2  (Smaller is better. MC Std. Err. = 0)
 ## 
 ##  The following terms are fixed by offset and are not estimated:
 ##   offset(nodematch.aux_var)
@@ -290,9 +290,9 @@ in ERGMs can be zero, e.g., triangles, the term `Log(~ ostar(2))` is undefined
 when `ostar(2) = 0`. In practice, the ERGM package sets a lower limit for the
 log of 0, so, instead of having `Log(0) ~ -Inf`, they set it to be a really
 large negative number. This causes all sorts of issues to the estimates; in
-our example, an over estimation of the population parameter and a really
-negative likelihood function. With that said, I wouldn't recommend using
-this transformation too often.
+our example, an over estimation of the population parameter and a positive
+log-likelihood. With that said, I wouldn't recommend using
+this transformation too often.  
 
 The bipartite network that we will be simulating will have 100 actors and
 50 entities. Actors, which we will map to the first level of the `ergm` terms,
@@ -433,7 +433,15 @@ res_b     <- ergm(
   # Control parameters
   control = control.ergm(seed = 1)
   )
+```
 
+```
+## Warning: 'glpk' selected as the solver, but package 'Rglpk' is not available;
+## falling back to 'lpSolveAPI'. This should be fine unless the sample size and/or
+## the number of parameters is very big.
+```
+
+```r
 # ERGM with a digraph with constraints
 res_not_b <- ergm(
   # Main formula
@@ -460,20 +468,20 @@ texreg::screenreg(list(Bipartite = res_b, Directed = res_not_b))
 ## ======================================================================
 ##                               Bipartite    Directed                   
 ## ----------------------------------------------------------------------
-## edges                           -3.14 ***                    -3.14 ***
+## edges                           -3.14 ***                    -3.11 ***
 ##                                 (0.15)                       (0.14)   
-## Log~b1star2                     21.86                                 
-##                                (16.92)                                
-## Log~ostar2                                                   21.62    
-##                                                             (16.42)   
+## Log~b1star2                     21.89                                 
+##                                (17.13)                                
+## Log~ostar2                                                   19.66    
+##                                                             (16.75)   
 ## offset(nodematch.is.actor)                                    -Inf    
 ##                                                                       
 ## offset(nodeocov.isnot.actor)                                  -Inf    
 ##                                                                       
 ## ----------------------------------------------------------------------
-## AIC                           1958.11      -2134192392760919552.00    
-## BIC                           1971.15      -2134192392760919552.00    
-## Log Likelihood                -977.06       1067096196380459776.00    
+## AIC                           1958.00      -2134192392498171136.00    
+## BIC                           1971.03      -2134192392498171136.00    
+## Log Likelihood                -977.00       1067096196249085568.00    
 ## ======================================================================
 ## *** p < 0.001; ** p < 0.01; * p < 0.05
 ```
@@ -499,8 +507,8 @@ Table: (\#tab:05-example2-post-dist)Rejection rate (%)
 
 |            | Bipartite| Directed|
 |:-----------|---------:|--------:|
-|edges       |      2.53|     4.62|
-|Log~b1star2 |      0.84|     2.82|
+|edges       |      2.48|     3.67|
+|Log~b1star2 |      1.24|     2.04|
 
 The ERGM fitted with the offset terms has a much higher rejection rate
 than that of the ERGM fitted with the bipartite ERGM.

@@ -441,15 +441,6 @@ The `which` function in R returns a vector of indices indicating which elements 
 V(ig_year1_111)$indegree   <- degree(ig_year1_111, mode = "in")
 V(ig_year1_111)$outdegree  <- degree(ig_year1_111, mode = "out")
 V(ig_year1_111)$closeness  <- closeness(ig_year1_111, mode = "total")
-```
-
-```
-## Warning in closeness(ig_year1_111, mode = "total"): At
-## centrality.c:2874 :closeness centrality is not well-defined for disconnected
-## graphs
-```
-
-```r
 V(ig_year1_111)$betweeness <- betweenness(ig_year1_111, normalized = TRUE)
 ```
 
@@ -463,10 +454,10 @@ stats <- as_data_frame(ig_year1_111, what = "vertices")
 # Computing quantiles for each variable
 stats_degree <- with(stats, {
  cbind(
-   indegree   = quantile(indegree, c(.025, .5, .975)),
-   outdegree  = quantile(outdegree, c(.025, .5, .975)),
-   closeness  = quantile(closeness, c(.025, .5, .975)),
-   betweeness = quantile(betweeness, c(.025, .5, .975))
+   indegree   = quantile(indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(betweeness, c(.025, .5, .975), na.rm = TRUE)
  )
 })
 
@@ -475,9 +466,9 @@ stats_degree
 
 ```
 ##       indegree outdegree    closeness  betweeness
-## 2.5%         0         0 3.526640e-06 0.000000000
-## 50%          4         4 1.595431e-05 0.001879006
-## 97.5%       16        16 1.601822e-05 0.016591048
+## 2.5%         0         0 0.0005915148 0.000000000
+## 50%          4         4 0.0007487833 0.001879006
+## 97.5%       16        16 0.0008838413 0.016591048
 ```
 
 The `with` function is somewhat similar to what `dplyr` allows us to do when we want to work with the dataset but without mentioning its name everytime that we ask for a variable. Without using the `with` function, the previous could have been done as follows:
@@ -485,10 +476,10 @@ The `with` function is somewhat similar to what `dplyr` allows us to do when we 
 ```r
 stats_degree <- 
  cbind(
-   indegree   = quantile(stats$indegree, c(.025, .5, .975)),
-   outdegree  = quantile(stats$outdegree, c(.025, .5, .975)),
-   closeness  = quantile(stats$closeness, c(.025, .5, .975)),
-   betweeness = quantile(stats$betweeness, c(.025, .5, .975))
+   indegree   = quantile(stats$indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(stats$outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(stats$closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(stats$betweeness, c(.025, .5, .975), na.rm = TRUE)
  )
 
 ```

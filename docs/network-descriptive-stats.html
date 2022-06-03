@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.3 Network descriptive stats | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
-  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.3 Network descriptive stats | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-04-11" />
+<meta name="date" content="2022-06-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,97 +143,106 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Applied SNA with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a><ul>
-<li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#the-book"><i class="fa fa-check"></i><b>1.0.1</b> The Book<span></span></a></li>
-<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#the-author"><i class="fa fa-check"></i><b>1.0.2</b> The author<span></span></a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
+<li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#the-book"><i class="fa fa-check"></i><b>1.0.1</b> The Book</a></li>
+<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#the-author"><i class="fa fa-check"></i><b>1.0.2</b> The author</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction<span></span></a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics<span></span></a><ul>
-<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R<span></span></a></li>
-<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages<span></span></a></li>
-<li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits<span></span></a></li>
-<li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R<span></span></a></li>
+<li class="part"><span><b>I Applications</b></span></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
+<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
+<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
+<li class="chapter" data-level="3.3" data-path="prerequisits.html"><a href="prerequisits.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisits</a></li>
+<li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data<span></span></a><ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing<span></span></a><ul>
-<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R<span></span></a></li>
-<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant<span></span></a></li>
+<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network<span></span></a><ul>
-<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist<span></span></a></li>
-<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
+<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats<span></span></a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph<span></span></a><ul>
-<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot<span></span></a></li>
-<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots<span></span></a></li>
+<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
+<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
+<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests<span></span></a><ul>
-<li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?<span></span></a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models<span></span></a><ul>
-<li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example<span></span></a></li>
-<li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs<span></span></a></li>
-<li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package<span></span></a></li>
-<li class="chapter" data-level="5.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.4</b> Running ERGMs<span></span></a></li>
-<li class="chapter" data-level="5.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.5</b> Model Goodness-of-Fit<span></span></a></li>
-<li class="chapter" data-level="5.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.6</b> More on MCMC convergence<span></span></a></li>
-<li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation<span></span></a></li>
-<li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>6</b> Using constraints in ERGMs<span></span></a><ul>
-<li class="chapter" data-level="6.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>6.1</b> Example 1: Interlocking egos and disconnected alters<span></span></a></li>
-<li class="chapter" data-level="6.2" data-path="example-2-bi-partite-networks.html"><a href="example-2-bi-partite-networks.html"><i class="fa fa-check"></i><b>6.2</b> Example 2: Bi-partite networks<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>7</b> (Separable) Temporal Exponential Family Random Graph Models<span></span></a></li>
-<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks<span></span></a><ul>
-<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks<span></span></a><ul>
-<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap<span></span></a></li>
-<li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal<span></span></a></li>
-<li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples<span></span></a><ul>
-<li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats<span></span></a></li>
+<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>9</b> Network diffussion with <code>netdiffuseR</code><span></span></a><ul>
-<li class="chapter" data-level="9.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>9.1</b> Network diffusion of innovation<span></span></a><ul>
-<li class="chapter" data-level="9.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>9.1.1</b> Diffusion networks<span></span></a></li>
-<li class="chapter" data-level="9.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>9.1.2</b> Thresholds<span></span></a></li>
+<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs</a></li>
+<li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package</a></li>
+<li class="chapter" data-level="5.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.4</b> Running ERGMs</a></li>
+<li class="chapter" data-level="5.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.5</b> Model Goodness-of-Fit</a></li>
+<li class="chapter" data-level="5.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.6</b> More on MCMC convergence</a></li>
+<li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation</a></li>
+<li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>9.2</b> The netdiffuseR R package<span></span></a><ul>
-<li class="chapter" data-level="9.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>9.2.1</b> Overview<span></span></a></li>
-<li class="chapter" data-level="9.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>9.2.2</b> Datasets<span></span></a></li>
-<li class="chapter" data-level="9.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>9.2.3</b> Visualization methods<span></span></a></li>
-<li class="chapter" data-level="9.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>9.2.4</b> Problems<span></span></a></li>
+<li class="chapter" data-level="6" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>6</b> Using constraints in ERGMs</a><ul>
+<li class="chapter" data-level="6.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>6.1</b> Example 1: Interlocking egos and disconnected alters</a></li>
+<li class="chapter" data-level="6.2" data-path="example-2-bi-partite-networks.html"><a href="example-2-bi-partite-networks.html"><i class="fa fa-check"></i><b>6.2</b> Example 2: Bi-partite networks</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>9.3</b> Simulation of diffusion processes<span></span></a><ul>
-<li class="chapter" data-level="9.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>9.3.1</b> Simulating diffusion networks<span></span></a></li>
-<li class="chapter" data-level="9.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>9.3.2</b> Rumor spreading<span></span></a></li>
-<li class="chapter" data-level="9.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>9.3.3</b> Difussion<span></span></a></li>
-<li class="chapter" data-level="9.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>9.3.4</b> Mentor Matching<span></span></a></li>
-<li class="chapter" data-level="9.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>9.3.5</b> Example by changing threshold<span></span></a></li>
-<li class="chapter" data-level="9.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>9.3.6</b> Problems<span></span></a></li>
+<li class="chapter" data-level="7" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>7</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
+<li class="chapter" data-level="8" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>8</b> Hypothesis testing in networks</a><ul>
+<li class="chapter" data-level="8.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>8.1</b> Comparing networks</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>8.1.1</b> Network bootstrap</a></li>
+<li class="chapter" data-level="8.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>8.1.2</b> When the statistic is normal</a></li>
+<li class="chapter" data-level="8.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>8.1.3</b> When the statistic is NOT normal</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>9.4</b> Statistical inference<span></span></a><ul>
-<li class="chapter" data-level="9.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>9.4.1</b> Moran’s I<span></span></a></li>
-<li class="chapter" data-level="9.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>9.4.2</b> Using geodesics<span></span></a></li>
-<li class="chapter" data-level="9.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>9.4.3</b> Structural dependence and permutation tests<span></span></a></li>
-<li class="chapter" data-level="9.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>9.4.4</b> Idea<span></span></a></li>
-<li class="chapter" data-level="9.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>9.4.5</b> Regression analysis<span></span></a></li>
-<li class="chapter" data-level="9.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>9.4.6</b> Problems<span></span></a></li>
+<li class="chapter" data-level="8.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>8.2</b> Examples</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>8.2.1</b> Average of node-level stats</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>10</b> Stochastic Actor Oriented Models<span></span></a></li>
-<li class="appendix"><span><b>Appendix<span></span></b></span></li>
-<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets<span></span></a><ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data<span></span></a><ul>
-<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data<span></span></a></li>
-<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables<span></span></a></li>
+<li class="chapter" data-level="9" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>9</b> Network diffussion with <code>netdiffuseR</code></a><ul>
+<li class="chapter" data-level="9.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>9.1</b> Network diffusion of innovation</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>9.1.1</b> Diffusion networks</a></li>
+<li class="chapter" data-level="9.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>9.1.2</b> Thresholds</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>9.2</b> The netdiffuseR R package</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>9.2.1</b> Overview</a></li>
+<li class="chapter" data-level="9.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>9.2.2</b> Datasets</a></li>
+<li class="chapter" data-level="9.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>9.2.3</b> Visualization methods</a></li>
+<li class="chapter" data-level="9.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>9.2.4</b> Problems</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>9.3</b> Simulation of diffusion processes</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>9.3.1</b> Simulating diffusion networks</a></li>
+<li class="chapter" data-level="9.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>9.3.2</b> Rumor spreading</a></li>
+<li class="chapter" data-level="9.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>9.3.3</b> Difussion</a></li>
+<li class="chapter" data-level="9.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>9.3.4</b> Mentor Matching</a></li>
+<li class="chapter" data-level="9.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>9.3.5</b> Example by changing threshold</a></li>
+<li class="chapter" data-level="9.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>9.3.6</b> Problems</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>9.4</b> Statistical inference</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>9.4.1</b> Moran’s I</a></li>
+<li class="chapter" data-level="9.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>9.4.2</b> Using geodesics</a></li>
+<li class="chapter" data-level="9.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>9.4.3</b> Structural dependence and permutation tests</a></li>
+<li class="chapter" data-level="9.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>9.4.4</b> Idea</a></li>
+<li class="chapter" data-level="9.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>9.4.5</b> Regression analysis</a></li>
+<li class="chapter" data-level="9.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>9.4.6</b> Problems</a></li>
 </ul></li>
 </ul></li>
-<li><a href="references.html#references">References<span></span></a></li>
+<li class="chapter" data-level="10" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>10</b> Stochastic Actor Oriented Models</a></li>
+<li class="part"><span><b>II Statistical Foundations</b></span><ul>
+<li class="chapter" data-level="10.1" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>10.1</b> Bayes’ Rule</a></li>
+<li class="chapter" data-level="10.2" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>10.2</b> Markov Chain</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="markov-chain.html"><a href="markov-chain.html#metropolis-algorithm"><i class="fa fa-check"></i><b>10.2.1</b> Metropolis Algorithm</a></li>
+<li class="chapter" data-level="10.2.2" data-path="markov-chain.html"><a href="markov-chain.html#metropolis-hastings"><i class="fa fa-check"></i><b>10.2.2</b> Metropolis-Hastings</a></li>
+<li class="chapter" data-level="10.2.3" data-path="markov-chain.html"><a href="markov-chain.html#likelihood-free-mcmc"><i class="fa fa-check"></i><b>10.2.3</b> Likelihood-free MCMC</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
+<li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -277,59 +286,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1"><span class="co"># Computing centrality measures for each vertex</span></a>
 <a class="sourceLine" id="cb104-2" title="2"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>indegree   &lt;-<span class="st"> </span><span class="kw">degree</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;in&quot;</span>)</a>
 <a class="sourceLine" id="cb104-3" title="3"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>outdegree  &lt;-<span class="st"> </span><span class="kw">degree</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;out&quot;</span>)</a>
-<a class="sourceLine" id="cb104-4" title="4"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>closeness  &lt;-<span class="st"> </span><span class="kw">closeness</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;total&quot;</span>)</a></code></pre></div>
-<pre><code>## Warning in closeness(ig_year1_111, mode = &quot;total&quot;): At
-## centrality.c:2874 :closeness centrality is not well-defined for disconnected
-## graphs</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>betweeness &lt;-<span class="st"> </span><span class="kw">betweenness</span>(ig_year1_<span class="dv">111</span>, <span class="dt">normalized =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb104-4" title="4"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>closeness  &lt;-<span class="st"> </span><span class="kw">closeness</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;total&quot;</span>)</a>
+<a class="sourceLine" id="cb104-5" title="5"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>betweeness &lt;-<span class="st"> </span><span class="kw">betweenness</span>(ig_year1_<span class="dv">111</span>, <span class="dt">normalized =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>From here, we can <em>go back</em> to our old habits and get the set of vertex attributes as a data frame so we can compute some summary statistics on the centrality measurements that we just got</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1"><span class="co"># Extracting each vectex features as a data.frame</span></a>
-<a class="sourceLine" id="cb107-2" title="2">stats &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(ig_year1_<span class="dv">111</span>, <span class="dt">what =</span> <span class="st">&quot;vertices&quot;</span>)</a>
-<a class="sourceLine" id="cb107-3" title="3"></a>
-<a class="sourceLine" id="cb107-4" title="4"><span class="co"># Computing quantiles for each variable</span></a>
-<a class="sourceLine" id="cb107-5" title="5">stats_degree &lt;-<span class="st"> </span><span class="kw">with</span>(stats, {</a>
-<a class="sourceLine" id="cb107-6" title="6"> <span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb107-7" title="7">   <span class="dt">indegree   =</span> <span class="kw">quantile</span>(indegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>)),</a>
-<a class="sourceLine" id="cb107-8" title="8">   <span class="dt">outdegree  =</span> <span class="kw">quantile</span>(outdegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>)),</a>
-<a class="sourceLine" id="cb107-9" title="9">   <span class="dt">closeness  =</span> <span class="kw">quantile</span>(closeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>)),</a>
-<a class="sourceLine" id="cb107-10" title="10">   <span class="dt">betweeness =</span> <span class="kw">quantile</span>(betweeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>))</a>
-<a class="sourceLine" id="cb107-11" title="11"> )</a>
-<a class="sourceLine" id="cb107-12" title="12">})</a>
-<a class="sourceLine" id="cb107-13" title="13"></a>
-<a class="sourceLine" id="cb107-14" title="14">stats_degree</a></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" title="1"><span class="co"># Extracting each vectex features as a data.frame</span></a>
+<a class="sourceLine" id="cb105-2" title="2">stats &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(ig_year1_<span class="dv">111</span>, <span class="dt">what =</span> <span class="st">&quot;vertices&quot;</span>)</a>
+<a class="sourceLine" id="cb105-3" title="3"></a>
+<a class="sourceLine" id="cb105-4" title="4"><span class="co"># Computing quantiles for each variable</span></a>
+<a class="sourceLine" id="cb105-5" title="5">stats_degree &lt;-<span class="st"> </span><span class="kw">with</span>(stats, {</a>
+<a class="sourceLine" id="cb105-6" title="6"> <span class="kw">cbind</span>(</a>
+<a class="sourceLine" id="cb105-7" title="7">   <span class="dt">indegree   =</span> <span class="kw">quantile</span>(indegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb105-8" title="8">   <span class="dt">outdegree  =</span> <span class="kw">quantile</span>(outdegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb105-9" title="9">   <span class="dt">closeness  =</span> <span class="kw">quantile</span>(closeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb105-10" title="10">   <span class="dt">betweeness =</span> <span class="kw">quantile</span>(betweeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb105-11" title="11"> )</a>
+<a class="sourceLine" id="cb105-12" title="12">})</a>
+<a class="sourceLine" id="cb105-13" title="13"></a>
+<a class="sourceLine" id="cb105-14" title="14">stats_degree</a></code></pre></div>
 <pre><code>##       indegree outdegree    closeness  betweeness
-## 2.5%         0         0 3.526640e-06 0.000000000
-## 50%          4         4 1.595431e-05 0.001879006
-## 97.5%       16        16 1.601822e-05 0.016591048</code></pre>
+## 2.5%         0         0 0.0005915148 0.000000000
+## 50%          4         4 0.0007487833 0.001879006
+## 97.5%       16        16 0.0008838413 0.016591048</code></pre>
 <p>The <code>with</code> function is somewhat similar to what <code>dplyr</code> allows us to do when we want to work with the dataset but without mentioning its name everytime that we ask for a variable. Without using the <code>with</code> function, the previous could have been done as follows:</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" title="1">stats_degree &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb109-2" title="2"><span class="st"> </span><span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb109-3" title="3">   <span class="dt">indegree   =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>indegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>)),</a>
-<a class="sourceLine" id="cb109-4" title="4">   <span class="dt">outdegree  =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>outdegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>)),</a>
-<a class="sourceLine" id="cb109-5" title="5">   <span class="dt">closeness  =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>closeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>)),</a>
-<a class="sourceLine" id="cb109-6" title="6">   <span class="dt">betweeness =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>betweeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>))</a>
-<a class="sourceLine" id="cb109-7" title="7"> )</a></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1">stats_degree &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb107-2" title="2"><span class="st"> </span><span class="kw">cbind</span>(</a>
+<a class="sourceLine" id="cb107-3" title="3">   <span class="dt">indegree   =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>indegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb107-4" title="4">   <span class="dt">outdegree  =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>outdegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb107-5" title="5">   <span class="dt">closeness  =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>closeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb107-6" title="6">   <span class="dt">betweeness =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>betweeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb107-7" title="7"> )</a></code></pre></div>
 <p>Now we will compute some statistics at the graph level:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1"><span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb110-2" title="2">  <span class="dt">size    =</span> <span class="kw">vcount</span>(ig_year1_<span class="dv">111</span>),</a>
-<a class="sourceLine" id="cb110-3" title="3">  <span class="dt">nedges  =</span> <span class="kw">ecount</span>(ig_year1_<span class="dv">111</span>),</a>
-<a class="sourceLine" id="cb110-4" title="4">  <span class="dt">density =</span> <span class="kw">edge_density</span>(ig_year1_<span class="dv">111</span>),</a>
-<a class="sourceLine" id="cb110-5" title="5">  <span class="dt">recip   =</span> <span class="kw">reciprocity</span>(ig_year1_<span class="dv">111</span>),</a>
-<a class="sourceLine" id="cb110-6" title="6">  <span class="dt">centr   =</span> <span class="kw">centr_betw</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>centralization,</a>
-<a class="sourceLine" id="cb110-7" title="7">  <span class="dt">pathLen =</span> <span class="kw">mean_distance</span>(ig_year1_<span class="dv">111</span>)</a>
-<a class="sourceLine" id="cb110-8" title="8">  )</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1"><span class="kw">cbind</span>(</a>
+<a class="sourceLine" id="cb108-2" title="2">  <span class="dt">size    =</span> <span class="kw">vcount</span>(ig_year1_<span class="dv">111</span>),</a>
+<a class="sourceLine" id="cb108-3" title="3">  <span class="dt">nedges  =</span> <span class="kw">ecount</span>(ig_year1_<span class="dv">111</span>),</a>
+<a class="sourceLine" id="cb108-4" title="4">  <span class="dt">density =</span> <span class="kw">edge_density</span>(ig_year1_<span class="dv">111</span>),</a>
+<a class="sourceLine" id="cb108-5" title="5">  <span class="dt">recip   =</span> <span class="kw">reciprocity</span>(ig_year1_<span class="dv">111</span>),</a>
+<a class="sourceLine" id="cb108-6" title="6">  <span class="dt">centr   =</span> <span class="kw">centr_betw</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>centralization,</a>
+<a class="sourceLine" id="cb108-7" title="7">  <span class="dt">pathLen =</span> <span class="kw">mean_distance</span>(ig_year1_<span class="dv">111</span>)</a>
+<a class="sourceLine" id="cb108-8" title="8">  )</a></code></pre></div>
 <pre><code>##      size nedges     density     recip      centr pathLen
 ## [1,]  533   2638 0.009303277 0.3731513 0.02179154 4.23678</code></pre>
 <p>Triadic census</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">triadic &lt;-<span class="st"> </span><span class="kw">triad_census</span>(ig_year1_<span class="dv">111</span>)</a>
-<a class="sourceLine" id="cb112-2" title="2">triadic</a></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">triadic &lt;-<span class="st"> </span><span class="kw">triad_census</span>(ig_year1_<span class="dv">111</span>)</a>
+<a class="sourceLine" id="cb110-2" title="2">triadic</a></code></pre></div>
 <pre><code>##  [1] 24059676   724389   290849     3619     3383     4401     3219     2997
 ##  [9]      407       33      836      235      163      137      277       85</code></pre>
 <p>To get a nicer view of this, we can use a table that I retrieved from <code>?triad_census</code>. Moreover, we can normalize the <code>triadic</code> object by its sum instead of looking at raw counts. That way, we get proportions instead<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb114-2" title="2">  <span class="dt">Pcent =</span> triadic<span class="op">/</span><span class="kw">sum</span>(triadic)<span class="op">*</span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb114-3" title="3">  <span class="kw">read.csv</span>(<span class="st">&quot;triadic_census.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb114-4" title="4">  ), <span class="dt">digits =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cbind</span>(</a>
+<a class="sourceLine" id="cb112-2" title="2">  <span class="dt">Pcent =</span> triadic<span class="op">/</span><span class="kw">sum</span>(triadic)<span class="op">*</span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb112-3" title="3">  <span class="kw">read.csv</span>(<span class="st">&quot;triadic_census.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb112-4" title="4">  ), <span class="dt">digits =</span> <span class="dv">2</span>)</a></code></pre></div>
 <table>
 <colgroup>
 <col width="7%" />
