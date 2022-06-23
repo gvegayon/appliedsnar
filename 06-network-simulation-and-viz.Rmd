@@ -1,0 +1,117 @@
+# Simulating and visualizing networks
+
+In this chapter, we will build and visualize artificial networks using Exponential
+Random Graph Models [ERGMs.] Together with chapter 3, this will be an extended 
+example of how to read network data and visualize it using some of the available
+R packages out there.
+
+For this chapter we will be using the following R packages: `ergm`, `sna`, `igraph`,
+`InterGraph`, `netplot`, and `rgexf`.
+
+## Random Graph Models
+
+While there are tons of social network data, we will use an artificial one for this chapter.
+We do this as it is always helpful to have more examples simulating Random
+networks. For this chapter, we will classify random graph models for sampling and
+generating networks into three categories:
+
+1. **Exogenous**: Graphs where the structure is determined by a macro rule, e.g., 
+expected density, degree distribution, or degree-sequence. In these cases,
+ties are assigned to comply with a macro-property.
+
+2. **Endogenous**: This category includes all Random Graphs generated based
+on endogenous information, e.g., small-world, scale-free, etc. Here, a tie 
+creation rule gives origin to a macro property, for example, preferential attachment
+in scale-free networks.
+
+3. **Exponential Random Graph Models**: Overall, since ERGMs compose a family
+of statistical models, we can always (or almost always) find a model specification
+that matches the previous categories. Whereas we are thinking about degree sequence,
+preferential attachment, or a mix of both, ERGMs can be the baseline for any of
+those models.
+
+The later, ERGMs, are a generalization that covers all classes. Because of that,
+we will use ERGMs to generate our artificial network.
+
+## Social Networks in Schools
+
+A common type of network we analyze is friendship networks. In this case,
+we will use ERGMs to simulate friendship networks within a school. In our 
+simulated world, these networks will be dominated by the following phenomena
+
+- Low density,
+- Race homophily,
+- Structural balance,
+- And age homophily.
+
+If you have been paying attention to the previous chapters, you will notice that,
+out of these five properties, only one constitutes Markov graphs. Within a tie,
+homophily and density only depend on ego and alter. In race homophily, only ego
+and alter's race matter for the tie formation, but, in the case of Structural
+balance, ego is more likely to befriend alter if a fried of ego is friends with alter,
+i.e., "the friend of my friend is my friend."
+
+The simulation steps are as follows:
+
+1. Draw a population of $n$ students and randomly distribute race and age across them.
+
+2. Create a `network` object.
+
+2. Simulate the ties in the empty network.
+
+Here is the code
+
+```{r 06-random-school}
+
+set.seed(712)
+n <- 200
+
+# Step 1: Students
+race   <- sample(c("white", "non-white"), n, replace = TRUE)
+age    <- sample(c(10, 14, 17), n, replace = TRUE)
+
+# Step 2: Create an empty network
+library(ergm)
+library(network)
+net <- network.initialize(n)
+
+net %v% "race"   <- race
+net %v% "age"    <- age
+
+# Step 3: Simulate a graph
+net_sim <- simulate(
+    net ~ edges +
+    nodematch("race") +
+    triangle +
+    absdiff("age"),
+    coef = c(-4, .5, .5, -.5)
+    )
+```
+
+Let's take a quick look at the resulting graph
+
+```{r 06-first-fig}
+library(sna)
+gplot(net_sim)
+```
+
+We can now start to see whether we got what we wanted!
+
+## Visualizing the network
+
+We will focus on three different attributes that we can use for this visualization:
+Node size, node shape, and node color. While there are no particular rules, some
+ideas you can follow are:
+
+- **Node size** Use it to describe a continuous measurement. This feature is often
+used to highlight important nodes, e.g., using one of the many available degree measurements.
+
+- **Node shape** Shapes can be used to represent categorical values. A good figure
+will not feature too many of them; less than four would make sense.
+
+- **Node color** Like shapes, colors can be used to represent categorical values, so the
+same idea applies. Furthermore, it is not crazy to use both shape and color to 
+represent the same feature.
+
+Notice that we have not talked about layout algorithms. The R packages used to build
+graphs usually have internal rules to decide what algorithm to use.
