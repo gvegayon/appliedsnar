@@ -6,7 +6,7 @@ example of how to read network data and visualize it using some of the available
 R packages out there.
 
 For this chapter we will be using the following R packages: `ergm`, `sna`, `igraph`,
-`InterGraph`, `netplot`, and `rgexf`.
+`intergraph`, `netplot`, `netdiffuseR`, and `rgexf`.
 
 ## Random Graph Models
 
@@ -88,6 +88,28 @@ net_sim <- simulate(
     )
 ```
 
+What just happened? Here is a line-by-line breakout:
+
+1. `set.seed(712)` Since this is a random simulation, we need to fix a seed so it is reproducible. Otherwise, results would change with every iteration.
+
+2. `n <- 200` We are assigning the value `200` to the object `n`. This will make things easier as, if needed, changing the size of the networks can be done at the top of the code.
+
+3. `race <- sample(c("white", "non-white"), n, replace = TRUE)` We are sampling 200, or actually, `n` values from the vector `c("white", "non-white")` with replacement.
+
+4. `age <- sample(c(10, 14, 17), n, replace = TRUE)` Same as before, but with ages!
+
+5. `library(ergm)` Loading the ergm R package, which we need to simulate the networks!
+
+6. `library(network)` Loading the `network` R package, which we need to create the empty graph.
+
+7. `net <- network.initialize(n)` Creating an empty graph of size `n`.
+
+8. `net %v% "race" <- race` Using the `%v%` operator, we can access vertices features in the network object. Since race does not exist in the network yet, the operator just creates it. Notice that the number of vertices matches the length of the race vector.
+
+9. `net %v% "age" <- age` Same as with race!
+
+10. `net_sim <- simulate(` Simulating an ERGM!
+
 Let's take a quick look at the resulting graph
 
 ```{r 06-first-fig}
@@ -113,5 +135,51 @@ will not feature too many of them; less than four would make sense.
 same idea applies. Furthermore, it is not crazy to use both shape and color to 
 represent the same feature.
 
-Notice that we have not talked about layout algorithms. The R packages used to build
-graphs usually have internal rules to decide what algorithm to use.
+Notice that we have not talked about layout algorithms. The R packages to build
+graphs usually have internal rules to decide what algorithm to use. We will discuss that
+later on. Let's start by size. Finding the right scale can be somewhat difficult. We 
+will draw the graph four times to see what size would be the best:
+
+```{r 06-size}
+# Sized by indegree
+net_sim %v% "indeg" <- degree(net_sim, gmode = "digraph")
+
+# Preparing the graphical device to hold four nets.
+# This line sets a 2 x 2 viz device and stores the 
+# original value. We will use the `op` object to reset
+# the configugarion
+op <- par(mfrow = c(2, 2), mai = c(.1, .1, .1, .1))
+gplot(net_sim, vertex.cex = (net_sim %v% "indeg") * 2)
+gplot(net_sim, vertex.cex = net_sim %v% "indeg")
+gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/2)
+gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/10)
+par(op)
+```
+
+If we were using igraph, setting the size can be easier thanks to the netdiffuseR
+R package. Let's start by converting our network to an igraph object with the
+R package `intergraph`
+
+```{r 06-size-netdiffuseR}
+library(intergraph)
+library(igraph)
+
+# Converting the network object to an igraph object
+net_sim_i <- asIgraph(net_sim)
+
+# Plotting with igraph
+plot(
+  net_sim_i,
+  vertex.size = netdiffuseR::rescale_vertex_igraph(
+    vertex.size = V(net_sim_i)$indeg,
+    minmax.relative.size = c(.01, .1)
+  )
+)
+```
+
+We could also have tried netplot, which should make things easier (and prettier):
+
+```{r 06-netplot1}
+library(netplot)
+nplot(net_sim)
+```

@@ -40,6 +40,11 @@ using-constraints-in-ergms
 example-1-interlocking-egos-and-disconnected-alters
 example-2-bi-partite-networks
 separable-temporal-exponential-family-random-graph-models
+simulating-and-visualizing-networks
+random-graph-models
+social-networks-in-schools
+step-3-simulate-a-graph
+visualizing-the-network
 hypothesis-testing-in-networks
 comparing-networks
 network-bootstrap
