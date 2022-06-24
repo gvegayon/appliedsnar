@@ -243,10 +243,10 @@ stats <- as_data_frame(ig_year1_111, what = "vertices")
 # Computing quantiles for each variable
 stats_degree <- with(stats, {
  cbind(
-   indegree   = quantile(indegree, c(.025, .5, .975)),
-   outdegree  = quantile(outdegree, c(.025, .5, .975)),
-   closeness  = quantile(closeness, c(.025, .5, .975)),
-   betweeness = quantile(betweeness, c(.025, .5, .975))
+   indegree   = quantile(indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(betweeness, c(.025, .5, .975), na.rm = TRUE)
  )
 })
 
@@ -258,10 +258,10 @@ The `with` function is somewhat similar to what `dplyr` allows us to do when we 
 ```r
 stats_degree <- 
  cbind(
-   indegree   = quantile(stats$indegree, c(.025, .5, .975)),
-   outdegree  = quantile(stats$outdegree, c(.025, .5, .975)),
-   closeness  = quantile(stats$closeness, c(.025, .5, .975)),
-   betweeness = quantile(stats$betweeness, c(.025, .5, .975))
+   indegree   = quantile(stats$indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(stats$outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(stats$closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(stats$betweeness, c(.025, .5, .975), na.rm = TRUE)
  )
 
 ```

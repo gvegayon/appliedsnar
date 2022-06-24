@@ -58,7 +58,7 @@ library(ergm)
 
 ```
 ## 
-## 'network' 1.17.1 (2021-06-12), part of the Statnet Project
+## 'network' 1.17.2 (2022-05-20), part of the Statnet Project
 ## * 'news(package="network")' for changes since last version
 ## * 'citation("network")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -66,7 +66,7 @@ library(ergm)
 
 ```
 ## 
-## 'ergm' 4.1.2 (2021-07-26), part of the Statnet Project
+## 'ergm' 4.2.1 (2022-05-10), part of the Statnet Project
 ## * 'news(package="ergm")' for changes since last version
 ## * 'citation("ergm")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -332,7 +332,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from 024878b (vertex names):
+## + 1/2638 edge from 75ee33b (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -471,8 +471,8 @@ library(texreg)
 ```
 
 ```
-## Version:  1.38.5
-## Date:     2022-03-03
+## Version:  1.38.6
+## Date:     2022-04-06
 ## Author:   Philip Leifeld (University of Essex)
 ## 
 ## Consider submitting praise using the praise or praise_interactive functions.
@@ -492,6 +492,12 @@ library(texreg)
 
 ```r
 screenreg(list(ans0, ans1, ans2))
+```
+
+```
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
 ```
 
 ```
@@ -525,6 +531,12 @@ Or, if you are using rmarkdown, you can export the results using LaTeX or html, 
 ```r
 library(texreg)
 htmlreg(list(ans0, ans1, ans2))
+```
+
+```
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
 ```
 
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
@@ -996,7 +1008,7 @@ ans_gof
 plot(ans_gof)
 ```
 
-<img src="04-ergms_files/figure-html/checking-gof-1.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-2.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-3.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-4.png" width="672" /><img src="04-ergms_files/figure-html/checking-gof-5.png" width="672" />
+![](04-ergms_files/figure-epub3/checking-gof-1.png)<!-- -->![](04-ergms_files/figure-epub3/checking-gof-2.png)<!-- -->![](04-ergms_files/figure-epub3/checking-gof-3.png)<!-- -->![](04-ergms_files/figure-epub3/checking-gof-4.png)<!-- -->![](04-ergms_files/figure-epub3/checking-gof-5.png)<!-- -->
 
 Try the following configuration instead
 
@@ -1031,7 +1043,7 @@ knitr::include_graphics("awful-chains.png")
 ```
 
 <div class="figure">
-<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful"  />
+<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="714" />
 <p class="caption">(\#fig:badconvergence)An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful</p>
 </div>
 

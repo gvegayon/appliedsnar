@@ -1,2 +1,2 @@
 build:
-	rmarkdown::render_site(encoding = 'UTF-8')
+	Rscript --vanilla --verbose -e "rmarkdown::render_site(encoding = 'UTF-8')"

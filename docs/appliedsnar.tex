@@ -123,7 +123,7 @@
 
 \title{Applied Network Science with R}
 \author{George G. Vega Yon}
-\date{2022-04-11}
+\date{2022-06-24}
 
 \begin{document}
 \maketitle
@@ -175,6 +175,9 @@ Bioinformatics and Social Network Analysis: Statistical and Computational Method
 for Complex Systems.''
 
 If you'd like to learn more about me, please visit my website at \url{https://ggvy.cl}.
+
+\hypertarget{part-applications}{%
+\part{Applications}\label{part-applications}}
 
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
@@ -1210,17 +1213,6 @@ The \texttt{which} function in R returns a vector of indices indicating which el
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{indegree   <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"in"}\NormalTok{)}
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{outdegree  <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"out"}\NormalTok{)}
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{closeness  <-}\StringTok{ }\KeywordTok{closeness}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"total"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in closeness(ig_year1_111, mode = "total"): At
-## centrality.c:2874 :closeness centrality is not well-defined for disconnected
-## graphs
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{V}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{)}\OperatorTok{$}\NormalTok{betweeness <-}\StringTok{ }\KeywordTok{betweenness}\NormalTok{(ig_year1_}\DecValTok{111}\NormalTok{, }\DataTypeTok{normalized =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1235,10 +1227,10 @@ From here, we can \emph{go back} to our old habits and get the set of vertex att
 \CommentTok{# Computing quantiles for each variable}
 \NormalTok{stats_degree <-}\StringTok{ }\KeywordTok{with}\NormalTok{(stats, \{}
  \KeywordTok{cbind}\NormalTok{(}
-   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{))}
+   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
 \NormalTok{ )}
 \NormalTok{\})}
 
@@ -1248,9 +1240,9 @@ From here, we can \emph{go back} to our old habits and get the set of vertex att
 
 \begin{verbatim}
 ##       indegree outdegree    closeness  betweeness
-## 2.5%         0         0 3.526640e-06 0.000000000
-## 50%          4         4 1.595431e-05 0.001879006
-## 97.5%       16        16 1.601822e-05 0.016591048
+## 2.5%         0         0 0.0005915148 0.000000000
+## 50%          4         4 0.0007487833 0.001879006
+## 97.5%       16        16 0.0008838413 0.016591048
 \end{verbatim}
 
 The \texttt{with} function is somewhat similar to what \texttt{dplyr} allows us to do when we want to work with the dataset but without mentioning its name everytime that we ask for a variable. Without using the \texttt{with} function, the previous could have been done as follows:
@@ -1259,10 +1251,10 @@ The \texttt{with} function is somewhat similar to what \texttt{dplyr} allows us 
 \begin{Highlighting}[]
 \NormalTok{stats_degree <-}\StringTok{ }
 \StringTok{ }\KeywordTok{cbind}\NormalTok{(}
-   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{)),}
-   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{))}
+   \DataTypeTok{indegree   =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{indegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{outdegree  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{outdegree, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{closeness  =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{closeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+   \DataTypeTok{betweeness =} \KeywordTok{quantile}\NormalTok{(stats}\OperatorTok{$}\NormalTok{betweeness, }\KeywordTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.975}\NormalTok{), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
 \NormalTok{ )}
 \end{Highlighting}
 \end{Shaded}
@@ -1737,7 +1729,7 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{verbatim}
 ## 
-## 'network' 1.17.1 (2021-06-12), part of the Statnet Project
+## 'network' 1.17.2 (2022-05-20), part of the Statnet Project
 ## * 'news(package="network")' for changes since last version
 ## * 'citation("network")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -1745,7 +1737,7 @@ In the simplest case, ergm is equivalent to a logistic regression
 
 \begin{verbatim}
 ## 
-## 'ergm' 4.1.2 (2021-07-26), part of the Statnet Project
+## 'ergm' 4.2.1 (2022-05-10), part of the Statnet Project
 ## * 'news(package="ergm")' for changes since last version
 ## * 'citation("ergm")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -2035,7 +2027,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from aba784e (vertex names):
+## + 1/2638 edge from d7c9950 (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2195,8 +2187,8 @@ Now, a nice trick to see all regressions in the same table, we can use the \text
 \end{Shaded}
 
 \begin{verbatim}
-## Version:  1.38.5
-## Date:     2022-03-03
+## Version:  1.38.6
+## Date:     2022-04-06
 ## Author:   Philip Leifeld (University of Essex)
 ## 
 ## Consider submitting praise using the praise or praise_interactive functions.
@@ -2219,6 +2211,12 @@ Now, a nice trick to see all regressions in the same table, we can use the \text
 \KeywordTok{screenreg}\NormalTok{(}\KeywordTok{list}\NormalTok{(ans0, ans1, ans2))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+\end{verbatim}
 
 \begin{verbatim}
 ## 
@@ -2253,6 +2251,12 @@ Or, if you are using rmarkdown, you can export the results using LaTeX or html, 
 \KeywordTok{texreg}\NormalTok{(}\KeywordTok{list}\NormalTok{(ans0, ans1, ans2))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+\end{verbatim}
 
 \begin{table}
 \begin{center}
@@ -2711,10 +2715,8 @@ Increase the sample size, so the curves are smoother, longer intervals (thinning
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{awful-chains.png}
-\caption{\label{fig:badconvergence}An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful}
+\begin{figure}[!h]
+\includegraphics[width=9.92in]{awful-chains} \caption{An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful}\label{fig:badconvergence}
 \end{figure}
 
 \hypertarget{more-on-mcmc-convergence}{%
@@ -3096,10 +3098,10 @@ the offset terms. Here is an example:
 \CommentTok{## ---}
 \CommentTok{## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1}
 \CommentTok{## }
-\CommentTok{##      Null Deviance: 3396  on 2450  degrees of freedom}
-\CommentTok{##  Residual Deviance: 2542  on 2448  degrees of freedom}
+\CommentTok{##      Null Deviance: 1233.8  on 2450  degrees of freedom}
+\CommentTok{##  Residual Deviance:  379.4  on 2448  degrees of freedom}
 \CommentTok{##  }
-\CommentTok{## AIC: 2544  BIC: 2550  (Smaller is better. MC Std. Err. = 0)}
+\CommentTok{## AIC: 381.4  BIC: 386.2  (Smaller is better. MC Std. Err. = 0)}
 \CommentTok{## }
 \CommentTok{##  The following terms are fixed by offset and are not estimated:}
 \CommentTok{##   offset(nodematch.aux_var)}
@@ -3141,7 +3143,15 @@ here. For example, the two-star term. Let's start simulating a bipartite
 network using the \texttt{edges} and \texttt{two-star} parameters. Since the \texttt{k-star} term
 is usually complex to fit (tends to generate degenerate models,) we will
 take advantage of the \texttt{Log()} transformation function in the \texttt{ergm} package
-to smooth the term.
+to smooth the term.\footnote{After writing this example, it became apparent the use of
+  the \texttt{Log()} transformation function may not be ideal. Since many terms used
+  in ERGMs can be zero, e.g., triangles, the term \texttt{Log(\textasciitilde{}\ ostar(2))} is undefined
+  when \texttt{ostar(2)\ =\ 0}. In practice, the ERGM package sets a lower limit for the
+  log of 0, so, instead of having \texttt{Log(0)\ \textasciitilde{}\ -Inf}, they set it to be a really
+  large negative number. This causes all sorts of issues to the estimates; in
+  our example, an over estimation of the population parameter and a positive
+  log-likelihood. With that said, I wouldn't recommend using
+  this transformation too often.}
 
 The bipartite network that we will be simulating will have 100 actors and
 50 entities. Actors, which we will map to the first level of the \texttt{ergm} terms,
@@ -3299,7 +3309,17 @@ offset terms and compare the results between the two models:
   \CommentTok{# Control parameters}
   \DataTypeTok{control =} \KeywordTok{control.ergm}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{1}\NormalTok{)}
 \NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{verbatim}
+## Warning: 'glpk' selected as the solver, but package 'Rglpk' is not available;
+## falling back to 'lpSolveAPI'. This should be fine unless the sample size and/or
+## the number of parameters is very big.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{# ERGM with a digraph with constraints}
 \NormalTok{res_not_b <-}\StringTok{ }\KeywordTok{ergm}\NormalTok{(}
   \CommentTok{# Main formula}
@@ -3315,11 +3335,7 @@ offset terms and compare the results between the two models:
 \end{Highlighting}
 \end{Shaded}
 
-Here are the estimates (using the \texttt{texreg} R package for a prettier output)\footnote{After writing this example, it became apparent the presence of
-  a couple of bugs in the ERGM package. First, the parameter estimate of the
-  \texttt{Log(\textasciitilde{}b1star(2))} term is significantly off from the simulated value. And second,
-  the likelihood approximates using offset terms are also very out compared to
-  those obtained fitting the bipartite graph without them.}:
+Here are the estimates (using the \texttt{texreg} R package for a prettier output):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3332,20 +3348,20 @@ Here are the estimates (using the \texttt{texreg} R package for a prettier outpu
 ## ======================================================================
 ##                               Bipartite    Directed                   
 ## ----------------------------------------------------------------------
-## edges                           -3.14 ***                    -3.14 ***
+## edges                           -3.14 ***                    -3.11 ***
 ##                                 (0.15)                       (0.14)   
-## Log~b1star2                     21.86                                 
-##                                (16.92)                                
-## Log~ostar2                                                   21.62    
-##                                                             (16.42)   
+## Log~b1star2                     21.89                                 
+##                                (17.13)                                
+## Log~ostar2                                                   19.66    
+##                                                             (16.75)   
 ## offset(nodematch.is.actor)                                    -Inf    
 ##                                                                       
 ## offset(nodeocov.isnot.actor)                                  -Inf    
 ##                                                                       
 ## ----------------------------------------------------------------------
-## AIC                           1958.11      -2134192392760919552.00    
-## BIC                           1971.15      -2134192392760919552.00    
-## Log Likelihood                -977.06       1067096196380459776.00    
+## AIC                           1958.00      -2134192392498171136.00    
+## BIC                           1971.03      -2134192392498171136.00    
+## Log Likelihood                -977.00       1067096196249085568.00    
 ## ======================================================================
 ## *** p < 0.001; ** p < 0.01; * p < 0.05
 \end{verbatim}
@@ -3375,9 +3391,9 @@ declared. We can tell this by inspecting rejection rates:
 \hline
   & Bipartite & Directed\\
 \hline
-edges & 2.53 & 4.62\\
+edges & 2.48 & 3.67\\
 \hline
-Log\textasciitilde{}b1star2 & 0.84 & 2.82\\
+Log\textasciitilde{}b1star2 & 1.24 & 2.04\\
 \hline
 \end{tabular}
 
@@ -3396,6 +3412,559 @@ features to make our job easier.
 \chapter{(Separable) Temporal Exponential Family Random Graph Models}\label{separable-temporal-exponential-family-random-graph-models}}
 
 This tutorial is great! \url{https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/tergm_tutorial.pdf}
+
+\hypertarget{simulating-and-visualizing-networks}{%
+\chapter{Simulating and visualizing networks}\label{simulating-and-visualizing-networks}}
+
+In this chapter, we will build and visualize artificial networks using Exponential
+Random Graph Models {[}ERGMs.{]} Together with chapter 3, this will be an extended
+example of how to read network data and visualize it using some of the available
+R packages out there.
+
+For this chapter we will be using the following R packages: \texttt{ergm}, \texttt{sna}, \texttt{igraph},
+\texttt{intergraph}, \texttt{netplot}, \texttt{netdiffuseR}, and \texttt{rgexf}.
+
+\hypertarget{random-graph-models}{%
+\section{Random Graph Models}\label{random-graph-models}}
+
+While there are tons of social network data, we will use an artificial one for this chapter.
+We do this as it is always helpful to have more examples simulating Random
+networks. For this chapter, we will classify random graph models for sampling and
+generating networks into three categories:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Exogenous}: Graphs where the structure is determined by a macro rule, e.g.,
+  expected density, degree distribution, or degree-sequence. In these cases,
+  ties are assigned to comply with a macro-property.
+\item
+  \textbf{Endogenous}: This category includes all Random Graphs generated based
+  on endogenous information, e.g., small-world, scale-free, etc. Here, a tie
+  creation rule gives origin to a macro property, for example, preferential attachment
+  in scale-free networks.
+\item
+  \textbf{Exponential Random Graph Models}: Overall, since ERGMs compose a family
+  of statistical models, we can always (or almost always) find a model specification
+  that matches the previous categories. Whereas we are thinking about degree sequence,
+  preferential attachment, or a mix of both, ERGMs can be the baseline for any of
+  those models.
+\end{enumerate}
+
+The later, ERGMs, are a generalization that covers all classes. Because of that,
+we will use ERGMs to generate our artificial network.
+
+\hypertarget{social-networks-in-schools}{%
+\section{Social Networks in Schools}\label{social-networks-in-schools}}
+
+A common type of network we analyze is friendship networks. In this case,
+we will use ERGMs to simulate friendship networks within a school. In our
+simulated world, these networks will be dominated by the following phenomena
+
+\begin{itemize}
+\tightlist
+\item
+  Low density,
+\item
+  Race homophily,
+\item
+  Structural balance,
+\item
+  And age homophily.
+\end{itemize}
+
+If you have been paying attention to the previous chapters, you will notice that,
+out of these five properties, only one constitutes Markov graphs. Within a tie,
+homophily and density only depend on ego and alter. In race homophily, only ego
+and alter's race matter for the tie formation, but, in the case of Structural
+balance, ego is more likely to befriend alter if a fried of ego is friends with alter,
+i.e., ``the friend of my friend is my friend.''
+
+The simulation steps are as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Draw a population of \(n\) students and randomly distribute race and age across them.
+\item
+  Create a \texttt{network} object.
+\item
+  Simulate the ties in the empty network.
+\end{enumerate}
+
+Here is the code
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{712}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{200}
+
+\CommentTok{# Step 1: Students}
+\NormalTok{race   <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"non-white"}\NormalTok{), n, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{age    <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{17}\NormalTok{), n, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# Step 2: Create an empty network}
+\KeywordTok{library}\NormalTok{(ergm)}
+\KeywordTok{library}\NormalTok{(network)}
+\NormalTok{net <-}\StringTok{ }\KeywordTok{network.initialize}\NormalTok{(n)}
+
+\NormalTok{net }\OperatorTok{%v%}\StringTok{ "race"}\NormalTok{   <-}\StringTok{ }\NormalTok{race}
+\NormalTok{net }\OperatorTok{%v%}\StringTok{ "age"}\NormalTok{    <-}\StringTok{ }\NormalTok{age}
+
+\CommentTok{# Step 3: Simulate a graph}
+\NormalTok{net_sim <-}\StringTok{ }\KeywordTok{simulate}\NormalTok{(}
+\NormalTok{    net }\OperatorTok{~}\StringTok{ }\NormalTok{edges }\OperatorTok{+}
+\StringTok{    }\KeywordTok{nodematch}\NormalTok{(}\StringTok{"race"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\NormalTok{triangle }\OperatorTok{+}
+\StringTok{    }\KeywordTok{absdiff}\NormalTok{(}\StringTok{"age"}\NormalTok{),}
+    \DataTypeTok{coef =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{4}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{.5}\NormalTok{, }\FloatTok{-.5}\NormalTok{)}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+What just happened? Here is a line-by-line breakout:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \texttt{set.seed(712)} Since this is a random simulation, we need to fix a seed so it is reproducible. Otherwise, results would change with every iteration.
+\item
+  \texttt{n\ \textless{}-\ 200} We are assigning the value \texttt{200} to the object \texttt{n}. This will make things easier as, if needed, changing the size of the networks can be done at the top of the code.
+\item
+  \texttt{race\ \textless{}-\ sample(c("white",\ "non-white"),\ n,\ replace\ =\ TRUE)} We are sampling 200, or actually, \texttt{n} values from the vector \texttt{c("white",\ "non-white")} with replacement.
+\item
+  \texttt{age\ \textless{}-\ sample(c(10,\ 14,\ 17),\ n,\ replace\ =\ TRUE)} Same as before, but with ages!
+\item
+  \texttt{library(ergm)} Loading the ergm R package, which we need to simulate the networks!
+\item
+  \texttt{library(network)} Loading the \texttt{network} R package, which we need to create the empty graph.
+\item
+  \texttt{net\ \textless{}-\ network.initialize(n)} Creating an empty graph of size \texttt{n}.
+\item
+  \texttt{net\ \%v\%\ "race"\ \textless{}-\ race} Using the \texttt{\%v\%} operator, we can access vertices features in the network object. Since race does not exist in the network yet, the operator just creates it. Notice that the number of vertices matches the length of the race vector.
+\item
+  \texttt{net\ \%v\%\ "age"\ \textless{}-\ age} Same as with race!
+\item
+  \texttt{net\_sim\ \textless{}-\ simulate(} Simulating an ERGM!
+\end{enumerate}
+
+Let's take a quick look at the resulting graph
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(sna)}
+\KeywordTok{gplot}\NormalTok{(net_sim)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf}
+
+We can now start to see whether we got what we wanted! Before that, let's save the
+network as a plain-text file so we can practice reading networks back in R!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{write.csv}\NormalTok{(}
+  \DataTypeTok{x         =} \KeywordTok{as.edgelist}\NormalTok{(net_sim),}
+  \DataTypeTok{file      =} \StringTok{"06-edgelist.csv"}\NormalTok{,}
+  \DataTypeTok{row.names =} \OtherTok{FALSE}
+\NormalTok{  )}
+
+\KeywordTok{write.csv}\NormalTok{(}
+  \DataTypeTok{x         =} \KeywordTok{as.data.frame}\NormalTok{(net_sim, }\DataTypeTok{unit =} \StringTok{"vertices"}\NormalTok{),}
+  \DataTypeTok{file      =} \StringTok{"06-nodes.csv"}\NormalTok{,}
+  \DataTypeTok{row.names =} \OtherTok{FALSE}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{reading-a-network}{%
+\section{Reading a network}\label{reading-a-network}}
+
+The first step to analyzing network data is to read it in. Many times you'll find
+data in the form of an adjacency matrix. Other times, data will come in the form
+of an edgelist. Another common format is the adjacency list, which is a compressed
+version of an edgelist. Let's see how the formats look like for the following
+network:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{example_graph <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(0L, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DataTypeTok{dimnames =} \KeywordTok{list}\NormalTok{(letters[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{], letters[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]))}
+\NormalTok{example_graph[}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{7}\NormalTok{)] <-}\StringTok{ }\NormalTok{1L}
+\NormalTok{example_graph[}\StringTok{"c"}\NormalTok{, }\StringTok{"d"}\NormalTok{] <-}\StringTok{ }\NormalTok{1L}
+\NormalTok{example_graph[}\StringTok{"d"}\NormalTok{, }\StringTok{"c"}\NormalTok{] <-}\StringTok{ }\NormalTok{1L}
+\NormalTok{example_graph <-}\StringTok{ }\KeywordTok{as.network}\NormalTok{(example_graph)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1231}\NormalTok{)}
+\KeywordTok{gplot}\NormalTok{(example_graph, }\DataTypeTok{label =}\NormalTok{ letters[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Adjacency matrix} a matrix of size \(n\) by \(n\) where the \(ij\)-th entry represents
+  the tie between \(i\) and \(j\). In a directed network, we say \(i\) connects to \(j\),
+  so the \(i\)-th row shows the ties \(i\) sends to the rest of the network. Likewise,
+  in a directed graph, the \(j\)-th column shows the ties sent to \(j\). For undirected
+  graphs, the adjacency matrix is usually upper or lower diagonal. The adjacency
+  matrix of an undirected graph is symmetric, so we don't need to report the same
+  information twice. For example:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{as.matrix}\NormalTok{(example_graph)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   a b c d
+## a 0 0 0 0
+## b 1 0 0 0
+## c 0 1 0 1
+## d 0 0 1 0
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Edge list} a matrix of size \(|E|\) by \(2\), where \(|E|\) is the number of edges.
+  Each entry represents a tie in the graph.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{as.edgelist}\NormalTok{(example_graph)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    2    1
+## [2,]    3    2
+## [3,]    3    4
+## [4,]    4    3
+## attr(,"n")
+## [1] 4
+## attr(,"vnames")
+## [1] "a" "b" "c" "d"
+## attr(,"directed")
+## [1] TRUE
+## attr(,"bipartite")
+## [1] FALSE
+## attr(,"loops")
+## [1] FALSE
+## attr(,"class")
+## [1] "matrix_edgelist" "edgelist"        "matrix"          "array"
+\end{verbatim}
+
+The command turns the \texttt{network} object into a matrix with a set of attributes
+(which are also printed.)
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Adjacency list} This data format uses less space than edgelists as ties are
+  grouped by ego (source.)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{igraph}\OperatorTok{::}\KeywordTok{as_adj_list}\NormalTok{(intergraph}\OperatorTok{::}\KeywordTok{asIgraph}\NormalTok{(example_graph)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## + 1/4 vertex, from 86ae1bf:
+## [1] 2
+## 
+## [[2]]
+## + 2/4 vertices, from 86ae1bf:
+## [1] 1 3
+## 
+## [[3]]
+## + 3/4 vertices, from 86ae1bf:
+## [1] 2 4 4
+## 
+## [[4]]
+## + 2/4 vertices, from 86ae1bf:
+## [1] 3 3
+\end{verbatim}
+
+The function \texttt{igraph::as\_adj\_list} turns the igraph object into a list of
+type adjacency list. In plain text it would look something like this:
+
+\begin{verbatim}
+2 
+1 3 
+2 4 4 
+3 3 
+\end{verbatim}
+
+Here we will deal with an edgelist that includes node information.
+In my opinion, this is one of the best ways to share network data. Let's read
+the data into R using the function \texttt{read.csv}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{edges <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"06-edgelist.csv"}\NormalTok{)}
+\NormalTok{nodes <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"06-nodes.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We now have two objects of class \texttt{data.frame}, edges and nodes. Let's inspect
+them using the \texttt{head} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(edges)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   V1  V2
+## 1  1  64
+## 2  2  41
+## 3  2 106
+## 4  3  61
+## 5  4  85
+## 6  4 138
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(nodes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   vertex.names      race age
+## 1            1 non-white  10
+## 2            2     white  10
+## 3            3     white  17
+## 4            4 non-white  14
+## 5            5 non-white  17
+## 6            6 non-white  14
+\end{verbatim}
+
+It is always important to look at the data before creating the network. Most common
+errors happen before reading the data in and could go undetected in many cases.
+A few examples:
+
+\begin{itemize}
+\item
+  Headers in the file could be treated as data, or the files may not
+  have headers.
+\item
+  Ego/alter columns may show in the wrong order. Both the \texttt{igraph} and \texttt{network}
+  packages take the first and second columns of edgelists as ego and alter.
+\item
+  Isolates, which wouldn't show in the edgelist, may be missing from the node
+  information set. This is one of the most common errors.
+\item
+  Nodes showing in the edgelist may be missing from the nodelist.
+\end{itemize}
+
+Both \texttt{igraph} and network have functions to read edgelist with a corresponding
+nodelist; the functions \texttt{graph\_from\_data\_frame} and \texttt{as.nework}, respectively. Although
+, for both cases, you can avoid using a nodelist, it is highly recommended as then
+you will (a) make sure that isolates are included and (b) become aware of possible
+problems in the data. A frequent error in \texttt{graph\_from\_data\_frame} is nodes present
+in the edgelist but not in the set of nodes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{net_ig <-}\StringTok{ }\NormalTok{igraph}\OperatorTok{::}\KeywordTok{graph_from_data_frame}\NormalTok{(}
+  \DataTypeTok{d        =}\NormalTok{ edges,}
+  \DataTypeTok{directed =} \OtherTok{TRUE}\NormalTok{,}
+  \DataTypeTok{vertices =}\NormalTok{ nodes}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Using \texttt{as.network} from the \texttt{network} package:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{net_net <-}\StringTok{ }\NormalTok{network}\OperatorTok{::}\KeywordTok{as.network}\NormalTok{(}
+  \DataTypeTok{x        =}\NormalTok{ edges,}
+  \DataTypeTok{directed =} \OtherTok{TRUE}\NormalTok{,}
+  \DataTypeTok{vertices =}\NormalTok{ nodes}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As you can see, both syntaxes are very similar. The main point here is that the
+more explicit we are, the better. Nevertheless, R can be brilliant; being
+\emph{shy}, i.e., not throwing warnings or errors, is not uncommon. In the next
+section, we will finally start visualizing the data.
+
+\hypertarget{visualizing-the-network}{%
+\section{Visualizing the network}\label{visualizing-the-network}}
+
+We will focus on three different attributes that we can use for this visualization:
+Node size, node shape, and node color. While there are no particular rules, some
+ideas you can follow are:
+
+\begin{itemize}
+\item
+  \textbf{Node size} Use it to describe a continuous measurement. This feature is often
+  used to highlight important nodes, e.g., using one of the many available degree measurements.
+\item
+  \textbf{Node shape} Shapes can be used to represent categorical values. A good figure
+  will not feature too many of them; less than four would make sense.
+\item
+  \textbf{Node color} Like shapes, colors can be used to represent categorical values, so the
+  same idea applies. Furthermore, it is not crazy to use both shape and color to
+  represent the same feature.
+\end{itemize}
+
+Notice that we have not talked about layout algorithms. The R packages to build
+graphs usually have internal rules to decide what algorithm to use. We will discuss that
+later on. Let's start by size.
+
+\hypertarget{vertex-size}{%
+\subsection{Vertex size}\label{vertex-size}}
+
+Finding the right scale can be somewhat difficult. We
+will draw the graph four times to see what size would be the best:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Sized by indegree}
+\NormalTok{net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{ <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(net_sim, }\DataTypeTok{gmode =} \StringTok{"digraph"}\NormalTok{)}
+
+\CommentTok{# Preparing the graphical device to hold four nets.}
+\CommentTok{# This line sets a 2 x 2 viz device and stores the }
+\CommentTok{# original value. We will use the `op` object to reset}
+\CommentTok{# the configugarion}
+\NormalTok{op <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{mai =} \KeywordTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{, }\FloatTok{.1}\NormalTok{, }\FloatTok{.1}\NormalTok{, }\FloatTok{.1}\NormalTok{))}
+\NormalTok{glayout <-}\StringTok{ }\KeywordTok{gplot}\NormalTok{(net_sim, }\DataTypeTok{vertex.cex =}\NormalTok{ (net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\KeywordTok{gplot}\NormalTok{(net_sim, }\DataTypeTok{vertex.cex =}\NormalTok{ net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{, }\DataTypeTok{coord =}\NormalTok{ glayout)}
+\KeywordTok{gplot}\NormalTok{(net_sim, }\DataTypeTok{vertex.cex =}\NormalTok{ (net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{, }\DataTypeTok{coord =}\NormalTok{ glayout)}
+\KeywordTok{gplot}\NormalTok{(net_sim, }\DataTypeTok{vertex.cex =}\NormalTok{ (net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{)}\OperatorTok{/}\DecValTok{10}\NormalTok{, }\DataTypeTok{coord =}\NormalTok{ glayout)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(op)}
+\end{Highlighting}
+\end{Shaded}
+
+If we were using igraph, setting the size can be easier thanks to the netdiffuseR
+R package. Let's start by converting our network to an igraph object with the
+R package \texttt{intergraph}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(intergraph)}
+\KeywordTok{library}\NormalTok{(igraph)}
+
+\CommentTok{# Converting the network object to an igraph object}
+\NormalTok{net_sim_i <-}\StringTok{ }\KeywordTok{asIgraph}\NormalTok{(net_sim)}
+
+\CommentTok{# Plotting with igraph}
+\KeywordTok{plot}\NormalTok{(}
+\NormalTok{  net_sim_i,}
+  \DataTypeTok{vertex.size =}\NormalTok{ netdiffuseR}\OperatorTok{::}\KeywordTok{rescale_vertex_igraph}\NormalTok{(}
+    \DataTypeTok{vertex.size =} \KeywordTok{V}\NormalTok{(net_sim_i)}\OperatorTok{$}\NormalTok{indeg,}
+    \DataTypeTok{minmax.relative.size =} \KeywordTok{c}\NormalTok{(.}\DecValTok{01}\NormalTok{, }\FloatTok{.1}\NormalTok{)}
+\NormalTok{  ), }
+  \DataTypeTok{layout       =}\NormalTok{ glayout,}
+  \DataTypeTok{vertex.label =} \OtherTok{NA}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf}
+
+We could also have tried netplot, which should make things easier and make a better use of the space:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(netplot)}
+\KeywordTok{nplot}\NormalTok{(}
+\NormalTok{  net_sim, }\DataTypeTok{layout =}\NormalTok{ glayout,}
+  \DataTypeTok{vertex.color =} \StringTok{"tomato"}\NormalTok{,}
+  \DataTypeTok{vertex.frame.color =} \StringTok{"darkred"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf}
+
+With a good idea for size, we can now start looking into vertex color.
+
+\hypertarget{vertex-color}{%
+\subsection{Vertex color}\label{vertex-color}}
+
+For the color, we will use vertex age. Although age is, by definition, continuous,
+we only have three values for age. Because of this, we can treat age as categorical.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vcolors <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"10"}\NormalTok{ =}\StringTok{ "gray"}\NormalTok{, }\StringTok{"14"}\NormalTok{ =}\StringTok{ "tomato"}\NormalTok{, }\StringTok{"17"}\NormalTok{ =}\StringTok{ "steelblue"}\NormalTok{)}
+\NormalTok{net_sim }\OperatorTok{%v%}\StringTok{ "color"}\NormalTok{ <-}\StringTok{ }\NormalTok{vcolors[}\KeywordTok{as.character}\NormalTok{(net_sim }\OperatorTok{%v%}\StringTok{ "age"}\NormalTok{)]}
+\KeywordTok{nplot_base}\NormalTok{(}
+\NormalTok{  net_ig,}
+  \DataTypeTok{layout =}\NormalTok{ glayout,}
+  \DataTypeTok{vertex.color =}\NormalTok{ net_sim }\OperatorTok{%v%}\StringTok{ "color"}\NormalTok{,}
+\NormalTok{  )}
+
+\KeywordTok{legend}\NormalTok{(}
+  \StringTok{"bottomright"}\NormalTok{,}
+  \DataTypeTok{legend =} \KeywordTok{names}\NormalTok{(vcolors),}
+  \DataTypeTok{fill   =}\NormalTok{ vcolors, }
+  \DataTypeTok{bty    =} \StringTok{"n"}\NormalTok{,}
+  \DataTypeTok{title  =} \StringTok{"Age"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf}
+
+\hypertarget{vertex-shape}{%
+\subsection{Vertex shape}\label{vertex-shape}}
+
+For the color, we will use vertex age. Although age is, by definition, continuous,
+we only have three values for age. Because of this, we can treat age as categorical.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vshape <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{ =}\StringTok{ }\DecValTok{15}\NormalTok{, }\StringTok{"non-white"}\NormalTok{ =}\StringTok{ }\DecValTok{3}\NormalTok{)}
+\NormalTok{net_sim }\OperatorTok{%v%}\StringTok{ "shape"}\NormalTok{ <-}\StringTok{ }\NormalTok{vshape[}\KeywordTok{as.character}\NormalTok{(net_sim }\OperatorTok{%v%}\StringTok{ "race"}\NormalTok{)]}
+\KeywordTok{nplot_base}\NormalTok{(}
+\NormalTok{  net_ig,}
+  \DataTypeTok{layout =}\NormalTok{ glayout,}
+  \DataTypeTok{vertex.color =}\NormalTok{ net_sim }\OperatorTok{%v%}\StringTok{ "color"}\NormalTok{,}
+  \DataTypeTok{vertex.nsides =}\NormalTok{ net_sim }\OperatorTok{%v%}\StringTok{ "shape"}
+\NormalTok{  )}
+  
+\KeywordTok{legend}\NormalTok{(}
+  \StringTok{"bottomright"}\NormalTok{,}
+  \DataTypeTok{legend =} \KeywordTok{names}\NormalTok{(vcolors),}
+  \DataTypeTok{fill   =}\NormalTok{ vcolors, }
+  \DataTypeTok{bty    =} \StringTok{"n"}\NormalTok{,}
+  \DataTypeTok{title  =} \StringTok{"Age"}
+\NormalTok{  )}
+
+\KeywordTok{legend}\NormalTok{(}
+  \StringTok{"bottomleft"}\NormalTok{,}
+  \DataTypeTok{legend =} \KeywordTok{names}\NormalTok{(vshape),}
+  \DataTypeTok{pch    =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }
+  \DataTypeTok{bty    =} \StringTok{"n"}\NormalTok{,}
+  \DataTypeTok{title  =} \StringTok{"Race"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf}
 
 \hypertarget{hypothesis-testing-in-networks}{%
 \chapter{Hypothesis testing in networks}\label{hypothesis-testing-in-networks}}
@@ -4653,6 +5222,104 @@ In other words, individuals choose between states \(x\) and \(x'\) in a probabil
 snijders\_(sociological methodology 2001)
 
 (Snijders, Bunt, and Steglich \protect\hyperlink{ref-Snijders2010}{2010}, @lazega2015, @Ripley2011)
+
+\hypertarget{part-statistical-foundations}{%
+\part{Statistical Foundations}\label{part-statistical-foundations}}
+
+\hypertarget{bayes-rule}{%
+\section{Bayes' Rule}\label{bayes-rule}}
+
+\begin{equation}
+{\mathbb{P}\left(\left(X=x|Y=y\right)\right) } = \frac{{\mathbb{P}\left(\left(Y=y|X=y\right)\right) }{\mathbb{P}\left(\left(X=x\right)\right) }}{{\mathbb{P}\left(\left(Y=y\right)\right) }}
+\end{equation}
+
+Bayes' rule can be derived using conditional probabilities. In particular, \({\mathbb{P}\left(\left(x=x|Y=y\right)\right) }\) is defined as \({\mathbb{P}\left(\left(x=x, Y=y\right)\right) }/Pr{\left(Y=y\right)}\). Likewise, \({\mathbb{P}\left(\left(y=y|X=x\right)\right) }\) is defined as \({\mathbb{P}\left(\left(y=y, X=x\right)\right) }/Pr{\left(X=x\right)}\), which can be re-written as \({\mathbb{P}\left(\left(x=x, Y=y\right)\right) } = {\mathbb{P}\left(\left(y=y|X=x\right)\right) }Pr{\left(X=x\right)}\). Replacing the last equality in the first equation we get
+
+\begin{align*}
+{\mathbb{P}\left(\left(x=x|Y=y\right)\right) } & = \frac{{\mathbb{P}\left(\left(x=x, Y=y\right)\right) }}{Pr{\left(Y=y\right)}} \\
+& \frac{{\mathbb{P}\left(\left(y=y|X=x\right)\right) }Pr{\left(X=x\right)}}{Pr{\left(Y=y\right)}}
+\end{align*}
+
+\hypertarget{markov-chain}{%
+\section{Markov Chain}\label{markov-chain}}
+
+A Markov Chain is a sequence of random variables in which the conditional distribution of the \(n\)-th element only depends on \(n-1\).
+
+\hypertarget{metropolis-algorithm}{%
+\subsection{Metropolis Algorithm}\label{metropolis-algorithm}}
+
+In the Metropolis Algorithm, or Metropolis MCMC, builds a Markov Chain that
+under certain conditions converges to the target distribution. The key of the
+Algorithm is in accepting a proposed move from \(\theta\) to \(\theta'\) with
+probability equal to:
+
+\begin{equation}
+r = \min\left(1, \frac{{\mathbb{P}\left(\left(\theta'|D\right)\right) }}{{\mathbb{P}\left(\left(\theta|D\right)\right) }}\right)
+\end{equation}
+
+The resulting sequence converges to the target distribution. We can prove
+convergence by showing that (a) the sequence is ergodic, and (b) the posterior
+distribution matches the target distribution. Ergodicity describes three
+propoerties of a chain:
+
+\begin{itemize}
+\item
+  Irreducibility: There is no zero probability of transitioning between any pair of states.
+\item
+  Aperiodicity: As the term suggests, the chain has no repetitive periods/sequences.
+\item
+  Non transient: Transient refers to a chain having non-zero probability of
+  never returning to a starting state.
+\end{itemize}
+
+The three properties are reached by any random walk based on a well defined
+probability distribution, so we will focus on showing that the posterior matches
+the target distribution. The following proof was adapted from ``Bayesian Data
+Analysis:''
+
+\hypertarget{metropolis-hastings}{%
+\subsection{Metropolis-Hastings}\label{metropolis-hastings}}
+
+\[
+\min\left(1, \frac{{\mathbb{P}\left(\left(d|\theta'\right)\right) }{\mathbb{P}\left(\left(\theta'\right)\right) }{\mathbb{P}\left(\left(\theta'|\theta\right)\right) }}{{\mathbb{P}\left(\left(d|\theta\right)\right) }{\mathbb{P}\left(\left(\theta\right)\right) }{\mathbb{P}\left(\left(\theta|\theta'\right)\right) }}\right)
+\]
+
+If the transittion probability is symmetric, then the previous equation reduces
+to the Metropolis probability.
+
+\hypertarget{likelihood-free-mcmc}{%
+\subsection{Likelihood-free MCMC}\label{likelihood-free-mcmc}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Initialize the algorithm with \(\theta_0\), \(\theta^* =\theta_0\)--the current accepted
+  state,--and observed summary statistic \(s_0 = S(D_{observed})\):
+\item
+  For \(t = 1\) to \(T\) do:
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    Draw \(\theta_t\) from the proposal distribution \(J(\theta_t|\theta^*)\)
+  \item
+    Draw a simulated data \(D_t\) from model \(M(\theta_t)\)
+  \item
+    Calculate the summary statistics \(s_t = S(D_t)\)
+  \item
+    Accept the proposed state with probability
+  \end{enumerate}
+
+  If accepted, set \(\theta^* = \theta_t\).
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \setcounter{enumii}{4}
+  \tightlist
+  \item
+    Next \(t\)
+  \end{enumerate}
+\end{enumerate}
 
 \cleardoublepage
 

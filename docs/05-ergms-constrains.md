@@ -94,7 +94,7 @@ net %v% "is.ego"
 gplot(net, vertex.col = net %v% "is.ego")
 ```
 
-<img src="05-ergms-constrains_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/unnamed-chunk-1-1.png)<!-- -->
 
 To create the auxiliary variable, we will use the following function:
 
@@ -158,7 +158,7 @@ net_sim <- simulate(net ~ edges + nodematch("aux_var"), coef = c(-3.0, -Inf))
 gplot(net_sim, vertex.col = net_sim %v% "is.ego")
 ```
 
-<img src="05-ergms-constrains_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
 
 As you can see, this network has only ties of the type `E-E` and `A-E`. We can
 double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph
@@ -208,7 +208,7 @@ gplot(net_of_alters, vertex.col = net_of_alters %v% "is.ego", main = "A")
 gplot(net_of_egos, vertex.col = net_of_egos %v% "is.ego", main = "E")
 ```
 
-<img src="05-ergms-constrains_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/unnamed-chunk-5-1.png)<!-- -->
 
 ```r
 par(op)
@@ -242,10 +242,10 @@ summary(ans)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-##      Null Deviance: 3396  on 2450  degrees of freedom
-##  Residual Deviance: 2542  on 2448  degrees of freedom
+##      Null Deviance: 1233.8  on 2450  degrees of freedom
+##  Residual Deviance:  379.4  on 2448  degrees of freedom
 ##  
-## AIC: 2544  BIC: 2550  (Smaller is better. MC Std. Err. = 0)
+## AIC: 381.4  BIC: 386.2  (Smaller is better. MC Std. Err. = 0)
 ## 
 ##  The following terms are fixed by offset and are not estimated:
 ##   offset(nodematch.aux_var)
@@ -266,7 +266,7 @@ for (i in 1:4) {
 }
 ```
 
-<img src="05-ergms-constrains_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/unnamed-chunk-7-1.png)<!-- -->
 
 ```r
 par(op)
@@ -282,7 +282,17 @@ here. For example, the two-star term. Let's start simulating a bipartite
 network using the `edges` and `two-star` parameters. Since the `k-star` term
 is usually complex to fit (tends to generate degenerate models,) we will
 take advantage of the `Log()` transformation function in the `ergm` package
-to smooth the term. 
+to smooth the term.[^notprettyaic]
+
+[^notprettyaic]: After writing this example, it became apparent the use of
+the `Log()` transformation function may not be ideal. Since many terms used
+in ERGMs can be zero, e.g., triangles, the term `Log(~ ostar(2))` is undefined
+when `ostar(2) = 0`. In practice, the ERGM package sets a lower limit for the
+log of 0, so, instead of having `Log(0) ~ -Inf`, they set it to be a really
+large negative number. This causes all sorts of issues to the estimates; in
+our example, an over estimation of the population parameter and a positive
+log-likelihood. With that said, I wouldn't recommend using
+this transformation too often.  
 
 The bipartite network that we will be simulating will have 100 actors and
 50 entities. Actors, which we will map to the first level of the `ergm` terms,
@@ -323,7 +333,7 @@ summary(net_b ~ edges + Log(~b1star(2)))
 netplot::nplot(net_b, vertex.col = (1:n <= nactors) + 1)
 ```
 
-<img src="05-ergms-constrains_files/figure-html/05-example2-simulated-graph-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/05-example2-simulated-graph-1.png)<!-- -->
 
 Notice that the first `nactors` vertices in the network are the actors, and
 the remaining are the entities. Now, although the `ergm` package features
@@ -389,7 +399,7 @@ gridExtra::grid.arrange(
 )
 ```
 
-<img src="05-ergms-constrains_files/figure-html/05-example2-side-by-side-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/05-example2-side-by-side-1.png)<!-- -->
 
 ```r
 # Looking at the counts
@@ -423,7 +433,15 @@ res_b     <- ergm(
   # Control parameters
   control = control.ergm(seed = 1)
   )
+```
 
+```
+## Warning: 'glpk' selected as the solver, but package 'Rglpk' is not available;
+## falling back to 'lpSolveAPI'. This should be fine unless the sample size and/or
+## the number of parameters is very big.
+```
+
+```r
 # ERGM with a digraph with constraints
 res_not_b <- ergm(
   # Main formula
@@ -438,13 +456,7 @@ res_not_b <- ergm(
   )
 ```
 
-Here are the estimates (using the `texreg` R package for a prettier output)[^notprettyaic]:
-
-[^notprettyaic]: After writing this example, it became apparent the presence of
-a couple of bugs in the ERGM package. First, the parameter estimate of the
-`Log(~b1star(2))` term is significantly off from the simulated value. And second,
-the likelihood approximates using offset terms are also very out compared to
-those obtained fitting the bipartite graph without them.
+Here are the estimates (using the `texreg` R package for a prettier output):
 
 
 ```r
@@ -456,20 +468,20 @@ texreg::screenreg(list(Bipartite = res_b, Directed = res_not_b))
 ## ======================================================================
 ##                               Bipartite    Directed                   
 ## ----------------------------------------------------------------------
-## edges                           -3.14 ***                    -3.14 ***
+## edges                           -3.14 ***                    -3.11 ***
 ##                                 (0.15)                       (0.14)   
-## Log~b1star2                     21.86                                 
-##                                (16.92)                                
-## Log~ostar2                                                   21.62    
-##                                                             (16.42)   
+## Log~b1star2                     21.89                                 
+##                                (17.13)                                
+## Log~ostar2                                                   19.66    
+##                                                             (16.75)   
 ## offset(nodematch.is.actor)                                    -Inf    
 ##                                                                       
 ## offset(nodeocov.isnot.actor)                                  -Inf    
 ##                                                                       
 ## ----------------------------------------------------------------------
-## AIC                           1958.11      -2134192392760919552.00    
-## BIC                           1971.15      -2134192392760919552.00    
-## Log Likelihood                -977.06       1067096196380459776.00    
+## AIC                           1958.00      -2134192392498171136.00    
+## BIC                           1971.03      -2134192392498171136.00    
+## Log Likelihood                -977.00       1067096196249085568.00    
 ## ======================================================================
 ## *** p < 0.001; ** p < 0.01; * p < 0.05
 ```
@@ -495,8 +507,8 @@ Table: (\#tab:05-example2-post-dist)Rejection rate (%)
 
 |            | Bipartite| Directed|
 |:-----------|---------:|--------:|
-|edges       |      2.53|     4.62|
-|Log~b1star2 |      0.84|     2.82|
+|edges       |      2.48|     3.67|
+|Log~b1star2 |      1.24|     2.04|
 
 The ERGM fitted with the offset terms has a much higher rejection rate
 than that of the ERGM fitted with the bipartite ERGM.

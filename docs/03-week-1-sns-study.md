@@ -370,11 +370,11 @@ ig_year1
 ```
 
 ```
-## IGRAPH bdeb582 DN-- 2164 9514 -- 
+## IGRAPH 871c9fc DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n), nnom
 ## | (e/n)
-## + edges from bdeb582 (vertex names):
+## + edges from 871c9fc (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -441,15 +441,6 @@ The `which` function in R returns a vector of indices indicating which elements 
 V(ig_year1_111)$indegree   <- degree(ig_year1_111, mode = "in")
 V(ig_year1_111)$outdegree  <- degree(ig_year1_111, mode = "out")
 V(ig_year1_111)$closeness  <- closeness(ig_year1_111, mode = "total")
-```
-
-```
-## Warning in closeness(ig_year1_111, mode = "total"): At
-## centrality.c:2874 :closeness centrality is not well-defined for disconnected
-## graphs
-```
-
-```r
 V(ig_year1_111)$betweeness <- betweenness(ig_year1_111, normalized = TRUE)
 ```
 
@@ -463,10 +454,10 @@ stats <- as_data_frame(ig_year1_111, what = "vertices")
 # Computing quantiles for each variable
 stats_degree <- with(stats, {
  cbind(
-   indegree   = quantile(indegree, c(.025, .5, .975)),
-   outdegree  = quantile(outdegree, c(.025, .5, .975)),
-   closeness  = quantile(closeness, c(.025, .5, .975)),
-   betweeness = quantile(betweeness, c(.025, .5, .975))
+   indegree   = quantile(indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(betweeness, c(.025, .5, .975), na.rm = TRUE)
  )
 })
 
@@ -475,9 +466,9 @@ stats_degree
 
 ```
 ##       indegree outdegree    closeness  betweeness
-## 2.5%         0         0 3.526640e-06 0.000000000
-## 50%          4         4 1.595431e-05 0.001879006
-## 97.5%       16        16 1.601822e-05 0.016591048
+## 2.5%         0         0 0.0005915148 0.000000000
+## 50%          4         4 0.0007487833 0.001879006
+## 97.5%       16        16 0.0008838413 0.016591048
 ```
 
 The `with` function is somewhat similar to what `dplyr` allows us to do when we want to work with the dataset but without mentioning its name everytime that we ask for a variable. Without using the `with` function, the previous could have been done as follows:
@@ -485,10 +476,10 @@ The `with` function is somewhat similar to what `dplyr` allows us to do when we 
 ```r
 stats_degree <- 
  cbind(
-   indegree   = quantile(stats$indegree, c(.025, .5, .975)),
-   outdegree  = quantile(stats$outdegree, c(.025, .5, .975)),
-   closeness  = quantile(stats$closeness, c(.025, .5, .975)),
-   betweeness = quantile(stats$betweeness, c(.025, .5, .975))
+   indegree   = quantile(stats$indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(stats$outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(stats$closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(stats$betweeness, c(.025, .5, .975), na.rm = TRUE)
  )
 
 ```
@@ -569,7 +560,7 @@ plot(ig_year1)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-week-1-sns-study_files/figure-html/03-plot-raw-1.png" alt="A not very nice network plot. This is what we get with the default parameters in igraph." width="672" />
+<img src="03-week-1-sns-study_files/figure-epub3/03-plot-raw-1.png" alt="A not very nice network plot. This is what we get with the default parameters in igraph."  />
 <p class="caption">(\#fig:03-plot-raw)A not very nice network plot. This is what we get with the default parameters in igraph.</p>
 </div>
 
@@ -638,7 +629,7 @@ plot(
 ```
 
 <div class="figure">
-<img src="03-week-1-sns-study_files/figure-html/03-plot-neat1-1.png" alt="Friends network in time 1 for school 111. " width="672" />
+<img src="03-week-1-sns-study_files/figure-epub3/03-plot-neat1-1.png" alt="Friends network in time 1 for school 111. "  />
 <p class="caption">(\#fig:03-plot-neat1)Friends network in time 1 for school 111. </p>
 </div>
 
@@ -670,7 +661,7 @@ plot(
 ```
 
 <div class="figure">
-<img src="03-week-1-sns-study_files/figure-html/03-plot-neat2-1.png" alt="Friends network in time 1 for school 111. The graph excludes isolates." width="672" />
+<img src="03-week-1-sns-study_files/figure-epub3/03-plot-neat2-1.png" alt="Friends network in time 1 for school 111. The graph excludes isolates."  />
 <p class="caption">(\#fig:03-plot-neat2)Friends network in time 1 for school 111. The graph excludes isolates.</p>
 </div>
 
@@ -745,7 +736,7 @@ legend(
 ```
 
 <div class="figure">
-<img src="03-week-1-sns-study_files/figure-html/03-myplot-call-1.png" alt="All 5 schools in time 1. Again, the graphs exclude isolates." width="672" />
+<img src="03-week-1-sns-study_files/figure-epub3/03-myplot-call-1.png" alt="All 5 schools in time 1. Again, the graphs exclude isolates."  />
 <p class="caption">(\#fig:03-myplot-call)All 5 schools in time 1. Again, the graphs exclude isolates.</p>
 </div>
 

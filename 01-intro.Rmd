@@ -1,3 +1,5 @@
+# (PART) Applications {-}
+
 # Introduction
 
 ```{r include=FALSE, cache=FALSE}
