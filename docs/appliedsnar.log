@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.3.14)  24 JUN 2022 00:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.3.14)  24 JUN 2022 13:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -698,37 +698,37 @@ File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 ) (./appliedsnar.aux)
 \openout1 = `appliedsnar.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for MDA/cmr/m/n on input line 128.
-LaTeX Font Info:    Trying to load font information for MDA+cmr on input line 128.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for MDA/cmr/m/n on input line 130.
+LaTeX Font Info:    Trying to load font information for MDA+cmr on input line 130.
  (/home/george/texlive/2021/texmf-dist/tex/latex/mathdesign/mdacmr.fd
 File: mdacmr.fd 
 )
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Info: Redefining \microtypecontext on input line 128.
-Package microtype Info: Applying patch `item' on input line 128.
-Package microtype Info: Applying patch `toc' on input line 128.
-Package microtype Info: Applying patch `eqnum' on input line 128.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Info: Redefining \microtypecontext on input line 130.
+Package microtype Info: Applying patch `item' on input line 130.
+Package microtype Info: Applying patch `toc' on input line 130.
+Package microtype Info: Applying patch `eqnum' on input line 130.
 
 
-Package microtype Warning: Unable to apply patch `footnote' on input line 128.
+Package microtype Warning: Unable to apply patch `footnote' on input line 130.
 
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
@@ -736,7 +736,7 @@ Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 128.
+LaTeX Info: Redefining \showhyphens on input line 130.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -744,7 +744,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `fav' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-Package hyperref Info: Link coloring ON on input line 128.
+Package hyperref Info: Link coloring ON on input line 130.
 (/home/george/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/home/george/texlive/2021/texmf-dist/tex/latex/refcount/refcount.sty
@@ -754,9 +754,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count303
 )
-LaTeX Info: Redefining \ref on input line 128.
-LaTeX Info: Redefining \pageref on input line 128.
-LaTeX Info: Redefining \nameref on input line 128.
+LaTeX Info: Redefining \ref on input line 130.
+LaTeX Info: Redefining \pageref on input line 130.
+LaTeX Info: Redefining \nameref on input line 130.
 \@outlinefile=\write4
 \openout4 = `appliedsnar.out'.
 
@@ -819,75 +819,75 @@ LaTeX Info: Redefining \BHBI on input line 130.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Trying to load font information for OT1+zavm on input line 130.
+LaTeX Font Info:    Trying to load font information for OT1+zavm on input line 132.
 (/home/george/texlive/2021/texmf-dist/tex/latex/arev/ot1zavm.fd
 File: ot1zavm.fd 2006/05/30 Fontinst v1.929 font definitions for OT1/zavm.
 )
-LaTeX Font Info:    Trying to load font information for OML+zavm on input line 130.
+LaTeX Font Info:    Trying to load font information for OML+zavm on input line 132.
  (/home/george/texlive/2021/texmf-dist/tex/latex/arev/omlzavm.fd
 File: omlzavm.fd 2006/05/30 Fontinst v1.929 font definitions for OML/zavm.
 )
-LaTeX Font Info:    Trying to load font information for OMS+zavm on input line 130.
+LaTeX Font Info:    Trying to load font information for OMS+zavm on input line 132.
  (/home/george/texlive/2021/texmf-dist/tex/latex/arev/omszavm.fd
 File: omszavm.fd 2006/05/30 Fontinst v1.929 font definitions for OMS/zavm.
 )
-LaTeX Font Info:    Trying to load font information for OMX+mdbch on input line 130.
+LaTeX Font Info:    Trying to load font information for OMX+mdbch on input line 132.
  (/home/george/texlive/2021/texmf-dist/tex/latex/mathdesign/mdbch/omxmdbch.fd
 File: omxmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for OMX/mdbch.
 )
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 11.52008pt on input line 130.
+(Font)              scaled to size 11.52008pt on input line 132.
  (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/mt-bch.cfg
 File: mt-bch.cfg 2007/03/03 v1.5 microtype config. file: Bitstream Charter (RS)
 )
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 8.64006pt on input line 130.
+(Font)              scaled to size 8.64006pt on input line 132.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 130.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 130.
+(Font)              scaled to size 6.72005pt on input line 132.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 132.
  (/home/george/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 130.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 132.
  (/home/george/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Trying to load font information for MDA+mdbch on input line 130.
+LaTeX Font Info:    Trying to load font information for MDA+mdbch on input line 132.
  (/home/george/texlive/2021/texmf-dist/tex/latex/mathdesign/mdbch/mdamdbch.fd
 File: mdamdbch.fd 2013/08/29 Fontinst v1.933 font definitions for MDA/mdbch.
 )
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 11.52008pt on input line 130.
+(Font)              scaled to size 11.52008pt on input line 132.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 8.64006pt on input line 130.
+(Font)              scaled to size 8.64006pt on input line 132.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 6.72005pt on input line 130.
-LaTeX Font Info:    Trying to load font information for U+zavm on input line 130.
+(Font)              scaled to size 6.72005pt on input line 132.
+LaTeX Font Info:    Trying to load font information for U+zavm on input line 132.
  (/home/george/texlive/2021/texmf-dist/tex/latex/arev/uzavm.fd
 File: uzavm.fd 2006/05/30 Fontinst v1.929 font definitions for U/zavm.
 )
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/12'
-(microtype)             (new value: 12.0pt) on input line 130.
+(microtype)             (new value: 12.0pt) on input line 132.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/9'
-(microtype)             (new value: 9.0pt) on input line 130.
+(microtype)             (new value: 9.0pt) on input line 132.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/7'
-(microtype)             (new value: 7.0pt) on input line 130.
+(microtype)             (new value: 7.0pt) on input line 132.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/12'
-(microtype)             (new value: 12.0pt) on input line 130.
+(microtype)             (new value: 12.0pt) on input line 132.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/9'
-(microtype)             (new value: 9.0pt) on input line 130.
+(microtype)             (new value: 9.0pt) on input line 132.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/7'
-(microtype)             (new value: 7.0pt) on input line 130.
+(microtype)             (new value: 7.0pt) on input line 132.
  [1
 
 
 {/home/george/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `T1/fav/m/sl' in size <10> not available
-(Font)              Font shape `T1/fav/m/it' tried instead on input line 133.
+(Font)              Font shape `T1/fav/m/it' tried instead on input line 135.
  [2
 
 ]
@@ -899,46 +899,46 @@ LaTeX Font Info:    Font shape `T1/fav/m/sl' in size <10> not available
 ]
 Chapter 1.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 157.
+(Font)              scaled to size 9.60007pt on input line 159.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 7.29605pt on input line 157.
+(Font)              scaled to size 7.29605pt on input line 159.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 5.76004pt on input line 157.
+(Font)              scaled to size 5.76004pt on input line 159.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 9.60007pt on input line 157.
+(Font)              scaled to size 9.60007pt on input line 159.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 7.29605pt on input line 157.
+(Font)              scaled to size 7.29605pt on input line 159.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 5.76004pt on input line 157.
+(Font)              scaled to size 5.76004pt on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/10'
-(microtype)             (new value: 10.0pt) on input line 157.
+(microtype)             (new value: 10.0pt) on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/7.6'
-(microtype)             (new value: 7.6pt) on input line 157.
+(microtype)             (new value: 7.6pt) on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/6'
-(microtype)             (new value: 6.0pt) on input line 157.
+(microtype)             (new value: 6.0pt) on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/10'
-(microtype)             (new value: 10.0pt) on input line 157.
+(microtype)             (new value: 10.0pt) on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/7.6'
-(microtype)             (new value: 7.6pt) on input line 157.
+(microtype)             (new value: 7.6pt) on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/6'
-(microtype)             (new value: 6.0pt) on input line 157.
+(microtype)             (new value: 6.0pt) on input line 159.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 157.
+(Font)              scaled to size 7.68005pt on input line 159.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 157.
+(Font)              scaled to size 4.80003pt on input line 159.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 7.68005pt on input line 157.
+(Font)              scaled to size 7.68005pt on input line 159.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 4.80003pt on input line 157.
+(Font)              scaled to size 4.80003pt on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/8'
-(microtype)             (new value: 8.0pt) on input line 157.
+(microtype)             (new value: 8.0pt) on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/5'
-(microtype)             (new value: 5.0pt) on input line 157.
+(microtype)             (new value: 5.0pt) on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/8'
-(microtype)             (new value: 8.0pt) on input line 157.
+(microtype)             (new value: 8.0pt) on input line 159.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/5'
-(microtype)             (new value: 5.0pt) on input line 157.
-LaTeX Font Info:    Trying to load font information for T1+fvm on input line 157.
+(microtype)             (new value: 5.0pt) on input line 159.
+LaTeX Font Info:    Trying to load font information for T1+fvm on input line 159.
 (/home/george/texlive/2021/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 ) [5] [6] [7
@@ -952,106 +952,106 @@ Chapter 2.
 ]
 Chapter 3.
 LaTeX Font Info:    Font shape `T1/fvm/m/it' in size <10> not available
-(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 215.
-LaTeX Font Info:    Trying to load font information for TS1+fvm on input line 218.
+(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 217.
+LaTeX Font Info:    Trying to load font information for TS1+fvm on input line 220.
 (/home/george/texlive/2021/texmf-dist/tex/latex/bera/ts1fvm.fd
 File: ts1fvm.fd 2004/09/07 scalable font definitions for TS1/fvm.
 )
 LaTeX Font Info:    Font shape `TS1/fvm/m/it' in size <10> not available
-(Font)              Font shape `TS1/fvm/m/sl' tried instead on input line 218.
+(Font)              Font shape `TS1/fvm/m/sl' tried instead on input line 220.
  [11] [12]
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 336.
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 336.
+(textcomp)             Default family used instead on input line 338.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 338.
  (/home/george/texlive/2021/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 336.
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 338.
  (/home/george/texlive/2021/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 336.
+(textcomp)             Default family used instead on input line 338.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 350.
+(textcomp)             Default family used instead on input line 352.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 350.
+(textcomp)             Default family used instead on input line 352.
  [13] [14] [15] [16]
 
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-1.pdf' not found on input line 668.
+LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-1.pdf' not found on input line 670.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:668: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:670: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.668 ..._files/figure-latex/random-numbers-1.pdf}
+l.670 ..._files/figure-latex/random-numbers-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-2.pdf' not found on input line 678.
+LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-2.pdf' not found on input line 680.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:678: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-2.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:680: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-2.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.678 ..._files/figure-latex/random-numbers-2.pdf}
+l.680 ..._files/figure-latex/random-numbers-2.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-3.pdf' not found on input line 688.
+LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-3.pdf' not found on input line 690.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:688: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-3.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:690: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-3.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.688 ..._files/figure-latex/random-numbers-3.pdf}
+l.690 ..._files/figure-latex/random-numbers-3.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-4.pdf' not found on input line 698.
+LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-4.pdf' not found on input line 700.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:698: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-4.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:700: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-4.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.698 ..._files/figure-latex/random-numbers-4.pdf}
+l.700 ..._files/figure-latex/random-numbers-4.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-5.pdf' not found on input line 708.
+LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-5.pdf' not found on input line 710.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:708: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-5.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:710: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-5.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.708 ..._files/figure-latex/random-numbers-5.pdf}
+l.710 ..._files/figure-latex/random-numbers-5.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1061,49 +1061,49 @@ Chapter 4.
 [19
 
 ] [20]
-LaTeX Font Info:    Trying to load font information for TS1+fav on input line 859.
-LaTeX Font Info:    No file TS1fav.fd. on input line 859.
+LaTeX Font Info:    Trying to load font information for TS1+fav on input line 861.
+LaTeX Font Info:    No file TS1fav.fd. on input line 861.
 
 
 LaTeX Font Warning: Font shape `TS1/fav/m/n' undefined
 (Font)              using `TS1/cmr/m/n' instead
-(Font)              for symbol `textbullet' on input line 859.
+(Font)              for symbol `textbullet' on input line 861.
 
 (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 ) [21] [22] [23] [24] [25]
-Overfull \hbox (306.82356pt too wide) in paragraph at lines 1117--1117
+Overfull \hbox (306.82356pt too wide) in paragraph at lines 1119--1119
 []\T1/fvm/m/n/10 ## Error in graph_from_data_frame(., vertices = vertex_attrs): Some vertex names in edge list are not listed in vertex data frame[] 
  []
 
 [26]
-Overfull \hbox (29.90407pt too wide) in paragraph at lines 1169--1169
+Overfull \hbox (29.90407pt too wide) in paragraph at lines 1171--1171
 []\T1/fvm/m/n/10 ## [1] "name"     "school"   "hispanic" "female1"  "eversmk1" "eversmk2" "eversmk3"[] 
  []
 
 [27]
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 1294--1294
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 1296--1296
 []\T1/fvm/m/n/10 ##  [1] 24059676   724389   290849     3619     3383     4401     3219     2997[] 
  []
 
 [28]
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 1294--1294
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 1296--1296
 []\T1/fvm/m/n/10 ##  [9]      407       33      836      235      163      137      277       85[] 
  []
 
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 1296.
+(amsmath)                 on input line 1298.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1361: LaTeX Error: File `03-week-1-sns-study_files/figure-latex/03-plot-raw-1' not found.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1363: LaTeX Error: File `03-week-1-sns-study_files/figure-latex/03-plot-raw-1' not found.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1361 ...-study_files/figure-latex/03-plot-raw-1}
+l.1363 ...-study_files/figure-latex/03-plot-raw-1}
                                                   
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1112,48 +1112,48 @@ If that doesn't work, type  X <return>  to quit.
 
 [29] [30]
 
-LaTeX Warning: File `03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf' not found on input line 1445.
+LaTeX Warning: File `03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf' not found on input line 1447.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1445: Package pdftex.def Error: File `03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1447: Package pdftex.def Error: File `03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1445 ..._files/figure-latex/03-plot-neat1-1.pdf}
+l.1447 ..._files/figure-latex/03-plot-neat1-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [31]
 
-LaTeX Warning: File `03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf' not found on input line 1480.
+LaTeX Warning: File `03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf' not found on input line 1482.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1480: Package pdftex.def Error: File `03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1482: Package pdftex.def Error: File `03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1480 ..._files/figure-latex/03-plot-neat2-1.pdf}
+l.1482 ..._files/figure-latex/03-plot-neat2-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [32]
 
-LaTeX Warning: File `03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf' not found on input line 1563.
+LaTeX Warning: File `03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf' not found on input line 1565.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1563: Package pdftex.def Error: File `03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1565: Package pdftex.def Error: File `03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1563 ...files/figure-latex/03-myplot-call-1.pdf}
+l.1565 ...files/figure-latex/03-myplot-call-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1161,18 +1161,18 @@ If that doesn't work, type  X <return>  to quit.
 [33] [34]
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 1612.
+(textcomp)             Default family used instead on input line 1614.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 1612.
+(textcomp)             Default family used instead on input line 1614.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 1612.
+(textcomp)             Default family used instead on input line 1614.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 1612.
+(textcomp)             Default family used instead on input line 1614.
 
-Overfull \hbox (141.19878pt too wide) in paragraph at lines 1612--1612
+Overfull \hbox (141.19878pt too wide) in paragraph at lines 1614--1614
 []\T1/fvm/m/n/10 ## \TS1/cmtt/m/n/10 `\T1/fvm/m/n/10 summarise()\TS1/cmtt/m/n/10 ` \T1/fvm/m/n/10 has grouped output by \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 to\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 , \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 to_name\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 . You can override using the \TS1/cmtt/m/n/10 `\T1/fvm/m/n/10 .groups\TS1/cmtt/m/n/10 ` \T1/fvm/m/n/10 argument.[] 
  []
 
@@ -1183,23 +1183,23 @@ Chapter 5.
 <hunter2008.png, id=316, 685.05937pt x 339.51843pt>
 File: hunter2008.png Graphic file (type png)
 <use hunter2008.png>
-Package pdftex.def Info: hunter2008.png  used on input line 1691.
+Package pdftex.def Info: hunter2008.png  used on input line 1693.
 (pdftex.def)             Requested size: 469.76459pt x 232.81738pt.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 10.39993pt on input line 1703.
+(Font)              scaled to size 10.39993pt on input line 1705.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.90395pt on input line 1703.
+(Font)              scaled to size 7.90395pt on input line 1705.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.23996pt on input line 1703.
+(Font)              scaled to size 6.23996pt on input line 1705.
 
-LaTeX Warning: Reference `eq:04-1' on page 37 undefined on input line 1705.
+LaTeX Warning: Reference `eq:04-1' on page 37 undefined on input line 1707.
 
 
 Underfull \vbox (badness 1221) has occurred while \output is active []
 
  [37]
 
-LaTeX Warning: Reference `eq:04-1' on page 38 undefined on input line 1711.
+LaTeX Warning: Reference `eq:04-1' on page 38 undefined on input line 1713.
 
 [38 <./hunter2008.png>] [39] [40]
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
@@ -1520,13 +1520,7 @@ Overfull \hbox (67.75998pt too wide) in paragraph at lines 2719--2719
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-Underfull \vbox (badness 4819) has occurred while \output is active []
-
- [56]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [57 <./awful-chains.png (PNG copy)>] [58] [59] [60
+[56] [57 <./awful-chains.png (PNG copy)>] [58] [59] [60
 
 ]
 Chapter 6.
@@ -1664,32 +1658,32 @@ Chapter 7.
 Chapter 8.
 [73] [74]
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found on input line 3560.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found on input line 3558.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3560: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3558: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3560 ...z_files/figure-latex/06-first-fig-1.pdf}
+l.3558 ...z_files/figure-latex/06-first-fig-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [75]
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found on input line 3602.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found on input line 3600.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3602: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3600: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3602 ...s/figure-latex/06-fake-graph-read-1.pdf}
+l.3600 ...s/figure-latex/06-fake-graph-read-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1697,68 +1691,68 @@ If that doesn't work, type  X <return>  to quit.
 [76] [77] [78]
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 3842.
+(textcomp)             Default family used instead on input line 3840.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 3842.
+(textcomp)             Default family used instead on input line 3840.
  [79]
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found on input line 3852.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found on input line 3850.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3852: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3850: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3852 ...nd-viz_files/figure-latex/06-size-1.pdf}
+l.3850 ...nd-viz_files/figure-latex/06-size-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found on input line 3885.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found on input line 3883.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3885: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3883: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3885 .../figure-latex/06-size-netdiffuseR-1.pdf}
+l.3883 .../figure-latex/06-size-netdiffuseR-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [80]
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found on input line 3900.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found on input line 3898.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3900: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3898: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3900 ...iz_files/figure-latex/06-netplot1-1.pdf}
+l.3898 ...iz_files/figure-latex/06-netplot1-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found on input line 3930.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found on input line 3928.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3930: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3928: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3930 ...les/figure-latex/06-network-color-1.pdf}
+l.3928 ...les/figure-latex/06-network-color-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1768,16 +1762,16 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [81]
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found on input line 3967.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found on input line 3965.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3967: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3965: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3967 ...les/figure-latex/06-network-shape-1.pdf}
+l.3965 ...les/figure-latex/06-network-shape-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1787,149 +1781,149 @@ Chapter 9.
 [83
 
 ] [84]
-Underfull \vbox (badness 4217) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [85] [86]
 Chapter 10.
 [87
 
 ]
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 4271--4271
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 4269--4269
  []\T1/fvm/m/n/10 ##  # of nodes         : 692 (1001, 1002, 1004, 1005, 1007, 1009, 1010, 1020, ...)[] 
  []
 
 
-Overfull \hbox (60.92409pt too wide) in paragraph at lines 4271--4271
+Overfull \hbox (60.92409pt too wide) in paragraph at lines 4269--4269
  []\T1/fvm/m/n/10 ##  Static attributes  : village, idold, age, liveout, visits, contact, coo... (146)[] 
  []
 
 [88]
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 4289--4289
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 4287--4287
  []\T1/fvm/m/n/10 ##  # of nodes         : 125 (1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, ...)[] 
  []
 
 
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 4289--4289
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 4287--4287
  []\T1/fvm/m/n/10 ##  Static attributes  : city, detail, meet, coll, attend, proage, length, ... (58)[] 
  []
 
 
-Overfull \hbox (103.06401pt too wide) in paragraph at lines 4307--4307
+Overfull \hbox (103.06401pt too wide) in paragraph at lines 4305--4305
  []\T1/fvm/m/n/10 ##  # of nodes         : 1047 (10002, 10003, 10005, 10007, 10010, 10011, 10012, 10014, ...)[] 
  []
 
 
-Overfull \hbox (60.92409pt too wide) in paragraph at lines 4307--4307
+Overfull \hbox (60.92409pt too wide) in paragraph at lines 4305--4305
  []\T1/fvm/m/n/10 ##  Static attributes  : village, recno1, studno1, area1, id1, nmage1, nmag... (430)[] 
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found on input line 4325.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found on input line 4323.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4325: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4323: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4325 ...etdiffuser_files/figure-latex/viz-1.pdf}
+l.4323 ...etdiffuser_files/figure-latex/viz-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found on input line 4333.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found on input line 4331.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4333: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4331: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4333 ...etdiffuser_files/figure-latex/viz-2.pdf}
+l.4331 ...etdiffuser_files/figure-latex/viz-2.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found on input line 4341.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found on input line 4339.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4341: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4339: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4341 ...etdiffuser_files/figure-latex/viz-3.pdf}
+l.4339 ...etdiffuser_files/figure-latex/viz-3.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [89]
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found on input line 4349.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found on input line 4347.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4349: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4349 ...etdiffuser_files/figure-latex/viz-4.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found on input line 4357.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4357: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4347: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4357 ...etdiffuser_files/figure-latex/viz-5.pdf}
+l.4347 ...etdiffuser_files/figure-latex/viz-4.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Overfull \hbox (23.88408pt too wide) in paragraph at lines 4368--4368
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found on input line 4355.
+
+
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4355: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4355 ...etdiffuser_files/figure-latex/viz-5.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (23.88408pt too wide) in paragraph at lines 4366--4366
 []\T1/fvm/m/n/10 ## Warning in plot_infectsuscep.list(graph$graph, graph$toa, t0, normalize, : When[] 
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found on input line 4370.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found on input line 4368.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4370: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4368: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4370 ...etdiffuser_files/figure-latex/viz-6.pdf}
+l.4368 ...etdiffuser_files/figure-latex/viz-6.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found on input line 4378.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found on input line 4376.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4378: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4376: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4378 ...etdiffuser_files/figure-latex/viz-7.pdf}
+l.4376 ...etdiffuser_files/figure-latex/viz-7.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1938,54 +1932,54 @@ If that doesn't work, type  X <return>  to quit.
 Underfull \vbox (badness 2452) has occurred while \output is active []
 
  [90] [91]
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4542--4542
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
 []\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
  []
 
 
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4542--4542
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4540--4540
 []\T1/fvm/m/n/10 ##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density   Moran\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 s I (sd)[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4542--4542
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
 []\T1/fvm/m/n/10 ## -------- ---------- ---------------- ------------- --------- ----------------[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4542--4542
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
 []\T1/fvm/m/n/10 ##        2         78       103 (0.21)          0.16      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4542--4542
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
 []\T1/fvm/m/n/10 ##        3        187       290 (0.58)          0.47      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4542--4542
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
 []\T1/fvm/m/n/10 ##        4        183       473 (0.95)          0.87      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4542--4542
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4540--4540
 []\T1/fvm/m/n/10 ##        5         27       500 (1.00)          1.00      0.01               -[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4542--4542
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
 []\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
  []
 
 [92]
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4550: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-1' not found.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4548: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-1' not found.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4550 ...iffuser_files/figure-latex/plot-rumor-1}
+l.4548 ...iffuser_files/figure-latex/plot-rumor-1}
                                                    \end{center}
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1993,13 +1987,13 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4562: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-2' not found.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4560: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-2' not found.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4562 ...iffuser_files/figure-latex/plot-rumor-2}
+l.4560 ...iffuser_files/figure-latex/plot-rumor-2}
                                                    \end{center}
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -2007,63 +2001,63 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found on input line 4590.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found on input line 4588.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4590: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4588: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4590 ...re-latex/plot-complex-and-disease-1.pdf}
+l.4588 ...re-latex/plot-complex-and-disease-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4604.
+(textcomp)             Default family used instead on input line 4602.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4604.
+(textcomp)             Default family used instead on input line 4602.
 [93]
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4633--4633
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
 []\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
  []
 
 
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4633--4633
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4631--4631
 []\T1/fvm/m/n/10 ##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density   Moran\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 s I (sd)[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4633--4633
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
 []\T1/fvm/m/n/10 ## -------- ---------- ---------------- ------------- --------- ----------------[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4633--4633
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
 []\T1/fvm/m/n/10 ##        2         92       117 (0.23)          0.19      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4633--4633
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
 []\T1/fvm/m/n/10 ##        3        152       269 (0.54)          0.40      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4633--4633
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
 []\T1/fvm/m/n/10 ##        4        150       419 (0.84)          0.65      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4633--4633
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4631--4631
 []\T1/fvm/m/n/10 ##        5         73       492 (0.98)          0.90      0.01 -0.00 (0.00) **[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4633--4633
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
 []\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
  []
 
@@ -2072,47 +2066,47 @@ Underfull \vbox (badness 1565) has occurred while \output is active []
 
  [94]
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found on input line 4679.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found on input line 4677.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4679: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4677: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4679 ...ffuser_files/figure-latex/sim-sim-1.pdf}
+l.4677 ...ffuser_files/figure-latex/sim-sim-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Underfull \vbox (badness 10000) detected at line 4755
+Underfull \vbox (badness 10000) detected at line 4753
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [95]
-Underfull \vbox (badness 10000) detected at line 4755
+Underfull \vbox (badness 10000) detected at line 4753
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4755
+Underfull \vbox (badness 10000) detected at line 4753
  []
 
 [96]
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found on input line 4794.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found on input line 4792.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4794: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4792: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4794 ...iles/figure-latex/sim-sim-results-1.pdf}
+l.4792 ...iles/figure-latex/sim-sim-results-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -2122,16 +2116,16 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [97]
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found on input line 4855.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found on input line 4853.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4855: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4853: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4855 ...s/figure-latex/geodesic_speed-box-1.pdf}
+l.4853 ...s/figure-latex/geodesic_speed-box-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -2139,67 +2133,67 @@ If that doesn't work, type  X <return>  to quit.
 [98] [99]
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4924.
+(textcomp)             Default family used instead on input line 4922.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4924.
+(textcomp)             Default family used instead on input line 4922.
 
-Overfull \hbox (650.88301pt too wide) in paragraph at lines 4928--4928
+Overfull \hbox (650.88301pt too wide) in paragraph at lines 4926--4926
  []\T1/fvm/m/n/10 It simulates networks with the same density, and computes a particular statistic every time, generating an EDF (Empirical Distribution Function) under the Null hypothesis (p-values).[] 
  []
 
 
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 4959--4959
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 4957--4957
  []\T1/fvm/m/n/10 ## --------------------------------------------------------------------------------[] 
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found on input line 4962.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found on input line 4960.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4962: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4960: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4962 ...iles/figure-latex/unnamed-chunk-2-1.pdf}
+l.4960 ...iles/figure-latex/unnamed-chunk-2-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [100]
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 4996--4996
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 4994--4994
  []\T1/fvm/m/n/10 ## --------------------------------------------------------------------------------[] 
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found on input line 4998.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found on input line 4996.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4998: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4996: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4998 ...iles/figure-latex/unnamed-chunk-3-1.pdf}
+l.4996 ...iles/figure-latex/unnamed-chunk-3-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [101]
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 5060--5060
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 5058--5058
  []\T1/fvm/m/n/10 ## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is static[] 
  []
 
 
-Overfull \hbox (133.16396pt too wide) in paragraph at lines 5107--5107
+Overfull \hbox (133.16396pt too wide) in paragraph at lines 5105--5105
  []\T1/fvm/m/n/10 ## glm(formula = adopt ~ cohesive_expo + var1 + factor(per), family = binomial(link = "probit"),[] 
  []
 
 [102]
-Overfull \hbox (103.06401pt too wide) in paragraph at lines 5147--5147
+Overfull \hbox (103.06401pt too wide) in paragraph at lines 5145--5145
  []\T1/fvm/m/n/10 ## glm(formula = Adopt ~ exposure + var1 + factor(per), family = binomial(link = "probit"),[] 
  []
 
@@ -2212,7 +2206,12 @@ Chapter 11.
 ] [107] [108]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 5230.
+(hyperref)                than one, level fixed on input line 5228.
+
+
+Overfull \hbox (39.29996pt too wide) in paragraph at lines 5234--5235
+\T1/fav/m/n/10 (-20) fined as $[]\OML/zavm/m/it/10 =Pr[]$\T1/fav/m/n/10 (-20) . Like-wise, $[]$ is de-fined as $[]\OML/zavm/m/it/10 =Pr[]$\T1/fav/m/n/10 (-20) ,
+ []
 
 [109] [110]
 Appendix A.
@@ -2241,13 +2240,13 @@ Package rerunfilecheck Info: Checksums for `appliedsnar.out':
 (rerunfilecheck)             After:  90C2E2E8A6F70C4144B4356C6B79A54B;7970.
  ) 
 Here is how much of TeX's memory you used:
- 16814 strings out of 478276
- 328478 string characters out of 5845506
- 561058 words of memory out of 5000000
+ 16827 strings out of 478276
+ 328601 string characters out of 5845506
+ 561133 words of memory out of 5000000
  33787 multiletter control sequences out of 15000+600000
- 591731 words of font info for 393 fonts, out of 8000000 for 9000
+ 592731 words of font info for 401 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 61i,12n,70p,1056b,687s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 61i,13n,70p,1056b,687s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.12} has been referenced but does not exist, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.11} has been referenced but does not exist, replaced by a fixed one
@@ -2273,10 +2272,10 @@ pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist,
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist, replaced by a fixed one
 
 {/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevoms.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevot1.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevoml.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}</home/george/texlive/2021/texmf-dist/fonts/type1/public/arev/ArevSans-Bold.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/arev/ArevSans-Oblique.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/arev/ArevSans-Roman.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/fourier/fourier-bb.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/bera/fvmb8a.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/bera/fvmro8a.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chb7t.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chb7y.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chr7v.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfit1000.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on appliedsnar.pdf (115 pages, 521755 bytes).
+Output written on appliedsnar.pdf (115 pages, 523707 bytes).
 PDF statistics:
- 1165 PDF objects out of 1200 (max. 8388607)
- 1001 compressed objects within 11 object streams
- 468 named destinations out of 1000 (max. 500000)
+ 1178 PDF objects out of 1200 (max. 8388607)
+ 1014 compressed objects within 11 object streams
+ 469 named destinations out of 1000 (max. 500000)
  65547 words of extra memory for PDF output out of 74296 (max. 10000000)
 

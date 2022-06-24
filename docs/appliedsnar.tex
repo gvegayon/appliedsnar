@@ -121,6 +121,8 @@
 
 \usepackage[margin=1in]{geometry}
 
+\allowdisplaybreaks
+
 \title{Applied Network Science with R}
 \author{George G. Vega Yon}
 \date{2022-06-24}
@@ -1867,12 +1869,11 @@ In \texttt{statnet}, the default estimation method is based on a method proposed
 
 The idea of MC-MLE for this family of statistical models is that we can approximate the expectation of normalizing constant ratios using the law of large numbers. In particular, the following:
 
-\[
-\begin{aligned}
-\frac{\kappa\left(\theta,\mathcal{Y}\right)}{\kappa\left(\theta_0,\mathcal{Y}\right)} & = %
-  \frac{%
-    \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}}{ %
-    \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta_0^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}
+\begin{align*}
+\frac{\kappa\left(\theta,\mathcal{Y}\right)}{\kappa\left(\theta_0,\mathcal{Y}\right)} & = 
+  \frac{
+    \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}}{ 
+    \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta_0^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\} 
   } \\
 & = \sum_{\mathbf{y}\in\mathcal{Y}}\left( %
   \frac{1}{%
@@ -1891,8 +1892,7 @@ The idea of MC-MLE for this family of statistical models is that we can approxim
   \mbox{exp}\left\{(\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\} %
   \right) \\
 & = \mbox{E}_{\theta_0}\left(\mbox{exp}\left\{(\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\} \right)
-\end{aligned}
-\]
+\end{align*}
 
 In particular, the MC-MLE algorithm uses this fact to maximize the ratio of log-likelihoods. The objective function itself can be approximated by simulating \(m\) networks from the distribution with parameter \(\theta_0\):
 
@@ -2027,7 +2027,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from d7c9950 (vertex names):
+## + 1/2638 edge from 4adb1e4 (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -3378,15 +3378,14 @@ declared. We can tell this by inspecting rejection rates:
 \KeywordTok{data.frame}\NormalTok{(}
   \DataTypeTok{Bipartite =}\NormalTok{ coda}\OperatorTok{::}\KeywordTok{rejectionRate}\NormalTok{(res_b}\OperatorTok{$}\NormalTok{sample[[}\DecValTok{1}\NormalTok{]]) }\OperatorTok{*}\StringTok{ }\DecValTok{100}\NormalTok{,}
   \DataTypeTok{Directed  =}\NormalTok{ coda}\OperatorTok{::}\KeywordTok{rejectionRate}\NormalTok{(res_not_b}\OperatorTok{$}\NormalTok{sample[[}\DecValTok{1}\NormalTok{]][, }\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)]) }\OperatorTok{*}\StringTok{ }\DecValTok{100}
-\NormalTok{) }\OperatorTok{|}\ErrorTok{>}\StringTok{ }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{2}\NormalTok{, }\DataTypeTok{caption =} \StringTok{"Rejection rate (%)"}\NormalTok{)}
+\NormalTok{) }\OperatorTok{|}\ErrorTok{>}\StringTok{ }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{2}\NormalTok{, }\DataTypeTok{caption =} \StringTok{"Rejection rate (percent)"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\textbackslash{}begin\{table\}
+\begin{table}
 
-\textbackslash{}caption\{\label{tab:05-example2-post-dist}Rejection rate (\%)\}
+\caption{\label{tab:05-example2-post-dist}Rejection rate (percent)}
 \centering
-
 \begin{tabular}[t]{l|r|r}
 \hline
   & Bipartite & Directed\\
@@ -3396,8 +3395,7 @@ edges & 2.48 & 3.67\\
 Log\textasciitilde{}b1star2 & 1.24 & 2.04\\
 \hline
 \end{tabular}
-
-\textbackslash{}end\{table\}
+\end{table}
 
 The ERGM fitted with the offset terms has a much higher rejection rate
 than that of the ERGM fitted with the bipartite ERGM.
@@ -3421,8 +3419,185 @@ Random Graph Models {[}ERGMs.{]} Together with chapter 3, this will be an extend
 example of how to read network data and visualize it using some of the available
 R packages out there.
 
-For this chapter we will be using the following R packages: \texttt{ergm}, \texttt{sna}, \texttt{igraph},
-\texttt{intergraph}, \texttt{netplot}, \texttt{netdiffuseR}, and \texttt{rgexf}.
+For this chapter, we will be using the following R packages:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ergm}: To simulate and estimate ERGMs.
+\item
+  \texttt{sna}: To visualize networks.
+\item
+  \texttt{igraph}: Also to visualize networks.
+\item
+  \texttt{intergraph}: To convert between \texttt{igraph} and \texttt{network} objects.
+\item
+  \texttt{netplot}: Again, for visualization.
+\item
+  \texttt{netdiffuseR}: For a single function we use for adjusting vertex size in igraph.
+\item
+  \texttt{rgexf}: For building interactive (html) figures.
+\end{itemize}
+
+You can use the following codeblock to install any missing package:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Creating the list to install}
+\NormalTok{pkgs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}
+  \StringTok{"ergm"}\NormalTok{, }\StringTok{"sna"}\NormalTok{, }\StringTok{"igraph"}\NormalTok{, }\StringTok{"intergraph"}\NormalTok{, }\StringTok{"netplot"}\NormalTok{, }\StringTok{"netdiffuseR"}\NormalTok{, }\StringTok{"rgexf"}
+\NormalTok{  )}
+
+\CommentTok{# Checking if we can load them and install them if not available}
+\ControlFlowTok{for}\NormalTok{ (pkg }\ControlFlowTok{in}\NormalTok{ pkgs) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{require}\NormalTok{(pkg, }\DataTypeTok{character.only =} \OtherTok{TRUE}\NormalTok{)) \{}
+
+    \CommentTok{# If not present, will install it}
+    \KeywordTok{install.packages}\NormalTok{(pkg, }\DataTypeTok{character.only =} \OtherTok{TRUE}\NormalTok{)}
+
+    \CommentTok{# And load it!}
+    \KeywordTok{library}\NormalTok{(pkg, }\DataTypeTok{character.only =} \OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ergm
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: network
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 'network' 1.17.2 (2022-05-20), part of the Statnet Project
+## * 'news(package="network")' for changes since last version
+## * 'citation("network")' for citation information
+## * 'https://statnet.org' for help, support, and other information
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 'ergm' 4.2.1 (2022-05-10), part of the Statnet Project
+## * 'news(package="ergm")' for changes since last version
+## * 'citation("ergm")' for citation information
+## * 'https://statnet.org' for help, support, and other information
+\end{verbatim}
+
+\begin{verbatim}
+## 'ergm' 4 is a major update that introduces some backwards-incompatible
+## changes. Please type 'news(package="ergm")' for a list of major
+## changes.
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: sna
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: statnet.common
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'statnet.common'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     attr, order
+\end{verbatim}
+
+\begin{verbatim}
+## sna: Tools for Social Network Analysis
+## Version 2.6 created on 2020-10-5.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##  For citation information, type citation("sna").
+##  Type help(package="sna") to get started.
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: igraph
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'igraph'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:sna':
+## 
+##     betweenness, bonpow, closeness, components, degree, dyad.census,
+##     evcent, hierarchy, is.connected, neighborhood, triad.census
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:network':
+## 
+##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
+##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
+##     is.directed, list.edge.attributes, list.vertex.attributes,
+##     set.edge.attribute, set.vertex.attribute
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     decompose, spectrum
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:base':
+## 
+##     union
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: intergraph
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: netplot
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: grid
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'netplot'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:igraph':
+## 
+##     ego
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: netdiffuseR
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'netdiffuseR'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:base':
+## 
+##     %*%
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: rgexf
+\end{verbatim}
 
 \hypertarget{random-graph-models}{%
 \section{Random Graph Models}\label{random-graph-models}}
@@ -3451,7 +3626,7 @@ generating networks into three categories:
   those models.
 \end{enumerate}
 
-The later, ERGMs, are a generalization that covers all classes. Because of that,
+The latter, ERGMs, are a generalization that covers all classes. Because of that,
 we will use ERGMs to generate our artificial network.
 
 \hypertarget{social-networks-in-schools}{%
@@ -3678,19 +3853,19 @@ The command turns the \texttt{network} object into a matrix with a set of attrib
 
 \begin{verbatim}
 ## [[1]]
-## + 1/4 vertex, from 86ae1bf:
+## + 1/4 vertex, from 5e45548:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from 86ae1bf:
+## + 2/4 vertices, from 5e45548:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from 86ae1bf:
+## + 3/4 vertices, from 5e45548:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from 86ae1bf:
+## + 2/4 vertices, from 5e45548:
 ## [1] 3 3
 \end{verbatim}
 
@@ -3835,13 +4010,12 @@ will draw the graph four times to see what size would be the best:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# Sized by indegree}
-\NormalTok{net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{ <-}\StringTok{ }\KeywordTok{degree}\NormalTok{(net_sim, }\DataTypeTok{gmode =} \StringTok{"digraph"}\NormalTok{)}
+\NormalTok{net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{ <-}\StringTok{ }\NormalTok{sna}\OperatorTok{::}\KeywordTok{degree}\NormalTok{(net_sim, }\DataTypeTok{cmode =} \StringTok{"indegree"}\NormalTok{)}
 
-\CommentTok{# Preparing the graphical device to hold four nets.}
-\CommentTok{# This line sets a 2 x 2 viz device and stores the }
-\CommentTok{# original value. We will use the `op` object to reset}
-\CommentTok{# the configugarion}
+\CommentTok{# Changing device config}
 \NormalTok{op <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{mai =} \KeywordTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{, }\FloatTok{.1}\NormalTok{, }\FloatTok{.1}\NormalTok{, }\FloatTok{.1}\NormalTok{))}
+
+\CommentTok{# Plotting}
 \NormalTok{glayout <-}\StringTok{ }\KeywordTok{gplot}\NormalTok{(net_sim, }\DataTypeTok{vertex.cex =}\NormalTok{ (net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}\NormalTok{)}
 \KeywordTok{gplot}\NormalTok{(net_sim, }\DataTypeTok{vertex.cex =}\NormalTok{ net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{, }\DataTypeTok{coord =}\NormalTok{ glayout)}
 \KeywordTok{gplot}\NormalTok{(net_sim, }\DataTypeTok{vertex.cex =}\NormalTok{ (net_sim }\OperatorTok{%v%}\StringTok{ "indeg"}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{, }\DataTypeTok{coord =}\NormalTok{ glayout)}
@@ -3853,13 +4027,42 @@ will draw the graph four times to see what size would be the best:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# Restoring device config}
 \KeywordTok{par}\NormalTok{(op)}
 \end{Highlighting}
 \end{Shaded}
 
-If we were using igraph, setting the size can be easier thanks to the netdiffuseR
-R package. Let's start by converting our network to an igraph object with the
-R package \texttt{intergraph}
+Line-by-line we did the following:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \texttt{net\_sim\ \%v\%\ "indeg"\ \textless{}-\ degree(net\_sim,\ cmode\ =\ "indegree")} Created a new
+  vertex attribute called indegree and assigned it to the network object.
+  The indegree is calculated using the \texttt{degree} function from the \texttt{sna}
+  package. Since \texttt{igraph} also has a \texttt{degree} function, we are making sure
+  that R uses \texttt{sna}'s and not \texttt{igraph}'s. The \texttt{package::function} notation
+  is useful for these cases.
+\item
+  \texttt{op\ \textless{}-\ par(mfrow\ =\ c(2,\ 2),\ mai\ =\ c(.1,\ .1,\ .1,\ .1))} This changes the
+  graphical device information to (a) \texttt{mfrow\ =\ c(2,2)} have a 2x2 grid by row,
+  meaning that new figures will be added left to right and then top to bottom,
+  and (b) set the margins in the figure to be 0.1 inches in all four sizes.
+\item
+  \texttt{glayout\ \textless{}-\ gplot(net\_sim,\ vertex.cex\ =\ (net\_sim\ \%v\%\ "indeg")\ *\ 2)} generating
+  the plot \textbf{and} recording the layout. The \texttt{gplot} function returns a matrix of
+  size \texttt{\#\ vertices} by 2 with the positions of the vertices. We are also passing the
+  \texttt{vertex.cex} argument, which we use to specify the size of each vertex. In our
+  case, we decided to size the vertices proportional to their indegree \emph{times two}.
+\item
+  \texttt{gplot(net\_sim,\ vertex.cex\ =\ net\_sim\ \%v\%\ "indeg",\ coord\ =\ glayout)}, again,
+  we are drawing the graph using the coordinates of the previous draw, but now
+  the vertices are half the size of the original figure.
+\end{enumerate}
+
+The other two calls are similar to four. If we used igraph, setting the
+size can be more accessible thanks to the netdiffuseR R package. Let's start by converting
+our network to an igraph object with the R package \texttt{intergraph}.
 
 \begin{Shaded}
 \begin{Highlighting}[]

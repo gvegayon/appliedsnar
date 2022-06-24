@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Applied SNA with R</a></li>
+<li><a href="./">Applied Network Science with R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
@@ -417,9 +417,9 @@ declared. We can tell this by inspecting rejection rates:</p>
 <div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" title="1"><span class="kw">data.frame</span>(</a>
 <a class="sourceLine" id="cb232-2" title="2">  <span class="dt">Bipartite =</span> coda<span class="op">::</span><span class="kw">rejectionRate</span>(res_b<span class="op">$</span>sample[[<span class="dv">1</span>]]) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</a>
 <a class="sourceLine" id="cb232-3" title="3">  <span class="dt">Directed  =</span> coda<span class="op">::</span><span class="kw">rejectionRate</span>(res_not_b<span class="op">$</span>sample[[<span class="dv">1</span>]][, <span class="op">-</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)]) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb232-4" title="4">) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&quot;Rejection rate (%)&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb232-4" title="4">) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&quot;Rejection rate (percent)&quot;</span>)</a></code></pre></div>
 <table>
-<caption><span id="tab:05-example2-post-dist">Table 6.1: </span>Rejection rate (%)</caption>
+<caption><span id="tab:05-example2-post-dist">Table 6.1: </span>Rejection rate (percent)</caption>
 <thead>
 <tr class="header">
 <th align="left"></th>

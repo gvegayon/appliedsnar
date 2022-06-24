@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Applied SNA with R</a></li>
+<li><a href="./">Applied Network Science with R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
@@ -279,8 +279,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Random Graph Models [ERGMs.] Together with chapter 3, this will be an extended
 example of how to read network data and visualize it using some of the available
 R packages out there.</p>
-<p>For this chapter we will be using the following R packages: <code>ergm</code>, <code>sna</code>, <code>igraph</code>,
-<code>intergraph</code>, <code>netplot</code>, <code>netdiffuseR</code>, and <code>rgexf</code>.</p>
+<p>For this chapter, we will be using the following R packages:</p>
+<ul>
+<li><code>ergm</code>: To simulate and estimate ERGMs.</li>
+<li><code>sna</code>: To visualize networks.</li>
+<li><code>igraph</code>: Also to visualize networks.</li>
+<li><code>intergraph</code>: To convert between <code>igraph</code> and <code>network</code> objects.</li>
+<li><code>netplot</code>: Again, for visualization.</li>
+<li><code>netdiffuseR</code>: For a single function we use for adjusting vertex size in igraph.</li>
+<li><code>rgexf</code>: For building interactive (html) figures.</li>
+</ul>
+<p>You can use the following codeblock to install any missing package:</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" title="1"><span class="co"># Creating the list to install</span></a>
+<a class="sourceLine" id="cb233-2" title="2">pkgs &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb233-3" title="3">  <span class="st">&quot;ergm&quot;</span>, <span class="st">&quot;sna&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;intergraph&quot;</span>, <span class="st">&quot;netplot&quot;</span>, <span class="st">&quot;netdiffuseR&quot;</span>, <span class="st">&quot;rgexf&quot;</span></a>
+<a class="sourceLine" id="cb233-4" title="4">  )</a>
+<a class="sourceLine" id="cb233-5" title="5"></a>
+<a class="sourceLine" id="cb233-6" title="6"><span class="co"># Checking if we can load them and install them if not available</span></a>
+<a class="sourceLine" id="cb233-7" title="7"><span class="cf">for</span> (pkg <span class="cf">in</span> pkgs) {</a>
+<a class="sourceLine" id="cb233-8" title="8">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(pkg, <span class="dt">character.only =</span> <span class="ot">TRUE</span>)) {</a>
+<a class="sourceLine" id="cb233-9" title="9"></a>
+<a class="sourceLine" id="cb233-10" title="10">    <span class="co"># If not present, will install it</span></a>
+<a class="sourceLine" id="cb233-11" title="11">    <span class="kw">install.packages</span>(pkg, <span class="dt">character.only =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb233-12" title="12"></a>
+<a class="sourceLine" id="cb233-13" title="13">    <span class="co"># And load it!</span></a>
+<a class="sourceLine" id="cb233-14" title="14">    <span class="kw">library</span>(pkg, <span class="dt">character.only =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb233-15" title="15"></a>
+<a class="sourceLine" id="cb233-16" title="16">  }</a>
+<a class="sourceLine" id="cb233-17" title="17">}</a></code></pre></div>
+<pre><code>## Loading required package: ergm</code></pre>
+<pre><code>## Loading required package: network</code></pre>
+<pre><code>## 
+## &#39;network&#39; 1.17.2 (2022-05-20), part of the Statnet Project
+## * &#39;news(package=&quot;network&quot;)&#39; for changes since last version
+## * &#39;citation(&quot;network&quot;)&#39; for citation information
+## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
+<pre><code>## 
+## &#39;ergm&#39; 4.2.1 (2022-05-10), part of the Statnet Project
+## * &#39;news(package=&quot;ergm&quot;)&#39; for changes since last version
+## * &#39;citation(&quot;ergm&quot;)&#39; for citation information
+## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
+<pre><code>## &#39;ergm&#39; 4 is a major update that introduces some backwards-incompatible
+## changes. Please type &#39;news(package=&quot;ergm&quot;)&#39; for a list of major
+## changes.</code></pre>
+<pre><code>## Loading required package: sna</code></pre>
+<pre><code>## Loading required package: statnet.common</code></pre>
+<pre><code>## 
+## Attaching package: &#39;statnet.common&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     attr, order</code></pre>
+<pre><code>## sna: Tools for Social Network Analysis
+## Version 2.6 created on 2020-10-5.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##  For citation information, type citation(&quot;sna&quot;).
+##  Type help(package=&quot;sna&quot;) to get started.</code></pre>
+<pre><code>## Loading required package: igraph</code></pre>
+<pre><code>## 
+## Attaching package: &#39;igraph&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:sna&#39;:
+## 
+##     betweenness, bonpow, closeness, components, degree, dyad.census,
+##     evcent, hierarchy, is.connected, neighborhood, triad.census</code></pre>
+<pre><code>## The following objects are masked from &#39;package:network&#39;:
+## 
+##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
+##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
+##     is.directed, list.edge.attributes, list.vertex.attributes,
+##     set.edge.attribute, set.vertex.attribute</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     decompose, spectrum</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     union</code></pre>
+<pre><code>## Loading required package: intergraph</code></pre>
+<pre><code>## Loading required package: netplot</code></pre>
+<pre><code>## Loading required package: grid</code></pre>
+<pre><code>## 
+## Attaching package: &#39;netplot&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:igraph&#39;:
+## 
+##     ego</code></pre>
+<pre><code>## Loading required package: netdiffuseR</code></pre>
+<pre><code>## 
+## Attaching package: &#39;netdiffuseR&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     %*%</code></pre>
+<pre><code>## Loading required package: rgexf</code></pre>
 </div>
             </section>
 

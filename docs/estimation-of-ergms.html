@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Applied SNA with R</a></li>
+<li><a href="./">Applied Network Science with R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
@@ -279,12 +279,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>For ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straightforward as in the regular setting. Because of it, most estimation methods rely on simulations.</p>
 <p>In <code>statnet</code>, the default estimation method is based on a method proposed by <span class="citation">(Geyer and Thompson <a href="#ref-Geyer1992">1992</a>)</span>, Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorithm to estimate the parameters.</p>
 <p>The idea of MC-MLE for this family of statistical models is that we can approximate the expectation of normalizing constant ratios using the law of large numbers. In particular, the following:</p>
-<p><span class="math display">\[
-\begin{aligned}
-\frac{\kappa\left(\theta,\mathcal{Y}\right)}{\kappa\left(\theta_0,\mathcal{Y}\right)} &amp; = %
-  \frac{%
-    \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}}{ %
-    \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta_0^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}
+<p><span class="math display">\[\begin{align*}
+\frac{\kappa\left(\theta,\mathcal{Y}\right)}{\kappa\left(\theta_0,\mathcal{Y}\right)} &amp; = 
+  \frac{
+    \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\}}{ 
+    \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{\theta_0^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\} 
   } \\
 &amp; = \sum_{\mathbf{y}\in\mathcal{Y}}\left( %
   \frac{1}{%
@@ -303,8 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   \mbox{exp}\left\{(\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\} %
   \right) \\
 &amp; = \mbox{E}_{\theta_0}\left(\mbox{exp}\left\{(\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y})\right\} \right)
-\end{aligned}
-\]</span></p>
+\end{align*}\]</span></p>
 <p>In particular, the MC-MLE algorithm uses this fact to maximize the ratio of log-likelihoods. The objective function itself can be approximated by simulating <span class="math inline">\(m\)</span> networks from the distribution with parameter <span class="math inline">\(\theta_0\)</span>:</p>
 <p><span class="math display">\[
 l(\theta) - l(\theta_0) \approx (\theta - \theta_0)^{\mbox{T}}\mathbf{g}(\mathbf{y}_{obs}) - 

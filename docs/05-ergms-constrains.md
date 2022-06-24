@@ -498,12 +498,12 @@ declared. We can tell this by inspecting rejection rates:
 data.frame(
   Bipartite = coda::rejectionRate(res_b$sample[[1]]) * 100,
   Directed  = coda::rejectionRate(res_not_b$sample[[1]][, -c(3,4)]) * 100
-) |> knitr::kable(digits = 2, caption = "Rejection rate (%)")
+) |> knitr::kable(digits = 2, caption = "Rejection rate (percent)")
 ```
 
 
 
-Table: (\#tab:05-example2-post-dist)Rejection rate (%)
+Table: (\#tab:05-example2-post-dist)Rejection rate (percent)
 
 |            | Bipartite| Directed|
 |:-----------|---------:|--------:|

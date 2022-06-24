@@ -5,8 +5,174 @@ Random Graph Models [ERGMs.] Together with chapter 3, this will be an extended
 example of how to read network data and visualize it using some of the available
 R packages out there.
 
-For this chapter we will be using the following R packages: `ergm`, `sna`, `igraph`,
-`intergraph`, `netplot`, `netdiffuseR`, and `rgexf`.
+For this chapter, we will be using the following R packages:
+
+- `ergm`: To simulate and estimate ERGMs.
+- `sna`: To visualize networks.
+- `igraph`: Also to visualize networks.
+- `intergraph`: To convert between `igraph` and `network` objects.
+- `netplot`: Again, for visualization.
+- `netdiffuseR`: For a single function we use for adjusting vertex size in igraph.
+- `rgexf`: For building interactive (html) figures.
+
+You can use the following codeblock to install any missing package:
+
+
+```r
+# Creating the list to install
+pkgs <- c(
+  "ergm", "sna", "igraph", "intergraph", "netplot", "netdiffuseR", "rgexf"
+  )
+
+# Checking if we can load them and install them if not available
+for (pkg in pkgs) {
+  if (!require(pkg, character.only = TRUE)) {
+
+    # If not present, will install it
+    install.packages(pkg, character.only = TRUE)
+
+    # And load it!
+    library(pkg, character.only = TRUE)
+
+  }
+}
+```
+
+```
+## Loading required package: ergm
+```
+
+```
+## Loading required package: network
+```
+
+```
+## 
+## 'network' 1.17.2 (2022-05-20), part of the Statnet Project
+## * 'news(package="network")' for changes since last version
+## * 'citation("network")' for citation information
+## * 'https://statnet.org' for help, support, and other information
+```
+
+```
+## 
+## 'ergm' 4.2.1 (2022-05-10), part of the Statnet Project
+## * 'news(package="ergm")' for changes since last version
+## * 'citation("ergm")' for citation information
+## * 'https://statnet.org' for help, support, and other information
+```
+
+```
+## 'ergm' 4 is a major update that introduces some backwards-incompatible
+## changes. Please type 'news(package="ergm")' for a list of major
+## changes.
+```
+
+```
+## Loading required package: sna
+```
+
+```
+## Loading required package: statnet.common
+```
+
+```
+## 
+## Attaching package: 'statnet.common'
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     attr, order
+```
+
+```
+## sna: Tools for Social Network Analysis
+## Version 2.6 created on 2020-10-5.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##  For citation information, type citation("sna").
+##  Type help(package="sna") to get started.
+```
+
+```
+## Loading required package: igraph
+```
+
+```
+## 
+## Attaching package: 'igraph'
+```
+
+```
+## The following objects are masked from 'package:sna':
+## 
+##     betweenness, bonpow, closeness, components, degree, dyad.census,
+##     evcent, hierarchy, is.connected, neighborhood, triad.census
+```
+
+```
+## The following objects are masked from 'package:network':
+## 
+##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
+##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
+##     is.directed, list.edge.attributes, list.vertex.attributes,
+##     set.edge.attribute, set.vertex.attribute
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     decompose, spectrum
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     union
+```
+
+```
+## Loading required package: intergraph
+```
+
+```
+## Loading required package: netplot
+```
+
+```
+## Loading required package: grid
+```
+
+```
+## 
+## Attaching package: 'netplot'
+```
+
+```
+## The following object is masked from 'package:igraph':
+## 
+##     ego
+```
+
+```
+## Loading required package: netdiffuseR
+```
+
+```
+## 
+## Attaching package: 'netdiffuseR'
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     %*%
+```
+
+```
+## Loading required package: rgexf
+```
 
 ## Random Graph Models
 
@@ -30,7 +196,7 @@ that matches the previous categories. Whereas we are thinking about degree seque
 preferential attachment, or a mix of both, ERGMs can be the baseline for any of
 those models.
 
-The later, ERGMs, are a generalization that covers all classes. Because of that,
+The latter, ERGMs, are a generalization that covers all classes. Because of that,
 we will use ERGMs to generate our artificial network.
 
 ## Social Networks in Schools
@@ -221,19 +387,19 @@ igraph::as_adj_list(intergraph::asIgraph(example_graph))
 
 ```
 ## [[1]]
-## + 1/4 vertex, from c8f0a74:
+## + 1/4 vertex, from cdece0e:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from c8f0a74:
+## + 2/4 vertices, from cdece0e:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from c8f0a74:
+## + 3/4 vertices, from cdece0e:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from c8f0a74:
+## + 2/4 vertices, from cdece0e:
 ## [1] 3 3
 ```
 
@@ -366,13 +532,12 @@ will draw the graph four times to see what size would be the best:
 
 ```r
 # Sized by indegree
-net_sim %v% "indeg" <- degree(net_sim, gmode = "digraph")
+net_sim %v% "indeg" <- sna::degree(net_sim, cmode = "indegree")
 
-# Preparing the graphical device to hold four nets.
-# This line sets a 2 x 2 viz device and stores the 
-# original value. We will use the `op` object to reset
-# the configugarion
+# Changing device config
 op <- par(mfrow = c(2, 2), mai = c(.1, .1, .1, .1))
+
+# Plotting
 glayout <- gplot(net_sim, vertex.cex = (net_sim %v% "indeg") * 2)
 gplot(net_sim, vertex.cex = net_sim %v% "indeg", coord = glayout)
 gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/2, coord = glayout)
@@ -382,12 +547,37 @@ gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/10, coord = glayout)
 ![](06-network-simulation-and-viz_files/figure-epub3/06-size-1.png)<!-- -->
 
 ```r
+# Restoring device config
 par(op)
 ```
 
-If we were using igraph, setting the size can be easier thanks to the netdiffuseR
-R package. Let's start by converting our network to an igraph object with the
-R package `intergraph`
+Line-by-line we did the following:
+
+1. `net_sim %v% "indeg" <- degree(net_sim, cmode = "indegree")` Created a new
+  vertex attribute called indegree and assigned it to the network object.
+  The indegree is calculated using the `degree` function from the `sna`
+  package. Since `igraph` also has a `degree` function, we are making sure
+  that R uses `sna`'s and not `igraph`'s. The `package::function` notation
+  is useful for these cases.
+
+2. `op <- par(mfrow = c(2, 2), mai = c(.1, .1, .1, .1))` This changes the
+  graphical device information to (a) `mfrow = c(2,2)` have a 2x2 grid by row,
+  meaning that new figures will be added left to right and then top to bottom,
+  and (b) set the margins in the figure to be 0.1 inches in all four sizes.
+
+3. `glayout <- gplot(net_sim, vertex.cex = (net_sim %v% "indeg") * 2)` generating
+  the plot **and** recording the layout. The `gplot` function returns a matrix of
+  size `# vertices` by 2 with the positions of the vertices. We are also passing the
+  `vertex.cex` argument, which we use to specify the size of each vertex. In our
+  case, we decided to size the vertices proportional to their indegree *times two*.
+
+4. `gplot(net_sim, vertex.cex = net_sim %v% "indeg", coord = glayout)`, again,
+  we are drawing the graph using the coordinates of the previous draw, but now
+  the vertices are half the size of the original figure.
+
+The other two calls are similar to four. If we used igraph, setting the
+size can be more accessible thanks to the netdiffuseR R package. Let's start by converting
+our network to an igraph object with the R package `intergraph`.
 
 
 ```r

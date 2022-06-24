@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Applied SNA with R</a></li>
+<li><a href="./">Applied Network Science with R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
@@ -297,29 +297,29 @@ i.e., “the friend of my friend is my friend.”</p>
 <li><p>Simulate the ties in the empty network.</p></li>
 </ol>
 <p>Here is the code</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" title="1"><span class="kw">set.seed</span>(<span class="dv">712</span>)</a>
-<a class="sourceLine" id="cb233-2" title="2">n &lt;-<span class="st"> </span><span class="dv">200</span></a>
-<a class="sourceLine" id="cb233-3" title="3"></a>
-<a class="sourceLine" id="cb233-4" title="4"><span class="co"># Step 1: Students</span></a>
-<a class="sourceLine" id="cb233-5" title="5">race   &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;non-white&quot;</span>), n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb233-6" title="6">age    &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">17</span>), n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb233-7" title="7"></a>
-<a class="sourceLine" id="cb233-8" title="8"><span class="co"># Step 2: Create an empty network</span></a>
-<a class="sourceLine" id="cb233-9" title="9"><span class="kw">library</span>(ergm)</a>
-<a class="sourceLine" id="cb233-10" title="10"><span class="kw">library</span>(network)</a>
-<a class="sourceLine" id="cb233-11" title="11">net &lt;-<span class="st"> </span><span class="kw">network.initialize</span>(n)</a>
-<a class="sourceLine" id="cb233-12" title="12"></a>
-<a class="sourceLine" id="cb233-13" title="13">net <span class="op">%v%</span><span class="st"> &quot;race&quot;</span>   &lt;-<span class="st"> </span>race</a>
-<a class="sourceLine" id="cb233-14" title="14">net <span class="op">%v%</span><span class="st"> &quot;age&quot;</span>    &lt;-<span class="st"> </span>age</a>
-<a class="sourceLine" id="cb233-15" title="15"></a>
-<a class="sourceLine" id="cb233-16" title="16"><span class="co"># Step 3: Simulate a graph</span></a>
-<a class="sourceLine" id="cb233-17" title="17">net_sim &lt;-<span class="st"> </span><span class="kw">simulate</span>(</a>
-<a class="sourceLine" id="cb233-18" title="18">    net <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span></a>
-<a class="sourceLine" id="cb233-19" title="19"><span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;race&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb233-20" title="20"><span class="st">    </span>triangle <span class="op">+</span></a>
-<a class="sourceLine" id="cb233-21" title="21"><span class="st">    </span><span class="kw">absdiff</span>(<span class="st">&quot;age&quot;</span>),</a>
-<a class="sourceLine" id="cb233-22" title="22">    <span class="dt">coef =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="fl">.5</span>, <span class="fl">.5</span>, <span class="fl">-.5</span>)</a>
-<a class="sourceLine" id="cb233-23" title="23">    )</a></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" title="1"><span class="kw">set.seed</span>(<span class="dv">712</span>)</a>
+<a class="sourceLine" id="cb259-2" title="2">n &lt;-<span class="st"> </span><span class="dv">200</span></a>
+<a class="sourceLine" id="cb259-3" title="3"></a>
+<a class="sourceLine" id="cb259-4" title="4"><span class="co"># Step 1: Students</span></a>
+<a class="sourceLine" id="cb259-5" title="5">race   &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;non-white&quot;</span>), n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb259-6" title="6">age    &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">17</span>), n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb259-7" title="7"></a>
+<a class="sourceLine" id="cb259-8" title="8"><span class="co"># Step 2: Create an empty network</span></a>
+<a class="sourceLine" id="cb259-9" title="9"><span class="kw">library</span>(ergm)</a>
+<a class="sourceLine" id="cb259-10" title="10"><span class="kw">library</span>(network)</a>
+<a class="sourceLine" id="cb259-11" title="11">net &lt;-<span class="st"> </span><span class="kw">network.initialize</span>(n)</a>
+<a class="sourceLine" id="cb259-12" title="12"></a>
+<a class="sourceLine" id="cb259-13" title="13">net <span class="op">%v%</span><span class="st"> &quot;race&quot;</span>   &lt;-<span class="st"> </span>race</a>
+<a class="sourceLine" id="cb259-14" title="14">net <span class="op">%v%</span><span class="st"> &quot;age&quot;</span>    &lt;-<span class="st"> </span>age</a>
+<a class="sourceLine" id="cb259-15" title="15"></a>
+<a class="sourceLine" id="cb259-16" title="16"><span class="co"># Step 3: Simulate a graph</span></a>
+<a class="sourceLine" id="cb259-17" title="17">net_sim &lt;-<span class="st"> </span><span class="kw">simulate</span>(</a>
+<a class="sourceLine" id="cb259-18" title="18">    net <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span></a>
+<a class="sourceLine" id="cb259-19" title="19"><span class="st">    </span><span class="kw">nodematch</span>(<span class="st">&quot;race&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb259-20" title="20"><span class="st">    </span>triangle <span class="op">+</span></a>
+<a class="sourceLine" id="cb259-21" title="21"><span class="st">    </span><span class="kw">absdiff</span>(<span class="st">&quot;age&quot;</span>),</a>
+<a class="sourceLine" id="cb259-22" title="22">    <span class="dt">coef =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="fl">.5</span>, <span class="fl">.5</span>, <span class="fl">-.5</span>)</a>
+<a class="sourceLine" id="cb259-23" title="23">    )</a></code></pre></div>
 <p>What just happened? Here is a line-by-line breakout:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>set.seed(712)</code> Since this is a random simulation, we need to fix a seed so it is reproducible. Otherwise, results would change with every iteration.</p></li>
@@ -334,22 +334,22 @@ i.e., “the friend of my friend is my friend.”</p>
 <li><p><code>net_sim &lt;- simulate(</code> Simulating an ERGM!</p></li>
 </ol>
 <p>Let’s take a quick look at the resulting graph</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" title="1"><span class="kw">library</span>(sna)</a>
-<a class="sourceLine" id="cb234-2" title="2"><span class="kw">gplot</span>(net_sim)</a></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" title="1"><span class="kw">library</span>(sna)</a>
+<a class="sourceLine" id="cb260-2" title="2"><span class="kw">gplot</span>(net_sim)</a></code></pre></div>
 <p><img src="06-network-simulation-and-viz_files/figure-html/06-first-fig-1.png" width="672" /></p>
 <p>We can now start to see whether we got what we wanted! Before that, let’s save the
 network as a plain-text file so we can practice reading networks back in R!</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb235-1" title="1"><span class="kw">write.csv</span>(</a>
-<a class="sourceLine" id="cb235-2" title="2">  <span class="dt">x         =</span> <span class="kw">as.edgelist</span>(net_sim),</a>
-<a class="sourceLine" id="cb235-3" title="3">  <span class="dt">file      =</span> <span class="st">&quot;06-edgelist.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb235-4" title="4">  <span class="dt">row.names =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb235-5" title="5">  )</a>
-<a class="sourceLine" id="cb235-6" title="6"></a>
-<a class="sourceLine" id="cb235-7" title="7"><span class="kw">write.csv</span>(</a>
-<a class="sourceLine" id="cb235-8" title="8">  <span class="dt">x         =</span> <span class="kw">as.data.frame</span>(net_sim, <span class="dt">unit =</span> <span class="st">&quot;vertices&quot;</span>),</a>
-<a class="sourceLine" id="cb235-9" title="9">  <span class="dt">file      =</span> <span class="st">&quot;06-nodes.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb235-10" title="10">  <span class="dt">row.names =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb235-11" title="11">  )</a></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" title="1"><span class="kw">write.csv</span>(</a>
+<a class="sourceLine" id="cb261-2" title="2">  <span class="dt">x         =</span> <span class="kw">as.edgelist</span>(net_sim),</a>
+<a class="sourceLine" id="cb261-3" title="3">  <span class="dt">file      =</span> <span class="st">&quot;06-edgelist.csv&quot;</span>,</a>
+<a class="sourceLine" id="cb261-4" title="4">  <span class="dt">row.names =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb261-5" title="5">  )</a>
+<a class="sourceLine" id="cb261-6" title="6"></a>
+<a class="sourceLine" id="cb261-7" title="7"><span class="kw">write.csv</span>(</a>
+<a class="sourceLine" id="cb261-8" title="8">  <span class="dt">x         =</span> <span class="kw">as.data.frame</span>(net_sim, <span class="dt">unit =</span> <span class="st">&quot;vertices&quot;</span>),</a>
+<a class="sourceLine" id="cb261-9" title="9">  <span class="dt">file      =</span> <span class="st">&quot;06-nodes.csv&quot;</span>,</a>
+<a class="sourceLine" id="cb261-10" title="10">  <span class="dt">row.names =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb261-11" title="11">  )</a></code></pre></div>
 </div>
             </section>
 
