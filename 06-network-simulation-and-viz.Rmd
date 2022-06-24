@@ -112,12 +112,84 @@ What just happened? Here is a line-by-line breakout:
 
 Let's take a quick look at the resulting graph
 
-```{r 06-first-fig}
+```{r 06-first-fig, message = FALSE, warning = FALSE}
 library(sna)
 gplot(net_sim)
 ```
 
-We can now start to see whether we got what we wanted!
+We can now start to see whether we got what we wanted! Before that, let's save the 
+network as a plain-text file so we can practice reading networks back in R!
+
+```{r}
+write.csv(as.edgelist(net_sim), file = "06-edgelist.csv")
+write.csv(as.data.frame(net_sim, unit = "vertices"), file = "06-nodes.csv")
+
+```
+
+## Reading a network
+
+The first step to analyzing network data is to read it in. Many times you'll find
+data in the form of an adjacency matrix. Other times, data will come in the form
+of an edgelist. Another common format is the adjacency list, which is a compressed
+version of an edgelist. Let's see how the formats look like for the following
+network:
+
+```{r 06-fake-graph-read}
+example_graph <- matrix(0L, 4, 4, dimnames = list(letters[1:4], letters[1:4]))
+example_graph[c(2, 7)] <- 1L
+example_graph["c", "d"] <- 1L
+example_graph["d", "c"] <- 1L
+example_graph <- as.network(example_graph)
+set.seed(1231)
+gplot(example_graph, label = letters[1:4])
+```
+
+- **Adjacency matrix** a matrix of size $n$ by $n$ where the $ij$-th entry represents
+the tie between $i$ and $j$. In a directed network, we say $i$ connects to $j$,
+so the $i$-th row shows the ties $i$ sends to the rest of the network. Likewise,
+in a directed graph, the $j$-th column shows the ties sent to $j$. For undirected
+graphs, the adjacency matrix is usually upper or lower diagonal. The adjacency
+matrix of an undirected graph is symmetric, so we don't need to report the same
+information twice. For example:
+
+```{r 06-adjmat-eg}
+as.matrix(example_graph)
+```
+
+- **Edge list** a matrix of size $|E|$ by $2$, where $|E|$ is the number of edges.
+Each entry represents a tie in the graph. 
+
+```{r 06-edgelist-eg}
+as.edgelist(example_graph)
+```
+
+- **Adjacency list** a list of vectors of at most size $n$. 
+
+```{r 06-adjlist}
+igraph::as_adj_list(intergraph::asIgraph(example_graph)) |>
+  lapply(\(x) as.vector(x))
+```
+
+Here we will deal with an edgelist that includes node information.
+In my opinion, this is one of the best ways to share network data.
+
+```{r 06-read-data}
+edges <- read.csv("06-edgelist.csv")
+nodes <- read.csv("06-nodes.csv")
+```
+
+Using igraph
+
+```{r 06-read-igraph}
+
+```
+
+Using `network`
+
+```{r 06-read-network}
+
+```
+
 
 ## Visualizing the network
 
@@ -160,7 +232,7 @@ If we were using igraph, setting the size can be easier thanks to the netdiffuse
 R package. Let's start by converting our network to an igraph object with the
 R package `intergraph`
 
-```{r 06-size-netdiffuseR}
+```{r 06-size-netdiffuseR, message = FALSE, warning = FALSE}
 library(intergraph)
 library(igraph)
 
@@ -179,7 +251,7 @@ plot(
 
 We could also have tried netplot, which should make things easier (and prettier):
 
-```{r 06-netplot1}
+```{r 06-netplot1, message = FALSE, warning = FALSE}
 library(netplot)
 nplot(net_sim)
 ```

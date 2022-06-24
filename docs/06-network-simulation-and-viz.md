@@ -137,46 +137,136 @@ What just happened? Here is a line-by-line breakout:
 
 9. `net %v% "age" <- age` Same as with race!
 
-# Step 3: Simulate a graph
-net_sim <- simulate
+10. `net_sim <- simulate(` Simulating an ERGM!
 
 Let's take a quick look at the resulting graph
 
 
 ```r
 library(sna)
-```
-
-```
-## Loading required package: statnet.common
-```
-
-```
-## 
-## Attaching package: 'statnet.common'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     attr, order
-```
-
-```
-## sna: Tools for Social Network Analysis
-## Version 2.6 created on 2020-10-5.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##  For citation information, type citation("sna").
-##  Type help(package="sna") to get started.
-```
-
-```r
 gplot(net_sim)
 ```
 
-<img src="06-network-simulation-and-viz_files/figure-html/06-first-fig-1.png" width="672" />
+![](06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf)<!-- --> 
 
-We can now start to see whether we got what we wanted!
+We can now start to see whether we got what we wanted! Before that, let's save the 
+network as a plain-text file so we can practice reading networks back in R!
+
+
+```r
+write.csv(as.edgelist(net_sim), file = "06-edgelist.csv")
+write.csv(as.data.frame(net_sim, unit = "vertices"), file = "06-nodes.csv")
+```
+
+## Reading a network
+
+The first step to analyzing network data is to read it in. Many times you'll find
+data in the form of an adjacency matrix. Other times, data will come in the form
+of an edgelist. Another common format is the adjacency list, which is a compressed
+version of an edgelist. Let's see how the formats look like for the following
+network:
+
+
+```r
+example_graph <- matrix(0L, 4, 4, dimnames = list(letters[1:4], letters[1:4]))
+example_graph[c(2, 7)] <- 1L
+example_graph["c", "d"] <- 1L
+example_graph["d", "c"] <- 1L
+example_graph <- as.network(example_graph)
+set.seed(1231)
+gplot(example_graph, label = letters[1:4])
+```
+
+![](06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf)<!-- --> 
+
+- **Adjacency matrix** a matrix of size $n$ by $n$ where the $ij$-th entry represents
+the tie between $i$ and $j$. In a directed network, we say $i$ connects to $j$,
+so the $i$-th row shows the ties $i$ sends to the rest of the network. Likewise,
+in a directed graph, the $j$-th column shows the ties sent to $j$. For undirected
+graphs, the adjacency matrix is usually upper or lower diagonal. The adjacency
+matrix of an undirected graph is symmetric, so we don't need to report the same
+information twice. For example:
+
+
+```r
+as.matrix(example_graph)
+```
+
+```
+##   a b c d
+## a 0 0 0 0
+## b 1 0 0 0
+## c 0 1 0 1
+## d 0 0 1 0
+```
+
+- **Edge list** a matrix of size $|E|$ by $2$, where $|E|$ is the number of edges.
+Each entry represents a tie in the graph. 
+
+
+```r
+as.edgelist(example_graph)
+```
+
+```
+##      [,1] [,2]
+## [1,]    2    1
+## [2,]    3    2
+## [3,]    3    4
+## [4,]    4    3
+## attr(,"n")
+## [1] 4
+## attr(,"vnames")
+## [1] "a" "b" "c" "d"
+## attr(,"directed")
+## [1] TRUE
+## attr(,"bipartite")
+## [1] FALSE
+## attr(,"loops")
+## [1] FALSE
+## attr(,"class")
+## [1] "matrix_edgelist" "edgelist"        "matrix"          "array"
+```
+
+- **Adjacency list** a list of vectors of at most size $n$. 
+
+
+```r
+igraph::as_adj_list(intergraph::asIgraph(example_graph)) |>
+  lapply(\(x) as.vector(x))
+```
+
+```
+## [[1]]
+## [1] 2
+## 
+## [[2]]
+## [1] 1 3
+## 
+## [[3]]
+## [1] 2 4 4
+## 
+## [[4]]
+## [1] 3 3
+```
+
+Here we will deal with an edgelist that includes node information.
+In my opinion, this is one of the best ways to share network data.
+
+
+```r
+edges <- read.csv("06-edgelist.csv")
+nodes <- read.csv("06-nodes.csv")
+```
+
+Using igraph
+
+
+
+Using `network`
+
+
+
 
 ## Visualizing the network
 
@@ -215,7 +305,7 @@ gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/2)
 gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/10)
 ```
 
-<img src="06-network-simulation-and-viz_files/figure-html/06-size-1.png" width="672" />
+![](06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf)<!-- --> 
 
 ```r
 par(op)
@@ -229,42 +319,7 @@ R package `intergraph`
 ```r
 library(intergraph)
 library(igraph)
-```
 
-```
-## 
-## Attaching package: 'igraph'
-```
-
-```
-## The following objects are masked from 'package:sna':
-## 
-##     betweenness, bonpow, closeness, components, degree, dyad.census,
-##     evcent, hierarchy, is.connected, neighborhood, triad.census
-```
-
-```
-## The following objects are masked from 'package:network':
-## 
-##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
-##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
-##     is.directed, list.edge.attributes, list.vertex.attributes,
-##     set.edge.attribute, set.vertex.attribute
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     decompose, spectrum
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     union
-```
-
-```r
 # Converting the network object to an igraph object
 net_sim_i <- asIgraph(net_sim)
 
@@ -278,32 +333,14 @@ plot(
 )
 ```
 
-<img src="06-network-simulation-and-viz_files/figure-html/06-size-netdiffuseR-1.png" width="672" />
+![](06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf)<!-- --> 
 
 We could also have tried netplot, which should make things easier (and prettier):
 
 
 ```r
 library(netplot)
-```
-
-```
-## Loading required package: grid
-```
-
-```
-## 
-## Attaching package: 'netplot'
-```
-
-```
-## The following object is masked from 'package:igraph':
-## 
-##     ego
-```
-
-```r
 nplot(net_sim)
 ```
 
-<img src="06-network-simulation-and-viz_files/figure-html/06-netplot1-1.png" width="672" />
+![](06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf)<!-- --> 
