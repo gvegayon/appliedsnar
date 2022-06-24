@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-06-23" />
+<meta name="date" content="2022-06-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -191,7 +191,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>8</b> Simulating and visualizing networks</a><ul>
 <li class="chapter" data-level="8.1" data-path="random-graph-models.html"><a href="random-graph-models.html"><i class="fa fa-check"></i><b>8.1</b> Random Graph Models</a></li>
 <li class="chapter" data-level="8.2" data-path="social-networks-in-schools.html"><a href="social-networks-in-schools.html"><i class="fa fa-check"></i><b>8.2</b> Social Networks in Schools</a></li>
-<li class="chapter" data-level="8.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>8.3</b> Visualizing the network</a></li>
+<li class="chapter" data-level="8.3" data-path="reading-a-network.html"><a href="reading-a-network.html"><i class="fa fa-check"></i><b>8.3</b> Reading a network</a></li>
+<li class="chapter" data-level="8.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>8.4</b> Visualizing the network</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-size"><i class="fa fa-check"></i><b>8.4.1</b> Vertex size</a></li>
+<li class="chapter" data-level="8.4.2" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-color"><i class="fa fa-check"></i><b>8.4.2</b> Vertex color</a></li>
+<li class="chapter" data-level="8.4.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-shape"><i class="fa fa-check"></i><b>8.4.3</b> Vertex shape</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>9</b> Hypothesis testing in networks</a><ul>
 <li class="chapter" data-level="9.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>9.1</b> Comparing networks</a><ul>
@@ -250,6 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
       </nav>
@@ -277,7 +283,7 @@ under certain conditions converges to the target distribution. The key of the
 Algorithm is in accepting a proposed move from <span class="math inline">\(\theta\)</span> to <span class="math inline">\(\theta&#39;\)</span> with
 probability equal to:</p>
 <p><span class="math display">\[\begin{equation}
-r = \min\left(1, \frac{{\mathbb{P}\left(\theta&#39;\vphantom{D}\;\right|\left.\vphantom{\theta&#39;}D\right)}}{{\mathbb{P}\left(\theta\vphantom{D}\;\right|\left.\vphantom{\theta}D\right)}}\right)
+r = \min\left(1, \frac{{\mathbb{P}\left(\left(\theta&#39;|D\right)\right) }}{{\mathbb{P}\left(\left(\theta|D\right)\right) }}\right)
 \end{equation}\]</span></p>
 <p>The resulting sequence converges to the target distribution. We can prove
 convergence by showing that (a) the sequence is ergodic, and (b) the posterior
@@ -300,7 +306,7 @@ Analysis:”</p>
 <div id="metropolis-hastings" class="section level3 hasAnchor">
 <h3><span class="header-section-number">11.2.2</span> Metropolis-Hastings<a href="markov-chain.html#metropolis-hastings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><span class="math display">\[
-\min\left(1, \frac{{\mathbb{P}\left(D\vphantom{\theta&#39;}\;\right|\left.\vphantom{D}\theta&#39;\right)}{\mathbb{P}\left(\theta&#39;\right) }{\mathbb{P}\left(\theta&#39;\vphantom{\theta}\;\right|\left.\vphantom{\theta&#39;}\theta\right)}}{{\mathbb{P}\left(D\vphantom{\theta}\;\right|\left.\vphantom{D}\theta\right)}{\mathbb{P}\left(\theta\right) }{\mathbb{P}\left(\theta\vphantom{\theta&#39;}\;\right|\left.\vphantom{\theta}\theta&#39;\right)}}\right)
+\min\left(1, \frac{{\mathbb{P}\left(\left(d|\theta&#39;\right)\right) }{\mathbb{P}\left(\left(\theta&#39;\right)\right) }{\mathbb{P}\left(\left(\theta&#39;|\theta\right)\right) }}{{\mathbb{P}\left(\left(d|\theta\right)\right) }{\mathbb{P}\left(\left(\theta\right)\right) }{\mathbb{P}\left(\left(\theta|\theta&#39;\right)\right) }}\right)
 \]</span></p>
 <p>If the transittion probability is symmetric, then the previous equation reduces
 to the Metropolis probability.</p>
@@ -316,9 +322,9 @@ state,–and observed summary statistic <span class="math inline">\(s_0 = S(D_{o
 <li><p>Draw a simulated data <span class="math inline">\(D_t\)</span> from model <span class="math inline">\(M(\theta_t)\)</span></p></li>
 <li><p>Calculate the summary statistics <span class="math inline">\(s_t = S(D_t)\)</span></p></li>
 <li><p>Accept the proposed state with probability
-<span class="math display">\[
- r = \min\left(1, \frac{{\mathbb{P}\left(s_0\vphantom{s_t,\theta_t}\;\right|\left.\vphantom{s_0}s_t,\theta_t\right)}{\mathbb{P}\left(\theta_t\right) }{\mathbb{P}\left(\theta^*\to\theta_t\right) }}{{\mathbb{P}\left(s_0\vphantom{s_{t-1},\theta_{t-1}}\;\right|\left.\vphantom{s_0}s_{t-1},\theta_{t-1}\right)}{\mathbb{P}\left(\theta_{t-1}\right) }{\mathbb{P}\left(\theta_{t}\to\theta^*\right) }}\right)
- \]</span></p></li>
+<!-- $$
+ r = \min\left(1, \frac{\Pr{\left(s_0|s_t,\theta_t\right)}\Pr{\left(\theta_t\right)}\Pr{\left(\theta^*\to\theta_t\right)}}{\Pr{\left(s_0|s_{t-1\right)},\theta_{t-1}}\Pr{\left(\theta_{t-1\right)}}\Pr{\left(\theta_{t\right)}\to\theta^*}}\right)
+ $$ --></p></li>
 </ol>
 <p>If accepted, set <span class="math inline">\(\theta^* = \theta_t\)</span>.</p>
 <ol start="5" style="list-style-type: lower-alpha">

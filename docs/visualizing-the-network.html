@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8.3 Visualizing the network | Applied Network Science with R</title>
+  <title>8.4 Visualizing the network | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8.3 Visualizing the network | Applied Network Science with R" />
+  <meta property="og:title" content="8.4 Visualizing the network | Applied Network Science with R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8.3 Visualizing the network | Applied Network Science with R" />
+  <meta name="twitter:title" content="8.4 Visualizing the network | Applied Network Science with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   
@@ -23,14 +23,14 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-06-23" />
+<meta name="date" content="2022-06-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="social-networks-in-schools.html"/>
+<link rel="prev" href="reading-a-network.html"/>
 <link rel="next" href="hypothesis-testing-in-networks.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -191,7 +191,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>8</b> Simulating and visualizing networks</a><ul>
 <li class="chapter" data-level="8.1" data-path="random-graph-models.html"><a href="random-graph-models.html"><i class="fa fa-check"></i><b>8.1</b> Random Graph Models</a></li>
 <li class="chapter" data-level="8.2" data-path="social-networks-in-schools.html"><a href="social-networks-in-schools.html"><i class="fa fa-check"></i><b>8.2</b> Social Networks in Schools</a></li>
-<li class="chapter" data-level="8.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>8.3</b> Visualizing the network</a></li>
+<li class="chapter" data-level="8.3" data-path="reading-a-network.html"><a href="reading-a-network.html"><i class="fa fa-check"></i><b>8.3</b> Reading a network</a></li>
+<li class="chapter" data-level="8.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>8.4</b> Visualizing the network</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-size"><i class="fa fa-check"></i><b>8.4.1</b> Vertex size</a></li>
+<li class="chapter" data-level="8.4.2" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-color"><i class="fa fa-check"></i><b>8.4.2</b> Vertex color</a></li>
+<li class="chapter" data-level="8.4.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-shape"><i class="fa fa-check"></i><b>8.4.3</b> Vertex shape</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>9</b> Hypothesis testing in networks</a><ul>
 <li class="chapter" data-level="9.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>9.1</b> Comparing networks</a><ul>
@@ -250,6 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
       </nav>
@@ -268,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="visualizing-the-network" class="section level2 hasAnchor">
-<h2><span class="header-section-number">8.3</span> Visualizing the network<a href="visualizing-the-network.html#visualizing-the-network" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">8.4</span> Visualizing the network<a href="visualizing-the-network.html#visualizing-the-network" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We will focus on three different attributes that we can use for this visualization:
 Node size, node shape, and node color. While there are no particular rules, some
 ideas you can follow are:</p>
@@ -283,68 +289,107 @@ represent the same feature.</p></li>
 </ul>
 <p>Notice that we have not talked about layout algorithms. The R packages to build
 graphs usually have internal rules to decide what algorithm to use. We will discuss that
-later on. Let’s start by size. Finding the right scale can be somewhat difficult. We
+later on. Let’s start by size.</p>
+<div id="vertex-size" class="section level3 hasAnchor">
+<h3><span class="header-section-number">8.4.1</span> Vertex size<a href="visualizing-the-network.html#vertex-size" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Finding the right scale can be somewhat difficult. We
 will draw the graph four times to see what size would be the best:</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb246-1" title="1"><span class="co"># Sized by indegree</span></a>
-<a class="sourceLine" id="cb246-2" title="2">net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span> &lt;-<span class="st"> </span><span class="kw">degree</span>(net_sim, <span class="dt">gmode =</span> <span class="st">&quot;digraph&quot;</span>)</a>
-<a class="sourceLine" id="cb246-3" title="3"></a>
-<a class="sourceLine" id="cb246-4" title="4"><span class="co"># Preparing the graphical device to hold four nets.</span></a>
-<a class="sourceLine" id="cb246-5" title="5"><span class="co"># This line sets a 2 x 2 viz device and stores the </span></a>
-<a class="sourceLine" id="cb246-6" title="6"><span class="co"># original value. We will use the `op` object to reset</span></a>
-<a class="sourceLine" id="cb246-7" title="7"><span class="co"># the configugarion</span></a>
-<a class="sourceLine" id="cb246-8" title="8">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">mai =</span> <span class="kw">c</span>(.<span class="dv">1</span>, <span class="fl">.1</span>, <span class="fl">.1</span>, <span class="fl">.1</span>))</a>
-<a class="sourceLine" id="cb246-9" title="9"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.cex =</span> (net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb246-10" title="10"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.cex =</span> net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span>)</a>
-<a class="sourceLine" id="cb246-11" title="11"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.cex =</span> (net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span>)<span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb246-12" title="12"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.cex =</span> (net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span>)<span class="op">/</span><span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" title="1"><span class="co"># Sized by indegree</span></a>
+<a class="sourceLine" id="cb251-2" title="2">net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span> &lt;-<span class="st"> </span><span class="kw">degree</span>(net_sim, <span class="dt">gmode =</span> <span class="st">&quot;digraph&quot;</span>)</a>
+<a class="sourceLine" id="cb251-3" title="3"></a>
+<a class="sourceLine" id="cb251-4" title="4"><span class="co"># Preparing the graphical device to hold four nets.</span></a>
+<a class="sourceLine" id="cb251-5" title="5"><span class="co"># This line sets a 2 x 2 viz device and stores the </span></a>
+<a class="sourceLine" id="cb251-6" title="6"><span class="co"># original value. We will use the `op` object to reset</span></a>
+<a class="sourceLine" id="cb251-7" title="7"><span class="co"># the configugarion</span></a>
+<a class="sourceLine" id="cb251-8" title="8">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">mai =</span> <span class="kw">c</span>(.<span class="dv">1</span>, <span class="fl">.1</span>, <span class="fl">.1</span>, <span class="fl">.1</span>))</a>
+<a class="sourceLine" id="cb251-9" title="9">glayout &lt;-<span class="st"> </span><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.cex =</span> (net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb251-10" title="10"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.cex =</span> net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span>, <span class="dt">coord =</span> glayout)</a>
+<a class="sourceLine" id="cb251-11" title="11"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.cex =</span> (net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span>)<span class="op">/</span><span class="dv">2</span>, <span class="dt">coord =</span> glayout)</a>
+<a class="sourceLine" id="cb251-12" title="12"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.cex =</span> (net_sim <span class="op">%v%</span><span class="st"> &quot;indeg&quot;</span>)<span class="op">/</span><span class="dv">10</span>, <span class="dt">coord =</span> glayout)</a></code></pre></div>
 <p><img src="06-network-simulation-and-viz_files/figure-html/06-size-1.png" width="672" /></p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
 <p>If we were using igraph, setting the size can be easier thanks to the netdiffuseR
 R package. Let’s start by converting our network to an igraph object with the
 R package <code>intergraph</code></p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" title="1"><span class="kw">library</span>(intergraph)</a>
-<a class="sourceLine" id="cb248-2" title="2"><span class="kw">library</span>(igraph)</a></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;igraph&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:sna&#39;:
-## 
-##     betweenness, bonpow, closeness, components, degree, dyad.census,
-##     evcent, hierarchy, is.connected, neighborhood, triad.census</code></pre>
-<pre><code>## The following objects are masked from &#39;package:network&#39;:
-## 
-##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
-##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
-##     is.directed, list.edge.attributes, list.vertex.attributes,
-##     set.edge.attribute, set.vertex.attribute</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     decompose, spectrum</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     union</code></pre>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" title="1"><span class="co"># Converting the network object to an igraph object</span></a>
-<a class="sourceLine" id="cb254-2" title="2">net_sim_i &lt;-<span class="st"> </span><span class="kw">asIgraph</span>(net_sim)</a>
-<a class="sourceLine" id="cb254-3" title="3"></a>
-<a class="sourceLine" id="cb254-4" title="4"><span class="co"># Plotting with igraph</span></a>
-<a class="sourceLine" id="cb254-5" title="5"><span class="kw">plot</span>(</a>
-<a class="sourceLine" id="cb254-6" title="6">  net_sim_i,</a>
-<a class="sourceLine" id="cb254-7" title="7">  <span class="dt">vertex.size =</span> netdiffuseR<span class="op">::</span><span class="kw">rescale_vertex_igraph</span>(</a>
-<a class="sourceLine" id="cb254-8" title="8">    <span class="dt">vertex.size =</span> <span class="kw">V</span>(net_sim_i)<span class="op">$</span>indeg,</a>
-<a class="sourceLine" id="cb254-9" title="9">    <span class="dt">minmax.relative.size =</span> <span class="kw">c</span>(.<span class="dv">01</span>, <span class="fl">.1</span>)</a>
-<a class="sourceLine" id="cb254-10" title="10">  )</a>
-<a class="sourceLine" id="cb254-11" title="11">)</a></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb253-1" title="1"><span class="kw">library</span>(intergraph)</a>
+<a class="sourceLine" id="cb253-2" title="2"><span class="kw">library</span>(igraph)</a>
+<a class="sourceLine" id="cb253-3" title="3"></a>
+<a class="sourceLine" id="cb253-4" title="4"><span class="co"># Converting the network object to an igraph object</span></a>
+<a class="sourceLine" id="cb253-5" title="5">net_sim_i &lt;-<span class="st"> </span><span class="kw">asIgraph</span>(net_sim)</a>
+<a class="sourceLine" id="cb253-6" title="6"></a>
+<a class="sourceLine" id="cb253-7" title="7"><span class="co"># Plotting with igraph</span></a>
+<a class="sourceLine" id="cb253-8" title="8"><span class="kw">plot</span>(</a>
+<a class="sourceLine" id="cb253-9" title="9">  net_sim_i,</a>
+<a class="sourceLine" id="cb253-10" title="10">  <span class="dt">vertex.size =</span> netdiffuseR<span class="op">::</span><span class="kw">rescale_vertex_igraph</span>(</a>
+<a class="sourceLine" id="cb253-11" title="11">    <span class="dt">vertex.size =</span> <span class="kw">V</span>(net_sim_i)<span class="op">$</span>indeg,</a>
+<a class="sourceLine" id="cb253-12" title="12">    <span class="dt">minmax.relative.size =</span> <span class="kw">c</span>(.<span class="dv">01</span>, <span class="fl">.1</span>)</a>
+<a class="sourceLine" id="cb253-13" title="13">  ), </a>
+<a class="sourceLine" id="cb253-14" title="14">  <span class="dt">layout       =</span> glayout,</a>
+<a class="sourceLine" id="cb253-15" title="15">  <span class="dt">vertex.label =</span> <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb253-16" title="16">)</a></code></pre></div>
 <p><img src="06-network-simulation-and-viz_files/figure-html/06-size-netdiffuseR-1.png" width="672" /></p>
-<p>We could also have tried netplot, which should make things easier (and prettier):</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" title="1"><span class="kw">library</span>(netplot)</a></code></pre></div>
-<pre><code>## Loading required package: grid</code></pre>
-<pre><code>## 
-## Attaching package: &#39;netplot&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:igraph&#39;:
-## 
-##     ego</code></pre>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" title="1"><span class="kw">nplot</span>(net_sim)</a></code></pre></div>
+<p>We could also have tried netplot, which should make things easier and make a better use of the space:</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" title="1"><span class="kw">library</span>(netplot)</a>
+<a class="sourceLine" id="cb254-2" title="2"><span class="kw">nplot</span>(</a>
+<a class="sourceLine" id="cb254-3" title="3">  net_sim, <span class="dt">layout =</span> glayout,</a>
+<a class="sourceLine" id="cb254-4" title="4">  <span class="dt">vertex.color =</span> <span class="st">&quot;tomato&quot;</span>,</a>
+<a class="sourceLine" id="cb254-5" title="5">  <span class="dt">vertex.frame.color =</span> <span class="st">&quot;darkred&quot;</span></a>
+<a class="sourceLine" id="cb254-6" title="6">  )</a></code></pre></div>
 <p><img src="06-network-simulation-and-viz_files/figure-html/06-netplot1-1.png" width="672" /></p>
+<p>With a good idea for size, we can now start looking into vertex color.</p>
+</div>
+<div id="vertex-color" class="section level3 hasAnchor">
+<h3><span class="header-section-number">8.4.2</span> Vertex color<a href="visualizing-the-network.html#vertex-color" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For the color, we will use vertex age. Although age is, by definition, continuous,
+we only have three values for age. Because of this, we can treat age as categorical.</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" title="1">vcolors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;10&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;14&quot;</span> =<span class="st"> &quot;tomato&quot;</span>, <span class="st">&quot;17&quot;</span> =<span class="st"> &quot;steelblue&quot;</span>)</a>
+<a class="sourceLine" id="cb255-2" title="2">net_sim <span class="op">%v%</span><span class="st"> &quot;color&quot;</span> &lt;-<span class="st"> </span>vcolors[<span class="kw">as.character</span>(net_sim <span class="op">%v%</span><span class="st"> &quot;age&quot;</span>)]</a>
+<a class="sourceLine" id="cb255-3" title="3"><span class="kw">nplot_base</span>(</a>
+<a class="sourceLine" id="cb255-4" title="4">  net_ig,</a>
+<a class="sourceLine" id="cb255-5" title="5">  <span class="dt">layout =</span> glayout,</a>
+<a class="sourceLine" id="cb255-6" title="6">  <span class="dt">vertex.color =</span> net_sim <span class="op">%v%</span><span class="st"> &quot;color&quot;</span>,</a>
+<a class="sourceLine" id="cb255-7" title="7">  )</a>
+<a class="sourceLine" id="cb255-8" title="8"></a>
+<a class="sourceLine" id="cb255-9" title="9"><span class="kw">legend</span>(</a>
+<a class="sourceLine" id="cb255-10" title="10">  <span class="st">&quot;bottomright&quot;</span>,</a>
+<a class="sourceLine" id="cb255-11" title="11">  <span class="dt">legend =</span> <span class="kw">names</span>(vcolors),</a>
+<a class="sourceLine" id="cb255-12" title="12">  <span class="dt">fill   =</span> vcolors, </a>
+<a class="sourceLine" id="cb255-13" title="13">  <span class="dt">bty    =</span> <span class="st">&quot;n&quot;</span>,</a>
+<a class="sourceLine" id="cb255-14" title="14">  <span class="dt">title  =</span> <span class="st">&quot;Age&quot;</span></a>
+<a class="sourceLine" id="cb255-15" title="15">  )</a></code></pre></div>
+<p><img src="06-network-simulation-and-viz_files/figure-html/06-network-color-1.png" width="672" /></p>
+</div>
+<div id="vertex-shape" class="section level3 hasAnchor">
+<h3><span class="header-section-number">8.4.3</span> Vertex shape<a href="visualizing-the-network.html#vertex-shape" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For the color, we will use vertex age. Although age is, by definition, continuous,
+we only have three values for age. Because of this, we can treat age as categorical.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb256-1" title="1">vshape &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;white&quot;</span> =<span class="st"> </span><span class="dv">15</span>, <span class="st">&quot;non-white&quot;</span> =<span class="st"> </span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb256-2" title="2">net_sim <span class="op">%v%</span><span class="st"> &quot;shape&quot;</span> &lt;-<span class="st"> </span>vshape[<span class="kw">as.character</span>(net_sim <span class="op">%v%</span><span class="st"> &quot;race&quot;</span>)]</a>
+<a class="sourceLine" id="cb256-3" title="3"><span class="kw">nplot_base</span>(</a>
+<a class="sourceLine" id="cb256-4" title="4">  net_ig,</a>
+<a class="sourceLine" id="cb256-5" title="5">  <span class="dt">layout =</span> glayout,</a>
+<a class="sourceLine" id="cb256-6" title="6">  <span class="dt">vertex.color =</span> net_sim <span class="op">%v%</span><span class="st"> &quot;color&quot;</span>,</a>
+<a class="sourceLine" id="cb256-7" title="7">  <span class="dt">vertex.nsides =</span> net_sim <span class="op">%v%</span><span class="st"> &quot;shape&quot;</span></a>
+<a class="sourceLine" id="cb256-8" title="8">  )</a>
+<a class="sourceLine" id="cb256-9" title="9">  </a>
+<a class="sourceLine" id="cb256-10" title="10"><span class="kw">legend</span>(</a>
+<a class="sourceLine" id="cb256-11" title="11">  <span class="st">&quot;bottomright&quot;</span>,</a>
+<a class="sourceLine" id="cb256-12" title="12">  <span class="dt">legend =</span> <span class="kw">names</span>(vcolors),</a>
+<a class="sourceLine" id="cb256-13" title="13">  <span class="dt">fill   =</span> vcolors, </a>
+<a class="sourceLine" id="cb256-14" title="14">  <span class="dt">bty    =</span> <span class="st">&quot;n&quot;</span>,</a>
+<a class="sourceLine" id="cb256-15" title="15">  <span class="dt">title  =</span> <span class="st">&quot;Age&quot;</span></a>
+<a class="sourceLine" id="cb256-16" title="16">  )</a>
+<a class="sourceLine" id="cb256-17" title="17"></a>
+<a class="sourceLine" id="cb256-18" title="18"><span class="kw">legend</span>(</a>
+<a class="sourceLine" id="cb256-19" title="19">  <span class="st">&quot;bottomleft&quot;</span>,</a>
+<a class="sourceLine" id="cb256-20" title="20">  <span class="dt">legend =</span> <span class="kw">names</span>(vshape),</a>
+<a class="sourceLine" id="cb256-21" title="21">  <span class="dt">pch    =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </a>
+<a class="sourceLine" id="cb256-22" title="22">  <span class="dt">bty    =</span> <span class="st">&quot;n&quot;</span>,</a>
+<a class="sourceLine" id="cb256-23" title="23">  <span class="dt">title  =</span> <span class="st">&quot;Race&quot;</span></a>
+<a class="sourceLine" id="cb256-24" title="24">  )</a></code></pre></div>
+<p><img src="06-network-simulation-and-viz_files/figure-html/06-network-shape-1.png" width="672" /></p>
 
+</div>
 </div>
 <!-- </div> -->
             </section>
@@ -352,7 +397,7 @@ R package <code>intergraph</code></p>
           </div>
         </div>
       </div>
-<a href="social-networks-in-schools.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reading-a-network.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="hypothesis-testing-in-networks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

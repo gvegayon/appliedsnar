@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-06-23" />
+<meta name="date" content="2022-06-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -191,7 +191,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>8</b> Simulating and visualizing networks</a><ul>
 <li class="chapter" data-level="8.1" data-path="random-graph-models.html"><a href="random-graph-models.html"><i class="fa fa-check"></i><b>8.1</b> Random Graph Models</a></li>
 <li class="chapter" data-level="8.2" data-path="social-networks-in-schools.html"><a href="social-networks-in-schools.html"><i class="fa fa-check"></i><b>8.2</b> Social Networks in Schools</a></li>
-<li class="chapter" data-level="8.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>8.3</b> Visualizing the network</a></li>
+<li class="chapter" data-level="8.3" data-path="reading-a-network.html"><a href="reading-a-network.html"><i class="fa fa-check"></i><b>8.3</b> Reading a network</a></li>
+<li class="chapter" data-level="8.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>8.4</b> Visualizing the network</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-size"><i class="fa fa-check"></i><b>8.4.1</b> Vertex size</a></li>
+<li class="chapter" data-level="8.4.2" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-color"><i class="fa fa-check"></i><b>8.4.2</b> Vertex color</a></li>
+<li class="chapter" data-level="8.4.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-shape"><i class="fa fa-check"></i><b>8.4.3</b> Vertex shape</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>9</b> Hypothesis testing in networks</a><ul>
 <li class="chapter" data-level="9.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>9.1</b> Comparing networks</a><ul>
@@ -250,6 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
       </nav>
@@ -270,8 +276,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="bayes-rule" class="section level2 hasAnchor">
 <h2><span class="header-section-number">11.1</span> Bayes’ Rule<a href="bayes-rule.html#bayes-rule" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><span class="math display">\[\begin{equation}
-{\mathbb{P}\left(X=x\vphantom{Y=y}\;\right|\left.\vphantom{X=x}Y=y\right)} = \frac{{\mathbb{P}\left(Y=y\vphantom{X=y}\;\right|\left.\vphantom{Y=y}X=y\right)}{\mathbb{P}\left(X=x\right) }}{{\mathbb{P}\left(Y=y\right) }}
+{\mathbb{P}\left(\left(X=x|Y=y\right)\right) } = \frac{{\mathbb{P}\left(\left(Y=y|X=y\right)\right) }{\mathbb{P}\left(\left(X=x\right)\right) }}{{\mathbb{P}\left(\left(Y=y\right)\right) }}
 \end{equation}\]</span></p>
+<p>Bayes’ rule can be derived using conditional probabilities. In particular, <span class="math inline">\({\mathbb{P}\left(\left(x=x|Y=y\right)\right) }\)</span> is defined as <span class="math inline">\({\mathbb{P}\left(\left(x=x, Y=y\right)\right) }/Pr{\left(Y=y\right)}\)</span>. Likewise, <span class="math inline">\({\mathbb{P}\left(\left(y=y|X=x\right)\right) }\)</span> is defined as <span class="math inline">\({\mathbb{P}\left(\left(y=y, X=x\right)\right) }/Pr{\left(X=x\right)}\)</span>, which can be re-written as <span class="math inline">\({\mathbb{P}\left(\left(x=x, Y=y\right)\right) } = {\mathbb{P}\left(\left(y=y|X=x\right)\right) }Pr{\left(X=x\right)}\)</span>. Replacing the last equality in the first equation we get</p>
+<p><span class="math display">\[\begin{align*}
+{\mathbb{P}\left(\left(x=x|Y=y\right)\right) } &amp; = \frac{{\mathbb{P}\left(\left(x=x, Y=y\right)\right) }}{Pr{\left(Y=y\right)}} \\
+&amp; \frac{{\mathbb{P}\left(\left(y=y|X=x\right)\right) }Pr{\left(X=x\right)}}{Pr{\left(Y=y\right)}}
+\end{align*}\]</span></p>
 </div>
             </section>
 

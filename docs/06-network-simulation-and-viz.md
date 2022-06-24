@@ -72,35 +72,6 @@ age    <- sample(c(10, 14, 17), n, replace = TRUE)
 
 # Step 2: Create an empty network
 library(ergm)
-```
-
-```
-## Loading required package: network
-```
-
-```
-## 
-## 'network' 1.17.2 (2022-05-20), part of the Statnet Project
-## * 'news(package="network")' for changes since last version
-## * 'citation("network")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-```
-
-```
-## 
-## 'ergm' 4.2.1 (2022-05-10), part of the Statnet Project
-## * 'news(package="ergm")' for changes since last version
-## * 'citation("ergm")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-```
-
-```
-## 'ergm' 4 is a major update that introduces some backwards-incompatible
-## changes. Please type 'news(package="ergm")' for a list of major
-## changes.
-```
-
-```r
 library(network)
 net <- network.initialize(n)
 
@@ -147,15 +118,24 @@ library(sna)
 gplot(net_sim)
 ```
 
-![](06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf)<!-- --> 
+![](06-network-simulation-and-viz_files/figure-epub3/06-first-fig-1.png)<!-- -->
 
 We can now start to see whether we got what we wanted! Before that, let's save the 
 network as a plain-text file so we can practice reading networks back in R!
 
 
 ```r
-write.csv(as.edgelist(net_sim), file = "06-edgelist.csv")
-write.csv(as.data.frame(net_sim, unit = "vertices"), file = "06-nodes.csv")
+write.csv(
+  x         = as.edgelist(net_sim),
+  file      = "06-edgelist.csv",
+  row.names = FALSE
+  )
+
+write.csv(
+  x         = as.data.frame(net_sim, unit = "vertices"),
+  file      = "06-nodes.csv",
+  row.names = FALSE
+  )
 ```
 
 ## Reading a network
@@ -177,7 +157,7 @@ set.seed(1231)
 gplot(example_graph, label = letters[1:4])
 ```
 
-![](06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf)<!-- --> 
+![](06-network-simulation-and-viz_files/figure-epub3/06-fake-graph-read-1.png)<!-- -->
 
 - **Adjacency matrix** a matrix of size $n$ by $n$ where the $ij$-th entry represents
 the tie between $i$ and $j$. In a directed network, we say $i$ connects to $j$,
@@ -227,31 +207,49 @@ as.edgelist(example_graph)
 ## attr(,"class")
 ## [1] "matrix_edgelist" "edgelist"        "matrix"          "array"
 ```
+  
+  The command turns the `network` object into a matrix with a set of attributes
+  (which are also printed.)
 
-- **Adjacency list** a list of vectors of at most size $n$. 
+- **Adjacency list** This data format uses less space than edgelists as ties are
+  grouped by ego (source.)
 
 
 ```r
-igraph::as_adj_list(intergraph::asIgraph(example_graph)) |>
-  lapply(\(x) as.vector(x))
+igraph::as_adj_list(intergraph::asIgraph(example_graph)) 
 ```
 
 ```
 ## [[1]]
+## + 1/4 vertex, from c8f0a74:
 ## [1] 2
 ## 
 ## [[2]]
+## + 2/4 vertices, from c8f0a74:
 ## [1] 1 3
 ## 
 ## [[3]]
+## + 3/4 vertices, from c8f0a74:
 ## [1] 2 4 4
 ## 
 ## [[4]]
+## + 2/4 vertices, from c8f0a74:
 ## [1] 3 3
 ```
 
+  The function `igraph::as_adj_list` turns the igraph object into a list of
+  type adjacency list. In plain text it would look something like this:
+
+  ```
+  2 
+  1 3 
+  2 4 4 
+  3 3 
+  ```
+
 Here we will deal with an edgelist that includes node information.
-In my opinion, this is one of the best ways to share network data.
+In my opinion, this is one of the best ways to share network data. Let's read
+the data into R using the function `read.csv`:
 
 
 ```r
@@ -259,13 +257,85 @@ edges <- read.csv("06-edgelist.csv")
 nodes <- read.csv("06-nodes.csv")
 ```
 
-Using igraph
+We now have two objects of class `data.frame`, edges and nodes. Let's inspect
+them using the `head` function:
 
 
+```r
+head(edges)
+```
 
-Using `network`
+```
+##   V1  V2
+## 1  1  64
+## 2  2  41
+## 3  2 106
+## 4  3  61
+## 5  4  85
+## 6  4 138
+```
+
+```r
+head(nodes)
+```
+
+```
+##   vertex.names      race age
+## 1            1 non-white  10
+## 2            2     white  10
+## 3            3     white  17
+## 4            4 non-white  14
+## 5            5 non-white  17
+## 6            6 non-white  14
+```
+
+It is always important to look at the data before creating the network. Most common
+errors happen before reading the data in and could go undetected in many cases.
+A few examples:
+
+- Headers in the file could be treated as data, or the files may not
+have headers.
+
+- Ego/alter columns may show in the wrong order. Both the `igraph` and `network`
+packages take the first and second columns of edgelists as ego and alter.
+
+- Isolates, which wouldn't show in the edgelist, may be missing from the node
+information set. This is one of the most common errors.
+
+- Nodes showing in the edgelist may be missing from the nodelist.
 
 
+Both `igraph` and network have functions to read edgelist with a corresponding
+nodelist; the functions `graph_from_data_frame` and `as.nework`, respectively. Although
+, for both cases, you can avoid using a nodelist, it is highly recommended as then
+you will (a) make sure that isolates are included and (b) become aware of possible
+problems in the data. A frequent error in `graph_from_data_frame` is nodes present
+in the edgelist but not in the set of nodes. 
+
+
+```r
+net_ig <- igraph::graph_from_data_frame(
+  d        = edges,
+  directed = TRUE,
+  vertices = nodes
+)
+```
+
+Using `as.network` from the `network` package:
+
+
+```r
+net_net <- network::as.network(
+  x        = edges,
+  directed = TRUE,
+  vertices = nodes
+)
+```
+
+As you can see, both syntaxes are very similar. The main point here is that the
+more explicit we are, the better. Nevertheless, R can be brilliant; being
+*shy*, i.e., not throwing warnings or errors, is not uncommon. In the next
+section, we will finally start visualizing the data.
 
 
 ## Visualizing the network
@@ -286,7 +356,11 @@ represent the same feature.
 
 Notice that we have not talked about layout algorithms. The R packages to build
 graphs usually have internal rules to decide what algorithm to use. We will discuss that
-later on. Let's start by size. Finding the right scale can be somewhat difficult. We 
+later on. Let's start by size.
+
+### Vertex size
+
+Finding the right scale can be somewhat difficult. We 
 will draw the graph four times to see what size would be the best:
 
 
@@ -299,13 +373,13 @@ net_sim %v% "indeg" <- degree(net_sim, gmode = "digraph")
 # original value. We will use the `op` object to reset
 # the configugarion
 op <- par(mfrow = c(2, 2), mai = c(.1, .1, .1, .1))
-gplot(net_sim, vertex.cex = (net_sim %v% "indeg") * 2)
-gplot(net_sim, vertex.cex = net_sim %v% "indeg")
-gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/2)
-gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/10)
+glayout <- gplot(net_sim, vertex.cex = (net_sim %v% "indeg") * 2)
+gplot(net_sim, vertex.cex = net_sim %v% "indeg", coord = glayout)
+gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/2, coord = glayout)
+gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/10, coord = glayout)
 ```
 
-![](06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf)<!-- --> 
+![](06-network-simulation-and-viz_files/figure-epub3/06-size-1.png)<!-- -->
 
 ```r
 par(op)
@@ -329,18 +403,87 @@ plot(
   vertex.size = netdiffuseR::rescale_vertex_igraph(
     vertex.size = V(net_sim_i)$indeg,
     minmax.relative.size = c(.01, .1)
-  )
+  ), 
+  layout       = glayout,
+  vertex.label = NA
 )
 ```
 
-![](06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf)<!-- --> 
+![](06-network-simulation-and-viz_files/figure-epub3/06-size-netdiffuseR-1.png)<!-- -->
 
-We could also have tried netplot, which should make things easier (and prettier):
+We could also have tried netplot, which should make things easier and make a better use of the space:
 
 
 ```r
 library(netplot)
-nplot(net_sim)
+nplot(
+  net_sim, layout = glayout,
+  vertex.color = "tomato",
+  vertex.frame.color = "darkred"
+  )
 ```
 
-![](06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf)<!-- --> 
+![](06-network-simulation-and-viz_files/figure-epub3/06-netplot1-1.png)<!-- -->
+
+With a good idea for size, we can now start looking into vertex color.
+
+### Vertex color
+
+For the color, we will use vertex age. Although age is, by definition, continuous,
+we only have three values for age. Because of this, we can treat age as categorical.
+
+
+```r
+vcolors <- c("10" = "gray", "14" = "tomato", "17" = "steelblue")
+net_sim %v% "color" <- vcolors[as.character(net_sim %v% "age")]
+nplot_base(
+  net_ig,
+  layout = glayout,
+  vertex.color = net_sim %v% "color",
+  )
+
+legend(
+  "bottomright",
+  legend = names(vcolors),
+  fill   = vcolors, 
+  bty    = "n",
+  title  = "Age"
+  )
+```
+
+![](06-network-simulation-and-viz_files/figure-epub3/06-network-color-1.png)<!-- -->
+
+### Vertex shape
+
+For the color, we will use vertex age. Although age is, by definition, continuous,
+we only have three values for age. Because of this, we can treat age as categorical.
+
+
+```r
+vshape <- c("white" = 15, "non-white" = 3)
+net_sim %v% "shape" <- vshape[as.character(net_sim %v% "race")]
+nplot_base(
+  net_ig,
+  layout = glayout,
+  vertex.color = net_sim %v% "color",
+  vertex.nsides = net_sim %v% "shape"
+  )
+  
+legend(
+  "bottomright",
+  legend = names(vcolors),
+  fill   = vcolors, 
+  bty    = "n",
+  title  = "Age"
+  )
+
+legend(
+  "bottomleft",
+  legend = names(vshape),
+  pch    = c(1, 2), 
+  bty    = "n",
+  title  = "Race"
+  )
+```
+
+![](06-network-simulation-and-viz_files/figure-epub3/06-network-shape-1.png)<!-- -->

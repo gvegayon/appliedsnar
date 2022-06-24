@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10.4 Statistical inference | Applied Network Science with R</title>
+  <title>8.3 Reading a network | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10.4 Statistical inference | Applied Network Science with R" />
+  <meta property="og:title" content="8.3 Reading a network | Applied Network Science with R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10.4 Statistical inference | Applied Network Science with R" />
+  <meta name="twitter:title" content="8.3 Reading a network | Applied Network Science with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="simulation-of-diffusion-processes.html"/>
-<link rel="next" href="stochastic-actor-oriented-models.html"/>
+<link rel="prev" href="social-networks-in-schools.html"/>
+<link rel="next" href="visualizing-the-network.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -273,333 +273,150 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="statistical-inference" class="section level2 hasAnchor">
-<h2><span class="header-section-number">10.4</span> Statistical inference<a href="statistical-inference.html#statistical-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="morans-i" class="section level3 hasAnchor">
-<h3><span class="header-section-number">10.4.1</span> Moran’s I<a href="statistical-inference.html#morans-i" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="reading-a-network" class="section level2 hasAnchor">
+<h2><span class="header-section-number">8.3</span> Reading a network<a href="reading-a-network.html#reading-a-network" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The first step to analyzing network data is to read it in. Many times you’ll find
+data in the form of an adjacency matrix. Other times, data will come in the form
+of an edgelist. Another common format is the adjacency list, which is a compressed
+version of an edgelist. Let’s see how the formats look like for the following
+network:</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" title="1">example_graph &lt;-<span class="st"> </span><span class="kw">matrix</span>(0L, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</a>
+<a class="sourceLine" id="cb236-2" title="2">example_graph[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">7</span>)] &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb236-3" title="3">example_graph[<span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>] &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb236-4" title="4">example_graph[<span class="st">&quot;d&quot;</span>, <span class="st">&quot;c&quot;</span>] &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb236-5" title="5">example_graph &lt;-<span class="st"> </span><span class="kw">as.network</span>(example_graph)</a>
+<a class="sourceLine" id="cb236-6" title="6"><span class="kw">set.seed</span>(<span class="dv">1231</span>)</a>
+<a class="sourceLine" id="cb236-7" title="7"><span class="kw">gplot</span>(example_graph, <span class="dt">label =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</a></code></pre></div>
+<p><img src="06-network-simulation-and-viz_files/figure-html/06-fake-graph-read-1.png" width="672" /></p>
 <ul>
-<li><p>Moran’s I tests for spatial autocorrelation.</p></li>
-<li><p><strong>netdiffuseR</strong> implements the test in <code>moran</code>, which is suited for sparse matrices.</p></li>
-<li><p>We can use Moran’s I as a first look to whether there is something happening:
-let that be influence or homophily.</p></li>
+<li><strong>Adjacency matrix</strong> a matrix of size <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> where the <span class="math inline">\(ij\)</span>-th entry represents
+the tie between <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>. In a directed network, we say <span class="math inline">\(i\)</span> connects to <span class="math inline">\(j\)</span>,
+so the <span class="math inline">\(i\)</span>-th row shows the ties <span class="math inline">\(i\)</span> sends to the rest of the network. Likewise,
+in a directed graph, the <span class="math inline">\(j\)</span>-th column shows the ties sent to <span class="math inline">\(j\)</span>. For undirected
+graphs, the adjacency matrix is usually upper or lower diagonal. The adjacency
+matrix of an undirected graph is symmetric, so we don’t need to report the same
+information twice. For example:</li>
 </ul>
-</div>
-<div id="using-geodesics" class="section level3 hasAnchor">
-<h3><span class="header-section-number">10.4.2</span> Using geodesics<a href="statistical-inference.html#using-geodesics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb237-1" title="1"><span class="kw">as.matrix</span>(example_graph)</a></code></pre></div>
+<pre><code>##   a b c d
+## a 0 0 0 0
+## b 1 0 0 0
+## c 0 1 0 1
+## d 0 0 1 0</code></pre>
 <ul>
-<li><p>One approach is to use the geodesic (shortest path length) matrix to account for indirect
-influence.</p></li>
-<li><p>In the case of sparse matrices, and furthermore, in the presence of structural holes
-it is more convenient to calculate the distance matrix taking this into account.</p></li>
-<li><p><strong>netdiffuseR</strong> has a function to do so, the <code>approx_geodesic</code> function, which,
-using graph powers, computes the shortest path up to <code>n</code> steps. This could be
-faster (if you only care up to <code>n</code> steps) than <code>igraph</code> or <code>sns</code>:</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb293-1" title="1"><span class="co"># Extracting the large adjacency matrix (stacked)</span></a>
-<a class="sourceLine" id="cb293-2" title="2">dgc &lt;-<span class="st"> </span><span class="kw">diag_expand</span>(medInnovationsDiffNet<span class="op">$</span>graph)</a>
-<a class="sourceLine" id="cb293-3" title="3">ig  &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_adjacency_matrix</span>(dgc)</a>
-<a class="sourceLine" id="cb293-4" title="4">mat &lt;-<span class="st"> </span>network<span class="op">::</span><span class="kw">as.network</span>(<span class="kw">as.matrix</span>(dgc))</a>
-<a class="sourceLine" id="cb293-5" title="5"></a>
-<a class="sourceLine" id="cb293-6" title="6"><span class="co"># Measuring times</span></a>
-<a class="sourceLine" id="cb293-7" title="7">times &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb293-8" title="8">  <span class="dt">netdiffuseR =</span> netdiffuseR<span class="op">::</span><span class="kw">approx_geodesic</span>(dgc),</a>
-<a class="sourceLine" id="cb293-9" title="9">  <span class="dt">igraph =</span> igraph<span class="op">::</span><span class="kw">distances</span>(ig),</a>
-<a class="sourceLine" id="cb293-10" title="10">  <span class="dt">sna =</span> sna<span class="op">::</span><span class="kw">geodist</span>(mat),</a>
-<a class="sourceLine" id="cb293-11" title="11">  <span class="dt">times =</span> <span class="dv">50</span>, <span class="dt">unit=</span><span class="st">&quot;ms&quot;</span></a>
-<a class="sourceLine" id="cb293-12" title="12">)</a></code></pre></div>
-<p><img src="08-netdiffuser_files/figure-html/geodesic_speed-box-1.png" width="672" /></p></li>
-<li><p>The <code>summary.diffnet</code> method already runs Moran’s for you. What happens under the hood is:</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" title="1"><span class="co"># For each time point we compute the geodesic distances matrix</span></a>
-<a class="sourceLine" id="cb294-2" title="2">W &lt;-<span class="st"> </span><span class="kw">approx_geodesic</span>(medInnovationsDiffNet<span class="op">$</span>graph[[<span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb294-3" title="3"></a>
-<a class="sourceLine" id="cb294-4" title="4"><span class="co"># We get the element-wise inverse</span></a>
-<a class="sourceLine" id="cb294-5" title="5">W<span class="op">@</span>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>W<span class="op">@</span>x</a>
-<a class="sourceLine" id="cb294-6" title="6"></a>
-<a class="sourceLine" id="cb294-7" title="7"><span class="co"># And then compute moran</span></a>
-<a class="sourceLine" id="cb294-8" title="8"><span class="kw">moran</span>(medInnovationsDiffNet<span class="op">$</span>cumadopt[,<span class="dv">1</span>], W)</a></code></pre></div>
-<pre><code>## $observed
-## [1] 0.06624028
-## 
-## $expected
-## [1] -0.008064516
-## 
-## $sd
-## [1] 0.03265066
-## 
-## $p.value
-## [1] 0.02286087
-## 
+<li><strong>Edge list</strong> a matrix of size <span class="math inline">\(|E|\)</span> by <span class="math inline">\(2\)</span>, where <span class="math inline">\(|E|\)</span> is the number of edges.
+Each entry represents a tie in the graph.</li>
+</ul>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" title="1"><span class="kw">as.edgelist</span>(example_graph)</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    2    1
+## [2,]    3    2
+## [3,]    3    4
+## [4,]    4    3
+## attr(,&quot;n&quot;)
+## [1] 4
+## attr(,&quot;vnames&quot;)
+## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;
+## attr(,&quot;directed&quot;)
+## [1] TRUE
+## attr(,&quot;bipartite&quot;)
+## [1] FALSE
+## attr(,&quot;loops&quot;)
+## [1] FALSE
 ## attr(,&quot;class&quot;)
-## [1] &quot;diffnet_moran&quot;</code></pre></li>
-</ul>
-</div>
-<div id="structural-dependence-and-permutation-tests" class="section level3 hasAnchor">
-<h3><span class="header-section-number">10.4.3</span> Structural dependence and permutation tests<a href="statistical-inference.html#structural-dependence-and-permutation-tests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+## [1] &quot;matrix_edgelist&quot; &quot;edgelist&quot;        &quot;matrix&quot;          &quot;array&quot;</code></pre>
+<p>The command turns the <code>network</code> object into a matrix with a set of attributes
+(which are also printed.)</p>
 <ul>
-<li>A novel statistical method (work-in-progress) that allows conducting inference.</li>
-<li>Included in the package, tests whether a particular network statistic depends on network structure</li>
-<li>Suitable to be applied to network thresholds (you can’t use thresholds in regression-like models!)</li>
+<li><strong>Adjacency list</strong> This data format uses less space than edgelists as ties are
+grouped by ego (source.)</li>
 </ul>
-</div>
-<div id="idea" class="section level3 hasAnchor">
-<h3><span class="header-section-number">10.4.4</span> Idea<a href="statistical-inference.html#idea" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" title="1">igraph<span class="op">::</span><span class="kw">as_adj_list</span>(intergraph<span class="op">::</span><span class="kw">asIgraph</span>(example_graph)) </a></code></pre></div>
+<pre><code>## [[1]]
+## + 1/4 vertex, from 67e5bad:
+## [1] 2
+## 
+## [[2]]
+## + 2/4 vertices, from 67e5bad:
+## [1] 1 3
+## 
+## [[3]]
+## + 3/4 vertices, from 67e5bad:
+## [1] 2 4 4
+## 
+## [[4]]
+## + 2/4 vertices, from 67e5bad:
+## [1] 3 3</code></pre>
+<p>The function <code>igraph::as_adj_list</code> turns the igraph object into a list of
+type adjacency list. In plain text it would look something like this:</p>
+<pre><code>2 
+1 3 
+2 4 4 
+3 3 </code></pre>
+<p>Here we will deal with an edgelist that includes node information.
+In my opinion, this is one of the best ways to share network data. Let’s read
+the data into R using the function <code>read.csv</code>:</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb244-1" title="1">edges &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;06-edgelist.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb244-2" title="2">nodes &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;06-nodes.csv&quot;</span>)</a></code></pre></div>
+<p>We now have two objects of class <code>data.frame</code>, edges and nodes. Let’s inspect
+them using the <code>head</code> function:</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb245-1" title="1"><span class="kw">head</span>(edges)</a></code></pre></div>
+<pre><code>##   V1  V2
+## 1  1  64
+## 2  2  41
+## 3  2 106
+## 4  3  61
+## 5  4  85
+## 6  4 138</code></pre>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" title="1"><span class="kw">head</span>(nodes)</a></code></pre></div>
+<pre><code>##   vertex.names      race age
+## 1            1 non-white  10
+## 2            2     white  10
+## 3            3     white  17
+## 4            4 non-white  14
+## 5            5 non-white  17
+## 6            6 non-white  14</code></pre>
+<p>It is always important to look at the data before creating the network. Most common
+errors happen before reading the data in and could go undetected in many cases.
+A few examples:</p>
 <ul>
-<li><p>Let <span class="math inline">\(\mathcal{G} = (V,E)\)</span> be a graph, <span class="math inline">\(\gamma\)</span> a vertex attribute, and <span class="math inline">\(\beta = f(\gamma,\mathcal{G})\)</span>, then</p>
-<p><span class="math display">\[\gamma \perp \mathcal{G} \implies \mathbb{E}\left[\beta(\gamma,\mathcal{G})|\mathcal{G}\right] = \mathbb{E}\left[\beta(\gamma,\mathcal{G})\right]\]</span></p></li>
-<li><p>This is, if for example time of adoption is independent on the structure of the network, then the average threshold level will be independent from the network structure as well.</p></li>
-<li><p>Another way of looking at this is that the test will allow us to see how probable is to have this combination of network structure and network threshold (if it is uncommon then we say that the diffusion model is highly likely)</p></li>
+<li><p>Headers in the file could be treated as data, or the files may not
+have headers.</p></li>
+<li><p>Ego/alter columns may show in the wrong order. Both the <code>igraph</code> and <code>network</code>
+packages take the first and second columns of edgelists as ego and alter.</p></li>
+<li><p>Isolates, which wouldn’t show in the edgelist, may be missing from the node
+information set. This is one of the most common errors.</p></li>
+<li><p>Nodes showing in the edgelist may be missing from the nodelist.</p></li>
 </ul>
-<div id="example-not-random-toa" class="section level4 hasAnchor">
-<h4><span class="header-section-number">10.4.4.1</span> Example Not random TOA<a href="statistical-inference.html#example-not-random-toa" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<ul>
-<li><pre><code>To use this test, __netdiffuseR__ has the `struct_test` function.</code></pre></li>
-<li><pre><code>It simulates networks with the same density, and computes a particular statistic every time, generating an EDF (Empirical Distribution Function) under the Null hypothesis (p-values).</code></pre>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb298-1" title="1"><span class="co"># Simulating network</span></a>
-<a class="sourceLine" id="cb298-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1123</span>)</a>
-<a class="sourceLine" id="cb298-3" title="3">net &lt;-<span class="st"> </span><span class="kw">rdiffnet</span>(<span class="dt">n=</span><span class="dv">500</span>, <span class="dt">t=</span><span class="dv">10</span>, <span class="dt">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>)</a>
-<a class="sourceLine" id="cb298-4" title="4"></a>
-<a class="sourceLine" id="cb298-5" title="5"><span class="co"># Running the test</span></a>
-<a class="sourceLine" id="cb298-6" title="6">test &lt;-<span class="st"> </span><span class="kw">struct_test</span>(</a>
-<a class="sourceLine" id="cb298-7" title="7">  <span class="dt">graph     =</span> net, </a>
-<a class="sourceLine" id="cb298-8" title="8">  <span class="dt">statistic =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">threshold</span>(x), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb298-9" title="9">  <span class="dt">R         =</span> <span class="fl">1e3</span>,</a>
-<a class="sourceLine" id="cb298-10" title="10">  <span class="dt">ncpus=</span><span class="dv">4</span>, <span class="dt">parallel=</span><span class="st">&quot;multicore&quot;</span></a>
-<a class="sourceLine" id="cb298-11" title="11">  )</a>
-<a class="sourceLine" id="cb298-12" title="12"></a>
-<a class="sourceLine" id="cb298-13" title="13"><span class="co"># See the output</span></a>
-<a class="sourceLine" id="cb298-14" title="14">test</a></code></pre></div>
-<pre><code>## 
-## Structure dependence test
-## # Simulations     : 1,000
-## # nodes           : 500
-## # of time periods : 10
-## --------------------------------------------------------------------------------
-##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
-##     observed    expected       p.val
-##       0.5513      0.2504      0.0000</code></pre></li>
-</ul>
-<p><img src="08-netdiffuser_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<ul>
-<li><p>Now we shuffle times of adoption, so that is random</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb300-1" title="1"><span class="co"># Resetting TOAs (now will be completely random)</span></a>
-<a class="sourceLine" id="cb300-2" title="2"><span class="kw">diffnet.toa</span>(net) &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">diffnet.toa</span>(net), <span class="kw">nnodes</span>(net), <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb300-3" title="3"></a>
-<a class="sourceLine" id="cb300-4" title="4"><span class="co"># Running the test</span></a>
-<a class="sourceLine" id="cb300-5" title="5">test &lt;-<span class="st"> </span><span class="kw">struct_test</span>(</a>
-<a class="sourceLine" id="cb300-6" title="6">  <span class="dt">graph     =</span> net, </a>
-<a class="sourceLine" id="cb300-7" title="7">  <span class="dt">statistic =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">threshold</span>(x), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb300-8" title="8">  <span class="dt">R         =</span> <span class="fl">1e3</span>,</a>
-<a class="sourceLine" id="cb300-9" title="9">  <span class="dt">ncpus=</span><span class="dv">4</span>, <span class="dt">parallel=</span><span class="st">&quot;multicore&quot;</span></a>
-<a class="sourceLine" id="cb300-10" title="10">  )</a>
-<a class="sourceLine" id="cb300-11" title="11"></a>
-<a class="sourceLine" id="cb300-12" title="12"><span class="co"># See the output</span></a>
-<a class="sourceLine" id="cb300-13" title="13">test</a></code></pre></div>
-<pre><code>## 
-## Structure dependence test
-## # Simulations     : 1,000
-## # nodes           : 500
-## # of time periods : 10
-## --------------------------------------------------------------------------------
-##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
-##     observed    expected       p.val
-##       0.2714      0.2585      0.4020</code></pre>
-<p><img src="08-netdiffuser_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p></li>
-</ul>
+<p>Both <code>igraph</code> and network have functions to read edgelist with a corresponding
+nodelist; the functions <code>graph_from_data_frame</code> and <code>as.nework</code>, respectively. Although
+, for both cases, you can avoid using a nodelist, it is highly recommended as then
+you will (a) make sure that isolates are included and (b) become aware of possible
+problems in the data. A frequent error in <code>graph_from_data_frame</code> is nodes present
+in the edgelist but not in the set of nodes.</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb249-1" title="1">net_ig &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(</a>
+<a class="sourceLine" id="cb249-2" title="2">  <span class="dt">d        =</span> edges,</a>
+<a class="sourceLine" id="cb249-3" title="3">  <span class="dt">directed =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb249-4" title="4">  <span class="dt">vertices =</span> nodes</a>
+<a class="sourceLine" id="cb249-5" title="5">)</a></code></pre></div>
+<p>Using <code>as.network</code> from the <code>network</code> package:</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" title="1">net_net &lt;-<span class="st"> </span>network<span class="op">::</span><span class="kw">as.network</span>(</a>
+<a class="sourceLine" id="cb250-2" title="2">  <span class="dt">x        =</span> edges,</a>
+<a class="sourceLine" id="cb250-3" title="3">  <span class="dt">directed =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb250-4" title="4">  <span class="dt">vertices =</span> nodes</a>
+<a class="sourceLine" id="cb250-5" title="5">)</a></code></pre></div>
+<p>As you can see, both syntaxes are very similar. The main point here is that the
+more explicit we are, the better. Nevertheless, R can be brilliant; being
+<em>shy</em>, i.e., not throwing warnings or errors, is not uncommon. In the next
+section, we will finally start visualizing the data.</p>
 </div>
-</div>
-<div id="regression-analysis" class="section level3 hasAnchor">
-<h3><span class="header-section-number">10.4.5</span> Regression analysis<a href="statistical-inference.html#regression-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><p>In regression analysis, we want to see if exposure, once we control for other
-covariates had any effect on the adoption of a behavior.</p></li>
-<li><p>In general, the big problem here is when we have a latent variable that
-co-determines both network and behavior.</p></li>
-<li><p>Unless we can control for such variable, regression analysis will be
-generically biased.</p></li>
-<li><p>On the other hand, if you can claim that either such variable doesn’t exist
-or you actually can control for it, then we have two options: lagged exposure
-models or contemporaneous exposure models. We will focus on the former.</p></li>
-</ul>
-<div id="lagged-exposure-models" class="section level4 hasAnchor">
-<h4><span class="header-section-number">10.4.5.1</span> Lagged exposure models<a href="statistical-inference.html#lagged-exposure-models" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<ul>
-<li><p>In this type of model, we usually have the following</p>
-<p><span class="math display">\[
-y_t = f(W_{t-1}, y_{t-1}, X_i) + \varepsilon
-\]</span></p>
-<p>Furthermore, in the case of adoption, we have</p>
-<p><span class="math display">\[
-y_{it} = \left\{
-\begin{array}{ll}
-1 &amp; \mbox{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt-1}y_{it-1}}{\sum_{j\neq i}W_{ijt-1}} + X_{it}\beta &gt; 0\\
-0 &amp; \mbox{otherwise}
-\end{array}
-\right.
-\]</span></p></li>
-<li><p>In netdiffuseR is as easy as doing the following:</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" title="1"><span class="co"># fakedata</span></a>
-<a class="sourceLine" id="cb302-2" title="2"><span class="kw">set.seed</span>(<span class="dv">121</span>)</a>
-<a class="sourceLine" id="cb302-3" title="3"></a>
-<a class="sourceLine" id="cb302-4" title="4">W   &lt;-<span class="st"> </span><span class="kw">rgraph_ws</span>(<span class="fl">1e3</span>, <span class="dv">8</span>, <span class="fl">.2</span>)</a>
-<a class="sourceLine" id="cb302-5" title="5">X   &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">var1 =</span> <span class="kw">rnorm</span>(<span class="fl">1e3</span>))</a>
-<a class="sourceLine" id="cb302-6" title="6">toa &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">NA</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="fl">1e3</span>, <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb302-7" title="7"></a>
-<a class="sourceLine" id="cb302-8" title="8">dn  &lt;-<span class="st"> </span><span class="kw">new_diffnet</span>(W, <span class="dt">toa=</span>toa, <span class="dt">vertex.static.attrs =</span> X)</a></code></pre></div>
-<pre><code>## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is static
-## and will be recycled (see ?new_diffnet).</code></pre>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" title="1"><span class="co"># Computing exposure and adoption for regression</span></a>
-<a class="sourceLine" id="cb304-2" title="2">dn[[<span class="st">&quot;cohesive_expo&quot;</span>]] &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="ot">NA</span>, <span class="kw">exposure</span>(dn)[,<span class="op">-</span><span class="kw">nslices</span>(dn)])</a>
-<a class="sourceLine" id="cb304-3" title="3">dn[[<span class="st">&quot;adopt&quot;</span>]]         &lt;-<span class="st"> </span>dn<span class="op">$</span>cumadopt</a>
-<a class="sourceLine" id="cb304-4" title="4"></a>
-<a class="sourceLine" id="cb304-5" title="5"><span class="co"># Generating the data and running the model</span></a>
-<a class="sourceLine" id="cb304-6" title="6">dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(dn)</a>
-<a class="sourceLine" id="cb304-7" title="7">ans &lt;-<span class="st"> </span><span class="kw">glm</span>(adopt <span class="op">~</span><span class="st"> </span>cohesive_expo <span class="op">+</span><span class="st"> </span>var1 <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(per),</a>
-<a class="sourceLine" id="cb304-8" title="8">           <span class="dt">data =</span> dat,</a>
-<a class="sourceLine" id="cb304-9" title="9">           <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&quot;probit&quot;</span>),</a>
-<a class="sourceLine" id="cb304-10" title="10">           <span class="dt">subset =</span> <span class="kw">is.na</span>(toa) <span class="op">|</span><span class="st"> </span>(per <span class="op">&lt;=</span><span class="st"> </span>toa))</a>
-<a class="sourceLine" id="cb304-11" title="11"><span class="kw">summary</span>(ans)</a></code></pre></div>
-<pre><code>## 
-## Call:
-## glm(formula = adopt ~ cohesive_expo + var1 + factor(per), family = binomial(link = &quot;probit&quot;), 
-##     data = dat, subset = is.na(toa) | (per &lt;= toa))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.1754  -0.8462  -0.6645   1.2878   1.9523  
-## 
-## Coefficients:
-##               Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)   -0.92777    0.05840 -15.888  &lt; 2e-16 ***
-## cohesive_expo  0.23839    0.17514   1.361 0.173452    
-## var1          -0.04623    0.02704  -1.710 0.087334 .  
-## factor(per)3   0.29313    0.07715   3.799 0.000145 ***
-## factor(per)4   0.33902    0.09897   3.425 0.000614 ***
-## factor(per)5   0.59851    0.12193   4.909 9.18e-07 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 2745.1  on 2317  degrees of freedom
-## Residual deviance: 2663.5  on 2312  degrees of freedom
-##   (1000 observations deleted due to missingness)
-## AIC: 2675.5
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
-<p>Alternatively, we could have used the new function <code>diffreg</code></p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb306-1" title="1">ans &lt;-<span class="st"> </span><span class="kw">diffreg</span>(dn <span class="op">~</span><span class="st"> </span>exposure <span class="op">+</span><span class="st"> </span>var1 <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(per), <span class="dt">type =</span> <span class="st">&quot;probit&quot;</span>)</a>
-<a class="sourceLine" id="cb306-2" title="2"><span class="kw">summary</span>(ans)</a></code></pre></div>
-<pre><code>## 
-## Call:
-## glm(formula = Adopt ~ exposure + var1 + factor(per), family = binomial(link = &quot;probit&quot;), 
-##     data = dat, subset = ifelse(is.na(toa), TRUE, toa &gt;= per))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.1754  -0.8462  -0.6645   1.2878   1.9523  
-## 
-## Coefficients:
-##              Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -0.92777    0.05840 -15.888  &lt; 2e-16 ***
-## exposure      0.23839    0.17514   1.361 0.173452    
-## var1         -0.04623    0.02704  -1.710 0.087334 .  
-## factor(per)3  0.29313    0.07715   3.799 0.000145 ***
-## factor(per)4  0.33902    0.09897   3.425 0.000614 ***
-## factor(per)5  0.59851    0.12193   4.909 9.18e-07 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 2745.1  on 2317  degrees of freedom
-## Residual deviance: 2663.5  on 2312  degrees of freedom
-##   (1000 observations deleted due to missingness)
-## AIC: 2675.5
-## 
-## Number of Fisher Scoring iterations: 4</code></pre></li>
-</ul>
-</div>
-<div id="contemporaneous-exposure-models" class="section level4 hasAnchor">
-<h4><span class="header-section-number">10.4.5.2</span> Contemporaneous exposure models<a href="statistical-inference.html#contemporaneous-exposure-models" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<ul>
-<li><p>Similar to the lagged exposure models, we usually have the following</p>
-<p><span class="math display">\[
-y_t = f(W_t, y_t, X_t) + \varepsilon
-\]</span></p>
-<p>Furthermore, in the case of adoption, we have</p>
-<p><span class="math display">\[
-y_{it} = \left\{
-\begin{array}{ll}
-1 &amp; \mbox{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt}y_{it}}{\sum_{j\neq i}W_{ijt}} + X_{it}\beta &gt; 0\\
-0 &amp; \mbox{otherwise}
-\end{array}
-\right.
-\]</span></p></li>
-<li><p>Unfortunately, since <span class="math inline">\(y_t\)</span> is in both sides of the equation, this models cannot
-be fitted using a standard probit or logit regression.</p></li>
-<li><p>Two alternatives to solve this:</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Using Instrumental Variables Probit (ivprobit in both R and Stata)</p></li>
-<li><p>Use a Spatial Autoregressive (SAR) Probit (SpatialProbit and ProbitSpatial in R).</p></li>
-</ol></li>
-<li><p>We won’t cover these here.</p></li>
-</ul>
-</div>
-</div>
-<div id="problems-2" class="section level3 hasAnchor">
-<h3><span class="header-section-number">10.4.6</span> Problems<a href="statistical-inference.html#problems-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Using the dataset <a href="stats.rda">stats.rda</a>:</p>
-<ol style="list-style-type: decimal">
-<li><p>Compute Moran’s I as the function <code>summary.diffnet</code> does. For this you’ll need
-to use the function <code>toa_mat</code> (which calculates the cumulative adoption matrix),
-and <code>approx_geodesic</code> (which computes the geodesic matrix). (see <code>?summary.diffnet</code>
-for more details).</p></li>
-<li><p>Read the data as diffnet object, and fit the following logit model <span class="math inline">\(adopt = Exposure*\gamma + Measure*\beta + \varepsilon\)</span>.
-What happens if you exclude the time-fixed effects?</p></li>
-</ol>
-<!-- (<a href="stats-solutions.r" target="_blank">solution script</a>) -->
-<!-- ```{r datagen, echo=FALSE, cache=TRUE}
-set.seed(1)
-n <- 500
-nper <- 5
-X <- cbind(Measure=rnorm(n))
-y <- cbind(sample(c(0, 1), n, TRUE, prob = c(.9, .1)))
-# Baseline network
-W <- (rgraph_ws(n, k=8, p = .2))
-sim_space <- function(W, y, X, pers = 4, lag = FALSE, rho = .2, beta=.5) {
-  W <- as.matrix(W)
-  W <- W/(rowSums(W) + 1e-20)
-  n <- nrow(W)
-  for (i in 1:pers) {
-    if (!lag)
-      ynew <- (solve(diag(n) - rho*W) %*% (X*beta) + rnorm(n)) > 0
-    else
-      ynew <- (rho * (W %*% y[,i - as.integer(i != 1),drop=FALSE]) + beta*X + rnorm(n)) > 0
-    
-    y <- cbind(y, ifelse(
-      y[,i - as.integer(i != 1),drop=FALSE] == 1,
-      y[,i - as.integer(i != 1),drop=FALSE], 
-      ynew)
-      )
-  }
-  
-  y
-}
-ans <- sim_space(W, y, X, pers = nper, lag=TRUE)
-toa <- ncol(ans) - apply(ans, 1, sum)
-X <- cbind(X, toa=ifelse(toa == 0, NA, toa))
-save(X, W, file="stats.rda")
-``` -->
-
-</div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="simulation-of-diffusion-processes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="stochastic-actor-oriented-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="social-networks-in-schools.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualizing-the-network.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -630,7 +447,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/gvegayon/appliedsnar/edit/master/08-netdiffuser.Rmd",
+"link": "https://github.com/gvegayon/appliedsnar/edit/master/06-network-simulation-and-viz.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -638,7 +455,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/gvegayon/appliedsnar/blob/master/08-netdiffuser.Rmd",
+"link": "https://github.com/gvegayon/appliedsnar/blob/master/06-network-simulation-and-viz.Rmd",
 "text": null
 },
 "download": ["appliedsnar.pdf", "appliedsnar.epub"],

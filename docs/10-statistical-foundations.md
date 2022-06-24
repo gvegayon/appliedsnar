@@ -3,8 +3,15 @@
 ## Bayes' Rule
 
 \begin{equation}
-\Prcond{X=x}{Y=y} = \frac{\Prcond{Y=y}{X=y}\Pr{X=x}}{\Pr{Y=y}}
+\Pr{\left(X=x|Y=y\right)} = \frac{\Pr{\left(Y=y|X=y\right)}\Pr{\left(X=x\right)}}{\Pr{\left(Y=y\right)}}
 \end{equation}
+
+Bayes' rule can be derived using conditional probabilities. In particular, $\Pr{\left(x=x|Y=y\right)}$ is defined as $\Pr{\left(x=x, Y=y\right)}/Pr{\left(Y=y\right)}$. Likewise, $\Pr{\left(y=y|X=x\right)}$ is defined as $\Pr{\left(y=y, X=x\right)}/Pr{\left(X=x\right)}$, which can be re-written as $\Pr{\left(x=x, Y=y\right)} = \Pr{\left(y=y|X=x\right)}Pr{\left(X=x\right)}$. Replacing the last equality in the first equation we get
+
+\begin{align*}
+\Pr{\left(x=x|Y=y\right)} & = \frac{\Pr{\left(x=x, Y=y\right)}}{Pr{\left(Y=y\right)}} \\
+& \frac{\Pr{\left(y=y|X=x\right)}Pr{\left(X=x\right)}}{Pr{\left(Y=y\right)}}
+\end{align*}
 
 ## Markov Chain 
 
@@ -18,7 +25,7 @@ Algorithm is in accepting a proposed move from $\theta$ to $\theta'$ with
 probability equal to:
 
 \begin{equation}
-r = \min\left(1, \frac{\Prcond{\theta'}{D}}{\Prcond{\theta}{D}}\right)
+r = \min\left(1, \frac{\Pr{\left(\theta'|D\right)}}{\Pr{\left(\theta|D\right)}}\right)
 \end{equation}
 
 The resulting sequence converges to the target distribution. We can prove
@@ -45,7 +52,7 @@ Analysis:"
 ### Metropolis-Hastings
 
 $$
-\min\left(1, \frac{\Prcond{D}{\theta'}\Pr{\theta'}\Prcond{\theta'}{\theta}}{\Prcond{D}{\theta}\Pr{\theta}\Prcond{\theta}{\theta'}}\right)
+\min\left(1, \frac{\Pr{\left(d|\theta'\right)}\Pr{\left(\theta'\right)}\Pr{\left(\theta'|\theta\right)}}{\Pr{\left(d|\theta\right)}\Pr{\left(\theta\right)}\Pr{\left(\theta|\theta'\right)}}\right)
 $$
 
 If the transittion probability is symmetric, then the previous equation reduces
@@ -65,9 +72,9 @@ state,--and observed summary statistic $s_0 = S(D_{observed})$:
     c. Calculate the summary statistics $s_t = S(D_t)$
 
     d. Accept the proposed state with probability
-    $$
-    r = \min\left(1, \frac{\Prcond{s_0}{s_t,\theta_t}\Pr{\theta_t}\Pr{\theta^*\to\theta_t}}{\Prcond{s_0}{s_{t-1},\theta_{t-1}}\Pr{\theta_{t-1}}\Pr{\theta_{t}\to\theta^*}}\right)
-    $$
+    <!-- $$
+    r = \min\left(1, \frac{\Pr{\left(s_0|s_t,\theta_t\right)}\Pr{\left(\theta_t\right)}\Pr{\left(\theta^*\to\theta_t\right)}}{\Pr{\left(s_0|s_{t-1\right)},\theta_{t-1}}\Pr{\left(\theta_{t-1\right)}}\Pr{\left(\theta_{t\right)}\to\theta^*}}\right)
+    $$ -->
 
     If accepted, set $\theta^* = \theta_t$.
 

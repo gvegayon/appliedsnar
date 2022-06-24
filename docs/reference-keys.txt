@@ -43,7 +43,11 @@ separable-temporal-exponential-family-random-graph-models
 simulating-and-visualizing-networks
 random-graph-models
 social-networks-in-schools
+reading-a-network
 visualizing-the-network
+vertex-size
+vertex-color
+vertex-shape
 hypothesis-testing-in-networks
 comparing-networks
 network-bootstrap

@@ -131,31 +131,31 @@ x <- rdiffnet(
 plot(x)
 ```
 
-<img src="08-netdiffuser_files/figure-html/viz-1.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/viz-1.png)<!-- -->
 
 ```r
 plot_diffnet(x)
 ```
 
-<img src="08-netdiffuser_files/figure-html/viz-2.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/viz-2.png)<!-- -->
 
 ```r
 plot_diffnet2(x)
 ```
 
-<img src="08-netdiffuser_files/figure-html/viz-3.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/viz-3.png)<!-- -->
 
 ```r
 plot_adopters(x)
 ```
 
-<img src="08-netdiffuser_files/figure-html/viz-4.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/viz-4.png)<!-- -->
 
 ```r
 plot_threshold(x)
 ```
 
-<img src="08-netdiffuser_files/figure-html/viz-5.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/viz-5.png)<!-- -->
 
 ```r
 plot_infectsuscep(x, K=2)
@@ -166,13 +166,13 @@ plot_infectsuscep(x, K=2)
 ## applying logscale some observations are missing.
 ```
 
-<img src="08-netdiffuser_files/figure-html/viz-6.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/viz-6.png)<!-- -->
 
 ```r
 plot_hazard(x)
 ```
 
-<img src="08-netdiffuser_files/figure-html/viz-7.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/viz-7.png)<!-- -->
 
 
 ### Problems
@@ -304,7 +304,7 @@ summary(diffnet_rumor)
 plot_diffnet(diffnet_rumor, slices = c(1, 3, 5))
 ```
 
-<img src="08-netdiffuser_files/figure-html/plot-rumor-1.png" width="672" style="display: block; margin: auto;" />
+<img src="08-netdiffuser_files/figure-epub3/plot-rumor-1.png" style="display: block; margin: auto;" />
 
 ```r
 # We want to use igraph to compute layout
@@ -314,7 +314,7 @@ pos <- igraph::layout_with_drl(igdf)
 plot_diffnet2(diffnet_rumor, vertex.size = dgr(diffnet_rumor)[,1], layout=pos)
 ```
 
-<img src="08-netdiffuser_files/figure-html/plot-rumor-2.png" width="672" style="display: block; margin: auto;" />
+<img src="08-netdiffuser_files/figure-epub3/plot-rumor-2.png" style="display: block; margin: auto;" />
 
 ### Difussion
 
@@ -339,7 +339,7 @@ legend("topleft", legend = c("Disease", "Complex"), col = c("lightblue", "tomato
        bty = "n", pch=19)
 ```
 
-<img src="08-netdiffuser_files/figure-html/plot-complex-and-disease-1.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/plot-complex-and-disease-1.png)<!-- -->
 
 
 ### Mentor Matching
@@ -423,7 +423,7 @@ plot(ig, vertex.color = c("azure", "tomato")[X+1], vertex.label = NA,
      vertex.size = sqrt(dgr(net)))
 ```
 
-<img src="08-netdiffuser_files/figure-html/sim-sim-1.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/sim-sim-1.png)<!-- -->
 
 ```r
 
@@ -534,7 +534,7 @@ legend(
 )
 ```
 
-<img src="08-netdiffuser_files/figure-html/sim-sim-results-1.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/sim-sim-results-1.png)<!-- -->
 
 
 <!-- *   Example simulating a thousand networks by changing threshold levels.
@@ -585,7 +585,7 @@ legend(
     )
     ```
     
-    <img src="08-netdiffuser_files/figure-html/geodesic_speed-box-1.png" width="672" />
+    ![](08-netdiffuser_files/figure-epub3/geodesic_speed-box-1.png)<!-- -->
 
 *   The `summary.diffnet` method already runs Moran's for you. What happens under the hood is:
     
@@ -670,10 +670,10 @@ legend(
     ## --------------------------------------------------------------------------------
     ##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
     ##     observed    expected       p.val
-    ##       0.5513      0.2504      0.0000
+    ##       0.5513      0.2509      0.0000
     ```
 
-<img src="08-netdiffuser_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+![](08-netdiffuser_files/figure-epub3/unnamed-chunk-2-1.png)<!-- -->
 
 -   Now we shuffle times of adoption, so that is random
     
@@ -703,10 +703,10 @@ legend(
     ## --------------------------------------------------------------------------------
     ##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
     ##     observed    expected       p.val
-    ##       0.2714      0.2585      0.4020
+    ##       0.2714      0.2594      0.4060
     ```
     
-    <img src="08-netdiffuser_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+    ![](08-netdiffuser_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
 
 ### Regression analysis
 

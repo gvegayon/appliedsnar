@@ -94,7 +94,7 @@ net %v% "is.ego"
 gplot(net, vertex.col = net %v% "is.ego")
 ```
 
-<img src="05-ergms-constrains_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/unnamed-chunk-1-1.png)<!-- -->
 
 To create the auxiliary variable, we will use the following function:
 
@@ -158,7 +158,7 @@ net_sim <- simulate(net ~ edges + nodematch("aux_var"), coef = c(-3.0, -Inf))
 gplot(net_sim, vertex.col = net_sim %v% "is.ego")
 ```
 
-<img src="05-ergms-constrains_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
 
 As you can see, this network has only ties of the type `E-E` and `A-E`. We can
 double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph
@@ -208,7 +208,7 @@ gplot(net_of_alters, vertex.col = net_of_alters %v% "is.ego", main = "A")
 gplot(net_of_egos, vertex.col = net_of_egos %v% "is.ego", main = "E")
 ```
 
-<img src="05-ergms-constrains_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/unnamed-chunk-5-1.png)<!-- -->
 
 ```r
 par(op)
@@ -266,7 +266,7 @@ for (i in 1:4) {
 }
 ```
 
-<img src="05-ergms-constrains_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/unnamed-chunk-7-1.png)<!-- -->
 
 ```r
 par(op)
@@ -333,7 +333,7 @@ summary(net_b ~ edges + Log(~b1star(2)))
 netplot::nplot(net_b, vertex.col = (1:n <= nactors) + 1)
 ```
 
-<img src="05-ergms-constrains_files/figure-html/05-example2-simulated-graph-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/05-example2-simulated-graph-1.png)<!-- -->
 
 Notice that the first `nactors` vertices in the network are the actors, and
 the remaining are the entities. Now, although the `ergm` package features
@@ -399,7 +399,7 @@ gridExtra::grid.arrange(
 )
 ```
 
-<img src="05-ergms-constrains_files/figure-html/05-example2-side-by-side-1.png" width="672" />
+![](05-ergms-constrains_files/figure-epub3/05-example2-side-by-side-1.png)<!-- -->
 
 ```r
 # Looking at the counts
