@@ -280,13 +280,13 @@ data in the form of an adjacency matrix. Other times, data will come in the form
 of an edgelist. Another common format is the adjacency list, which is a compressed
 version of an edgelist. Let’s see how the formats look like for the following
 network:</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" title="1">example_graph &lt;-<span class="st"> </span><span class="kw">matrix</span>(0L, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</a>
-<a class="sourceLine" id="cb262-2" title="2">example_graph[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">7</span>)] &lt;-<span class="st"> </span>1L</a>
-<a class="sourceLine" id="cb262-3" title="3">example_graph[<span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>] &lt;-<span class="st"> </span>1L</a>
-<a class="sourceLine" id="cb262-4" title="4">example_graph[<span class="st">&quot;d&quot;</span>, <span class="st">&quot;c&quot;</span>] &lt;-<span class="st"> </span>1L</a>
-<a class="sourceLine" id="cb262-5" title="5">example_graph &lt;-<span class="st"> </span><span class="kw">as.network</span>(example_graph)</a>
-<a class="sourceLine" id="cb262-6" title="6"><span class="kw">set.seed</span>(<span class="dv">1231</span>)</a>
-<a class="sourceLine" id="cb262-7" title="7"><span class="kw">gplot</span>(example_graph, <span class="dt">label =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb237-1" title="1">example_graph &lt;-<span class="st"> </span><span class="kw">matrix</span>(0L, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</a>
+<a class="sourceLine" id="cb237-2" title="2">example_graph[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">7</span>)] &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb237-3" title="3">example_graph[<span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>] &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb237-4" title="4">example_graph[<span class="st">&quot;d&quot;</span>, <span class="st">&quot;c&quot;</span>] &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb237-5" title="5">example_graph &lt;-<span class="st"> </span><span class="kw">as.network</span>(example_graph)</a>
+<a class="sourceLine" id="cb237-6" title="6"><span class="kw">set.seed</span>(<span class="dv">1231</span>)</a>
+<a class="sourceLine" id="cb237-7" title="7"><span class="kw">gplot</span>(example_graph, <span class="dt">label =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</a></code></pre></div>
 <p><img src="06-network-simulation-and-viz_files/figure-html/06-fake-graph-read-1.png" width="672" /></p>
 <ul>
 <li><strong>Adjacency matrix</strong> a matrix of size <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> where the <span class="math inline">\(ij\)</span>-th entry represents
@@ -297,7 +297,7 @@ graphs, the adjacency matrix is usually upper or lower diagonal. The adjacency
 matrix of an undirected graph is symmetric, so we don’t need to report the same
 information twice. For example:</li>
 </ul>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" title="1"><span class="kw">as.matrix</span>(example_graph)</a></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" title="1"><span class="kw">as.matrix</span>(example_graph)</a></code></pre></div>
 <pre><code>##   a b c d
 ## a 0 0 0 0
 ## b 1 0 0 0
@@ -307,7 +307,7 @@ information twice. For example:</li>
 <li><strong>Edge list</strong> a matrix of size <span class="math inline">\(|E|\)</span> by <span class="math inline">\(2\)</span>, where <span class="math inline">\(|E|\)</span> is the number of edges.
 Each entry represents a tie in the graph.</li>
 </ul>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" title="1"><span class="kw">as.edgelist</span>(example_graph)</a></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" title="1"><span class="kw">as.edgelist</span>(example_graph)</a></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]    2    1
 ## [2,]    3    2
@@ -331,21 +331,21 @@ Each entry represents a tie in the graph.</li>
 <li><strong>Adjacency list</strong> This data format uses less space than edgelists as ties are
 grouped by ego (source.)</li>
 </ul>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" title="1">igraph<span class="op">::</span><span class="kw">as_adj_list</span>(intergraph<span class="op">::</span><span class="kw">asIgraph</span>(example_graph)) </a></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" title="1">igraph<span class="op">::</span><span class="kw">as_adj_list</span>(intergraph<span class="op">::</span><span class="kw">asIgraph</span>(example_graph)) </a></code></pre></div>
 <pre><code>## [[1]]
-## + 1/4 vertex, from ccbea60:
+## + 1/4 vertex, from ee31f86:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from ccbea60:
+## + 2/4 vertices, from ee31f86:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from ccbea60:
+## + 3/4 vertices, from ee31f86:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from ccbea60:
+## + 2/4 vertices, from ee31f86:
 ## [1] 3 3</code></pre>
 <p>The function <code>igraph::as_adj_list</code> turns the igraph object into a list of
 type adjacency list. In plain text it would look something like this:</p>
@@ -356,19 +356,19 @@ type adjacency list. In plain text it would look something like this:</p>
 <p>Here we will deal with an edgelist that includes node information.
 In my opinion, this is one of the best ways to share network data. Let’s read
 the data into R using the function <code>read.csv</code>:</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb270-1" title="1">edges &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;06-edgelist.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb270-2" title="2">nodes &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;06-nodes.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb245-1" title="1">edges &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;06-edgelist.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb245-2" title="2">nodes &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;06-nodes.csv&quot;</span>)</a></code></pre></div>
 <p>We now have two objects of class <code>data.frame</code>, edges and nodes. Let’s inspect
 them using the <code>head</code> function:</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" title="1"><span class="kw">head</span>(edges)</a></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb246-1" title="1"><span class="kw">head</span>(edges)</a></code></pre></div>
 <pre><code>##   V1  V2
-## 1  1  64
+## 1  2   7
 ## 2  2  41
-## 3  2 106
-## 4  3  61
-## 5  4  85
-## 6  4 138</code></pre>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb273-1" title="1"><span class="kw">head</span>(nodes)</a></code></pre></div>
+## 3  3   5
+## 4  3  16
+## 5  4 138
+## 6  5   9</code></pre>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" title="1"><span class="kw">head</span>(nodes)</a></code></pre></div>
 <pre><code>##   vertex.names      race age
 ## 1            1 non-white  10
 ## 2            2     white  10
@@ -394,17 +394,17 @@ nodelist; the functions <code>graph_from_data_frame</code> and <code>as.nework</
 you will (a) make sure that isolates are included and (b) become aware of possible
 problems in the data. A frequent error in <code>graph_from_data_frame</code> is nodes present
 in the edgelist but not in the set of nodes.</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" title="1">net_ig &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(</a>
-<a class="sourceLine" id="cb275-2" title="2">  <span class="dt">d        =</span> edges,</a>
-<a class="sourceLine" id="cb275-3" title="3">  <span class="dt">directed =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb275-4" title="4">  <span class="dt">vertices =</span> nodes</a>
-<a class="sourceLine" id="cb275-5" title="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" title="1">net_ig &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(</a>
+<a class="sourceLine" id="cb250-2" title="2">  <span class="dt">d        =</span> edges,</a>
+<a class="sourceLine" id="cb250-3" title="3">  <span class="dt">directed =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb250-4" title="4">  <span class="dt">vertices =</span> nodes</a>
+<a class="sourceLine" id="cb250-5" title="5">)</a></code></pre></div>
 <p>Using <code>as.network</code> from the <code>network</code> package:</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" title="1">net_net &lt;-<span class="st"> </span>network<span class="op">::</span><span class="kw">as.network</span>(</a>
-<a class="sourceLine" id="cb276-2" title="2">  <span class="dt">x        =</span> edges,</a>
-<a class="sourceLine" id="cb276-3" title="3">  <span class="dt">directed =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb276-4" title="4">  <span class="dt">vertices =</span> nodes</a>
-<a class="sourceLine" id="cb276-5" title="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" title="1">net_net &lt;-<span class="st"> </span>network<span class="op">::</span><span class="kw">as.network</span>(</a>
+<a class="sourceLine" id="cb251-2" title="2">  <span class="dt">x        =</span> edges,</a>
+<a class="sourceLine" id="cb251-3" title="3">  <span class="dt">directed =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb251-4" title="4">  <span class="dt">vertices =</span> nodes</a>
+<a class="sourceLine" id="cb251-5" title="5">)</a></code></pre></div>
 <p>As you can see, both syntaxes are very similar. The main point here is that the
 more explicit we are, the better. Nevertheless, R can be brilliant; being
 <em>shy</em>, i.e., not throwing warnings or errors, is not uncommon. In the next

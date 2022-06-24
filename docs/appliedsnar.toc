@@ -35,55 +35,55 @@
 \contentsline {section}{\numberline {6.2}Example 2: Bi-partite networks}{66}{section.6.2}%
 \contentsline {chapter}{\numberline {7}(Separable) Temporal Exponential Family Random Graph Models}{71}{chapter.7}%
 \contentsline {chapter}{\numberline {8}Simulating and visualizing networks}{73}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Random Graph Models}{73}{section.8.1}%
+\contentsline {section}{\numberline {8.1}Random Graph Models}{74}{section.8.1}%
 \contentsline {section}{\numberline {8.2}Social Networks in Schools}{74}{section.8.2}%
 \contentsline {section}{\numberline {8.3}Reading a network}{76}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Visualizing the network}{79}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}Vertex size}{79}{subsection.8.4.1}%
-\contentsline {subsection}{\numberline {8.4.2}Vertex color}{81}{subsection.8.4.2}%
-\contentsline {subsection}{\numberline {8.4.3}Vertex shape}{82}{subsection.8.4.3}%
-\contentsline {chapter}{\numberline {9}Hypothesis testing in networks}{83}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Comparing networks}{83}{section.9.1}%
-\contentsline {subsection}{\numberline {9.1.1}Network bootstrap}{83}{subsection.9.1.1}%
-\contentsline {subsection}{\numberline {9.1.2}When the statistic is normal}{84}{subsection.9.1.2}%
-\contentsline {subsection}{\numberline {9.1.3}When the statistic is NOT normal}{85}{subsection.9.1.3}%
-\contentsline {section}{\numberline {9.2}Examples}{86}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Average of node-level stats}{86}{subsection.9.2.1}%
-\contentsline {chapter}{\numberline {10}Network diffussion with \texttt {netdiffuseR}}{87}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Network diffusion of innovation}{87}{section.10.1}%
-\contentsline {subsection}{\numberline {10.1.1}Diffusion networks}{87}{subsection.10.1.1}%
-\contentsline {subsection}{\numberline {10.1.2}Thresholds}{87}{subsection.10.1.2}%
-\contentsline {section}{\numberline {10.2}The netdiffuseR R package}{88}{section.10.2}%
-\contentsline {subsection}{\numberline {10.2.1}Overview}{88}{subsection.10.2.1}%
-\contentsline {subsection}{\numberline {10.2.2}Datasets}{88}{subsection.10.2.2}%
-\contentsline {subsection}{\numberline {10.2.3}Visualization methods}{89}{subsection.10.2.3}%
-\contentsline {subsection}{\numberline {10.2.4}Problems}{90}{subsection.10.2.4}%
-\contentsline {section}{\numberline {10.3}Simulation of diffusion processes}{91}{section.10.3}%
-\contentsline {subsection}{\numberline {10.3.1}Simulating diffusion networks}{91}{subsection.10.3.1}%
-\contentsline {subsection}{\numberline {10.3.2}Rumor spreading}{92}{subsection.10.3.2}%
-\contentsline {subsection}{\numberline {10.3.3}Difussion}{93}{subsection.10.3.3}%
-\contentsline {subsection}{\numberline {10.3.4}Mentor Matching}{93}{subsection.10.3.4}%
-\contentsline {subsection}{\numberline {10.3.5}Example by changing threshold}{95}{subsection.10.3.5}%
-\contentsline {subsection}{\numberline {10.3.6}Problems}{98}{subsection.10.3.6}%
-\contentsline {section}{\numberline {10.4}Statistical inference}{98}{section.10.4}%
-\contentsline {subsection}{\numberline {10.4.1}Moran's I}{98}{subsection.10.4.1}%
-\contentsline {subsection}{\numberline {10.4.2}Using geodesics}{98}{subsection.10.4.2}%
-\contentsline {subsection}{\numberline {10.4.3}Structural dependence and permutation tests}{99}{subsection.10.4.3}%
-\contentsline {subsection}{\numberline {10.4.4}Idea}{99}{subsection.10.4.4}%
-\contentsline {subsubsection}{\numberline {10.4.4.1}Example Not random TOA}{100}{subsubsection.10.4.4.1}%
-\contentsline {subsection}{\numberline {10.4.5}Regression analysis}{101}{subsection.10.4.5}%
-\contentsline {subsubsection}{\numberline {10.4.5.1}Lagged exposure models}{101}{subsubsection.10.4.5.1}%
-\contentsline {subsubsection}{\numberline {10.4.5.2}Contemporaneous exposure models}{104}{subsubsection.10.4.5.2}%
-\contentsline {subsection}{\numberline {10.4.6}Problems}{104}{subsection.10.4.6}%
-\contentsline {chapter}{\numberline {11}Stochastic Actor Oriented Models}{105}{chapter.11}%
-\contentsline {part}{II\hspace {1em}Statistical Foundations}{107}{part.2}%
-\contentsline {section}{\numberline {11.1}Bayes' Rule}{109}{section.11.1}%
-\contentsline {section}{\numberline {11.2}Markov Chain}{109}{section.11.2}%
-\contentsline {subsection}{\numberline {11.2.1}Metropolis Algorithm}{109}{subsection.11.2.1}%
-\contentsline {subsection}{\numberline {11.2.2}Metropolis-Hastings}{110}{subsection.11.2.2}%
-\contentsline {subsection}{\numberline {11.2.3}Likelihood-free MCMC}{110}{subsection.11.2.3}%
-\contentsline {chapter}{\numberline {A}Datasets}{111}{appendix.A}%
-\contentsline {section}{\numberline {A.1}SNS data}{111}{section.A.1}%
-\contentsline {subsection}{\numberline {A.1.1}About the data}{111}{subsection.A.1.1}%
-\contentsline {subsection}{\numberline {A.1.2}Variables}{111}{subsection.A.1.2}%
-\contentsline {chapter}{References}{113}{appendix*.2}%
+\contentsline {section}{\numberline {8.4}Visualizing the network}{80}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}Vertex size}{80}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}Vertex color}{82}{subsection.8.4.2}%
+\contentsline {subsection}{\numberline {8.4.3}Vertex shape}{83}{subsection.8.4.3}%
+\contentsline {chapter}{\numberline {9}Hypothesis testing in networks}{85}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Comparing networks}{85}{section.9.1}%
+\contentsline {subsection}{\numberline {9.1.1}Network bootstrap}{85}{subsection.9.1.1}%
+\contentsline {subsection}{\numberline {9.1.2}When the statistic is normal}{86}{subsection.9.1.2}%
+\contentsline {subsection}{\numberline {9.1.3}When the statistic is NOT normal}{87}{subsection.9.1.3}%
+\contentsline {section}{\numberline {9.2}Examples}{88}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Average of node-level stats}{88}{subsection.9.2.1}%
+\contentsline {chapter}{\numberline {10}Network diffussion with \texttt {netdiffuseR}}{89}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Network diffusion of innovation}{89}{section.10.1}%
+\contentsline {subsection}{\numberline {10.1.1}Diffusion networks}{89}{subsection.10.1.1}%
+\contentsline {subsection}{\numberline {10.1.2}Thresholds}{89}{subsection.10.1.2}%
+\contentsline {section}{\numberline {10.2}The netdiffuseR R package}{90}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}Overview}{90}{subsection.10.2.1}%
+\contentsline {subsection}{\numberline {10.2.2}Datasets}{90}{subsection.10.2.2}%
+\contentsline {subsection}{\numberline {10.2.3}Visualization methods}{91}{subsection.10.2.3}%
+\contentsline {subsection}{\numberline {10.2.4}Problems}{92}{subsection.10.2.4}%
+\contentsline {section}{\numberline {10.3}Simulation of diffusion processes}{93}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}Simulating diffusion networks}{93}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}Rumor spreading}{94}{subsection.10.3.2}%
+\contentsline {subsection}{\numberline {10.3.3}Difussion}{95}{subsection.10.3.3}%
+\contentsline {subsection}{\numberline {10.3.4}Mentor Matching}{95}{subsection.10.3.4}%
+\contentsline {subsection}{\numberline {10.3.5}Example by changing threshold}{97}{subsection.10.3.5}%
+\contentsline {subsection}{\numberline {10.3.6}Problems}{100}{subsection.10.3.6}%
+\contentsline {section}{\numberline {10.4}Statistical inference}{100}{section.10.4}%
+\contentsline {subsection}{\numberline {10.4.1}Moran's I}{100}{subsection.10.4.1}%
+\contentsline {subsection}{\numberline {10.4.2}Using geodesics}{100}{subsection.10.4.2}%
+\contentsline {subsection}{\numberline {10.4.3}Structural dependence and permutation tests}{101}{subsection.10.4.3}%
+\contentsline {subsection}{\numberline {10.4.4}Idea}{101}{subsection.10.4.4}%
+\contentsline {subsubsection}{\numberline {10.4.4.1}Example Not random TOA}{102}{subsubsection.10.4.4.1}%
+\contentsline {subsection}{\numberline {10.4.5}Regression analysis}{103}{subsection.10.4.5}%
+\contentsline {subsubsection}{\numberline {10.4.5.1}Lagged exposure models}{103}{subsubsection.10.4.5.1}%
+\contentsline {subsubsection}{\numberline {10.4.5.2}Contemporaneous exposure models}{106}{subsubsection.10.4.5.2}%
+\contentsline {subsection}{\numberline {10.4.6}Problems}{106}{subsection.10.4.6}%
+\contentsline {chapter}{\numberline {11}Stochastic Actor Oriented Models}{107}{chapter.11}%
+\contentsline {part}{II\hspace {1em}Statistical Foundations}{109}{part.2}%
+\contentsline {section}{\numberline {11.1}Bayes' Rule}{111}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Markov Chain}{111}{section.11.2}%
+\contentsline {subsection}{\numberline {11.2.1}Metropolis Algorithm}{111}{subsection.11.2.1}%
+\contentsline {subsection}{\numberline {11.2.2}Metropolis-Hastings}{112}{subsection.11.2.2}%
+\contentsline {subsection}{\numberline {11.2.3}Likelihood-free MCMC}{112}{subsection.11.2.3}%
+\contentsline {chapter}{\numberline {A}Datasets}{113}{appendix.A}%
+\contentsline {section}{\numberline {A.1}SNS data}{113}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}About the data}{113}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}Variables}{113}{subsection.A.1.2}%
+\contentsline {chapter}{References}{115}{appendix*.2}%

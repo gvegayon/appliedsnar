@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.3.14)  24 JUN 2022 13:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.3.14)  24 JUN 2022 15:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1656,103 +1656,105 @@ Chapter 7.
 
 ]
 Chapter 8.
-[73] [74]
+[73] [74] [75]
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found on input line 3558.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3558: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3558 ...z_files/figure-latex/06-first-fig-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[75]
-
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found on input line 3600.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found on input line 3599.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3600: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3599: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3600 ...s/figure-latex/06-fake-graph-read-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[76] [77] [78]
-Package textcomp Info: Symbol \textasciigrave not provided by
-(textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 3840.
-Package textcomp Info: Symbol \textasciigrave not provided by
-(textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 3840.
- [79]
-
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found on input line 3850.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3850: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3850 ...nd-viz_files/figure-latex/06-size-1.pdf}
+l.3599 ...z_files/figure-latex/06-first-fig-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found on input line 3883.
+Overfull \vbox (1.85396pt too high) detected at line 3639
+ []
+
+[76]
+
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found on input line 3641.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3883: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3641: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3883 .../figure-latex/06-size-netdiffuseR-1.pdf}
+l.3641 ...s/figure-latex/06-fake-graph-read-1.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[77] [78] [79]
+
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found on input line 3890.
+
+
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3890: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3890 ...nd-viz_files/figure-latex/06-size-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [80]
+Underfull \hbox (badness 10000) in paragraph at lines 3916--3922
+[]\T1/fvm/m/n/10 glayout <- gplot(net_sim, vertex.cex = (net_sim %v% "indeg") * 2) \T1/fav/m/n/10 (+20) gen-er-at-
+ []
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found on input line 3898.
+
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found on input line 3952.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3898: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3952: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3898 ...iz_files/figure-latex/06-netplot1-1.pdf}
+l.3952 .../figure-latex/06-size-netdiffuseR-1.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[81]
+
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found on input line 3967.
+
+
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3967: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3967 ...iz_files/figure-latex/06-netplot1-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found on input line 3928.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found on input line 4002.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3928: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4002: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3928 ...les/figure-latex/06-network-color-1.pdf}
+l.4002 ...les/figure-latex/06-network-color-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1760,170 +1762,170 @@ If that doesn't work, type  X <return>  to quit.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [81]
+ [82] [83]
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found on input line 3965.
+LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found on input line 4084.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3965: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4084: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3965 ...les/figure-latex/06-network-shape-1.pdf}
+l.4084 ...les/figure-latex/06-network-shape-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[82]
+[84]
 Chapter 9.
-[83
+[85
 
-] [84]
+] [86]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [85] [86]
+ [87] [88]
 Chapter 10.
-[87
+[89
 
 ]
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 4269--4269
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 4388--4388
  []\T1/fvm/m/n/10 ##  # of nodes         : 692 (1001, 1002, 1004, 1005, 1007, 1009, 1010, 1020, ...)[] 
  []
 
 
-Overfull \hbox (60.92409pt too wide) in paragraph at lines 4269--4269
+Overfull \hbox (60.92409pt too wide) in paragraph at lines 4388--4388
  []\T1/fvm/m/n/10 ##  Static attributes  : village, idold, age, liveout, visits, contact, coo... (146)[] 
  []
 
-[88]
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 4287--4287
+[90]
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 4406--4406
  []\T1/fvm/m/n/10 ##  # of nodes         : 125 (1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, ...)[] 
  []
 
 
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 4287--4287
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 4406--4406
  []\T1/fvm/m/n/10 ##  Static attributes  : city, detail, meet, coll, attend, proage, length, ... (58)[] 
  []
 
 
-Overfull \hbox (103.06401pt too wide) in paragraph at lines 4305--4305
+Overfull \hbox (103.06401pt too wide) in paragraph at lines 4424--4424
  []\T1/fvm/m/n/10 ##  # of nodes         : 1047 (10002, 10003, 10005, 10007, 10010, 10011, 10012, 10014, ...)[] 
  []
 
 
-Overfull \hbox (60.92409pt too wide) in paragraph at lines 4305--4305
+Overfull \hbox (60.92409pt too wide) in paragraph at lines 4424--4424
  []\T1/fvm/m/n/10 ##  Static attributes  : village, recno1, studno1, area1, id1, nmage1, nmag... (430)[] 
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found on input line 4323.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found on input line 4442.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4323: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4323 ...etdiffuser_files/figure-latex/viz-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found on input line 4331.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4331: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4442: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4331 ...etdiffuser_files/figure-latex/viz-2.pdf}
+l.4442 ...etdiffuser_files/figure-latex/viz-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found on input line 4339.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found on input line 4450.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4339: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4450: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4339 ...etdiffuser_files/figure-latex/viz-3.pdf}
+l.4450 ...etdiffuser_files/figure-latex/viz-2.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[89]
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found on input line 4347.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found on input line 4458.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4347: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4458: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4347 ...etdiffuser_files/figure-latex/viz-4.pdf}
+l.4458 ...etdiffuser_files/figure-latex/viz-3.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
+[91]
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found on input line 4355.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found on input line 4466.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4355: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4466: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4355 ...etdiffuser_files/figure-latex/viz-5.pdf}
+l.4466 ...etdiffuser_files/figure-latex/viz-4.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Overfull \hbox (23.88408pt too wide) in paragraph at lines 4366--4366
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found on input line 4474.
+
+
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4474: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4474 ...etdiffuser_files/figure-latex/viz-5.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (23.88408pt too wide) in paragraph at lines 4485--4485
 []\T1/fvm/m/n/10 ## Warning in plot_infectsuscep.list(graph$graph, graph$toa, t0, normalize, : When[] 
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found on input line 4368.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found on input line 4487.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4368: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4487: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4368 ...etdiffuser_files/figure-latex/viz-6.pdf}
+l.4487 ...etdiffuser_files/figure-latex/viz-6.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found on input line 4376.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found on input line 4495.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4376: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4495: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4376 ...etdiffuser_files/figure-latex/viz-7.pdf}
+l.4495 ...etdiffuser_files/figure-latex/viz-7.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1931,55 +1933,55 @@ If that doesn't work, type  X <return>  to quit.
 
 Underfull \vbox (badness 2452) has occurred while \output is active []
 
- [90] [91]
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
+ [92] [93]
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
 []\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
  []
 
 
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4540--4540
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4659--4659
 []\T1/fvm/m/n/10 ##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density   Moran\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 s I (sd)[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
 []\T1/fvm/m/n/10 ## -------- ---------- ---------------- ------------- --------- ----------------[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
 []\T1/fvm/m/n/10 ##        2         78       103 (0.21)          0.16      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
 []\T1/fvm/m/n/10 ##        3        187       290 (0.58)          0.47      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
 []\T1/fvm/m/n/10 ##        4        183       473 (0.95)          0.87      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4540--4540
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4659--4659
 []\T1/fvm/m/n/10 ##        5         27       500 (1.00)          1.00      0.01               -[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4540--4540
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
 []\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
  []
 
-[92]
+[94]
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4548: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-1' not found.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4667: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-1' not found.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4548 ...iffuser_files/figure-latex/plot-rumor-1}
+l.4667 ...iffuser_files/figure-latex/plot-rumor-1}
                                                    \end{center}
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1987,13 +1989,13 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4560: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-2' not found.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4679: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-2' not found.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4560 ...iffuser_files/figure-latex/plot-rumor-2}
+l.4679 ...iffuser_files/figure-latex/plot-rumor-2}
                                                    \end{center}
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -2001,226 +2003,226 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found on input line 4588.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found on input line 4707.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4588: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4707: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4588 ...re-latex/plot-complex-and-disease-1.pdf}
+l.4707 ...re-latex/plot-complex-and-disease-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4602.
+(textcomp)             Default family used instead on input line 4721.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4602.
-[93]
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
+(textcomp)             Default family used instead on input line 4721.
+[95]
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
 []\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
  []
 
 
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4631--4631
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4750--4750
 []\T1/fvm/m/n/10 ##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density   Moran\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 s I (sd)[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
 []\T1/fvm/m/n/10 ## -------- ---------- ---------------- ------------- --------- ----------------[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
 []\T1/fvm/m/n/10 ##        2         92       117 (0.23)          0.19      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
 []\T1/fvm/m/n/10 ##        3        152       269 (0.54)          0.40      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
 []\T1/fvm/m/n/10 ##        4        150       419 (0.84)          0.65      0.01  0.01 (0.00) ***[] 
  []
 
 
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4631--4631
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4750--4750
 []\T1/fvm/m/n/10 ##        5         73       492 (0.98)          0.90      0.01 -0.00 (0.00) **[] 
  []
 
 
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4631--4631
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
 []\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
  []
 
 
 Underfull \vbox (badness 1565) has occurred while \output is active []
 
- [94]
+ [96]
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found on input line 4677.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4677: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4677 ...ffuser_files/figure-latex/sim-sim-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found on input line 4796.
 
 
-Underfull \vbox (badness 10000) detected at line 4753
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [95]
-Underfull \vbox (badness 10000) detected at line 4753
- []
-
-
-Underfull \vbox (badness 10000) detected at line 4753
- []
-
-[96]
-
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found on input line 4792.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4792: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4796: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4792 ...iles/figure-latex/sim-sim-results-1.pdf}
+l.4796 ...ffuser_files/figure-latex/sim-sim-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \vbox (badness 10000) detected at line 4872
+ []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [97]
+Underfull \vbox (badness 10000) detected at line 4872
+ []
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found on input line 4853.
+
+Underfull \vbox (badness 10000) detected at line 4872
+ []
+
+[98]
+
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found on input line 4911.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4853: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4911: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4853 ...s/figure-latex/geodesic_speed-box-1.pdf}
+l.4911 ...iles/figure-latex/sim-sim-results-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[98] [99]
-Package textcomp Info: Symbol \textasciigrave not provided by
-(textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4922.
-Package textcomp Info: Symbol \textasciigrave not provided by
-(textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4922.
 
-Overfull \hbox (650.88301pt too wide) in paragraph at lines 4926--4926
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [99]
+
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found on input line 4972.
+
+
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4972: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4972 ...s/figure-latex/geodesic_speed-box-1.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[100] [101]
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family fvm in TS1 encoding.
+(textcomp)             Default family used instead on input line 5041.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family fvm in TS1 encoding.
+(textcomp)             Default family used instead on input line 5041.
+
+Overfull \hbox (650.88301pt too wide) in paragraph at lines 5045--5045
  []\T1/fvm/m/n/10 It simulates networks with the same density, and computes a particular statistic every time, generating an EDF (Empirical Distribution Function) under the Null hypothesis (p-values).[] 
  []
 
 
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 4957--4957
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 5076--5076
  []\T1/fvm/m/n/10 ## --------------------------------------------------------------------------------[] 
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found on input line 4960.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found on input line 5079.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4960: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:5079: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4960 ...iles/figure-latex/unnamed-chunk-2-1.pdf}
+l.5079 ...iles/figure-latex/unnamed-chunk-2-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[100]
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 4994--4994
+[102]
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 5113--5113
  []\T1/fvm/m/n/10 ## --------------------------------------------------------------------------------[] 
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found on input line 4996.
+LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found on input line 5115.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4996: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found: using draft setting.
+/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:5115: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.4996 ...iles/figure-latex/unnamed-chunk-3-1.pdf}
+l.5115 ...iles/figure-latex/unnamed-chunk-3-1.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[101]
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 5058--5058
+[103]
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 5177--5177
  []\T1/fvm/m/n/10 ## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is static[] 
  []
 
 
-Overfull \hbox (133.16396pt too wide) in paragraph at lines 5105--5105
+Overfull \hbox (133.16396pt too wide) in paragraph at lines 5224--5224
  []\T1/fvm/m/n/10 ## glm(formula = adopt ~ cohesive_expo + var1 + factor(per), family = binomial(link = "probit"),[] 
  []
 
-[102]
-Overfull \hbox (103.06401pt too wide) in paragraph at lines 5145--5145
+[104]
+Overfull \hbox (103.06401pt too wide) in paragraph at lines 5264--5264
  []\T1/fvm/m/n/10 ## glm(formula = Adopt ~ exposure + var1 + factor(per), family = binomial(link = "probit"),[] 
  []
 
-[103] [104]
+[105] [106]
 Chapter 11.
-[105
+[107
 
-] [106
+] [108
 
-] [107] [108]
+] [109] [110]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 5228.
+(hyperref)                than one, level fixed on input line 5347.
 
 
-Overfull \hbox (39.29996pt too wide) in paragraph at lines 5234--5235
+Overfull \hbox (39.29996pt too wide) in paragraph at lines 5353--5354
 \T1/fav/m/n/10 (-20) fined as $[]\OML/zavm/m/it/10 =Pr[]$\T1/fav/m/n/10 (-20) . Like-wise, $[]$ is de-fined as $[]\OML/zavm/m/it/10 =Pr[]$\T1/fav/m/n/10 (-20) ,
  []
 
-[109] [110]
+[111] [112]
 Appendix A.
-[111
+[113
 
 
-] [112] [113
+] [114] [115
 
-] [114] [115] (./appliedsnar.aux)
+] [116] [117] (./appliedsnar.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -2240,8 +2242,8 @@ Package rerunfilecheck Info: Checksums for `appliedsnar.out':
 (rerunfilecheck)             After:  90C2E2E8A6F70C4144B4356C6B79A54B;7970.
  ) 
 Here is how much of TeX's memory you used:
- 16827 strings out of 478276
- 328601 string characters out of 5845506
+ 16843 strings out of 478276
+ 328729 string characters out of 5845506
  561133 words of memory out of 5000000
  33787 multiletter control sequences out of 15000+600000
  592731 words of font info for 401 fonts, out of 8000000 for 9000
@@ -2272,10 +2274,10 @@ pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist,
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist, replaced by a fixed one
 
 {/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevoms.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevot1.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevoml.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}</home/george/texlive/2021/texmf-dist/fonts/type1/public/arev/ArevSans-Bold.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/arev/ArevSans-Oblique.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/arev/ArevSans-Roman.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/fourier/fourier-bb.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/bera/fvmb8a.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/bera/fvmro8a.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chb7t.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chb7y.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chr7v.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfit1000.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on appliedsnar.pdf (115 pages, 523707 bytes).
+Output written on appliedsnar.pdf (117 pages, 529694 bytes).
 PDF statistics:
- 1178 PDF objects out of 1200 (max. 8388607)
- 1014 compressed objects within 11 object streams
- 469 named destinations out of 1000 (max. 500000)
+ 1202 PDF objects out of 1440 (max. 8388607)
+ 1036 compressed objects within 11 object streams
+ 485 named destinations out of 1000 (max. 500000)
  65547 words of extra memory for PDF output out of 74296 (max. 10000000)
 

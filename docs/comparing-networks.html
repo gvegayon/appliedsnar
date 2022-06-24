@@ -313,29 +313,29 @@ Where We now proceede to approximate the variances.</p></li>
 <li><p>Using the <em>plugin principle</em> <span class="citation">(Efron and Tibshirani <a href="#ref-Efron1994">1994</a>)</span>, we can approximate the variances
 using Bootstrap/Jackknife, i.e., compute <span class="math inline">\(\hat\sigma_1^2\approx\sigma_1^2/m_1\)</span> and
 <span class="math inline">\(\hat\sigma_2^2\approx\sigma_2^2/m_2\)</span>. Using netdiffuseR</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" title="1"><span class="kw">library</span>(netdiffuseR)</a>
-<a class="sourceLine" id="cb283-2" title="2"></a>
-<a class="sourceLine" id="cb283-3" title="3"><span class="co"># Obtain a 100 replicates</span></a>
-<a class="sourceLine" id="cb283-4" title="4">sg1 &lt;-<span class="st"> </span><span class="kw">bootnet</span>(g1, <span class="cf">function</span>(i, ...) <span class="kw">sum</span>(i)<span class="op">/</span>(<span class="kw">nnodes</span>(i) <span class="op">*</span><span class="st"> </span>(<span class="kw">nnodes</span>(i) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)), <span class="dt">R =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb283-5" title="5">sg2 &lt;-<span class="st"> </span><span class="kw">bootnet</span>(g2, <span class="cf">function</span>(i, ...) <span class="kw">sum</span>(i)<span class="op">/</span>(<span class="kw">nnodes</span>(i) <span class="op">*</span><span class="st"> </span>(<span class="kw">nnodes</span>(i) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)), <span class="dt">R =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb283-6" title="6"></a>
-<a class="sourceLine" id="cb283-7" title="7"><span class="co"># Retrieving the variances</span></a>
-<a class="sourceLine" id="cb283-8" title="8">hat_sigma1 &lt;-<span class="st"> </span>sg1<span class="op">$</span>var_t</a>
-<a class="sourceLine" id="cb283-9" title="9">hat_sigma2 &lt;-<span class="st"> </span>sg2<span class="op">$</span>var_t</a>
-<a class="sourceLine" id="cb283-10" title="10"></a>
-<a class="sourceLine" id="cb283-11" title="11"><span class="co"># And the actual values</span></a>
-<a class="sourceLine" id="cb283-12" title="12">sg1 &lt;-<span class="st"> </span>sg1<span class="op">$</span>t0</a>
-<a class="sourceLine" id="cb283-13" title="13">sg2 &lt;-<span class="st"> </span>sg2<span class="op">$</span>t0</a></code></pre></div></li>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" title="1"><span class="kw">library</span>(netdiffuseR)</a>
+<a class="sourceLine" id="cb260-2" title="2"></a>
+<a class="sourceLine" id="cb260-3" title="3"><span class="co"># Obtain a 100 replicates</span></a>
+<a class="sourceLine" id="cb260-4" title="4">sg1 &lt;-<span class="st"> </span><span class="kw">bootnet</span>(g1, <span class="cf">function</span>(i, ...) <span class="kw">sum</span>(i)<span class="op">/</span>(<span class="kw">nnodes</span>(i) <span class="op">*</span><span class="st"> </span>(<span class="kw">nnodes</span>(i) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)), <span class="dt">R =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb260-5" title="5">sg2 &lt;-<span class="st"> </span><span class="kw">bootnet</span>(g2, <span class="cf">function</span>(i, ...) <span class="kw">sum</span>(i)<span class="op">/</span>(<span class="kw">nnodes</span>(i) <span class="op">*</span><span class="st"> </span>(<span class="kw">nnodes</span>(i) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)), <span class="dt">R =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb260-6" title="6"></a>
+<a class="sourceLine" id="cb260-7" title="7"><span class="co"># Retrieving the variances</span></a>
+<a class="sourceLine" id="cb260-8" title="8">hat_sigma1 &lt;-<span class="st"> </span>sg1<span class="op">$</span>var_t</a>
+<a class="sourceLine" id="cb260-9" title="9">hat_sigma2 &lt;-<span class="st"> </span>sg2<span class="op">$</span>var_t</a>
+<a class="sourceLine" id="cb260-10" title="10"></a>
+<a class="sourceLine" id="cb260-11" title="11"><span class="co"># And the actual values</span></a>
+<a class="sourceLine" id="cb260-12" title="12">sg1 &lt;-<span class="st"> </span>sg1<span class="op">$</span>t0</a>
+<a class="sourceLine" id="cb260-13" title="13">sg2 &lt;-<span class="st"> </span>sg2<span class="op">$</span>t0</a></code></pre></div></li>
 <li><p>With the approximates in hand, we can then use the the “t-test table” to
 retrieve the corresponding value, in R:</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" title="1"><span class="co"># Building the statistic</span></a>
-<a class="sourceLine" id="cb284-2" title="2">k &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co"># For equal variances</span></a>
-<a class="sourceLine" id="cb284-3" title="3">tstat &lt;-<span class="st"> </span>(sg1 <span class="op">-</span><span class="st"> </span>sg2 <span class="op">-</span><span class="st"> </span>k)<span class="op">/</span>(<span class="kw">sqrt</span>(hat_sigma1 <span class="op">+</span><span class="st"> </span>hat_sigma2))</a>
-<a class="sourceLine" id="cb284-4" title="4"></a>
-<a class="sourceLine" id="cb284-5" title="5"><span class="co"># Computing the pvalue</span></a>
-<a class="sourceLine" id="cb284-6" title="6">m1 &lt;-<span class="st"> </span><span class="kw">nnodes</span>(g1)<span class="op">*</span>(<span class="kw">nnodes</span>(g1) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb284-7" title="7">m2 &lt;-<span class="st"> </span><span class="kw">nnodes</span>(g2)<span class="op">*</span>(<span class="kw">nnodes</span>(g2) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb284-8" title="8"><span class="kw">pt</span>(tstat, <span class="dt">df =</span> m1 <span class="op">+</span><span class="st"> </span>m2 <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div></li>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" title="1"><span class="co"># Building the statistic</span></a>
+<a class="sourceLine" id="cb261-2" title="2">k &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co"># For equal variances</span></a>
+<a class="sourceLine" id="cb261-3" title="3">tstat &lt;-<span class="st"> </span>(sg1 <span class="op">-</span><span class="st"> </span>sg2 <span class="op">-</span><span class="st"> </span>k)<span class="op">/</span>(<span class="kw">sqrt</span>(hat_sigma1 <span class="op">+</span><span class="st"> </span>hat_sigma2))</a>
+<a class="sourceLine" id="cb261-4" title="4"></a>
+<a class="sourceLine" id="cb261-5" title="5"><span class="co"># Computing the pvalue</span></a>
+<a class="sourceLine" id="cb261-6" title="6">m1 &lt;-<span class="st"> </span><span class="kw">nnodes</span>(g1)<span class="op">*</span>(<span class="kw">nnodes</span>(g1) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb261-7" title="7">m2 &lt;-<span class="st"> </span><span class="kw">nnodes</span>(g2)<span class="op">*</span>(<span class="kw">nnodes</span>(g2) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb261-8" title="8"><span class="kw">pt</span>(tstat, <span class="dt">df =</span> m1 <span class="op">+</span><span class="st"> </span>m2 <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div></li>
 </ol>
 </div>
 <div id="when-the-statistic-is-not-normal" class="section level3 hasAnchor">
@@ -354,19 +354,19 @@ The procedure is very similar:</p>
 Building confidence intervals with bootstrap could be more intuitive.</p></li>
 <li><p>Like before, we use bootstrap to generate a distribution of <span class="math inline">\(s(G_1)\)</span> and
 <span class="math inline">\(s(G_2)\)</span>, in R:</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" title="1"><span class="co"># Obtain a 1000 replicates</span></a>
-<a class="sourceLine" id="cb285-2" title="2">sg1 &lt;-<span class="st"> </span><span class="kw">bootnet</span>(g1, <span class="cf">function</span>(i, ...) <span class="kw">range</span>(<span class="kw">threshold</span>(i)), <span class="dt">R =</span> <span class="dv">1000</span>)</a>
-<a class="sourceLine" id="cb285-3" title="3">sg2 &lt;-<span class="st"> </span><span class="kw">bootnet</span>(g2, <span class="cf">function</span>(i, ...) <span class="kw">range</span>(<span class="kw">threshold</span>(i)), <span class="dt">R =</span> <span class="dv">1000</span>)</a>
-<a class="sourceLine" id="cb285-4" title="4"></a>
-<a class="sourceLine" id="cb285-5" title="5"><span class="co"># Retrieving the distributions</span></a>
-<a class="sourceLine" id="cb285-6" title="6">sg1 &lt;-<span class="st"> </span>sg1<span class="op">$</span>boot<span class="op">$</span>t</a>
-<a class="sourceLine" id="cb285-7" title="7">sg2 &lt;-<span class="st"> </span>sg2<span class="op">$</span>boot<span class="op">$</span>t</a>
-<a class="sourceLine" id="cb285-8" title="8"></a>
-<a class="sourceLine" id="cb285-9" title="9"><span class="co"># Define the statistic</span></a>
-<a class="sourceLine" id="cb285-10" title="10">sdiff &lt;-<span class="st"> </span>sg1 <span class="op">-</span><span class="st"> </span>sg2</a></code></pre></div></li>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" title="1"><span class="co"># Obtain a 1000 replicates</span></a>
+<a class="sourceLine" id="cb262-2" title="2">sg1 &lt;-<span class="st"> </span><span class="kw">bootnet</span>(g1, <span class="cf">function</span>(i, ...) <span class="kw">range</span>(<span class="kw">threshold</span>(i)), <span class="dt">R =</span> <span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb262-3" title="3">sg2 &lt;-<span class="st"> </span><span class="kw">bootnet</span>(g2, <span class="cf">function</span>(i, ...) <span class="kw">range</span>(<span class="kw">threshold</span>(i)), <span class="dt">R =</span> <span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb262-4" title="4"></a>
+<a class="sourceLine" id="cb262-5" title="5"><span class="co"># Retrieving the distributions</span></a>
+<a class="sourceLine" id="cb262-6" title="6">sg1 &lt;-<span class="st"> </span>sg1<span class="op">$</span>boot<span class="op">$</span>t</a>
+<a class="sourceLine" id="cb262-7" title="7">sg2 &lt;-<span class="st"> </span>sg2<span class="op">$</span>boot<span class="op">$</span>t</a>
+<a class="sourceLine" id="cb262-8" title="8"></a>
+<a class="sourceLine" id="cb262-9" title="9"><span class="co"># Define the statistic</span></a>
+<a class="sourceLine" id="cb262-10" title="10">sdiff &lt;-<span class="st"> </span>sg1 <span class="op">-</span><span class="st"> </span>sg2</a></code></pre></div></li>
 <li><p>Once we have <code>sdiff</code>, we can proceed and compute the, for example, 95%
 confidence interval, and evaluate whether <span class="math inline">\(k\)</span> falls within. In R:</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" title="1">diff_ci &lt;-<span class="st"> </span><span class="kw">quantile</span>(sdiff, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">.975</span>))</a></code></pre></div></li>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" title="1">diff_ci &lt;-<span class="st"> </span><span class="kw">quantile</span>(sdiff, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">.975</span>))</a></code></pre></div></li>
 </ol>
 <p>This corresponds to what Efron and Tibshirani call “percentile interval.”
 This is easy to compute, but a better approach is using the “BCa” method,

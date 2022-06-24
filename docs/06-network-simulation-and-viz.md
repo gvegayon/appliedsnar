@@ -38,142 +38,6 @@ for (pkg in pkgs) {
 }
 ```
 
-```
-## Loading required package: ergm
-```
-
-```
-## Loading required package: network
-```
-
-```
-## 
-## 'network' 1.17.2 (2022-05-20), part of the Statnet Project
-## * 'news(package="network")' for changes since last version
-## * 'citation("network")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-```
-
-```
-## 
-## 'ergm' 4.2.1 (2022-05-10), part of the Statnet Project
-## * 'news(package="ergm")' for changes since last version
-## * 'citation("ergm")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-```
-
-```
-## 'ergm' 4 is a major update that introduces some backwards-incompatible
-## changes. Please type 'news(package="ergm")' for a list of major
-## changes.
-```
-
-```
-## Loading required package: sna
-```
-
-```
-## Loading required package: statnet.common
-```
-
-```
-## 
-## Attaching package: 'statnet.common'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     attr, order
-```
-
-```
-## sna: Tools for Social Network Analysis
-## Version 2.6 created on 2020-10-5.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##  For citation information, type citation("sna").
-##  Type help(package="sna") to get started.
-```
-
-```
-## Loading required package: igraph
-```
-
-```
-## 
-## Attaching package: 'igraph'
-```
-
-```
-## The following objects are masked from 'package:sna':
-## 
-##     betweenness, bonpow, closeness, components, degree, dyad.census,
-##     evcent, hierarchy, is.connected, neighborhood, triad.census
-```
-
-```
-## The following objects are masked from 'package:network':
-## 
-##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
-##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
-##     is.directed, list.edge.attributes, list.vertex.attributes,
-##     set.edge.attribute, set.vertex.attribute
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     decompose, spectrum
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     union
-```
-
-```
-## Loading required package: intergraph
-```
-
-```
-## Loading required package: netplot
-```
-
-```
-## Loading required package: grid
-```
-
-```
-## 
-## Attaching package: 'netplot'
-```
-
-```
-## The following object is masked from 'package:igraph':
-## 
-##     ego
-```
-
-```
-## Loading required package: netdiffuseR
-```
-
-```
-## 
-## Attaching package: 'netdiffuseR'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     %*%
-```
-
-```
-## Loading required package: rgexf
-```
-
 ## Random Graph Models
 
 While there are tons of social network data, we will use an artificial one for this chapter.
@@ -248,9 +112,9 @@ net %v% "age"    <- age
 net_sim <- simulate(
     net ~ edges +
     nodematch("race") +
-    triangle +
+    ttriad +
     absdiff("age"),
-    coef = c(-4, .5, .5, -.5)
+    coef = c(-4, .5, .25, -.5)
     )
 ```
 
@@ -274,7 +138,24 @@ What just happened? Here is a line-by-line breakout:
 
 9. `net %v% "age" <- age` Same as with race!
 
-10. `net_sim <- simulate(` Simulating an ERGM!
+10. `net_sim <- simulate(` Simulating an ERGM! A couple of observations here:
+
+    a. The LHS (left-hand-side) of the equation has the network, `net`
+
+    b. The RHS (you guessed it) has the terms that govern the process.
+
+    c. For low density, we used the `edges` term with a corresponding
+    -4.0 for the parameter.
+
+    d. For race homophily, we used the `nodematch("race")` with a 
+    corresponding 0.5 parameter value.
+
+    e. For structural balance, we use the `ttriad` term with parameter
+    0.25.
+
+    f. For age homophily, we use the `absdiff("age")` term with parameter
+    -0.5. This is, in rigor, a term capturing heterophily. Nonetheless,
+    heterophily is the opposite of homophily.
 
 Let's take a quick look at the resulting graph
 
@@ -387,19 +268,19 @@ igraph::as_adj_list(intergraph::asIgraph(example_graph))
 
 ```
 ## [[1]]
-## + 1/4 vertex, from cdece0e:
+## + 1/4 vertex, from 568438d:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from cdece0e:
+## + 2/4 vertices, from 568438d:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from cdece0e:
+## + 3/4 vertices, from 568438d:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from cdece0e:
+## + 2/4 vertices, from 568438d:
 ## [1] 3 3
 ```
 
@@ -433,12 +314,12 @@ head(edges)
 
 ```
 ##   V1  V2
-## 1  1  64
+## 1  2   7
 ## 2  2  41
-## 3  2 106
-## 4  3  61
-## 5  4  85
-## 6  4 138
+## 3  3   5
+## 4  3  16
+## 5  4 138
+## 6  5   9
 ```
 
 ```r
@@ -621,27 +502,74 @@ With a good idea for size, we can now start looking into vertex color.
 
 For the color, we will use vertex age. Although age is, by definition, continuous,
 we only have three values for age. Because of this, we can treat age as categorical.
+Instead of using `nplot` we will go ahead with `nplot_base`. As of this version of
+the book, the `netplot` package does not have an easy way to add legends with the
+core function, `nplot`; therefore, we use `nplot_base` which is compatible with 
+the R function `legend`, as we will now see:
 
 
 ```r
-vcolors <- c("10" = "gray", "14" = "tomato", "17" = "steelblue")
-net_sim %v% "color" <- vcolors[as.character(net_sim %v% "age")]
+# Specifying colors for each vertex
+vcolors_palette <- c("10" = "gray", "14" = "tomato", "17" = "steelblue")
+vcolors <- vcolors_palette[as.character(net_sim %v% "age")]
+net_sim %v% "color" <- vcolors
+
+# Plotting
 nplot_base(
   net_ig,
   layout = glayout,
   vertex.color = net_sim %v% "color",
   )
 
+# Color legend
 legend(
   "bottomright",
-  legend = names(vcolors),
-  fill   = vcolors, 
+  legend = names(vcolors_palette),
+  fill   = vcolors_palette, 
   bty    = "n",
   title  = "Age"
   )
 ```
 
 ![](06-network-simulation-and-viz_files/figure-epub3/06-network-color-1.png)<!-- -->
+
+Line by line, this is what we just did:
+
+1. `vcolors <- c("10" = "gray", "14" = "tomato", "17" = "steelblue")` we created
+  a character vector with three elements, `"gray"`, `"tomato"`, and `"blue"`.
+  Furthermore, the vector has names assigned to it, `"10"`, `"14"`, and `"17"`--
+  the ages we have in the network--so that we can access its
+  elements by indexing by name, e.g., if we type `vcolors["10"]` R returns
+  the value `"gray"`.
+
+2. `vcolors <- vcolors[as.character(net_sim %v% "age")]` there are several things
+  going on in this line. First, we extract the attribute "age" from the network
+  using the `%v%` operator. We then transform the resulting vector from integer type
+  to a character type with the function `as.character`. Finally, using the resulting
+  **character vector** with values `"10", "14", "17", ...`, we retrieve values
+  from `vcolors` name-indexing. The resulting vector is of length equal to
+  the vertex count in the network.
+
+
+3. `net_sim %v% "color" <- vcolors` creates a 
+  new vertex attribute, `color`. The assigned value is the result from subsetting
+  `vcolors` by the ages of each vertex. 
+
+4. `nplot_base(...` finally draws the network. We pass the previously computed
+  vertex coordinates and vertex colors with the new attribute `color`.
+
+5. `legend(...)` Let's see one parameter at a time:
+
+    a.  `"bottomright"` tells the overall position of the legend
+
+    b.  `legend = names(vcolors)` passes the actual legend (text); in our case
+        the ages of individuals.
+
+    c.  `fill   = vcolors` passes the colors associated with the text.
+
+    d.  `bty    = "n"` suppresses wrapping the legend within a box.
+
+    e.  `title  = "Age"` sets the title to be "Age".
 
 ### Vertex shape
 
@@ -650,26 +578,32 @@ we only have three values for age. Because of this, we can treat age as categori
 
 
 ```r
-vshape <- c("white" = 15, "non-white" = 3)
-net_sim %v% "shape" <- vshape[as.character(net_sim %v% "race")]
+# Specifying the shapes for each vertex
+vshape_list <- c("white" = 15, "non-white" = 3)
+vshape      <- vshape_list[as.character(net_sim %v% "race")]
+net_sim %v% "shape" <- vshape
+
+# Plotting
 nplot_base(
   net_ig,
   layout = glayout,
   vertex.color = net_sim %v% "color",
   vertex.nsides = net_sim %v% "shape"
   )
-  
+
+# Color legend
 legend(
   "bottomright",
-  legend = names(vcolors),
-  fill   = vcolors, 
+  legend = names(vcolors_palette),
+  fill   = vcolors_palette, 
   bty    = "n",
   title  = "Age"
   )
 
+# Shape legend
 legend(
   "bottomleft",
-  legend = names(vshape),
+  legend = names(vshape_list),
   pch    = c(1, 2), 
   bty    = "n",
   title  = "Race"
@@ -677,3 +611,91 @@ legend(
 ```
 
 ![](06-network-simulation-and-viz_files/figure-epub3/06-network-shape-1.png)<!-- -->
+
+Let's now compare the figure to our original ERGM:
+
+1. **Low density (`edges`)** Without low density, the figure would be
+  a hairball.
+
+2. **Race homophily (`nodematch("race")`)** Although not surprisingly evident,
+  nodes tend to form small clusters by shape, which, in our model, represents
+  race.
+
+3. **Structural balance (`ttriad`)** A force, in this case, opposite to low
+  density, higher prevalence of transitive triads makes individuals cluster.
+
+4. **Age homophily (`absdiff("age")`)** This is the most prominent feature of
+  the graph. In it, nodes are clustered by age.
+  
+Of the four features, **age homophily** is the one that stands out. Why is this
+tha case? If we look again at the parameters used in the ERGM and how these
+interact with vertices' attributes, we will find the answer:
+
+- The log-odds of a new race-homophilic tie are $1\times\theta_{\mbox{race-homophily}} = 0.5$.
+
+- But, the log-odd of an age heterophilic tie between, say, 14 and 17 year
+  olds is $|17-14|\theta_{\mbox{age-homophily}} = 3\times -0.5  = -1.5$.
+
+- Therefore, the effect of heterophily (which is just the opposite of homophily)
+  is significantly larger, actually three times in this case, than the race-homophily
+  effect.
+
+This observation becomes clear if we run another simulation with the same seed, but
+adjusting for the maximum size the effect of age-homophily can take. A
+quick-n-dirty way to achieve this is to re-run the simulation with the `nodematch`
+term instead of the `absdiff` term. This way, we (a) explicitly operationalize
+the term as homophily (before it was heterophily,) and (b) have both homophily
+effects have the same influence in the model:
+
+
+```r
+net_sim2 <- simulate(
+    net ~ edges +
+    nodematch("race") +
+    ttriad +
+    nodematch("age"),
+    coef = c(-5, .5, .25, .5) # This line changed
+    )
+```
+
+Re-doing the plot. From the previous graph-drawing, only the graph structure
+changed. The vertex attributes are the same so we can go ahead and re-use them.
+Like I mentioned earlier, the `nplot_base` function currently supports `igraph`
+objects, so we will use `intergraph::asIgraph` to make it work:
+
+
+```r
+# Plotting
+nplot_base(
+  asIgraph(net_sim2),
+  # We comment this out to allow for a new layout
+  # layout = glayout, 
+  vertex.color = net_sim %v% "color",
+  vertex.nsides = net_sim %v% "shape"
+  )
+
+# Color legend
+legend(
+  "bottomright",
+  legend = names(vcolors_palette),
+  fill   = vcolors_palette, 
+  bty    = "n",
+  title  = "Age"
+  )
+
+# Shape legend
+legend(
+  "bottomleft",
+  legend = names(vshape_list),
+  pch    = c(1, 2), 
+  bty    = "n",
+  title  = "Race"
+  )
+```
+
+![](06-network-simulation-and-viz_files/figure-epub3/06-adjust-homophily-plot-1.png)<!-- -->
+
+As expected, there is no longer a dominant effect in homophily. One important
+thing we can learn from this final example is that phenomena will not always
+show themselves in graph visualization. Careful analysis in complex networks
+is a must.

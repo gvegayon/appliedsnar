@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1656098385 "/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex" "appliedsnar.pdf" "appliedsnar" 1656098385
-  "/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex" 1656096959 256505 29b9e2b3c4c14053f94ab305df6b2b46 ""
+["pdflatex"] 1656106626 "/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex" "appliedsnar.pdf" "appliedsnar" 1656106626
+  "/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex" 1656100362 262129 505cc41aac6ec996235a909488c229e6 ""
   "/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevoml.enc" 1153172756 2921 ae68ca7d9a4902b5e8c8b47846fadadb ""
   "/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevoms.enc" 1153172756 3537 5668d9ed3132b78b010223039ece2e6f ""
   "/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevot1.enc" 1153172756 3020 a1ac7e8d91c840af41a220ec7126413f ""
@@ -226,11 +226,11 @@
   "08-netdiffuser_files/figure-latex/viz-5.pdf" 0 -1 0 ""
   "08-netdiffuser_files/figure-latex/viz-6.pdf" 0 -1 0 ""
   "08-netdiffuser_files/figure-latex/viz-7.pdf" 0 -1 0 ""
-  "appliedsnar.aux" 1656098385 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "appliedsnar.aux" 1656106626 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "appliedsnar.out" 0 -1 0 "pdflatex"
-  "appliedsnar.tex" 1656096959 256505 29b9e2b3c4c14053f94ab305df6b2b46 ""
-  "awful-chains.png" 1656098382 94240 b6e361e9a778e040e7c9bf586a6b055f ""
-  "hunter2008.png" 1656098382 75186 370a5ccd4ba3421f43981810d7243e9e ""
+  "appliedsnar.tex" 1656100362 262129 505cc41aac6ec996235a909488c229e6 ""
+  "awful-chains.png" 1656106623 94240 b6e361e9a778e040e7c9bf586a6b055f ""
+  "hunter2008.png" 1656106623 75186 370a5ccd4ba3421f43981810d7243e9e ""
   (generated)
   "appliedsnar.aux"
   "appliedsnar.log"
