@@ -66,7 +66,7 @@ library(ergm)
 
 ```
 ## 
-## 'ergm' 4.2.1 (2022-05-10), part of the Statnet Project
+## 'ergm' 4.2.2 (2022-06-01), part of the Statnet Project
 ## * 'news(package="ergm")' for changes since last version
 ## * 'citation("ergm")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -330,7 +330,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from 7cd5b70 (vertex names):
+## + 1/2638 edge from 1d16a66 (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -1165,4 +1165,4 @@ Where the last equality follows from $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_
 
 Related to this, block-diagonal ERGMs can be estimated as independent models, one per block. To see more about this, read [@Snijders2010margin]. Likewise, since independence depends--pun intended--on partitioning the objective function, as pointed by Snijders, non-linear functions make the model dependent, e.g., $\s{\mathbf{y}} = \sqrt{\sum_{ij}y_{ij}}$, the square root of the edgecount is no longer a bernoulli graph.
 
-
+\renewcommand{\Pr}[1]{\mathbb{P}{#1}}

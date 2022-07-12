@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11.2 Markov Chain | Applied Network Science with R</title>
+  <title>Chapter 13 Markov Chain | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11.2 Markov Chain | Applied Network Science with R" />
+  <meta property="og:title" content="Chapter 13 Markov Chain | Applied Network Science with R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11.2 Markov Chain | Applied Network Science with R" />
+  <meta name="twitter:title" content="Chapter 13 Markov Chain | Applied Network Science with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-06-24" />
+<meta name="date" content="2022-07-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="bayes-rule.html"/>
-<link rel="next" href="datasets-1.html"/>
+<link rel="next" href="metropolis-algorithm.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -237,12 +237,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>11</b> Stochastic Actor Oriented Models</a></li>
-<li class="part"><span><b>II Statistical Foundations</b></span><ul>
-<li class="chapter" data-level="11.1" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>11.1</b> Bayes’ Rule</a></li>
-<li class="chapter" data-level="11.2" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>11.2</b> Markov Chain</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="markov-chain.html"><a href="markov-chain.html#metropolis-algorithm"><i class="fa fa-check"></i><b>11.2.1</b> Metropolis Algorithm</a></li>
-<li class="chapter" data-level="11.2.2" data-path="markov-chain.html"><a href="markov-chain.html#metropolis-hastings"><i class="fa fa-check"></i><b>11.2.2</b> Metropolis-Hastings</a></li>
-<li class="chapter" data-level="11.2.3" data-path="markov-chain.html"><a href="markov-chain.html#likelihood-free-mcmc"><i class="fa fa-check"></i><b>11.2.3</b> Likelihood-free MCMC</a></li>
+<li class="part"><span><b>II Statistical Foundations</b></span></li>
+<li class="chapter" data-level="12" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>12</b> Bayes’ Rule</a></li>
+<li class="chapter" data-level="13" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>13</b> Markov Chain</a><ul>
+<li class="chapter" data-level="13.1" data-path="metropolis-algorithm.html"><a href="metropolis-algorithm.html"><i class="fa fa-check"></i><b>13.1</b> Metropolis Algorithm</a></li>
+<li class="chapter" data-level="13.2" data-path="metropolis-hastings.html"><a href="metropolis-hastings.html"><i class="fa fa-check"></i><b>13.2</b> Metropolis-Hastings</a></li>
+<li class="chapter" data-level="13.3" data-path="likelihood-free-mcmc.html"><a href="likelihood-free-mcmc.html"><i class="fa fa-check"></i><b>13.3</b> Likelihood-free MCMC</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>14</b> Power calculation in network studies</a><ul>
+<li class="chapter" data-level="14.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>14.1</b> Error types</a></li>
+<li class="chapter" data-level="14.2" data-path="examples-1.html"><a href="examples-1.html"><i class="fa fa-check"></i><b>14.2</b> Examples</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="examples-1.html"><a href="examples-1.html#sample-size-for-a-proportion"><i class="fa fa-check"></i><b>14.2.1</b> Sample size for a proportion</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -273,79 +278,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="markov-chain" class="section level2 hasAnchor">
-<h2><span class="header-section-number">11.2</span> Markov Chain<a href="markov-chain.html#markov-chain" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="markov-chain" class="section level1 hasAnchor">
+<h1><span class="header-section-number">Chapter 13</span> Markov Chain<a href="markov-chain.html#markov-chain" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>A Markov Chain is a sequence of random variables in which the conditional distribution of the <span class="math inline">\(n\)</span>-th element only depends on <span class="math inline">\(n-1\)</span>.</p>
-<div id="metropolis-algorithm" class="section level3 hasAnchor">
-<h3><span class="header-section-number">11.2.1</span> Metropolis Algorithm<a href="markov-chain.html#metropolis-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In the Metropolis Algorithm, or Metropolis MCMC, builds a Markov Chain that
-under certain conditions converges to the target distribution. The key of the
-Algorithm is in accepting a proposed move from <span class="math inline">\(\theta\)</span> to <span class="math inline">\(\theta&#39;\)</span> with
-probability equal to:</p>
-<p><span class="math display">\[\begin{equation}
-r = \min\left(1, \frac{{\mathbb{P}\left(\left(\theta&#39;|D\right)\right) }}{{\mathbb{P}\left(\left(\theta|D\right)\right) }}\right)
-\end{equation}\]</span></p>
-<p>The resulting sequence converges to the target distribution. We can prove
-convergence by showing that (a) the sequence is ergodic, and (b) the posterior
-distribution matches the target distribution. Ergodicity describes three
-propoerties of a chain:</p>
-<ul>
-<li><p>Irreducibility: There is no zero probability of transitioning between any pair of states.</p></li>
-<li><p>Aperiodicity: As the term suggests, the chain has no repetitive periods/sequences.</p></li>
-<li><p>Non transient: Transient refers to a chain having non-zero probability of
-never returning to a starting state.</p></li>
-</ul>
-<p>The three properties are reached by any random walk based on a well defined
-probability distribution, so we will focus on showing that the posterior matches
-the target distribution. The following proof was adapted from “Bayesian Data
-Analysis:”</p>
-<!-- \begin{align*}
-
-\end{align*} -->
 </div>
-<div id="metropolis-hastings" class="section level3 hasAnchor">
-<h3><span class="header-section-number">11.2.2</span> Metropolis-Hastings<a href="markov-chain.html#metropolis-hastings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><span class="math display">\[
-\min\left(1, \frac{{\mathbb{P}\left(\left(d|\theta&#39;\right)\right) }{\mathbb{P}\left(\left(\theta&#39;\right)\right) }{\mathbb{P}\left(\left(\theta&#39;|\theta\right)\right) }}{{\mathbb{P}\left(\left(d|\theta\right)\right) }{\mathbb{P}\left(\left(\theta\right)\right) }{\mathbb{P}\left(\left(\theta|\theta&#39;\right)\right) }}\right)
-\]</span></p>
-<p>If the transittion probability is symmetric, then the previous equation reduces
-to the Metropolis probability.</p>
-</div>
-<div id="likelihood-free-mcmc" class="section level3 hasAnchor">
-<h3><span class="header-section-number">11.2.3</span> Likelihood-free MCMC<a href="markov-chain.html#likelihood-free-mcmc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: decimal">
-<li><p>Initialize the algorithm with <span class="math inline">\(\theta_0\)</span>, <span class="math inline">\(\theta^* =\theta_0\)</span>–the current accepted
-state,–and observed summary statistic <span class="math inline">\(s_0 = S(D_{observed})\)</span>:</p></li>
-<li><p>For <span class="math inline">\(t = 1\)</span> to <span class="math inline">\(T\)</span> do:</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Draw <span class="math inline">\(\theta_t\)</span> from the proposal distribution <span class="math inline">\(J(\theta_t|\theta^*)\)</span></p></li>
-<li><p>Draw a simulated data <span class="math inline">\(D_t\)</span> from model <span class="math inline">\(M(\theta_t)\)</span></p></li>
-<li><p>Calculate the summary statistics <span class="math inline">\(s_t = S(D_t)\)</span></p></li>
-<li><p>Accept the proposed state with probability
-<!-- $$
- r = \min\left(1, \frac{\Pr{\left(s_0|s_t,\theta_t\right)}\Pr{\left(\theta_t\right)}\Pr{\left(\theta^*\to\theta_t\right)}}{\Pr{\left(s_0|s_{t-1\right)},\theta_{t-1}}\Pr{\left(\theta_{t-1\right)}}\Pr{\left(\theta_{t\right)}\to\theta^*}}\right)
- $$ --></p></li>
-</ol>
-<p>If accepted, set <span class="math inline">\(\theta^* = \theta_t\)</span>.</p>
-<ol start="5" style="list-style-type: lower-alpha">
-<li>Next <span class="math inline">\(t\)</span></li>
-</ol></li>
-</ol>
-
-
-</div>
-</div>
-<!-- </div> -->
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="bayes-rule.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="datasets-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="metropolis-algorithm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11.1 Bayes’ Rule | Applied Network Science with R</title>
+  <title>Chapter 12 Bayes’ Rule | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11.1 Bayes’ Rule | Applied Network Science with R" />
+  <meta property="og:title" content="Chapter 12 Bayes’ Rule | Applied Network Science with R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11.1 Bayes’ Rule | Applied Network Science with R" />
+  <meta name="twitter:title" content="Chapter 12 Bayes’ Rule | Applied Network Science with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC’s Center for Applied Network Analysis (CANA)" />
   
@@ -23,14 +23,14 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-06-24" />
+<meta name="date" content="2022-07-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="part-statistical-foundations.html"/>
+<link rel="prev" href="stochastic-actor-oriented-models.html"/>
 <link rel="next" href="markov-chain.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -237,12 +237,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>11</b> Stochastic Actor Oriented Models</a></li>
-<li class="part"><span><b>II Statistical Foundations</b></span><ul>
-<li class="chapter" data-level="11.1" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>11.1</b> Bayes’ Rule</a></li>
-<li class="chapter" data-level="11.2" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>11.2</b> Markov Chain</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="markov-chain.html"><a href="markov-chain.html#metropolis-algorithm"><i class="fa fa-check"></i><b>11.2.1</b> Metropolis Algorithm</a></li>
-<li class="chapter" data-level="11.2.2" data-path="markov-chain.html"><a href="markov-chain.html#metropolis-hastings"><i class="fa fa-check"></i><b>11.2.2</b> Metropolis-Hastings</a></li>
-<li class="chapter" data-level="11.2.3" data-path="markov-chain.html"><a href="markov-chain.html#likelihood-free-mcmc"><i class="fa fa-check"></i><b>11.2.3</b> Likelihood-free MCMC</a></li>
+<li class="part"><span><b>II Statistical Foundations</b></span></li>
+<li class="chapter" data-level="12" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>12</b> Bayes’ Rule</a></li>
+<li class="chapter" data-level="13" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>13</b> Markov Chain</a><ul>
+<li class="chapter" data-level="13.1" data-path="metropolis-algorithm.html"><a href="metropolis-algorithm.html"><i class="fa fa-check"></i><b>13.1</b> Metropolis Algorithm</a></li>
+<li class="chapter" data-level="13.2" data-path="metropolis-hastings.html"><a href="metropolis-hastings.html"><i class="fa fa-check"></i><b>13.2</b> Metropolis-Hastings</a></li>
+<li class="chapter" data-level="13.3" data-path="likelihood-free-mcmc.html"><a href="likelihood-free-mcmc.html"><i class="fa fa-check"></i><b>13.3</b> Likelihood-free MCMC</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>14</b> Power calculation in network studies</a><ul>
+<li class="chapter" data-level="14.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>14.1</b> Error types</a></li>
+<li class="chapter" data-level="14.2" data-path="examples-1.html"><a href="examples-1.html"><i class="fa fa-check"></i><b>14.2</b> Examples</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="examples-1.html"><a href="examples-1.html#sample-size-for-a-proportion"><i class="fa fa-check"></i><b>14.2.1</b> Sample size for a proportion</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -273,23 +278,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bayes-rule" class="section level2 hasAnchor">
-<h2><span class="header-section-number">11.1</span> Bayes’ Rule<a href="bayes-rule.html#bayes-rule" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="bayes-rule" class="section level1 hasAnchor">
+<h1><span class="header-section-number">Chapter 12</span> Bayes’ Rule<a href="bayes-rule.html#bayes-rule" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Bayes’ Rule is a fundamental equation in Bayesian statistics. With it, we can reformulate inferential problems by writing probabilities in terms of known quantities. Bayes’ rule can be stated as follows:</p>
 <p><span class="math display">\[\begin{equation}
-{\mathbb{P}\left(\left(X=x|Y=y\right)\right) } = \frac{{\mathbb{P}\left(\left(Y=y|X=y\right)\right) }{\mathbb{P}\left(\left(X=x\right)\right) }}{{\mathbb{P}\left(\left(Y=y\right)\right) }}
+\mathbb{P}{\left(X=x|Y=y\right)} = \frac{\mathbb{P}{\left(Y=y|X=y\right)}\mathbb{P}{\left(X=x\right)}}{\mathbb{P}{\left(Y=y\right)}}
 \end{equation}\]</span></p>
-<p>Bayes’ rule can be derived using conditional probabilities. In particular, <span class="math inline">\({\mathbb{P}\left(\left(x=x|Y=y\right)\right) }\)</span> is defined as <span class="math inline">\({\mathbb{P}\left(\left(x=x, Y=y\right)\right) }/Pr{\left(Y=y\right)}\)</span>. Likewise, <span class="math inline">\({\mathbb{P}\left(\left(y=y|X=x\right)\right) }\)</span> is defined as <span class="math inline">\({\mathbb{P}\left(\left(y=y, X=x\right)\right) }/Pr{\left(X=x\right)}\)</span>, which can be re-written as <span class="math inline">\({\mathbb{P}\left(\left(x=x, Y=y\right)\right) } = {\mathbb{P}\left(\left(y=y|X=x\right)\right) }Pr{\left(X=x\right)}\)</span>. Replacing the last equality in the first equation we get</p>
+<p>Here we say that the conditional probability of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y\)</span> can be expressed in terms of the conditional probability of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span>. For example, let <span class="math inline">\(X\)</span> be an unknown vector of parameters <span class="math inline">\(\theta\in\Theta\)</span> and <span class="math inline">\(Y\)</span> a dataset <span class="math inline">\(D \sim f(\theta)\)</span> whose data generating process depends on the unobserved <span class="math inline">\(\theta\)</span>. As the posterior distribution of model parameters is in general elusive, instead, we use Bayes’ rule to rephrase the problem:</p>
+<p><span class="math display">\[\begin{equation*}
+\mathbb{P}{\left(\theta|D\right)} = \frac{\mathbb{P}{\left(\theta|D\right)}\mathbb{P}{\left(\theta\right)}}{\mathbb{P}{\left(D\right)}}
+\end{equation*}\]</span></p>
+<p>Since the denominator of the equation does not depend on <span class="math inline">\(\theta\)</span>, we can, instead, write</p>
+<p><span class="math display">\[\begin{equation*}
+\mathbb{P}{\left(\theta|D\right)} \propto \mathbb{P}{\left(\theta|D\right)}\mathbb{P}{\left(\theta\right)}
+\end{equation*}\]</span></p>
+<p>In the Bayesian world, the unconditional distribution of the model parameters is assumed to come from a particular distribution, whereas in the frequentist world, no distributional assumptions are made about the model parameters. The latter is then equivalent to saying that <span class="math inline">\(\theta\sim \mbox{Uniform}(-\infty, +\infty)\)</span>; therefore, even frequentists assume something about the model parameters!<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></p>
+<p>Bayes’ rule can be derived using conditional probabilities. In particular, <span class="math inline">\(\mathbb{P}{\left(x=x|Y=y\right)}\)</span> is defined as <span class="math inline">\(\mathbb{P}{\left(x=x, Y=y\right)}/Pr{\left(Y=y\right)}\)</span>. Likewise, <span class="math inline">\(\mathbb{P}{\left(y=y|X=x\right)}\)</span> is defined as <span class="math inline">\(\mathbb{P}{\left(y=y, X=x\right)}/Pr{\left(X=x\right)}\)</span>, which can be re-written as <span class="math inline">\(\mathbb{P}{\left(x=x, Y=y\right)} = \mathbb{P}{\left(y=y|X=x\right)}Pr{\left(X=x\right)}\)</span>. Replacing the last equality in the first equation we get</p>
 <p><span class="math display">\[\begin{align*}
-{\mathbb{P}\left(\left(x=x|Y=y\right)\right) } &amp; = \frac{{\mathbb{P}\left(\left(x=x, Y=y\right)\right) }}{Pr{\left(Y=y\right)}} \\
-&amp; \frac{{\mathbb{P}\left(\left(y=y|X=x\right)\right) }Pr{\left(X=x\right)}}{Pr{\left(Y=y\right)}}
+\mathbb{P}{\left(x=x|Y=y\right)} &amp; = \frac{\mathbb{P}{\left(x=x, Y=y\right)}}{Pr{\left(Y=y\right)}} \\
+&amp; \frac{\mathbb{P}{\left(y=y|X=x\right)}Pr{\left(X=x\right)}}{Pr{\left(Y=y\right)}}
 \end{align*}\]</span></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="13">
+<li id="fn13"><p>The discussion about differences and similarities between frequentists and Bayesians has a long tradition. Bottom line, no one can say 100% that they are either or. In rigor, frequentists say that model parameters are not random but deterministic.<a href="bayes-rule.html#fnref13" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="part-statistical-foundations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="stochastic-actor-oriented-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="markov-chain.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

@@ -589,4 +589,4 @@ Where the last equality follows from $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_
 
 Related to this, block-diagonal ERGMs can be estimated as independent models, one per block. To see more about this, read [@Snijders2010margin]. Likewise, since independence depends--pun intended--on partitioning the objective function, as pointed by Snijders, non-linear functions make the model dependent, e.g., $\s{\mathbf{y}} = \sqrt{\sum_{ij}y_{ij}}$, the square root of the edgecount is no longer a bernoulli graph.
 
-
+\renewcommand{\Pr}[1]{\mathbb{P}{#1}}

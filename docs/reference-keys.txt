@@ -87,6 +87,10 @@ markov-chain
 metropolis-algorithm
 metropolis-hastings
 likelihood-free-mcmc
+power-calculation-in-network-studies
+error-types
+examples-1
+sample-size-for-a-proportion
 datasets-1
 sns-data
 about-the-data

@@ -268,19 +268,19 @@ igraph::as_adj_list(intergraph::asIgraph(example_graph))
 
 ```
 ## [[1]]
-## + 1/4 vertex, from 568438d:
+## + 1/4 vertex, from c219e4a:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from 568438d:
+## + 2/4 vertices, from c219e4a:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from 568438d:
+## + 3/4 vertices, from c219e4a:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from 568438d:
+## + 2/4 vertices, from c219e4a:
 ## [1] 3 3
 ```
 
