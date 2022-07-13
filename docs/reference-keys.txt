@@ -91,6 +91,7 @@ power-calculation-in-network-studies
 error-types
 examples-1
 sample-size-for-a-proportion
+sample-size-for-a-proportion-vis
 datasets-1
 sns-data
 about-the-data

@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-07-12" />
+<meta name="date" content="2022-07-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -248,6 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>14.1</b> Error types</a></li>
 <li class="chapter" data-level="14.2" data-path="examples-1.html"><a href="examples-1.html"><i class="fa fa-check"></i><b>14.2</b> Examples</a><ul>
 <li class="chapter" data-level="14.2.1" data-path="examples-1.html"><a href="examples-1.html#sample-size-for-a-proportion"><i class="fa fa-check"></i><b>14.2.1</b> Sample size for a proportion</a></li>
+<li class="chapter" data-level="14.2.2" data-path="examples-1.html"><a href="examples-1.html#sample-size-for-a-proportion-vis"><i class="fa fa-check"></i><b>14.2.2</b> Sample size for a proportion (vis)</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -321,7 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## -4.734</code></pre>
 <p>So what happened here! We got a warning. It turns out that our network has loops (didn’t thought about it before!). Let’s take a look at that with the <code>which_loop</code> function</p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" title="1"><span class="kw">E</span>(ig_year1_<span class="dv">111</span>)[<span class="kw">which_loop</span>(ig_year1_<span class="dv">111</span>)]</a></code></pre></div>
-<pre><code>## + 1/2638 edge from 7b63659 (vertex names):
+<pre><code>## + 1/2638 edge from 3c29320 (vertex names):
 ## [1] 1110111-&gt;1110111</code></pre>
 <p>We can get rid of these using the <code>igraph::-.igraph</code>. Let’s remove the isolates using the same operator</p>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" title="1"><span class="co"># Creating the new network</span></a>

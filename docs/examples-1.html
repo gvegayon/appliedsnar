@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon" />
 
 
-<meta name="date" content="2022-07-12" />
+<meta name="date" content="2022-07-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -248,6 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>14.1</b> Error types</a></li>
 <li class="chapter" data-level="14.2" data-path="examples-1.html"><a href="examples-1.html"><i class="fa fa-check"></i><b>14.2</b> Examples</a><ul>
 <li class="chapter" data-level="14.2.1" data-path="examples-1.html"><a href="examples-1.html#sample-size-for-a-proportion"><i class="fa fa-check"></i><b>14.2.1</b> Sample size for a proportion</a></li>
+<li class="chapter" data-level="14.2.2" data-path="examples-1.html"><a href="examples-1.html#sample-size-for-a-proportion-vis"><i class="fa fa-check"></i><b>14.2.2</b> Sample size for a proportion (vis)</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -318,6 +319,74 @@ Z_{1-\beta}\sqrt{p_1(1-p_1)}&amp; = Z_{\alpha/2}\sqrt{p_0(1-p_0)} + \sqrt{n}(p_0
 \frac{\left(Z_{1-\beta}\sqrt{p_1(1-p_1)} - Z_{\alpha/2}\sqrt{p_0(1-p_0)}\right)^2}{(p_0 - p_1)^2}&amp; = n \\
 \end{align*}\]</span></p>
 <p>Therefore, for the parameters <span class="math inline">\((1-\beta, \alpha, p_0, p_1) = (0.8, 0.05, 0.5, 0.6)\)</span>, the required sample size is 193.8473 <span class="math inline">\(\sim\)</span> 194.</p>
+</div>
+<div id="sample-size-for-a-proportion-vis" class="section level3 hasAnchor">
+<h3><span class="header-section-number">14.2.2</span> Sample size for a proportion (vis)<a href="examples-1.html#sample-size-for-a-proportion-vis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now, what happens if the model we are planning to estimate does not have a close form? If analytical solutions are not available, simulations can be an excellent alternative to save the day. Let’s re-do the sample size calculation using simulations.</p>
+<p>The procedure to compute sample size based on simulations is computationally intensive. The concept is straightforward, pick a set of best guesses for sample size, and for each one of them, simulate the system to estimate power. Now, for a given value of <span class="math inline">\(n\)</span>, we:</p>
+<ol style="list-style-type: decimal">
+<li><p>Simulate a sample of size <span class="math inline">\(n\)</span> under the alternative.</p></li>
+<li><p>Compute the test statistic corresponding to the null.</p></li>
+<li><p>Accept or reject accordingly to the selected <span class="math inline">\(\alpha\)</span>, and store the result.</p></li>
+<li><p>Repeat steps 1-3 many times. The obtained average is the corresponding power.</p></li>
+</ol>
+<p>When running simulations, it is convenient to write a function for the data generating process. In our case, the function will be called <code>sim_fun</code>. The following lines of code achieve our goal: approximate power by simulating 10,000 experiments for each sample size candidate:</p>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb311-1" title="1"><span class="co"># Model parameters</span></a>
+<a class="sourceLine" id="cb311-2" title="2">p0        &lt;-<span class="st"> </span><span class="fl">.5</span></a>
+<a class="sourceLine" id="cb311-3" title="3">p1        &lt;-<span class="st"> </span><span class="fl">.6</span></a>
+<a class="sourceLine" id="cb311-4" title="4">betapower &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.8</span></a>
+<a class="sourceLine" id="cb311-5" title="5">alpha     &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
+<a class="sourceLine" id="cb311-6" title="6">nsims     &lt;-<span class="st"> </span><span class="dv">10000</span></a>
+<a class="sourceLine" id="cb311-7" title="7"></a>
+<a class="sourceLine" id="cb311-8" title="8"><span class="co"># Step 1: Simulate the data under H1</span></a>
+<a class="sourceLine" id="cb311-9" title="9">z_one_minus_alpha_half &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb311-10" title="10">sim_fun &lt;-<span class="st"> </span><span class="cf">function</span>(n) {</a>
+<a class="sourceLine" id="cb311-11" title="11"></a>
+<a class="sourceLine" id="cb311-12" title="12">    <span class="co"># Generating the data</span></a>
+<a class="sourceLine" id="cb311-13" title="13">    y &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">runif</span>(n) <span class="op">&lt;</span><span class="st"> </span>p1)</a>
+<a class="sourceLine" id="cb311-14" title="14">    phat &lt;-<span class="st"> </span><span class="kw">mean</span>(y)</a>
+<a class="sourceLine" id="cb311-15" title="15"></a>
+<a class="sourceLine" id="cb311-16" title="16">    <span class="co"># Accept or reject?</span></a>
+<a class="sourceLine" id="cb311-17" title="17">    <span class="kw">sqrt</span>(n) <span class="op">*</span><span class="st"> </span>(phat <span class="op">-</span><span class="st"> </span>p0) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(p0 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p0)) <span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb311-18" title="18"><span class="st">        </span>z_one_minus_alpha_half</a>
+<a class="sourceLine" id="cb311-19" title="19"></a>
+<a class="sourceLine" id="cb311-20" title="20">}</a>
+<a class="sourceLine" id="cb311-21" title="21"></a>
+<a class="sourceLine" id="cb311-22" title="22"><span class="co"># Step 2: For an array of n, simulate multiple experiments</span></a>
+<a class="sourceLine" id="cb311-23" title="23">n_seq &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">150</span>, <span class="dt">to =</span> <span class="dv">250</span>, <span class="dt">by =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb311-24" title="24"></a>
+<a class="sourceLine" id="cb311-25" title="25">simulations &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb311-26" title="26"><span class="kw">set.seed</span>(<span class="dv">12312</span>)</a>
+<a class="sourceLine" id="cb311-27" title="27"><span class="cf">for</span> (n <span class="cf">in</span> n_seq) {</a>
+<a class="sourceLine" id="cb311-28" title="28"></a>
+<a class="sourceLine" id="cb311-29" title="29">    <span class="co"># Run the nsims experiments</span></a>
+<a class="sourceLine" id="cb311-30" title="30">    res &lt;-<span class="st"> </span><span class="kw">replicate</span>(nsims, <span class="kw">sim_fun</span>(n))</a>
+<a class="sourceLine" id="cb311-31" title="31"></a>
+<a class="sourceLine" id="cb311-32" title="32">    <span class="co"># Compute power and store the value</span></a>
+<a class="sourceLine" id="cb311-33" title="33">    simulations &lt;-<span class="st"> </span><span class="kw">rbind</span>(</a>
+<a class="sourceLine" id="cb311-34" title="34">        simulations,</a>
+<a class="sourceLine" id="cb311-35" title="35">        <span class="kw">data.frame</span>(<span class="dt">size =</span> n, <span class="dt">power =</span> <span class="kw">mean</span>(res))</a>
+<a class="sourceLine" id="cb311-36" title="36">    )</a>
+<a class="sourceLine" id="cb311-37" title="37">}</a>
+<a class="sourceLine" id="cb311-38" title="38"></a>
+<a class="sourceLine" id="cb311-39" title="39"><span class="co"># Finding out what is the closets value</span></a>
+<a class="sourceLine" id="cb311-40" title="40">best &lt;-<span class="st"> </span><span class="kw">which.min</span>(</a>
+<a class="sourceLine" id="cb311-41" title="41">    <span class="kw">abs</span>((<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>betapower) <span class="op">-</span><span class="st"> </span>simulations<span class="op">$</span>power)</a>
+<a class="sourceLine" id="cb311-42" title="42">    )</a>
+<a class="sourceLine" id="cb311-43" title="43"></a>
+<a class="sourceLine" id="cb311-44" title="44">simulations[best,,drop=<span class="ot">FALSE</span>]</a></code></pre></div>
+<pre><code>##   size  power
+## 5  190 0.7952</code></pre>
+<p>Let’s visualize the power curve we generate from this simulation:</p>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb313-1" title="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb313-2" title="2"><span class="kw">ggplot</span>(simulations, <span class="kw">aes</span>(<span class="dt">x =</span> size, <span class="dt">y =</span> power)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb313-3" title="3"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb313-4" title="4"><span class="st">    </span><span class="kw">geom_smooth</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb313-5" title="5"><span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>betapower)</a></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="11-power_files/figure-html/11-power-plot-1.png" width="672" /></p>
+<p>According to our simulation study, the closest to our 80% power is using a sample size equal to 190, which is very close to the analytical solution of 194.</p>
+<p>As a final comment for this example, remember that the more simulations the better.</p>
 
 
 </div>
