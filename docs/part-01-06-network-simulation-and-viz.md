@@ -17,7 +17,8 @@ For this chapter, we will be using the following R packages:
 
 You can use the following codeblock to install any missing package:
 
-```{r 06-check-packages, message = FALSE, warning=FALSE}
+
+```r
 # Creating the list to install
 pkgs <- c(
   "ergm", "sna", "igraph", "intergraph", "netplot", "netdiffuseR", "rgexf"
@@ -36,6 +37,8 @@ for (pkg in pkgs) {
   }
 }
 ```
+
+A recorded version is available [here](https://youtu.be/VasQf--gT-E).
 
 ## Random Graph Models
 
@@ -90,8 +93,8 @@ The simulation steps are as follows:
 
 Here is the code
 
-```{r 06-random-school, message=FALSE, warning = FALSE}
 
+```r
 set.seed(712)
 n <- 200
 
@@ -158,15 +161,19 @@ What just happened? Here is a line-by-line breakout:
 
 Let's take a quick look at the resulting graph
 
-```{r 06-first-fig, message = FALSE, warning = FALSE}
+
+```r
 library(sna)
 gplot(net_sim)
 ```
 
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-first-fig-1.png)<!-- -->
+
 We can now start to see whether we got what we wanted! Before that, let's save the 
 network as a plain-text file so we can practice reading networks back in R!
 
-```{r}
+
+```r
 write.csv(
   x         = as.edgelist(net_sim),
   file      = "06-edgelist.csv",
@@ -178,7 +185,6 @@ write.csv(
   file      = "06-nodes.csv",
   row.names = FALSE
   )
-
 ```
 
 ## Reading a network
@@ -189,7 +195,8 @@ of an edgelist. Another common format is the adjacency list, which is a compress
 version of an edgelist. Let's see how the formats look like for the following
 network:
 
-```{r 06-fake-graph-read}
+
+```r
 example_graph <- matrix(0L, 4, 4, dimnames = list(letters[1:4], letters[1:4]))
 example_graph[c(2, 7)] <- 1L
 example_graph["c", "d"] <- 1L
@@ -199,6 +206,8 @@ set.seed(1231)
 gplot(example_graph, label = letters[1:4])
 ```
 
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-fake-graph-read-1.png)<!-- -->
+
 - **Adjacency matrix** a matrix of size $n$ by $n$ where the $ij$-th entry represents
 the tie between $i$ and $j$. In a directed network, we say $i$ connects to $j$,
 so the $i$-th row shows the ties $i$ sends to the rest of the network. Likewise,
@@ -207,15 +216,45 @@ graphs, the adjacency matrix is usually upper or lower diagonal. The adjacency
 matrix of an undirected graph is symmetric, so we don't need to report the same
 information twice. For example:
 
-```{r 06-adjmat-eg}
+
+```r
 as.matrix(example_graph)
+```
+
+```
+##   a b c d
+## a 0 0 0 0
+## b 1 0 0 0
+## c 0 1 0 1
+## d 0 0 1 0
 ```
 
 - **Edge list** a matrix of size $|E|$ by $2$, where $|E|$ is the number of edges.
 Each entry represents a tie in the graph. 
 
-```{r 06-edgelist-eg}
+
+```r
 as.edgelist(example_graph)
+```
+
+```
+##      [,1] [,2]
+## [1,]    2    1
+## [2,]    3    2
+## [3,]    3    4
+## [4,]    4    3
+## attr(,"n")
+## [1] 4
+## attr(,"vnames")
+## [1] "a" "b" "c" "d"
+## attr(,"directed")
+## [1] TRUE
+## attr(,"bipartite")
+## [1] FALSE
+## attr(,"loops")
+## [1] FALSE
+## attr(,"class")
+## [1] "matrix_edgelist" "edgelist"        "matrix"          "array"
 ```
   
   The command turns the `network` object into a matrix with a set of attributes
@@ -224,25 +263,45 @@ as.edgelist(example_graph)
 - **Adjacency list** This data format uses less space than edgelists as ties are
   grouped by ego (source.)
 
-```{r 06-adjlist}
+
+```r
 igraph::as_adj_list(intergraph::asIgraph(example_graph)) 
+```
+
+```
+## [[1]]
+## + 1/4 vertex, from ba49935:
+## [1] 2
+## 
+## [[2]]
+## + 2/4 vertices, from ba49935:
+## [1] 1 3
+## 
+## [[3]]
+## + 3/4 vertices, from ba49935:
+## [1] 2 4 4
+## 
+## [[4]]
+## + 2/4 vertices, from ba49935:
+## [1] 3 3
 ```
 
   The function `igraph::as_adj_list` turns the igraph object into a list of
   type adjacency list. In plain text it would look something like this:
 
-  ```{r 06-adjlist-plain, echo = FALSE, results = 'asis'}
-  cat("```\n")
-  igraph::as_adj_list(intergraph::asIgraph(example_graph)) |>
-    lapply(\(x) cat(paste(as.vector(x), collapse = " "), "\n")) |> invisible()
-  cat("```")
+  ```
+  2 
+  1 3 
+  2 4 4 
+  3 3 
   ```
 
 Here we will deal with an edgelist that includes node information.
 In my opinion, this is one of the best ways to share network data. Let's read
 the data into R using the function `read.csv`:
 
-```{r 06-read-data}
+
+```r
 edges <- read.csv("06-edgelist.csv")
 nodes <- read.csv("06-nodes.csv")
 ```
@@ -250,9 +309,33 @@ nodes <- read.csv("06-nodes.csv")
 We now have two objects of class `data.frame`, edges and nodes. Let's inspect
 them using the `head` function:
 
-```{r 06-read-head}
+
+```r
 head(edges)
+```
+
+```
+##   V1  V2
+## 1  2   7
+## 2  2  41
+## 3  3   5
+## 4  3  16
+## 5  4 138
+## 6  5   9
+```
+
+```r
 head(nodes)
+```
+
+```
+##   vertex.names      race age
+## 1            1 non-white  10
+## 2            2     white  10
+## 3            3     white  17
+## 4            4 non-white  14
+## 5            5 non-white  17
+## 6            6 non-white  14
 ```
 
 It is always important to look at the data before creating the network. Most common
@@ -278,7 +361,8 @@ you will (a) make sure that isolates are included and (b) become aware of possib
 problems in the data. A frequent error in `graph_from_data_frame` is nodes present
 in the edgelist but not in the set of nodes. 
 
-```{r 06-read-igraph}
+
+```r
 net_ig <- igraph::graph_from_data_frame(
   d        = edges,
   directed = TRUE,
@@ -288,7 +372,8 @@ net_ig <- igraph::graph_from_data_frame(
 
 Using `as.network` from the `network` package:
 
-```{r 06-read-network}
+
+```r
 net_net <- network::as.network(
   x        = edges,
   directed = TRUE,
@@ -327,7 +412,8 @@ later on. Let's start by size.
 Finding the right scale can be somewhat difficult. We 
 will draw the graph four times to see what size would be the best:
 
-```{r 06-size}
+
+```r
 # Sized by indegree
 net_sim %v% "indeg" <- sna::degree(net_sim, cmode = "indegree")
 
@@ -339,7 +425,11 @@ glayout <- gplot(net_sim, vertex.cex = (net_sim %v% "indeg") * 2)
 gplot(net_sim, vertex.cex = net_sim %v% "indeg", coord = glayout)
 gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/2, coord = glayout)
 gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/10, coord = glayout)
+```
 
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-size-1.png)<!-- -->
+
+```r
 # Restoring device config
 par(op)
 ```
@@ -372,7 +462,8 @@ The other two calls are similar to four. If we used igraph, setting the
 size can be more accessible thanks to the netdiffuseR R package. Let's start by converting
 our network to an igraph object with the R package `intergraph`.
 
-```{r 06-size-netdiffuseR, message = FALSE, warning = FALSE}
+
+```r
 library(intergraph)
 library(igraph)
 
@@ -391,9 +482,12 @@ plot(
 )
 ```
 
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-size-netdiffuseR-1.png)<!-- -->
+
 We could also have tried netplot, which should make things easier and make a better use of the space:
 
-```{r 06-netplot1, message = FALSE, warning = FALSE}
+
+```r
 library(netplot)
 nplot(
   net_sim, layout = glayout,
@@ -401,6 +495,8 @@ nplot(
   vertex.frame.color = "darkred"
   )
 ```
+
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-netplot1-1.png)<!-- -->
 
 With a good idea for size, we can now start looking into vertex color.
 
@@ -413,7 +509,8 @@ the book, the `netplot` package does not have an easy way to add legends with th
 core function, `nplot`; therefore, we use `nplot_base` which is compatible with 
 the R function `legend`, as we will now see:
 
-```{r 06-network-color}
+
+```r
 # Specifying colors for each vertex
 vcolors_palette <- c("10" = "gray", "14" = "tomato", "17" = "steelblue")
 vcolors <- vcolors_palette[as.character(net_sim %v% "age")]
@@ -435,6 +532,8 @@ legend(
   title  = "Age"
   )
 ```
+
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-network-color-1.png)<!-- -->
 
 Line by line, this is what we just did:
 
@@ -479,7 +578,8 @@ Line by line, this is what we just did:
 For the color, we will use vertex age. Although age is, by definition, continuous,
 we only have three values for age. Because of this, we can treat age as categorical.
 
-```{r 06-network-shape}
+
+```r
 # Specifying the shapes for each vertex
 vshape_list <- c("white" = 15, "non-white" = 3)
 vshape      <- vshape_list[as.character(net_sim %v% "race")]
@@ -511,6 +611,8 @@ legend(
   title  = "Race"
   )
 ```
+
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-network-shape-1.png)<!-- -->
 
 Let's now compare the figure to our original ERGM:
 
@@ -547,7 +649,8 @@ term instead of the `absdiff` term. This way, we (a) explicitly operationalize
 the term as homophily (before it was heterophily,) and (b) have both homophily
 effects have the same influence in the model:
 
-```{r 06-adjust-homophily}
+
+```r
 net_sim2 <- simulate(
     net ~ edges +
     nodematch("race") +
@@ -562,7 +665,8 @@ changed. The vertex attributes are the same so we can go ahead and re-use them.
 Like I mentioned earlier, the `nplot_base` function currently supports `igraph`
 objects, so we will use `intergraph::asIgraph` to make it work:
 
-```{r 06-adjust-homophily-plot}
+
+```r
 # Plotting
 nplot_base(
   asIgraph(net_sim2),
@@ -590,6 +694,8 @@ legend(
   title  = "Race"
   )
 ```
+
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-adjust-homophily-plot-1.png)<!-- -->
 
 As expected, there is no longer a dominant effect in homophily. One important
 thing we can learn from this final example is that phenomena will not always

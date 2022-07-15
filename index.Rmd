@@ -1,6 +1,6 @@
 --- 
 title: "Applied Network Science with R"
-author: "George G. Vega Yon"
+author: "George G. Vega Yon, Ph.D."
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -8,18 +8,17 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: gvegayon/appliedsnar
-description: "An improvised book on applied Social Network Analysis with R, this is(will be) a compilation of the materials presented in this series of workshop hosted by USC's Center for Applied Network Analysis (CANA)"
+description: "An improvised book on applied Network Science with R."
 ---
 
-# About
+# Preface
 
 \renewcommand{\Pr}[1]{\mbox{Pr}\left(#1\right)}
 \renewcommand{\exp}[1]{\mbox{exp}\left\{#1\right\}}
 
-### The Book
 
 Statistical methods for networked systems are present in most disciplines.
-Nonetheless, the language differences between disciplines, many methods
+Nonetheless, despite the language differences between disciplines, many methods
 developed to study specific types of problems can be helpful outside of their original context.
 
 This project began as a part of a workshop that took place at USC's
@@ -35,7 +34,7 @@ analysis.^[Some of you may be wondering "what about ggplot2 and friends? What ab
 
 You can access the book's source code at https://github.com/gvegayon/appliedsnar.
 
-### The author
+# About the Author
 
 I am a Research Assistant Professor at the University of Utah's Division of
 Epidemiology, where I work on studying Complex Systems using Statistical Computing.

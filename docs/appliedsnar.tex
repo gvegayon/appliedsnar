@@ -30,7 +30,7 @@
 \usepackage{hyperref}
 \hypersetup{
             pdftitle={Applied Network Science with R},
-            pdfauthor={George G. Vega Yon},
+            pdfauthor={George G. Vega Yon, Ph.D.},
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
@@ -124,8 +124,8 @@
 \allowdisplaybreaks
 
 \title{Applied Network Science with R}
-\author{George G. Vega Yon}
-\date{2022-07-13}
+\author{George G. Vega Yon, Ph.D.}
+\date{2022-07-15}
 
 \begin{document}
 \maketitle
@@ -134,17 +134,14 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{about}{%
-\chapter{About}\label{about}}
+\hypertarget{preface}{%
+\chapter{Preface}\label{preface}}
 
 \renewcommand{\Pr}[1]{\mbox{Pr}\left(#1\right)}
 \renewcommand{\exp}[1]{\mbox{exp}\left\{#1\right\}}
 
-\hypertarget{the-book}{%
-\subsection{The Book}\label{the-book}}
-
 Statistical methods for networked systems are present in most disciplines.
-Nonetheless, the language differences between disciplines, many methods
+Nonetheless, despite the language differences between disciplines, many methods
 developed to study specific types of problems can be helpful outside of their original context.
 
 This project began as a part of a workshop that took place at USC's
@@ -160,8 +157,8 @@ analysis.\footnote{Some of you may be wondering ``what about ggplot2 and friends
 
 You can access the book's source code at \url{https://github.com/gvegayon/appliedsnar}.
 
-\hypertarget{the-author}{%
-\subsection{The author}\label{the-author}}
+\hypertarget{about-the-author}{%
+\chapter{About the Author}\label{about-the-author}}
 
 I am a Research Assistant Professor at the University of Utah's Division of
 Epidemiology, where I work on studying Complex Systems using Statistical Computing.
@@ -205,12 +202,12 @@ and provide a few examples illustrating their usage.
 \hypertarget{what-is-r}{%
 \section{What is R}\label{what-is-r}}
 
-A good reference book for both new and advanced user is \href{https://nostarch.com/artofr.htm}{``The Art of R programming''} (Matloff \protect\hyperlink{ref-Matloff2011}{2011})\footnote{\href{http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf}{Here} a free pdf version distributed by the author.}
+A good reference book for both novice and advanced users is \href{https://nostarch.com/artofr.htm}{``The Art of R programming''} (Matloff \protect\hyperlink{ref-Matloff2011}{2011})\footnote{\href{http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf}{Here} a free pdf version distributed by the author.}
 
 \hypertarget{how-to-install-packages}{%
 \section{How to install packages}\label{how-to-install-packages}}
 
-Nowadays there are two ways of installing R packages (that I'm aware of), either using \texttt{install.packages}, which is a function shipped with R, or use the devtools R package to install a package from some remote repository other than CRAN, here is a couple of examples:
+Nowadays there are two ways of installing R packages (that I'm aware of), either using \texttt{install.packages}, which is a function shipped with R, or use the \href{https://cran.r-project.org/package=devtools}{\texttt{devtools}} R package to install a package from some remote repository other than CRAN, here are a few examples:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -222,14 +219,14 @@ Nowadays there are two ways of installing R packages (that I'm aware of), either
 \end{Highlighting}
 \end{Shaded}
 
-The first one, using \texttt{install.packages}, installs the CRAN version of \texttt{netdiffuseR}, whereas the second installs whatever version is plublished on \url{https://github.com/USCCANA/netdiffuseR}, which is usually called the development version.
+The first one, using \texttt{install.packages}, installs the CRAN version of \href{https://r-project.org/package=netdiffuseR}{\texttt{netdiffuseR}}, whereas the line of code installs whatever version is plublished on \url{https://github.com/USCCANA/netdiffuseR}, which is usually called the development version.
 
-In some cases users may want/need to install packages from command line as some packages need extra configuration to be installed. But we won't need to look at it now.
+In some cases, users may want/need to install packages from the command line as some packages need extra configuration to be installed. But we won't need to look at it now.
 
-\hypertarget{prerequisits}{%
-\section{Prerequisits}\label{prerequisits}}
+\hypertarget{prerequisites}{%
+\section{Prerequisites}\label{prerequisites}}
 
-To install R just follow the instructions available at \url{http://cran.r-project.org}
+To install R just follow the instructions available at \url{http://cran.r-project.org}.
 
 RStudio is the most popular Integrated Development Environment (IDE) for R that is developed by the company of the same name. While having RStudio is not a requirement for using netdiffuseR, it is highly recommended.
 
@@ -273,7 +270,7 @@ Some common tasks in R
 \end{Highlighting}
 \end{Shaded}
 
-  Historically the assign operator is the most common used.
+  Historically the assign operator is the most commonly used.
 \item
   R has several type of objects, the most basic structures in R are \texttt{vectors}, \texttt{matrix}, \texttt{list}, \texttt{data.frame}. Here is an example creating several of these (each line is enclosed with parenthesis so that R prints the resulting element):
 
@@ -639,7 +636,7 @@ Some common tasks in R
 ## [1] "I'm step 1 / 10"
 \end{verbatim}
 \item
-  R has a very nice set of pseudo random number generation functions. In general, distribution functions have the following name structure:
+  R has a very nice set of pseudo-random number generation functions. In general, distribution functions have the following name structure:
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
@@ -667,7 +664,7 @@ Some common tasks in R
 \end{Highlighting}
 \end{Shaded}
 
-  \includegraphics{02-the-basics_files/figure-latex/random-numbers-1.pdf}
+  \includegraphics{part-01-02-the-basics_files/figure-latex/random-numbers-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -677,7 +674,7 @@ Some common tasks in R
 \end{Highlighting}
 \end{Shaded}
 
-  \includegraphics{02-the-basics_files/figure-latex/random-numbers-2.pdf}
+  \includegraphics{part-01-02-the-basics_files/figure-latex/random-numbers-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -687,7 +684,7 @@ Some common tasks in R
 \end{Highlighting}
 \end{Shaded}
 
-  \includegraphics{02-the-basics_files/figure-latex/random-numbers-3.pdf}
+  \includegraphics{part-01-02-the-basics_files/figure-latex/random-numbers-3.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -697,7 +694,7 @@ Some common tasks in R
 \end{Highlighting}
 \end{Shaded}
 
-  \includegraphics{02-the-basics_files/figure-latex/random-numbers-4.pdf}
+  \includegraphics{part-01-02-the-basics_files/figure-latex/random-numbers-4.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -707,9 +704,9 @@ Some common tasks in R
 \end{Highlighting}
 \end{Shaded}
 
-  \includegraphics{02-the-basics_files/figure-latex/random-numbers-5.pdf}
+  \includegraphics{part-01-02-the-basics_files/figure-latex/random-numbers-5.pdf}
 
-  More distributions available at \texttt{??Distributions}.
+  More distributions are available at \texttt{??Distributions}.
 \end{enumerate}
 
 For a nice intro to R, take a look at \href{https://nostarch.com/artofr.htm}{``The Art of R Programming'' by Norman Matloff}. For more advanced users, take a look at \href{http://adv-r.had.co.nz/}{``Advanced R'' by Hadley Wickham}.
@@ -1138,11 +1135,11 @@ Ups! It seems that individuals are making nominations to other students not incl
 \end{Shaded}
 
 \begin{verbatim}
-## IGRAPH 832e763 DN-- 2164 9514 -- 
+## IGRAPH 3cbc143 DN-- 2164 9514 -- 
 ## + attr: name (v/c), school (v/n), hispanic (v/n), female1 (v/n),
 ## | eversmk1 (v/n), eversmk2 (v/n), eversmk3 (v/n), eversmk4 (v/n), nnom
 ## | (e/n)
-## + edges from 832e763 (vertex names):
+## + edges from 3cbc143 (vertex names):
 ##  [1] 1110007->1110629 1110013->1110232 1110014->1110582 1110015->1110026
 ##  [5] 1110025->1110135 1110027->1110346 1110029->1110369 1110035->1110034
 ##  [9] 1110040->1110390 1110041->1110557 1110044->1110027 1110046->1110030
@@ -1360,7 +1357,7 @@ Let's take a look at how does our network looks like when we use the default par
 
 \begin{figure}
 
-{\centering \includegraphics{03-week-1-sns-study_files/figure-latex/03-plot-raw-1} 
+{\centering \includegraphics{part-01-03-week-1-sns-study_files/figure-latex/03-plot-raw-1} 
 
 }
 
@@ -1444,7 +1441,7 @@ With our nice vector of colors, now we can pass it to \texttt{plot.igraph} (whic
 
 \begin{figure}
 \centering
-\includegraphics{03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf}
+\includegraphics{part-01-03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf}
 \caption{\label{fig:03-plot-neat1}Friends network in time 1 for school 111.}
 \end{figure}
 
@@ -1479,7 +1476,7 @@ Nice! So it does look better. The only problem is that we have a lot of isolates
 
 \begin{figure}
 \centering
-\includegraphics{03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf}
+\includegraphics{part-01-03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf}
 \caption{\label{fig:03-plot-neat2}Friends network in time 1 for school 111. The graph excludes isolates.}
 \end{figure}
 
@@ -1562,7 +1559,7 @@ In the following lines of code, using our new function, we will plot each school
 
 \begin{figure}
 \centering
-\includegraphics{03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf}
+\includegraphics{part-01-03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf}
 \caption{\label{fig:03-myplot-call}All 5 schools in time 1. Again, the graphs exclude isolates.}
 \end{figure}
 
@@ -1610,7 +1607,8 @@ Hypothesis: Individuals that, on average, are among the first nominations of the
 \end{Shaded}
 
 \begin{verbatim}
-## `summarise()` has grouped output by 'to', 'to_name'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'to', 'to_name'. You can override using
+## the `.groups` argument.
 \end{verbatim}
 
 \begin{Shaded}
@@ -2027,7 +2025,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from ec0b228 (vertex names):
+## + 1/2638 edge from ca3262a (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2678,7 +2676,7 @@ Let's take a look at it
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{04-ergms_files/figure-latex/checking-gof-1.pdf} \includegraphics{04-ergms_files/figure-latex/checking-gof-2.pdf} \includegraphics{04-ergms_files/figure-latex/checking-gof-3.pdf} \includegraphics{04-ergms_files/figure-latex/checking-gof-4.pdf} \includegraphics{04-ergms_files/figure-latex/checking-gof-5.pdf}
+\includegraphics{part-01-04-ergms_files/figure-latex/checking-gof-1.pdf} \includegraphics{part-01-04-ergms_files/figure-latex/checking-gof-2.pdf} \includegraphics{part-01-04-ergms_files/figure-latex/checking-gof-3.pdf} \includegraphics{part-01-04-ergms_files/figure-latex/checking-gof-4.pdf} \includegraphics{part-01-04-ergms_files/figure-latex/checking-gof-5.pdf}
 
 Try the following configuration instead
 
@@ -2941,7 +2939,7 @@ block creates an empty graph with 50 nodes, 10 of which are in group \texttt{E} 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{05-ergms-constrains_files/figure-latex/unnamed-chunk-1-1.pdf}
+\includegraphics{part-01-05-ergms-constrains_files/figure-latex/unnamed-chunk-1-1.pdf}
 
 To create the auxiliary variable, we will use the following function:
 
@@ -3007,7 +3005,7 @@ We can now use this data to simulate a network in which ties between
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{05-ergms-constrains_files/figure-latex/unnamed-chunk-4-1.pdf}
+\includegraphics{part-01-05-ergms-constrains_files/figure-latex/unnamed-chunk-4-1.pdf}
 
 As you can see, this network has only ties of the type \texttt{E-E} and \texttt{A-E}. We can
 double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph
@@ -3064,7 +3062,7 @@ separately:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{05-ergms-constrains_files/figure-latex/unnamed-chunk-5-1.pdf}
+\includegraphics{part-01-05-ergms-constrains_files/figure-latex/unnamed-chunk-5-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3126,7 +3124,7 @@ at a few simulations based on this model:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{05-ergms-constrains_files/figure-latex/unnamed-chunk-7-1.pdf}
+\includegraphics{part-01-05-ergms-constrains_files/figure-latex/unnamed-chunk-7-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3198,7 +3196,7 @@ Let's see what we got here:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{05-ergms-constrains_files/figure-latex/05-example2-simulated-graph-1.pdf}
+\includegraphics{part-01-05-ergms-constrains_files/figure-latex/05-example2-simulated-graph-1.pdf}
 
 Notice that the first \texttt{nactors} vertices in the network are the actors, and
 the remaining are the entities. Now, although the \texttt{ergm} package features
@@ -3273,7 +3271,7 @@ and unimodal--look side by side:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{05-ergms-constrains_files/figure-latex/05-example2-side-by-side-1.pdf}
+\includegraphics{part-01-05-ergms-constrains_files/figure-latex/05-example2-side-by-side-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3465,6 +3463,8 @@ You can use the following codeblock to install any missing package:
 \end{Highlighting}
 \end{Shaded}
 
+A recorded version is available \href{https://youtu.be/VasQf--gT-E}{here}.
+
 \hypertarget{random-graph-models}{%
 \section{Random Graph Models}\label{random-graph-models}}
 
@@ -3619,7 +3619,7 @@ Let's take a quick look at the resulting graph
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf}
+\includegraphics{part-01-06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf}
 
 We can now start to see whether we got what we wanted! Before that, let's save the
 network as a plain-text file so we can practice reading networks back in R!
@@ -3661,7 +3661,7 @@ network:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf}
+\includegraphics{part-01-06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf}
 
 \begin{itemize}
 \tightlist
@@ -3740,19 +3740,19 @@ The command turns the \texttt{network} object into a matrix with a set of attrib
 
 \begin{verbatim}
 ## [[1]]
-## + 1/4 vertex, from c444783:
+## + 1/4 vertex, from 25b463f:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from c444783:
+## + 2/4 vertices, from 25b463f:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from c444783:
+## + 3/4 vertices, from 25b463f:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from c444783:
+## + 2/4 vertices, from 25b463f:
 ## [1] 3 3
 \end{verbatim}
 
@@ -3910,7 +3910,7 @@ will draw the graph four times to see what size would be the best:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf}
+\includegraphics{part-01-06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3972,7 +3972,7 @@ our network to an igraph object with the R package \texttt{intergraph}.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf}
+\includegraphics{part-01-06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf}
 
 We could also have tried netplot, which should make things easier and make a better use of the space:
 
@@ -3987,7 +3987,7 @@ We could also have tried netplot, which should make things easier and make a bet
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf}
+\includegraphics{part-01-06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf}
 
 With a good idea for size, we can now start looking into vertex color.
 
@@ -4026,7 +4026,7 @@ the R function \texttt{legend}, as we will now see:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf}
+\includegraphics{part-01-06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf}
 
 Line by line, this is what we just did:
 
@@ -4114,7 +4114,7 @@ we only have three values for age. Because of this, we can treat age as categori
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf}
+\includegraphics{part-01-06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf}
 
 Let's now compare the figure to our original ERGM:
 
@@ -4206,7 +4206,7 @@ objects, so we will use \texttt{intergraph::asIgraph} to make it work:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{06-network-simulation-and-viz_files/figure-latex/06-adjust-homophily-plot-1.pdf}
+\includegraphics{part-01-06-network-simulation-and-viz_files/figure-latex/06-adjust-homophily-plot-1.pdf}
 
 As expected, there is no longer a dominant effect in homophily. One important
 thing we can learn from this final example is that phenomena will not always
@@ -4569,7 +4569,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-netdiffuser_files/figure-latex/viz-1.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4577,7 +4577,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-netdiffuser_files/figure-latex/viz-2.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4585,7 +4585,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-netdiffuser_files/figure-latex/viz-3.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-3.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4593,7 +4593,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-netdiffuser_files/figure-latex/viz-4.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-4.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4601,7 +4601,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-netdiffuser_files/figure-latex/viz-5.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-5.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4614,7 +4614,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 ## applying logscale some observations are missing.
 \end{verbatim}
 
-\includegraphics{08-netdiffuser_files/figure-latex/viz-6.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-6.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4622,7 +4622,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-netdiffuser_files/figure-latex/viz-7.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-7.pdf}
 
 \hypertarget{problems}{%
 \subsection{Problems}\label{problems}}
@@ -4794,7 +4794,7 @@ To generate this diffusion network, we can use the \texttt{rdiffnet} function in
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{08-netdiffuser_files/figure-latex/plot-rumor-1} \end{center}
+\begin{center}\includegraphics{part-01-08-netdiffuser_files/figure-latex/plot-rumor-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4806,7 +4806,7 @@ To generate this diffusion network, we can use the \texttt{rdiffnet} function in
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{08-netdiffuser_files/figure-latex/plot-rumor-2} \end{center}
+\begin{center}\includegraphics{part-01-08-netdiffuser_files/figure-latex/plot-rumor-2} \end{center}
 
 \hypertarget{difussion}{%
 \subsection{Difussion}\label{difussion}}
@@ -4834,7 +4834,7 @@ To generate this diffusion network, we can use the \texttt{rdiffnet} function in
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf}
 
 \hypertarget{mentor-matching}{%
 \subsection{Mentor Matching}\label{mentor-matching}}
@@ -4923,7 +4923,7 @@ To generate this diffusion network, we can use the \texttt{rdiffnet} function in
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-netdiffuser_files/figure-latex/sim-sim-1.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/sim-sim-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5038,7 +5038,7 @@ We can simplify by using the function \texttt{rdiffnet\_multiple}. The following
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf}
 
 \hypertarget{problems-1}{%
 \subsection{Problems}\label{problems-1}}
@@ -5099,7 +5099,7 @@ We can simplify by using the function \texttt{rdiffnet\_multiple}. The following
 \end{Highlighting}
 \end{Shaded}
 
-  \includegraphics{08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf}
+  \includegraphics{part-01-08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf}
 \item
   The \texttt{summary.diffnet} method already runs Moran's for you. What happens under the hood is:
 
@@ -5202,11 +5202,11 @@ It simulates networks with the same density, and computes a particular statistic
 ## --------------------------------------------------------------------------------
 ##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
 ##     observed    expected       p.val
-##       0.5513      0.2511      0.0000
+##       0.5513      0.2510      0.0000
 \end{verbatim}
 \end{itemize}
 
-\includegraphics{08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf}
+\includegraphics{part-01-08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf}
 
 \begin{itemize}
 \item
@@ -5239,10 +5239,10 @@ It simulates networks with the same density, and computes a particular statistic
 ## --------------------------------------------------------------------------------
 ##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
 ##     observed    expected       p.val
-##       0.2714      0.2579      0.3720
+##       0.2714      0.2582      0.3940
 \end{verbatim}
 
-  \includegraphics{08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf}
+  \includegraphics{part-01-08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf}
 \end{itemize}
 
 \hypertarget{regression-analysis}{%
@@ -5470,6 +5470,145 @@ snijders\_(sociological methodology 2001)
 
 (Snijders, Bunt, and Steglich \protect\hyperlink{ref-Snijders2010}{2010}, @lazega2015, @Ripley2011)
 
+\hypertarget{power-calculation-in-network-studies}{%
+\chapter{Power calculation in network studies}\label{power-calculation-in-network-studies}}
+
+In survey and study design, calculating the required sample size is key. Nowadays, tools and methods for calculating the required sample size abound; nonetheless, sample size calculation for studies involving social networks is still underdeveloped. In this chapter, we will illustrate how can we use computer simulations to estimate the required sample size. Chapter \ref{part2-power} provides a general overview of power analysis.
+
+\hypertarget{example-1-spillover-effects-in-egocentric-studiescredit-ego-power}{%
+\section[Example 1: Spillover effects in egocentric studies]{\texorpdfstring{Example 1: Spillover effects in egocentric studies\footnote{The original problem was posed by \href{https://faculty.utah.edu/u6037777-SHINDUK_LEE/hm/index.hml}{Dr.~Shinduk Lee} from the School of Nursing at the University of Utah.}}{Example 1: Spillover effects in egocentric studies}}\label{example-1-spillover-effects-in-egocentric-studiescredit-ego-power}}
+
+Suppose that we want to run an intervention over a particular population and we are interested in the effects such intervention will have over the egos' alters. In economics, this problem, which they call the ``spillover effect,'' is actively studied.
+
+For the power calculation, we will assume that alters only get exposed if egos acquire the behavior. Furthermore, for this first run, we will assume that there is no social reinforcement or influence between alters. We will later relax this assumption. To calculate power we will do the following:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Simulate egos' behavior following a logit distribution.
+\item
+  Randomly drop some egos as a result of attrition.
+\item
+  Simulate alters' behavior using their egos as the treatment.
+\item
+  Fit a logistic regression based on the previous model.
+\item
+  Accept/reject the null and store the result.
+\end{enumerate}
+
+The previous steps will be repeated 500 for each value of \(n\) we analyze. We will finalize by plotting power against sample sizes. Let's first start by writing down the simulation parameters:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Design}
+\NormalTok{n_sims    <-}\StringTok{ }\DecValTok{500} \CommentTok{# Number of simulations}
+\NormalTok{n_a       <-}\StringTok{ }\DecValTok{5}   \CommentTok{# Number of alters}
+\NormalTok{sizes     <-}\StringTok{     }\CommentTok{# Sizes to try}
+\StringTok{  }\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{100}\NormalTok{, }\DataTypeTok{to =} \DecValTok{300}\NormalTok{, }\DataTypeTok{by =} \DecValTok{25}\NormalTok{)}
+
+\CommentTok{# Assumptions}
+\NormalTok{odds_h_}\DecValTok{1}\NormalTok{  <-}\StringTok{ }\FloatTok{1.5}
+\NormalTok{attrition <-}\StringTok{ }\FloatTok{.3}
+
+\CommentTok{# Parameters}
+\NormalTok{alpha    <-}\StringTok{ }\FloatTok{.05}
+\NormalTok{beta_pow <-}\StringTok{ }\FloatTok{0.2}
+\end{Highlighting}
+\end{Shaded}
+
+As we discuss in \ref{part2-power}, it is always a good idea to encapsule the simulation into a function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The odds turned to a prob}
+\NormalTok{theta_h_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{plogis}\NormalTok{(}\KeywordTok{log}\NormalTok{(odds_h_}\DecValTok{1}\NormalTok{))}
+
+\CommentTok{# Simulation function}
+\NormalTok{sim_data <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(n) \{}
+
+  \CommentTok{# Treatment assignment}
+\NormalTok{  tr  <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, n}\OperatorTok{/}\DecValTok{2}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, n}\OperatorTok{/}\DecValTok{2}\NormalTok{))}
+
+  \CommentTok{# Step 1: Sampling population of egos}
+\NormalTok{  y_ego <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(n) }\OperatorTok{<}\StringTok{ }\KeywordTok{c}\NormalTok{(}
+    \KeywordTok{rep}\NormalTok{(theta_h_}\DecValTok{1}\NormalTok{, n}\OperatorTok{/}\DecValTok{2}\NormalTok{),}
+    \KeywordTok{rep}\NormalTok{(}\FloatTok{0.5}\NormalTok{, n}\OperatorTok{/}\DecValTok{2}\NormalTok{)}
+\NormalTok{  )}
+
+  \CommentTok{# Step 2: Simulating attrition}
+\NormalTok{  todrop <-}\StringTok{ }\KeywordTok{order}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n))[}\DecValTok{1}\OperatorTok{:}\NormalTok{(n }\OperatorTok{*}\StringTok{ }\NormalTok{attrition)]}
+\NormalTok{  y_ego  <-}\StringTok{ }\NormalTok{y_ego[}\OperatorTok{-}\NormalTok{todrop]}
+\NormalTok{  tr     <-}\StringTok{ }\NormalTok{tr[}\OperatorTok{-}\NormalTok{todrop]}
+\NormalTok{  n      <-}\StringTok{ }\NormalTok{n }\OperatorTok{-}\StringTok{ }\KeywordTok{length}\NormalTok{(todrop)}
+
+  \CommentTok{# Step 3: Simulating alter's effect. We assume the same as in}
+  \CommentTok{# ego}
+\NormalTok{  tr_alter <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(y_ego }\OperatorTok{*}\StringTok{ }\NormalTok{tr, n_a)}
+\NormalTok{  y_alter  <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(n }\OperatorTok{*}\StringTok{ }\NormalTok{n_a) }\OperatorTok{<}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(tr_alter, theta_h_}\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
+
+  \CommentTok{# Step 4: Computing test statistic}
+\NormalTok{  res_ego   <-}\StringTok{ }\KeywordTok{tryCatch}\NormalTok{(}\KeywordTok{glm}\NormalTok{(y_ego }\OperatorTok{~}\StringTok{ }\NormalTok{tr, }\DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{)), }\DataTypeTok{error =} \ControlFlowTok{function}\NormalTok{(e) e)}
+\NormalTok{  res_alter <-}\StringTok{ }\KeywordTok{tryCatch}\NormalTok{(}\KeywordTok{glm}\NormalTok{(y_alter }\OperatorTok{~}\StringTok{ }\NormalTok{tr_alter, }\DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{)), }\DataTypeTok{error =} \ControlFlowTok{function}\NormalTok{(e) e)}
+
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{inherits}\NormalTok{(res_ego, }\StringTok{"error"}\NormalTok{) }\OperatorTok{|}\StringTok{ }\KeywordTok{inherits}\NormalTok{(res_alter, }\StringTok{"error"}\NormalTok{))}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DataTypeTok{ego =}  \OtherTok{NA}\NormalTok{, }\DataTypeTok{alter =} \OtherTok{NA}\NormalTok{))}
+  
+  \CommentTok{# Step 5: Reject?}
+  \KeywordTok{c}\NormalTok{(}
+    \DataTypeTok{ego   =} \KeywordTok{summary}\NormalTok{(res_ego)}\OperatorTok{$}\NormalTok{coefficients[}\StringTok{"tr"}\NormalTok{, }\StringTok{"Pr(>|z|)"}\NormalTok{] }\OperatorTok{<}\StringTok{ }\NormalTok{alpha,}
+    \DataTypeTok{alter =} \KeywordTok{summary}\NormalTok{(res_alter)}\OperatorTok{$}\NormalTok{coefficients[}\StringTok{"tr_alter"}\NormalTok{, }\StringTok{"Pr(>|z|)"}\NormalTok{] }\OperatorTok{<}\StringTok{ }\NormalTok{alpha}
+\NormalTok{  )}
+  
+
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Now that we have the data generating function, we can run the simulations to approximate statistical power given the sample size. Since we are simulating data, it is important to set the seed so that we can reproduce the results. The results will be stored in the matrix \texttt{spower}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# We always set the seed}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{88}\NormalTok{) }
+
+\CommentTok{# Making space, and running!}
+\NormalTok{spower <-}\StringTok{ }\OtherTok{NULL}
+\ControlFlowTok{for}\NormalTok{ (s }\ControlFlowTok{in}\NormalTok{ sizes) \{}
+
+  \CommentTok{# Run the simulation for size s}
+\NormalTok{  simres <-}\StringTok{ }\KeywordTok{rowMeans}\NormalTok{(}\KeywordTok{replicate}\NormalTok{(n_sims, }\KeywordTok{sim_data}\NormalTok{(s)), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+
+  \CommentTok{# And store the results}
+\NormalTok{  spower <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(spower, simres)}
+
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The following figure shows the approximate power for finding effects at both levels, ego and alter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{spower <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(}
+  \KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ sizes, }\DataTypeTok{power =}\NormalTok{ spower[,}\StringTok{"ego"}\NormalTok{], }\DataTypeTok{type =}  \StringTok{"ego"}\NormalTok{),}
+  \KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ sizes, }\DataTypeTok{power =}\NormalTok{ spower[,}\StringTok{"alter"}\NormalTok{], }\DataTypeTok{type =}  \StringTok{"alter"}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{spower }\OperatorTok{|}\ErrorTok{>}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ size, }\DataTypeTok{y =}\NormalTok{ power, }\DataTypeTok{colour =}\NormalTok{ type)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Number of Egos"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Approx. Power"}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"Node type"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_hline}\NormalTok{(}\DataTypeTok{yintercept =} \DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{beta_pow)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{part-01-10-power_files/figure-latex/part-01-power-plot1-1.pdf}
+
+From the figure, it becomes apparent that, although there is not enough power to identify effects at the ego level, because each ego brings in five alters, the alter sample size is high enough that we can reach above 0.8 statistical power with relatively small sample size.
+
 \hypertarget{part-statistical-foundations}{%
 \part{Statistical Foundations}\label{part-statistical-foundations}}
 
@@ -5583,8 +5722,8 @@ to the Metropolis probability.
   \end{enumerate}
 \end{enumerate}
 
-\hypertarget{power-calculation-in-network-studies}{%
-\chapter{Power calculation in network studies}\label{power-calculation-in-network-studies}}
+\hypertarget{part2-power}{%
+\chapter{Power and sample size}\label{part2-power}}
 
 Computing power and sample size are common tasks in study design. This chapter will walk you
 through power analysis for network studies. First, we will start with some preliminaries
@@ -5768,7 +5907,7 @@ Let's visualize the power curve we generate from this simulation:
 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{11-power_files/figure-latex/11-power-plot-1.pdf}
+\includegraphics{part-02-11-power_files/figure-latex/11-power-plot-1.pdf}
 
 According to our simulation study, the closest to our 80\% power is using a sample size equal to 190, which is very close to the analytical solution of 194.
 

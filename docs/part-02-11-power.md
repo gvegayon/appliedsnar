@@ -1,4 +1,4 @@
-# Power calculation in network studies
+# Power and sample size {#part2-power}
 
 Computing power and sample size are common tasks in study design. This chapter will walk you
 through power analysis for network studies. First, we will start with some preliminaries
@@ -8,19 +8,19 @@ regarding error types and statistical power.
 
 One of the most important tables we'll see around is the contingency table of accept/reject the null hypothesis conditional on the true state:
 
-```{r 11-contingency, echo=FALSE}
-tab <- c("True positive", "False negative", "False positive", "True negative")
-tab <- matrix(tab, ncol = 2, byrow = TRUE, dimnames = list(c("H0 is true", "H1 is true"), c("Accept H0", "Reject H0")))
-knitr::kable(tab)
-```
+
+|           |Accept H0      |Reject H0      |
+|:----------|:--------------|:--------------|
+|H0 is true |True positive  |False negative |
+|H1 is true |False positive |True negative  |
 
 A better way, more statistically accurate version of this table would be
 
-```{r 11-contingency-bis, echo=FALSE}
-tab <- c("Correct inference", "Type I error", "Type II error", "Correct Inference")
-tab <- matrix(tab, ncol = 2, byrow = TRUE, dimnames = list(c("H0 is true", "H1 is true"), c("Accept H0", "Reject H0")))
-knitr::kable(tab)
-```
+
+|           |Accept H0         |Reject H0         |
+|:----------|:-----------------|:-----------------|
+|H0 is true |Correct inference |Type I error      |
+|H1 is true |Type II error     |Correct Inference |
 
 With $\Pr{(\mbox{Type I error})} = \alpha$ and $\Pr{(\mbox{Type II error})} = \beta$. This way, power can be defined as the
 probability of rejecting the null given the alternative is true, $\Pr{(\mbox{Reject H0}|\mbox{H1 is true})} = 1-\beta$.
@@ -96,7 +96,8 @@ The procedure to compute sample size based on simulations is computationally int
 
 When running simulations, it is convenient to write a function for the data generating process. In our case, the function will be called `sim_fun`. The following lines of code achieve our goal: approximate power by simulating 10,000 experiments for each sample size candidate:
 
-```{r 11-power-via-sims, cache=TRUE}
+
+```r
 # Model parameters
 p0        <- .5
 p1        <- .6
@@ -143,15 +144,27 @@ best <- which.min(
 simulations[best,,drop=FALSE]
 ```
 
+```
+##   size  power
+## 5  190 0.7952
+```
+
 Let's visualize the power curve we generate from this simulation:
 
-```{r 11-power-plot}
+
+```r
 library(ggplot2)
 ggplot(simulations, aes(x = size, y = power)) +
     geom_point() +
     geom_smooth() +
     geom_hline(yintercept = 1 - betapower)
 ```
+
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+![](part-02-11-power_files/figure-epub3/11-power-plot-1.png)<!-- -->
 
 According to our simulation study, the closest to our 80% power is using a sample size equal to 190, which is very close to the analytical solution of 194. 
 

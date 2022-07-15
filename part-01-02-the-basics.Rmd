@@ -2,11 +2,11 @@
 
 ## What is R
 
-A good reference book for both new and advanced user is ["The Art of R programming"](https://nostarch.com/artofr.htm) [@Matloff2011]^[[Here](http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf) a free pdf version distributed by the author.]
+A good reference book for both novice and advanced users is ["The Art of R programming"](https://nostarch.com/artofr.htm) [@Matloff2011]^[[Here](http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf) a free pdf version distributed by the author.]
 
 ## How to install packages
 
-Nowadays there are two ways of installing R packages (that I'm aware of), either using `install.packages`, which is a function shipped with R, or use the devtools R package to install a package from some remote repository other than CRAN, here is a couple of examples:
+Nowadays there are two ways of installing R packages (that I'm aware of), either using `install.packages`, which is a function shipped with R, or use the [`devtools`](https://cran.r-project.org/package=devtools) R package to install a package from some remote repository other than CRAN, here are a few examples:
 
 ```r
 # This will install the igraph package from CRAN
@@ -16,13 +16,13 @@ Nowadays there are two ways of installing R packages (that I'm aware of), either
 > devtools::install_github("USCCANA/netdiffuseR")
 ```
 
-The first one, using `install.packages`, installs the CRAN version of `netdiffuseR`, whereas the second installs whatever version is plublished on https://github.com/USCCANA/netdiffuseR, which is usually called the development version.
+The first one, using `install.packages`, installs the CRAN version of [`netdiffuseR`](https://r-project.org/package=netdiffuseR), whereas the line of code installs whatever version is plublished on https://github.com/USCCANA/netdiffuseR, which is usually called the development version.
 
-In some cases users may want/need to install packages from command line as some packages need extra configuration to be installed. But we won't need to look at it now.
+In some cases, users may want/need to install packages from the command line as some packages need extra configuration to be installed. But we won't need to look at it now.
 
-## Prerequisits
+## Prerequisites
 
-To install R just follow the instructions available at http://cran.r-project.org
+To install R just follow the instructions available at http://cran.r-project.org.
 
 RStudio is the most popular Integrated Development Environment (IDE) for R that is developed by the company of the same name. While having RStudio is not a requirement for using netdiffuseR, it is highly recommended.
 
@@ -52,9 +52,10 @@ Some common tasks in R
     a <- 1
     a =  1
     ```
-    Historically the assign operator is the most common used.
+    Historically the assign operator is the most commonly used.
 
 2.  R has several type of objects, the most basic structures in R are `vectors`, `matrix`, `list`, `data.frame`. Here is an example creating several of these (each line is enclosed with parenthesis so that R prints the resulting element):
+
     ```{r creating}
     (a_vector     <- 1:9)
     (another_vect <- c(1, 2, 3, 4, 5, 6, 7, 8, 9))
@@ -117,7 +118,8 @@ Some common tasks in R
     }
     ```
 
-5.  R has a very nice set of pseudo random number generation functions. In general, distribution functions have the following name structure:
+5.  R has a very nice set of pseudo-random number generation functions. In general, distribution functions have the following name structure:
+
     a.  Random Number Generation: `r[name-of-the-distribution]`, e.g. `rnorm` for normal, `runif` for uniform.
     b.  Density function: `d[name-of-the-distribution]`, e.g. `dnorm` for normal, `dunif` for uniform.
     c.  Cumulative Distribution Function (CDF): `p[name-of-the-distribution]`, e.g. `pnorm` for normal, `punif` for uniform.
@@ -150,10 +152,9 @@ Some common tasks in R
     hist(x)
     ```
     
-    More distributions available at `??Distributions`.
+    More distributions are available at `??Distributions`.
 
 For a nice intro to R, take a look at ["The Art of R Programming" by Norman Matloff](https://nostarch.com/artofr.htm). For more advanced users, take a look at ["Advanced R" by Hadley Wickham](http://adv-r.had.co.nz/).
-    
 
 
 For this book, we need the following
