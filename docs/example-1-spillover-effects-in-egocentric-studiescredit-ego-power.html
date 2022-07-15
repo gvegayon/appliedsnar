@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="power-calculation-in-network-studies.html"/>
-<link rel="next" href="bayes-rule.html"/>
+<link rel="next" href="example-2-spillover-effects-pre-post-effect.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -237,6 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>12</b> Stochastic Actor Oriented Models</a></li>
 <li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a><ul>
 <li class="chapter" data-level="13.1" data-path="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><i class="fa fa-check"></i><b>13.1</b> Example 1: Spillover effects in egocentric studies</a></li>
+<li class="chapter" data-level="13.2" data-path="example-2-spillover-effects-pre-post-effect.html"><a href="example-2-spillover-effects-pre-post-effect.html"><i class="fa fa-check"></i><b>13.2</b> Example 2: Spillover effects pre-post effect</a></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Foundations</b></span></li>
 <li class="chapter" data-level="14" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>14</b> Bayes’ Rule</a></li>
@@ -247,10 +248,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a><ul>
 <li class="chapter" data-level="16.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>16.1</b> Error types</a></li>
-<li class="chapter" data-level="16.2" data-path="examples-1.html"><a href="examples-1.html"><i class="fa fa-check"></i><b>16.2</b> Examples</a><ul>
-<li class="chapter" data-level="16.2.1" data-path="examples-1.html"><a href="examples-1.html#sample-size-for-a-proportion"><i class="fa fa-check"></i><b>16.2.1</b> Sample size for a proportion</a></li>
-<li class="chapter" data-level="16.2.2" data-path="examples-1.html"><a href="examples-1.html#sample-size-for-a-proportion-vis"><i class="fa fa-check"></i><b>16.2.2</b> Sample size for a proportion (vis)</a></li>
-</ul></li>
+<li class="chapter" data-level="16.2" data-path="example-1-sample-size-for-a-proportion.html"><a href="example-1-sample-size-for-a-proportion.html"><i class="fa fa-check"></i><b>16.2</b> Example 1: Sample size for a proportion</a></li>
+<li class="chapter" data-level="16.3" data-path="example-2-sample-size-for-a-proportion-vis.html"><a href="example-2-sample-size-for-a-proportion-vis.html"><i class="fa fa-check"></i><b>16.3</b> Example 2: Sample size for a proportion (vis)</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
@@ -293,18 +292,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>The previous steps will be repeated 500 for each value of <span class="math inline">\(n\)</span> we analyze. We will finalize by plotting power against sample sizes. Let’s first start by writing down the simulation parameters:</p>
 <div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb311-1" title="1"><span class="co"># Design</span></a>
-<a class="sourceLine" id="cb311-2" title="2">n_sims    &lt;-<span class="st"> </span><span class="dv">500</span> <span class="co"># Number of simulations</span></a>
+<a class="sourceLine" id="cb311-2" title="2">n_sims    &lt;-<span class="st"> </span><span class="dv">1000</span> <span class="co"># Number of simulations</span></a>
 <a class="sourceLine" id="cb311-3" title="3">n_a       &lt;-<span class="st"> </span><span class="dv">5</span>   <span class="co"># Number of alters</span></a>
 <a class="sourceLine" id="cb311-4" title="4">sizes     &lt;-<span class="st">     </span><span class="co"># Sizes to try</span></a>
-<a class="sourceLine" id="cb311-5" title="5"><span class="st">  </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">100</span>, <span class="dt">to =</span> <span class="dv">300</span>, <span class="dt">by =</span> <span class="dv">25</span>)</a>
+<a class="sourceLine" id="cb311-5" title="5"><span class="st">  </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">100</span>, <span class="dt">to =</span> <span class="dv">350</span>, <span class="dt">by =</span> <span class="dv">25</span>)</a>
 <a class="sourceLine" id="cb311-6" title="6"></a>
 <a class="sourceLine" id="cb311-7" title="7"><span class="co"># Assumptions</span></a>
-<a class="sourceLine" id="cb311-8" title="8">odds_h_<span class="dv">1</span>  &lt;-<span class="st"> </span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb311-8" title="8">odds_h_<span class="dv">1</span>  &lt;-<span class="st"> </span><span class="fl">1.5</span> <span class="co"># Odds of Increase/</span></a>
 <a class="sourceLine" id="cb311-9" title="9">attrition &lt;-<span class="st"> </span><span class="fl">.3</span></a>
-<a class="sourceLine" id="cb311-10" title="10"></a>
-<a class="sourceLine" id="cb311-11" title="11"><span class="co"># Parameters</span></a>
-<a class="sourceLine" id="cb311-12" title="12">alpha    &lt;-<span class="st"> </span><span class="fl">.05</span></a>
-<a class="sourceLine" id="cb311-13" title="13">beta_pow &lt;-<span class="st"> </span><span class="fl">0.2</span></a></code></pre></div>
+<a class="sourceLine" id="cb311-10" title="10">baseline  &lt;-<span class="st"> </span><span class="fl">.2</span>  <span class="co"># Low prevalence in 1s</span></a>
+<a class="sourceLine" id="cb311-11" title="11"></a>
+<a class="sourceLine" id="cb311-12" title="12"><span class="co"># Parameters</span></a>
+<a class="sourceLine" id="cb311-13" title="13">alpha    &lt;-<span class="st"> </span><span class="fl">.05</span></a>
+<a class="sourceLine" id="cb311-14" title="14">beta_pow &lt;-<span class="st"> </span><span class="fl">0.2</span></a></code></pre></div>
 <p>As we discuss in <a href="part2-power.html#part2-power">16</a>, it is always a good idea to encapsule the simulation into a function:</p>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb312-1" title="1"><span class="co"># The odds turned to a prob</span></a>
 <a class="sourceLine" id="cb312-2" title="2">theta_h_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">plogis</span>(<span class="kw">log</span>(odds_h_<span class="dv">1</span>))</a>
@@ -377,13 +377,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb314-12" title="12"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb314-13" title="13"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>beta_pow)</a></code></pre></div>
 <p><img src="part-01-10-power_files/figure-html/part-01-power-plot1-1.png" width="672" /></p>
+<p>As shown in Chapter <a href="part2-power.html#part2-power">16</a>, we can use a linear regression model to predict sample size as a function of statistical power:</p>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb315-1" title="1"><span class="co"># Fitting the model</span></a>
+<a class="sourceLine" id="cb315-2" title="2">power_model &lt;-<span class="st"> </span><span class="kw">glm</span>(</a>
+<a class="sourceLine" id="cb315-3" title="3">  size <span class="op">~</span><span class="st"> </span>power <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(power<span class="op">^</span><span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb315-4" title="4">  <span class="dt">data =</span> spower, <span class="dt">family =</span> <span class="kw">gaussian</span>(), <span class="dt">subset =</span> type <span class="op">==</span><span class="st"> &quot;alter&quot;</span></a>
+<a class="sourceLine" id="cb315-5" title="5">)</a>
+<a class="sourceLine" id="cb315-6" title="6"></a>
+<a class="sourceLine" id="cb315-7" title="7"><span class="kw">summary</span>(power_model)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = size ~ power + I(power^2), family = gaussian(), 
+##     data = spower, subset = type == &quot;alter&quot;)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -25.702  -11.940    3.638   11.915   16.094  
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)    185.1      101.4   1.827   0.1052  
+## power         -473.5      329.0  -1.439   0.1880  
+## I(power^2)     728.4      252.8   2.882   0.0205 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for gaussian family taken to be 279.529)
+## 
+##     Null deviance: 68750.0  on 10  degrees of freedom
+## Residual deviance:  2236.2  on  8  degrees of freedom
+## AIC: 97.678
+## 
+## Number of Fisher Scoring iterations: 2</code></pre>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb317-1" title="1"><span class="co"># Predict</span></a>
+<a class="sourceLine" id="cb317-2" title="2"><span class="kw">predict</span>(power_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">power =</span> <span class="fl">.8</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">|</span><span class="er">&gt;</span></a>
+<a class="sourceLine" id="cb317-3" title="3"><span class="st">  </span><span class="kw">ceiling</span>()</a></code></pre></div>
+<pre><code>##   1 
+## 273</code></pre>
 <p>From the figure, it becomes apparent that, although there is not enough power to identify effects at the ego level, because each ego brings in five alters, the alter sample size is high enough that we can reach above 0.8 statistical power with relatively small sample size.</p>
-
 </div>
-<!-- </div> -->
-
-
-
 <div class="footnotes">
 <hr />
 <ol start="13">
@@ -396,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="power-calculation-in-network-studies.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bayes-rule.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="example-2-spillover-effects-pre-post-effect.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

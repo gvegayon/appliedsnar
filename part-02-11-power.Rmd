@@ -25,9 +25,7 @@ knitr::kable(tab)
 With $\Pr{(\mbox{Type I error})} = \alpha$ and $\Pr{(\mbox{Type II error})} = \beta$. This way, power can be defined as the
 probability of rejecting the null given the alternative is true, $\Pr{(\mbox{Reject H0}|\mbox{H1 is true})} = 1-\beta$.
 
-## Examples
-
-### Sample size for a proportion
+## Example 1: Sample size for a proportion
 
 Let's imagine we are preparing a study in which we would like to estimate the proportion of individuals with a given status. Formally, we then say that the variable $Y\sim\mbox{Bernoulli}(p)$. To do so, we will need to survey $n$ individuals and estimate such a number by taking the sample average. Furthermore, we hypothesize that under the null the proportion is $H_0: p = p_0$.
 
@@ -80,7 +78,7 @@ Z_{1-\beta}\sqrt{p_1(1-p_1)}& = Z_{\alpha/2}\sqrt{p_0(1-p_0)} + \sqrt{n}(p_0 - p
 
 Therefore, for the parameters $(1-\beta, \alpha, p_0, p_1) = (0.8, 0.05, 0.5, 0.6)$, the required sample size is 193.8473 $\sim$ 194.
 
-### Sample size for a proportion (vis)
+## Example 2: Sample size for a proportion (vis)
 
 Now, what happens if the model we are planning to estimate does not have a close form? If analytical solutions are not available, simulations can be an excellent alternative to save the day. Let's re-do the sample size calculation using simulations.
 
@@ -153,6 +151,27 @@ ggplot(simulations, aes(x = size, y = power)) +
     geom_hline(yintercept = 1 - betapower)
 ```
 
-According to our simulation study, the closest to our 80% power is using a sample size equal to 190, which is very close to the analytical solution of 194. 
+Alternatively, we can fit a linear regression model where we predict power as a function of sample size using linear and quadratic effects:
+
+$$
+n = \theta_0 + \theta_1 (1 - \beta) + \theta_2 (1 - \beta)^2
+$$
+
+```{r 11-power-ols}
+# Fitting the model
+power_model <- glm(
+  size ~ power + I(power^2),
+  data = simulations, family = gaussian()
+)
+
+# Printing the results
+summary(power_model)
+
+# Predict
+predict(power_model, newdata = data.frame(power = .8), type = "response") |>
+  ceiling()
+```
+
+According to our simulation study, the closest to our 80% power is using a sample size equal to 193, which is very close to the analytical solution of 194. 
 
 As a final comment for this example, remember that the more simulations the better.

@@ -25,9 +25,7 @@ A better way, more statistically accurate version of this table would be
 With $\Pr{(\mbox{Type I error})} = \alpha$ and $\Pr{(\mbox{Type II error})} = \beta$. This way, power can be defined as the
 probability of rejecting the null given the alternative is true, $\Pr{(\mbox{Reject H0}|\mbox{H1 is true})} = 1-\beta$.
 
-## Examples
-
-### Sample size for a proportion
+## Example 1: Sample size for a proportion
 
 Let's imagine we are preparing a study in which we would like to estimate the proportion of individuals with a given status. Formally, we then say that the variable $Y\sim\mbox{Bernoulli}(p)$. To do so, we will need to survey $n$ individuals and estimate such a number by taking the sample average. Furthermore, we hypothesize that under the null the proportion is $H_0: p = p_0$.
 
@@ -80,7 +78,7 @@ Z_{1-\beta}\sqrt{p_1(1-p_1)}& = Z_{\alpha/2}\sqrt{p_0(1-p_0)} + \sqrt{n}(p_0 - p
 
 Therefore, for the parameters $(1-\beta, \alpha, p_0, p_1) = (0.8, 0.05, 0.5, 0.6)$, the required sample size is 193.8473 $\sim$ 194.
 
-### Sample size for a proportion (vis)
+## Example 2: Sample size for a proportion (vis)
 
 Now, what happens if the model we are planning to estimate does not have a close form? If analytical solutions are not available, simulations can be an excellent alternative to save the day. Let's re-do the sample size calculation using simulations.
 
@@ -166,6 +164,62 @@ ggplot(simulations, aes(x = size, y = power)) +
 
 ![](part-02-11-power_files/figure-epub3/11-power-plot-1.png)<!-- -->
 
-According to our simulation study, the closest to our 80% power is using a sample size equal to 190, which is very close to the analytical solution of 194. 
+Alternatively, we can fit a linear regression model where we predict power as a function of sample size using linear and quadratic effects:
+
+$$
+n = \theta_0 + \theta_1 (1 - \beta) + \theta_2 (1 - \beta)^2
+$$
+
+
+```r
+# Fitting the model
+power_model <- glm(
+  size ~ power + I(power^2),
+  data = simulations, family = gaussian()
+)
+
+# Printing the results
+summary(power_model)
+```
+
+```
+## 
+## Call:
+## glm(formula = size ~ power + I(power^2), family = gaussian(), 
+##     data = simulations)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -7.7850  -3.7716  -0.5132   3.3510   8.0064  
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)   
+## (Intercept)    632.5      232.9   2.715  0.02644 * 
+## power        -1590.3      598.1  -2.659  0.02885 * 
+## I(power^2)    1301.0      381.6   3.410  0.00923 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for gaussian family taken to be 34.83159)
+## 
+##     Null deviance: 11000.00  on 10  degrees of freedom
+## Residual deviance:   278.65  on  8  degrees of freedom
+## AIC: 74.769
+## 
+## Number of Fisher Scoring iterations: 2
+```
+
+```r
+# Predict
+predict(power_model, newdata = data.frame(power = .8), type = "response") |>
+  ceiling()
+```
+
+```
+##   1 
+## 193
+```
+
+According to our simulation study, the closest to our 80% power is using a sample size equal to 193, which is very close to the analytical solution of 194. 
 
 As a final comment for this example, remember that the more simulations the better.

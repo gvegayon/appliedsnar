@@ -23,14 +23,15 @@ The previous steps will be repeated 500 for each value of $n$ we analyze. We wil
 
 ```r
 # Design
-n_sims    <- 500 # Number of simulations
+n_sims    <- 1000 # Number of simulations
 n_a       <- 5   # Number of alters
 sizes     <-     # Sizes to try
-  seq(from = 100, to = 300, by = 25)
+  seq(from = 100, to = 350, by = 25)
 
 # Assumptions
-odds_h_1  <- 1.5
+odds_h_1  <- 1.5 # Odds of Increase/
 attrition <- .3
+baseline  <- .2  # Low prevalence in 1s
 
 # Parameters
 alpha    <- .05
@@ -125,6 +126,225 @@ spower |>
 
 ![](part-01-10-power_files/figure-epub3/part-01-power-plot1-1.png)<!-- -->
 
+As shown in Chapter \@ref(part2-power), we can use a linear regression model to predict sample size as a function of statistical power:
+
+
+```r
+# Fitting the model
+power_model <- glm(
+  size ~ power + I(power^2),
+  data = spower, family = gaussian(), subset = type == "alter"
+)
+
+summary(power_model)
+```
+
+```
+## 
+## Call:
+## glm(formula = size ~ power + I(power^2), family = gaussian(), 
+##     data = spower, subset = type == "alter")
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -25.702  -11.940    3.638   11.915   16.094  
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept)    185.1      101.4   1.827   0.1052  
+## power         -473.5      329.0  -1.439   0.1880  
+## I(power^2)     728.4      252.8   2.882   0.0205 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for gaussian family taken to be 279.529)
+## 
+##     Null deviance: 68750.0  on 10  degrees of freedom
+## Residual deviance:  2236.2  on  8  degrees of freedom
+## AIC: 97.678
+## 
+## Number of Fisher Scoring iterations: 2
+```
+
+```r
+# Predict
+predict(power_model, newdata = data.frame(power = .8), type = "response") |>
+  ceiling()
+```
+
+```
+##   1 
+## 273
+```
+
 From the figure, it becomes apparent that, although there is not enough power to identify effects at the ego level, because each ego brings in five alters, the alter sample size is high enough that we can reach above 0.8 statistical power with relatively small sample size.
 
 [^credit-ego-power]: The original problem was posed by [Dr. Shinduk Lee](https://faculty.utah.edu/u6037777-SHINDUK_LEE/hm/index.hml) from the School of Nursing at the University of Utah.
+
+
+## Example 2: Spillover effects pre-post effect
+
+Now the dynamics are different. Instead of having a treated and control group, we have a single group over which we will measure behavioral change. We will simulate individuals in their initial state, still 0/1, and then simulate that the intervention will make them more likely to have $y = 1.$ We will also assume that subjects generally don't change their behavior and that the baseline prevalence of zeros is higher. The simulation steps are as follows:
+
+1. For each individual in the population, draw the underlaying probability that $y = 1$. With that probability assign the value of $y$. This applies to both ego and alter.
+
+2. Randomly drop some egos and their corresponding alters as a result of attrition.
+
+3. Simulate alters' behavior using their egos as the treatment. Both ego and alter's underlying probability are increased by the chosen odds.
+
+4. In the case of ego, perform a paired t-test comparing first vs second observation. In the case of alters, since we can treat ego's behavior as treatment, fit a linear regression using alters' state at time 0 and ego's state at time 1
+
+5. Accept/reject the null and store the result.
+
+
+```r
+beta_pars <- c(2, 8)
+odds_h_1  <- 1.5
+```
+
+
+```r
+# Simulation function
+sim_data_prepost <- function(n) {
+
+
+  # Step 1: Sampling population of egos
+  y_ego_star <- rbeta(n, beta_pars[1], beta_pars[2])
+  y_ego_0    <- runif(n) < y_ego_star
+
+  # Step 2: Simulating attrition
+  todrop     <- order(runif(n))[1:(n * attrition)]
+  y_ego_0    <- y_ego_0[-todrop]
+  n          <- n - length(todrop)
+  y_ego_star <- y_ego_star[-todrop]
+
+  # Step 3: Simulating alter's effect. We assume the same as in
+  # ego
+  y_alter_star <- rbeta(n * n_a, beta_pars[1], beta_pars[2])
+  y_alter_0    <- runif(n * n_a) < y_alter_star
+
+  # Simulating post
+  y_ego_1   <- runif(n) < (y_ego_star * odds_h_1)
+  tr_alter  <- as.integer(rep(y_ego_1, n_a))
+  y_alter_1 <- runif(n * n_a) < (y_alter_star * odds_h_1^(tr_alter)) # So only if ego did something
+
+  # Step 4: Computing test statistic
+  y_ego_0 <- as.integer(y_ego_0)
+  y_ego_1 <- as.integer(y_ego_1)
+  y_alter_0 <- as.integer(y_alter_0)
+  y_alter_1 <- as.integer(y_alter_1)
+
+  res_ego   <- tryCatch(
+    t.test(y_ego_0, y_ego_1, paired = TRUE, alternative="two.sided"),
+    error = function(e) e
+    )
+
+  res_alter <- tryCatch(
+    glm(y_alter_1 ~ y_alter_0 + tr_alter, family = binomial("logit")),
+    error = function(e) e
+    )
+
+  if (inherits(res_ego, "error") | inherits(res_alter, "error"))
+    return(c(ego =  NA, alter = NA))
+  
+  # Step 5: Reject?
+  c(
+    ego   = res_ego$p.value < alpha,
+    alter = summary(res_alter)$coefficients["tr_alter", "Pr(>|z|)"] < alpha,
+    mean_ego = mean(y_ego_0 < y_ego_1) ,
+    mean_alter = coef(res_alter)[2]
+  )
+  
+
+}
+```
+
+
+```r
+# We always set the seed
+set.seed(88)
+
+# Making space and running!
+spower <- NULL
+for (s in sizes) {
+
+  # Run the simulation for size s
+  simres <- rowMeans(replicate(n_sims, sim_data_prepost(s)), na.rm = TRUE)
+
+  # And store the results
+  spower <- rbind(spower, simres)
+
+}
+```
+
+
+
+```r
+library(ggplot2)
+
+spower <- rbind(
+  data.frame(size = sizes, power = spower[,"ego"], type =  "ego"),
+  data.frame(size = sizes, power = spower[,"alter"], type =  "alter")
+)
+
+spower |>
+  ggplot(aes(x = size, y = power, colour = type)) +
+  geom_point() +
+  geom_smooth(method = "loess", formula = y ~ x) +
+  labs(x = "Number of Egos", y = "Approx. Power", colour = "Node type") +
+  geom_hline(yintercept = 1 - beta_pow)
+```
+
+![](part-01-10-power_files/figure-epub3/part-01-power-plot2-1.png)<!-- -->
+
+As shown in Chapter \@ref(part2-power), we can use a linear regression model to predict sample size as a function of statistical power:
+
+
+```r
+# Fitting the model
+power_model <- glm(
+  size ~ power + I(power^2),
+  data = spower, family = gaussian(), subset = type == "alter"
+)
+
+summary(power_model)
+```
+
+```
+## 
+## Call:
+## glm(formula = size ~ power + I(power^2), family = gaussian(), 
+##     data = spower, subset = type == "alter")
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -29.325  -10.613    1.184    9.447   25.774  
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)   
+## (Intercept)    403.7      172.8   2.337  0.04765 * 
+## power        -1136.4      471.8  -2.409  0.04259 * 
+## I(power^2)    1097.5      311.6   3.522  0.00782 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for gaussian family taken to be 316.7394)
+## 
+##     Null deviance: 68750.0  on 10  degrees of freedom
+## Residual deviance:  2533.9  on  8  degrees of freedom
+## AIC: 99.053
+## 
+## Number of Fisher Scoring iterations: 2
+```
+
+```r
+# Predict
+predict(power_model, newdata = data.frame(power = .8), type = "response") |>
+  ceiling()
+```
+
+```
+##   1 
+## 198
+```
+
