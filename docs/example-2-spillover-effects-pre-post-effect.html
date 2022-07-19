@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2022-07-15" />
+<meta name="date" content="2022-07-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -286,64 +286,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>For each individual in the population, draw the underlaying probability that <span class="math inline">\(y = 1\)</span>. With that probability assign the value of <span class="math inline">\(y\)</span>. This applies to both ego and alter.</p></li>
 <li><p>Randomly drop some egos and their corresponding alters as a result of attrition.</p></li>
 <li><p>Simulate alters’ behavior using their egos as the treatment. Both ego and alter’s underlying probability are increased by the chosen odds.</p></li>
-<li><p>In the case of ego, perform a paired t-test comparing first vs second observation. In the case of alters, since we can treat ego’s behavior as treatment, fit a linear regression using alters’ state at time 0 and ego’s state at time 1</p></li>
+<li><p>To control for the underlying probability that an individual has <span class="math inline">\(y = 1\)</span>, we use conditional logistic regression (also known as matched case-control logit,) to estimate the treatment effects.</p></li>
 <li><p>Accept/reject the null and store the result.</p></li>
 </ol>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb319-1" title="1">beta_pars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">8</span>)</a>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb319-1" title="1">beta_pars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">6</span>)</a>
 <a class="sourceLine" id="cb319-2" title="2">odds_h_<span class="dv">1</span>  &lt;-<span class="st"> </span><span class="fl">1.5</span></a></code></pre></div>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb320-1" title="1"><span class="co"># Simulation function</span></a>
-<a class="sourceLine" id="cb320-2" title="2">sim_data_prepost &lt;-<span class="st"> </span><span class="cf">function</span>(n) {</a>
-<a class="sourceLine" id="cb320-3" title="3"></a>
+<a class="sourceLine" id="cb320-2" title="2"><span class="kw">library</span>(survival)</a>
+<a class="sourceLine" id="cb320-3" title="3">sim_data_prepost &lt;-<span class="st"> </span><span class="cf">function</span>(n) {</a>
 <a class="sourceLine" id="cb320-4" title="4"></a>
-<a class="sourceLine" id="cb320-5" title="5">  <span class="co"># Step 1: Sampling population of egos</span></a>
-<a class="sourceLine" id="cb320-6" title="6">  y_ego_star &lt;-<span class="st"> </span><span class="kw">rbeta</span>(n, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb320-7" title="7">  y_ego_<span class="dv">0</span>    &lt;-<span class="st"> </span><span class="kw">runif</span>(n) <span class="op">&lt;</span><span class="st"> </span>y_ego_star</a>
-<a class="sourceLine" id="cb320-8" title="8"></a>
-<a class="sourceLine" id="cb320-9" title="9">  <span class="co"># Step 2: Simulating attrition</span></a>
-<a class="sourceLine" id="cb320-10" title="10">  todrop     &lt;-<span class="st"> </span><span class="kw">order</span>(<span class="kw">runif</span>(n))[<span class="dv">1</span><span class="op">:</span>(n <span class="op">*</span><span class="st"> </span>attrition)]</a>
-<a class="sourceLine" id="cb320-11" title="11">  y_ego_<span class="dv">0</span>    &lt;-<span class="st"> </span>y_ego_<span class="dv">0</span>[<span class="op">-</span>todrop]</a>
-<a class="sourceLine" id="cb320-12" title="12">  n          &lt;-<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(todrop)</a>
-<a class="sourceLine" id="cb320-13" title="13">  y_ego_star &lt;-<span class="st"> </span>y_ego_star[<span class="op">-</span>todrop]</a>
-<a class="sourceLine" id="cb320-14" title="14"></a>
-<a class="sourceLine" id="cb320-15" title="15">  <span class="co"># Step 3: Simulating alter&#39;s effect. We assume the same as in</span></a>
-<a class="sourceLine" id="cb320-16" title="16">  <span class="co"># ego</span></a>
-<a class="sourceLine" id="cb320-17" title="17">  y_alter_star &lt;-<span class="st"> </span><span class="kw">rbeta</span>(n <span class="op">*</span><span class="st"> </span>n_a, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb320-18" title="18">  y_alter_<span class="dv">0</span>    &lt;-<span class="st"> </span><span class="kw">runif</span>(n <span class="op">*</span><span class="st"> </span>n_a) <span class="op">&lt;</span><span class="st"> </span>y_alter_star</a>
-<a class="sourceLine" id="cb320-19" title="19"></a>
-<a class="sourceLine" id="cb320-20" title="20">  <span class="co"># Simulating post</span></a>
-<a class="sourceLine" id="cb320-21" title="21">  y_ego_<span class="dv">1</span>   &lt;-<span class="st"> </span><span class="kw">runif</span>(n) <span class="op">&lt;</span><span class="st"> </span>(y_ego_star <span class="op">*</span><span class="st"> </span>odds_h_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb320-22" title="22">  tr_alter  &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">rep</span>(y_ego_<span class="dv">1</span>, n_a))</a>
-<a class="sourceLine" id="cb320-23" title="23">  y_alter_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">runif</span>(n <span class="op">*</span><span class="st"> </span>n_a) <span class="op">&lt;</span><span class="st"> </span>(y_alter_star <span class="op">*</span><span class="st"> </span>odds_h_<span class="dv">1</span><span class="op">^</span>(tr_alter)) <span class="co"># So only if ego did something</span></a>
-<a class="sourceLine" id="cb320-24" title="24"></a>
-<a class="sourceLine" id="cb320-25" title="25">  <span class="co"># Step 4: Computing test statistic</span></a>
-<a class="sourceLine" id="cb320-26" title="26">  y_ego_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_ego_<span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb320-27" title="27">  y_ego_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_ego_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb320-28" title="28">  y_alter_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_alter_<span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb320-29" title="29">  y_alter_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_alter_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb320-30" title="30"></a>
-<a class="sourceLine" id="cb320-31" title="31">  res_ego   &lt;-<span class="st"> </span><span class="kw">tryCatch</span>(</a>
-<a class="sourceLine" id="cb320-32" title="32">    <span class="kw">t.test</span>(y_ego_<span class="dv">0</span>, y_ego_<span class="dv">1</span>, <span class="dt">paired =</span> <span class="ot">TRUE</span>, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>),</a>
-<a class="sourceLine" id="cb320-33" title="33">    <span class="dt">error =</span> <span class="cf">function</span>(e) e</a>
-<a class="sourceLine" id="cb320-34" title="34">    )</a>
-<a class="sourceLine" id="cb320-35" title="35"></a>
-<a class="sourceLine" id="cb320-36" title="36">  res_alter &lt;-<span class="st"> </span><span class="kw">tryCatch</span>(</a>
-<a class="sourceLine" id="cb320-37" title="37">    <span class="kw">glm</span>(y_alter_<span class="dv">1</span> <span class="op">~</span><span class="st"> </span>y_alter_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>tr_alter, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="st">&quot;logit&quot;</span>)),</a>
-<a class="sourceLine" id="cb320-38" title="38">    <span class="dt">error =</span> <span class="cf">function</span>(e) e</a>
-<a class="sourceLine" id="cb320-39" title="39">    )</a>
-<a class="sourceLine" id="cb320-40" title="40"></a>
-<a class="sourceLine" id="cb320-41" title="41">  <span class="cf">if</span> (<span class="kw">inherits</span>(res_ego, <span class="st">&quot;error&quot;</span>) <span class="op">|</span><span class="st"> </span><span class="kw">inherits</span>(res_alter, <span class="st">&quot;error&quot;</span>))</a>
-<a class="sourceLine" id="cb320-42" title="42">    <span class="kw">return</span>(<span class="kw">c</span>(<span class="dt">ego =</span>  <span class="ot">NA</span>, <span class="dt">alter =</span> <span class="ot">NA</span>))</a>
-<a class="sourceLine" id="cb320-43" title="43">  </a>
-<a class="sourceLine" id="cb320-44" title="44">  <span class="co"># Step 5: Reject?</span></a>
-<a class="sourceLine" id="cb320-45" title="45">  <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb320-46" title="46">    <span class="dt">ego   =</span> res_ego<span class="op">$</span>p.value <span class="op">&lt;</span><span class="st"> </span>alpha,</a>
-<a class="sourceLine" id="cb320-47" title="47">    <span class="dt">alter =</span> <span class="kw">summary</span>(res_alter)<span class="op">$</span>coefficients[<span class="st">&quot;tr_alter&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="op">&lt;</span><span class="st"> </span>alpha,</a>
-<a class="sourceLine" id="cb320-48" title="48">    <span class="dt">mean_ego =</span> <span class="kw">mean</span>(y_ego_<span class="dv">0</span> <span class="op">&lt;</span><span class="st"> </span>y_ego_<span class="dv">1</span>) ,</a>
-<a class="sourceLine" id="cb320-49" title="49">    <span class="dt">mean_alter =</span> <span class="kw">coef</span>(res_alter)[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb320-50" title="50">  )</a>
-<a class="sourceLine" id="cb320-51" title="51">  </a>
-<a class="sourceLine" id="cb320-52" title="52"></a>
-<a class="sourceLine" id="cb320-53" title="53">}</a></code></pre></div>
+<a class="sourceLine" id="cb320-5" title="5"></a>
+<a class="sourceLine" id="cb320-6" title="6">  <span class="co"># Step 1: Sampling population of egos</span></a>
+<a class="sourceLine" id="cb320-7" title="7">  y_ego_star &lt;-<span class="st"> </span><span class="kw">rbeta</span>(n, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb320-8" title="8">  y_ego_<span class="dv">0</span>    &lt;-<span class="st"> </span><span class="kw">runif</span>(n) <span class="op">&lt;</span><span class="st"> </span>y_ego_star</a>
+<a class="sourceLine" id="cb320-9" title="9"></a>
+<a class="sourceLine" id="cb320-10" title="10">  <span class="co"># Step 2: Simulating attrition</span></a>
+<a class="sourceLine" id="cb320-11" title="11">  todrop     &lt;-<span class="st"> </span><span class="kw">order</span>(<span class="kw">runif</span>(n))[<span class="dv">1</span><span class="op">:</span>(n <span class="op">*</span><span class="st"> </span>attrition)]</a>
+<a class="sourceLine" id="cb320-12" title="12">  y_ego_<span class="dv">0</span>    &lt;-<span class="st"> </span>y_ego_<span class="dv">0</span>[<span class="op">-</span>todrop]</a>
+<a class="sourceLine" id="cb320-13" title="13">  n          &lt;-<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(todrop)</a>
+<a class="sourceLine" id="cb320-14" title="14">  y_ego_star &lt;-<span class="st"> </span>y_ego_star[<span class="op">-</span>todrop]</a>
+<a class="sourceLine" id="cb320-15" title="15"></a>
+<a class="sourceLine" id="cb320-16" title="16">  <span class="co"># Step 3: Simulating alter&#39;s effect. We assume the same as in</span></a>
+<a class="sourceLine" id="cb320-17" title="17">  <span class="co"># ego</span></a>
+<a class="sourceLine" id="cb320-18" title="18">  y_alter_star &lt;-<span class="st"> </span><span class="kw">rbeta</span>(n <span class="op">*</span><span class="st"> </span>n_a, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb320-19" title="19">  y_alter_<span class="dv">0</span>    &lt;-<span class="st"> </span><span class="kw">runif</span>(n <span class="op">*</span><span class="st"> </span>n_a) <span class="op">&lt;</span><span class="st"> </span>y_alter_star</a>
+<a class="sourceLine" id="cb320-20" title="20"></a>
+<a class="sourceLine" id="cb320-21" title="21">  <span class="co"># Simulating post</span></a>
+<a class="sourceLine" id="cb320-22" title="22">  y_ego_<span class="dv">1</span>   &lt;-<span class="st"> </span><span class="kw">runif</span>(n) <span class="op">&lt;</span><span class="st"> </span><span class="kw">plogis</span>(<span class="kw">qlogis</span>(y_ego_star) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(odds_h_<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb320-23" title="23">  tr_alter  &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">rep</span>(y_ego_<span class="dv">1</span>, n_a))</a>
+<a class="sourceLine" id="cb320-24" title="24">  y_alter_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">runif</span>(n <span class="op">*</span><span class="st"> </span>n_a) <span class="op">&lt;</span><span class="st"> </span><span class="kw">plogis</span>(<span class="kw">qlogis</span>(y_alter_star) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(odds_h_<span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>tr_alter) <span class="co"># So only if ego did something</span></a>
+<a class="sourceLine" id="cb320-25" title="25"></a>
+<a class="sourceLine" id="cb320-26" title="26">  <span class="co"># Step 4: Computing test statistic</span></a>
+<a class="sourceLine" id="cb320-27" title="27">  y_ego_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_ego_<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb320-28" title="28">  y_ego_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_ego_<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb320-29" title="29">  y_alter_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_alter_<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb320-30" title="30">  y_alter_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_alter_<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb320-31" title="31"></a>
+<a class="sourceLine" id="cb320-32" title="32">  d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb320-33" title="33">    <span class="dt">y  =</span> <span class="kw">c</span>(y_ego_<span class="dv">0</span>, y_ego_<span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb320-34" title="34">    <span class="dt">tr =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>, n), <span class="kw">rep</span>(<span class="dv">1</span>, n)),</a>
+<a class="sourceLine" id="cb320-35" title="35">    <span class="dt">g  =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>n, <span class="dv">1</span><span class="op">:</span>n)</a>
+<a class="sourceLine" id="cb320-36" title="36">  )</a>
+<a class="sourceLine" id="cb320-37" title="37"></a>
+<a class="sourceLine" id="cb320-38" title="38">  res_ego   &lt;-<span class="st"> </span><span class="kw">tryCatch</span>(</a>
+<a class="sourceLine" id="cb320-39" title="39">    <span class="kw">clogit</span>(y <span class="op">~</span><span class="st"> </span>tr <span class="op">+</span><span class="st"> </span><span class="kw">strata</span>(g), <span class="dt">data =</span> d, <span class="dt">method =</span> <span class="st">&quot;exact&quot;</span>),</a>
+<a class="sourceLine" id="cb320-40" title="40">    <span class="dt">error =</span> <span class="cf">function</span>(e) e</a>
+<a class="sourceLine" id="cb320-41" title="41">    )</a>
+<a class="sourceLine" id="cb320-42" title="42"></a>
+<a class="sourceLine" id="cb320-43" title="43">  d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb320-44" title="44">    <span class="dt">y  =</span> <span class="kw">c</span>(y_alter_<span class="dv">0</span>, y_alter_<span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb320-45" title="45">    <span class="dt">tr =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>, n <span class="op">*</span><span class="st"> </span>n_a), tr_alter),</a>
+<a class="sourceLine" id="cb320-46" title="46">    <span class="dt">g  =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>(n <span class="op">*</span><span class="st"> </span>n_a), <span class="dv">1</span><span class="op">:</span>(n <span class="op">*</span><span class="st"> </span>n_a))</a>
+<a class="sourceLine" id="cb320-47" title="47">  )</a>
+<a class="sourceLine" id="cb320-48" title="48"></a>
+<a class="sourceLine" id="cb320-49" title="49">  res_alter &lt;-<span class="st"> </span><span class="kw">tryCatch</span>(</a>
+<a class="sourceLine" id="cb320-50" title="50">    <span class="kw">clogit</span>(y <span class="op">~</span><span class="st"> </span>tr <span class="op">+</span><span class="st"> </span><span class="kw">strata</span>(g), <span class="dt">data =</span> d, <span class="dt">method =</span> <span class="st">&quot;exact&quot;</span>),</a>
+<a class="sourceLine" id="cb320-51" title="51">    <span class="dt">error =</span> <span class="cf">function</span>(e) e</a>
+<a class="sourceLine" id="cb320-52" title="52">    )</a>
+<a class="sourceLine" id="cb320-53" title="53"></a>
+<a class="sourceLine" id="cb320-54" title="54">  <span class="cf">if</span> (<span class="kw">inherits</span>(res_ego, <span class="st">&quot;error&quot;</span>) <span class="op">|</span><span class="st"> </span><span class="kw">inherits</span>(res_alter, <span class="st">&quot;error&quot;</span>))</a>
+<a class="sourceLine" id="cb320-55" title="55">    <span class="kw">return</span>(<span class="kw">c</span>(<span class="dt">ego =</span>  <span class="ot">NA</span>, <span class="dt">alter =</span> <span class="ot">NA</span>))</a>
+<a class="sourceLine" id="cb320-56" title="56">  </a>
+<a class="sourceLine" id="cb320-57" title="57">  <span class="co"># Step 5: Reject?</span></a>
+<a class="sourceLine" id="cb320-58" title="58">  <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb320-59" title="59">    <span class="co"># ego        = res_ego$p.value &lt; alpha,</span></a>
+<a class="sourceLine" id="cb320-60" title="60">    <span class="dt">ego        =</span> <span class="kw">summary</span>(res_ego)<span class="op">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="op">&lt;</span><span class="st"> </span>alpha,</a>
+<a class="sourceLine" id="cb320-61" title="61">    <span class="dt">alter      =</span> <span class="kw">summary</span>(res_alter)<span class="op">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="op">&lt;</span><span class="st"> </span>alpha,</a>
+<a class="sourceLine" id="cb320-62" title="62">    <span class="dt">ego_test   =</span> <span class="kw">coef</span>(res_ego),</a>
+<a class="sourceLine" id="cb320-63" title="63">    <span class="dt">alter_glm  =</span> <span class="kw">coef</span>(res_alter)</a>
+<a class="sourceLine" id="cb320-64" title="64">  )</a>
+<a class="sourceLine" id="cb320-65" title="65">  </a>
+<a class="sourceLine" id="cb320-66" title="66"></a>
+<a class="sourceLine" id="cb320-67" title="67">}</a></code></pre></div>
 <div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb321-1" title="1"><span class="co"># We always set the seed</span></a>
 <a class="sourceLine" id="cb321-2" title="2"><span class="kw">set.seed</span>(<span class="dv">88</span>)</a>
 <a class="sourceLine" id="cb321-3" title="3"></a>
@@ -352,20 +366,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb321-6" title="6"><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</a>
 <a class="sourceLine" id="cb321-7" title="7"></a>
 <a class="sourceLine" id="cb321-8" title="8">  <span class="co"># Run the simulation for size s</span></a>
-<a class="sourceLine" id="cb321-9" title="9">  simres &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(<span class="kw">replicate</span>(n_sims, <span class="kw">sim_data_prepost</span>(s)), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb321-10" title="10"></a>
-<a class="sourceLine" id="cb321-11" title="11">  <span class="co"># And store the results</span></a>
-<a class="sourceLine" id="cb321-12" title="12">  spower &lt;-<span class="st"> </span><span class="kw">rbind</span>(spower, simres)</a>
+<a class="sourceLine" id="cb321-9" title="9">  simres &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(</a>
+<a class="sourceLine" id="cb321-10" title="10">    <span class="kw">replicate</span>(n_sims, <span class="kw">sim_data_prepost</span>(s)),</a>
+<a class="sourceLine" id="cb321-11" title="11">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb321-12" title="12">    )</a>
 <a class="sourceLine" id="cb321-13" title="13"></a>
-<a class="sourceLine" id="cb321-14" title="14">}</a></code></pre></div>
+<a class="sourceLine" id="cb321-14" title="14">  <span class="co"># And store the results</span></a>
+<a class="sourceLine" id="cb321-15" title="15">  spower &lt;-<span class="st"> </span><span class="kw">rbind</span>(spower, simres)</a>
+<a class="sourceLine" id="cb321-16" title="16"></a>
+<a class="sourceLine" id="cb321-17" title="17">}</a></code></pre></div>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb322-1" title="1"><span class="kw">library</span>(ggplot2)</a>
 <a class="sourceLine" id="cb322-2" title="2"></a>
-<a class="sourceLine" id="cb322-3" title="3">spower &lt;-<span class="st"> </span><span class="kw">rbind</span>(</a>
+<a class="sourceLine" id="cb322-3" title="3">spowerd &lt;-<span class="st"> </span><span class="kw">rbind</span>(</a>
 <a class="sourceLine" id="cb322-4" title="4">  <span class="kw">data.frame</span>(<span class="dt">size =</span> sizes, <span class="dt">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="dt">type =</span>  <span class="st">&quot;ego&quot;</span>),</a>
 <a class="sourceLine" id="cb322-5" title="5">  <span class="kw">data.frame</span>(<span class="dt">size =</span> sizes, <span class="dt">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="dt">type =</span>  <span class="st">&quot;alter&quot;</span>)</a>
 <a class="sourceLine" id="cb322-6" title="6">)</a>
 <a class="sourceLine" id="cb322-7" title="7"></a>
-<a class="sourceLine" id="cb322-8" title="8">spower <span class="op">|</span><span class="er">&gt;</span></a>
+<a class="sourceLine" id="cb322-8" title="8">spowerd <span class="op">|</span><span class="er">&gt;</span></a>
 <a class="sourceLine" id="cb322-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> size, <span class="dt">y =</span> power, <span class="dt">colour =</span> type)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb322-10" title="10"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb322-11" title="11"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x) <span class="op">+</span></a>
@@ -376,39 +393,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb323-1" title="1"><span class="co"># Fitting the model</span></a>
 <a class="sourceLine" id="cb323-2" title="2">power_model &lt;-<span class="st"> </span><span class="kw">glm</span>(</a>
 <a class="sourceLine" id="cb323-3" title="3">  size <span class="op">~</span><span class="st"> </span>power <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(power<span class="op">^</span><span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb323-4" title="4">  <span class="dt">data =</span> spower, <span class="dt">family =</span> <span class="kw">gaussian</span>(), <span class="dt">subset =</span> type <span class="op">==</span><span class="st"> &quot;alter&quot;</span></a>
+<a class="sourceLine" id="cb323-4" title="4">  <span class="dt">data =</span> spowerd, <span class="dt">family =</span> <span class="kw">gaussian</span>(), <span class="dt">subset =</span> type <span class="op">==</span><span class="st"> &quot;alter&quot;</span></a>
 <a class="sourceLine" id="cb323-5" title="5">)</a>
 <a class="sourceLine" id="cb323-6" title="6"></a>
 <a class="sourceLine" id="cb323-7" title="7"><span class="kw">summary</span>(power_model)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
-##     data = spower, subset = type == &quot;alter&quot;)
+##     data = spowerd, subset = type == &quot;alter&quot;)
 ## 
 ## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -29.325  -10.613    1.184    9.447   25.774  
+##       8        9       10       11       12       13       14  
+## -1.0634  -0.4537   5.7842  -9.2459   1.9510   3.7878  -0.7598  
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept)    403.7      172.8   2.337  0.04765 * 
-## power        -1136.4      471.8  -2.409  0.04259 * 
-## I(power^2)    1097.5      311.6   3.522  0.00782 **
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)    47.69      46.34   1.029    0.362
+## power          37.87     182.00   0.208    0.845
+## I(power^2)    343.21     171.19   2.005    0.115
 ## 
-## (Dispersion parameter for gaussian family taken to be 316.7394)
+## (Dispersion parameter for gaussian family taken to be 34.7529)
 ## 
-##     Null deviance: 68750.0  on 10  degrees of freedom
-## Residual deviance:  2533.9  on  8  degrees of freedom
-## AIC: 99.053
+##     Null deviance: 17500.00  on 6  degrees of freedom
+## Residual deviance:   139.01  on 4  degrees of freedom
+## AIC: 48.786
 ## 
 ## Number of Fisher Scoring iterations: 2</code></pre>
 <div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb325-1" title="1"><span class="co"># Predict</span></a>
 <a class="sourceLine" id="cb325-2" title="2"><span class="kw">predict</span>(power_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">power =</span> <span class="fl">.8</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">|</span><span class="er">&gt;</span></a>
 <a class="sourceLine" id="cb325-3" title="3"><span class="st">  </span><span class="kw">ceiling</span>()</a></code></pre></div>
 <pre><code>##   1 
-## 198</code></pre>
+## 298</code></pre>
 
 </div>
 <!-- </div> -->

@@ -24,12 +24,12 @@ The previous steps will be repeated 500 for each value of $n$ we analyze. We wil
 ```r
 # Design
 n_sims    <- 1000 # Number of simulations
-n_a       <- 5   # Number of alters
+n_a       <- 4   # Number of alters
 sizes     <-     # Sizes to try
-  seq(from = 100, to = 350, by = 25)
+  seq(from = 100, to = 250, by = 25)
 
 # Assumptions
-odds_h_1  <- 1.5 # Odds of Increase/
+odds_h_1  <- 2.0 # Odds of Increase/
 attrition <- .3
 baseline  <- .2  # Low prevalence in 1s
 
@@ -146,22 +146,22 @@ summary(power_model)
 ##     data = spower, subset = type == "alter")
 ## 
 ## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -25.702  -11.940    3.638   11.915   16.094  
+##       8        9       10       11       12       13       14  
+##  -3.336    7.905    4.879  -16.191   -7.997    1.434   13.306  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)  
-## (Intercept)    185.1      101.4   1.827   0.1052  
-## power         -473.5      329.0  -1.439   0.1880  
-## I(power^2)     728.4      252.8   2.882   0.0205 *
+## (Intercept)   1438.3      565.1   2.546   0.0636 .
+## power        -3556.8     1317.3  -2.700   0.0541 .
+## I(power^2)    2367.8      760.2   3.115   0.0357 *
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## (Dispersion parameter for gaussian family taken to be 279.529)
+## (Dispersion parameter for gaussian family taken to be 150.6603)
 ## 
-##     Null deviance: 68750.0  on 10  degrees of freedom
-## Residual deviance:  2236.2  on  8  degrees of freedom
-## AIC: 97.678
+##     Null deviance: 17500.00  on 6  degrees of freedom
+## Residual deviance:   602.64  on 4  degrees of freedom
+## AIC: 59.053
 ## 
 ## Number of Fisher Scoring iterations: 2
 ```
@@ -174,7 +174,7 @@ predict(power_model, newdata = data.frame(power = .8), type = "response") |>
 
 ```
 ##   1 
-## 273
+## 109
 ```
 
 From the figure, it becomes apparent that, although there is not enough power to identify effects at the ego level, because each ego brings in five alters, the alter sample size is high enough that we can reach above 0.8 statistical power with relatively small sample size.
@@ -192,19 +192,20 @@ Now the dynamics are different. Instead of having a treated and control group, w
 
 3. Simulate alters' behavior using their egos as the treatment. Both ego and alter's underlying probability are increased by the chosen odds.
 
-4. In the case of ego, perform a paired t-test comparing first vs second observation. In the case of alters, since we can treat ego's behavior as treatment, fit a linear regression using alters' state at time 0 and ego's state at time 1
+4. To control for the underlying probability that an individual has $y = 1$, we use conditional logistic regression (also known as matched case-control logit,) to estimate the treatment effects.
 
 5. Accept/reject the null and store the result.
 
 
 ```r
-beta_pars <- c(2, 8)
+beta_pars <- c(4, 6)
 odds_h_1  <- 1.5
 ```
 
 
 ```r
 # Simulation function
+library(survival)
 sim_data_prepost <- function(n) {
 
 
@@ -224,9 +225,9 @@ sim_data_prepost <- function(n) {
   y_alter_0    <- runif(n * n_a) < y_alter_star
 
   # Simulating post
-  y_ego_1   <- runif(n) < (y_ego_star * odds_h_1)
+  y_ego_1   <- runif(n) < plogis(qlogis(y_ego_star) + log(odds_h_1))
   tr_alter  <- as.integer(rep(y_ego_1, n_a))
-  y_alter_1 <- runif(n * n_a) < (y_alter_star * odds_h_1^(tr_alter)) # So only if ego did something
+  y_alter_1 <- runif(n * n_a) < plogis(qlogis(y_alter_star) + log(odds_h_1) * tr_alter) # So only if ego did something
 
   # Step 4: Computing test statistic
   y_ego_0 <- as.integer(y_ego_0)
@@ -234,13 +235,25 @@ sim_data_prepost <- function(n) {
   y_alter_0 <- as.integer(y_alter_0)
   y_alter_1 <- as.integer(y_alter_1)
 
+  d <- data.frame(
+    y  = c(y_ego_0, y_ego_1),
+    tr = c(rep(0, n), rep(1, n)),
+    g  = c(1:n, 1:n)
+  )
+
   res_ego   <- tryCatch(
-    t.test(y_ego_0, y_ego_1, paired = TRUE, alternative="two.sided"),
+    clogit(y ~ tr + strata(g), data = d, method = "exact"),
     error = function(e) e
     )
 
+  d <- data.frame(
+    y  = c(y_alter_0, y_alter_1),
+    tr = c(rep(0, n * n_a), tr_alter),
+    g  = c(1:(n * n_a), 1:(n * n_a))
+  )
+
   res_alter <- tryCatch(
-    glm(y_alter_1 ~ y_alter_0 + tr_alter, family = binomial("logit")),
+    clogit(y ~ tr + strata(g), data = d, method = "exact"),
     error = function(e) e
     )
 
@@ -249,10 +262,11 @@ sim_data_prepost <- function(n) {
   
   # Step 5: Reject?
   c(
-    ego   = res_ego$p.value < alpha,
-    alter = summary(res_alter)$coefficients["tr_alter", "Pr(>|z|)"] < alpha,
-    mean_ego = mean(y_ego_0 < y_ego_1) ,
-    mean_alter = coef(res_alter)[2]
+    # ego        = res_ego$p.value < alpha,
+    ego        = summary(res_ego)$coefficients["tr", "Pr(>|z|)"] < alpha,
+    alter      = summary(res_alter)$coefficients["tr", "Pr(>|z|)"] < alpha,
+    ego_test   = coef(res_ego),
+    alter_glm  = coef(res_alter)
   )
   
 
@@ -269,7 +283,10 @@ spower <- NULL
 for (s in sizes) {
 
   # Run the simulation for size s
-  simres <- rowMeans(replicate(n_sims, sim_data_prepost(s)), na.rm = TRUE)
+  simres <- rowMeans(
+    replicate(n_sims, sim_data_prepost(s)),
+    na.rm = TRUE
+    )
 
   # And store the results
   spower <- rbind(spower, simres)
@@ -282,12 +299,12 @@ for (s in sizes) {
 ```r
 library(ggplot2)
 
-spower <- rbind(
+spowerd <- rbind(
   data.frame(size = sizes, power = spower[,"ego"], type =  "ego"),
   data.frame(size = sizes, power = spower[,"alter"], type =  "alter")
 )
 
-spower |>
+spowerd |>
   ggplot(aes(x = size, y = power, colour = type)) +
   geom_point() +
   geom_smooth(method = "loess", formula = y ~ x) +
@@ -304,7 +321,7 @@ As shown in Chapter \@ref(part2-power), we can use a linear regression model to 
 # Fitting the model
 power_model <- glm(
   size ~ power + I(power^2),
-  data = spower, family = gaussian(), subset = type == "alter"
+  data = spowerd, family = gaussian(), subset = type == "alter"
 )
 
 summary(power_model)
@@ -314,25 +331,23 @@ summary(power_model)
 ## 
 ## Call:
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
-##     data = spower, subset = type == "alter")
+##     data = spowerd, subset = type == "alter")
 ## 
 ## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -29.325  -10.613    1.184    9.447   25.774  
+##       8        9       10       11       12       13       14  
+## -1.0634  -0.4537   5.7842  -9.2459   1.9510   3.7878  -0.7598  
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)   
-## (Intercept)    403.7      172.8   2.337  0.04765 * 
-## power        -1136.4      471.8  -2.409  0.04259 * 
-## I(power^2)    1097.5      311.6   3.522  0.00782 **
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)    47.69      46.34   1.029    0.362
+## power          37.87     182.00   0.208    0.845
+## I(power^2)    343.21     171.19   2.005    0.115
 ## 
-## (Dispersion parameter for gaussian family taken to be 316.7394)
+## (Dispersion parameter for gaussian family taken to be 34.7529)
 ## 
-##     Null deviance: 68750.0  on 10  degrees of freedom
-## Residual deviance:  2533.9  on  8  degrees of freedom
-## AIC: 99.053
+##     Null deviance: 17500.00  on 6  degrees of freedom
+## Residual deviance:   139.01  on 4  degrees of freedom
+## AIC: 48.786
 ## 
 ## Number of Fisher Scoring iterations: 2
 ```
@@ -345,6 +360,6 @@ predict(power_model, newdata = data.frame(power = .8), type = "response") |>
 
 ```
 ##   1 
-## 198
+## 298
 ```
 
