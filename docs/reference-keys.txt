@@ -97,3 +97,6 @@ datasets-1
 sns-data
 about-the-data
 variables
+example-3-autocorrelated-behavior
+example-3-first-difference
+example-4-autocorrelated-behavior

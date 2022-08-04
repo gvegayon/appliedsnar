@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12.2 Example 2: Spillover effects pre-post effect | Applied Network Science with R</title>
+  <title>12.3 Example 3: Autocorrelated behavior | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12.2 Example 2: Spillover effects pre-post effect | Applied Network Science with R" />
+  <meta property="og:title" content="12.3 Example 3: Autocorrelated behavior | Applied Network Science with R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="An improvised book on applied Network Science with R." />
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12.2 Example 2: Spillover effects pre-post effect | Applied Network Science with R" />
+  <meta name="twitter:title" content="12.3 Example 3: Autocorrelated behavior | Applied Network Science with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Network Science with R." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"/>
-<link rel="next" href="example-3-first-difference.html"/>
+<link rel="prev" href="example-2-spillover-effects-pre-post-effect.html"/>
+<link rel="next" href="bayes-rule.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>12</b> Power calculation in network studies</a><ul>
 <li class="chapter" data-level="12.1" data-path="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><i class="fa fa-check"></i><b>12.1</b> Example 1: Spillover effects in egocentric studies</a></li>
 <li class="chapter" data-level="12.2" data-path="example-2-spillover-effects-pre-post-effect.html"><a href="example-2-spillover-effects-pre-post-effect.html"><i class="fa fa-check"></i><b>12.2</b> Example 2: Spillover effects pre-post effect</a></li>
-<li class="chapter" data-level="12.3" data-path="example-3-first-difference.html"><a href="example-3-first-difference.html"><i class="fa fa-check"></i><b>12.3</b> Example 3: First difference</a></li>
+<li class="chapter" data-level="12.3" data-path="example-3-autocorrelated-behavior.html"><a href="example-3-autocorrelated-behavior.html"><i class="fa fa-check"></i><b>12.3</b> Example 3: Autocorrelated behavior</a></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Foundations</b></span></li>
 <li class="chapter" data-level="13" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>13</b> Bayes’ Rule</a><ul>
@@ -278,159 +278,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="example-2-spillover-effects-pre-post-effect" class="section level2 hasAnchor">
-<h2><span class="header-section-number">12.2</span> Example 2: Spillover effects pre-post effect<a href="example-2-spillover-effects-pre-post-effect.html#example-2-spillover-effects-pre-post-effect" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Now the dynamics are different. Instead of having a treated and control group, we have a single group over which we will measure behavioral change. We will simulate individuals in their initial state, still 0/1, and then simulate that the intervention will make them more likely to have <span class="math inline">\(y = 1.\)</span> We will also assume that subjects generally don’t change their behavior and that the baseline prevalence of zeros is higher. The simulation steps are as follows:</p>
-<ol style="list-style-type: decimal">
-<li><p>For each individual in the population, draw the underlying probability that <span class="math inline">\(y = 1\)</span>. With that probability, assign the value of <span class="math inline">\(y\)</span>. This applies to both ego and alter.</p></li>
-<li><p>Randomly drop some egos, and their corresponding alters due to attrition.</p></li>
-<li><p>Simulate alters’ behavior using their egos as the treatment. Both ego and alter’s underlying probability are increased by the chosen odds.</p></li>
-<li><p>To control for the underlying probability that an individual has <span class="math inline">\(y = 1\)</span>, we use conditional logistic regression (also known as matched case-control logit,) to estimate the treatment effects.</p></li>
-<li><p>Accept/reject the null and store the result.</p></li>
-</ol>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">beta_pars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2">odds_h_<span class="dv">1</span>  &lt;-<span class="st"> </span><span class="fl">2.0</span></a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Simulation function</span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="kw">library</span>(survival)</a>
-<a class="sourceLine" id="cb10-3" title="3">sim_data_prepost &lt;-<span class="st"> </span><span class="cf">function</span>(n) {</a>
-<a class="sourceLine" id="cb10-4" title="4"></a>
-<a class="sourceLine" id="cb10-5" title="5"></a>
-<a class="sourceLine" id="cb10-6" title="6">  <span class="co"># Step 1: Sampling population of egos</span></a>
-<a class="sourceLine" id="cb10-7" title="7">  y_ego_star &lt;-<span class="st"> </span><span class="kw">rbeta</span>(n, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb10-8" title="8">  y_ego_<span class="dv">0</span>    &lt;-<span class="st"> </span><span class="kw">runif</span>(n) <span class="op">&lt;</span><span class="st"> </span>y_ego_star</a>
-<a class="sourceLine" id="cb10-9" title="9"></a>
-<a class="sourceLine" id="cb10-10" title="10">  <span class="co"># Step 2: Simulating attrition</span></a>
-<a class="sourceLine" id="cb10-11" title="11">  todrop     &lt;-<span class="st"> </span><span class="kw">order</span>(<span class="kw">runif</span>(n))[<span class="dv">1</span><span class="op">:</span>(n <span class="op">*</span><span class="st"> </span>attrition)]</a>
-<a class="sourceLine" id="cb10-12" title="12">  y_ego_<span class="dv">0</span>    &lt;-<span class="st"> </span>y_ego_<span class="dv">0</span>[<span class="op">-</span>todrop]</a>
-<a class="sourceLine" id="cb10-13" title="13">  n          &lt;-<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(todrop)</a>
-<a class="sourceLine" id="cb10-14" title="14">  y_ego_star &lt;-<span class="st"> </span>y_ego_star[<span class="op">-</span>todrop]</a>
-<a class="sourceLine" id="cb10-15" title="15"></a>
-<a class="sourceLine" id="cb10-16" title="16">  <span class="co"># Step 3: Simulating alter&#39;s effect. We assume the same as in</span></a>
-<a class="sourceLine" id="cb10-17" title="17">  <span class="co"># ego</span></a>
-<a class="sourceLine" id="cb10-18" title="18">  y_alter_star &lt;-<span class="st"> </span><span class="kw">rbeta</span>(n <span class="op">*</span><span class="st"> </span>n_a, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb10-19" title="19">  y_alter_<span class="dv">0</span>    &lt;-<span class="st"> </span><span class="kw">runif</span>(n <span class="op">*</span><span class="st"> </span>n_a) <span class="op">&lt;</span><span class="st"> </span>y_alter_star</a>
-<a class="sourceLine" id="cb10-20" title="20"></a>
-<a class="sourceLine" id="cb10-21" title="21">  <span class="co"># Simulating post</span></a>
-<a class="sourceLine" id="cb10-22" title="22">  y_ego_<span class="dv">1</span>   &lt;-<span class="st"> </span><span class="kw">runif</span>(n) <span class="op">&lt;</span><span class="st"> </span><span class="kw">plogis</span>(<span class="kw">qlogis</span>(y_ego_star) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(odds_h_<span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb10-23" title="23">  tr_alter  &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">rep</span>(y_ego_<span class="dv">1</span>, n_a))</a>
-<a class="sourceLine" id="cb10-24" title="24">  y_alter_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">runif</span>(n <span class="op">*</span><span class="st"> </span>n_a) <span class="op">&lt;</span><span class="st"> </span><span class="kw">plogis</span>(<span class="kw">qlogis</span>(y_alter_star) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(odds_h_<span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>tr_alter) <span class="co"># So only if ego did something</span></a>
-<a class="sourceLine" id="cb10-25" title="25"></a>
-<a class="sourceLine" id="cb10-26" title="26">  <span class="co"># Step 4: Computing test statistic</span></a>
-<a class="sourceLine" id="cb10-27" title="27">  y_ego_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_ego_<span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb10-28" title="28">  y_ego_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_ego_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb10-29" title="29">  y_alter_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_alter_<span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb10-30" title="30">  y_alter_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(y_alter_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb10-31" title="31"></a>
-<a class="sourceLine" id="cb10-32" title="32">  d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb10-33" title="33">    <span class="dt">y  =</span> <span class="kw">c</span>(y_ego_<span class="dv">0</span>, y_ego_<span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb10-34" title="34">    <span class="dt">tr =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>, n), <span class="kw">rep</span>(<span class="dv">1</span>, n)),</a>
-<a class="sourceLine" id="cb10-35" title="35">    <span class="dt">g  =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>n, <span class="dv">1</span><span class="op">:</span>n)</a>
-<a class="sourceLine" id="cb10-36" title="36">  )</a>
-<a class="sourceLine" id="cb10-37" title="37"></a>
-<a class="sourceLine" id="cb10-38" title="38">  res_ego   &lt;-<span class="st"> </span><span class="kw">tryCatch</span>(</a>
-<a class="sourceLine" id="cb10-39" title="39">    <span class="kw">clogit</span>(y <span class="op">~</span><span class="st"> </span>tr <span class="op">+</span><span class="st"> </span><span class="kw">strata</span>(g), <span class="dt">data =</span> d, <span class="dt">method =</span> <span class="st">&quot;exact&quot;</span>),</a>
-<a class="sourceLine" id="cb10-40" title="40">    <span class="dt">error =</span> <span class="cf">function</span>(e) e</a>
-<a class="sourceLine" id="cb10-41" title="41">    )</a>
-<a class="sourceLine" id="cb10-42" title="42"></a>
-<a class="sourceLine" id="cb10-43" title="43">  d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb10-44" title="44">    <span class="dt">y  =</span> <span class="kw">c</span>(y_alter_<span class="dv">0</span>, y_alter_<span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb10-45" title="45">    <span class="dt">tr =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>, n <span class="op">*</span><span class="st"> </span>n_a), tr_alter),</a>
-<a class="sourceLine" id="cb10-46" title="46">    <span class="dt">g  =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>(n <span class="op">*</span><span class="st"> </span>n_a), <span class="dv">1</span><span class="op">:</span>(n <span class="op">*</span><span class="st"> </span>n_a))</a>
-<a class="sourceLine" id="cb10-47" title="47">  )</a>
-<a class="sourceLine" id="cb10-48" title="48"></a>
-<a class="sourceLine" id="cb10-49" title="49">  res_alter &lt;-<span class="st"> </span><span class="kw">tryCatch</span>(</a>
-<a class="sourceLine" id="cb10-50" title="50">    <span class="kw">clogit</span>(y <span class="op">~</span><span class="st"> </span>tr <span class="op">+</span><span class="st"> </span><span class="kw">strata</span>(g), <span class="dt">data =</span> d, <span class="dt">method =</span> <span class="st">&quot;exact&quot;</span>),</a>
-<a class="sourceLine" id="cb10-51" title="51">    <span class="dt">error =</span> <span class="cf">function</span>(e) e</a>
-<a class="sourceLine" id="cb10-52" title="52">    )</a>
-<a class="sourceLine" id="cb10-53" title="53"></a>
-<a class="sourceLine" id="cb10-54" title="54">  <span class="cf">if</span> (<span class="kw">inherits</span>(res_ego, <span class="st">&quot;error&quot;</span>) <span class="op">|</span><span class="st"> </span><span class="kw">inherits</span>(res_alter, <span class="st">&quot;error&quot;</span>))</a>
-<a class="sourceLine" id="cb10-55" title="55">    <span class="kw">return</span>(<span class="kw">c</span>(<span class="dt">ego =</span>  <span class="ot">NA</span>, <span class="dt">alter =</span> <span class="ot">NA</span>))</a>
-<a class="sourceLine" id="cb10-56" title="56">  </a>
-<a class="sourceLine" id="cb10-57" title="57">  <span class="co"># Step 5: Reject?</span></a>
-<a class="sourceLine" id="cb10-58" title="58">  <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb10-59" title="59">    <span class="co"># ego        = res_ego$p.value &lt; alpha,</span></a>
-<a class="sourceLine" id="cb10-60" title="60">    <span class="dt">ego        =</span> <span class="kw">summary</span>(res_ego)<span class="op">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="op">&lt;</span><span class="st"> </span>alpha,</a>
-<a class="sourceLine" id="cb10-61" title="61">    <span class="dt">alter      =</span> <span class="kw">summary</span>(res_alter)<span class="op">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="op">&lt;</span><span class="st"> </span>alpha,</a>
-<a class="sourceLine" id="cb10-62" title="62">    <span class="dt">ego_test   =</span> <span class="kw">coef</span>(res_ego),</a>
-<a class="sourceLine" id="cb10-63" title="63">    <span class="dt">alter_glm  =</span> <span class="kw">coef</span>(res_alter)</a>
-<a class="sourceLine" id="cb10-64" title="64">  )</a>
-<a class="sourceLine" id="cb10-65" title="65">  </a>
-<a class="sourceLine" id="cb10-66" title="66"></a>
-<a class="sourceLine" id="cb10-67" title="67">}</a></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># We always set the seed </span></a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="kw">set.seed</span>(<span class="dv">88</span>)</a>
-<a class="sourceLine" id="cb11-3" title="3"></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="co"># Making space and running!</span></a>
-<a class="sourceLine" id="cb11-5" title="5">spower &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</a>
-<a class="sourceLine" id="cb11-7" title="7"></a>
-<a class="sourceLine" id="cb11-8" title="8">  <span class="co"># Run the simulation for size s</span></a>
-<a class="sourceLine" id="cb11-9" title="9">  simres &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(</a>
-<a class="sourceLine" id="cb11-10" title="10">    <span class="kw">replicate</span>(n_sims, <span class="kw">sim_data_prepost</span>(s)),</a>
-<a class="sourceLine" id="cb11-11" title="11">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb11-12" title="12">    )</a>
-<a class="sourceLine" id="cb11-13" title="13"></a>
-<a class="sourceLine" id="cb11-14" title="14">  <span class="co"># And store the results</span></a>
-<a class="sourceLine" id="cb11-15" title="15">  spower &lt;-<span class="st"> </span><span class="kw">rbind</span>(spower, simres)</a>
-<a class="sourceLine" id="cb11-16" title="16"></a>
-<a class="sourceLine" id="cb11-17" title="17">}</a></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb12-2" title="2"></a>
-<a class="sourceLine" id="cb12-3" title="3">spowerd &lt;-<span class="st"> </span><span class="kw">rbind</span>(</a>
-<a class="sourceLine" id="cb12-4" title="4">  <span class="kw">data.frame</span>(<span class="dt">size =</span> sizes, <span class="dt">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="dt">type =</span>  <span class="st">&quot;ego&quot;</span>),</a>
-<a class="sourceLine" id="cb12-5" title="5">  <span class="kw">data.frame</span>(<span class="dt">size =</span> sizes, <span class="dt">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="dt">type =</span>  <span class="st">&quot;alter&quot;</span>)</a>
-<a class="sourceLine" id="cb12-6" title="6">)</a>
-<a class="sourceLine" id="cb12-7" title="7"></a>
-<a class="sourceLine" id="cb12-8" title="8">spowerd <span class="op">|</span><span class="er">&gt;</span></a>
-<a class="sourceLine" id="cb12-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> size, <span class="dt">y =</span> power, <span class="dt">colour =</span> type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-10" title="10"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-11" title="11"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x) <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-12" title="12"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-13" title="13"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>beta_pow)</a></code></pre></div>
-<p><img src="part-01-10-power_files/figure-html/part-01-power-plot2-1.png" width="672" /></p>
-<p>As shown in Chapter <a href="part2-power.html#part2-power">14</a>, we can use a linear regression model to predict sample size as a function of statistical power:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># Fitting the model</span></a>
-<a class="sourceLine" id="cb13-2" title="2">power_model &lt;-<span class="st"> </span><span class="kw">glm</span>(</a>
-<a class="sourceLine" id="cb13-3" title="3">  size <span class="op">~</span><span class="st"> </span>power <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(power<span class="op">^</span><span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb13-4" title="4">  <span class="dt">data =</span> spowerd, <span class="dt">family =</span> <span class="kw">gaussian</span>(), <span class="dt">subset =</span> type <span class="op">==</span><span class="st"> &quot;alter&quot;</span></a>
-<a class="sourceLine" id="cb13-5" title="5">)</a>
-<a class="sourceLine" id="cb13-6" title="6"></a>
-<a class="sourceLine" id="cb13-7" title="7"><span class="kw">summary</span>(power_model)</a></code></pre></div>
-<pre><code>## 
-## Call:
-## glm(formula = size ~ power + I(power^2), family = gaussian(), 
-##     data = spowerd, subset = type == &quot;alter&quot;)
-## 
-## Deviance Residuals: 
-##       6        7        8        9       10  
-## -0.8182   1.7278   0.9180  -7.9188   6.0912  
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)    611.4      666.3   0.918    0.456
-## power        -1553.8     1504.7  -1.033    0.410
-## I(power^2)    1147.9      844.8   1.359    0.307
-## 
-## (Dispersion parameter for gaussian family taken to be 52.1536)
-## 
-##     Null deviance: 6250.00  on 4  degrees of freedom
-## Residual deviance:  104.31  on 2  degrees of freedom
-## AIC: 37.379
-## 
-## Number of Fisher Scoring iterations: 2</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Predict</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="kw">predict</span>(power_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">power =</span> <span class="fl">.8</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">|</span><span class="er">&gt;</span></a>
-<a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="kw">ceiling</span>()</a></code></pre></div>
-<pre><code>##   1 
-## 104</code></pre>
+<div id="example-3-autocorrelated-behavior" class="section level2 hasAnchor">
+<h2><span class="header-section-number">12.3</span> Example 3: Autocorrelated behavior<a href="example-3-autocorrelated-behavior.html#example-3-autocorrelated-behavior" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this scenario, ego and alter behavior are correlated. To model this, we will
+use a Spatial Autocorrelation Model [SAR.] SAR models are common in Spatial
+statistics. A general form is:</p>
+<p><span class="math display">\[
+\mathbf{y} = \rho W \mathbf{y} + \mathbf{X} \beta + \varepsilon,\quad \varepsilon \sim \mbox{MVN}(0, \sigma^2 I_n),
+\]</span></p>
+<p>where <span class="math inline">\(\rho\)</span> is the correlation coefficient, <span class="math inline">\(W\)</span> is a row-stochastic
+a square matrix and <span class="math inline">\(\varepsilon\)</span> is Multivariate Normal distributed. A row-stochastic
+matrix is one where the rows add up to one. In social network analysis, <span class="math inline">\(W\)</span> is usually
+operationalized as the inverse of the geodesic matrix, thus, the closer two
+individuals are, the higher the influence they have over each other. In our case,
+such system can be simulated using the following equation:</p>
+<p><span class="math display">\[
+\mathbf{y} = (I_n - \rho W)^{-1}\mathbf{X} \beta + (I_n - \rho W)^{-1}\varepsilon
+\]</span></p>
+
 </div>
+<!-- </div> -->
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="example-3-first-difference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="example-2-spillover-effects-pre-post-effect.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bayes-rule.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
