@@ -1,20 +1,9 @@
 # Using constraints in ERGMs
 
 
-Exponential Random Graph Models [ERGMs] can represent a variety of
-network classes. We often look at "regular" social networks
-like students in schools, colleagues in a workplace, or families. Nonetheless,
-some social networks we study have features that restrict how connections can
-occur. Typical examples are [bi-partite graphs](https://en.wikipedia.org/wiki/Bipartite_graph)
-and [multilevel networks](https://cran.r-project.org/web/packages/mlergm/vignettes/mlergm_tutorial.html).
-There are two classes of vertices in bi-partite networks, and ties can only
-occur between classes. On the other hand, Multilevel networks may feature
-multiple classes with inter-class ties somewhat restricted. In both cases,
-structural constraints exist, meaning that some configurations may not
-be plausible.
+Exponential Random Graph Models [ERGMs] can represent a variety of network classes. We often look at "regular" social networks like students in schools, colleagues in the workplace, or families. Nonetheless, some social networks we study have features that restrict how connections can occur. Typical examples are [bi-partite graphs](https://en.wikipedia.org/wiki/Bipartite_graph) and [multilevel networks](https://cran.r-project.org/web/packages/mlergm/vignettes/mlergm_tutorial.html). There are two classes of vertices in bi-partite networks, and ties can only occur between classes. On the other hand, Multilevel networks may feature multiple classes with inter-class ties somewhat restricted. In both cases, structural constraints exist, meaning that some configurations may not be plausible.
 
-Mathematically, what we are trying to do is, instead of assuming that
-all network configurations are possible:
+Mathematically, what we are trying to do is, instead of assuming that all network configurations are possible:
 
 $$
 \left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j\right\}
@@ -27,46 +16,26 @@ $$
 \left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j; \mathbf{y} \in C\right\}
 $$,
 
-\noindent where $C$ is a constraint, for example, only networks with no triangles.
-The `ergm` R package has built-in capabilities to deal with some of these
-cases. Nonetheless, we can specify models with arbitrary
-structural constraints built into the model. The key is in using offset terms.
+\noindent where $C$ is a constraint, for example, only networks with no triangles. The `ergm` R package has built-in capabilities to deal with some of these cases. Nonetheless, we can specify models with arbitrary structural constraints built into the model. The key is in using offset terms.
 
 ## Example 1: Interlocking egos and disconnected alters
 
-Imagine that we have two sets of vertices. The first, group `E`, are egos part of
-an egocentric study. The second group, called `A`, is composed of people mentioned by egos in `E` but
-were not surveyed. Assume that individuals in `A` can only connect
-to individuals in `E`; moreover, individuals in `E` have no restrictions connecting to each other. 
-In other words, only two types of ties exist: `E-E` and `A-E`. The question is
-now, how can we enforce such a constraint in an ERGM?
+Imagine that we have two sets of vertices. The first, group `E`, are egos part of an egocentric study. The second group, called `A`, is composed of people mentioned by egos in `E` but were not surveyed. Assume that individuals in `A` can only connect to individuals in `E`; moreover, individuals in `E` have no restrictions on connecting. In other words, only two types of ties exist: `E-E` and `A-E`. The question is now, how can we enforce such a constraint in an ERGM?
 
-Using offsets, and in particular, setting coefficients to `-Inf` provides
-an easy way to restrict the support set of ERGMs. For example, if we wanted
-to constrain the support to include networks with no triangles, we would
-add the term `offset(triangle)` and use the option `offset.coef = -Inf` to
-indicate that realizations including triangles are not possible. Using R:
+Using offsets, and in particular, setting coefficients to `-Inf` provides an easy way to restrict the support set of ERGMs. For example, if we wanted to constrain the support to include networks with no triangles, we would add the term `offset(triangle)` and use the option `offset.coef = -Inf` to indicate that realizations including triangles are not possible. Using R:
 
 
 ```r
 ergm(net ~ edges + offset(triangle), offset.coef = -Inf)
 ```
 
-In this model, a Bernoulli graph, we reduce the sample space to networks
-with no triangles. In our example, such statistic should only take non-zero
-values whenever ties within the `A` class happen. We can use
-the `nodematch()` term to do that. Formally
+In this model, a Bernoulli graph, we reduce the sample space to networks with no triangles. In our example, such a statistic should only take non-zero values whenever ties within the `A` class happen. We can use the `nodematch()` term to do that. Formally
 
 $$
 \text{NodeMatch}(x) = \sum_{i,j} y_{ij} \mathbf{1}({x_{i} = x_{j}})
 $$
 
-This statistic will sum over all ties in which source ($i$) and target ($j$)'s
-$X$ attribute is equal. One way to make this happen is by creating an auxiliary
-variable that equals, e.g., 0 for all vertices in `A`, and a unique value
-different from zero otherwise. For example, if we had 2 `A`s and three `E`s,
-the data would look something like this: $\{0,0,1,2,3\}$. The following code
-block creates an empty graph with 50 nodes, 10 of which are in group `E` (ego).
+This statistic will sum over all ties in which source ($i$) and target ($j$)'s $X$ attribute is equal. One way to make this happen is by creating an auxiliary variable that equals, e.g., 0 for all vertices in `A`, and a unique value different from zero otherwise. For example, if we had 2 `A`s and three `E`s, the data would look something like this: $\{0,0,1,2,3\}$. The following code block creates an empty graph with 50 nodes, 10 of which are in group `E` (ego).
 
 ```{r, message=FALSE, warning=FALSE}
 library(ergm, quietly =  TRUE)
@@ -123,9 +92,7 @@ net_sim <- simulate(net ~ edges + nodematch("aux_var"), coef = c(-3.0, -Inf))
 gplot(net_sim, vertex.col = net_sim %v% "is.ego")
 ```
 
-As you can see, this network has only ties of the type `E-E` and `A-E`. We can
-double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph
-separately:
+As you can see, this network has only ties of the type `E-E` and `A-E`. We can double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph separately:
 
 ```{r}
 summary(net_sim ~ edges + nodematch("aux_var"))
@@ -149,8 +116,7 @@ gplot(net_of_egos, vertex.col = net_of_egos %v% "is.ego", main = "E")
 par(op)
 ```
 
-Now, to fit an ERGM with this constraint, we simply need to make use of
-the offset terms. Here is an example:
+Now, to fit an ERGM with this constraint, we simply need to make use of the offset terms. Here is an example:
 
 ```{r collapse = TRUE}
 ans <- ergm(
@@ -160,10 +126,7 @@ ans <- ergm(
 summary(ans)
 ```
 
-This ERGM model--which by the way only featured dyadic-independent terms, and
-thus can be reduced to a logistic regression--restricts the support by excluding
-all networks in which ties within the class `A` exists. To finalize, let's look
-at a few simulations based on this model:
+This ERGM model--which by the way only featured dyadic-independent terms, and thus can be reduced to a logistic regression--restricts the support by excluding all networks in which ties within the class `A` exists. To finalize, let's look at a few simulations based on this model:
 
 ```{r}
 set.seed(1323)
@@ -179,30 +142,11 @@ All networks with no ties between `A` nodes.
 
 ## Example 2: Bi-partite networks
 
-In the case of bipartite networks (sometimes called affiliation networks,) we can
-use `ergm`'s terms for bipartite graphs to corroborate what we discussed
-here. For example, the two-star term. Let's start simulating a bipartite
-network using the `edges` and `two-star` parameters. Since the `k-star` term
-is usually complex to fit (tends to generate degenerate models,) we will
-take advantage of the `Log()` transformation function in the `ergm` package
-to smooth the term.[^notprettyaic]
+In the case of bipartite networks (sometimes called affiliation networks,) we can use `ergm`'s terms for bipartite graphs to corroborate what we discussed here. For example, the two-star term. Let's start simulating a bipartite network using the `edges` and `two-star` parameters. Since the `k-star` term is usually complex to fit (tends to generate degenerate models,) we will take advantage of the `Log()` transformation function in the `ergm` package to smooth the term.[^notprettyaic]
 
-[^notprettyaic]: After writing this example, it became apparent the use of
-the `Log()` transformation function may not be ideal. Since many terms used
-in ERGMs can be zero, e.g., triangles, the term `Log(~ ostar(2))` is undefined
-when `ostar(2) = 0`. In practice, the ERGM package sets a lower limit for the
-log of 0, so, instead of having `Log(0) ~ -Inf`, they set it to be a really
-large negative number. This causes all sorts of issues to the estimates; in
-our example, an over estimation of the population parameter and a positive
-log-likelihood. With that said, I wouldn't recommend using
-this transformation too often.  
+[^notprettyaic]: After writing this example, it became apparent the use of the `Log()` transformation function may not be ideal. Since many terms used in ERGMs can be zero, e.g., triangles, the term `Log(~ ostar(2))` is undefined when `ostar(2) = 0`. In practice, the ERGM package sets a lower limit for the log of 0, so, instead of having `Log(0) ~ -Inf`, they set it to be a really large negative number. This causes all sorts of issues to the estimates; in our example, an overestimation of the population parameter and a positive log-likelihood. Therefore, I wouldn't recommend using this transformation too often.  
 
-The bipartite network that we will be simulating will have 100 actors and
-50 entities. Actors, which we will map to the first level of the `ergm` terms,
-this is, `b1star` `b1nodematch`, etc. will send ties to the entities,
-the second level of the bipartite ERGM. To create a bipartite network, we will
-create an empty matrix of size `nactors x nentitites`; thus, actors are 
-represented by rows and entities by columns. 
+The bipartite network that we will be simulating will have 100 actors and 50 entities. Actors, which we will map to the first level of the `ergm` terms, this is, `b1star` `b1nodematch`, etc. will send ties to the entities, the second level of the bipartite ERGM. To create a bipartite network, we will create an empty matrix of size `nactors x nentitites`; thus, actors are represented by rows and entities by columns. 
 
 ```{r 05-new-bipartite}
 # Parameters for the simulation
@@ -226,14 +170,7 @@ summary(net_b ~ edges + Log(~b1star(2)))
 netplot::nplot(net_b, vertex.col = (1:n <= nactors) + 1)
 ```
 
-Notice that the first `nactors` vertices in the network are the actors, and
-the remaining are the entities. Now, although the `ergm` package features
-bipartite network terms, we can still fit a bipartite ERGM without explicitly
-declaring the graph as such. In such case, the `b1star(2)` term of a bipartite
-network is equivalent to an `ostar(2)` in a directed graph. Likewise, `b2star(2)`
-in a bipartite graph matches the `istar(2)` term in a directed graph. This 
-information will be relevant when fitting the ERGM. Let's transform the bipartite
-network into a directed graph. The following code block does so:
+Notice that the first `nactors` vertices in the network are the actors, and the remaining are the entities. Now, although the `ergm` package features bipartite network terms, we can still fit a bipartite ERGM without explicitly declaring the graph as such. In such case, the `b1star(2)` term of a bipartite network is equivalent to an `ostar(2)` in a directed graph. Likewise, `b2star(2)` in a bipartite graph matches the `istar(2)` term in a directed graph. This information will be relevant when fitting the ERGM. Let's transform the bipartite network into a directed graph. The following code block does so:
 
 ```{r 05-bipartite-maps}
 # Identifying the edges

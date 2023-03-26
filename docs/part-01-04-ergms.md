@@ -8,21 +8,13 @@ I strongly suggest reading the vignette included in the `ergm` R package
 vignette("ergm", package="ergm")
 ```
 
-> The purpose of ERGMs, in a nutshell, is to describe parsimoniously the local selection forces
-that shape the global structure of a network. To this end, a network dataset, like those
-depicted in Figure 1, may be considered as the response in a regression model, where the
-predictors are things like "propensity for individuals of the same sex to form partnerships" or
-"propensity for individuals to form triangles of partnerships". In Figure 1(b), for example, it
-is evident that the individual nodes appear to cluster in groups of the same numerical labels
-(which turn out to be students' grades, 7 through 12); thus, an ERGM can help us quantify
-the strength of this intra-group effect.  
+> The purpose of ERGMs, in a nutshell, is to describe parsimoniously the local selection forces that shape the global structure of a network. To this end, a network dataset, like those depicted in Figure 1, may be considered as the response in a regression model, where the predictors are things like "propensity for individuals of the same sex to form partnerships" or "propensity for individuals to form triangles of partnerships". In Figure 1(b), for example, it is evident that the individual nodes appear to cluster in groups of the same numerical labels (which turn out to be students' grades, 7 through 12); thus, an ERGM can help us quantify the strength of this intra-group effect.  
 >
 > --- [@Hunter2008]
 
 ![Source: Hunter et al. (2008)](hunter2008.png)
 
-In a nutshell, we use ERGMs as a parametric interpretation of the distribution of $\mathbf{Y}$,
-which takes the canonical form:
+In a nutshell, we use ERGMs as a parametric interpretation of the distribution of $\mathbf{Y}$, which takes the canonical form:
 
 $$
 \Pr{\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}} = \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
@@ -44,7 +36,9 @@ Recent developments include new forms of dependency structures to take into acco
 
 ## A naïve example
 
-In the simplest case, ergm is equivalent to a logistic regression
+In the simplest case, ERGMs equate a logistic regression. By simple, I mean cases in which there are no Markovian terms--motifs involving more than one edge--for example, the Bernoulli graph. In the Bernoulli graph, ties are independent of each other, so the presence/absence of a tie between nodes $i$ and $j$ won't affect the presence/absence of a tie between nodes $k$ and $l$.
+
+Let's fit an ERGM using the `sampson` dataset included in the `ergm` package.
 
 
 
@@ -58,7 +52,7 @@ library(ergm)
 
 ```
 ## 
-## 'network' 1.17.2 (2022-05-20), part of the Statnet Project
+## 'network' 1.18.1 (2023-01-24), part of the Statnet Project
 ## * 'news(package="network")' for changes since last version
 ## * 'citation("network")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -66,7 +60,7 @@ library(ergm)
 
 ```
 ## 
-## 'ergm' 4.2.2 (2022-06-01), part of the Statnet Project
+## 'ergm' 4.4.0 (2023-01-26), part of the Statnet Project
 ## * 'news(package="ergm")' for changes since last version
 ## * 'citation("ergm")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -80,7 +74,6 @@ library(ergm)
 
 ```r
 data("sampson")
-
 samplike
 ```
 
@@ -102,26 +95,11 @@ samplike
 ##     nominations
 ```
 
-```r
-y <- sort(as.vector(as.matrix(samplike)))[-c(1:18)]
-glm(y~1, family=binomial("logit"))
-```
+Using `ergm` to fit a Bernoulli graph requires using the `edges` term, which counts how many ties are in the graph:
 
-```
-## 
-## Call:  glm(formula = y ~ 1, family = binomial("logit"))
-## 
-## Coefficients:
-## (Intercept)  
-##     -0.9072  
-## 
-## Degrees of Freedom: 305 Total (i.e. Null);  305 Residual
-## Null Deviance:	    367.2 
-## Residual Deviance: 367.2 	AIC: 369.2
-```
 
 ```r
-ergm(samplike ~ edges)
+ergm_fit <- ergm(samplike ~ edges)
 ```
 
 ```
@@ -148,6 +126,59 @@ ergm(samplike ~ edges)
 ## Evaluating log-likelihood at the estimate.
 ```
 
+Since this is equivalent to a logistic regression, we can use the `glm` function to fit the same model. First, we need to prepare the data so we can pass it to `glm`:
+
+
+```r
+y <- sort(as.vector(as.matrix(samplike)))
+y <- y[-c(1:18)] # We remove the diagonal from the model, which is all 0.
+y
+```
+
+```
+##   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [112] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [149] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [186] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1
+## [223] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+## [260] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+## [297] 1 1 1 1 1 1 1 1 1 1
+```
+
+We can now fit the GLM model:
+
+
+
+```r
+glm_fit <- glm(y~1, family=binomial("logit"))
+```
+
+The coefficients of both ERGM and GLM should match:
+
+
+```r
+glm_fit
+```
+
+```
+## 
+## Call:  glm(formula = y ~ 1, family = binomial("logit"))
+## 
+## Coefficients:
+## (Intercept)  
+##     -0.9072  
+## 
+## Degrees of Freedom: 305 Total (i.e. Null);  305 Residual
+## Null Deviance:	    367.2 
+## Residual Deviance: 367.2 	AIC: 369.2
+```
+
+```r
+ergm_fit
+```
+
 ```
 ## 
 ## Call:
@@ -158,22 +189,21 @@ ergm(samplike ~ edges)
 ## -0.9072
 ```
 
+Furthermore, in the case of the Bernoulli graph, we can get the estimate using the Logit function:
+
+
 ```r
 pr <- mean(y)
-log(pr) - log(1-pr) # Logit function
-```
-
-```
-## [1] -0.9071582
-```
-
-```r
+# Logit function:
+# Alternatively we could have used log(pr) - log(1-pr)
 qlogis(pr)
 ```
 
 ```
 ## [1] -0.9071582
 ```
+
+Again, the same result. The Bernoulli graph is not the only ERGM model that can be fitted using a Logistic regression. Moreover, if all the terms of the model are non-Markov terms, `ergm` automatically defaults to a Logistic regression.
 
 ## Estimation of ERGMs
 
@@ -223,13 +253,13 @@ For more details, see [@Hunter2008]. A sketch of the algorithm follows:
 
 2.  While (no convergence) do:
     
-    a.  Using $\theta^{(t)}$, simulate $M$ networks by means of small changes in the $\mathbf{Y}_{obs}$ (the observed network). This part is done by using an importance-sampling method which weights each proposed network by it's likelihood conditional on $\theta^{(t)}$
+    a.  Using $\theta^{(t)}$, simulate $M$ networks by means of small changes in the $\mathbf{Y}_{obs}$ (the observed network). This part is done by using an importance-sampling method which weights each proposed network by its likelihood conditional on $\theta^{(t)}$
     
     b.  With the networks simulated, we can do the Newton step to update the parameter $\theta^{(t)}$ (this is the iteration part in the `ergm` package): $\theta^{(t)}\to\theta^{(t+1)}$.
     
     c.  If convergence has been reached (which usually means that $\theta^{(t)}$ and $\theta^{(t + 1)}$ are not very different), then stop; otherwise, go to step a.
 
-For more details see [@lusher2012;@admiraal2006;@Snijders2002;@Wang2009] provides details on the algorithm used by PNet (which is the same as the one used in `RSiena`). [@lusher2012] provides a short discussion on differences between `ergm` and `PNet`. 
+For more details see [@lusher2012;@admiraal2006;@Snijders2002;@Wang2009] provides details on the algorithm used by PNet (which is the same as the one used in `RSiena`). [@lusher2012] provides a short discussion on the differences between `ergm` and `PNet`. 
 
 
 ## The `ergm` package
@@ -248,7 +278,7 @@ load("03.rda")
 ```
 
 
-In this section we will use the `ergm` package (from the `statnet` suit of packages [@R-statnet]) suit, and the `intergraph` [@R-intergraph] package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
+In this section, we will use the `ergm` package (from the `statnet` suit of packages [@R-statnet],) and the `intergraph` [@R-intergraph] package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
 
 
 ```r
@@ -256,7 +286,7 @@ library(ergm)
 library(intergraph)
 ```
 
-As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the `network` package have the same name of some functions in the `igraph` package. When the `ergm` package is loaded, since it depends on `network`, it will load the `network`  package first, which will _mask_ some functions in `igraph`. This becomes evident once you load `ergm` after loading `igraph`:
+As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the `network` package have the same name as some functions in the `igraph` package. When the `ergm` package is loaded, since it depends on `network`, it will load the `network`  package first, which will _mask_ some functions in `igraph`. This becomes evident once you load `ergm` after loading `igraph`:
   
 ```
 The following objects are masked from ‘package:igraph’:
@@ -273,7 +303,7 @@ igraph::list.edge.attributes(my_igraph_object)
 network::list.edge.attributes(my_network_object)
 ```
 
-Anyway... Using the `asNetwork` function, we can coerce the igraph object into a network object so we can use it with the `ergm` function:
+Anyway... Using the `asNetwork` function, we can coerce the `igraph` object into a network object so we can use it with the `ergm` function:
 
 
 ```r
@@ -322,7 +352,7 @@ ergm(network_111 ~ edges)
 ## -4.734
 ```
 
-So what happened here! We got a warning. It turns out that our network has loops (didn't thought about it before!). Let's take a look at that with the `which_loop` function
+So what happened here? We got a warning. It turns out that our network has loops (didn't think about it before!). Let's take a look at that with the `which_loop` function
 
 
 ```r
@@ -330,7 +360,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from 37b523d (vertex names):
+## + 1/2638 edge from a60079c (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -355,9 +385,7 @@ network_111 <- intergraph::asNetwork(network_111)
 `asNetwork(simplify(ig_year1_111))`
 `ig_year1_111 %>% simplify %>% asNetwork`
 
-A problem that we have on this data is the fact that some vertices have
-missing values in the variables `hispanic`, `female1`, and `eversmk1`. For now,
-we will proceed by imputing values based on the avareges:
+A problem that we have with this data is the fact that some vertices have missing values in the variables `hispanic`, `female1`, and `eversmk1`. For now, we will proceed by imputing values based on the averages:
 
 
 ```r
@@ -381,7 +409,7 @@ Proposed workflow:
 
 What to use:
 
-1.  `control.ergms`: Maximum number of iteration, seed for Pseudo-RNG, how many cores
+1.  `control.ergms`: Maximum number of iterations, seed for Pseudo-RNG, how many cores
 
 2.  `ergm.constraints`: Where to sample the network from. Gives stability and (in some cases) faster convergence as by constraining the model you are reducing the sample size.
 
@@ -493,9 +521,36 @@ screenreg(list(ans0, ans1, ans2))
 ```
 
 ```
-## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
-## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
-## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
+## it with version 4.2 or later may return incorrect results or fail.
+```
+
+```
+## Warning in nobs.ergm(object): The number of observed dyads in this network is
+## ill-defined due to complex constraints on the sample space. Disable this warning
+## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+```
+
+```
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
+## it with version 4.2 or later may return incorrect results or fail.
+```
+
+```
+## Warning in nobs.ergm(object): The number of observed dyads in this network is
+## ill-defined due to complex constraints on the sample space. Disable this warning
+## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+```
+
+```
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
+## it with version 4.2 or later may return incorrect results or fail.
+```
+
+```
+## Warning in nobs.ergm(object): The number of observed dyads in this network is
+## ill-defined due to complex constraints on the sample space. Disable this warning
+## with 'options(ergm.loglik.warn_dyads=FALSE)'.
 ```
 
 ```
@@ -532,9 +587,36 @@ htmlreg(list(ans0, ans1, ans2))
 ```
 
 ```
-## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
-## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
-## This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
+## it with version 4.2 or later may return incorrect results or fail.
+```
+
+```
+## Warning in nobs.ergm(object): The number of observed dyads in this network is
+## ill-defined due to complex constraints on the sample space. Disable this warning
+## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+```
+
+```
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
+## it with version 4.2 or later may return incorrect results or fail.
+```
+
+```
+## Warning in nobs.ergm(object): The number of observed dyads in this network is
+## ill-defined due to complex constraints on the sample space. Disable this warning
+## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+```
+
+```
+## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
+## it with version 4.2 or later may return incorrect results or fail.
+```
+
+```
+## Warning in nobs.ergm(object): The number of observed dyads in this network is
+## ill-defined due to complex constraints on the sample space. Disable this warning
+## with 'options(ergm.loglik.warn_dyads=FALSE)'.
 ```
 
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
@@ -916,61 +998,61 @@ ans_gof
 ## Goodness-of-fit for in-degree 
 ## 
 ##           obs min  mean max MC p-value
-## idegree0   13   0  1.43   5       0.00
-## idegree1   34   2  8.47  16       0.00
-## idegree2   37  13 22.53  33       0.00
-## idegree3   48  29 42.25  60       0.38
-## idegree4   37  45 57.78  76       0.00
-## idegree5   47  44 66.51  88       0.02
-## idegree6   42  44 64.18  79       0.00
-## idegree7   39  40 53.58  68       0.00
-## idegree8   35  23 39.58  53       0.50
-## idegree9   21  18 27.43  40       0.28
-## idegree10  12   9 16.38  23       0.34
-## idegree11  19   1  8.82  16       0.00
-## idegree12   4   0  4.63  12       1.00
-## idegree13   7   0  2.12   7       0.02
-## idegree14   6   0  1.26   5       0.00
-## idegree15   3   0  0.44   2       0.00
-## idegree16   4   0  0.37   2       0.00
-## idegree17   3   0  0.14   1       0.00
-## idegree18   3   0  0.06   1       0.00
-## idegree19   2   0  0.02   1       0.00
-## idegree20   1   0  0.00   0       0.00
-## idegree21   0   0  0.02   1       1.00
+## idegree0   13   0  1.38   5       0.00
+## idegree1   34   2  7.84  15       0.00
+## idegree2   37  13 22.13  36       0.00
+## idegree3   48  26 40.12  60       0.12
+## idegree4   37  44 59.60  74       0.00
+## idegree5   47  52 67.86  89       0.00
+## idegree6   42  48 65.06  82       0.00
+## idegree7   39  38 53.40  69       0.04
+## idegree8   35  26 40.30  57       0.46
+## idegree9   21  17 26.48  43       0.36
+## idegree10  12   9 16.36  24       0.34
+## idegree11  19   2  8.73  15       0.00
+## idegree12   4   0  4.80  13       1.00
+## idegree13   7   0  2.23   6       0.00
+## idegree14   6   0  0.99   4       0.00
+## idegree15   3   0  0.32   2       0.00
+## idegree16   4   0  0.20   2       0.00
+## idegree17   3   0  0.09   1       0.00
+## idegree18   3   0  0.09   1       0.00
+## idegree19   2   0  0.00   0       0.00
+## idegree20   1   0  0.02   1       0.04
 ## idegree22   1   0  0.00   0       0.00
 ## 
 ## Goodness-of-fit for out-degree 
 ## 
 ##           obs min  mean max MC p-value
-## odegree0    4   0  1.56   5       0.10
-## odegree1   28   2  8.23  17       0.00
-## odegree2   45  11 22.52  33       0.00
-## odegree3   50  23 40.11  56       0.10
-## odegree4   54  43 59.27  76       0.52
-## odegree5   62  50 67.39  93       0.48
-## odegree6   40  45 63.79  79       0.00
-## odegree7   28  32 54.74  73       0.00
-## odegree8   13  27 39.88  50       0.00
-## odegree9   16  14 26.17  43       0.04
-## odegree10  20   5 16.30  25       0.36
-## odegree11   8   4  8.99  17       0.76
-## odegree12  11   1  4.73  10       0.00
-## odegree13  13   0  2.54   8       0.00
-## odegree14   6   0  1.00   3       0.00
-## odegree15   6   0  0.45   3       0.00
-## odegree16   7   0  0.21   2       0.00
-## odegree17   4   0  0.10   2       0.00
-## odegree18   3   0  0.02   1       0.00
+## odegree0    4   0  1.33   6       0.14
+## odegree1   28   2  7.67  15       0.00
+## odegree2   45  13 22.07  33       0.00
+## odegree3   50  27 40.96  55       0.16
+## odegree4   54  44 59.37  75       0.50
+## odegree5   62  40 67.12  92       0.62
+## odegree6   40  46 64.49  81       0.00
+## odegree7   28  39 54.33  78       0.00
+## odegree8   13  28 39.73  53       0.00
+## odegree9   16  17 27.48  45       0.00
+## odegree10  20   7 15.74  26       0.22
+## odegree11   8   2  9.25  16       0.86
+## odegree12  11   1  4.98  12       0.04
+## odegree13  13   0  2.12   7       0.00
+## odegree14   6   0  0.72   3       0.00
+## odegree15   6   0  0.41   3       0.00
+## odegree16   7   0  0.17   2       0.00
+## odegree17   4   0  0.03   1       0.00
+## odegree18   3   0  0.01   1       0.00
+## odegree19   0   0  0.02   1       1.00
 ## 
 ## Goodness-of-fit for edgewise shared partner 
 ## 
 ##       obs  min    mean  max MC p-value
-## esp0 1032 1979 2193.78 2313          0
-## esp1  755  166  235.04  423          0
-## esp2  352    2   16.24   83          0
-## esp3  202    0    0.88    5          0
-## esp4   79    0    0.02    1          0
+## esp0 1032 1991 2195.84 2289          0
+## esp1  755  170  235.05  441          0
+## esp2  352    1   14.86   86          0
+## esp3  202    0    0.84   14          0
+## esp4   79    0    0.08    2          0
 ## esp5   36    0    0.00    0          0
 ## esp6   14    0    0.00    0          0
 ## esp7    4    0    0.00    0          0
@@ -979,26 +1061,26 @@ ans_gof
 ## Goodness-of-fit for minimum geodesic distance 
 ## 
 ##       obs   min     mean   max MC p-value
-## 1    2475  2329  2445.96  2573       0.52
-## 2   10672 12419 13611.54 15000       0.00
-## 3   31134 49756 55207.67 60888       0.00
-## 4   50673 77398 79886.41 81893       0.00
-## 5   42563 15561 20575.07 26629       0.00
-## 6   18719   491  1265.91  2285       0.00
-## 7    4808     4    38.99   178       0.00
-## 8     822     0     0.77    14       0.00
-## 9     100     0     0.03     1       0.00
-## 10      7     0     0.00     0       0.00
-## Inf 12333     0  1273.65  3321       0.00
+## 1    2475  2319  2446.67  2571        0.6
+## 2   10672 12048 13548.63 14726        0.0
+## 3   31134 48016 54997.05 60096        0.0
+## 4   50673 78122 80230.34 82613        0.0
+## 5   42563 15553 20682.28 27611        0.0
+## 6   18719   383  1227.29  2611        0.0
+## 7    4808     0    40.46   214        0.0
+## 8     822     0     0.87    16        0.0
+## 9     100     0     0.00     0        0.0
+## 10      7     0     0.00     0        0.0
+## Inf 12333     0  1132.41  3324        0.0
 ## 
 ## Goodness-of-fit for model statistics 
 ## 
 ##                     obs  min    mean  max MC p-value
-## edges              2475 2329 2445.96 2573       0.52
-## nodematch.hispanic 1832 1740 1826.07 1978       0.86
-## nodematch.female1  1879 1760 1860.64 1958       0.76
-## nodematch.eversmk1 1755 1646 1733.50 1814       0.46
-## mutual              486  434  472.02  498       0.42
+## edges              2475 2319 2446.67 2571       0.60
+## nodematch.hispanic 1832 1710 1807.58 1903       0.56
+## nodematch.female1  1879 1760 1852.63 1970       0.60
+## nodematch.eversmk1 1755 1614 1724.70 1824       0.56
+## mutual              486  441  475.38  514       0.66
 ```
 
 ```r
@@ -1006,7 +1088,7 @@ ans_gof
 plot(ans_gof)
 ```
 
-![](part-01-04-ergms_files/figure-epub3/checking-gof-1.png)<!-- -->![](part-01-04-ergms_files/figure-epub3/checking-gof-2.png)<!-- -->![](part-01-04-ergms_files/figure-epub3/checking-gof-3.png)<!-- -->![](part-01-04-ergms_files/figure-epub3/checking-gof-4.png)<!-- -->![](part-01-04-ergms_files/figure-epub3/checking-gof-5.png)<!-- -->
+<img src="part-01-04-ergms_files/figure-html/checking-gof-1.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-2.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-3.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-4.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-5.png" width="672" />
 
 Try the following configuration instead
 
@@ -1041,7 +1123,7 @@ knitr::include_graphics("awful-chains.png")
 ```
 
 <div class="figure">
-<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="714" />
+<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="357" />
 <p class="caption">(\#fig:badconvergence)An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful</p>
 </div>
 

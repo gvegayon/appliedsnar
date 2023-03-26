@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7.1 Example 1: Interlocking egos and disconnected alters | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7.1 Example 1: Interlocking egos and disconnected alters | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2022-07-19" />
+<meta name="date" content="2023-03-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -64,25 +64,27 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -91,15 +93,15 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -112,7 +114,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -126,6 +128,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -147,31 +171,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i><b>2</b> About the Author</a></li>
 <li class="part"><span><b>I Applications</b></span></li>
 <li class="chapter" data-level="3" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>3</b> Introduction</a></li>
-<li class="chapter" data-level="4" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>4</b> R Basics</a><ul>
+<li class="chapter" data-level="4" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>4</b> R Basics</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>4.1</b> What is R</a></li>
 <li class="chapter" data-level="4.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>4.2</b> How to install packages</a></li>
 <li class="chapter" data-level="4.3" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>4.3</b> Prerequisites</a></li>
 <li class="chapter" data-level="4.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>4.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>5</b> Network Nomination Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>5.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="5" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>5</b> Network Nomination Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>5.1</b> Data preprocessing</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>5.1.1</b> Reading the data into R</a></li>
 <li class="chapter" data-level="5.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>5.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>5.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="5.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>5.2</b> Creating a network</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>5.2.1</b> From survey to edgelist</a></li>
 <li class="chapter" data-level="5.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>5.2.2</b> igraph network</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>5.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="5.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>5.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="5.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>5.4</b> Plotting the network in igraph</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>5.4.1</b> Single plot</a></li>
 <li class="chapter" data-level="5.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>5.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>5.5</b> Statistical tests</a><ul>
+<li class="chapter" data-level="5.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>5.5</b> Statistical tests</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>5.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="6" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> Exponential Random Graph Models</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>6.1</b> A naïve example</a></li>
 <li class="chapter" data-level="6.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>6.2</b> Estimation of ERGMs</a></li>
 <li class="chapter" data-level="6.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>6.3</b> The <code>ergm</code> package</a></li>
@@ -181,43 +212,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>6.7</b> Mathematical Interpretation</a></li>
 <li class="chapter" data-level="6.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>6.8</b> Markov independence</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>7</b> Using constraints in ERGMs</a><ul>
+<li class="chapter" data-level="7" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>7</b> Using constraints in ERGMs</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>7.1</b> Example 1: Interlocking egos and disconnected alters</a></li>
 <li class="chapter" data-level="7.2" data-path="example-2-bi-partite-networks.html"><a href="example-2-bi-partite-networks.html"><i class="fa fa-check"></i><b>7.2</b> Example 2: Bi-partite networks</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>8</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
-<li class="chapter" data-level="9" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>9</b> Simulating and visualizing networks</a><ul>
+<li class="chapter" data-level="9" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>9</b> Simulating and visualizing networks</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="random-graph-models.html"><a href="random-graph-models.html"><i class="fa fa-check"></i><b>9.1</b> Random Graph Models</a></li>
 <li class="chapter" data-level="9.2" data-path="social-networks-in-schools.html"><a href="social-networks-in-schools.html"><i class="fa fa-check"></i><b>9.2</b> Social Networks in Schools</a></li>
 <li class="chapter" data-level="9.3" data-path="reading-a-network.html"><a href="reading-a-network.html"><i class="fa fa-check"></i><b>9.3</b> Reading a network</a></li>
-<li class="chapter" data-level="9.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>9.4</b> Visualizing the network</a><ul>
+<li class="chapter" data-level="9.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>9.4</b> Visualizing the network</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-size"><i class="fa fa-check"></i><b>9.4.1</b> Vertex size</a></li>
 <li class="chapter" data-level="9.4.2" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-color"><i class="fa fa-check"></i><b>9.4.2</b> Vertex color</a></li>
 <li class="chapter" data-level="9.4.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-shape"><i class="fa fa-check"></i><b>9.4.3</b> Vertex shape</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>10</b> Hypothesis testing in networks</a><ul>
-<li class="chapter" data-level="10.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>10.1</b> Comparing networks</a><ul>
+<li class="chapter" data-level="10" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>10</b> Hypothesis testing in networks</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>10.1</b> Comparing networks</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>10.1.1</b> Network bootstrap</a></li>
 <li class="chapter" data-level="10.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>10.1.2</b> When the statistic is normal</a></li>
 <li class="chapter" data-level="10.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>10.1.3</b> When the statistic is NOT normal</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>10.2</b> Examples</a><ul>
+<li class="chapter" data-level="10.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>10.2</b> Examples</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>10.2.1</b> Average of node-level stats</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>11</b> Network diffussion with <code>netdiffuseR</code></a><ul>
-<li class="chapter" data-level="11.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>11.1</b> Network diffusion of innovation</a><ul>
+<li class="chapter" data-level="11" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>11</b> Network diffussion with <code>netdiffuseR</code></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>11.1</b> Network diffusion of innovation</a>
+<ul>
 <li class="chapter" data-level="11.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>11.1.1</b> Diffusion networks</a></li>
 <li class="chapter" data-level="11.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>11.1.2</b> Thresholds</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>11.2</b> The netdiffuseR R package</a><ul>
+<li class="chapter" data-level="11.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>11.2</b> The netdiffuseR R package</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>11.2.1</b> Overview</a></li>
 <li class="chapter" data-level="11.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>11.2.2</b> Datasets</a></li>
 <li class="chapter" data-level="11.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>11.2.3</b> Visualization methods</a></li>
 <li class="chapter" data-level="11.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>11.2.4</b> Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>11.3</b> Simulation of diffusion processes</a><ul>
+<li class="chapter" data-level="11.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>11.3</b> Simulation of diffusion processes</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>11.3.1</b> Simulating diffusion networks</a></li>
 <li class="chapter" data-level="11.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>11.3.2</b> Rumor spreading</a></li>
 <li class="chapter" data-level="11.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>11.3.3</b> Difussion</a></li>
@@ -225,7 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>11.3.5</b> Example by changing threshold</a></li>
 <li class="chapter" data-level="11.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>11.3.6</b> Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>11.4</b> Statistical inference</a><ul>
+<li class="chapter" data-level="11.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>11.4</b> Statistical inference</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>11.4.1</b> Moran’s I</a></li>
 <li class="chapter" data-level="11.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>11.4.2</b> Using geodesics</a></li>
 <li class="chapter" data-level="11.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>11.4.3</b> Structural dependence and permutation tests</a></li>
@@ -235,25 +277,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>12</b> Stochastic Actor Oriented Models</a></li>
-<li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a><ul>
+<li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><i class="fa fa-check"></i><b>13.1</b> Example 1: Spillover effects in egocentric studies</a></li>
 <li class="chapter" data-level="13.2" data-path="example-2-spillover-effects-pre-post-effect.html"><a href="example-2-spillover-effects-pre-post-effect.html"><i class="fa fa-check"></i><b>13.2</b> Example 2: Spillover effects pre-post effect</a></li>
+<li class="chapter" data-level="13.3" data-path="example-3-first-difference.html"><a href="example-3-first-difference.html"><i class="fa fa-check"></i><b>13.3</b> Example 3: First difference</a></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Foundations</b></span></li>
 <li class="chapter" data-level="14" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>14</b> Bayes’ Rule</a></li>
-<li class="chapter" data-level="15" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>15</b> Markov Chain</a><ul>
+<li class="chapter" data-level="15" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>15</b> Markov Chain</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="metropolis-algorithm.html"><a href="metropolis-algorithm.html"><i class="fa fa-check"></i><b>15.1</b> Metropolis Algorithm</a></li>
 <li class="chapter" data-level="15.2" data-path="metropolis-hastings.html"><a href="metropolis-hastings.html"><i class="fa fa-check"></i><b>15.2</b> Metropolis-Hastings</a></li>
 <li class="chapter" data-level="15.3" data-path="likelihood-free-mcmc.html"><a href="likelihood-free-mcmc.html"><i class="fa fa-check"></i><b>15.3</b> Likelihood-free MCMC</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a><ul>
+<li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>16.1</b> Error types</a></li>
 <li class="chapter" data-level="16.2" data-path="example-1-sample-size-for-a-proportion.html"><a href="example-1-sample-size-for-a-proportion.html"><i class="fa fa-check"></i><b>16.2</b> Example 1: Sample size for a proportion</a></li>
 <li class="chapter" data-level="16.3" data-path="example-2-sample-size-for-a-proportion-vis.html"><a href="example-2-sample-size-for-a-proportion-vis.html"><i class="fa fa-check"></i><b>16.3</b> Example 2: Sample size for a proportion (vis)</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
@@ -279,72 +327,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="example-1-interlocking-egos-and-disconnected-alters" class="section level2 hasAnchor">
+<div id="example-1-interlocking-egos-and-disconnected-alters" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Example 1: Interlocking egos and disconnected alters<a href="example-1-interlocking-egos-and-disconnected-alters.html#example-1-interlocking-egos-and-disconnected-alters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Imagine that we have two sets of vertices. The first, group <code>E</code>, are egos part of
-an egocentric study. The second group, called <code>A</code>, is composed of people mentioned by egos in <code>E</code> but
-were not surveyed. Assume that individuals in <code>A</code> can only connect
-to individuals in <code>E</code>; moreover, individuals in <code>E</code> have no restrictions connecting to each other.
-In other words, only two types of ties exist: <code>E-E</code> and <code>A-E</code>. The question is
-now, how can we enforce such a constraint in an ERGM?</p>
-<p>Using offsets, and in particular, setting coefficients to <code>-Inf</code> provides
-an easy way to restrict the support set of ERGMs. For example, if we wanted
-to constrain the support to include networks with no triangles, we would
-add the term <code>offset(triangle)</code> and use the option <code>offset.coef = -Inf</code> to
-indicate that realizations including triangles are not possible. Using R:</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" title="1"><span class="kw">ergm</span>(net <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(triangle), <span class="dt">offset.coef =</span> <span class="op">-</span><span class="ot">Inf</span>)</a></code></pre></div>
-<p>In this model, a Bernoulli graph, we reduce the sample space to networks
-with no triangles. In our example, such statistic should only take non-zero
-values whenever ties within the <code>A</code> class happen. We can use
-the <code>nodematch()</code> term to do that. Formally</p>
+<p>Imagine that we have two sets of vertices. The first, group <code>E</code>, are egos part of an egocentric study. The second group, called <code>A</code>, is composed of people mentioned by egos in <code>E</code> but were not surveyed. Assume that individuals in <code>A</code> can only connect to individuals in <code>E</code>; moreover, individuals in <code>E</code> have no restrictions on connecting. In other words, only two types of ties exist: <code>E-E</code> and <code>A-E</code>. The question is now, how can we enforce such a constraint in an ERGM?</p>
+<p>Using offsets, and in particular, setting coefficients to <code>-Inf</code> provides an easy way to restrict the support set of ERGMs. For example, if we wanted to constrain the support to include networks with no triangles, we would add the term <code>offset(triangle)</code> and use the option <code>offset.coef = -Inf</code> to indicate that realizations including triangles are not possible. Using R:</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb206-1" tabindex="-1"></a><span class="fu">ergm</span>(net <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">offset</span>(triangle), <span class="at">offset.coef =</span> <span class="sc">-</span><span class="cn">Inf</span>)</span></code></pre></div>
+<p>In this model, a Bernoulli graph, we reduce the sample space to networks with no triangles. In our example, such a statistic should only take non-zero values whenever ties within the <code>A</code> class happen. We can use the <code>nodematch()</code> term to do that. Formally</p>
 <p><span class="math display">\[
 \text{NodeMatch}(x) = \sum_{i,j} y_{ij} \mathbf{1}({x_{i} = x_{j}})
 \]</span></p>
-<p>This statistic will sum over all ties in which source (<span class="math inline">\(i\)</span>) and target (<span class="math inline">\(j\)</span>)’s
-<span class="math inline">\(X\)</span> attribute is equal. One way to make this happen is by creating an auxiliary
-variable that equals, e.g., 0 for all vertices in <code>A</code>, and a unique value
-different from zero otherwise. For example, if we had 2 <code>A</code>s and three <code>E</code>s,
-the data would look something like this: <span class="math inline">\(\{0,0,1,2,3\}\)</span>. The following code
-block creates an empty graph with 50 nodes, 10 of which are in group <code>E</code> (ego).</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" title="1"><span class="kw">library</span>(ergm, <span class="dt">quietly =</span>  <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb198-2" title="2"><span class="kw">library</span>(sna, <span class="dt">quietly =</span>  <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb198-3" title="3"></a>
-<a class="sourceLine" id="cb198-4" title="4">n &lt;-<span class="st"> </span><span class="dv">50</span></a>
-<a class="sourceLine" id="cb198-5" title="5">n_egos &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb198-6" title="6">net &lt;-<span class="st"> </span><span class="kw">as.network</span>(<span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dt">ncol =</span> n, <span class="dt">nrow =</span> n), <span class="dt">directed =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb198-7" title="7"></a>
-<a class="sourceLine" id="cb198-8" title="8"><span class="co"># Let&#39;s assing the groups</span></a>
-<a class="sourceLine" id="cb198-9" title="9">net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="ot">TRUE</span>, n_egos), <span class="kw">rep</span>(<span class="ot">FALSE</span>, n <span class="op">-</span><span class="st"> </span>n_egos))</a>
-<a class="sourceLine" id="cb198-10" title="10">net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span></a></code></pre></div>
+<p>This statistic will sum over all ties in which source (<span class="math inline">\(i\)</span>) and target (<span class="math inline">\(j\)</span>)’s <span class="math inline">\(X\)</span> attribute is equal. One way to make this happen is by creating an auxiliary variable that equals, e.g., 0 for all vertices in <code>A</code>, and a unique value different from zero otherwise. For example, if we had 2 <code>A</code>s and three <code>E</code>s, the data would look something like this: <span class="math inline">\(\{0,0,1,2,3\}\)</span>. The following code block creates an empty graph with 50 nodes, 10 of which are in group <code>E</code> (ego).</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-1" tabindex="-1"></a><span class="fu">library</span>(ergm, <span class="at">quietly =</span>  <span class="cn">TRUE</span>)</span>
+<span id="cb207-2"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-2" tabindex="-1"></a><span class="fu">library</span>(sna, <span class="at">quietly =</span>  <span class="cn">TRUE</span>)</span>
+<span id="cb207-3"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-3" tabindex="-1"></a></span>
+<span id="cb207-4"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-4" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb207-5"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-5" tabindex="-1"></a>n_egos <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb207-6"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-6" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">as.network</span>(<span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">ncol =</span> n, <span class="at">nrow =</span> n), <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb207-7"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-7" tabindex="-1"></a></span>
+<span id="cb207-8"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-8" tabindex="-1"></a><span class="co"># Let&#39;s assing the groups</span></span>
+<span id="cb207-9"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-9" tabindex="-1"></a>net <span class="sc">%v%</span> <span class="st">&quot;is.ego&quot;</span> <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">TRUE</span>, n_egos), <span class="fu">rep</span>(<span class="cn">FALSE</span>, n <span class="sc">-</span> n_egos))</span>
+<span id="cb207-10"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb207-10" tabindex="-1"></a>net <span class="sc">%v%</span> <span class="st">&quot;is.ego&quot;</span></span></code></pre></div>
 <pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
 ## [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [49] FALSE FALSE</code></pre>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" title="1"><span class="kw">gplot</span>(net, <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb209-1" tabindex="-1"></a><span class="fu">gplot</span>(net, <span class="at">vertex.col =</span> net <span class="sc">%v%</span> <span class="st">&quot;is.ego&quot;</span>)</span></code></pre></div>
 <p><img src="part-01-05-ergms-constrains_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>To create the auxiliary variable, we will use the following function:</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" title="1"><span class="co"># Function that creates an aux variable for the ergm model</span></a>
-<a class="sourceLine" id="cb201-2" title="2">make_aux_var &lt;-<span class="st"> </span><span class="cf">function</span>(my_net, is_ego_dummy) {</a>
-<a class="sourceLine" id="cb201-3" title="3">  </a>
-<a class="sourceLine" id="cb201-4" title="4">  n_vertex &lt;-<span class="st"> </span><span class="kw">length</span>(my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy)</a>
-<a class="sourceLine" id="cb201-5" title="5">  n_ego_   &lt;-<span class="st"> </span><span class="kw">sum</span>(my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy)</a>
-<a class="sourceLine" id="cb201-6" title="6">  </a>
-<a class="sourceLine" id="cb201-7" title="7">  <span class="co"># Creating an auxiliary variable to identify the non-informant non-informant ties</span></a>
-<a class="sourceLine" id="cb201-8" title="8">  my_net <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(</a>
-<a class="sourceLine" id="cb201-9" title="9">    <span class="op">!</span>my_net <span class="op">%v%</span><span class="st"> </span>is_ego_dummy, <span class="dv">0</span>, <span class="dv">1</span><span class="op">:</span>(n_vertex <span class="op">-</span><span class="st"> </span>n_ego_)</a>
-<a class="sourceLine" id="cb201-10" title="10">    )</a>
-<a class="sourceLine" id="cb201-11" title="11"></a>
-<a class="sourceLine" id="cb201-12" title="12">  my_net</a>
-<a class="sourceLine" id="cb201-13" title="13">}</a></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-1" tabindex="-1"></a><span class="co"># Function that creates an aux variable for the ergm model</span></span>
+<span id="cb210-2"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-2" tabindex="-1"></a>make_aux_var <span class="ot">&lt;-</span> <span class="cf">function</span>(my_net, is_ego_dummy) {</span>
+<span id="cb210-3"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-3" tabindex="-1"></a>  </span>
+<span id="cb210-4"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-4" tabindex="-1"></a>  n_vertex <span class="ot">&lt;-</span> <span class="fu">length</span>(my_net <span class="sc">%v%</span> is_ego_dummy)</span>
+<span id="cb210-5"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-5" tabindex="-1"></a>  n_ego_   <span class="ot">&lt;-</span> <span class="fu">sum</span>(my_net <span class="sc">%v%</span> is_ego_dummy)</span>
+<span id="cb210-6"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-6" tabindex="-1"></a>  </span>
+<span id="cb210-7"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-7" tabindex="-1"></a>  <span class="co"># Creating an auxiliary variable to identify the non-informant non-informant ties</span></span>
+<span id="cb210-8"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-8" tabindex="-1"></a>  my_net <span class="sc">%v%</span> <span class="st">&quot;aux_var&quot;</span> <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
+<span id="cb210-9"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-9" tabindex="-1"></a>    <span class="sc">!</span>my_net <span class="sc">%v%</span> is_ego_dummy, <span class="dv">0</span>, <span class="dv">1</span><span class="sc">:</span>(n_vertex <span class="sc">-</span> n_ego_)</span>
+<span id="cb210-10"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-10" tabindex="-1"></a>    )</span>
+<span id="cb210-11"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-11" tabindex="-1"></a></span>
+<span id="cb210-12"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-12" tabindex="-1"></a>  my_net</span>
+<span id="cb210-13"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb210-13" tabindex="-1"></a>}</span></code></pre></div>
 <p>Calling the function in our data results in the following:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" title="1">net &lt;-<span class="st"> </span><span class="kw">make_aux_var</span>(net, <span class="st">&quot;is.ego&quot;</span>)</a>
-<a class="sourceLine" id="cb202-2" title="2"></a>
-<a class="sourceLine" id="cb202-3" title="3"><span class="co"># Taking a look over the first 15 rows of data</span></a>
-<a class="sourceLine" id="cb202-4" title="4"><span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb202-5" title="5">  <span class="dt">Is_Ego =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>,</a>
-<a class="sourceLine" id="cb202-6" title="6">  <span class="dt">Aux    =</span> net <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>  </a>
-<a class="sourceLine" id="cb202-7" title="7">) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span><span class="kw">head</span>(<span class="dt">n =</span> <span class="dv">15</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb211-1" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">make_aux_var</span>(net, <span class="st">&quot;is.ego&quot;</span>)</span>
+<span id="cb211-2"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb211-2" tabindex="-1"></a></span>
+<span id="cb211-3"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb211-3" tabindex="-1"></a><span class="co"># Taking a look over the first 15 rows of data</span></span>
+<span id="cb211-4"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb211-4" tabindex="-1"></a><span class="fu">cbind</span>(</span>
+<span id="cb211-5"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb211-5" tabindex="-1"></a>  <span class="at">Is_Ego =</span> net <span class="sc">%v%</span> <span class="st">&quot;is.ego&quot;</span>,</span>
+<span id="cb211-6"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb211-6" tabindex="-1"></a>  <span class="at">Aux    =</span> net <span class="sc">%v%</span> <span class="st">&quot;aux_var&quot;</span>  </span>
+<span id="cb211-7"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb211-7" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">15</span>)</span></code></pre></div>
 <pre><code>##       Is_Ego Aux
 ##  [1,]      1   1
 ##  [2,]      1   2
@@ -363,81 +394,75 @@ block creates an empty graph with 50 nodes, 10 of which are in group <code>E</co
 ## [15,]      0   0</code></pre>
 <p>We can now use this data to simulate a network in which ties between
 <code>A</code>-class vertices are not possible:</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" title="1"><span class="kw">set.seed</span>(<span class="dv">2828</span>)</a>
-<a class="sourceLine" id="cb204-2" title="2">net_sim &lt;-<span class="st"> </span><span class="kw">simulate</span>(net <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>), <span class="dt">coef =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">3.0</span>, <span class="op">-</span><span class="ot">Inf</span>))</a>
-<a class="sourceLine" id="cb204-3" title="3"><span class="kw">gplot</span>(net_sim, <span class="dt">vertex.col =</span> net_sim <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb213-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2828</span>)</span>
+<span id="cb213-2"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb213-2" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> <span class="fu">simulate</span>(net <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>), <span class="at">coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.0</span>, <span class="sc">-</span><span class="cn">Inf</span>))</span>
+<span id="cb213-3"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb213-3" tabindex="-1"></a><span class="fu">gplot</span>(net_sim, <span class="at">vertex.col =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;is.ego&quot;</span>)</span></code></pre></div>
 <p><img src="part-01-05-ergms-constrains_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>As you can see, this network has only ties of the type <code>E-E</code> and <code>A-E</code>. We can
-double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph
-separately:</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" title="1"><span class="kw">summary</span>(net_sim <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
+<p>As you can see, this network has only ties of the type <code>E-E</code> and <code>A-E</code>. We can double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph separately:</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb214-1" tabindex="-1"></a><span class="fu">summary</span>(net_sim <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</span></code></pre></div>
 <pre><code>##             edges nodematch.aux_var 
 ##                49                 0</code></pre>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" title="1">net_of_alters &lt;-<span class="st"> </span><span class="kw">get.inducedSubgraph</span>(</a>
-<a class="sourceLine" id="cb207-2" title="2">  net_sim, <span class="kw">which</span>((net_sim <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb207-3" title="3">  )</a>
-<a class="sourceLine" id="cb207-4" title="4"></a>
-<a class="sourceLine" id="cb207-5" title="5">net_of_egos &lt;-<span class="st"> </span><span class="kw">get.inducedSubgraph</span>(</a>
-<a class="sourceLine" id="cb207-6" title="6">  net_sim, <span class="kw">which</span>((net_sim <span class="op">%v%</span><span class="st"> &quot;aux_var&quot;</span>) <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb207-7" title="7">  )</a>
-<a class="sourceLine" id="cb207-8" title="8"></a>
-<a class="sourceLine" id="cb207-9" title="9"><span class="co"># Counts</span></a>
-<a class="sourceLine" id="cb207-10" title="10"><span class="kw">summary</span>(net_of_alters <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-1" tabindex="-1"></a>net_of_alters <span class="ot">&lt;-</span> <span class="fu">get.inducedSubgraph</span>(</span>
+<span id="cb216-2"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-2" tabindex="-1"></a>  net_sim, <span class="fu">which</span>((net_sim <span class="sc">%v%</span> <span class="st">&quot;aux_var&quot;</span>) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb216-3"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-3" tabindex="-1"></a>  )</span>
+<span id="cb216-4"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-4" tabindex="-1"></a></span>
+<span id="cb216-5"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-5" tabindex="-1"></a>net_of_egos <span class="ot">&lt;-</span> <span class="fu">get.inducedSubgraph</span>(</span>
+<span id="cb216-6"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-6" tabindex="-1"></a>  net_sim, <span class="fu">which</span>((net_sim <span class="sc">%v%</span> <span class="st">&quot;aux_var&quot;</span>) <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb216-7"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-7" tabindex="-1"></a>  )</span>
+<span id="cb216-8"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-8" tabindex="-1"></a></span>
+<span id="cb216-9"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-9" tabindex="-1"></a><span class="co"># Counts</span></span>
+<span id="cb216-10"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb216-10" tabindex="-1"></a><span class="fu">summary</span>(net_of_alters <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</span></code></pre></div>
 <pre><code>##             edges nodematch.aux_var 
 ##                 0                 0</code></pre>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" title="1"><span class="kw">summary</span>(net_of_egos <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb218-1" tabindex="-1"></a><span class="fu">summary</span>(net_of_egos <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>))</span></code></pre></div>
 <pre><code>##             edges nodematch.aux_var 
 ##                 1                 0</code></pre>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" title="1"><span class="co"># Figures</span></a>
-<a class="sourceLine" id="cb211-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb211-3" title="3"><span class="kw">gplot</span>(net_of_alters, <span class="dt">vertex.col =</span> net_of_alters <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;A&quot;</span>)</a>
-<a class="sourceLine" id="cb211-4" title="4"><span class="kw">gplot</span>(net_of_egos, <span class="dt">vertex.col =</span> net_of_egos <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;E&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb220-1" tabindex="-1"></a><span class="co"># Figures</span></span>
+<span id="cb220-2"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb220-2" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb220-3"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb220-3" tabindex="-1"></a><span class="fu">gplot</span>(net_of_alters, <span class="at">vertex.col =</span> net_of_alters <span class="sc">%v%</span> <span class="st">&quot;is.ego&quot;</span>, <span class="at">main =</span> <span class="st">&quot;A&quot;</span>)</span>
+<span id="cb220-4"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb220-4" tabindex="-1"></a><span class="fu">gplot</span>(net_of_egos, <span class="at">vertex.col =</span> net_of_egos <span class="sc">%v%</span> <span class="st">&quot;is.ego&quot;</span>, <span class="at">main =</span> <span class="st">&quot;E&quot;</span>)</span></code></pre></div>
 <p><img src="part-01-05-ergms-constrains_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
-<p>Now, to fit an ERGM with this constraint, we simply need to make use of
-the offset terms. Here is an example:</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" title="1">ans &lt;-<span class="st"> </span><span class="kw">ergm</span>(</a>
-<a class="sourceLine" id="cb213-2" title="2">  net_sim <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(<span class="kw">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>)), <span class="co"># The model (notice the offset)</span></a>
-<a class="sourceLine" id="cb213-3" title="3">  <span class="dt">offset.coef =</span> <span class="op">-</span><span class="ot">Inf</span>                              <span class="co"># The offset coefficient</span></a>
-<a class="sourceLine" id="cb213-4" title="4">  )</a>
-<a class="sourceLine" id="cb213-5" title="5"><span class="co">## Starting maximum pseudolikelihood estimation (MPLE):</span></a>
-<a class="sourceLine" id="cb213-6" title="6"><span class="co">## Evaluating the predictor and response matrix.</span></a>
-<a class="sourceLine" id="cb213-7" title="7"><span class="co">## Maximizing the pseudolikelihood.</span></a>
-<a class="sourceLine" id="cb213-8" title="8"><span class="co">## Finished MPLE.</span></a>
-<a class="sourceLine" id="cb213-9" title="9"><span class="co">## Stopping at the initial estimate.</span></a>
-<a class="sourceLine" id="cb213-10" title="10"><span class="co">## Evaluating log-likelihood at the estimate.</span></a>
-<a class="sourceLine" id="cb213-11" title="11"><span class="kw">summary</span>(ans)</a>
-<a class="sourceLine" id="cb213-12" title="12"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb213-13" title="13"><span class="co">## ergm(formula = net_sim ~ edges + offset(nodematch(&quot;aux_var&quot;)), </span></a>
-<a class="sourceLine" id="cb213-14" title="14"><span class="co">##     offset.coef = -Inf)</span></a>
-<a class="sourceLine" id="cb213-15" title="15"><span class="co">## </span></a>
-<a class="sourceLine" id="cb213-16" title="16"><span class="co">## Maximum Likelihood Results:</span></a>
-<a class="sourceLine" id="cb213-17" title="17"><span class="co">## </span></a>
-<a class="sourceLine" id="cb213-18" title="18"><span class="co">##                           Estimate Std. Error MCMC % z value Pr(&gt;|z|)    </span></a>
-<a class="sourceLine" id="cb213-19" title="19"><span class="co">## edges                       -2.843      0.147      0  -19.34   &lt;1e-04 ***</span></a>
-<a class="sourceLine" id="cb213-20" title="20"><span class="co">## offset(nodematch.aux_var)     -Inf      0.000      0    -Inf   &lt;1e-04 ***</span></a>
-<a class="sourceLine" id="cb213-21" title="21"><span class="co">## ---</span></a>
-<a class="sourceLine" id="cb213-22" title="22"><span class="co">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></a>
-<a class="sourceLine" id="cb213-23" title="23"><span class="co">## </span></a>
-<a class="sourceLine" id="cb213-24" title="24"><span class="co">##      Null Deviance: 1233.8  on 2450  degrees of freedom</span></a>
-<a class="sourceLine" id="cb213-25" title="25"><span class="co">##  Residual Deviance:  379.4  on 2448  degrees of freedom</span></a>
-<a class="sourceLine" id="cb213-26" title="26"><span class="co">##  </span></a>
-<a class="sourceLine" id="cb213-27" title="27"><span class="co">## AIC: 381.4  BIC: 386.2  (Smaller is better. MC Std. Err. = 0)</span></a>
-<a class="sourceLine" id="cb213-28" title="28"><span class="co">## </span></a>
-<a class="sourceLine" id="cb213-29" title="29"><span class="co">##  The following terms are fixed by offset and are not estimated:</span></a>
-<a class="sourceLine" id="cb213-30" title="30"><span class="co">##   offset(nodematch.aux_var)</span></a></code></pre></div>
-<p>This ERGM model–which by the way only featured dyadic-independent terms, and
-thus can be reduced to a logistic regression–restricts the support by excluding
-all networks in which ties within the class <code>A</code> exists. To finalize, let’s look
-at a few simulations based on this model:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1323</span>)</a>
-<a class="sourceLine" id="cb214-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb214-3" title="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</a>
-<a class="sourceLine" id="cb214-4" title="4">  <span class="kw">gplot</span>(<span class="kw">simulate</span>(ans), <span class="dt">vertex.col =</span> net <span class="op">%v%</span><span class="st"> &quot;is.ego&quot;</span>, <span class="dt">vertex.cex =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb214-5" title="5">  <span class="kw">box</span>()</a>
-<a class="sourceLine" id="cb214-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb221-1" tabindex="-1"></a><span class="fu">par</span>(op)</span></code></pre></div>
+<p>Now, to fit an ERGM with this constraint, we simply need to make use of the offset terms. Here is an example:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-1" tabindex="-1"></a>ans <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb222-2"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-2" tabindex="-1"></a>  net_sim <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">nodematch</span>(<span class="st">&quot;aux_var&quot;</span>)), <span class="co"># The model (notice the offset)</span></span>
+<span id="cb222-3"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-3" tabindex="-1"></a>  <span class="at">offset.coef =</span> <span class="sc">-</span><span class="cn">Inf</span>                              <span class="co"># The offset coefficient</span></span>
+<span id="cb222-4"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-4" tabindex="-1"></a>  )</span>
+<span id="cb222-5"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-5" tabindex="-1"></a><span class="do">## Starting maximum pseudolikelihood estimation (MPLE):</span></span>
+<span id="cb222-6"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-6" tabindex="-1"></a><span class="do">## Evaluating the predictor and response matrix.</span></span>
+<span id="cb222-7"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-7" tabindex="-1"></a><span class="do">## Maximizing the pseudolikelihood.</span></span>
+<span id="cb222-8"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-8" tabindex="-1"></a><span class="do">## Finished MPLE.</span></span>
+<span id="cb222-9"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-9" tabindex="-1"></a><span class="do">## Stopping at the initial estimate.</span></span>
+<span id="cb222-10"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-10" tabindex="-1"></a><span class="do">## Evaluating log-likelihood at the estimate.</span></span>
+<span id="cb222-11"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-11" tabindex="-1"></a><span class="fu">summary</span>(ans)</span>
+<span id="cb222-12"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-12" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb222-13"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-13" tabindex="-1"></a><span class="do">## ergm(formula = net_sim ~ edges + offset(nodematch(&quot;aux_var&quot;)), </span></span>
+<span id="cb222-14"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-14" tabindex="-1"></a><span class="do">##     offset.coef = -Inf)</span></span>
+<span id="cb222-15"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-15" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb222-16"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-16" tabindex="-1"></a><span class="do">## Maximum Likelihood Results:</span></span>
+<span id="cb222-17"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-17" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb222-18"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-18" tabindex="-1"></a><span class="do">##                           Estimate Std. Error MCMC % z value Pr(&gt;|z|)    </span></span>
+<span id="cb222-19"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-19" tabindex="-1"></a><span class="do">## edges                       -2.843      0.147      0  -19.34   &lt;1e-04 ***</span></span>
+<span id="cb222-20"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-20" tabindex="-1"></a><span class="do">## offset(nodematch.aux_var)     -Inf      0.000      0    -Inf   &lt;1e-04 ***</span></span>
+<span id="cb222-21"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-21" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb222-22"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-22" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb222-23"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-23" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb222-24"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-24" tabindex="-1"></a><span class="do">##      Null Deviance: 1233.8  on 890  degrees of freedom</span></span>
+<span id="cb222-25"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-25" tabindex="-1"></a><span class="do">##  Residual Deviance:  379.4  on 888  degrees of freedom</span></span>
+<span id="cb222-26"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-26" tabindex="-1"></a><span class="do">##  </span></span>
+<span id="cb222-27"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-27" tabindex="-1"></a><span class="do">## AIC: 381.4  BIC: 386.2  (Smaller is better. MC Std. Err. = 0)</span></span>
+<span id="cb222-28"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-28" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb222-29"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-29" tabindex="-1"></a><span class="do">##  The following terms are fixed by offset and are not estimated:</span></span>
+<span id="cb222-30"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb222-30" tabindex="-1"></a><span class="do">##   offset(nodematch.aux_var)</span></span></code></pre></div>
+<p>This ERGM model–which by the way only featured dyadic-independent terms, and thus can be reduced to a logistic regression–restricts the support by excluding all networks in which ties within the class <code>A</code> exists. To finalize, let’s look at a few simulations based on this model:</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb223-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1323</span>)</span>
+<span id="cb223-2"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb223-2" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb223-3"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb223-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb223-4"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb223-4" tabindex="-1"></a>  <span class="fu">gplot</span>(<span class="fu">simulate</span>(ans), <span class="at">vertex.col =</span> net <span class="sc">%v%</span> <span class="st">&quot;is.ego&quot;</span>, <span class="at">vertex.cex =</span> <span class="dv">2</span>)</span>
+<span id="cb223-5"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb223-5" tabindex="-1"></a>  <span class="fu">box</span>()</span>
+<span id="cb223-6"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb223-6" tabindex="-1"></a>}</span></code></pre></div>
 <p><img src="part-01-05-ergms-constrains_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="example-1-interlocking-egos-and-disconnected-alters.html#cb224-1" tabindex="-1"></a><span class="fu">par</span>(op)</span></code></pre></div>
 <p>All networks with no ties between <code>A</code> nodes.</p>
 </div>
             </section>
@@ -506,7 +531,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

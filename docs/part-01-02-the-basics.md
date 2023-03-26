@@ -2,17 +2,18 @@
 
 ## What is R
 
-A good reference book for both novice and advanced users is ["The Art of R programming"](https://nostarch.com/artofr.htm) [@Matloff2011]^[[Here](http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf) a free pdf version distributed by the author.]
+A good reference book for both novice and advanced users is ["The Art of R programming"](https://nostarch.com/artofr.htm) 
+[@Matloff2011]^[[Here](http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf) a free pdf version distributed by the author.]
 
 ## How to install packages
 
-Nowadays there are two ways of installing R packages (that I'm aware of), either using `install.packages`, which is a function shipped with R, or use the [`devtools`](https://cran.r-project.org/package=devtools) R package to install a package from some remote repository other than CRAN, here are a few examples:
+Nowadays there are two ways of installing R packages (that I'm aware of), either using `install.packages`, which is a function shipped with R, or using the [`devtools`](https://cran.r-project.org/package=devtools) R package to install a package from some remote repository other than CRAN, here are a few examples:
 
 ```r
 # This will install the igraph package from CRAN
 > install.packages("netdiffuseR")
 
-# This will install the bleeding-edge version from the project's github repo!
+# This will install the bleeding-edge version from the project's GitHub repo!
 > devtools::install_github("USCCANA/netdiffuseR")
 ```
 
@@ -24,7 +25,7 @@ In some cases, users may want/need to install packages from the command line as 
 
 To install R just follow the instructions available at http://cran.r-project.org.
 
-RStudio is the most popular Integrated Development Environment (IDE) for R that is developed by the company of the same name. While having RStudio is not a requirement for using netdiffuseR, it is highly recommended.
+RStudio is the most popular Integrated Development Environment (IDE) for R that is developed by [posit.co](https://posit.co). While having RStudio is not a requirement for using netdiffuseR, it is highly recommended.
 
 To get RStudio just visit https://www.rstudio.com/products/rstudio/download/.
 
@@ -384,7 +385,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](part-01-02-the-basics_files/figure-epub3/random-numbers-1.png)<!-- -->
+    <img src="part-01-02-the-basics_files/figure-html/random-numbers-1.png" width="672" />
     
     ```r
     # 100,000 N(0,1) numbers
@@ -392,7 +393,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](part-01-02-the-basics_files/figure-epub3/random-numbers-2.png)<!-- -->
+    <img src="part-01-02-the-basics_files/figure-html/random-numbers-2.png" width="672" />
     
     ```r
     # 100,000 N(10,25) numbers
@@ -400,7 +401,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](part-01-02-the-basics_files/figure-epub3/random-numbers-3.png)<!-- -->
+    <img src="part-01-02-the-basics_files/figure-html/random-numbers-3.png" width="672" />
     
     ```r
     # 100,000 Poisson(5) numbers
@@ -408,7 +409,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](part-01-02-the-basics_files/figure-epub3/random-numbers-4.png)<!-- -->
+    <img src="part-01-02-the-basics_files/figure-html/random-numbers-4.png" width="672" />
     
     ```r
     # 100,000 rexp(5) numbers
@@ -416,7 +417,7 @@ Some common tasks in R
     hist(x)
     ```
     
-    ![](part-01-02-the-basics_files/figure-epub3/random-numbers-5.png)<!-- -->
+    <img src="part-01-02-the-basics_files/figure-html/random-numbers-5.png" width="672" />
     
     More distributions are available at `??Distributions`.
 

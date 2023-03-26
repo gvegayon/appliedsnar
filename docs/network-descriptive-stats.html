@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.3 Network descriptive stats | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.3 Network descriptive stats | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2022-07-19" />
+<meta name="date" content="2023-03-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -64,25 +64,27 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -91,15 +93,15 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -112,7 +114,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -126,6 +128,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -147,31 +171,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i><b>2</b> About the Author</a></li>
 <li class="part"><span><b>I Applications</b></span></li>
 <li class="chapter" data-level="3" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>3</b> Introduction</a></li>
-<li class="chapter" data-level="4" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>4</b> R Basics</a><ul>
+<li class="chapter" data-level="4" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>4</b> R Basics</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>4.1</b> What is R</a></li>
 <li class="chapter" data-level="4.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>4.2</b> How to install packages</a></li>
 <li class="chapter" data-level="4.3" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>4.3</b> Prerequisites</a></li>
 <li class="chapter" data-level="4.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>4.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>5</b> Network Nomination Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>5.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="5" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>5</b> Network Nomination Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>5.1</b> Data preprocessing</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>5.1.1</b> Reading the data into R</a></li>
 <li class="chapter" data-level="5.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>5.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>5.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="5.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>5.2</b> Creating a network</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>5.2.1</b> From survey to edgelist</a></li>
 <li class="chapter" data-level="5.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>5.2.2</b> igraph network</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>5.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="5.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>5.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="5.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>5.4</b> Plotting the network in igraph</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>5.4.1</b> Single plot</a></li>
 <li class="chapter" data-level="5.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>5.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>5.5</b> Statistical tests</a><ul>
+<li class="chapter" data-level="5.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>5.5</b> Statistical tests</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>5.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="6" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> Exponential Random Graph Models</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>6.1</b> A naïve example</a></li>
 <li class="chapter" data-level="6.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>6.2</b> Estimation of ERGMs</a></li>
 <li class="chapter" data-level="6.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>6.3</b> The <code>ergm</code> package</a></li>
@@ -181,43 +212,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>6.7</b> Mathematical Interpretation</a></li>
 <li class="chapter" data-level="6.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>6.8</b> Markov independence</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>7</b> Using constraints in ERGMs</a><ul>
+<li class="chapter" data-level="7" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>7</b> Using constraints in ERGMs</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>7.1</b> Example 1: Interlocking egos and disconnected alters</a></li>
 <li class="chapter" data-level="7.2" data-path="example-2-bi-partite-networks.html"><a href="example-2-bi-partite-networks.html"><i class="fa fa-check"></i><b>7.2</b> Example 2: Bi-partite networks</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>8</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
-<li class="chapter" data-level="9" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>9</b> Simulating and visualizing networks</a><ul>
+<li class="chapter" data-level="9" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>9</b> Simulating and visualizing networks</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="random-graph-models.html"><a href="random-graph-models.html"><i class="fa fa-check"></i><b>9.1</b> Random Graph Models</a></li>
 <li class="chapter" data-level="9.2" data-path="social-networks-in-schools.html"><a href="social-networks-in-schools.html"><i class="fa fa-check"></i><b>9.2</b> Social Networks in Schools</a></li>
 <li class="chapter" data-level="9.3" data-path="reading-a-network.html"><a href="reading-a-network.html"><i class="fa fa-check"></i><b>9.3</b> Reading a network</a></li>
-<li class="chapter" data-level="9.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>9.4</b> Visualizing the network</a><ul>
+<li class="chapter" data-level="9.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>9.4</b> Visualizing the network</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-size"><i class="fa fa-check"></i><b>9.4.1</b> Vertex size</a></li>
 <li class="chapter" data-level="9.4.2" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-color"><i class="fa fa-check"></i><b>9.4.2</b> Vertex color</a></li>
 <li class="chapter" data-level="9.4.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-shape"><i class="fa fa-check"></i><b>9.4.3</b> Vertex shape</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>10</b> Hypothesis testing in networks</a><ul>
-<li class="chapter" data-level="10.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>10.1</b> Comparing networks</a><ul>
+<li class="chapter" data-level="10" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>10</b> Hypothesis testing in networks</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>10.1</b> Comparing networks</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>10.1.1</b> Network bootstrap</a></li>
 <li class="chapter" data-level="10.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>10.1.2</b> When the statistic is normal</a></li>
 <li class="chapter" data-level="10.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>10.1.3</b> When the statistic is NOT normal</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>10.2</b> Examples</a><ul>
+<li class="chapter" data-level="10.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>10.2</b> Examples</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>10.2.1</b> Average of node-level stats</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>11</b> Network diffussion with <code>netdiffuseR</code></a><ul>
-<li class="chapter" data-level="11.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>11.1</b> Network diffusion of innovation</a><ul>
+<li class="chapter" data-level="11" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>11</b> Network diffussion with <code>netdiffuseR</code></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>11.1</b> Network diffusion of innovation</a>
+<ul>
 <li class="chapter" data-level="11.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>11.1.1</b> Diffusion networks</a></li>
 <li class="chapter" data-level="11.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>11.1.2</b> Thresholds</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>11.2</b> The netdiffuseR R package</a><ul>
+<li class="chapter" data-level="11.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>11.2</b> The netdiffuseR R package</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>11.2.1</b> Overview</a></li>
 <li class="chapter" data-level="11.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>11.2.2</b> Datasets</a></li>
 <li class="chapter" data-level="11.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>11.2.3</b> Visualization methods</a></li>
 <li class="chapter" data-level="11.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>11.2.4</b> Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>11.3</b> Simulation of diffusion processes</a><ul>
+<li class="chapter" data-level="11.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>11.3</b> Simulation of diffusion processes</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>11.3.1</b> Simulating diffusion networks</a></li>
 <li class="chapter" data-level="11.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>11.3.2</b> Rumor spreading</a></li>
 <li class="chapter" data-level="11.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>11.3.3</b> Difussion</a></li>
@@ -225,7 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>11.3.5</b> Example by changing threshold</a></li>
 <li class="chapter" data-level="11.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>11.3.6</b> Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>11.4</b> Statistical inference</a><ul>
+<li class="chapter" data-level="11.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>11.4</b> Statistical inference</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>11.4.1</b> Moran’s I</a></li>
 <li class="chapter" data-level="11.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>11.4.2</b> Using geodesics</a></li>
 <li class="chapter" data-level="11.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>11.4.3</b> Structural dependence and permutation tests</a></li>
@@ -235,25 +277,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>12</b> Stochastic Actor Oriented Models</a></li>
-<li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a><ul>
+<li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><i class="fa fa-check"></i><b>13.1</b> Example 1: Spillover effects in egocentric studies</a></li>
 <li class="chapter" data-level="13.2" data-path="example-2-spillover-effects-pre-post-effect.html"><a href="example-2-spillover-effects-pre-post-effect.html"><i class="fa fa-check"></i><b>13.2</b> Example 2: Spillover effects pre-post effect</a></li>
+<li class="chapter" data-level="13.3" data-path="example-3-first-difference.html"><a href="example-3-first-difference.html"><i class="fa fa-check"></i><b>13.3</b> Example 3: First difference</a></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Foundations</b></span></li>
 <li class="chapter" data-level="14" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>14</b> Bayes’ Rule</a></li>
-<li class="chapter" data-level="15" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>15</b> Markov Chain</a><ul>
+<li class="chapter" data-level="15" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>15</b> Markov Chain</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="metropolis-algorithm.html"><a href="metropolis-algorithm.html"><i class="fa fa-check"></i><b>15.1</b> Metropolis Algorithm</a></li>
 <li class="chapter" data-level="15.2" data-path="metropolis-hastings.html"><a href="metropolis-hastings.html"><i class="fa fa-check"></i><b>15.2</b> Metropolis-Hastings</a></li>
 <li class="chapter" data-level="15.3" data-path="likelihood-free-mcmc.html"><a href="likelihood-free-mcmc.html"><i class="fa fa-check"></i><b>15.3</b> Likelihood-free MCMC</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a><ul>
+<li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>16.1</b> Error types</a></li>
 <li class="chapter" data-level="16.2" data-path="example-1-sample-size-for-a-proportion.html"><a href="example-1-sample-size-for-a-proportion.html"><i class="fa fa-check"></i><b>16.2</b> Example 1: Sample size for a proportion</a></li>
 <li class="chapter" data-level="16.3" data-path="example-2-sample-size-for-a-proportion-vis.html"><a href="example-2-sample-size-for-a-proportion-vis.html"><i class="fa fa-check"></i><b>16.3</b> Example 2: Sample size for a proportion (vis)</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
@@ -279,80 +327,80 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="network-descriptive-stats" class="section level2 hasAnchor">
+<div id="network-descriptive-stats" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Network descriptive stats<a href="network-descriptive-stats.html#network-descriptive-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>While we could do all networks at once, in this part, we will focus on computing some network statistics for one of the schools only. We start by school 111. The first question that you should be asking yourself now is, “how can I get that information from the igraph object?.” Vertex and edges attributes can be accessed via the <code>V</code> and <code>E</code> functions, respectively; moreover, we can list what vertex/edge attributes are available:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1"><span class="kw">list.vertex.attributes</span>(ig_year1)</a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="network-descriptive-stats.html#cb94-1" tabindex="-1"></a><span class="fu">list.vertex.attributes</span>(ig_year1)</span></code></pre></div>
 <pre><code>## [1] &quot;name&quot;     &quot;school&quot;   &quot;hispanic&quot; &quot;female1&quot;  &quot;eversmk1&quot; &quot;eversmk2&quot; &quot;eversmk3&quot;
 ## [8] &quot;eversmk4&quot;</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1"><span class="kw">list.edge.attributes</span>(ig_year1) </a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="network-descriptive-stats.html#cb96-1" tabindex="-1"></a><span class="fu">list.edge.attributes</span>(ig_year1) </span></code></pre></div>
 <pre><code>## [1] &quot;nnom&quot;</code></pre>
 <p>Just like we would do with data frames, accessing vertex attributes is done via the dollar sign operator <code>$</code>. Together with the <code>V</code> function; for example, accessing the first ten elements of the variable <code>hispanic</code> can be done as follows:</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1"><span class="kw">V</span>(ig_year1)<span class="op">$</span>hispanic[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="network-descriptive-stats.html#cb98-1" tabindex="-1"></a><span class="fu">V</span>(ig_year1)<span class="sc">$</span>hispanic[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div>
 <pre><code>##  [1] 1 1 0 1 1 1 1 1 0 1</code></pre>
 <p>Now that you know how to access vertex attributes, we can get the network corresponding to school 111 by identifying which vertices are part of it and pass that information to the <code>induced_subgraph</code> function:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1"><span class="co"># Which ids are from school 111?</span></a>
-<a class="sourceLine" id="cb103-2" title="2">school111ids &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">V</span>(ig_year1)<span class="op">$</span>school <span class="op">==</span><span class="st"> </span><span class="dv">111</span>)</a>
-<a class="sourceLine" id="cb103-3" title="3"></a>
-<a class="sourceLine" id="cb103-4" title="4"><span class="co"># Creating a subgraph</span></a>
-<a class="sourceLine" id="cb103-5" title="5">ig_year1_<span class="dv">111</span> &lt;-<span class="st"> </span><span class="kw">induced_subgraph</span>(</a>
-<a class="sourceLine" id="cb103-6" title="6">  <span class="dt">graph =</span> ig_year1,</a>
-<a class="sourceLine" id="cb103-7" title="7">  <span class="dt">vids  =</span> school111ids</a>
-<a class="sourceLine" id="cb103-8" title="8">)</a></code></pre></div>
-<p>The <code>which</code> function in R returns a vector of indices indicating which elements pass the test, returning true and false, otherwise. In our case, it will result in a vector of indices of the vertices which have the attribute <code>school</code> equal to 111. With the subgraph, we can compute different centrality measures<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> for each vertex and store them in the igraph object itself:</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1"><span class="co"># Computing centrality measures for each vertex</span></a>
-<a class="sourceLine" id="cb104-2" title="2"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>indegree   &lt;-<span class="st"> </span><span class="kw">degree</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;in&quot;</span>)</a>
-<a class="sourceLine" id="cb104-3" title="3"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>outdegree  &lt;-<span class="st"> </span><span class="kw">degree</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;out&quot;</span>)</a>
-<a class="sourceLine" id="cb104-4" title="4"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>closeness  &lt;-<span class="st"> </span><span class="kw">closeness</span>(ig_year1_<span class="dv">111</span>, <span class="dt">mode =</span> <span class="st">&quot;total&quot;</span>)</a>
-<a class="sourceLine" id="cb104-5" title="5"><span class="kw">V</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>betweeness &lt;-<span class="st"> </span><span class="kw">betweenness</span>(ig_year1_<span class="dv">111</span>, <span class="dt">normalized =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="network-descriptive-stats.html#cb100-1" tabindex="-1"></a><span class="co"># Which ids are from school 111?</span></span>
+<span id="cb100-2"><a href="network-descriptive-stats.html#cb100-2" tabindex="-1"></a>school111ids <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">V</span>(ig_year1)<span class="sc">$</span>school <span class="sc">==</span> <span class="dv">111</span>)</span>
+<span id="cb100-3"><a href="network-descriptive-stats.html#cb100-3" tabindex="-1"></a></span>
+<span id="cb100-4"><a href="network-descriptive-stats.html#cb100-4" tabindex="-1"></a><span class="co"># Creating a subgraph</span></span>
+<span id="cb100-5"><a href="network-descriptive-stats.html#cb100-5" tabindex="-1"></a>ig_year1_111 <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(</span>
+<span id="cb100-6"><a href="network-descriptive-stats.html#cb100-6" tabindex="-1"></a>  <span class="at">graph =</span> ig_year1,</span>
+<span id="cb100-7"><a href="network-descriptive-stats.html#cb100-7" tabindex="-1"></a>  <span class="at">vids  =</span> school111ids</span>
+<span id="cb100-8"><a href="network-descriptive-stats.html#cb100-8" tabindex="-1"></a>)</span></code></pre></div>
+<p>The <code>which</code> function in R returns a vector of indices indicating which elements pass the test, returning true and false, otherwise. In our case, it will result in a vector of indices of the vertices which have the attribute <code>school</code> equal to 111. With the subgraph, we can compute different centrality measures<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> for each vertex and store them in the igraph object itself:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="network-descriptive-stats.html#cb101-1" tabindex="-1"></a><span class="co"># Computing centrality measures for each vertex</span></span>
+<span id="cb101-2"><a href="network-descriptive-stats.html#cb101-2" tabindex="-1"></a><span class="fu">V</span>(ig_year1_111)<span class="sc">$</span>indegree   <span class="ot">&lt;-</span> <span class="fu">degree</span>(ig_year1_111, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>)</span>
+<span id="cb101-3"><a href="network-descriptive-stats.html#cb101-3" tabindex="-1"></a><span class="fu">V</span>(ig_year1_111)<span class="sc">$</span>outdegree  <span class="ot">&lt;-</span> <span class="fu">degree</span>(ig_year1_111, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>)</span>
+<span id="cb101-4"><a href="network-descriptive-stats.html#cb101-4" tabindex="-1"></a><span class="fu">V</span>(ig_year1_111)<span class="sc">$</span>closeness  <span class="ot">&lt;-</span> <span class="fu">closeness</span>(ig_year1_111, <span class="at">mode =</span> <span class="st">&quot;total&quot;</span>)</span>
+<span id="cb101-5"><a href="network-descriptive-stats.html#cb101-5" tabindex="-1"></a><span class="fu">V</span>(ig_year1_111)<span class="sc">$</span>betweeness <span class="ot">&lt;-</span> <span class="fu">betweenness</span>(ig_year1_111, <span class="at">normalized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>From here, we can <em>go back</em> to our old habits and get the set of vertex attributes as a data frame so we can compute some summary statistics on the centrality measurements that we just got</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" title="1"><span class="co"># Extracting each vectex features as a data.frame</span></a>
-<a class="sourceLine" id="cb105-2" title="2">stats &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(ig_year1_<span class="dv">111</span>, <span class="dt">what =</span> <span class="st">&quot;vertices&quot;</span>)</a>
-<a class="sourceLine" id="cb105-3" title="3"></a>
-<a class="sourceLine" id="cb105-4" title="4"><span class="co"># Computing quantiles for each variable</span></a>
-<a class="sourceLine" id="cb105-5" title="5">stats_degree &lt;-<span class="st"> </span><span class="kw">with</span>(stats, {</a>
-<a class="sourceLine" id="cb105-6" title="6"> <span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb105-7" title="7">   <span class="dt">indegree   =</span> <span class="kw">quantile</span>(indegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb105-8" title="8">   <span class="dt">outdegree  =</span> <span class="kw">quantile</span>(outdegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb105-9" title="9">   <span class="dt">closeness  =</span> <span class="kw">quantile</span>(closeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb105-10" title="10">   <span class="dt">betweeness =</span> <span class="kw">quantile</span>(betweeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb105-11" title="11"> )</a>
-<a class="sourceLine" id="cb105-12" title="12">})</a>
-<a class="sourceLine" id="cb105-13" title="13"></a>
-<a class="sourceLine" id="cb105-14" title="14">stats_degree</a></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="network-descriptive-stats.html#cb102-1" tabindex="-1"></a><span class="co"># Extracting each vectex features as a data.frame</span></span>
+<span id="cb102-2"><a href="network-descriptive-stats.html#cb102-2" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">as_data_frame</span>(ig_year1_111, <span class="at">what =</span> <span class="st">&quot;vertices&quot;</span>)</span>
+<span id="cb102-3"><a href="network-descriptive-stats.html#cb102-3" tabindex="-1"></a></span>
+<span id="cb102-4"><a href="network-descriptive-stats.html#cb102-4" tabindex="-1"></a><span class="co"># Computing quantiles for each variable</span></span>
+<span id="cb102-5"><a href="network-descriptive-stats.html#cb102-5" tabindex="-1"></a>stats_degree <span class="ot">&lt;-</span> <span class="fu">with</span>(stats, {</span>
+<span id="cb102-6"><a href="network-descriptive-stats.html#cb102-6" tabindex="-1"></a> <span class="fu">cbind</span>(</span>
+<span id="cb102-7"><a href="network-descriptive-stats.html#cb102-7" tabindex="-1"></a>   <span class="at">indegree   =</span> <span class="fu">quantile</span>(indegree, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb102-8"><a href="network-descriptive-stats.html#cb102-8" tabindex="-1"></a>   <span class="at">outdegree  =</span> <span class="fu">quantile</span>(outdegree, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb102-9"><a href="network-descriptive-stats.html#cb102-9" tabindex="-1"></a>   <span class="at">closeness  =</span> <span class="fu">quantile</span>(closeness, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb102-10"><a href="network-descriptive-stats.html#cb102-10" tabindex="-1"></a>   <span class="at">betweeness =</span> <span class="fu">quantile</span>(betweeness, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb102-11"><a href="network-descriptive-stats.html#cb102-11" tabindex="-1"></a> )</span>
+<span id="cb102-12"><a href="network-descriptive-stats.html#cb102-12" tabindex="-1"></a>})</span>
+<span id="cb102-13"><a href="network-descriptive-stats.html#cb102-13" tabindex="-1"></a></span>
+<span id="cb102-14"><a href="network-descriptive-stats.html#cb102-14" tabindex="-1"></a>stats_degree</span></code></pre></div>
 <pre><code>##       indegree outdegree    closeness  betweeness
 ## 2.5%         0         0 0.0005915148 0.000000000
 ## 50%          4         4 0.0007487833 0.001879006
 ## 97.5%       16        16 0.0008838413 0.016591048</code></pre>
 <p>The <code>with</code> function is somewhat similar to what <code>dplyr</code> allows us to do when we want to work with the dataset but without mentioning its name everytime that we ask for a variable. Without using the <code>with</code> function, the previous could have been done as follows:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1">stats_degree &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb107-2" title="2"><span class="st"> </span><span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb107-3" title="3">   <span class="dt">indegree   =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>indegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb107-4" title="4">   <span class="dt">outdegree  =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>outdegree, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb107-5" title="5">   <span class="dt">closeness  =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>closeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb107-6" title="6">   <span class="dt">betweeness =</span> <span class="kw">quantile</span>(stats<span class="op">$</span>betweeness, <span class="kw">c</span>(.<span class="dv">025</span>, <span class="fl">.5</span>, <span class="fl">.975</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb107-7" title="7"> )</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="network-descriptive-stats.html#cb104-1" tabindex="-1"></a>stats_degree <span class="ot">&lt;-</span> </span>
+<span id="cb104-2"><a href="network-descriptive-stats.html#cb104-2" tabindex="-1"></a> <span class="fu">cbind</span>(</span>
+<span id="cb104-3"><a href="network-descriptive-stats.html#cb104-3" tabindex="-1"></a>   <span class="at">indegree   =</span> <span class="fu">quantile</span>(stats<span class="sc">$</span>indegree, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb104-4"><a href="network-descriptive-stats.html#cb104-4" tabindex="-1"></a>   <span class="at">outdegree  =</span> <span class="fu">quantile</span>(stats<span class="sc">$</span>outdegree, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb104-5"><a href="network-descriptive-stats.html#cb104-5" tabindex="-1"></a>   <span class="at">closeness  =</span> <span class="fu">quantile</span>(stats<span class="sc">$</span>closeness, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb104-6"><a href="network-descriptive-stats.html#cb104-6" tabindex="-1"></a>   <span class="at">betweeness =</span> <span class="fu">quantile</span>(stats<span class="sc">$</span>betweeness, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb104-7"><a href="network-descriptive-stats.html#cb104-7" tabindex="-1"></a> )</span></code></pre></div>
 <p>Now we will compute some statistics at the graph level:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1"><span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb108-2" title="2">  <span class="dt">size    =</span> <span class="kw">vcount</span>(ig_year1_<span class="dv">111</span>),</a>
-<a class="sourceLine" id="cb108-3" title="3">  <span class="dt">nedges  =</span> <span class="kw">ecount</span>(ig_year1_<span class="dv">111</span>),</a>
-<a class="sourceLine" id="cb108-4" title="4">  <span class="dt">density =</span> <span class="kw">edge_density</span>(ig_year1_<span class="dv">111</span>),</a>
-<a class="sourceLine" id="cb108-5" title="5">  <span class="dt">recip   =</span> <span class="kw">reciprocity</span>(ig_year1_<span class="dv">111</span>),</a>
-<a class="sourceLine" id="cb108-6" title="6">  <span class="dt">centr   =</span> <span class="kw">centr_betw</span>(ig_year1_<span class="dv">111</span>)<span class="op">$</span>centralization,</a>
-<a class="sourceLine" id="cb108-7" title="7">  <span class="dt">pathLen =</span> <span class="kw">mean_distance</span>(ig_year1_<span class="dv">111</span>)</a>
-<a class="sourceLine" id="cb108-8" title="8">  )</a></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="network-descriptive-stats.html#cb105-1" tabindex="-1"></a><span class="fu">cbind</span>(</span>
+<span id="cb105-2"><a href="network-descriptive-stats.html#cb105-2" tabindex="-1"></a>  <span class="at">size    =</span> <span class="fu">vcount</span>(ig_year1_111),</span>
+<span id="cb105-3"><a href="network-descriptive-stats.html#cb105-3" tabindex="-1"></a>  <span class="at">nedges  =</span> <span class="fu">ecount</span>(ig_year1_111),</span>
+<span id="cb105-4"><a href="network-descriptive-stats.html#cb105-4" tabindex="-1"></a>  <span class="at">density =</span> <span class="fu">edge_density</span>(ig_year1_111),</span>
+<span id="cb105-5"><a href="network-descriptive-stats.html#cb105-5" tabindex="-1"></a>  <span class="at">recip   =</span> <span class="fu">reciprocity</span>(ig_year1_111),</span>
+<span id="cb105-6"><a href="network-descriptive-stats.html#cb105-6" tabindex="-1"></a>  <span class="at">centr   =</span> <span class="fu">centr_betw</span>(ig_year1_111)<span class="sc">$</span>centralization,</span>
+<span id="cb105-7"><a href="network-descriptive-stats.html#cb105-7" tabindex="-1"></a>  <span class="at">pathLen =</span> <span class="fu">mean_distance</span>(ig_year1_111)</span>
+<span id="cb105-8"><a href="network-descriptive-stats.html#cb105-8" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>##      size nedges     density     recip      centr pathLen
 ## [1,]  533   2638 0.009303277 0.3731513 0.02179154 4.23678</code></pre>
 <p>Triadic census</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">triadic &lt;-<span class="st"> </span><span class="kw">triad_census</span>(ig_year1_<span class="dv">111</span>)</a>
-<a class="sourceLine" id="cb110-2" title="2">triadic</a></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="network-descriptive-stats.html#cb107-1" tabindex="-1"></a>triadic <span class="ot">&lt;-</span> <span class="fu">triad_census</span>(ig_year1_111)</span>
+<span id="cb107-2"><a href="network-descriptive-stats.html#cb107-2" tabindex="-1"></a>triadic</span></code></pre></div>
 <pre><code>##  [1] 24059676   724389   290849     3619     3383     4401     3219     2997
 ##  [9]      407       33      836      235      163      137      277       85</code></pre>
-<p>To get a nicer view of this, we can use a table that I retrieved from <code>?triad_census</code>. Moreover, we can normalize the <code>triadic</code> object by its sum instead of looking at raw counts. That way, we get proportions instead<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cbind</span>(</a>
-<a class="sourceLine" id="cb112-2" title="2">  <span class="dt">Pcent =</span> triadic<span class="op">/</span><span class="kw">sum</span>(triadic)<span class="op">*</span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb112-3" title="3">  <span class="kw">read.csv</span>(<span class="st">&quot;triadic_census.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb112-4" title="4">  ), <span class="dt">digits =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p>To get a nicer view of this, we can use a table that I retrieved from <code>?triad_census</code>. Moreover, we can normalize the <code>triadic</code> object by its sum instead of looking at raw counts. That way, we get proportions instead<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="network-descriptive-stats.html#cb109-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">cbind</span>(</span>
+<span id="cb109-2"><a href="network-descriptive-stats.html#cb109-2" tabindex="-1"></a>  <span class="at">Pcent =</span> triadic<span class="sc">/</span><span class="fu">sum</span>(triadic)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb109-3"><a href="network-descriptive-stats.html#cb109-3" tabindex="-1"></a>  <span class="fu">read.csv</span>(<span class="st">&quot;triadic_census.csv&quot;</span>)</span>
+<span id="cb109-4"><a href="network-descriptive-stats.html#cb109-4" tabindex="-1"></a>  ), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="7%" />
@@ -452,9 +500,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="footnotes">
 <hr />
-<ol start="4">
-<li id="fn4"><p>For more information about the different centrality measurements, please take a look at the “Centrality” article on <a href="https://en.wikipedia.org/wiki/Centrality">Wikipedia</a>.<a href="network-descriptive-stats.html#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>During our workshop, Prof. De la Haye suggested using <span class="math inline">\({n \choose 3}\)</span> as a normalizing constant. It turns out that <code>sum(triadic) = choose(n, 3)</code>! So either approach is correct.<a href="network-descriptive-stats.html#fnref5" class="footnote-back">↩</a></p></li>
+<ol start="3">
+<li id="fn3"><p>For more information about the different centrality measurements, please take a look at the “Centrality” article on <a href="https://en.wikipedia.org/wiki/Centrality">Wikipedia</a>.<a href="network-descriptive-stats.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>During our workshop, Prof. De la Haye suggested using <span class="math inline">\({n \choose 3}\)</span> as a normalizing constant. It turns out that <code>sum(triadic) = choose(n, 3)</code>! So either approach is correct.<a href="network-descriptive-stats.html#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -523,7 +571,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

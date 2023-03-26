@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11.3 Simulation of diffusion processes | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11.3 Simulation of diffusion processes | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2022-07-19" />
+<meta name="date" content="2023-03-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -64,25 +64,27 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -91,15 +93,15 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -112,7 +114,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -126,6 +128,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -147,31 +171,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i><b>2</b> About the Author</a></li>
 <li class="part"><span><b>I Applications</b></span></li>
 <li class="chapter" data-level="3" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>3</b> Introduction</a></li>
-<li class="chapter" data-level="4" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>4</b> R Basics</a><ul>
+<li class="chapter" data-level="4" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>4</b> R Basics</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>4.1</b> What is R</a></li>
 <li class="chapter" data-level="4.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>4.2</b> How to install packages</a></li>
 <li class="chapter" data-level="4.3" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>4.3</b> Prerequisites</a></li>
 <li class="chapter" data-level="4.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>4.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>5</b> Network Nomination Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>5.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="5" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>5</b> Network Nomination Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>5.1</b> Data preprocessing</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>5.1.1</b> Reading the data into R</a></li>
 <li class="chapter" data-level="5.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>5.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>5.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="5.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>5.2</b> Creating a network</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>5.2.1</b> From survey to edgelist</a></li>
 <li class="chapter" data-level="5.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>5.2.2</b> igraph network</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>5.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="5.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>5.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="5.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>5.4</b> Plotting the network in igraph</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>5.4.1</b> Single plot</a></li>
 <li class="chapter" data-level="5.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>5.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>5.5</b> Statistical tests</a><ul>
+<li class="chapter" data-level="5.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>5.5</b> Statistical tests</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>5.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="6" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> Exponential Random Graph Models</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>6.1</b> A naïve example</a></li>
 <li class="chapter" data-level="6.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>6.2</b> Estimation of ERGMs</a></li>
 <li class="chapter" data-level="6.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>6.3</b> The <code>ergm</code> package</a></li>
@@ -181,43 +212,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>6.7</b> Mathematical Interpretation</a></li>
 <li class="chapter" data-level="6.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>6.8</b> Markov independence</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>7</b> Using constraints in ERGMs</a><ul>
+<li class="chapter" data-level="7" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>7</b> Using constraints in ERGMs</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>7.1</b> Example 1: Interlocking egos and disconnected alters</a></li>
 <li class="chapter" data-level="7.2" data-path="example-2-bi-partite-networks.html"><a href="example-2-bi-partite-networks.html"><i class="fa fa-check"></i><b>7.2</b> Example 2: Bi-partite networks</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>8</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
-<li class="chapter" data-level="9" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>9</b> Simulating and visualizing networks</a><ul>
+<li class="chapter" data-level="9" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>9</b> Simulating and visualizing networks</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="random-graph-models.html"><a href="random-graph-models.html"><i class="fa fa-check"></i><b>9.1</b> Random Graph Models</a></li>
 <li class="chapter" data-level="9.2" data-path="social-networks-in-schools.html"><a href="social-networks-in-schools.html"><i class="fa fa-check"></i><b>9.2</b> Social Networks in Schools</a></li>
 <li class="chapter" data-level="9.3" data-path="reading-a-network.html"><a href="reading-a-network.html"><i class="fa fa-check"></i><b>9.3</b> Reading a network</a></li>
-<li class="chapter" data-level="9.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>9.4</b> Visualizing the network</a><ul>
+<li class="chapter" data-level="9.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>9.4</b> Visualizing the network</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-size"><i class="fa fa-check"></i><b>9.4.1</b> Vertex size</a></li>
 <li class="chapter" data-level="9.4.2" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-color"><i class="fa fa-check"></i><b>9.4.2</b> Vertex color</a></li>
 <li class="chapter" data-level="9.4.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-shape"><i class="fa fa-check"></i><b>9.4.3</b> Vertex shape</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>10</b> Hypothesis testing in networks</a><ul>
-<li class="chapter" data-level="10.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>10.1</b> Comparing networks</a><ul>
+<li class="chapter" data-level="10" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>10</b> Hypothesis testing in networks</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>10.1</b> Comparing networks</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>10.1.1</b> Network bootstrap</a></li>
 <li class="chapter" data-level="10.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>10.1.2</b> When the statistic is normal</a></li>
 <li class="chapter" data-level="10.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>10.1.3</b> When the statistic is NOT normal</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>10.2</b> Examples</a><ul>
+<li class="chapter" data-level="10.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>10.2</b> Examples</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>10.2.1</b> Average of node-level stats</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>11</b> Network diffussion with <code>netdiffuseR</code></a><ul>
-<li class="chapter" data-level="11.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>11.1</b> Network diffusion of innovation</a><ul>
+<li class="chapter" data-level="11" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>11</b> Network diffussion with <code>netdiffuseR</code></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>11.1</b> Network diffusion of innovation</a>
+<ul>
 <li class="chapter" data-level="11.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>11.1.1</b> Diffusion networks</a></li>
 <li class="chapter" data-level="11.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>11.1.2</b> Thresholds</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>11.2</b> The netdiffuseR R package</a><ul>
+<li class="chapter" data-level="11.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>11.2</b> The netdiffuseR R package</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>11.2.1</b> Overview</a></li>
 <li class="chapter" data-level="11.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>11.2.2</b> Datasets</a></li>
 <li class="chapter" data-level="11.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>11.2.3</b> Visualization methods</a></li>
 <li class="chapter" data-level="11.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>11.2.4</b> Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>11.3</b> Simulation of diffusion processes</a><ul>
+<li class="chapter" data-level="11.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>11.3</b> Simulation of diffusion processes</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>11.3.1</b> Simulating diffusion networks</a></li>
 <li class="chapter" data-level="11.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>11.3.2</b> Rumor spreading</a></li>
 <li class="chapter" data-level="11.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>11.3.3</b> Difussion</a></li>
@@ -225,7 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>11.3.5</b> Example by changing threshold</a></li>
 <li class="chapter" data-level="11.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>11.3.6</b> Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>11.4</b> Statistical inference</a><ul>
+<li class="chapter" data-level="11.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>11.4</b> Statistical inference</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>11.4.1</b> Moran’s I</a></li>
 <li class="chapter" data-level="11.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>11.4.2</b> Using geodesics</a></li>
 <li class="chapter" data-level="11.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>11.4.3</b> Structural dependence and permutation tests</a></li>
@@ -235,25 +277,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>12</b> Stochastic Actor Oriented Models</a></li>
-<li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a><ul>
+<li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><i class="fa fa-check"></i><b>13.1</b> Example 1: Spillover effects in egocentric studies</a></li>
 <li class="chapter" data-level="13.2" data-path="example-2-spillover-effects-pre-post-effect.html"><a href="example-2-spillover-effects-pre-post-effect.html"><i class="fa fa-check"></i><b>13.2</b> Example 2: Spillover effects pre-post effect</a></li>
+<li class="chapter" data-level="13.3" data-path="example-3-first-difference.html"><a href="example-3-first-difference.html"><i class="fa fa-check"></i><b>13.3</b> Example 3: First difference</a></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Foundations</b></span></li>
 <li class="chapter" data-level="14" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>14</b> Bayes’ Rule</a></li>
-<li class="chapter" data-level="15" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>15</b> Markov Chain</a><ul>
+<li class="chapter" data-level="15" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>15</b> Markov Chain</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="metropolis-algorithm.html"><a href="metropolis-algorithm.html"><i class="fa fa-check"></i><b>15.1</b> Metropolis Algorithm</a></li>
 <li class="chapter" data-level="15.2" data-path="metropolis-hastings.html"><a href="metropolis-hastings.html"><i class="fa fa-check"></i><b>15.2</b> Metropolis-Hastings</a></li>
 <li class="chapter" data-level="15.3" data-path="likelihood-free-mcmc.html"><a href="likelihood-free-mcmc.html"><i class="fa fa-check"></i><b>15.3</b> Likelihood-free MCMC</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a><ul>
+<li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>16.1</b> Error types</a></li>
 <li class="chapter" data-level="16.2" data-path="example-1-sample-size-for-a-proportion.html"><a href="example-1-sample-size-for-a-proportion.html"><i class="fa fa-check"></i><b>16.2</b> Example 1: Sample size for a proportion</a></li>
 <li class="chapter" data-level="16.3" data-path="example-2-sample-size-for-a-proportion-vis.html"><a href="example-2-sample-size-for-a-proportion-vis.html"><i class="fa fa-check"></i><b>16.3</b> Example 2: Sample size for a proportion (vis)</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
@@ -279,7 +327,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="simulation-of-diffusion-processes" class="section level2 hasAnchor">
+<div id="simulation-of-diffusion-processes" class="section level2 hasAnchor" number="11.3">
 <h2><span class="header-section-number">11.3</span> Simulation of diffusion processes<a href="simulation-of-diffusion-processes.html#simulation-of-diffusion-processes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Before we start, a review of the concepts we will be using here</p>
 <ol style="list-style-type: decimal">
@@ -289,7 +337,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Susceptibility: How much <span class="math inline">\(i\)</span>’s alters’ adoption affects her.</li>
 <li>Structural equivalence: How similar is <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> in terms of position in the network.</li>
 </ol>
-<div id="simulating-diffusion-networks" class="section level3 hasAnchor">
+<div id="simulating-diffusion-networks" class="section level3 hasAnchor" number="11.3.1">
 <h3><span class="header-section-number">11.3.1</span> Simulating diffusion networks<a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will simulate a diffusion network with the following parameters:</p>
 <ol style="list-style-type: decimal">
@@ -302,19 +350,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Threshold levels will be uniformly distributed between [0.3, 0.7]</li>
 </ol>
 <p>To generate this diffusion network, we can use the <code>rdiffnet</code> function included in the package:</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" title="1"><span class="co"># Setting the seed for the RNG</span></a>
-<a class="sourceLine" id="cb278-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1213</span>)</a>
-<a class="sourceLine" id="cb278-3" title="3"></a>
-<a class="sourceLine" id="cb278-4" title="4"><span class="co"># Generating a random diffusion network</span></a>
-<a class="sourceLine" id="cb278-5" title="5">net &lt;-<span class="st"> </span><span class="kw">rdiffnet</span>(</a>
-<a class="sourceLine" id="cb278-6" title="6">  <span class="dt">n              =</span> <span class="fl">1e3</span>,                         <span class="co"># 1.</span></a>
-<a class="sourceLine" id="cb278-7" title="7">  <span class="dt">t              =</span> <span class="dv">20</span>,                          <span class="co"># 2.</span></a>
-<a class="sourceLine" id="cb278-8" title="8">  <span class="dt">seed.nodes     =</span> <span class="st">&quot;random&quot;</span>,                    <span class="co"># 3.</span></a>
-<a class="sourceLine" id="cb278-9" title="9">  <span class="dt">seed.p.adopt   =</span> <span class="fl">.1</span>,                          <span class="co"># 4.</span></a>
-<a class="sourceLine" id="cb278-10" title="10">  <span class="dt">seed.graph     =</span> <span class="st">&quot;small-world&quot;</span>,               <span class="co"># 5.</span></a>
-<a class="sourceLine" id="cb278-11" title="11">  <span class="dt">rgraph.args    =</span> <span class="kw">list</span>(<span class="dt">p=</span>.<span class="dv">2</span>),                  <span class="co"># 6.</span></a>
-<a class="sourceLine" id="cb278-12" title="12">  <span class="dt">threshold.dist =</span> <span class="cf">function</span>(x) <span class="kw">runif</span>(<span class="dv">1</span>, <span class="fl">.3</span>, <span class="fl">.7</span>) <span class="co"># 7.</span></a>
-<a class="sourceLine" id="cb278-13" title="13">  )</a></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="simulation-of-diffusion-processes.html#cb287-1" tabindex="-1"></a><span class="co"># Setting the seed for the RNG</span></span>
+<span id="cb287-2"><a href="simulation-of-diffusion-processes.html#cb287-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1213</span>)</span>
+<span id="cb287-3"><a href="simulation-of-diffusion-processes.html#cb287-3" tabindex="-1"></a></span>
+<span id="cb287-4"><a href="simulation-of-diffusion-processes.html#cb287-4" tabindex="-1"></a><span class="co"># Generating a random diffusion network</span></span>
+<span id="cb287-5"><a href="simulation-of-diffusion-processes.html#cb287-5" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(</span>
+<span id="cb287-6"><a href="simulation-of-diffusion-processes.html#cb287-6" tabindex="-1"></a>  <span class="at">n              =</span> <span class="fl">1e3</span>,                         <span class="co"># 1.</span></span>
+<span id="cb287-7"><a href="simulation-of-diffusion-processes.html#cb287-7" tabindex="-1"></a>  <span class="at">t              =</span> <span class="dv">20</span>,                          <span class="co"># 2.</span></span>
+<span id="cb287-8"><a href="simulation-of-diffusion-processes.html#cb287-8" tabindex="-1"></a>  <span class="at">seed.nodes     =</span> <span class="st">&quot;random&quot;</span>,                    <span class="co"># 3.</span></span>
+<span id="cb287-9"><a href="simulation-of-diffusion-processes.html#cb287-9" tabindex="-1"></a>  <span class="at">seed.p.adopt   =</span> .<span class="dv">1</span>,                          <span class="co"># 4.</span></span>
+<span id="cb287-10"><a href="simulation-of-diffusion-processes.html#cb287-10" tabindex="-1"></a>  <span class="at">seed.graph     =</span> <span class="st">&quot;small-world&quot;</span>,               <span class="co"># 5.</span></span>
+<span id="cb287-11"><a href="simulation-of-diffusion-processes.html#cb287-11" tabindex="-1"></a>  <span class="at">rgraph.args    =</span> <span class="fu">list</span>(<span class="at">p=</span>.<span class="dv">2</span>),                  <span class="co"># 6.</span></span>
+<span id="cb287-12"><a href="simulation-of-diffusion-processes.html#cb287-12" tabindex="-1"></a>  <span class="at">threshold.dist =</span> <span class="cf">function</span>(x) <span class="fu">runif</span>(<span class="dv">1</span>, .<span class="dv">3</span>, .<span class="dv">7</span>) <span class="co"># 7.</span></span>
+<span id="cb287-13"><a href="simulation-of-diffusion-processes.html#cb287-13" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## Warning in (function (graph, p, algorithm = &quot;endpoints&quot;, both.ends = FALSE, :
+## The option -copy.first- is set to TRUE. In this case, the first graph will be
+## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.</code></pre>
 <ul>
 <li><p>The function <code>rdiffnet</code> generates random diffusion networks. Main features:</p>
 <ol style="list-style-type: decimal">
@@ -337,23 +388,26 @@ adopts, otherwise, continue without change.</p></li>
 </ol></li>
 </ul>
 </div>
-<div id="rumor-spreading" class="section level3 hasAnchor">
+<div id="rumor-spreading" class="section level3 hasAnchor" number="11.3.2">
 <h3><span class="header-section-number">11.3.2</span> Rumor spreading<a href="simulation-of-diffusion-processes.html#rumor-spreading" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" title="1"><span class="kw">library</span>(netdiffuseR)</a>
-<a class="sourceLine" id="cb279-2" title="2"></a>
-<a class="sourceLine" id="cb279-3" title="3"><span class="kw">set.seed</span>(<span class="dv">09</span>)</a>
-<a class="sourceLine" id="cb279-4" title="4">diffnet_rumor &lt;-<span class="st"> </span><span class="kw">rdiffnet</span>(</a>
-<a class="sourceLine" id="cb279-5" title="5">  <span class="dt">n =</span> <span class="fl">5e2</span>,</a>
-<a class="sourceLine" id="cb279-6" title="6">  <span class="dt">t =</span> <span class="dv">5</span>, </a>
-<a class="sourceLine" id="cb279-7" title="7">  <span class="dt">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>,</a>
-<a class="sourceLine" id="cb279-8" title="8">  <span class="dt">rgraph.args =</span> <span class="kw">list</span>(<span class="dt">k =</span> <span class="dv">4</span>, <span class="dt">p =</span> <span class="fl">.3</span>),</a>
-<a class="sourceLine" id="cb279-9" title="9">  <span class="dt">seed.nodes =</span> <span class="st">&quot;random&quot;</span>,</a>
-<a class="sourceLine" id="cb279-10" title="10">  <span class="dt">seed.p.adopt =</span> <span class="fl">.05</span>,</a>
-<a class="sourceLine" id="cb279-11" title="11">  <span class="dt">rewire =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb279-12" title="12">  <span class="dt">threshold.dist =</span> <span class="cf">function</span>(i) 1L,</a>
-<a class="sourceLine" id="cb279-13" title="13">  <span class="dt">exposure.args =</span> <span class="kw">list</span>(<span class="dt">normalized =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb279-14" title="14">  )</a></code></pre></div>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb280-1" title="1"><span class="kw">summary</span>(diffnet_rumor)</a></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="simulation-of-diffusion-processes.html#cb289-1" tabindex="-1"></a><span class="fu">library</span>(netdiffuseR)</span>
+<span id="cb289-2"><a href="simulation-of-diffusion-processes.html#cb289-2" tabindex="-1"></a></span>
+<span id="cb289-3"><a href="simulation-of-diffusion-processes.html#cb289-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">09</span>)</span>
+<span id="cb289-4"><a href="simulation-of-diffusion-processes.html#cb289-4" tabindex="-1"></a>diffnet_rumor <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(</span>
+<span id="cb289-5"><a href="simulation-of-diffusion-processes.html#cb289-5" tabindex="-1"></a>  <span class="at">n =</span> <span class="fl">5e2</span>,</span>
+<span id="cb289-6"><a href="simulation-of-diffusion-processes.html#cb289-6" tabindex="-1"></a>  <span class="at">t =</span> <span class="dv">5</span>, </span>
+<span id="cb289-7"><a href="simulation-of-diffusion-processes.html#cb289-7" tabindex="-1"></a>  <span class="at">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>,</span>
+<span id="cb289-8"><a href="simulation-of-diffusion-processes.html#cb289-8" tabindex="-1"></a>  <span class="at">rgraph.args =</span> <span class="fu">list</span>(<span class="at">k =</span> <span class="dv">4</span>, <span class="at">p =</span> .<span class="dv">3</span>),</span>
+<span id="cb289-9"><a href="simulation-of-diffusion-processes.html#cb289-9" tabindex="-1"></a>  <span class="at">seed.nodes =</span> <span class="st">&quot;random&quot;</span>,</span>
+<span id="cb289-10"><a href="simulation-of-diffusion-processes.html#cb289-10" tabindex="-1"></a>  <span class="at">seed.p.adopt =</span> .<span class="dv">05</span>,</span>
+<span id="cb289-11"><a href="simulation-of-diffusion-processes.html#cb289-11" tabindex="-1"></a>  <span class="at">rewire =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb289-12"><a href="simulation-of-diffusion-processes.html#cb289-12" tabindex="-1"></a>  <span class="at">threshold.dist =</span> <span class="cf">function</span>(i) 1L,</span>
+<span id="cb289-13"><a href="simulation-of-diffusion-processes.html#cb289-13" tabindex="-1"></a>  <span class="at">exposure.args =</span> <span class="fu">list</span>(<span class="at">normalized =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb289-14"><a href="simulation-of-diffusion-processes.html#cb289-14" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## Warning in (function (graph, p, algorithm = &quot;endpoints&quot;, both.ends = FALSE, :
+## The option -copy.first- is set to TRUE. In this case, the first graph will be
+## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.</code></pre>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="simulation-of-diffusion-processes.html#cb291-1" tabindex="-1"></a><span class="fu">summary</span>(diffnet_rumor)</span></code></pre></div>
 <pre><code>## Diffusion network summary statistics
 ## Name     : A diffusion network
 ## Behavior : Random contagion
@@ -372,48 +426,48 @@ adopts, otherwise, continue without change.</p></li>
 ## 
 ##  Moran&#39;s I was computed on contemporaneous autocorrelation using 1/geodesic
 ##  values. Significane levels  *** &lt;= .01, ** &lt;= .05, * &lt;= .1.</code></pre>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb282-1" title="1"><span class="kw">plot_diffnet</span>(diffnet_rumor, <span class="dt">slices =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="simulation-of-diffusion-processes.html#cb293-1" tabindex="-1"></a><span class="fu">plot_diffnet</span>(diffnet_rumor, <span class="at">slices =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>))</span></code></pre></div>
 <p><img src="part-01-08-netdiffuser_files/figure-html/plot-rumor-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" title="1"><span class="co"># We want to use igraph to compute layout</span></a>
-<a class="sourceLine" id="cb283-2" title="2">igdf &lt;-<span class="st"> </span><span class="kw">diffnet_to_igraph</span>(diffnet_rumor, <span class="dt">slices=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb283-3" title="3">pos &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">layout_with_drl</span>(igdf)</a>
-<a class="sourceLine" id="cb283-4" title="4"></a>
-<a class="sourceLine" id="cb283-5" title="5"><span class="kw">plot_diffnet2</span>(diffnet_rumor, <span class="dt">vertex.size =</span> <span class="kw">dgr</span>(diffnet_rumor)[,<span class="dv">1</span>], <span class="dt">layout=</span>pos)</a></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="simulation-of-diffusion-processes.html#cb294-1" tabindex="-1"></a><span class="co"># We want to use igraph to compute layout</span></span>
+<span id="cb294-2"><a href="simulation-of-diffusion-processes.html#cb294-2" tabindex="-1"></a>igdf <span class="ot">&lt;-</span> <span class="fu">diffnet_to_igraph</span>(diffnet_rumor, <span class="at">slices=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))[[<span class="dv">1</span>]]</span>
+<span id="cb294-3"><a href="simulation-of-diffusion-processes.html#cb294-3" tabindex="-1"></a>pos <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">layout_with_drl</span>(igdf)</span>
+<span id="cb294-4"><a href="simulation-of-diffusion-processes.html#cb294-4" tabindex="-1"></a></span>
+<span id="cb294-5"><a href="simulation-of-diffusion-processes.html#cb294-5" tabindex="-1"></a><span class="fu">plot_diffnet2</span>(diffnet_rumor, <span class="at">vertex.size =</span> <span class="fu">dgr</span>(diffnet_rumor)[,<span class="dv">1</span>], <span class="at">layout=</span>pos)</span></code></pre></div>
 <p><img src="part-01-08-netdiffuser_files/figure-html/plot-rumor-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="difussion" class="section level3 hasAnchor">
+<div id="difussion" class="section level3 hasAnchor" number="11.3.3">
 <h3><span class="header-section-number">11.3.3</span> Difussion<a href="simulation-of-diffusion-processes.html#difussion" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" title="1"><span class="kw">set.seed</span>(<span class="dv">09</span>)</a>
-<a class="sourceLine" id="cb284-2" title="2">diffnet_complex &lt;-<span class="st"> </span><span class="kw">rdiffnet</span>(</a>
-<a class="sourceLine" id="cb284-3" title="3">  <span class="dt">seed.graph =</span> diffnet_rumor<span class="op">$</span>graph,</a>
-<a class="sourceLine" id="cb284-4" title="4">  <span class="dt">seed.nodes =</span> <span class="kw">which</span>(diffnet_rumor<span class="op">$</span>toa <span class="op">==</span><span class="st"> </span><span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb284-5" title="5">  <span class="dt">rewire =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb284-6" title="6">  <span class="dt">threshold.dist =</span> <span class="cf">function</span>(i) <span class="kw">rbeta</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">10</span>),</a>
-<a class="sourceLine" id="cb284-7" title="7">  <span class="dt">name =</span> <span class="st">&quot;Diffusion&quot;</span>,</a>
-<a class="sourceLine" id="cb284-8" title="8">  <span class="dt">behavior =</span> <span class="st">&quot;Some social behavior&quot;</span></a>
-<a class="sourceLine" id="cb284-9" title="9">)</a></code></pre></div>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" title="1"><span class="kw">plot_adopters</span>(diffnet_rumor, <span class="dt">what =</span> <span class="st">&quot;cumadopt&quot;</span>, <span class="dt">include.legend =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb285-2" title="2"><span class="kw">plot_adopters</span>(diffnet_complex, <span class="dt">bg=</span><span class="st">&quot;tomato&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">what =</span> <span class="st">&quot;cumadopt&quot;</span>)</a>
-<a class="sourceLine" id="cb285-3" title="3"><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Disease&quot;</span>, <span class="st">&quot;Complex&quot;</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;tomato&quot;</span>),</a>
-<a class="sourceLine" id="cb285-4" title="4">       <span class="dt">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="simulation-of-diffusion-processes.html#cb295-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">09</span>)</span>
+<span id="cb295-2"><a href="simulation-of-diffusion-processes.html#cb295-2" tabindex="-1"></a>diffnet_complex <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(</span>
+<span id="cb295-3"><a href="simulation-of-diffusion-processes.html#cb295-3" tabindex="-1"></a>  <span class="at">seed.graph =</span> diffnet_rumor<span class="sc">$</span>graph,</span>
+<span id="cb295-4"><a href="simulation-of-diffusion-processes.html#cb295-4" tabindex="-1"></a>  <span class="at">seed.nodes =</span> <span class="fu">which</span>(diffnet_rumor<span class="sc">$</span>toa <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb295-5"><a href="simulation-of-diffusion-processes.html#cb295-5" tabindex="-1"></a>  <span class="at">rewire =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb295-6"><a href="simulation-of-diffusion-processes.html#cb295-6" tabindex="-1"></a>  <span class="at">threshold.dist =</span> <span class="cf">function</span>(i) <span class="fu">rbeta</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">10</span>),</span>
+<span id="cb295-7"><a href="simulation-of-diffusion-processes.html#cb295-7" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">&quot;Diffusion&quot;</span>,</span>
+<span id="cb295-8"><a href="simulation-of-diffusion-processes.html#cb295-8" tabindex="-1"></a>  <span class="at">behavior =</span> <span class="st">&quot;Some social behavior&quot;</span></span>
+<span id="cb295-9"><a href="simulation-of-diffusion-processes.html#cb295-9" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="simulation-of-diffusion-processes.html#cb296-1" tabindex="-1"></a><span class="fu">plot_adopters</span>(diffnet_rumor, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>, <span class="at">include.legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb296-2"><a href="simulation-of-diffusion-processes.html#cb296-2" tabindex="-1"></a><span class="fu">plot_adopters</span>(diffnet_complex, <span class="at">bg=</span><span class="st">&quot;tomato&quot;</span>, <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>)</span>
+<span id="cb296-3"><a href="simulation-of-diffusion-processes.html#cb296-3" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Disease&quot;</span>, <span class="st">&quot;Complex&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;tomato&quot;</span>),</span>
+<span id="cb296-4"><a href="simulation-of-diffusion-processes.html#cb296-4" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>)</span></code></pre></div>
 <p><img src="part-01-08-netdiffuser_files/figure-html/plot-complex-and-disease-1.png" width="672" /></p>
 </div>
-<div id="mentor-matching" class="section level3 hasAnchor">
+<div id="mentor-matching" class="section level3 hasAnchor" number="11.3.4">
 <h3><span class="header-section-number">11.3.4</span> Mentor Matching<a href="simulation-of-diffusion-processes.html#mentor-matching" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" title="1"><span class="co"># Finding mentors</span></a>
-<a class="sourceLine" id="cb286-2" title="2">mentors &lt;-<span class="st"> </span><span class="kw">mentor_matching</span>(diffnet_rumor, <span class="dv">25</span>, <span class="dt">lead.ties.method =</span> <span class="st">&quot;random&quot;</span>)</a>
-<a class="sourceLine" id="cb286-3" title="3"></a>
-<a class="sourceLine" id="cb286-4" title="4"><span class="co"># Simulating diffusion with these mentors</span></a>
-<a class="sourceLine" id="cb286-5" title="5"><span class="kw">set.seed</span>(<span class="dv">09</span>)</a>
-<a class="sourceLine" id="cb286-6" title="6">diffnet_mentored &lt;-<span class="st"> </span><span class="kw">rdiffnet</span>(</a>
-<a class="sourceLine" id="cb286-7" title="7">  <span class="dt">seed.graph =</span> diffnet_complex,</a>
-<a class="sourceLine" id="cb286-8" title="8">  <span class="dt">seed.nodes =</span> <span class="kw">which</span>(mentors<span class="op">$</span><span class="st">`</span><span class="dt">1</span><span class="st">`</span><span class="op">$</span>isleader),</a>
-<a class="sourceLine" id="cb286-9" title="9">  <span class="dt">rewire =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb286-10" title="10">  <span class="dt">threshold.dist =</span> diffnet_complex[[<span class="st">&quot;real_threshold&quot;</span>]],</a>
-<a class="sourceLine" id="cb286-11" title="11">  <span class="dt">name =</span> <span class="st">&quot;Diffusion using Mentors&quot;</span></a>
-<a class="sourceLine" id="cb286-12" title="12">)</a>
-<a class="sourceLine" id="cb286-13" title="13"></a>
-<a class="sourceLine" id="cb286-14" title="14"><span class="kw">summary</span>(diffnet_mentored)</a></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="simulation-of-diffusion-processes.html#cb297-1" tabindex="-1"></a><span class="co"># Finding mentors</span></span>
+<span id="cb297-2"><a href="simulation-of-diffusion-processes.html#cb297-2" tabindex="-1"></a>mentors <span class="ot">&lt;-</span> <span class="fu">mentor_matching</span>(diffnet_rumor, <span class="dv">25</span>, <span class="at">lead.ties.method =</span> <span class="st">&quot;random&quot;</span>)</span>
+<span id="cb297-3"><a href="simulation-of-diffusion-processes.html#cb297-3" tabindex="-1"></a></span>
+<span id="cb297-4"><a href="simulation-of-diffusion-processes.html#cb297-4" tabindex="-1"></a><span class="co"># Simulating diffusion with these mentors</span></span>
+<span id="cb297-5"><a href="simulation-of-diffusion-processes.html#cb297-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">09</span>)</span>
+<span id="cb297-6"><a href="simulation-of-diffusion-processes.html#cb297-6" tabindex="-1"></a>diffnet_mentored <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(</span>
+<span id="cb297-7"><a href="simulation-of-diffusion-processes.html#cb297-7" tabindex="-1"></a>  <span class="at">seed.graph =</span> diffnet_complex,</span>
+<span id="cb297-8"><a href="simulation-of-diffusion-processes.html#cb297-8" tabindex="-1"></a>  <span class="at">seed.nodes =</span> <span class="fu">which</span>(mentors<span class="sc">$</span><span class="st">`</span><span class="at">1</span><span class="st">`</span><span class="sc">$</span>isleader),</span>
+<span id="cb297-9"><a href="simulation-of-diffusion-processes.html#cb297-9" tabindex="-1"></a>  <span class="at">rewire =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb297-10"><a href="simulation-of-diffusion-processes.html#cb297-10" tabindex="-1"></a>  <span class="at">threshold.dist =</span> diffnet_complex[[<span class="st">&quot;real_threshold&quot;</span>]],</span>
+<span id="cb297-11"><a href="simulation-of-diffusion-processes.html#cb297-11" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">&quot;Diffusion using Mentors&quot;</span></span>
+<span id="cb297-12"><a href="simulation-of-diffusion-processes.html#cb297-12" tabindex="-1"></a>)</span>
+<span id="cb297-13"><a href="simulation-of-diffusion-processes.html#cb297-13" tabindex="-1"></a></span>
+<span id="cb297-14"><a href="simulation-of-diffusion-processes.html#cb297-14" tabindex="-1"></a><span class="fu">summary</span>(diffnet_mentored)</span></code></pre></div>
 <pre><code>## Diffusion network summary statistics
 ## Name     : Diffusion using Mentors
 ## Behavior : Random contagion
@@ -432,132 +486,132 @@ adopts, otherwise, continue without change.</p></li>
 ## 
 ##  Moran&#39;s I was computed on contemporaneous autocorrelation using 1/geodesic
 ##  values. Significane levels  *** &lt;= .01, ** &lt;= .05, * &lt;= .1.</code></pre>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb288-1" title="1"><span class="kw">cumulative_adopt_count</span>(diffnet_complex)</a></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="simulation-of-diffusion-processes.html#cb299-1" tabindex="-1"></a><span class="fu">cumulative_adopt_count</span>(diffnet_complex)</span></code></pre></div>
 <pre><code>##          1     2        3           4           5
 ## num  25.00 80.00 183.0000 338.0000000 470.0000000
 ## prop  0.05  0.16   0.3660   0.6760000   0.9400000
 ## rate  0.00  2.20   1.2875   0.8469945   0.3905325</code></pre>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb290-1" title="1"><span class="kw">cumulative_adopt_count</span>(diffnet_mentored)</a></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="simulation-of-diffusion-processes.html#cb301-1" tabindex="-1"></a><span class="fu">cumulative_adopt_count</span>(diffnet_mentored)</span></code></pre></div>
 <pre><code>##          1       2          3           4           5
 ## num  25.00 117.000 269.000000 419.0000000 492.0000000
 ## prop  0.05   0.234   0.538000   0.8380000   0.9840000
 ## rate  0.00   3.680   1.299145   0.5576208   0.1742243</code></pre>
 </div>
-<div id="example-by-changing-threshold" class="section level3 hasAnchor">
+<div id="example-by-changing-threshold" class="section level3 hasAnchor" number="11.3.5">
 <h3><span class="header-section-number">11.3.5</span> Example by changing threshold<a href="simulation-of-diffusion-processes.html#example-by-changing-threshold" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb292-1" title="1"></a>
-<a class="sourceLine" id="cb292-2" title="2"><span class="co"># Simulating a scale-free homophilic network</span></a>
-<a class="sourceLine" id="cb292-3" title="3"><span class="kw">set.seed</span>(<span class="dv">1231</span>)</a>
-<a class="sourceLine" id="cb292-4" title="4">X &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb292-5" title="5">net &lt;-<span class="st"> </span><span class="kw">rgraph_ba</span>(<span class="dt">t =</span> <span class="dv">499</span>, <span class="dt">m=</span><span class="dv">4</span>, <span class="dt">eta =</span> X)</a>
-<a class="sourceLine" id="cb292-6" title="6"></a>
-<a class="sourceLine" id="cb292-7" title="7"><span class="co"># Taking a look in igraph</span></a>
-<a class="sourceLine" id="cb292-8" title="8">ig  &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_adjacency_matrix</span>(net)</a>
-<a class="sourceLine" id="cb292-9" title="9"><span class="kw">plot</span>(ig, <span class="dt">vertex.color =</span> <span class="kw">c</span>(<span class="st">&quot;azure&quot;</span>, <span class="st">&quot;tomato&quot;</span>)[X<span class="op">+</span><span class="dv">1</span>], <span class="dt">vertex.label =</span> <span class="ot">NA</span>,</a>
-<a class="sourceLine" id="cb292-10" title="10">     <span class="dt">vertex.size =</span> <span class="kw">sqrt</span>(<span class="kw">dgr</span>(net)))</a></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="simulation-of-diffusion-processes.html#cb303-1" tabindex="-1"></a></span>
+<span id="cb303-2"><a href="simulation-of-diffusion-processes.html#cb303-2" tabindex="-1"></a><span class="co"># Simulating a scale-free homophilic network</span></span>
+<span id="cb303-3"><a href="simulation-of-diffusion-processes.html#cb303-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1231</span>)</span>
+<span id="cb303-4"><a href="simulation-of-diffusion-processes.html#cb303-4" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="dv">50</span>)</span>
+<span id="cb303-5"><a href="simulation-of-diffusion-processes.html#cb303-5" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">rgraph_ba</span>(<span class="at">t =</span> <span class="dv">499</span>, <span class="at">m=</span><span class="dv">4</span>, <span class="at">eta =</span> X)</span>
+<span id="cb303-6"><a href="simulation-of-diffusion-processes.html#cb303-6" tabindex="-1"></a></span>
+<span id="cb303-7"><a href="simulation-of-diffusion-processes.html#cb303-7" tabindex="-1"></a><span class="co"># Taking a look in igraph</span></span>
+<span id="cb303-8"><a href="simulation-of-diffusion-processes.html#cb303-8" tabindex="-1"></a>ig  <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(net)</span>
+<span id="cb303-9"><a href="simulation-of-diffusion-processes.html#cb303-9" tabindex="-1"></a><span class="fu">plot</span>(ig, <span class="at">vertex.color =</span> <span class="fu">c</span>(<span class="st">&quot;azure&quot;</span>, <span class="st">&quot;tomato&quot;</span>)[X<span class="sc">+</span><span class="dv">1</span>], <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb303-10"><a href="simulation-of-diffusion-processes.html#cb303-10" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="fu">sqrt</span>(<span class="fu">dgr</span>(net)))</span></code></pre></div>
 <p><img src="part-01-08-netdiffuser_files/figure-html/sim-sim-1.png" width="672" /></p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb293-1" title="1"></a>
-<a class="sourceLine" id="cb293-2" title="2"><span class="co"># Now, simulating a bunch of diffusion processes</span></a>
-<a class="sourceLine" id="cb293-3" title="3">nsim &lt;-<span class="st"> </span>500L</a>
-<a class="sourceLine" id="cb293-4" title="4">ans_1and2 &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, nsim)</a>
-<a class="sourceLine" id="cb293-5" title="5"><span class="kw">set.seed</span>(<span class="dv">223</span>)</a>
-<a class="sourceLine" id="cb293-6" title="6"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</a>
-<a class="sourceLine" id="cb293-7" title="7">  <span class="co"># We just want the cum adopt count</span></a>
-<a class="sourceLine" id="cb293-8" title="8">  ans_1and2[[i]] &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb293-9" title="9"><span class="st">    </span><span class="kw">cumulative_adopt_count</span>(</a>
-<a class="sourceLine" id="cb293-10" title="10">      <span class="kw">rdiffnet</span>(</a>
-<a class="sourceLine" id="cb293-11" title="11">        <span class="dt">seed.graph =</span> net,</a>
-<a class="sourceLine" id="cb293-12" title="12">        <span class="dt">t =</span> <span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb293-13" title="13">        <span class="dt">threshold.dist =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, 500L, <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb293-14" title="14">        <span class="dt">seed.nodes =</span> <span class="st">&quot;random&quot;</span>,</a>
-<a class="sourceLine" id="cb293-15" title="15">        <span class="dt">seed.p.adopt =</span> <span class="fl">.10</span>,</a>
-<a class="sourceLine" id="cb293-16" title="16">        <span class="dt">exposure.args =</span> <span class="kw">list</span>(<span class="dt">outgoing =</span> <span class="ot">FALSE</span>, <span class="dt">normalized =</span> <span class="ot">FALSE</span>),</a>
-<a class="sourceLine" id="cb293-17" title="17">        <span class="dt">rewire =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb293-18" title="18">        )</a>
-<a class="sourceLine" id="cb293-19" title="19">      )</a>
-<a class="sourceLine" id="cb293-20" title="20">  </a>
-<a class="sourceLine" id="cb293-21" title="21">  <span class="co"># Are we there yet?</span></a>
-<a class="sourceLine" id="cb293-22" title="22">  <span class="cf">if</span> (<span class="op">!</span>(i <span class="op">%%</span><span class="st"> </span><span class="dv">50</span>))</a>
-<a class="sourceLine" id="cb293-23" title="23">    <span class="kw">message</span>(<span class="st">&quot;Simulation &quot;</span>, i,<span class="st">&quot; of &quot;</span>, nsim, <span class="st">&quot; done.&quot;</span>)</a>
-<a class="sourceLine" id="cb293-24" title="24">}</a>
-<a class="sourceLine" id="cb293-25" title="25"><span class="co">## Simulation 50 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-26" title="26"><span class="co">## Simulation 100 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-27" title="27"><span class="co">## Simulation 150 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-28" title="28"><span class="co">## Simulation 200 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-29" title="29"><span class="co">## Simulation 250 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-30" title="30"><span class="co">## Simulation 300 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-31" title="31"><span class="co">## Simulation 350 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-32" title="32"><span class="co">## Simulation 400 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-33" title="33"><span class="co">## Simulation 450 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-34" title="34"><span class="co">## Simulation 500 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-35" title="35"></a>
-<a class="sourceLine" id="cb293-36" title="36"><span class="co"># Extracting prop</span></a>
-<a class="sourceLine" id="cb293-37" title="37">ans_1and2 &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, <span class="kw">lapply</span>(ans_1and2, <span class="st">&quot;[&quot;</span>, <span class="dt">i=</span><span class="st">&quot;prop&quot;</span>, <span class="dt">j=</span>))</a>
-<a class="sourceLine" id="cb293-38" title="38"></a>
-<a class="sourceLine" id="cb293-39" title="39">ans_2and3 &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, nsim)</a>
-<a class="sourceLine" id="cb293-40" title="40"><span class="kw">set.seed</span>(<span class="dv">223</span>)</a>
-<a class="sourceLine" id="cb293-41" title="41"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</a>
-<a class="sourceLine" id="cb293-42" title="42">  <span class="co"># We just want the cum adopt count</span></a>
-<a class="sourceLine" id="cb293-43" title="43">  ans_2and3[[i]] &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb293-44" title="44"><span class="st">    </span><span class="kw">cumulative_adopt_count</span>(</a>
-<a class="sourceLine" id="cb293-45" title="45">      <span class="kw">rdiffnet</span>(</a>
-<a class="sourceLine" id="cb293-46" title="46">        <span class="dt">seed.graph =</span> net,</a>
-<a class="sourceLine" id="cb293-47" title="47">        <span class="dt">t =</span> <span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb293-48" title="48">        <span class="dt">threshold.dist =</span> <span class="kw">sample</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, 500L, <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb293-49" title="49">        <span class="dt">seed.nodes =</span> <span class="st">&quot;random&quot;</span>,</a>
-<a class="sourceLine" id="cb293-50" title="50">        <span class="dt">seed.p.adopt =</span> <span class="fl">.10</span>,</a>
-<a class="sourceLine" id="cb293-51" title="51">        <span class="dt">exposure.args =</span> <span class="kw">list</span>(<span class="dt">outgoing =</span> <span class="ot">FALSE</span>, <span class="dt">normalized =</span> <span class="ot">FALSE</span>),</a>
-<a class="sourceLine" id="cb293-52" title="52">        <span class="dt">rewire =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb293-53" title="53">        )</a>
-<a class="sourceLine" id="cb293-54" title="54">      )</a>
-<a class="sourceLine" id="cb293-55" title="55">  </a>
-<a class="sourceLine" id="cb293-56" title="56">  <span class="co"># Are we there yet?</span></a>
-<a class="sourceLine" id="cb293-57" title="57">  <span class="cf">if</span> (<span class="op">!</span>(i <span class="op">%%</span><span class="st"> </span><span class="dv">50</span>))</a>
-<a class="sourceLine" id="cb293-58" title="58">    <span class="kw">message</span>(<span class="st">&quot;Simulation &quot;</span>, i,<span class="st">&quot; of &quot;</span>, nsim, <span class="st">&quot; done.&quot;</span>)</a>
-<a class="sourceLine" id="cb293-59" title="59">}</a>
-<a class="sourceLine" id="cb293-60" title="60"><span class="co">## Simulation 50 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-61" title="61"><span class="co">## Simulation 100 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-62" title="62"><span class="co">## Simulation 150 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-63" title="63"><span class="co">## Simulation 200 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-64" title="64"><span class="co">## Simulation 250 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-65" title="65"><span class="co">## Simulation 300 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-66" title="66"><span class="co">## Simulation 350 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-67" title="67"><span class="co">## Simulation 400 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-68" title="68"><span class="co">## Simulation 450 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-69" title="69"><span class="co">## Simulation 500 of 500 done.</span></a>
-<a class="sourceLine" id="cb293-70" title="70"></a>
-<a class="sourceLine" id="cb293-71" title="71">ans_2and3 &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, <span class="kw">lapply</span>(ans_2and3, <span class="st">&quot;[&quot;</span>, <span class="dt">i=</span><span class="st">&quot;prop&quot;</span>, <span class="dt">j=</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="simulation-of-diffusion-processes.html#cb304-1" tabindex="-1"></a></span>
+<span id="cb304-2"><a href="simulation-of-diffusion-processes.html#cb304-2" tabindex="-1"></a><span class="co"># Now, simulating a bunch of diffusion processes</span></span>
+<span id="cb304-3"><a href="simulation-of-diffusion-processes.html#cb304-3" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> 500L</span>
+<span id="cb304-4"><a href="simulation-of-diffusion-processes.html#cb304-4" tabindex="-1"></a>ans_1and2 <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, nsim)</span>
+<span id="cb304-5"><a href="simulation-of-diffusion-processes.html#cb304-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">223</span>)</span>
+<span id="cb304-6"><a href="simulation-of-diffusion-processes.html#cb304-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb304-7"><a href="simulation-of-diffusion-processes.html#cb304-7" tabindex="-1"></a>  <span class="co"># We just want the cum adopt count</span></span>
+<span id="cb304-8"><a href="simulation-of-diffusion-processes.html#cb304-8" tabindex="-1"></a>  ans_1and2[[i]] <span class="ot">&lt;-</span> </span>
+<span id="cb304-9"><a href="simulation-of-diffusion-processes.html#cb304-9" tabindex="-1"></a>    <span class="fu">cumulative_adopt_count</span>(</span>
+<span id="cb304-10"><a href="simulation-of-diffusion-processes.html#cb304-10" tabindex="-1"></a>      <span class="fu">rdiffnet</span>(</span>
+<span id="cb304-11"><a href="simulation-of-diffusion-processes.html#cb304-11" tabindex="-1"></a>        <span class="at">seed.graph =</span> net,</span>
+<span id="cb304-12"><a href="simulation-of-diffusion-processes.html#cb304-12" tabindex="-1"></a>        <span class="at">t =</span> <span class="dv">10</span>,</span>
+<span id="cb304-13"><a href="simulation-of-diffusion-processes.html#cb304-13" tabindex="-1"></a>        <span class="at">threshold.dist =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, 500L, <span class="cn">TRUE</span>),</span>
+<span id="cb304-14"><a href="simulation-of-diffusion-processes.html#cb304-14" tabindex="-1"></a>        <span class="at">seed.nodes =</span> <span class="st">&quot;random&quot;</span>,</span>
+<span id="cb304-15"><a href="simulation-of-diffusion-processes.html#cb304-15" tabindex="-1"></a>        <span class="at">seed.p.adopt =</span> .<span class="dv">10</span>,</span>
+<span id="cb304-16"><a href="simulation-of-diffusion-processes.html#cb304-16" tabindex="-1"></a>        <span class="at">exposure.args =</span> <span class="fu">list</span>(<span class="at">outgoing =</span> <span class="cn">FALSE</span>, <span class="at">normalized =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb304-17"><a href="simulation-of-diffusion-processes.html#cb304-17" tabindex="-1"></a>        <span class="at">rewire =</span> <span class="cn">FALSE</span></span>
+<span id="cb304-18"><a href="simulation-of-diffusion-processes.html#cb304-18" tabindex="-1"></a>        )</span>
+<span id="cb304-19"><a href="simulation-of-diffusion-processes.html#cb304-19" tabindex="-1"></a>      )</span>
+<span id="cb304-20"><a href="simulation-of-diffusion-processes.html#cb304-20" tabindex="-1"></a>  </span>
+<span id="cb304-21"><a href="simulation-of-diffusion-processes.html#cb304-21" tabindex="-1"></a>  <span class="co"># Are we there yet?</span></span>
+<span id="cb304-22"><a href="simulation-of-diffusion-processes.html#cb304-22" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>(i <span class="sc">%%</span> <span class="dv">50</span>))</span>
+<span id="cb304-23"><a href="simulation-of-diffusion-processes.html#cb304-23" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&quot;Simulation &quot;</span>, i,<span class="st">&quot; of &quot;</span>, nsim, <span class="st">&quot; done.&quot;</span>)</span>
+<span id="cb304-24"><a href="simulation-of-diffusion-processes.html#cb304-24" tabindex="-1"></a>}</span>
+<span id="cb304-25"><a href="simulation-of-diffusion-processes.html#cb304-25" tabindex="-1"></a><span class="do">## Simulation 50 of 500 done.</span></span>
+<span id="cb304-26"><a href="simulation-of-diffusion-processes.html#cb304-26" tabindex="-1"></a><span class="do">## Simulation 100 of 500 done.</span></span>
+<span id="cb304-27"><a href="simulation-of-diffusion-processes.html#cb304-27" tabindex="-1"></a><span class="do">## Simulation 150 of 500 done.</span></span>
+<span id="cb304-28"><a href="simulation-of-diffusion-processes.html#cb304-28" tabindex="-1"></a><span class="do">## Simulation 200 of 500 done.</span></span>
+<span id="cb304-29"><a href="simulation-of-diffusion-processes.html#cb304-29" tabindex="-1"></a><span class="do">## Simulation 250 of 500 done.</span></span>
+<span id="cb304-30"><a href="simulation-of-diffusion-processes.html#cb304-30" tabindex="-1"></a><span class="do">## Simulation 300 of 500 done.</span></span>
+<span id="cb304-31"><a href="simulation-of-diffusion-processes.html#cb304-31" tabindex="-1"></a><span class="do">## Simulation 350 of 500 done.</span></span>
+<span id="cb304-32"><a href="simulation-of-diffusion-processes.html#cb304-32" tabindex="-1"></a><span class="do">## Simulation 400 of 500 done.</span></span>
+<span id="cb304-33"><a href="simulation-of-diffusion-processes.html#cb304-33" tabindex="-1"></a><span class="do">## Simulation 450 of 500 done.</span></span>
+<span id="cb304-34"><a href="simulation-of-diffusion-processes.html#cb304-34" tabindex="-1"></a><span class="do">## Simulation 500 of 500 done.</span></span>
+<span id="cb304-35"><a href="simulation-of-diffusion-processes.html#cb304-35" tabindex="-1"></a></span>
+<span id="cb304-36"><a href="simulation-of-diffusion-processes.html#cb304-36" tabindex="-1"></a><span class="co"># Extracting prop</span></span>
+<span id="cb304-37"><a href="simulation-of-diffusion-processes.html#cb304-37" tabindex="-1"></a>ans_1and2 <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(ans_1and2, <span class="st">&quot;[&quot;</span>, <span class="at">i=</span><span class="st">&quot;prop&quot;</span>, <span class="at">j=</span>))</span>
+<span id="cb304-38"><a href="simulation-of-diffusion-processes.html#cb304-38" tabindex="-1"></a></span>
+<span id="cb304-39"><a href="simulation-of-diffusion-processes.html#cb304-39" tabindex="-1"></a>ans_2and3 <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, nsim)</span>
+<span id="cb304-40"><a href="simulation-of-diffusion-processes.html#cb304-40" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">223</span>)</span>
+<span id="cb304-41"><a href="simulation-of-diffusion-processes.html#cb304-41" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb304-42"><a href="simulation-of-diffusion-processes.html#cb304-42" tabindex="-1"></a>  <span class="co"># We just want the cum adopt count</span></span>
+<span id="cb304-43"><a href="simulation-of-diffusion-processes.html#cb304-43" tabindex="-1"></a>  ans_2and3[[i]] <span class="ot">&lt;-</span> </span>
+<span id="cb304-44"><a href="simulation-of-diffusion-processes.html#cb304-44" tabindex="-1"></a>    <span class="fu">cumulative_adopt_count</span>(</span>
+<span id="cb304-45"><a href="simulation-of-diffusion-processes.html#cb304-45" tabindex="-1"></a>      <span class="fu">rdiffnet</span>(</span>
+<span id="cb304-46"><a href="simulation-of-diffusion-processes.html#cb304-46" tabindex="-1"></a>        <span class="at">seed.graph =</span> net,</span>
+<span id="cb304-47"><a href="simulation-of-diffusion-processes.html#cb304-47" tabindex="-1"></a>        <span class="at">t =</span> <span class="dv">10</span>,</span>
+<span id="cb304-48"><a href="simulation-of-diffusion-processes.html#cb304-48" tabindex="-1"></a>        <span class="at">threshold.dist =</span> <span class="fu">sample</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, 500L, <span class="cn">TRUE</span>),</span>
+<span id="cb304-49"><a href="simulation-of-diffusion-processes.html#cb304-49" tabindex="-1"></a>        <span class="at">seed.nodes =</span> <span class="st">&quot;random&quot;</span>,</span>
+<span id="cb304-50"><a href="simulation-of-diffusion-processes.html#cb304-50" tabindex="-1"></a>        <span class="at">seed.p.adopt =</span> .<span class="dv">10</span>,</span>
+<span id="cb304-51"><a href="simulation-of-diffusion-processes.html#cb304-51" tabindex="-1"></a>        <span class="at">exposure.args =</span> <span class="fu">list</span>(<span class="at">outgoing =</span> <span class="cn">FALSE</span>, <span class="at">normalized =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb304-52"><a href="simulation-of-diffusion-processes.html#cb304-52" tabindex="-1"></a>        <span class="at">rewire =</span> <span class="cn">FALSE</span></span>
+<span id="cb304-53"><a href="simulation-of-diffusion-processes.html#cb304-53" tabindex="-1"></a>        )</span>
+<span id="cb304-54"><a href="simulation-of-diffusion-processes.html#cb304-54" tabindex="-1"></a>      )</span>
+<span id="cb304-55"><a href="simulation-of-diffusion-processes.html#cb304-55" tabindex="-1"></a>  </span>
+<span id="cb304-56"><a href="simulation-of-diffusion-processes.html#cb304-56" tabindex="-1"></a>  <span class="co"># Are we there yet?</span></span>
+<span id="cb304-57"><a href="simulation-of-diffusion-processes.html#cb304-57" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>(i <span class="sc">%%</span> <span class="dv">50</span>))</span>
+<span id="cb304-58"><a href="simulation-of-diffusion-processes.html#cb304-58" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&quot;Simulation &quot;</span>, i,<span class="st">&quot; of &quot;</span>, nsim, <span class="st">&quot; done.&quot;</span>)</span>
+<span id="cb304-59"><a href="simulation-of-diffusion-processes.html#cb304-59" tabindex="-1"></a>}</span>
+<span id="cb304-60"><a href="simulation-of-diffusion-processes.html#cb304-60" tabindex="-1"></a><span class="do">## Simulation 50 of 500 done.</span></span>
+<span id="cb304-61"><a href="simulation-of-diffusion-processes.html#cb304-61" tabindex="-1"></a><span class="do">## Simulation 100 of 500 done.</span></span>
+<span id="cb304-62"><a href="simulation-of-diffusion-processes.html#cb304-62" tabindex="-1"></a><span class="do">## Simulation 150 of 500 done.</span></span>
+<span id="cb304-63"><a href="simulation-of-diffusion-processes.html#cb304-63" tabindex="-1"></a><span class="do">## Simulation 200 of 500 done.</span></span>
+<span id="cb304-64"><a href="simulation-of-diffusion-processes.html#cb304-64" tabindex="-1"></a><span class="do">## Simulation 250 of 500 done.</span></span>
+<span id="cb304-65"><a href="simulation-of-diffusion-processes.html#cb304-65" tabindex="-1"></a><span class="do">## Simulation 300 of 500 done.</span></span>
+<span id="cb304-66"><a href="simulation-of-diffusion-processes.html#cb304-66" tabindex="-1"></a><span class="do">## Simulation 350 of 500 done.</span></span>
+<span id="cb304-67"><a href="simulation-of-diffusion-processes.html#cb304-67" tabindex="-1"></a><span class="do">## Simulation 400 of 500 done.</span></span>
+<span id="cb304-68"><a href="simulation-of-diffusion-processes.html#cb304-68" tabindex="-1"></a><span class="do">## Simulation 450 of 500 done.</span></span>
+<span id="cb304-69"><a href="simulation-of-diffusion-processes.html#cb304-69" tabindex="-1"></a><span class="do">## Simulation 500 of 500 done.</span></span>
+<span id="cb304-70"><a href="simulation-of-diffusion-processes.html#cb304-70" tabindex="-1"></a></span>
+<span id="cb304-71"><a href="simulation-of-diffusion-processes.html#cb304-71" tabindex="-1"></a>ans_2and3 <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(ans_2and3, <span class="st">&quot;[&quot;</span>, <span class="at">i=</span><span class="st">&quot;prop&quot;</span>, <span class="at">j=</span>))</span></code></pre></div>
 <p>We can simplify by using the function <code>rdiffnet_multiple</code>. The following lines of code accomplish the same as the previous code avoiding the for-loop (from the user’s perspective). Besides of the usual parameters passed to <code>rdiffnet</code>, the <code>rdiffnet_multiple</code> function requires <code>R</code> (number of repetitions/simulations), and <code>statistic</code> (a function that returns the statistic of interest). Optionally, the user may choose to specify the number of clusters to run it in parallel (multiple CPUs):</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" title="1">ans_1and3 &lt;-<span class="st"> </span><span class="kw">rdiffnet_multiple</span>(</a>
-<a class="sourceLine" id="cb294-2" title="2">  <span class="co"># Num of sim</span></a>
-<a class="sourceLine" id="cb294-3" title="3">  <span class="dt">R              =</span> nsim,</a>
-<a class="sourceLine" id="cb294-4" title="4">  <span class="co"># Statistic</span></a>
-<a class="sourceLine" id="cb294-5" title="5">  <span class="dt">statistic      =</span> <span class="cf">function</span>(d) <span class="kw">cumulative_adopt_count</span>(d)[<span class="st">&quot;prop&quot;</span>,], </a>
-<a class="sourceLine" id="cb294-6" title="6">  <span class="dt">seed.graph     =</span> net,</a>
-<a class="sourceLine" id="cb294-7" title="7">  <span class="dt">t              =</span> <span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb294-8" title="8">  <span class="dt">threshold.dist =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">500</span>, <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb294-9" title="9">  <span class="dt">seed.nodes     =</span> <span class="st">&quot;random&quot;</span>,</a>
-<a class="sourceLine" id="cb294-10" title="10">  <span class="dt">seed.p.adopt   =</span> <span class="fl">.1</span>,</a>
-<a class="sourceLine" id="cb294-11" title="11">  <span class="dt">rewire         =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb294-12" title="12">  <span class="dt">exposure.args  =</span> <span class="kw">list</span>(<span class="dt">outgoing=</span><span class="ot">FALSE</span>, <span class="dt">normalized=</span><span class="ot">FALSE</span>),</a>
-<a class="sourceLine" id="cb294-13" title="13">  <span class="co"># Running on 4 cores</span></a>
-<a class="sourceLine" id="cb294-14" title="14">  <span class="dt">ncpus          =</span> 4L</a>
-<a class="sourceLine" id="cb294-15" title="15">  )</a></code></pre></div>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb295-1" title="1"><span class="kw">boxplot</span>(ans_1and2, <span class="dt">col=</span><span class="st">&quot;ivory&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Threshold&quot;</span>)</a>
-<a class="sourceLine" id="cb295-2" title="2"><span class="kw">boxplot</span>(ans_2and3, <span class="dt">col=</span><span class="st">&quot;tomato&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb295-3" title="3"><span class="kw">boxplot</span>(<span class="kw">t</span>(ans_1and3), <span class="dt">col =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb295-4" title="4"><span class="kw">legend</span>(</a>
-<a class="sourceLine" id="cb295-5" title="5">  <span class="st">&quot;topleft&quot;</span>,</a>
-<a class="sourceLine" id="cb295-6" title="6">  <span class="dt">fill =</span> <span class="kw">c</span>(<span class="st">&quot;ivory&quot;</span>, <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;steelblue&quot;</span>),</a>
-<a class="sourceLine" id="cb295-7" title="7">  <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;1/2&quot;</span>, <span class="st">&quot;2/3&quot;</span>, <span class="st">&quot;1/3&quot;</span>),</a>
-<a class="sourceLine" id="cb295-8" title="8">  <span class="dt">title =</span> <span class="st">&quot;Threshold range&quot;</span>,</a>
-<a class="sourceLine" id="cb295-9" title="9">  <span class="dt">bty =</span><span class="st">&quot;n&quot;</span></a>
-<a class="sourceLine" id="cb295-10" title="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="simulation-of-diffusion-processes.html#cb305-1" tabindex="-1"></a>ans_1and3 <span class="ot">&lt;-</span> <span class="fu">rdiffnet_multiple</span>(</span>
+<span id="cb305-2"><a href="simulation-of-diffusion-processes.html#cb305-2" tabindex="-1"></a>  <span class="co"># Num of sim</span></span>
+<span id="cb305-3"><a href="simulation-of-diffusion-processes.html#cb305-3" tabindex="-1"></a>  <span class="at">R              =</span> nsim,</span>
+<span id="cb305-4"><a href="simulation-of-diffusion-processes.html#cb305-4" tabindex="-1"></a>  <span class="co"># Statistic</span></span>
+<span id="cb305-5"><a href="simulation-of-diffusion-processes.html#cb305-5" tabindex="-1"></a>  <span class="at">statistic      =</span> <span class="cf">function</span>(d) <span class="fu">cumulative_adopt_count</span>(d)[<span class="st">&quot;prop&quot;</span>,], </span>
+<span id="cb305-6"><a href="simulation-of-diffusion-processes.html#cb305-6" tabindex="-1"></a>  <span class="at">seed.graph     =</span> net,</span>
+<span id="cb305-7"><a href="simulation-of-diffusion-processes.html#cb305-7" tabindex="-1"></a>  <span class="at">t              =</span> <span class="dv">10</span>,</span>
+<span id="cb305-8"><a href="simulation-of-diffusion-processes.html#cb305-8" tabindex="-1"></a>  <span class="at">threshold.dist =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">500</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb305-9"><a href="simulation-of-diffusion-processes.html#cb305-9" tabindex="-1"></a>  <span class="at">seed.nodes     =</span> <span class="st">&quot;random&quot;</span>,</span>
+<span id="cb305-10"><a href="simulation-of-diffusion-processes.html#cb305-10" tabindex="-1"></a>  <span class="at">seed.p.adopt   =</span> .<span class="dv">1</span>,</span>
+<span id="cb305-11"><a href="simulation-of-diffusion-processes.html#cb305-11" tabindex="-1"></a>  <span class="at">rewire         =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb305-12"><a href="simulation-of-diffusion-processes.html#cb305-12" tabindex="-1"></a>  <span class="at">exposure.args  =</span> <span class="fu">list</span>(<span class="at">outgoing=</span><span class="cn">FALSE</span>, <span class="at">normalized=</span><span class="cn">FALSE</span>),</span>
+<span id="cb305-13"><a href="simulation-of-diffusion-processes.html#cb305-13" tabindex="-1"></a>  <span class="co"># Running on 4 cores</span></span>
+<span id="cb305-14"><a href="simulation-of-diffusion-processes.html#cb305-14" tabindex="-1"></a>  <span class="at">ncpus          =</span> 4L</span>
+<span id="cb305-15"><a href="simulation-of-diffusion-processes.html#cb305-15" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="simulation-of-diffusion-processes.html#cb306-1" tabindex="-1"></a><span class="fu">boxplot</span>(ans_1and2, <span class="at">col=</span><span class="st">&quot;ivory&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Threshold&quot;</span>)</span>
+<span id="cb306-2"><a href="simulation-of-diffusion-processes.html#cb306-2" tabindex="-1"></a><span class="fu">boxplot</span>(ans_2and3, <span class="at">col=</span><span class="st">&quot;tomato&quot;</span>, <span class="at">add=</span><span class="cn">TRUE</span>)</span>
+<span id="cb306-3"><a href="simulation-of-diffusion-processes.html#cb306-3" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">t</span>(ans_1and3), <span class="at">col =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">add=</span><span class="cn">TRUE</span>)</span>
+<span id="cb306-4"><a href="simulation-of-diffusion-processes.html#cb306-4" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb306-5"><a href="simulation-of-diffusion-processes.html#cb306-5" tabindex="-1"></a>  <span class="st">&quot;topleft&quot;</span>,</span>
+<span id="cb306-6"><a href="simulation-of-diffusion-processes.html#cb306-6" tabindex="-1"></a>  <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">&quot;ivory&quot;</span>, <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;steelblue&quot;</span>),</span>
+<span id="cb306-7"><a href="simulation-of-diffusion-processes.html#cb306-7" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;1/2&quot;</span>, <span class="st">&quot;2/3&quot;</span>, <span class="st">&quot;1/3&quot;</span>),</span>
+<span id="cb306-8"><a href="simulation-of-diffusion-processes.html#cb306-8" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">&quot;Threshold range&quot;</span>,</span>
+<span id="cb306-9"><a href="simulation-of-diffusion-processes.html#cb306-9" tabindex="-1"></a>  <span class="at">bty =</span><span class="st">&quot;n&quot;</span></span>
+<span id="cb306-10"><a href="simulation-of-diffusion-processes.html#cb306-10" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="part-01-08-netdiffuser_files/figure-html/sim-sim-results-1.png" width="672" /></p>
 <!-- *   Example simulating a thousand networks by changing threshold levels.
     The final prevalence, or hazard as a function of threshold levels. -->
 </div>
-<div id="problems-1" class="section level3 hasAnchor">
+<div id="problems-1" class="section level3 hasAnchor" number="11.3.6">
 <h3><span class="header-section-number">11.3.6</span> Problems<a href="simulation-of-diffusion-processes.html#problems-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Given the following types of networks: Small-world, Scale-free, Bernoulli,
@@ -632,7 +686,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

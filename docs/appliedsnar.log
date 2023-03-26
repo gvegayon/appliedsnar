@@ -1,14 +1,14 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.3.14)  24 JUN 2022 15:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.3.24)  24 MAR 2023 11:30
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex
-(/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex
+**appliedsnar.tex
+(./appliedsnar.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-02-24> (/home/george/texlive/2021/texmf-dist/tex/latex/base/book.cls
+L3 programming layer <2022-01-21>
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
-(/home/george/texlive/2021/texmf-dist/tex/latex/base/bk10.clo
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo
 File: bk10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count185
@@ -23,8 +23,9 @@ File: bk10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
-) (/home/george/texlive/2021/texmf-dist/tex/latex/lm/lmodern.sty
-Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+)
+(/usr/share/texmf/tex/latex/lm/lmodern.sty
+Package: lmodern 2009/10/30 v1.6 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
@@ -57,9 +58,11 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
-) (/home/george/texlive/2021/texmf-dist/tex/latex/amsfonts/amssymb.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
- (/home/george/texlive/2021/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \@emptytoks=\toks16
 \symAMSa=\mathgroup4
@@ -67,21 +70,25 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (/home/george/texlive/2021/texmf-dist/tex/latex/amsmath/amsmath.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2021/10/15 v2.17l AMS math features
 \@mathmargin=\skip49
 
 For additional information on amsmath, use the `?' option.
-(/home/george/texlive/2021/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
- (/home/george/texlive/2021/texmf-dist/tex/latex/amsmath/amsgen.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks17
 \ex@=\dimen139
-)) (/home/george/texlive/2021/texmf-dist/tex/latex/amsmath/amsbsy.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen140
-) (/home/george/texlive/2021/texmf-dist/tex/latex/amsmath/amsopn.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2021/08/26 v2.02 operator names
 )
 \inf@bad=\count194
@@ -121,13 +128,17 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \mathdisplay@stack=\toks21
 LaTeX Info: Redefining \[ on input line 2938.
 LaTeX Info: Redefining \] on input line 2939.
-) (/home/george/texlive/2021/texmf-dist/tex/generic/iftex/ifxetex.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifxetex.sty
 Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
- (/home/george/texlive/2021/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2022/02/03 v1.0f TeX engine tests
-)) (/home/george/texlive/2021/texmf-dist/tex/generic/iftex/ifluatex.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifluatex.sty
 Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-) (/home/george/texlive/2021/texmf-dist/tex/latex/base/fixltx2e.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/fixltx2e.sty
 Package: fixltx2e 2016/12/29 v2.1a fixes to LaTeX (obsolete)
 Applying: [2015/01/01] Old fixltx2e package on input line 46.
 
@@ -137,127 +148,165 @@ Package fixltx2e Warning: fixltx2e is not required with releases after 2015
 (fixltx2e)                See the latexrelease package for details.
 
 Already applied: [0000/00/00] Old fixltx2e package on input line 53.
-) (/home/george/texlive/2021/texmf-dist/tex/latex/base/fontenc.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 112.
- (/home/george/texlive/2021/texmf-dist/tex/latex/lm/t1lmr.fd
-File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) (/home/george/texlive/2021/texmf-dist/tex/latex/base/inputenc.sty
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
+2.
+
+(/usr/share/texmf/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+))
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks22
 \inpenc@posthook=\toks23
-) (/home/george/texlive/2021/texmf-dist/tex/latex/base/textcomp.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
-) (/home/george/texlive/2021/texmf-dist/tex/latex/upquote/upquote.sty
-Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
-) (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2022/03/14 v3.0d Micro-typographical refinements (RS)
- (/home/george/texlive/2021/texmf-dist/tex/latex/graphics/keyval.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/upquote/upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+)
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2021/12/10 v3.0b Micro-typographical refinements (RS)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks24
-) (/home/george/texlive/2021/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count272
 )
 \MT@toks=\toks25
-\MT@tempbox=\box52
 \MT@count=\count273
-LaTeX Info: Redefining \noprotrusionifhmode on input line 1027.
-LaTeX Info: Redefining \leftprotrusion on input line 1028.
-LaTeX Info: Redefining \rightprotrusion on input line 1036.
-LaTeX Info: Redefining \textls on input line 1195.
+\MT@tempbox=\box52
+LaTeX Info: Redefining \leftprotrusion on input line 1010.
+LaTeX Info: Redefining \rightprotrusion on input line 1018.
+LaTeX Info: Redefining \textls on input line 1173.
 \MT@outer@kern=\dimen148
-LaTeX Info: Redefining \textmicrotypecontext on input line 1781.
+LaTeX Info: Redefining \textmicrotypecontext on input line 1759.
 \MT@listname@count=\count274
- (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/microtype-pdftex.def
-File: microtype-pdftex.def 2022/03/14 v3.0d Definitions specific to pdftex (RS)
-LaTeX Info: Redefining \lsstyle on input line 900.
-LaTeX Info: Redefining \lslig on input line 900.
+
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2021/12/10 v3.0b Definitions specific to pdftex (RS)
+
+LaTeX Info: Redefining \lsstyle on input line 897.
+LaTeX Info: Redefining \lslig on input line 897.
 \MT@outer@space=\skip52
 )
 Package microtype Info: Loading configuration file microtype.cfg.
- (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2022/03/14 v3.0d microtype main configuration file (RS)
-)) (/home/george/texlive/2021/texmf-dist/tex/latex/parskip/parskip.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2021/12/10 v3.0b microtype main configuration file (RS)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/parskip/parskip.sty
 Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
- (/home/george/texlive/2021/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
- (/home/george/texlive/2021/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
-) (/home/george/texlive/2021/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
-))) (/home/george/texlive/2021/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2022-02-21 v7.00n Hypertext links for LaTeX
- (/home/george/texlive/2021/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
- (/home/george/texlive/2021/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+)))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-) (/home/george/texlive/2021/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-) (/home/george/texlive/2021/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-) (/home/george/texlive/2021/texmf-dist/tex/latex/hycolor/hycolor.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-) (/home/george/texlive/2021/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
-) (/home/george/texlive/2021/texmf-dist/tex/latex/auxhook/auxhook.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
 \@linkdim=\dimen149
 \Hy@linkcounter=\count275
 \Hy@pagecounter=\count276
- (/home/george/texlive/2021/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2022-02-21 v7.00n Hyperref: PDFDocEncoding definition (HO)
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-) (/home/george/texlive/2021/texmf-dist/tex/generic/intcalc/intcalc.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref-langpatches.def
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
+nguages
+)
+(/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
-) (/home/george/texlive/2021/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count277
- (/home/george/texlive/2021/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2022-02-21 v7.00n Hyperref: PDF Unicode definition (HO)
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `unicode' set `true' on input line 4018.
-Package hyperref Info: Hyper figures OFF on input line 4137.
-Package hyperref Info: Link nesting OFF on input line 4142.
-Package hyperref Info: Hyper index ON on input line 4145.
-Package hyperref Info: Plain pages OFF on input line 4152.
-Package hyperref Info: Backreferencing OFF on input line 4157.
+Package hyperref Info: Option `draft' set `true' on input line 4073.
+Package hyperref Info: Option `unicode' set `true' on input line 4073.
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4390.
+Package hyperref Info: Bookmarks ON on input line 4445.
 \c@Hy@tempcnt=\count278
- (/home/george/texlive/2021/texmf-dist/tex/latex/url/url.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4749.
+LaTeX Info: Redefining \url on input line 4804.
 \XeTeXLinkMargin=\dimen150
- (/home/george/texlive/2021/texmf-dist/tex/generic/bitset/bitset.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
- (/home/george/texlive/2021/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
-Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
 ))
 \Fld@menulength=\count279
 \Field@Width=\dimen151
 \Fld@charsize=\dimen152
-Package hyperref Info: Hyper figures OFF on input line 6027.
-Package hyperref Info: Link nesting OFF on input line 6032.
-Package hyperref Info: Hyper index ON on input line 6035.
-Package hyperref Info: backreferencing OFF on input line 6042.
-Package hyperref Info: Link coloring OFF on input line 6047.
-Package hyperref Info: Link coloring with OCG OFF on input line 6052.
-Package hyperref Info: PDF/A mode OFF on input line 6057.
-LaTeX Info: Redefining \ref on input line 6097.
-LaTeX Info: Redefining \pageref on input line 6101.
- (/home/george/texlive/2021/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
@@ -266,33 +315,43 @@ package with kernel methods
 \c@Hfootnote=\count282
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
- (/home/george/texlive/2021/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2022-02-21 v7.00n Hyperref driver for pdfTeX
- (/home/george/texlive/2021/texmf-dist/tex/latex/base/atveryend-ltx.sty
-Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
 with kernel methods
 )
 \Fld@listcount=\count283
 \c@bookmark@seq@number=\count284
- (/home/george/texlive/2021/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
- (/home/george/texlive/2021/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 286.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
 )
 \Hy@SectionHShift=\skip53
 )
 Package hyperref Info: Option `breaklinks' set `true' on input line 35.
- (/home/george/texlive/2021/texmf-dist/tex/latex/graphics/color.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2021/12/07 v1.3c Standard LaTeX Color (DPC)
- (/home/george/texlive/2021/texmf-dist/tex/latex/graphics-cfg/color.cfg
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
- (/home/george/texlive/2021/texmf-dist/tex/latex/graphics-def/pdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
-)) (/home/george/texlive/2021/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
 \FV@CodeLineNo=\count285
 \FV@InFile=\read2
@@ -300,14 +359,16 @@ Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
 \c@FancyVerbLine=\count286
 \FV@StepNumber=\count287
 \FV@OutFile=\write3
-) (/home/george/texlive/2021/texmf-dist/tex/latex/framed/framed.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \OuterFrameSep=\skip54
 \fb@frw=\dimen153
 \fb@frh=\dimen154
 \FrameRule=\dimen155
 \FrameSep=\dimen156
-) (/home/george/texlive/2021/texmf-dist/tex/latex/tools/longtable.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \LTleft=\skip55
 \LTright=\skip56
@@ -325,7 +386,8 @@ Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \c@LT@tables=\count291
 \c@LT@chunks=\count292
 \LT@p@ftn=\toks26
-) (/home/george/texlive/2021/texmf-dist/tex/latex/booktabs/booktabs.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen158
 \lightrulewidth=\dimen159
@@ -344,27 +406,36 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count295
 \@lastruleclass=\count296
 \@thisrulewidth=\dimen170
-) (/home/george/texlive/2021/texmf-dist/tex/latex/mdwtools/footnote.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/mdwtools/footnote.sty
 Package: footnote 1997/01/28 1.13 Save footnotes around boxes
 \fn@notes=\box59
 \fn@width=\dimen171
-) (/home/george/texlive/2021/texmf-dist/tex/latex/graphics/graphicx.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
- (/home/george/texlive/2021/texmf-dist/tex/latex/graphics/graphics.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
- (/home/george/texlive/2021/texmf-dist/tex/latex/graphics/trig.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
-) (/home/george/texlive/2021/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
 )
 \Gin@req@height=\dimen172
 \Gin@req@width=\dimen173
-) (/home/george/texlive/2021/texmf-dist/tex/latex/grffile/grffile.sty
-Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legacy)
-Package grffile Info: This package is an empty stub for compatibility on input line 40.
-) (/home/george/texlive/2021/texmf-dist/tex/generic/ulem/ulem.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/grffile/grffile.sty
+Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legac
+y)
+Package grffile Info: This package is an empty stub for compatibility on input 
+line 40.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/ulem/ulem.sty
 \UL@box=\box60
 \UL@hyphenbox=\box61
 \UL@skip=\skip59
@@ -377,7 +448,8 @@ Package: ulem 2019/11/18
 \ULdepth=\dimen176
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 113.
- (/home/george/texlive/2021/texmf-dist/tex/latex/apacite/apacite.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/apacite/apacite.sty
 Package: apacite 2013/07/21 v6.03 APA citation
 \c@BibCnt=\count298
 \bibleftmargin=\skip60
@@ -385,24 +457,32 @@ Package: apacite 2013/07/21 v6.03 APA citation
 \bibparsep=\skip62
 \bibitemsep=\skip63
 \biblabelsep=\skip64
-) (/home/george/texlive/2021/texmf-dist/tex/latex/setspace/setspace.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
-) (/home/george/texlive/2021/texmf-dist/tex/latex/arev/arev.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/arev/arev.sty
 Package: arev 2005/06/14 0.1 Arev Sans package
- (/home/george/texlive/2021/texmf-dist/tex/latex/arev/arevtext.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/arev/arevtext.sty
 Package: arevtext 2005/09/01 0.1 Arev Sans Text package
- (/home/george/texlive/2021/texmf-dist/tex/latex/base/fontenc.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-)) (/home/george/texlive/2021/texmf-dist/tex/latex/arev/arevmath.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/arev/arevmath.sty
 Package: arevmath 2006/02/19 0.1 Arev Sans Math package
- (/home/george/texlive/2021/texmf-dist/tex/latex/arev/ams-mdbch.sty
-Package: ams-mdbch 2005/05/08 v1.4 Bold mdbch (Math Design Project) to replace AMS fonts
+
+(/usr/share/texlive/texmf-dist/tex/latex/arev/ams-mdbch.sty
+Package: ams-mdbch 2005/05/08 v1.4 Bold mdbch (Math Design Project) to replace 
+AMS fonts
 Now handling font encoding MDA ...
 ... no UTF-8 mapping file for font encoding MDA
 \symmathdesignA=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `mathdesignA' in version `bold'
 (Font)                  MDA/mdbch/b/n --> MDA/mdbch/b/n on input line 47.
 LaTeX Font Info:    Overwriting encoding scheme math defaults on input line 52.
+
 LaTeX Info: Redefining \bold on input line 64.
 LaTeX Font Info:    Redeclaring math delimiter \ulcorner on input line 82.
 LaTeX Font Info:    Redeclaring math delimiter \urcorner on input line 83.
@@ -463,8 +543,10 @@ LaTeX Font Info:    Redeclaring math symbol \nvdash on input line 144.
 LaTeX Font Info:    Redeclaring math symbol \nVdash on input line 145.
 LaTeX Font Info:    Redeclaring math symbol \nvDash on input line 146.
 LaTeX Font Info:    Redeclaring math symbol \nVDash on input line 147.
-LaTeX Font Info:    Redeclaring math symbol \ntrianglerighteq on input line 148.
+LaTeX Font Info:    Redeclaring math symbol \ntrianglerighteq on input line 148
+.
 LaTeX Font Info:    Redeclaring math symbol \ntrianglelefteq on input line 149.
+
 LaTeX Font Info:    Redeclaring math symbol \ntriangleleft on input line 150.
 LaTeX Font Info:    Redeclaring math symbol \ntriangleright on input line 151.
 LaTeX Font Info:    Redeclaring math symbol \nleftarrow on input line 152.
@@ -472,7 +554,9 @@ LaTeX Font Info:    Redeclaring math symbol \nrightarrow on input line 153.
 LaTeX Font Info:    Redeclaring math symbol \nLeftarrow on input line 154.
 LaTeX Font Info:    Redeclaring math symbol \nRightarrow on input line 155.
 LaTeX Font Info:    Redeclaring math symbol \nLeftrightarrow on input line 156.
+
 LaTeX Font Info:    Redeclaring math symbol \nleftrightarrow on input line 157.
+
 LaTeX Font Info:    Redeclaring math symbol \divideontimes on input line 158.
 LaTeX Font Info:    Redeclaring math symbol \varnothing on input line 159.
 LaTeX Font Info:    Redeclaring math symbol \nexists on input line 160.
@@ -497,6 +581,7 @@ LaTeX Font Info:    Redeclaring math symbol \succapprox on input line 181.
 LaTeX Font Info:    Redeclaring math symbol \precapprox on input line 182.
 LaTeX Font Info:    Redeclaring math symbol \curvearrowleft on input line 183.
 LaTeX Font Info:    Redeclaring math symbol \curvearrowright on input line 184.
+
 LaTeX Font Info:    Redeclaring math symbol \Bbbk on input line 189.
 LaTeX Font Info:    Redeclaring math symbol \backepsilon on input line 190.
 LaTeX Font Info:    Redeclaring math symbol \boxdot on input line 192.
@@ -507,32 +592,45 @@ LaTeX Font Info:    Redeclaring math symbol \blacksquare on input line 196.
 LaTeX Font Info:    Redeclaring math symbol \centerdot on input line 197.
 LaTeX Font Info:    Redeclaring math symbol \lozenge on input line 198.
 LaTeX Font Info:    Redeclaring math symbol \blacklozenge on input line 199.
-LaTeX Font Info:    Redeclaring math symbol \circlearrowright on input line 200.
+LaTeX Font Info:    Redeclaring math symbol \circlearrowright on input line 200
+.
 LaTeX Font Info:    Redeclaring math symbol \circlearrowleft on input line 201.
-LaTeX Font Info:    Redeclaring math symbol \rightleftharpoons on input line 203.
-LaTeX Font Info:    Redeclaring math symbol \leftrightharpoons on input line 204.
+
+LaTeX Font Info:    Redeclaring math symbol \rightleftharpoons on input line 20
+3.
+LaTeX Font Info:    Redeclaring math symbol \leftrightharpoons on input line 20
+4.
 LaTeX Font Info:    Redeclaring math symbol \boxminus on input line 205.
 LaTeX Font Info:    Redeclaring math symbol \Vdash on input line 206.
 LaTeX Font Info:    Redeclaring math symbol \Vvdash on input line 207.
 LaTeX Font Info:    Redeclaring math symbol \vDash on input line 208.
-LaTeX Font Info:    Redeclaring math symbol \twoheadrightarrow on input line 209.
-LaTeX Font Info:    Redeclaring math symbol \twoheadleftarrow on input line 210.
+LaTeX Font Info:    Redeclaring math symbol \twoheadrightarrow on input line 20
+9.
+LaTeX Font Info:    Redeclaring math symbol \twoheadleftarrow on input line 210
+.
 LaTeX Font Info:    Redeclaring math symbol \leftleftarrows on input line 211.
-LaTeX Font Info:    Redeclaring math symbol \rightrightarrows on input line 212.
+LaTeX Font Info:    Redeclaring math symbol \rightrightarrows on input line 212
+.
 LaTeX Font Info:    Redeclaring math symbol \upuparrows on input line 213.
 LaTeX Font Info:    Redeclaring math symbol \downdownarrows on input line 214.
 LaTeX Font Info:    Redeclaring math symbol \upharpoonright on input line 215.
-LaTeX Font Info:    Redeclaring math symbol \downharpoonright on input line 217.
+LaTeX Font Info:    Redeclaring math symbol \downharpoonright on input line 217
+.
 LaTeX Font Info:    Redeclaring math symbol \upharpoonleft on input line 218.
 LaTeX Font Info:    Redeclaring math symbol \downharpoonleft on input line 219.
+
 LaTeX Font Info:    Redeclaring math symbol \rightarrowtail on input line 220.
 LaTeX Font Info:    Redeclaring math symbol \leftarrowtail on input line 221.
 LaTeX Font Info:    Redeclaring math symbol \leftrightarrows on input line 222.
+
 LaTeX Font Info:    Redeclaring math symbol \rightleftarrows on input line 223.
+
 LaTeX Font Info:    Redeclaring math symbol \Lsh on input line 224.
 LaTeX Font Info:    Redeclaring math symbol \Rsh on input line 225.
 LaTeX Font Info:    Redeclaring math symbol \rightsquigarrow on input line 226.
-LaTeX Font Info:    Redeclaring math symbol \leftrightsquigarrow on input line 227.
+
+LaTeX Font Info:    Redeclaring math symbol \leftrightsquigarrow on input line 
+227.
 LaTeX Font Info:    Redeclaring math symbol \looparrowleft on input line 228.
 LaTeX Font Info:    Redeclaring math symbol \looparrowright on input line 229.
 LaTeX Font Info:    Redeclaring math symbol \circeq on input line 230.
@@ -564,15 +662,21 @@ LaTeX Font Info:    Redeclaring math symbol \geqslant on input line 256.
 LaTeX Font Info:    Redeclaring math symbol \gtrless on input line 257.
 LaTeX Font Info:    Redeclaring math symbol \sqsubset on input line 258.
 LaTeX Font Info:    Redeclaring math symbol \sqsupset on input line 259.
-LaTeX Font Info:    Redeclaring math symbol \vartriangleright on input line 260.
+LaTeX Font Info:    Redeclaring math symbol \vartriangleright on input line 260
+.
 LaTeX Font Info:    Redeclaring math symbol \vartriangleleft on input line 261.
+
 LaTeX Font Info:    Redeclaring math symbol \trianglerighteq on input line 262.
+
 LaTeX Font Info:    Redeclaring math symbol \trianglelefteq on input line 263.
 LaTeX Font Info:    Redeclaring math symbol \bigstar on input line 264.
 LaTeX Font Info:    Redeclaring math symbol \between on input line 265.
-LaTeX Font Info:    Redeclaring math symbol \blacktriangledown on input line 266.
-LaTeX Font Info:    Redeclaring math symbol \blacktriangleright on input line 267.
-LaTeX Font Info:    Redeclaring math symbol \blacktriangleleft on input line 268.
+LaTeX Font Info:    Redeclaring math symbol \blacktriangledown on input line 26
+6.
+LaTeX Font Info:    Redeclaring math symbol \blacktriangleright on input line 2
+67.
+LaTeX Font Info:    Redeclaring math symbol \blacktriangleleft on input line 26
+8.
 LaTeX Font Info:    Redeclaring math symbol \vartriangle on input line 269.
 LaTeX Font Info:    Redeclaring math symbol \blacktriangle on input line 270.
 LaTeX Font Info:    Redeclaring math symbol \triangledown on input line 271.
@@ -600,6 +704,7 @@ LaTeX Font Info:    Redeclaring math symbol \curlywedge on input line 294.
 LaTeX Font Info:    Redeclaring math symbol \curlyvee on input line 295.
 LaTeX Font Info:    Redeclaring math symbol \leftthreetimes on input line 296.
 LaTeX Font Info:    Redeclaring math symbol \rightthreetimes on input line 297.
+
 LaTeX Font Info:    Redeclaring math symbol \subseteqq on input line 298.
 LaTeX Font Info:    Redeclaring math symbol \supseteqq on input line 299.
 LaTeX Font Info:    Redeclaring math symbol \bumpeq on input line 300.
@@ -616,7 +721,8 @@ LaTeX Font Info:    Redeclaring math symbol \intercal on input line 312.
 LaTeX Font Info:    Redeclaring math symbol \circledcirc on input line 313.
 LaTeX Font Info:    Redeclaring math symbol \circledast on input line 314.
 LaTeX Font Info:    Redeclaring math symbol \circleddash on input line 315.
-) (/home/george/texlive/2021/texmf-dist/tex/latex/base/ifthen.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
 )
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
@@ -651,7 +757,8 @@ LaTeX Font Info:    Redeclaring math accent \widetilde on input line 123.
 LaTeX Font Info:    Redeclaring math accent \widehat on input line 124.
 \symextraup=\mathgroup7
 \symextraitalic=\mathgroup8
- (/home/george/texlive/2021/texmf-dist/tex/latex/arev/arevsymbols.tex
+
+(/usr/share/texlive/texmf-dist/tex/latex/arev/arevsymbols.tex
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 22.
 LaTeX Font Info:    Redeclaring math symbol \hslash on input line 23.
 LaTeX Font Info:    Redeclaring math symbol \digamma on input line 25.
@@ -667,16 +774,22 @@ LaTeX Font Info:    Redeclaring math symbol \varPi on input line 183.
 LaTeX Font Info:    Redeclaring math symbol \varSigma on input line 184.
 LaTeX Font Info:    Redeclaring math symbol \varPhi on input line 185.
 LaTeX Font Info:    Redeclaring math symbol \varnothing on input line 204.
-) (/home/george/texlive/2021/texmf-dist/tex/latex/bera/beramono.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/bera/beramono.sty
 Package: beramono 2004/01/31 (WaS)
-)) (/home/george/texlive/2021/texmf-dist/tex/latex/base/fontenc.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-LaTeX Font Info:    Trying to load font information for T1+fav on input line 112.
- (/home/george/texlive/2021/texmf-dist/tex/latex/arev/t1fav.fd
+LaTeX Font Info:    Trying to load font information for T1+fav on input line 11
+2.
+
+(/usr/share/texlive/texmf-dist/tex/latex/arev/t1fav.fd
 File: t1fav.fd 2006/05/30 Fontinst v1.929 font definitions for T1/fav.
-)) (/home/george/texlive/2021/texmf-dist/tex/latex/geometry/geometry.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
- (/home/george/texlive/2021/texmf-dist/tex/generic/iftex/ifvtex.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
 \Gm@cnth=\count299
@@ -691,11 +804,13 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layouthoffset=\dimen183
 \Gm@layoutvoffset=\dimen184
 \Gm@dimlist=\toks28
-) (/home/george/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count302
 \l__pdf_internal_box=\box63
-) (./appliedsnar.aux)
+)
+(./appliedsnar.aux)
 \openout1 = `appliedsnar.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 130.
@@ -717,8 +832,10 @@ LaTeX Font Info:    ... okay on input line 130.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 130.
 LaTeX Font Info:    ... okay on input line 130.
 LaTeX Font Info:    Checking defaults for MDA/cmr/m/n on input line 130.
-LaTeX Font Info:    Trying to load font information for MDA+cmr on input line 130.
- (/home/george/texlive/2021/texmf-dist/tex/latex/mathdesign/mdacmr.fd
+LaTeX Font Info:    Trying to load font information for MDA+cmr on input line 1
+30.
+
+(/usr/share/texlive/texmf-dist/tex/latex/mathdesign/mdacmr.fd
 File: mdacmr.fd 
 )
 LaTeX Font Info:    ... okay on input line 130.
@@ -744,12 +861,17 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `fav' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+
+Package hyperref Warning: Draft mode on.
+
 Package hyperref Info: Link coloring ON on input line 130.
-(/home/george/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
- (/home/george/texlive/2021/texmf-dist/tex/latex/refcount/refcount.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-) (/home/george/texlive/2021/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count303
@@ -757,10 +879,8 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 130.
 LaTeX Info: Redefining \pageref on input line 130.
 LaTeX Info: Redefining \nameref on input line 130.
-\@outlinefile=\write4
-\openout4 = `appliedsnar.out'.
 
- (/home/george/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count304
 \scratchdimen=\dimen185
@@ -773,14 +893,18 @@ LaTeX Info: Redefining \nameref on input line 130.
 \MPnumerator=\count308
 \makeMPintoPDFobject=\count309
 \everyMPtoPDFconversion=\toks30
-) (/home/george/texlive/2021/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (/home/george/texlive/2021/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
 ))
 \c@maskedRefs=\count310
- (/home/george/texlive/2021/texmf-dist/tex/latex/apacite/english.apc
+
+(/usr/share/texlive/texmf-dist/tex/latex/apacite/english.apc
 File: english.apc 2013/07/21 v6.03 apacite language file
 LaTeX Info: Redefining \BPBI on input line 129.
 LaTeX Info: Redefining \BHBI on input line 130.
@@ -819,45 +943,62 @@ LaTeX Info: Redefining \BHBI on input line 130.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Trying to load font information for OT1+zavm on input line 132.
-(/home/george/texlive/2021/texmf-dist/tex/latex/arev/ot1zavm.fd
+LaTeX Font Info:    Trying to load font information for OT1+zavm on input line 
+132.
+(/usr/share/texlive/texmf-dist/tex/latex/arev/ot1zavm.fd
 File: ot1zavm.fd 2006/05/30 Fontinst v1.929 font definitions for OT1/zavm.
 )
-LaTeX Font Info:    Trying to load font information for OML+zavm on input line 132.
- (/home/george/texlive/2021/texmf-dist/tex/latex/arev/omlzavm.fd
+LaTeX Font Info:    Trying to load font information for OML+zavm on input line 
+132.
+
+(/usr/share/texlive/texmf-dist/tex/latex/arev/omlzavm.fd
 File: omlzavm.fd 2006/05/30 Fontinst v1.929 font definitions for OML/zavm.
 )
-LaTeX Font Info:    Trying to load font information for OMS+zavm on input line 132.
- (/home/george/texlive/2021/texmf-dist/tex/latex/arev/omszavm.fd
+LaTeX Font Info:    Trying to load font information for OMS+zavm on input line 
+132.
+
+(/usr/share/texlive/texmf-dist/tex/latex/arev/omszavm.fd
 File: omszavm.fd 2006/05/30 Fontinst v1.929 font definitions for OMS/zavm.
 )
-LaTeX Font Info:    Trying to load font information for OMX+mdbch on input line 132.
- (/home/george/texlive/2021/texmf-dist/tex/latex/mathdesign/mdbch/omxmdbch.fd
+LaTeX Font Info:    Trying to load font information for OMX+mdbch on input line
+ 132.
+
+(/usr/share/texlive/texmf-dist/tex/latex/mathdesign/mdbch/omxmdbch.fd
 File: omxmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for OMX/mdbch.
 )
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
 (Font)              scaled to size 11.52008pt on input line 132.
- (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/mt-bch.cfg
+
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-bch.cfg
 File: mt-bch.cfg 2007/03/03 v1.5 microtype config. file: Bitstream Charter (RS)
+
 )
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
 (Font)              scaled to size 8.64006pt on input line 132.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
 (Font)              scaled to size 6.72005pt on input line 132.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 132.
- (/home/george/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
+LaTeX Font Info:    Trying to load font information for U+msa on input line 132
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-) (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/mt-msa.cfg
+)
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 132.
- (/home/george/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
+LaTeX Font Info:    Trying to load font information for U+msb on input line 132
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (/home/george/texlive/2021/texmf-dist/tex/latex/microtype/mt-msb.cfg
+)
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Trying to load font information for MDA+mdbch on input line 132.
- (/home/george/texlive/2021/texmf-dist/tex/latex/mathdesign/mdbch/mdamdbch.fd
+LaTeX Font Info:    Trying to load font information for MDA+mdbch on input line
+ 132.
+
+(/usr/share/texlive/texmf-dist/tex/latex/mathdesign/mdbch/mdamdbch.fd
 File: mdamdbch.fd 2013/08/29 Fontinst v1.933 font definitions for MDA/mdbch.
 )
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
@@ -866,1418 +1007,1142 @@ LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
 (Font)              scaled to size 8.64006pt on input line 132.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
 (Font)              scaled to size 6.72005pt on input line 132.
-LaTeX Font Info:    Trying to load font information for U+zavm on input line 132.
- (/home/george/texlive/2021/texmf-dist/tex/latex/arev/uzavm.fd
+LaTeX Font Info:    Trying to load font information for U+zavm on input line 13
+2.
+
+(/usr/share/texlive/texmf-dist/tex/latex/arev/uzavm.fd
 File: uzavm.fd 2006/05/30 Fontinst v1.929 font definitions for U/zavm.
 )
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/12'
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/n/12'
 (microtype)             (new value: 12.0pt) on input line 132.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/9'
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/n/9'
 (microtype)             (new value: 9.0pt) on input line 132.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/7'
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/n/7'
 (microtype)             (new value: 7.0pt) on input line 132.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/12'
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/it/12'
 (microtype)             (new value: 12.0pt) on input line 132.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/9'
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/it/9'
 (microtype)             (new value: 9.0pt) on input line 132.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/7'
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/it/7'
 (microtype)             (new value: 7.0pt) on input line 132.
  [1
 
 
-{/home/george/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `T1/fav/m/sl' in size <10> not available
 (Font)              Font shape `T1/fav/m/it' tried instead on input line 135.
  [2
 
-]
-\tf@toc=\write5
-\openout5 = `appliedsnar.toc'.
+] (./appliedsnar.toc
+LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
+(Font)              scaled to size 9.60007pt on input line 6.
+LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
+(Font)              scaled to size 7.29605pt on input line 6.
+LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
+(Font)              scaled to size 5.76004pt on input line 6.
+LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
+(Font)              scaled to size 9.60007pt on input line 6.
+LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
+(Font)              scaled to size 7.29605pt on input line 6.
+LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
+(Font)              scaled to size 5.76004pt on input line 6.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/n/10'
+(microtype)             (new value: 10.0pt) on input line 6.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/n/7.6'
+(microtype)             (new value: 7.6pt) on input line 6.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/n/6'
+(microtype)             (new value: 6.0pt) on input line 6.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/it/10'
+(microtype)             (new value: 10.0pt) on input line 6.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/it/7.6'
+(microtype)             (new value: 7.6pt) on input line 6.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/it/6'
+(microtype)             (new value: 6.0pt) on input line 6.
+LaTeX Font Info:    Trying to load font information for T1+fvm on input line 26
+.
 
- [3] [4
+(/usr/share/texlive/texmf-dist/tex/latex/bera/t1fvm.fd
+File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
+) [3]
+Overfull \hbox (3.57993pt too wide) detected at line 67
+ []\T1/fav/m/n/10 104|
+ []
 
-]
+
+Overfull \hbox (3.57993pt too wide) detected at line 79
+ []\T1/fav/m/n/10 113|
+ []
+
+
+Overfull \hbox (3.57993pt too wide) detected at line 80
+ []\T1/fav/m/n/10 117|
+ []
+
+
+Overfull \hbox (3.57993pt too wide) detected at line 84
+ []\T1/fav/m/n/10 127|
+ []
+
+
+Overfull \hbox (3.57993pt too wide) detected at line 85
+ []\T1/fav/m/n/10 127|
+ []
+
+
+Overfull \hbox (3.57993pt too wide) detected at line 86
+ []\T1/fav/m/n/10 128|
+ []
+
+
+Overfull \hbox (3.57993pt too wide) detected at line 88
+ []\T1/fav/m/n/10 129|
+ []
+
+
+Overfull \hbox (3.57993pt too wide) detected at line 89
+ []\T1/fav/m/n/10 129|
+ []
+
+
+Overfull \hbox (3.57993pt too wide) detected at line 90
+ []\T1/fav/m/n/10 131|
+ []
+
+
+Overfull \hbox (3.57993pt too wide) detected at line 92
+ []\T1/fav/m/n/10 135|
+ []
+
+)
+\tf@toc=\write4
+\openout4 = `appliedsnar.toc'.
+
+ [4]
 Chapter 1.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 159.
+(Font)              scaled to size 7.68005pt on input line 156.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 7.29605pt on input line 159.
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 5.76004pt on input line 159.
+(Font)              scaled to size 4.80003pt on input line 156.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 9.60007pt on input line 159.
+(Font)              scaled to size 7.68005pt on input line 156.
 LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 7.29605pt on input line 159.
-LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 5.76004pt on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/10'
-(microtype)             (new value: 10.0pt) on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/7.6'
-(microtype)             (new value: 7.6pt) on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/6'
-(microtype)             (new value: 6.0pt) on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/10'
-(microtype)             (new value: 10.0pt) on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/7.6'
-(microtype)             (new value: 7.6pt) on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/6'
-(microtype)             (new value: 6.0pt) on input line 159.
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 159.
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 159.
-LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 7.68005pt on input line 159.
-LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
-(Font)              scaled to size 4.80003pt on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/8'
-(microtype)             (new value: 8.0pt) on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/n/5'
-(microtype)             (new value: 5.0pt) on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/8'
-(microtype)             (new value: 8.0pt) on input line 159.
-Package microtype Info: Fixing zero \fontdimen 6 for font `U/zavm/m/it/5'
-(microtype)             (new value: 5.0pt) on input line 159.
-LaTeX Font Info:    Trying to load font information for T1+fvm on input line 159.
-(/home/george/texlive/2021/texmf-dist/tex/latex/bera/t1fvm.fd
-File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
-) [5] [6] [7
+(Font)              scaled to size 4.80003pt on input line 156.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/n/8'
+(microtype)             (new value: 8.0pt) on input line 156.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/n/5'
+(microtype)             (new value: 5.0pt) on input line 156.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/it/8'
+(microtype)             (new value: 8.0pt) on input line 156.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/it/5'
+(microtype)             (new value: 5.0pt) on input line 156.
+[5
 
-] [8]
-Chapter 2.
-[9
-
-] [10
+] [6
 
 ]
+Chapter 2.
+[7] [8
+
+] [9] [10]
 Chapter 3.
+[11
+
+] [12
+
+]
+Chapter 4.
 LaTeX Font Info:    Font shape `T1/fvm/m/it' in size <10> not available
-(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 217.
-LaTeX Font Info:    Trying to load font information for TS1+fvm on input line 220.
-(/home/george/texlive/2021/texmf-dist/tex/latex/bera/ts1fvm.fd
+(Font)              Font shape `T1/fvm/m/sl' tried instead on input line 214.
+LaTeX Font Info:    Trying to load font information for TS1+fvm on input line 2
+17.
+(/usr/share/texlive/texmf-dist/tex/latex/bera/ts1fvm.fd
 File: ts1fvm.fd 2004/09/07 scalable font definitions for TS1/fvm.
 )
 LaTeX Font Info:    Font shape `TS1/fvm/m/it' in size <10> not available
-(Font)              Font shape `TS1/fvm/m/sl' tried instead on input line 220.
- [11] [12]
+(Font)              Font shape `TS1/fvm/m/sl' tried instead on input line 217.
+ [13] [14]
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 338.
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 338.
- (/home/george/texlive/2021/texmf-dist/tex/latex/base/t1cmtt.fd
+(textcomp)             Default family used instead on input line 335.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 3
+35.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 338.
- (/home/george/texlive/2021/texmf-dist/tex/latex/base/ts1cmtt.fd
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
+335.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 338.
+(textcomp)             Default family used instead on input line 335.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 352.
+(textcomp)             Default family used instead on input line 349.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 352.
- [13] [14] [15] [16]
+(textcomp)             Default family used instead on input line 349.
+ [15] [16] [17]
+[18]
 
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-1.pdf' not found on input line 670.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:670: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.670 ..._files/figure-latex/random-numbers-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Warning: File `part-01-02-the-basics_files/figure-latex/random-numbers-1.
+pdf' not found on input line 667.
 
 
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-2.pdf' not found on input line 680.
+LaTeX Warning: File `part-01-02-the-basics_files/figure-latex/random-numbers-2.
+pdf' not found on input line 677.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:680: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-2.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.680 ..._files/figure-latex/random-numbers-2.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Warning: File `part-01-02-the-basics_files/figure-latex/random-numbers-3.
+pdf' not found on input line 687.
 
 
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-3.pdf' not found on input line 690.
+LaTeX Warning: File `part-01-02-the-basics_files/figure-latex/random-numbers-4.
+pdf' not found on input line 697.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:690: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-3.pdf' not found: using draft setting.
+LaTeX Warning: File `part-01-02-the-basics_files/figure-latex/random-numbers-5.
+pdf' not found on input line 707.
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.690 ..._files/figure-latex/random-numbers-3.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+[19] [20]
+Chapter 5.
+[21
 
-
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-4.pdf' not found on input line 700.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:700: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-4.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.700 ..._files/figure-latex/random-numbers-4.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `02-the-basics_files/figure-latex/random-numbers-5.pdf' not found on input line 710.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:710: Package pdftex.def Error: File `02-the-basics_files/figure-latex/random-numbers-5.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.710 ..._files/figure-latex/random-numbers-5.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[17] [18]
-Chapter 4.
-[19
-
-] [20]
-LaTeX Font Info:    Trying to load font information for TS1+fav on input line 861.
-LaTeX Font Info:    No file TS1fav.fd. on input line 861.
+] [22]
+LaTeX Font Info:    Trying to load font information for TS1+fav on input line 8
+58.
+LaTeX Font Info:    No file TS1fav.fd. on input line 858.
 
 
 LaTeX Font Warning: Font shape `TS1/fav/m/n' undefined
 (Font)              using `TS1/cmr/m/n' instead
-(Font)              for symbol `textbullet' on input line 861.
+(Font)              for symbol `textbullet' on input line 858.
 
-(/home/george/texlive/2021/texmf-dist/tex/latex/microtype/mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
-) [21] [22] [23] [24] [25]
-Overfull \hbox (306.82356pt too wide) in paragraph at lines 1119--1119
-[]\T1/fvm/m/n/10 ## Error in graph_from_data_frame(., vertices = vertex_attrs): Some vertex names in edge list are not listed in vertex data frame[] 
- []
-
-[26]
-Overfull \hbox (29.90407pt too wide) in paragraph at lines 1171--1171
-[]\T1/fvm/m/n/10 ## [1] "name"     "school"   "hispanic" "female1"  "eversmk1" "eversmk2" "eversmk3"[] 
- []
-
-[27]
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 1296--1296
-[]\T1/fvm/m/n/10 ##  [1] 24059676   724389   290849     3619     3383     4401     3219     2997[] 
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
+(RS)
+) [23] [24]
+[25] [26] [27]
+Overfull \hbox (306.82356pt too wide) in paragraph at lines 1116--1116
+[]\T1/fvm/m/n/10 ## Error in graph_from_data_frame(., vertices = vertex_attrs):
+ Some vertex names in edge list are not listed in vertex data frame[] |
  []
 
 [28]
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 1296--1296
-[]\T1/fvm/m/n/10 ##  [9]      407       33      836      235      163      137      277       85[] 
+Overfull \hbox (29.90407pt too wide) in paragraph at lines 1168--1168
+[]\T1/fvm/m/n/10 ## [1] "name"     "school"   "hispanic" "female1"  "eversmk1" 
+"eversmk2" "eversmk3"[] |
+ []
+
+[29]
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 1293--1293
+[]\T1/fvm/m/n/10 ##  [1] 24059676   724389   290849     3619     3383     4401 
+    3219     2997[] |
+ []
+
+[30]
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 1293--1293
+[]\T1/fvm/m/n/10 ##  [9]      407       33      836      235      163      137 
+     277       85[] |
  []
 
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 1298.
+(amsmath)                 on input line 1295.
 
+[31] [32]
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1363: LaTeX Error: File `03-week-1-sns-study_files/figure-latex/03-plot-raw-1' not found.
+LaTeX Warning: File `part-01-03-week-1-sns-study_files/figure-latex/03-plot-nea
+t1-1.pdf' not found on input line 1444.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1363 ...-study_files/figure-latex/03-plot-raw-1}
-                                                  
-I could not locate the file with any of these extensions:
-.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+[33]
 
-[29] [30]
+LaTeX Warning: File `part-01-03-week-1-sns-study_files/figure-latex/03-plot-nea
+t2-1.pdf' not found on input line 1479.
 
-LaTeX Warning: File `03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf' not found on input line 1447.
+[34]
 
+LaTeX Warning: File `part-01-03-week-1-sns-study_files/figure-latex/03-myplot-c
+all-1.pdf' not found on input line 1562.
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1447: Package pdftex.def Error: File `03-week-1-sns-study_files/figure-latex/03-plot-neat1-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1447 ..._files/figure-latex/03-plot-neat1-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[31]
-
-LaTeX Warning: File `03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf' not found on input line 1482.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1482: Package pdftex.def Error: File `03-week-1-sns-study_files/figure-latex/03-plot-neat2-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1482 ..._files/figure-latex/03-plot-neat2-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[32]
-
-LaTeX Warning: File `03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf' not found on input line 1565.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:1565: Package pdftex.def Error: File `03-week-1-sns-study_files/figure-latex/03-myplot-call-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1565 ...files/figure-latex/03-myplot-call-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[33] [34]
+[35] [36]
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 1614.
+(textcomp)             Default family used instead on input line 1612.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 1614.
+(textcomp)             Default family used instead on input line 1612.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 1614.
+(textcomp)             Default family used instead on input line 1612.
 Package textcomp Info: Symbol \textasciigrave not provided by
 (textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 1614.
-
-Overfull \hbox (141.19878pt too wide) in paragraph at lines 1614--1614
-[]\T1/fvm/m/n/10 ## \TS1/cmtt/m/n/10 `\T1/fvm/m/n/10 summarise()\TS1/cmtt/m/n/10 ` \T1/fvm/m/n/10 has grouped output by \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 to\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 , \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 to_name\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 . You can override using the \TS1/cmtt/m/n/10 `\T1/fvm/m/n/10 .groups\TS1/cmtt/m/n/10 ` \T1/fvm/m/n/10 argument.[] 
- []
-
-[35] [36
+(textcomp)             Default family used instead on input line 1612.
+ [37] [38
 
 ]
-Chapter 5.
-<hunter2008.png, id=316, 685.05937pt x 339.51843pt>
-File: hunter2008.png Graphic file (type png)
-<use hunter2008.png>
-Package pdftex.def Info: hunter2008.png  used on input line 1693.
-(pdftex.def)             Requested size: 469.76459pt x 232.81738pt.
+Chapter 6.
+<hunter2008.png, id=135, 685.05937pt x 339.51843pt>
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 10.39993pt on input line 1705.
+(Font)              scaled to size 10.39993pt on input line 1703.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.90395pt on input line 1705.
+(Font)              scaled to size 7.90395pt on input line 1703.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.23996pt on input line 1705.
-
-LaTeX Warning: Reference `eq:04-1' on page 37 undefined on input line 1707.
-
+(Font)              scaled to size 6.23996pt on input line 1703.
 
 Underfull \vbox (badness 1221) has occurred while \output is active []
 
- [37]
-
-LaTeX Warning: Reference `eq:04-1' on page 38 undefined on input line 1713.
-
-[38 <./hunter2008.png>] [39] [40]
+ [39]
+[40] [41] [42]
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 8.31995pt on input line 1931.
+(Font)              scaled to size 8.31995pt on input line 1929.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.19997pt on input line 1931.
- [41]
-Overfull \hbox (90.10396pt too wide) in paragraph at lines 1960--1960
-[]  \T1/fvm/m/n/10 add.edges, add.vertices, %c%, delete.edges, delete.vertices, get.edge.attribute, get.edges,[] 
+(Font)              scaled to size 5.19997pt on input line 1929.
+ [43]
+Overfull \hbox (90.10396pt too wide) in paragraph at lines 1958--1958
+[]  \T1/fvm/m/n/10 add.edges, add.vertices, %c%, delete.edges, delete.vertices,
+ get.edge.attribute, get.edges,[] |
  []
 
 
-Overfull \hbox (138.26387pt too wide) in paragraph at lines 1960--1960
-[]  \T1/fvm/m/n/10 get.vertex.attribute, is.bipartite, is.directed, list.edge.attributes, list.vertex.attributes, %s%,[] 
+Overfull \hbox (138.26387pt too wide) in paragraph at lines 1958--1958
+[]  \T1/fvm/m/n/10 get.vertex.attribute, is.bipartite, is.directed, list.edge.a
+ttributes, list.vertex.attributes, %s%,[] |
  []
 
-[42] [43] [44] [45]
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 2196--2196
-[]\T1/fvm/m/n/10 ## Consider submitting praise using the praise or praise_interactive functions.[] 
- []
-
-
-Overfull \hbox (421.20335pt too wide) in paragraph at lines 2219--2219
-[]\T1/fvm/m/n/10 ## Warning: This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 ergm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.[] 
+[44] [45] [46] [47]
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 2194--2194
+[]\T1/fvm/m/n/10 ## Consider submitting praise using the praise or praise_inter
+active functions.[] |
  []
 
 
-Overfull \hbox (367.02345pt too wide) in paragraph at lines 2219--2219
-[]\T1/fvm/m/n/10 ## This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 ergm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.[] 
+Overfull \hbox (421.20335pt too wide) in paragraph at lines 2217--2217
+[]\T1/fvm/m/n/10 ## Warning: This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/
+m/n/10 ergm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizi
+ng it with version 4.2 or later may return incorrect results or fail.[] |
  []
 
 
-Overfull \hbox (367.02345pt too wide) in paragraph at lines 2219--2219
-[]\T1/fvm/m/n/10 ## This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 ergm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.[] 
- []
-
-[46]
-Overfull \hbox (421.20335pt too wide) in paragraph at lines 2259--2259
-[]\T1/fvm/m/n/10 ## Warning: This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 ergm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.[] 
+Overfull \hbox (367.02345pt too wide) in paragraph at lines 2217--2217
+[]\T1/fvm/m/n/10 ## This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 er
+gm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it wit
+h version 4.2 or later may return incorrect results or fail.[] |
  []
 
 
-Overfull \hbox (367.02345pt too wide) in paragraph at lines 2259--2259
-[]\T1/fvm/m/n/10 ## This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 ergm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.[] 
+Overfull \hbox (367.02345pt too wide) in paragraph at lines 2217--2217
+[]\T1/fvm/m/n/10 ## This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 er
+gm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it wit
+h version 4.2 or later may return incorrect results or fail.[] |
+ []
+
+[48]
+Overfull \hbox (421.20335pt too wide) in paragraph at lines 2257--2257
+[]\T1/fvm/m/n/10 ## Warning: This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/
+m/n/10 ergm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizi
+ng it with version 4.2 or later may return incorrect results or fail.[] |
  []
 
 
-Overfull \hbox (367.02345pt too wide) in paragraph at lines 2259--2259
-[]\T1/fvm/m/n/10 ## This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 ergm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it with version 4.2 or later may return incorrect results or fail.[] 
+Overfull \hbox (367.02345pt too wide) in paragraph at lines 2257--2257
+[]\T1/fvm/m/n/10 ## This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 er
+gm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it wit
+h version 4.2 or later may return incorrect results or fail.[] |
+ []
+
+
+Overfull \hbox (367.02345pt too wide) in paragraph at lines 2257--2257
+[]\T1/fvm/m/n/10 ## This object was fit with \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 er
+gm\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 version 4.1.2 or earlier. Summarizing it wit
+h version 4.2 or later may return incorrect results or fail.[] |
  []
 
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.27995pt on input line 2284.
-[47] [48]
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1[] 
+(Font)              scaled to size 7.27995pt on input line 2282.
+[49] [50]
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ##                   edges nodematch.hispanic nodematch.femal
+e1 nodematch.eversmk1[] |
  []
 
 
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 0       1.000000000        0.861920590        0.90235072         0.86215333[] 
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 0       1.000000000        0.861920590        0.902350
+72         0.86215333[] |
  []
 
 
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 65536   0.415060923        0.326775063        0.43751588         0.38274418[] 
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 65536   0.415060923        0.326775063        0.437515
+88         0.38274418[] |
  []
 
 
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 327680  0.063993999        0.002238453        0.09094189         0.05143792[] 
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 327680  0.063993999        0.002238453        0.090941
+89         0.05143792[] |
  []
 
 
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 655360  0.002497326       -0.105210070       -0.02414091         0.00143358[] 
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 655360  0.002497326       -0.105210070       -0.024140
+91         0.00143358[] |
  []
 
 
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 3276800 0.026845190        0.068616366        0.03686125         0.03652383[] 
- []
-
-[49]
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 0        0.86192059        1.000000000        0.76137201         0.74623272[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 65536    0.32680263        0.336764054        0.30353156         0.32690588[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 327680   0.05778076        0.004465856        0.07267341         0.03757479[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 655360   0.07704457        0.024226503        0.03252125         0.08420548[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 3276800 -0.02970399        0.021278122       -0.02753467        -0.03018601[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 0       0.902350724         0.76137201        1.00000000         0.77769826[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 65536   0.453418914         0.37756721        0.51290498         0.41954866[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 327680  0.055464012        -0.01058737        0.09841770         0.04272154[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 655360  0.009910833        -0.06123858       -0.03186870         0.04679847[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 3276800 0.004163166         0.04057544        0.01548719        -0.01288236[] 
- []
-
-
-Overfull \hbox (42.86412pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ##                  edges nodematch.hispanic nodematch.female1 nodematch.eversmk1[] 
- []
-
-
-Overfull \hbox (42.86412pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 0       0.86215333        0.746232721        0.77769826        1.000000000[] 
- []
-
-
-Overfull \hbox (42.86412pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 65536   0.37539678        0.297591397        0.41717478        0.448697559[] 
- []
-
-
-Overfull \hbox (42.86412pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 327680  0.02105523       -0.040132752        0.03760486        0.019124328[] 
- []
-
-
-Overfull \hbox (42.86412pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 655360  0.04566425        0.003387581        0.04761067       -0.006388743[] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [50]
-Overfull \hbox (42.86412pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 3276800 0.05048735        0.084790008        0.07108989        0.045582057[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 0        0.78526442         0.70578514       0.769810849         0.70530096[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 65536    0.50645801         0.44741607       0.532817503         0.47751208[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 327680   0.12979152         0.06061696       0.147380566         0.10930214[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 655360  -0.06393205        -0.13217821      -0.008121728        -0.03814393[] 
- []
-
-
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 2477--2477
- []\T1/fvm/m/n/10 ## Lag 3276800 -0.01707605         0.03244214      -0.023750630         0.02781638[] 
- []
-
-
-Overfull \hbox (24.80415pt too wide) in paragraph at lines 2505--2505
- []\T1/fvm/m/n/10 ##              edges nodematch.hispanic  nodematch.female1 nodematch.eversmk1[] 
- []
-
-
-Overfull \hbox (24.80415pt too wide) in paragraph at lines 2505--2505
- []\T1/fvm/m/n/10 ##            -0.7115            -1.7204            -0.1841             0.6952[] 
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 3276800 0.026845190        0.068616366        0.036861
+25         0.03652383[] |
  []
 
 [51]
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ##                   edges nodematch.hispanic nodematch.femal
+e1 nodematch.eversmk1[] |
+ []
 
-LaTeX Warning: Reference `fig:coda-plots' on page 52 undefined on input line 2540.
 
-[52] [53]
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 0        0.86192059        1.000000000        0.761372
+01         0.74623272[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 65536    0.32680263        0.336764054        0.303531
+56         0.32690588[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 327680   0.05778076        0.004465856        0.072673
+41         0.03757479[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 655360   0.07704457        0.024226503        0.032521
+25         0.08420548[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 3276800 -0.02970399        0.021278122       -0.027534
+67        -0.03018601[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ##                   edges nodematch.hispanic nodematch.femal
+e1 nodematch.eversmk1[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 0       0.902350724         0.76137201        1.000000
+00         0.77769826[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 65536   0.453418914         0.37756721        0.512904
+98         0.41954866[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 327680  0.055464012        -0.01058737        0.098417
+70         0.04272154[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 655360  0.009910833        -0.06123858       -0.031868
+70         0.04679847[] |
+ []
+
+
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 3276800 0.004163166         0.04057544        0.015487
+19        -0.01288236[] |
+ []
+
+
+Overfull \hbox (42.86412pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ##                  edges nodematch.hispanic nodematch.female
+1 nodematch.eversmk1[] |
+ []
+
+
+Overfull \hbox (42.86412pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 0       0.86215333        0.746232721        0.7776982
+6        1.000000000[] |
+ []
+
+
+Overfull \hbox (42.86412pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 65536   0.37539678        0.297591397        0.4171747
+8        0.448697559[] |
+ []
+
+
+Overfull \hbox (42.86412pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 327680  0.02105523       -0.040132752        0.0376048
+6        0.019124328[] |
+ []
+
+
+Overfull \hbox (42.86412pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 655360  0.04566425        0.003387581        0.0476106
+7       -0.006388743[] |
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [54]
-
-LaTeX Warning: File `04-ergms_files/figure-latex/checking-gof-1.pdf' not found on input line 2681.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:2681: Package pdftex.def Error: File `04-ergms_files/figure-latex/checking-gof-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.2681 ...s_files/figure-latex/checking-gof-1.pdf}
-                                                   \includegraphics{04-ergms...
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+ [52]
+Overfull \hbox (42.86412pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 3276800 0.05048735        0.084790008        0.0710898
+9        0.045582057[] |
+ []
 
 
-LaTeX Warning: File `04-ergms_files/figure-latex/checking-gof-2.pdf' not found on input line 2681.
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ##                   edges nodematch.hispanic nodematch.femal
+e1 nodematch.eversmk1[] |
+ []
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:2681: Package pdftex.def Error: File `04-ergms_files/figure-latex/checking-gof-2.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.2681 ...s_files/figure-latex/checking-gof-2.pdf}
-                                                   \includegraphics{04-ergms...
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 0        0.78526442         0.70578514       0.7698108
+49         0.70530096[] |
+ []
 
 
-LaTeX Warning: File `04-ergms_files/figure-latex/checking-gof-3.pdf' not found on input line 2681.
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 65536    0.50645801         0.44741607       0.5328175
+03         0.47751208[] |
+ []
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:2681: Package pdftex.def Error: File `04-ergms_files/figure-latex/checking-gof-3.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.2681 ...s_files/figure-latex/checking-gof-3.pdf}
-                                                   \includegraphics{04-ergms...
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 327680   0.12979152         0.06061696       0.1473805
+66         0.10930214[] |
+ []
 
 
-LaTeX Warning: File `04-ergms_files/figure-latex/checking-gof-4.pdf' not found on input line 2681.
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 655360  -0.06393205        -0.13217821      -0.0081217
+28        -0.03814393[] |
+ []
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:2681: Package pdftex.def Error: File `04-ergms_files/figure-latex/checking-gof-4.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.2681 ...s_files/figure-latex/checking-gof-4.pdf}
-                                                   \includegraphics{04-ergms...
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 2475--2475
+ []\T1/fvm/m/n/10 ## Lag 3276800 -0.01707605         0.03244214      -0.0237506
+30         0.02781638[] |
+ []
 
 
-LaTeX Warning: File `04-ergms_files/figure-latex/checking-gof-5.pdf' not found on input line 2681.
+Overfull \hbox (24.80415pt too wide) in paragraph at lines 2503--2503
+ []\T1/fvm/m/n/10 ##              edges nodematch.hispanic  nodematch.female1 n
+odematch.eversmk1[] |
+ []
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:2681: Package pdftex.def Error: File `04-ergms_files/figure-latex/checking-gof-5.pdf' not found: using draft setting.
+Overfull \hbox (24.80415pt too wide) in paragraph at lines 2503--2503
+ []\T1/fvm/m/n/10 ##            -0.7115            -1.7204            -0.1841  
+           0.6952[] |
+ []
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.2681 ...s_files/figure-latex/checking-gof-5.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+[53]
+
+LaTeX Warning: Reference `fig:coda-plots' on page 54 undefined on input line 25
+38.
+
+[54] [55]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [56]
+
+LaTeX Warning: File `part-01-04-ergms_files/figure-latex/checking-gof-1.pdf' no
+t found on input line 2679.
 
 
-Underfull \vbox (badness 3514) detected at line 2708
+LaTeX Warning: File `part-01-04-ergms_files/figure-latex/checking-gof-2.pdf' no
+t found on input line 2679.
+
+
+LaTeX Warning: File `part-01-04-ergms_files/figure-latex/checking-gof-3.pdf' no
+t found on input line 2679.
+
+
+LaTeX Warning: File `part-01-04-ergms_files/figure-latex/checking-gof-4.pdf' no
+t found on input line 2679.
+
+
+LaTeX Warning: File `part-01-04-ergms_files/figure-latex/checking-gof-5.pdf' no
+t found on input line 2679.
+
+
+Underfull \vbox (badness 3514) detected at line 2706
  []
 
 
 Underfull \vbox (badness 2529) has occurred while \output is active []
 
- [55]
-<awful-chains.png, id=481, 537.50812pt x 429.85594pt>
-File: awful-chains.png Graphic file (type png)
-<use awful-chains.png>
-Package pdftex.def Info: awful-chains.png  used on input line 2719.
-(pdftex.def)             Requested size: 537.515pt x 429.86143pt.
+ [57]
+<awful-chains.png, id=204, 537.50812pt x 429.85594pt>
 
-Overfull \hbox (67.75998pt too wide) in paragraph at lines 2719--2719
-[][] 
+Overfull \hbox (67.75998pt too wide) in paragraph at lines 2717--2717
+[][] |
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[56] [57 <./awful-chains.png (PNG copy)>] [58] [59] [60
+[58] [59] [60] [61] [62
 
 ]
-Chapter 6.
-[61]
+Chapter 7.
+[63]
 Overfull \hbox (5.82411pt too wide) in paragraph at lines 2934--2934
-[]\T1/fvm/m/n/10 ##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE[] 
+[]\T1/fvm/m/n/10 ##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE 
+ TRUE FALSE FALSE[] |
  []
 
 
 Overfull \hbox (5.82411pt too wide) in paragraph at lines 2934--2934
-[]\T1/fvm/m/n/10 ## [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE[] 
+[]\T1/fvm/m/n/10 ## [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE 
+FALSE FALSE FALSE[] |
  []
 
 
 Overfull \hbox (5.82411pt too wide) in paragraph at lines 2934--2934
-[]\T1/fvm/m/n/10 ## [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE[] 
+[]\T1/fvm/m/n/10 ## [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE 
+FALSE FALSE FALSE[] |
  []
 
 
 Overfull \hbox (5.82411pt too wide) in paragraph at lines 2934--2934
-[]\T1/fvm/m/n/10 ## [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE[] 
+[]\T1/fvm/m/n/10 ## [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE 
+FALSE FALSE FALSE[] |
  []
 
 
-LaTeX Warning: File `05-ergms-constrains_files/figure-latex/unnamed-chunk-1-1.pdf' not found on input line 2942.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:2942: Package pdftex.def Error: File `05-ergms-constrains_files/figure-latex/unnamed-chunk-1-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.2942 ...iles/figure-latex/unnamed-chunk-1-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[62] [63]
-
-LaTeX Warning: File `05-ergms-constrains_files/figure-latex/unnamed-chunk-4-1.pdf' not found on input line 3008.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3008: Package pdftex.def Error: File `05-ergms-constrains_files/figure-latex/unnamed-chunk-4-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3008 ...iles/figure-latex/unnamed-chunk-4-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `05-ergms-constrains_files/figure-latex/unnamed-chunk-5-1.pdf' not found on input line 3065.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3065: Package pdftex.def Error: File `05-ergms-constrains_files/figure-latex/unnamed-chunk-5-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3065 ...iles/figure-latex/unnamed-chunk-5-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Warning: File `part-01-05-ergms-constrains_files/figure-latex/unnamed-chu
+nk-1-1.pdf' not found on input line 2942.
 
 [64] [65]
 
-LaTeX Warning: File `05-ergms-constrains_files/figure-latex/unnamed-chunk-7-1.pdf' not found on input line 3127.
+LaTeX Warning: File `part-01-05-ergms-constrains_files/figure-latex/unnamed-chu
+nk-4-1.pdf' not found on input line 3008.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3127: Package pdftex.def Error: File `05-ergms-constrains_files/figure-latex/unnamed-chunk-7-1.pdf' not found: using draft setting.
+LaTeX Warning: File `part-01-05-ergms-constrains_files/figure-latex/unnamed-chu
+nk-5-1.pdf' not found on input line 3065.
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3127 ...iles/figure-latex/unnamed-chunk-7-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+[66] [67]
 
-[66]
+LaTeX Warning: File `part-01-05-ergms-constrains_files/figure-latex/unnamed-chu
+nk-7-1.pdf' not found on input line 3127.
 
-LaTeX Warning: File `05-ergms-constrains_files/figure-latex/05-example2-simulated-graph-1.pdf' not found on input line 3199.
+[68]
 
+LaTeX Warning: File `part-01-05-ergms-constrains_files/figure-latex/05-example2
+-simulated-graph-1.pdf' not found on input line 3199.
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3199: Package pdftex.def Error: File `05-ergms-constrains_files/figure-latex/05-example2-simulated-graph-1.pdf' not found: using draft setting.
+[69]
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3199 ...latex/05-example2-simulated-graph-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[67]
-
-LaTeX Warning: File `05-ergms-constrains_files/figure-latex/05-example2-side-by-side-1.pdf' not found on input line 3274.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3274: Package pdftex.def Error: File `05-ergms-constrains_files/figure-latex/05-example2-side-by-side-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3274 ...re-latex/05-example2-side-by-side-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Warning: File `part-01-05-ergms-constrains_files/figure-latex/05-example2
+-side-by-side-1.pdf' not found on input line 3274.
 
 
 Overfull \hbox (11.8441pt too wide) in paragraph at lines 3319--3319
-[]\T1/fvm/m/n/10 ## Warning: \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 glpk\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 selected as the solver, but package \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 Rglpk\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 is not available;[] 
+[]\T1/fvm/m/n/10 ## Warning: \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 glpk\TS1/fvm/m/n/1
+0 ' \T1/fvm/m/n/10 selected as the solver, but package \TS1/fvm/m/n/10 '\T1/fvm
+/m/n/10 Rglpk\TS1/fvm/m/n/10 ' \T1/fvm/m/n/10 is not available;[] |
  []
 
-[68]
+[70]
 Overfull \hbox (23.88408pt too wide) in paragraph at lines 3319--3319
-[]\T1/fvm/m/n/10 ## falling back to \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 lpSolveAPI\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 . This should be fine unless the sample size and/or[] 
+[]\T1/fvm/m/n/10 ## falling back to \TS1/fvm/m/n/10 '\T1/fvm/m/n/10 lpSolveAPI\
+TS1/fvm/m/n/10 '\T1/fvm/m/n/10 . This should be fine unless the sample size and
+/or[] |
  []
 
-[69] [70]
-Chapter 7.
-[71
+[71] [72]
+Chapter 8.
+[73
 
-] [72
+] [74
 
 ]
-Chapter 8.
-[73] [74] [75]
+Chapter 9.
+[75] [76] [77]
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found on input line 3599.
+LaTeX Warning: File `part-01-06-network-simulation-and-viz_files/figure-latex/0
+6-first-fig-1.pdf' not found on input line 3622.
+
+[78]
+
+LaTeX Warning: File `part-01-06-network-simulation-and-viz_files/figure-latex/0
+6-fake-graph-read-1.pdf' not found on input line 3664.
+
+[79] [80] [81] [82]
+
+LaTeX Warning: File `part-01-06-network-simulation-and-viz_files/figure-latex/0
+6-size-1.pdf' not found on input line 3913.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3599: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-first-fig-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3599 ...z_files/figure-latex/06-first-fig-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-Overfull \vbox (1.85396pt too high) detected at line 3639
+Underfull \hbox (badness 10000) in paragraph at lines 3939--3945
+[]\T1/fvm/m/n/10 glayout <- gplot(net_sim, vertex.cex = (net_sim %v% "indeg") *
+ 2) \T1/fav/m/n/10 (+20) gen-er-at-
  []
 
-[76]
+[83]
 
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found on input line 3641.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3641: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-fake-graph-read-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3641 ...s/figure-latex/06-fake-graph-read-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[77] [78] [79]
-
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found on input line 3890.
+LaTeX Warning: File `part-01-06-network-simulation-and-viz_files/figure-latex/0
+6-size-netdiffuseR-1.pdf' not found on input line 3975.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3890: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3890 ...nd-viz_files/figure-latex/06-size-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[80]
-Underfull \hbox (badness 10000) in paragraph at lines 3916--3922
-[]\T1/fvm/m/n/10 glayout <- gplot(net_sim, vertex.cex = (net_sim %v% "indeg") * 2) \T1/fav/m/n/10 (+20) gen-er-at-
- []
-
-
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found on input line 3952.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3952: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-size-netdiffuseR-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3952 .../figure-latex/06-size-netdiffuseR-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[81]
-
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found on input line 3967.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:3967: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-netplot1-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3967 ...iz_files/figure-latex/06-netplot1-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found on input line 4002.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4002: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-color-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4002 ...les/figure-latex/06-network-color-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [82] [83]
-
-LaTeX Warning: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found on input line 4084.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4084: Package pdftex.def Error: File `06-network-simulation-and-viz_files/figure-latex/06-network-shape-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4084 ...les/figure-latex/06-network-shape-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Warning: File `part-01-06-network-simulation-and-viz_files/figure-latex/0
+6-netplot1-1.pdf' not found on input line 3990.
 
 [84]
-Chapter 9.
-[85
 
-] [86]
+LaTeX Warning: File `part-01-06-network-simulation-and-viz_files/figure-latex/0
+6-network-color-1.pdf' not found on input line 4029.
+
+[85]
+
+LaTeX Warning: File `part-01-06-network-simulation-and-viz_files/figure-latex/0
+6-network-shape-1.pdf' not found on input line 4117.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [87] [88]
+ [86]
+[87]
+
+LaTeX Warning: File `part-01-06-network-simulation-and-viz_files/figure-latex/0
+6-adjust-homophily-plot-1.pdf' not found on input line 4209.
+
+[88]
 Chapter 10.
 [89
 
+] [90]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [91]
+[92]
+Chapter 11.
+[93
+
 ]
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 4388--4388
- []\T1/fvm/m/n/10 ##  # of nodes         : 692 (1001, 1002, 1004, 1005, 1007, 1009, 1010, 1020, ...)[] 
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 4518--4518
+ []\T1/fvm/m/n/10 ##  # of nodes         : 692 (1001, 1002, 1004, 1005, 1007, 1
+009, 1010, 1020, ...)[] |
  []
 
 
-Overfull \hbox (60.92409pt too wide) in paragraph at lines 4388--4388
- []\T1/fvm/m/n/10 ##  Static attributes  : village, idold, age, liveout, visits, contact, coo... (146)[] 
+Overfull \hbox (60.92409pt too wide) in paragraph at lines 4518--4518
+ []\T1/fvm/m/n/10 ##  Static attributes  : village, idold, age, liveout, visits
+, contact, coo... (146)[] |
  []
 
-[90]
-Overfull \hbox (48.88411pt too wide) in paragraph at lines 4406--4406
- []\T1/fvm/m/n/10 ##  # of nodes         : 125 (1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, ...)[] 
- []
-
-
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 4406--4406
- []\T1/fvm/m/n/10 ##  Static attributes  : city, detail, meet, coll, attend, proage, length, ... (58)[] 
+[94]
+Overfull \hbox (48.88411pt too wide) in paragraph at lines 4536--4536
+ []\T1/fvm/m/n/10 ##  # of nodes         : 125 (1001, 1002, 1003, 1004, 1005, 1
+006, 1007, 1008, ...)[] |
  []
 
 
-Overfull \hbox (103.06401pt too wide) in paragraph at lines 4424--4424
- []\T1/fvm/m/n/10 ##  # of nodes         : 1047 (10002, 10003, 10005, 10007, 10010, 10011, 10012, 10014, ...)[] 
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 4536--4536
+ []\T1/fvm/m/n/10 ##  Static attributes  : city, detail, meet, coll, attend, pr
+oage, length, ... (58)[] |
  []
 
 
-Overfull \hbox (60.92409pt too wide) in paragraph at lines 4424--4424
- []\T1/fvm/m/n/10 ##  Static attributes  : village, recno1, studno1, area1, id1, nmage1, nmag... (430)[] 
+Overfull \hbox (103.06401pt too wide) in paragraph at lines 4554--4554
+ []\T1/fvm/m/n/10 ##  # of nodes         : 1047 (10002, 10003, 10005, 10007, 10
+010, 10011, 10012, 10014, ...)[] |
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found on input line 4442.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4442: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4442 ...etdiffuser_files/figure-latex/viz-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found on input line 4450.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4450: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-2.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4450 ...etdiffuser_files/figure-latex/viz-2.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found on input line 4458.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4458: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-3.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4458 ...etdiffuser_files/figure-latex/viz-3.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[91]
-
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found on input line 4466.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4466: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-4.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4466 ...etdiffuser_files/figure-latex/viz-4.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found on input line 4474.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4474: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-5.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4474 ...etdiffuser_files/figure-latex/viz-5.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-Overfull \hbox (23.88408pt too wide) in paragraph at lines 4485--4485
-[]\T1/fvm/m/n/10 ## Warning in plot_infectsuscep.list(graph$graph, graph$toa, t0, normalize, : When[] 
+Overfull \hbox (60.92409pt too wide) in paragraph at lines 4554--4554
+ []\T1/fvm/m/n/10 ##  Static attributes  : village, recno1, studno1, area1, id1
+, nmage1, nmag... (430)[] |
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found on input line 4487.
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/viz-1.pdf' not f
+ound on input line 4572.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4487: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-6.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4487 ...etdiffuser_files/figure-latex/viz-6.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/viz-2.pdf' not f
+ound on input line 4580.
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found on input line 4495.
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/viz-3.pdf' not f
+ound on input line 4588.
+
+[95]
+
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/viz-4.pdf' not f
+ound on input line 4596.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4495: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/viz-7.pdf' not found: using draft setting.
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/viz-5.pdf' not f
+ound on input line 4604.
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4495 ...etdiffuser_files/figure-latex/viz-7.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+
+Overfull \hbox (23.88408pt too wide) in paragraph at lines 4615--4615
+[]\T1/fvm/m/n/10 ## Warning in plot_infectsuscep.list(graph$graph, graph$toa, t
+0, normalize, : When[] |
+ []
+
+
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/viz-6.pdf' not f
+ound on input line 4617.
+
+
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/viz-7.pdf' not f
+ound on input line 4625.
 
 
 Underfull \vbox (badness 2452) has occurred while \output is active []
 
- [92] [93]
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
-[]\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4659--4659
-[]\T1/fvm/m/n/10 ##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density   Moran\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 s I (sd)[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
-[]\T1/fvm/m/n/10 ## -------- ---------- ---------------- ------------- --------- ----------------[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
-[]\T1/fvm/m/n/10 ##        2         78       103 (0.21)          0.16      0.01  0.01 (0.00) ***[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
-[]\T1/fvm/m/n/10 ##        3        187       290 (0.58)          0.47      0.01  0.01 (0.00) ***[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
-[]\T1/fvm/m/n/10 ##        4        183       473 (0.95)          0.87      0.01  0.01 (0.00) ***[] 
- []
-
-
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4659--4659
-[]\T1/fvm/m/n/10 ##        5         27       500 (1.00)          1.00      0.01               -[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4659--4659
-[]\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
- []
-
-[94]
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4667: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-1' not found.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4667 ...iffuser_files/figure-latex/plot-rumor-1}
-                                                   \end{center}
-I could not locate the file with any of these extensions:
-.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4679: LaTeX Error: File `08-netdiffuser_files/figure-latex/plot-rumor-2' not found.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4679 ...iffuser_files/figure-latex/plot-rumor-2}
-                                                   \end{center}
-I could not locate the file with any of these extensions:
-.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found on input line 4707.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4707: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4707 ...re-latex/plot-complex-and-disease-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Package textcomp Info: Symbol \textasciigrave not provided by
-(textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4721.
-Package textcomp Info: Symbol \textasciigrave not provided by
-(textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 4721.
-[95]
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
-[]\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4750--4750
-[]\T1/fvm/m/n/10 ##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density   Moran\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 s I (sd)[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
-[]\T1/fvm/m/n/10 ## -------- ---------- ---------------- ------------- --------- ----------------[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
-[]\T1/fvm/m/n/10 ##        2         92       117 (0.23)          0.19      0.01  0.01 (0.00) ***[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
-[]\T1/fvm/m/n/10 ##        3        152       269 (0.54)          0.40      0.01  0.01 (0.00) ***[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
-[]\T1/fvm/m/n/10 ##        4        150       419 (0.84)          0.65      0.01  0.01 (0.00) ***[] 
- []
-
-
-Overfull \hbox (5.82411pt too wide) in paragraph at lines 4750--4750
-[]\T1/fvm/m/n/10 ##        5         73       492 (0.98)          0.90      0.01 -0.00 (0.00) **[] 
- []
-
-
-Overfull \hbox (11.8441pt too wide) in paragraph at lines 4750--4750
-[]\T1/fvm/m/n/10 ## -----------------------------------------------------------------------------[] 
- []
-
-
-Underfull \vbox (badness 1565) has occurred while \output is active []
-
  [96]
-
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found on input line 4796.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4796: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4796 ...ffuser_files/figure-latex/sim-sim-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-Underfull \vbox (badness 10000) detected at line 4872
+[97]
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4789--4789
+[]\T1/fvm/m/n/10 ## -----------------------------------------------------------
+------------------[] |
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [97]
-Underfull \vbox (badness 10000) detected at line 4872
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4789--4789
+[]\T1/fvm/m/n/10 ##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density
+   Moran\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 s I (sd)[] |
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4872
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4789--4789
+[]\T1/fvm/m/n/10 ## -------- ---------- ---------------- ------------- --------
+- ----------------[] |
+ []
+
+
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4789--4789
+[]\T1/fvm/m/n/10 ##        2         78       103 (0.21)          0.16      0.0
+1  0.01 (0.00) ***[] |
+ []
+
+
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4789--4789
+[]\T1/fvm/m/n/10 ##        3        187       290 (0.58)          0.47      0.0
+1  0.01 (0.00) ***[] |
+ []
+
+
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4789--4789
+[]\T1/fvm/m/n/10 ##        4        183       473 (0.95)          0.87      0.0
+1  0.01 (0.00) ***[] |
+ []
+
+
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4789--4789
+[]\T1/fvm/m/n/10 ##        5         27       500 (1.00)          1.00      0.0
+1               -[] |
+ []
+
+
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4789--4789
+[]\T1/fvm/m/n/10 ## -----------------------------------------------------------
+------------------[] |
  []
 
 [98]
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found on input line 4911.
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/plot-complex-and
+-disease-1.pdf' not found on input line 4837.
+
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family fvm in TS1 encoding.
+(textcomp)             Default family used instead on input line 4851.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family fvm in TS1 encoding.
+(textcomp)             Default family used instead on input line 4851.
+[99]
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4880--4880
+[]\T1/fvm/m/n/10 ## -----------------------------------------------------------
+------------------[] |
+ []
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4911: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf' not found: using draft setting.
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4880--4880
+[]\T1/fvm/m/n/10 ##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density
+   Moran\TS1/fvm/m/n/10 '\T1/fvm/m/n/10 s I (sd)[] |
+ []
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4911 ...iles/figure-latex/sim-sim-results-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4880--4880
+[]\T1/fvm/m/n/10 ## -------- ---------- ---------------- ------------- --------
+- ----------------[] |
+ []
+
+
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4880--4880
+[]\T1/fvm/m/n/10 ##        2         92       117 (0.23)          0.19      0.0
+1  0.01 (0.00) ***[] |
+ []
+
+
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4880--4880
+[]\T1/fvm/m/n/10 ##        3        152       269 (0.54)          0.40      0.0
+1  0.01 (0.00) ***[] |
+ []
+
+
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4880--4880
+[]\T1/fvm/m/n/10 ##        4        150       419 (0.84)          0.65      0.0
+1  0.01 (0.00) ***[] |
+ []
+
+
+Overfull \hbox (5.82411pt too wide) in paragraph at lines 4880--4880
+[]\T1/fvm/m/n/10 ##        5         73       492 (0.98)          0.90      0.0
+1 -0.00 (0.00) **[] |
+ []
+
+
+Overfull \hbox (11.8441pt too wide) in paragraph at lines 4880--4880
+[]\T1/fvm/m/n/10 ## -----------------------------------------------------------
+------------------[] |
+ []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [99]
+ [100]
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found on input line 4972.
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/sim-sim-1.pdf' n
+ot found on input line 4926.
 
 
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:4972: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.4972 ...s/figure-latex/geodesic_speed-box-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[100] [101]
-Package textcomp Info: Symbol \textasciigrave not provided by
-(textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 5041.
-Package textcomp Info: Symbol \textasciigrave not provided by
-(textcomp)             font family fvm in TS1 encoding.
-(textcomp)             Default family used instead on input line 5041.
-
-Overfull \hbox (650.88301pt too wide) in paragraph at lines 5045--5045
- []\T1/fvm/m/n/10 It simulates networks with the same density, and computes a particular statistic every time, generating an EDF (Empirical Distribution Function) under the Null hypothesis (p-values).[] 
+Underfull \vbox (badness 10000) detected at line 5002
  []
 
 
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 5076--5076
- []\T1/fvm/m/n/10 ## --------------------------------------------------------------------------------[] 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [101]
+Underfull \vbox (badness 10000) detected at line 5002
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found on input line 5079.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:5079: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.5079 ...iles/figure-latex/unnamed-chunk-2-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+Underfull \vbox (badness 10000) detected at line 5002
+ []
 
 [102]
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 5113--5113
- []\T1/fvm/m/n/10 ## --------------------------------------------------------------------------------[] 
+
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/sim-sim-results-
+1.pdf' not found on input line 5041.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [103]
+
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/geodesic_speed-b
+ox-1.pdf' not found on input line 5102.
+
+[104] [105]
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family fvm in TS1 encoding.
+(textcomp)             Default family used instead on input line 5171.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family fvm in TS1 encoding.
+(textcomp)             Default family used instead on input line 5171.
+
+Overfull \hbox (650.88301pt too wide) in paragraph at lines 5175--5175
+ []\T1/fvm/m/n/10 It simulates networks with the same density, and computes a p
+articular statistic every time, generating an EDF (Empirical Distribution Funct
+ion) under the Null hypothesis (p-values).[] |
  []
 
 
-LaTeX Warning: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found on input line 5115.
-
-
-/home/george/Documents/content/appliedsnar/docs/appliedsnar.tex:5115: Package pdftex.def Error: File `08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.5115 ...iles/figure-latex/unnamed-chunk-3-1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[103]
-Overfull \hbox (54.9041pt too wide) in paragraph at lines 5177--5177
- []\T1/fvm/m/n/10 ## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is static[] 
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 5206--5206
+ []\T1/fvm/m/n/10 ## ----------------------------------------------------------
+----------------------[] |
  []
 
 
-Overfull \hbox (133.16396pt too wide) in paragraph at lines 5224--5224
- []\T1/fvm/m/n/10 ## glm(formula = adopt ~ cohesive_expo + var1 + factor(per), family = binomial(link = "probit"),[] 
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/unnamed-chunk-2-
+1.pdf' not found on input line 5209.
+
+[106]
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 5243--5243
+ []\T1/fvm/m/n/10 ## ----------------------------------------------------------
+----------------------[] |
  []
 
-[104]
-Overfull \hbox (103.06401pt too wide) in paragraph at lines 5264--5264
- []\T1/fvm/m/n/10 ## glm(formula = Adopt ~ exposure + var1 + factor(per), family = binomial(link = "probit"),[] 
+
+LaTeX Warning: File `part-01-08-netdiffuser_files/figure-latex/unnamed-chunk-3-
+1.pdf' not found on input line 5245.
+
+[107]
+Overfull \hbox (54.9041pt too wide) in paragraph at lines 5307--5307
+ []\T1/fvm/m/n/10 ## Warning in new_diffnet(W, toa = toa, vertex.static.attrs =
+ X): -graph- is static[] |
  []
 
-[105] [106]
-Chapter 11.
-[107
 
-] [108
-
-] [109] [110]
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 5347.
-
-
-Overfull \hbox (39.29996pt too wide) in paragraph at lines 5353--5354
-\T1/fav/m/n/10 (-20) fined as $[]\OML/zavm/m/it/10 =Pr[]$\T1/fav/m/n/10 (-20) . Like-wise, $[]$ is de-fined as $[]\OML/zavm/m/it/10 =Pr[]$\T1/fav/m/n/10 (-20) ,
+Overfull \hbox (133.16396pt too wide) in paragraph at lines 5354--5354
+ []\T1/fvm/m/n/10 ## glm(formula = adopt ~ cohesive_expo + var1 + factor(per), 
+family = binomial(link = "probit"),[] |
  []
 
-[111] [112]
+[108]
+Overfull \hbox (103.06401pt too wide) in paragraph at lines 5394--5394
+ []\T1/fvm/m/n/10 ## glm(formula = Adopt ~ exposure + var1 + factor(per), famil
+y = binomial(link = "probit"),[] |
+ []
+
+[109] [110]
+Chapter 12.
+[111
+
+] [112
+
+]
+Chapter 13.
+LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
+(Font)              scaled to size 13.82408pt on input line 5479.
+LaTeX Font Info:    Font shape `MDA/mdbch/b/n' will be
+(Font)              scaled to size 13.82408pt on input line 5479.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 14.97589pt on input line 5479.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/n/14.4'
+(microtype)             (new value: 14.4pt) on input line 5479.
+Package microtype Info: Fixing zero fontdimen6 for font `U/zavm/m/it/14.4'
+(microtype)             (new value: 14.4pt) on input line 5479.
+[113] [114]
+Overfull \vbox (0.76495pt too high) detected at line 5607
+ []
+
+[115]
+
+LaTeX Warning: File `part-01-10-power_files/figure-latex/part-01-power-plot1-1.
+pdf' not found on input line 5609.
+
+[116] [117]
+Underfull \vbox (badness 10000) detected at line 5763
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5763
+ []
+
+[118]
+Underfull \vbox (badness 10000) detected at line 5803
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [119]
+
+LaTeX Warning: File `part-01-10-power_files/figure-latex/part-01-power-plot2-1.
+pdf' not found on input line 5805.
+
+
+Underfull \vbox (badness 1052) has occurred while \output is active []
+
+ [120]
+[121] [122
+
+] [123] [124]
+Chapter 14.
+[125
+
+] [126]
+Chapter 15.
+[127
+
+] [128]
+Chapter 16.
+[129
+
+] [130] [131]
+Underfull \vbox (badness 10000) detected at line 6131
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [132]
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family fvm in TS1 encoding.
+(textcomp)             Default family used instead on input line 6152.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family fvm in TS1 encoding.
+(textcomp)             Default family used instead on input line 6152.
+
+
+LaTeX Warning: File `part-02-11-power_files/figure-latex/11-power-plot-1.pdf' n
+ot found on input line 6154.
+
+[133] [134]
 Appendix A.
-[113
+[135
 
 
-] [114] [115
+] [136] [137
 
-] [116] [117] (./appliedsnar.aux)
+] [138] [139] (./appliedsnar.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `appliedsnar.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `appliedsnar.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  90C2E2E8A6F70C4144B4356C6B79A54B;7970.
  ) 
 Here is how much of TeX's memory you used:
- 16843 strings out of 478276
- 328729 string characters out of 5845506
- 561133 words of memory out of 5000000
- 33787 multiletter control sequences out of 15000+600000
- 592731 words of font info for 401 fonts, out of 8000000 for 9000
+ 16480 strings out of 478287
+ 336415 string characters out of 5849289
+ 567655 words of memory out of 5000000
+ 33879 multiletter control sequences out of 15000+600000
+ 597918 words of font info for 419 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 61i,13n,70p,1056b,687s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.12} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.11} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.10} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.9} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.8} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.7} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.6} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.5} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.4} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.3} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist, replaced by a fixed one
-
-{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevoms.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevot1.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/arev/arevoml.enc}{/home/george/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}</home/george/texlive/2021/texmf-dist/fonts/type1/public/arev/ArevSans-Bold.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/arev/ArevSans-Oblique.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/arev/ArevSans-Roman.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/fourier/fourier-bb.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/bera/fvmb8a.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/bera/fvmro8a.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chb7t.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chb7y.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chr7v.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfit1000.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></home/george/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on appliedsnar.pdf (117 pages, 529694 bytes).
+ 61i,14n,70p,1008b,682s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/arev/arevoms.enc}{/usr/share/t
+exlive/texmf-dist/fonts/enc/dvips/arev/arevot1.enc}{/usr/share/texmf/fonts/enc/
+dvips/cm-super/cm-super-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/
+arev/arevoml.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</u
+sr/share/texlive/texmf-dist/fonts/type1/public/arev/ArevSans-Bold.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/arev/ArevSans-Oblique.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/arev/ArevSans-Roman.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/fourier/fourier-bb.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/bera/fvmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/bera/fvmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvmro8a
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chb7
+t.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chb
+7y.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-ch
+r7v.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit1000.pfb></usr/share/
+texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/pu
+blic/cm-super/sftt1000.pfb>
+Output written on appliedsnar.pdf (139 pages, 405277 bytes).
 PDF statistics:
- 1202 PDF objects out of 1440 (max. 8388607)
- 1036 compressed objects within 11 object streams
- 485 named destinations out of 1000 (max. 500000)
+ 547 PDF objects out of 1000 (max. 8388607)
+ 366 compressed objects within 4 object streams
+ 0 named destinations out of 1000 (max. 500000)
  65547 words of extra memory for PDF output out of 74296 (max. 10000000)
 

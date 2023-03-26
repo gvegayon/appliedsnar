@@ -366,12 +366,10 @@ predict(power_model, newdata = data.frame(power = .8), type = "response") |>
 Now, instead of looking at a dichotomous outcome, let's evaluate what happens if 
 the variable is continuous. The effects we are interested to identify are the ego and alter effect, $\gamma_{ego}$ and $\gamma_{alter}$, respectively. Furthermore, the data generating process is
 
-$$
 \begin{align*}
 y_{itg} & = \alpha_i + \kappa_g + X_i\beta + \varepsilon_{itg} \\
 y_{itg} & = \alpha_i + \kappa_g + X_i\beta + D_{i}^{ego}\gamma_{ego} + D_i^{alter}\gamma_{alter} + \varepsilon_{itg}
 \end{align*}
-$$
 
 Where $D_i^{ego/alter}$ is an indicator variable. Here, ego and alter behavior are correlated through a fixed effect. In other words,
 within each group, we are assuming that there's a shared baseline prevalence of

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7.2 Example 2: Bi-partite networks | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7.2 Example 2: Bi-partite networks | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2022-07-19" />
+<meta name="date" content="2023-03-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -64,25 +64,27 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -91,15 +93,15 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -112,7 +114,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -126,6 +128,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -147,31 +171,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i><b>2</b> About the Author</a></li>
 <li class="part"><span><b>I Applications</b></span></li>
 <li class="chapter" data-level="3" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>3</b> Introduction</a></li>
-<li class="chapter" data-level="4" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>4</b> R Basics</a><ul>
+<li class="chapter" data-level="4" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>4</b> R Basics</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>4.1</b> What is R</a></li>
 <li class="chapter" data-level="4.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>4.2</b> How to install packages</a></li>
 <li class="chapter" data-level="4.3" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>4.3</b> Prerequisites</a></li>
 <li class="chapter" data-level="4.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>4.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>5</b> Network Nomination Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>5.1</b> Data preprocessing</a><ul>
+<li class="chapter" data-level="5" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>5</b> Network Nomination Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>5.1</b> Data preprocessing</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>5.1.1</b> Reading the data into R</a></li>
 <li class="chapter" data-level="5.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>5.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>5.2</b> Creating a network</a><ul>
+<li class="chapter" data-level="5.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>5.2</b> Creating a network</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>5.2.1</b> From survey to edgelist</a></li>
 <li class="chapter" data-level="5.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>5.2.2</b> igraph network</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>5.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="5.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>5.4</b> Plotting the network in igraph</a><ul>
+<li class="chapter" data-level="5.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>5.4</b> Plotting the network in igraph</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>5.4.1</b> Single plot</a></li>
 <li class="chapter" data-level="5.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>5.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>5.5</b> Statistical tests</a><ul>
+<li class="chapter" data-level="5.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>5.5</b> Statistical tests</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>5.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> Exponential Random Graph Models</a><ul>
+<li class="chapter" data-level="6" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> Exponential Random Graph Models</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>6.1</b> A naïve example</a></li>
 <li class="chapter" data-level="6.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>6.2</b> Estimation of ERGMs</a></li>
 <li class="chapter" data-level="6.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>6.3</b> The <code>ergm</code> package</a></li>
@@ -181,43 +212,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>6.7</b> Mathematical Interpretation</a></li>
 <li class="chapter" data-level="6.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>6.8</b> Markov independence</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>7</b> Using constraints in ERGMs</a><ul>
+<li class="chapter" data-level="7" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>7</b> Using constraints in ERGMs</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>7.1</b> Example 1: Interlocking egos and disconnected alters</a></li>
 <li class="chapter" data-level="7.2" data-path="example-2-bi-partite-networks.html"><a href="example-2-bi-partite-networks.html"><i class="fa fa-check"></i><b>7.2</b> Example 2: Bi-partite networks</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>8</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
-<li class="chapter" data-level="9" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>9</b> Simulating and visualizing networks</a><ul>
+<li class="chapter" data-level="9" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>9</b> Simulating and visualizing networks</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="random-graph-models.html"><a href="random-graph-models.html"><i class="fa fa-check"></i><b>9.1</b> Random Graph Models</a></li>
 <li class="chapter" data-level="9.2" data-path="social-networks-in-schools.html"><a href="social-networks-in-schools.html"><i class="fa fa-check"></i><b>9.2</b> Social Networks in Schools</a></li>
 <li class="chapter" data-level="9.3" data-path="reading-a-network.html"><a href="reading-a-network.html"><i class="fa fa-check"></i><b>9.3</b> Reading a network</a></li>
-<li class="chapter" data-level="9.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>9.4</b> Visualizing the network</a><ul>
+<li class="chapter" data-level="9.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>9.4</b> Visualizing the network</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-size"><i class="fa fa-check"></i><b>9.4.1</b> Vertex size</a></li>
 <li class="chapter" data-level="9.4.2" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-color"><i class="fa fa-check"></i><b>9.4.2</b> Vertex color</a></li>
 <li class="chapter" data-level="9.4.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-shape"><i class="fa fa-check"></i><b>9.4.3</b> Vertex shape</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>10</b> Hypothesis testing in networks</a><ul>
-<li class="chapter" data-level="10.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>10.1</b> Comparing networks</a><ul>
+<li class="chapter" data-level="10" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>10</b> Hypothesis testing in networks</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>10.1</b> Comparing networks</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>10.1.1</b> Network bootstrap</a></li>
 <li class="chapter" data-level="10.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>10.1.2</b> When the statistic is normal</a></li>
 <li class="chapter" data-level="10.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>10.1.3</b> When the statistic is NOT normal</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>10.2</b> Examples</a><ul>
+<li class="chapter" data-level="10.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>10.2</b> Examples</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>10.2.1</b> Average of node-level stats</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>11</b> Network diffussion with <code>netdiffuseR</code></a><ul>
-<li class="chapter" data-level="11.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>11.1</b> Network diffusion of innovation</a><ul>
+<li class="chapter" data-level="11" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>11</b> Network diffussion with <code>netdiffuseR</code></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>11.1</b> Network diffusion of innovation</a>
+<ul>
 <li class="chapter" data-level="11.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>11.1.1</b> Diffusion networks</a></li>
 <li class="chapter" data-level="11.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>11.1.2</b> Thresholds</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>11.2</b> The netdiffuseR R package</a><ul>
+<li class="chapter" data-level="11.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>11.2</b> The netdiffuseR R package</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>11.2.1</b> Overview</a></li>
 <li class="chapter" data-level="11.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>11.2.2</b> Datasets</a></li>
 <li class="chapter" data-level="11.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>11.2.3</b> Visualization methods</a></li>
 <li class="chapter" data-level="11.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>11.2.4</b> Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>11.3</b> Simulation of diffusion processes</a><ul>
+<li class="chapter" data-level="11.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>11.3</b> Simulation of diffusion processes</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>11.3.1</b> Simulating diffusion networks</a></li>
 <li class="chapter" data-level="11.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>11.3.2</b> Rumor spreading</a></li>
 <li class="chapter" data-level="11.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>11.3.3</b> Difussion</a></li>
@@ -225,7 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>11.3.5</b> Example by changing threshold</a></li>
 <li class="chapter" data-level="11.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>11.3.6</b> Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>11.4</b> Statistical inference</a><ul>
+<li class="chapter" data-level="11.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>11.4</b> Statistical inference</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>11.4.1</b> Moran’s I</a></li>
 <li class="chapter" data-level="11.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>11.4.2</b> Using geodesics</a></li>
 <li class="chapter" data-level="11.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>11.4.3</b> Structural dependence and permutation tests</a></li>
@@ -235,25 +277,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>12</b> Stochastic Actor Oriented Models</a></li>
-<li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a><ul>
+<li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><i class="fa fa-check"></i><b>13.1</b> Example 1: Spillover effects in egocentric studies</a></li>
 <li class="chapter" data-level="13.2" data-path="example-2-spillover-effects-pre-post-effect.html"><a href="example-2-spillover-effects-pre-post-effect.html"><i class="fa fa-check"></i><b>13.2</b> Example 2: Spillover effects pre-post effect</a></li>
+<li class="chapter" data-level="13.3" data-path="example-3-first-difference.html"><a href="example-3-first-difference.html"><i class="fa fa-check"></i><b>13.3</b> Example 3: First difference</a></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Foundations</b></span></li>
 <li class="chapter" data-level="14" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>14</b> Bayes’ Rule</a></li>
-<li class="chapter" data-level="15" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>15</b> Markov Chain</a><ul>
+<li class="chapter" data-level="15" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>15</b> Markov Chain</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="metropolis-algorithm.html"><a href="metropolis-algorithm.html"><i class="fa fa-check"></i><b>15.1</b> Metropolis Algorithm</a></li>
 <li class="chapter" data-level="15.2" data-path="metropolis-hastings.html"><a href="metropolis-hastings.html"><i class="fa fa-check"></i><b>15.2</b> Metropolis-Hastings</a></li>
 <li class="chapter" data-level="15.3" data-path="likelihood-free-mcmc.html"><a href="likelihood-free-mcmc.html"><i class="fa fa-check"></i><b>15.3</b> Likelihood-free MCMC</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a><ul>
+<li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>16.1</b> Error types</a></li>
 <li class="chapter" data-level="16.2" data-path="example-1-sample-size-for-a-proportion.html"><a href="example-1-sample-size-for-a-proportion.html"><i class="fa fa-check"></i><b>16.2</b> Example 1: Sample size for a proportion</a></li>
 <li class="chapter" data-level="16.3" data-path="example-2-sample-size-for-a-proportion-vis.html"><a href="example-2-sample-size-for-a-proportion-vis.html"><i class="fa fa-check"></i><b>16.3</b> Example 2: Sample size for a proportion (vis)</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
@@ -279,56 +327,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="example-2-bi-partite-networks" class="section level2 hasAnchor">
+<div id="example-2-bi-partite-networks" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Example 2: Bi-partite networks<a href="example-2-bi-partite-networks.html#example-2-bi-partite-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In the case of bipartite networks (sometimes called affiliation networks,) we can
-use <code>ergm</code>’s terms for bipartite graphs to corroborate what we discussed
-here. For example, the two-star term. Let’s start simulating a bipartite
-network using the <code>edges</code> and <code>two-star</code> parameters. Since the <code>k-star</code> term
-is usually complex to fit (tends to generate degenerate models,) we will
-take advantage of the <code>Log()</code> transformation function in the <code>ergm</code> package
-to smooth the term.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p>
-<p>The bipartite network that we will be simulating will have 100 actors and
-50 entities. Actors, which we will map to the first level of the <code>ergm</code> terms,
-this is, <code>b1star</code> <code>b1nodematch</code>, etc. will send ties to the entities,
-the second level of the bipartite ERGM. To create a bipartite network, we will
-create an empty matrix of size <code>nactors x nentitites</code>; thus, actors are
-represented by rows and entities by columns.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" title="1"><span class="co"># Parameters for the simulation</span></a>
-<a class="sourceLine" id="cb216-2" title="2">nactors   &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb216-3" title="3">nentities &lt;-<span class="st"> </span><span class="kw">floor</span>(nactors<span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb216-4" title="4">n         &lt;-<span class="st"> </span>nactors <span class="op">+</span><span class="st"> </span>nentities</a>
-<a class="sourceLine" id="cb216-5" title="5"></a>
-<a class="sourceLine" id="cb216-6" title="6"><span class="co"># Creating an empty bipartite network (baseline)</span></a>
-<a class="sourceLine" id="cb216-7" title="7">net_b &lt;-<span class="st"> </span><span class="kw">network</span>(</a>
-<a class="sourceLine" id="cb216-8" title="8">  <span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dt">nrow =</span> nactors, <span class="dt">ncol =</span> nentities), <span class="dt">bipartite =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb216-9" title="9">)</a>
-<a class="sourceLine" id="cb216-10" title="10"></a>
-<a class="sourceLine" id="cb216-11" title="11"><span class="co"># Simulating the bipartite ERGM,</span></a>
-<a class="sourceLine" id="cb216-12" title="12">net_b &lt;-<span class="st"> </span><span class="kw">simulate</span>(net_b <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">Log</span>(<span class="op">~</span><span class="kw">b1star</span>(<span class="dv">2</span>)), <span class="dt">coef =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="fl">1.5</span>), <span class="dt">seed =</span> <span class="dv">55</span>)</a></code></pre></div>
+<p>In the case of bipartite networks (sometimes called affiliation networks,) we can use <code>ergm</code>’s terms for bipartite graphs to corroborate what we discussed here. For example, the two-star term. Let’s start simulating a bipartite network using the <code>edges</code> and <code>two-star</code> parameters. Since the <code>k-star</code> term is usually complex to fit (tends to generate degenerate models,) we will take advantage of the <code>Log()</code> transformation function in the <code>ergm</code> package to smooth the term.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></p>
+<p>The bipartite network that we will be simulating will have 100 actors and 50 entities. Actors, which we will map to the first level of the <code>ergm</code> terms, this is, <code>b1star</code> <code>b1nodematch</code>, etc. will send ties to the entities, the second level of the bipartite ERGM. To create a bipartite network, we will create an empty matrix of size <code>nactors x nentitites</code>; thus, actors are represented by rows and entities by columns.</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="example-2-bi-partite-networks.html#cb225-1" tabindex="-1"></a><span class="co"># Parameters for the simulation</span></span>
+<span id="cb225-2"><a href="example-2-bi-partite-networks.html#cb225-2" tabindex="-1"></a>nactors   <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb225-3"><a href="example-2-bi-partite-networks.html#cb225-3" tabindex="-1"></a>nentities <span class="ot">&lt;-</span> <span class="fu">floor</span>(nactors<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb225-4"><a href="example-2-bi-partite-networks.html#cb225-4" tabindex="-1"></a>n         <span class="ot">&lt;-</span> nactors <span class="sc">+</span> nentities</span>
+<span id="cb225-5"><a href="example-2-bi-partite-networks.html#cb225-5" tabindex="-1"></a></span>
+<span id="cb225-6"><a href="example-2-bi-partite-networks.html#cb225-6" tabindex="-1"></a><span class="co"># Creating an empty bipartite network (baseline)</span></span>
+<span id="cb225-7"><a href="example-2-bi-partite-networks.html#cb225-7" tabindex="-1"></a>net_b <span class="ot">&lt;-</span> <span class="fu">network</span>(</span>
+<span id="cb225-8"><a href="example-2-bi-partite-networks.html#cb225-8" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> nactors, <span class="at">ncol =</span> nentities), <span class="at">bipartite =</span> <span class="cn">TRUE</span></span>
+<span id="cb225-9"><a href="example-2-bi-partite-networks.html#cb225-9" tabindex="-1"></a>)</span>
+<span id="cb225-10"><a href="example-2-bi-partite-networks.html#cb225-10" tabindex="-1"></a></span>
+<span id="cb225-11"><a href="example-2-bi-partite-networks.html#cb225-11" tabindex="-1"></a><span class="co"># Simulating the bipartite ERGM,</span></span>
+<span id="cb225-12"><a href="example-2-bi-partite-networks.html#cb225-12" tabindex="-1"></a>net_b <span class="ot">&lt;-</span> <span class="fu">simulate</span>(net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">b1star</span>(<span class="dv">2</span>)), <span class="at">coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="fl">1.5</span>), <span class="at">seed =</span> <span class="dv">55</span>)</span></code></pre></div>
 <p>Let’s see what we got here:</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" title="1"><span class="kw">summary</span>(net_b <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">Log</span>(<span class="op">~</span><span class="kw">b1star</span>(<span class="dv">2</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="example-2-bi-partite-networks.html#cb226-1" tabindex="-1"></a><span class="fu">summary</span>(net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">b1star</span>(<span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>##       edges Log~b1star2 
 ##  245.000000    5.746203</code></pre>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" title="1">netplot<span class="op">::</span><span class="kw">nplot</span>(net_b, <span class="dt">vertex.col =</span> (<span class="dv">1</span><span class="op">:</span>n <span class="op">&lt;=</span><span class="st"> </span>nactors) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="example-2-bi-partite-networks.html#cb228-1" tabindex="-1"></a>netplot<span class="sc">::</span><span class="fu">nplot</span>(net_b, <span class="at">vertex.col =</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors) <span class="sc">+</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="part-01-05-ergms-constrains_files/figure-html/05-example2-simulated-graph-1.png" width="672" /></p>
-<p>Notice that the first <code>nactors</code> vertices in the network are the actors, and
-the remaining are the entities. Now, although the <code>ergm</code> package features
-bipartite network terms, we can still fit a bipartite ERGM without explicitly
-declaring the graph as such. In such case, the <code>b1star(2)</code> term of a bipartite
-network is equivalent to an <code>ostar(2)</code> in a directed graph. Likewise, <code>b2star(2)</code>
-in a bipartite graph matches the <code>istar(2)</code> term in a directed graph. This
-information will be relevant when fitting the ERGM. Let’s transform the bipartite
-network into a directed graph. The following code block does so:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" title="1"><span class="co"># Identifying the edges</span></a>
-<a class="sourceLine" id="cb220-2" title="2">net_not_b &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">as.matrix</span>(net_b) <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb220-3" title="3"></a>
-<a class="sourceLine" id="cb220-4" title="4"><span class="co"># We need to offset the endpoint of the ties by nactors</span></a>
-<a class="sourceLine" id="cb220-5" title="5"><span class="co"># so that the ids go from 1 through (nactors + nentitites)</span></a>
-<a class="sourceLine" id="cb220-6" title="6">net_not_b[,<span class="dv">2</span>] &lt;-<span class="st"> </span>net_not_b[,<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>nactors</a>
-<a class="sourceLine" id="cb220-7" title="7"></a>
-<a class="sourceLine" id="cb220-8" title="8"><span class="co"># The resulting graph is a directed network</span></a>
-<a class="sourceLine" id="cb220-9" title="9">net_not_b &lt;-<span class="st"> </span><span class="kw">network</span>(net_not_b, <span class="dt">directed =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>Notice that the first <code>nactors</code> vertices in the network are the actors, and the remaining are the entities. Now, although the <code>ergm</code> package features bipartite network terms, we can still fit a bipartite ERGM without explicitly declaring the graph as such. In such case, the <code>b1star(2)</code> term of a bipartite network is equivalent to an <code>ostar(2)</code> in a directed graph. Likewise, <code>b2star(2)</code> in a bipartite graph matches the <code>istar(2)</code> term in a directed graph. This information will be relevant when fitting the ERGM. Let’s transform the bipartite network into a directed graph. The following code block does so:</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="example-2-bi-partite-networks.html#cb229-1" tabindex="-1"></a><span class="co"># Identifying the edges</span></span>
+<span id="cb229-2"><a href="example-2-bi-partite-networks.html#cb229-2" tabindex="-1"></a>net_not_b <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">as.matrix</span>(net_b) <span class="sc">!=</span> <span class="dv">0</span>, <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb229-3"><a href="example-2-bi-partite-networks.html#cb229-3" tabindex="-1"></a></span>
+<span id="cb229-4"><a href="example-2-bi-partite-networks.html#cb229-4" tabindex="-1"></a><span class="co"># We need to offset the endpoint of the ties by nactors</span></span>
+<span id="cb229-5"><a href="example-2-bi-partite-networks.html#cb229-5" tabindex="-1"></a><span class="co"># so that the ids go from 1 through (nactors + nentitites)</span></span>
+<span id="cb229-6"><a href="example-2-bi-partite-networks.html#cb229-6" tabindex="-1"></a>net_not_b[,<span class="dv">2</span>] <span class="ot">&lt;-</span> net_not_b[,<span class="dv">2</span>] <span class="sc">+</span> nactors</span>
+<span id="cb229-7"><a href="example-2-bi-partite-networks.html#cb229-7" tabindex="-1"></a></span>
+<span id="cb229-8"><a href="example-2-bi-partite-networks.html#cb229-8" tabindex="-1"></a><span class="co"># The resulting graph is a directed network</span></span>
+<span id="cb229-9"><a href="example-2-bi-partite-networks.html#cb229-9" tabindex="-1"></a>net_not_b <span class="ot">&lt;-</span> <span class="fu">network</span>(net_not_b, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Now we are almost done. As before, we need to use node-level covariates
 to put the constraints in our model. For this ERGM to reflect an ERGM on
 a bipartite network, we need two constraints:</p>
@@ -340,60 +370,60 @@ a bipartite network, we need two constraints:</p>
 and <code>nodeocov("isnot.actor") ~ -Inf</code>. Mathematically:</p>
 <p><span class="math display">\[\begin{align*}
 \text{NodeMatch(x = &quot;is.actor&quot;)} &amp;= \sum_{i&lt;j} y_{ij}\mathbb{1}\left(x_i = x_j\right) \\
-\text{NodeOCov(x = &quot;isnot.actor&quot;)} &amp;= \sum_{i} x_i \times \sum_{j&lt;i} y_{ij} 
+\text{NodeOCov(x = &quot;isnot.actor&quot;)} &amp;= \sum_{i} x_i \times \sum_{j&lt;i} y_{ij}
 \end{align*}\]</span></p>
 <p>In other words, we are setting that ties between nodes of the same class are
 forbidden, and outgoing ties are forbidden for entities. Let’s create the
 vertex attributes needed to use the aforementioned terms:</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" title="1">net_not_b <span class="op">%v%</span><span class="st"> &quot;is.actor&quot;</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="dv">1</span><span class="op">:</span>n <span class="op">&lt;=</span><span class="st"> </span>nactors)</a>
-<a class="sourceLine" id="cb221-2" title="2">net_not_b <span class="op">%v%</span><span class="st"> &quot;isnot.actor&quot;</span> &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="dv">1</span><span class="op">:</span>n <span class="op">&gt;</span><span class="st"> </span>nactors)</a></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="example-2-bi-partite-networks.html#cb230-1" tabindex="-1"></a>net_not_b <span class="sc">%v%</span> <span class="st">&quot;is.actor&quot;</span> <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors)</span>
+<span id="cb230-2"><a href="example-2-bi-partite-networks.html#cb230-2" tabindex="-1"></a>net_not_b <span class="sc">%v%</span> <span class="st">&quot;isnot.actor&quot;</span> <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&gt;</span> nactors)</span></code></pre></div>
 <p>Finally, to make sure we have done all well, let’s look how both networks–bipartite
 and unimodal–look side by side:</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="co"># First, let&#39;s get the layout</span></a>
-<a class="sourceLine" id="cb222-2" title="2">fig &lt;-<span class="st"> </span>netplot<span class="op">::</span><span class="kw">nplot</span>(net_b, <span class="dt">vertex.col =</span> (<span class="dv">1</span><span class="op">:</span>n <span class="op">&lt;=</span><span class="st"> </span>nactors) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb222-3" title="3">gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(</a>
-<a class="sourceLine" id="cb222-4" title="4">  fig,</a>
-<a class="sourceLine" id="cb222-5" title="5">  netplot<span class="op">::</span><span class="kw">nplot</span>(</a>
-<a class="sourceLine" id="cb222-6" title="6">    net_not_b, <span class="dt">vertex.col =</span> (<span class="dv">1</span><span class="op">:</span>n <span class="op">&lt;=</span><span class="st"> </span>nactors) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb222-7" title="7">    <span class="dt">layout =</span> fig<span class="op">$</span>.layout</a>
-<a class="sourceLine" id="cb222-8" title="8">     ),</a>
-<a class="sourceLine" id="cb222-9" title="9">  <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb222-10" title="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="example-2-bi-partite-networks.html#cb231-1" tabindex="-1"></a><span class="co"># First, let&#39;s get the layout</span></span>
+<span id="cb231-2"><a href="example-2-bi-partite-networks.html#cb231-2" tabindex="-1"></a>fig <span class="ot">&lt;-</span> netplot<span class="sc">::</span><span class="fu">nplot</span>(net_b, <span class="at">vertex.col =</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors) <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb231-3"><a href="example-2-bi-partite-networks.html#cb231-3" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(</span>
+<span id="cb231-4"><a href="example-2-bi-partite-networks.html#cb231-4" tabindex="-1"></a>  fig,</span>
+<span id="cb231-5"><a href="example-2-bi-partite-networks.html#cb231-5" tabindex="-1"></a>  netplot<span class="sc">::</span><span class="fu">nplot</span>(</span>
+<span id="cb231-6"><a href="example-2-bi-partite-networks.html#cb231-6" tabindex="-1"></a>    net_not_b, <span class="at">vertex.col =</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors) <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb231-7"><a href="example-2-bi-partite-networks.html#cb231-7" tabindex="-1"></a>    <span class="at">layout =</span> fig<span class="sc">$</span>.layout</span>
+<span id="cb231-8"><a href="example-2-bi-partite-networks.html#cb231-8" tabindex="-1"></a>     ),</span>
+<span id="cb231-9"><a href="example-2-bi-partite-networks.html#cb231-9" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">1</span></span>
+<span id="cb231-10"><a href="example-2-bi-partite-networks.html#cb231-10" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="part-01-05-ergms-constrains_files/figure-html/05-example2-side-by-side-1.png" width="672" /></p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1"><span class="co"># Looking at the counts</span></a>
-<a class="sourceLine" id="cb223-2" title="2"><span class="kw">summary</span>(net_b <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">b1star</span>(<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">b2star</span>(<span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="example-2-bi-partite-networks.html#cb232-1" tabindex="-1"></a><span class="co"># Looking at the counts</span></span>
+<span id="cb232-2"><a href="example-2-bi-partite-networks.html#cb232-2" tabindex="-1"></a><span class="fu">summary</span>(net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">b1star</span>(<span class="dv">2</span>) <span class="sc">+</span> <span class="fu">b2star</span>(<span class="dv">2</span>))</span></code></pre></div>
 <pre><code>##   edges b1star2 b2star2 
 ##     245     313     645</code></pre>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb225-1" title="1"><span class="kw">summary</span>(net_not_b <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">ostar</span>(<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">istar</span>(<span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="example-2-bi-partite-networks.html#cb234-1" tabindex="-1"></a><span class="fu">summary</span>(net_not_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">ostar</span>(<span class="dv">2</span>) <span class="sc">+</span> <span class="fu">istar</span>(<span class="dv">2</span>))</span></code></pre></div>
 <pre><code>##  edges ostar2 istar2 
 ##    245    313    645</code></pre>
 <p>With the two networks matching, we can now fit the ERGMs with and without
 offset terms and compare the results between the two models:</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" title="1"><span class="co"># ERGM with a bipartite graph</span></a>
-<a class="sourceLine" id="cb227-2" title="2">res_b     &lt;-<span class="st"> </span><span class="kw">ergm</span>(</a>
-<a class="sourceLine" id="cb227-3" title="3">  <span class="co"># Main formula</span></a>
-<a class="sourceLine" id="cb227-4" title="4">  net_b <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">Log</span>(<span class="op">~</span><span class="kw">b1star</span>(<span class="dv">2</span>)),</a>
-<a class="sourceLine" id="cb227-5" title="5"></a>
-<a class="sourceLine" id="cb227-6" title="6">  <span class="co"># Control parameters</span></a>
-<a class="sourceLine" id="cb227-7" title="7">  <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">seed =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb227-8" title="8">  )</a></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="example-2-bi-partite-networks.html#cb236-1" tabindex="-1"></a><span class="co"># ERGM with a bipartite graph</span></span>
+<span id="cb236-2"><a href="example-2-bi-partite-networks.html#cb236-2" tabindex="-1"></a>res_b     <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb236-3"><a href="example-2-bi-partite-networks.html#cb236-3" tabindex="-1"></a>  <span class="co"># Main formula</span></span>
+<span id="cb236-4"><a href="example-2-bi-partite-networks.html#cb236-4" tabindex="-1"></a>  net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">b1star</span>(<span class="dv">2</span>)),</span>
+<span id="cb236-5"><a href="example-2-bi-partite-networks.html#cb236-5" tabindex="-1"></a></span>
+<span id="cb236-6"><a href="example-2-bi-partite-networks.html#cb236-6" tabindex="-1"></a>  <span class="co"># Control parameters</span></span>
+<span id="cb236-7"><a href="example-2-bi-partite-networks.html#cb236-7" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(<span class="at">seed =</span> <span class="dv">1</span>)</span>
+<span id="cb236-8"><a href="example-2-bi-partite-networks.html#cb236-8" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning: &#39;glpk&#39; selected as the solver, but package &#39;Rglpk&#39; is not available;
 ## falling back to &#39;lpSolveAPI&#39;. This should be fine unless the sample size and/or
 ## the number of parameters is very big.</code></pre>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" title="1"><span class="co"># ERGM with a digraph with constraints</span></a>
-<a class="sourceLine" id="cb229-2" title="2">res_not_b &lt;-<span class="st"> </span><span class="kw">ergm</span>(</a>
-<a class="sourceLine" id="cb229-3" title="3">  <span class="co"># Main formula</span></a>
-<a class="sourceLine" id="cb229-4" title="4">  net_not_b <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">Log</span>(<span class="op">~</span><span class="kw">ostar</span>(<span class="dv">2</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb229-5" title="5"></a>
-<a class="sourceLine" id="cb229-6" title="6"><span class="st">  </span><span class="co"># Offset terms </span></a>
-<a class="sourceLine" id="cb229-7" title="7"><span class="st">  </span><span class="kw">offset</span>(<span class="kw">nodematch</span>(<span class="st">&quot;is.actor&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(<span class="kw">nodeocov</span>(<span class="st">&quot;isnot.actor&quot;</span>)),</a>
-<a class="sourceLine" id="cb229-8" title="8">  <span class="dt">offset.coef =</span> <span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="op">-</span><span class="ot">Inf</span>),</a>
-<a class="sourceLine" id="cb229-9" title="9"></a>
-<a class="sourceLine" id="cb229-10" title="10">  <span class="co"># Control parameters</span></a>
-<a class="sourceLine" id="cb229-11" title="11">  <span class="dt">control =</span> <span class="kw">control.ergm</span>(<span class="dt">seed =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb229-12" title="12">  )</a></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="example-2-bi-partite-networks.html#cb238-1" tabindex="-1"></a><span class="co"># ERGM with a digraph with constraints</span></span>
+<span id="cb238-2"><a href="example-2-bi-partite-networks.html#cb238-2" tabindex="-1"></a>res_not_b <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb238-3"><a href="example-2-bi-partite-networks.html#cb238-3" tabindex="-1"></a>  <span class="co"># Main formula</span></span>
+<span id="cb238-4"><a href="example-2-bi-partite-networks.html#cb238-4" tabindex="-1"></a>  net_not_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">ostar</span>(<span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb238-5"><a href="example-2-bi-partite-networks.html#cb238-5" tabindex="-1"></a></span>
+<span id="cb238-6"><a href="example-2-bi-partite-networks.html#cb238-6" tabindex="-1"></a>  <span class="co"># Offset terms </span></span>
+<span id="cb238-7"><a href="example-2-bi-partite-networks.html#cb238-7" tabindex="-1"></a>  <span class="fu">offset</span>(<span class="fu">nodematch</span>(<span class="st">&quot;is.actor&quot;</span>)) <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">nodeocov</span>(<span class="st">&quot;isnot.actor&quot;</span>)),</span>
+<span id="cb238-8"><a href="example-2-bi-partite-networks.html#cb238-8" tabindex="-1"></a>  <span class="at">offset.coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="cn">Inf</span>),</span>
+<span id="cb238-9"><a href="example-2-bi-partite-networks.html#cb238-9" tabindex="-1"></a></span>
+<span id="cb238-10"><a href="example-2-bi-partite-networks.html#cb238-10" tabindex="-1"></a>  <span class="co"># Control parameters</span></span>
+<span id="cb238-11"><a href="example-2-bi-partite-networks.html#cb238-11" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(<span class="at">seed =</span> <span class="dv">1</span>)</span>
+<span id="cb238-12"><a href="example-2-bi-partite-networks.html#cb238-12" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Here are the estimates (using the <code>texreg</code> R package for a prettier output):</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" title="1">texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">list</span>(<span class="dt">Bipartite =</span> res_b, <span class="dt">Directed =</span> res_not_b))</a></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="example-2-bi-partite-networks.html#cb239-1" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">screenreg</span>(<span class="fu">list</span>(<span class="at">Bipartite =</span> res_b, <span class="at">Directed =</span> res_not_b))</span></code></pre></div>
 <pre><code>## 
 ## ======================================================================
 ##                               Bipartite    Directed                   
@@ -409,9 +439,9 @@ offset terms and compare the results between the two models:</p>
 ## offset(nodeocov.isnot.actor)                                  -Inf    
 ##                                                                       
 ## ----------------------------------------------------------------------
-## AIC                           1958.00      -2134192392498171136.00    
-## BIC                           1971.03      -2134192392498171136.00    
-## Log Likelihood                -977.00       1067096196249085568.00    
+## AIC                           1958.00      -2134192392498170112.00    
+## BIC                           1971.03      -2134192392498170112.00    
+## Log Likelihood                -977.00       1067096196249085056.00    
 ## ======================================================================
 ## *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
 <p>As expected, both models yield the “same” estimate. The minor differences
@@ -420,10 +450,10 @@ the sampling. In particular, in the bipartite case, <code>ergm</code> has specia
 routines for making the sampling more efficient, having a higher acceptance
 rate than that of the model in which the bipartite graph was not explicitly
 declared. We can tell this by inspecting rejection rates:</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" title="1"><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb232-2" title="2">  <span class="dt">Bipartite =</span> coda<span class="op">::</span><span class="kw">rejectionRate</span>(res_b<span class="op">$</span>sample[[<span class="dv">1</span>]]) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb232-3" title="3">  <span class="dt">Directed  =</span> coda<span class="op">::</span><span class="kw">rejectionRate</span>(res_not_b<span class="op">$</span>sample[[<span class="dv">1</span>]][, <span class="op">-</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)]) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb232-4" title="4">) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&quot;Rejection rate (percent)&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="example-2-bi-partite-networks.html#cb241-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb241-2"><a href="example-2-bi-partite-networks.html#cb241-2" tabindex="-1"></a>  <span class="at">Bipartite =</span> coda<span class="sc">::</span><span class="fu">rejectionRate</span>(res_b<span class="sc">$</span>sample[[<span class="dv">1</span>]]) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb241-3"><a href="example-2-bi-partite-networks.html#cb241-3" tabindex="-1"></a>  <span class="at">Directed  =</span> coda<span class="sc">::</span><span class="fu">rejectionRate</span>(res_not_b<span class="sc">$</span>sample[[<span class="dv">1</span>]][, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)]) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb241-4"><a href="example-2-bi-partite-networks.html#cb241-4" tabindex="-1"></a>) <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Rejection rate (percent)&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:05-example2-post-dist">Table 7.1: </span>Rejection rate (percent)</caption>
 <thead>
@@ -458,16 +488,8 @@ features to make our job easier.</p>
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="11">
-<li id="fn11"><p>After writing this example, it became apparent the use of
-the <code>Log()</code> transformation function may not be ideal. Since many terms used
-in ERGMs can be zero, e.g., triangles, the term <code>Log(~ ostar(2))</code> is undefined
-when <code>ostar(2) = 0</code>. In practice, the ERGM package sets a lower limit for the
-log of 0, so, instead of having <code>Log(0) ~ -Inf</code>, they set it to be a really
-large negative number. This causes all sorts of issues to the estimates; in
-our example, an over estimation of the population parameter and a positive
-log-likelihood. With that said, I wouldn’t recommend using
-this transformation too often.<a href="example-2-bi-partite-networks.html#fnref11" class="footnote-back">↩</a></p></li>
+<ol start="10">
+<li id="fn10"><p>After writing this example, it became apparent the use of the <code>Log()</code> transformation function may not be ideal. Since many terms used in ERGMs can be zero, e.g., triangles, the term <code>Log(~ ostar(2))</code> is undefined when <code>ostar(2) = 0</code>. In practice, the ERGM package sets a lower limit for the log of 0, so, instead of having <code>Log(0) ~ -Inf</code>, they set it to be a really large negative number. This causes all sorts of issues to the estimates; in our example, an overestimation of the population parameter and a positive log-likelihood. Therefore, I wouldn’t recommend using this transformation too often.<a href="example-2-bi-partite-networks.html#fnref10" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -536,7 +558,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12.3 Example 3: First difference | Applied Network Science with R</title>
+  <title>13.3 Example 3: First difference | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12.3 Example 3: First difference | Applied Network Science with R" />
+  <meta property="og:title" content="13.3 Example 3: First difference | Applied Network Science with R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="An improvised book on applied Network Science with R." />
   <meta name="github-repo" content="gvegayon/appliedsnar" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12.3 Example 3: First difference | Applied Network Science with R" />
+  <meta name="twitter:title" content="13.3 Example 3: First difference | Applied Network Science with R" />
   
   <meta name="twitter:description" content="An improvised book on applied Network Science with R." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2022-07-19" />
+<meta name="date" content="2023-03-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -64,25 +64,27 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -91,15 +93,15 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -112,7 +114,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -126,6 +128,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -144,115 +168,140 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i><b>2</b> About the Author</a></li>
 <li class="part"><span><b>I Applications</b></span></li>
-<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R Basics</a><ul>
-<li class="chapter" data-level="3.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>3.1</b> What is R</a></li>
-<li class="chapter" data-level="3.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>3.2</b> How to install packages</a></li>
-<li class="chapter" data-level="3.3" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisites</a></li>
-<li class="chapter" data-level="3.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>3.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
+<li class="chapter" data-level="3" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>3</b> Introduction</a></li>
+<li class="chapter" data-level="4" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>4</b> R Basics</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="what-is-r.html"><a href="what-is-r.html"><i class="fa fa-check"></i><b>4.1</b> What is R</a></li>
+<li class="chapter" data-level="4.2" data-path="how-to-install-packages.html"><a href="how-to-install-packages.html"><i class="fa fa-check"></i><b>4.2</b> How to install packages</a></li>
+<li class="chapter" data-level="4.3" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>4.3</b> Prerequisites</a></li>
+<li class="chapter" data-level="4.4" data-path="a-gentle-quick-n-dirty-introduction-to-r.html"><a href="a-gentle-quick-n-dirty-introduction-to-r.html"><i class="fa fa-check"></i><b>4.4</b> A <del>gentle</del> Quick n’ Dirty Introduction to R</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>4</b> Network Nomination Data</a><ul>
-<li class="chapter" data-level="4.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>4.1</b> Data preprocessing</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>4.1.1</b> Reading the data into R</a></li>
-<li class="chapter" data-level="4.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>4.1.2</b> Creating a unique id for each participant</a></li>
+<li class="chapter" data-level="5" data-path="network-nomination-data.html"><a href="network-nomination-data.html"><i class="fa fa-check"></i><b>5</b> Network Nomination Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>5.1</b> Data preprocessing</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="data-preprocessing.html"><a href="data-preprocessing.html#reading-the-data-into-r"><i class="fa fa-check"></i><b>5.1.1</b> Reading the data into R</a></li>
+<li class="chapter" data-level="5.1.2" data-path="data-preprocessing.html"><a href="data-preprocessing.html#creating-a-unique-id-for-each-participant"><i class="fa fa-check"></i><b>5.1.2</b> Creating a unique id for each participant</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>4.2</b> Creating a network</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>4.2.1</b> From survey to edgelist</a></li>
-<li class="chapter" data-level="4.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>4.2.2</b> igraph network</a></li>
+<li class="chapter" data-level="5.2" data-path="creating-a-network.html"><a href="creating-a-network.html"><i class="fa fa-check"></i><b>5.2</b> Creating a network</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="creating-a-network.html"><a href="creating-a-network.html#from-survey-to-edgelist"><i class="fa fa-check"></i><b>5.2.1</b> From survey to edgelist</a></li>
+<li class="chapter" data-level="5.2.2" data-path="creating-a-network.html"><a href="creating-a-network.html#igraph-network"><i class="fa fa-check"></i><b>5.2.2</b> igraph network</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>4.3</b> Network descriptive stats</a></li>
-<li class="chapter" data-level="4.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>4.4</b> Plotting the network in igraph</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>4.4.1</b> Single plot</a></li>
-<li class="chapter" data-level="4.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>4.4.2</b> Multiple plots</a></li>
+<li class="chapter" data-level="5.3" data-path="network-descriptive-stats.html"><a href="network-descriptive-stats.html"><i class="fa fa-check"></i><b>5.3</b> Network descriptive stats</a></li>
+<li class="chapter" data-level="5.4" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html"><i class="fa fa-check"></i><b>5.4</b> Plotting the network in igraph</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#single-plot"><i class="fa fa-check"></i><b>5.4.1</b> Single plot</a></li>
+<li class="chapter" data-level="5.4.2" data-path="plotting-the-network-in-igraph.html"><a href="plotting-the-network-in-igraph.html#multiple-plots"><i class="fa fa-check"></i><b>5.4.2</b> Multiple plots</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>4.5</b> Statistical tests</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>4.5.1</b> Is nomination number correlated with indegree?</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>5</b> Exponential Random Graph Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>5.1</b> A naïve example</a></li>
-<li class="chapter" data-level="5.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>5.2</b> Estimation of ERGMs</a></li>
-<li class="chapter" data-level="5.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>5.3</b> The <code>ergm</code> package</a></li>
-<li class="chapter" data-level="5.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>5.4</b> Running ERGMs</a></li>
-<li class="chapter" data-level="5.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>5.5</b> Model Goodness-of-Fit</a></li>
-<li class="chapter" data-level="5.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>5.6</b> More on MCMC convergence</a></li>
-<li class="chapter" data-level="5.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>5.7</b> Mathematical Interpretation</a></li>
-<li class="chapter" data-level="5.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>5.8</b> Markov independence</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>6</b> Using constraints in ERGMs</a><ul>
-<li class="chapter" data-level="6.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>6.1</b> Example 1: Interlocking egos and disconnected alters</a></li>
-<li class="chapter" data-level="6.2" data-path="example-2-bi-partite-networks.html"><a href="example-2-bi-partite-networks.html"><i class="fa fa-check"></i><b>6.2</b> Example 2: Bi-partite networks</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>7</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
-<li class="chapter" data-level="8" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>8</b> Simulating and visualizing networks</a><ul>
-<li class="chapter" data-level="8.1" data-path="random-graph-models.html"><a href="random-graph-models.html"><i class="fa fa-check"></i><b>8.1</b> Random Graph Models</a></li>
-<li class="chapter" data-level="8.2" data-path="social-networks-in-schools.html"><a href="social-networks-in-schools.html"><i class="fa fa-check"></i><b>8.2</b> Social Networks in Schools</a></li>
-<li class="chapter" data-level="8.3" data-path="reading-a-network.html"><a href="reading-a-network.html"><i class="fa fa-check"></i><b>8.3</b> Reading a network</a></li>
-<li class="chapter" data-level="8.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>8.4</b> Visualizing the network</a><ul>
-<li class="chapter" data-level="8.4.1" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-size"><i class="fa fa-check"></i><b>8.4.1</b> Vertex size</a></li>
-<li class="chapter" data-level="8.4.2" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-color"><i class="fa fa-check"></i><b>8.4.2</b> Vertex color</a></li>
-<li class="chapter" data-level="8.4.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-shape"><i class="fa fa-check"></i><b>8.4.3</b> Vertex shape</a></li>
+<li class="chapter" data-level="5.5" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>5.5</b> Statistical tests</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="statistical-tests.html"><a href="statistical-tests.html#is-nomination-number-correlated-with-indegree"><i class="fa fa-check"></i><b>5.5.1</b> Is nomination number correlated with indegree?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>9</b> Hypothesis testing in networks</a><ul>
-<li class="chapter" data-level="9.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>9.1</b> Comparing networks</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>9.1.1</b> Network bootstrap</a></li>
-<li class="chapter" data-level="9.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>9.1.2</b> When the statistic is normal</a></li>
-<li class="chapter" data-level="9.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>9.1.3</b> When the statistic is NOT normal</a></li>
+<li class="chapter" data-level="6" data-path="exponential-random-graph-models.html"><a href="exponential-random-graph-models.html"><i class="fa fa-check"></i><b>6</b> Exponential Random Graph Models</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="a-naïve-example.html"><a href="a-naïve-example.html"><i class="fa fa-check"></i><b>6.1</b> A naïve example</a></li>
+<li class="chapter" data-level="6.2" data-path="estimation-of-ergms.html"><a href="estimation-of-ergms.html"><i class="fa fa-check"></i><b>6.2</b> Estimation of ERGMs</a></li>
+<li class="chapter" data-level="6.3" data-path="the-ergm-package.html"><a href="the-ergm-package.html"><i class="fa fa-check"></i><b>6.3</b> The <code>ergm</code> package</a></li>
+<li class="chapter" data-level="6.4" data-path="running-ergms.html"><a href="running-ergms.html"><i class="fa fa-check"></i><b>6.4</b> Running ERGMs</a></li>
+<li class="chapter" data-level="6.5" data-path="model-goodness-of-fit.html"><a href="model-goodness-of-fit.html"><i class="fa fa-check"></i><b>6.5</b> Model Goodness-of-Fit</a></li>
+<li class="chapter" data-level="6.6" data-path="more-on-mcmc-convergence.html"><a href="more-on-mcmc-convergence.html"><i class="fa fa-check"></i><b>6.6</b> More on MCMC convergence</a></li>
+<li class="chapter" data-level="6.7" data-path="mathematical-interpretation.html"><a href="mathematical-interpretation.html"><i class="fa fa-check"></i><b>6.7</b> Mathematical Interpretation</a></li>
+<li class="chapter" data-level="6.8" data-path="markov-independence.html"><a href="markov-independence.html"><i class="fa fa-check"></i><b>6.8</b> Markov independence</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>9.2</b> Examples</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>9.2.1</b> Average of node-level stats</a></li>
+<li class="chapter" data-level="7" data-path="using-constraints-in-ergms.html"><a href="using-constraints-in-ergms.html"><i class="fa fa-check"></i><b>7</b> Using constraints in ERGMs</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="example-1-interlocking-egos-and-disconnected-alters.html"><a href="example-1-interlocking-egos-and-disconnected-alters.html"><i class="fa fa-check"></i><b>7.1</b> Example 1: Interlocking egos and disconnected alters</a></li>
+<li class="chapter" data-level="7.2" data-path="example-2-bi-partite-networks.html"><a href="example-2-bi-partite-networks.html"><i class="fa fa-check"></i><b>7.2</b> Example 2: Bi-partite networks</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>10</b> Network diffussion with <code>netdiffuseR</code></a><ul>
-<li class="chapter" data-level="10.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>10.1</b> Network diffusion of innovation</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>10.1.1</b> Diffusion networks</a></li>
-<li class="chapter" data-level="10.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>10.1.2</b> Thresholds</a></li>
-</ul></li>
-<li class="chapter" data-level="10.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>10.2</b> The netdiffuseR R package</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>10.2.1</b> Overview</a></li>
-<li class="chapter" data-level="10.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>10.2.2</b> Datasets</a></li>
-<li class="chapter" data-level="10.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>10.2.3</b> Visualization methods</a></li>
-<li class="chapter" data-level="10.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>10.2.4</b> Problems</a></li>
-</ul></li>
-<li class="chapter" data-level="10.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>10.3</b> Simulation of diffusion processes</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>10.3.1</b> Simulating diffusion networks</a></li>
-<li class="chapter" data-level="10.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>10.3.2</b> Rumor spreading</a></li>
-<li class="chapter" data-level="10.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>10.3.3</b> Difussion</a></li>
-<li class="chapter" data-level="10.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>10.3.4</b> Mentor Matching</a></li>
-<li class="chapter" data-level="10.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>10.3.5</b> Example by changing threshold</a></li>
-<li class="chapter" data-level="10.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>10.3.6</b> Problems</a></li>
-</ul></li>
-<li class="chapter" data-level="10.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>10.4</b> Statistical inference</a><ul>
-<li class="chapter" data-level="10.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>10.4.1</b> Moran’s I</a></li>
-<li class="chapter" data-level="10.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>10.4.2</b> Using geodesics</a></li>
-<li class="chapter" data-level="10.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>10.4.3</b> Structural dependence and permutation tests</a></li>
-<li class="chapter" data-level="10.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>10.4.4</b> Idea</a></li>
-<li class="chapter" data-level="10.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>10.4.5</b> Regression analysis</a></li>
-<li class="chapter" data-level="10.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>10.4.6</b> Problems</a></li>
+<li class="chapter" data-level="8" data-path="separable-temporal-exponential-family-random-graph-models.html"><a href="separable-temporal-exponential-family-random-graph-models.html"><i class="fa fa-check"></i><b>8</b> (Separable) Temporal Exponential Family Random Graph Models</a></li>
+<li class="chapter" data-level="9" data-path="simulating-and-visualizing-networks.html"><a href="simulating-and-visualizing-networks.html"><i class="fa fa-check"></i><b>9</b> Simulating and visualizing networks</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="random-graph-models.html"><a href="random-graph-models.html"><i class="fa fa-check"></i><b>9.1</b> Random Graph Models</a></li>
+<li class="chapter" data-level="9.2" data-path="social-networks-in-schools.html"><a href="social-networks-in-schools.html"><i class="fa fa-check"></i><b>9.2</b> Social Networks in Schools</a></li>
+<li class="chapter" data-level="9.3" data-path="reading-a-network.html"><a href="reading-a-network.html"><i class="fa fa-check"></i><b>9.3</b> Reading a network</a></li>
+<li class="chapter" data-level="9.4" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html"><i class="fa fa-check"></i><b>9.4</b> Visualizing the network</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-size"><i class="fa fa-check"></i><b>9.4.1</b> Vertex size</a></li>
+<li class="chapter" data-level="9.4.2" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-color"><i class="fa fa-check"></i><b>9.4.2</b> Vertex color</a></li>
+<li class="chapter" data-level="9.4.3" data-path="visualizing-the-network.html"><a href="visualizing-the-network.html#vertex-shape"><i class="fa fa-check"></i><b>9.4.3</b> Vertex shape</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>11</b> Stochastic Actor Oriented Models</a></li>
-<li class="chapter" data-level="12" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>12</b> Power calculation in network studies</a><ul>
-<li class="chapter" data-level="12.1" data-path="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><i class="fa fa-check"></i><b>12.1</b> Example 1: Spillover effects in egocentric studies</a></li>
-<li class="chapter" data-level="12.2" data-path="example-2-spillover-effects-pre-post-effect.html"><a href="example-2-spillover-effects-pre-post-effect.html"><i class="fa fa-check"></i><b>12.2</b> Example 2: Spillover effects pre-post effect</a></li>
-<li class="chapter" data-level="12.3" data-path="example-3-first-difference.html"><a href="example-3-first-difference.html"><i class="fa fa-check"></i><b>12.3</b> Example 3: First difference</a></li>
+<li class="chapter" data-level="10" data-path="hypothesis-testing-in-networks.html"><a href="hypothesis-testing-in-networks.html"><i class="fa fa-check"></i><b>10</b> Hypothesis testing in networks</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="comparing-networks.html"><a href="comparing-networks.html"><i class="fa fa-check"></i><b>10.1</b> Comparing networks</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="comparing-networks.html"><a href="comparing-networks.html#network-bootstrap"><i class="fa fa-check"></i><b>10.1.1</b> Network bootstrap</a></li>
+<li class="chapter" data-level="10.1.2" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-normal"><i class="fa fa-check"></i><b>10.1.2</b> When the statistic is normal</a></li>
+<li class="chapter" data-level="10.1.3" data-path="comparing-networks.html"><a href="comparing-networks.html#when-the-statistic-is-not-normal"><i class="fa fa-check"></i><b>10.1.3</b> When the statistic is NOT normal</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>10.2</b> Examples</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="examples.html"><a href="examples.html#average-of-node-level-stats"><i class="fa fa-check"></i><b>10.2.1</b> Average of node-level stats</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="network-diffussion-with-netdiffuser.html"><a href="network-diffussion-with-netdiffuser.html"><i class="fa fa-check"></i><b>11</b> Network diffussion with <code>netdiffuseR</code></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html"><i class="fa fa-check"></i><b>11.1</b> Network diffusion of innovation</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#diffusion-networks"><i class="fa fa-check"></i><b>11.1.1</b> Diffusion networks</a></li>
+<li class="chapter" data-level="11.1.2" data-path="network-diffusion-of-innovation.html"><a href="network-diffusion-of-innovation.html#thresholds"><i class="fa fa-check"></i><b>11.1.2</b> Thresholds</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html"><i class="fa fa-check"></i><b>11.2</b> The netdiffuseR R package</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#overview"><i class="fa fa-check"></i><b>11.2.1</b> Overview</a></li>
+<li class="chapter" data-level="11.2.2" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#datasets"><i class="fa fa-check"></i><b>11.2.2</b> Datasets</a></li>
+<li class="chapter" data-level="11.2.3" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#visualization-methods"><i class="fa fa-check"></i><b>11.2.3</b> Visualization methods</a></li>
+<li class="chapter" data-level="11.2.4" data-path="the-netdiffuser-r-package.html"><a href="the-netdiffuser-r-package.html#problems"><i class="fa fa-check"></i><b>11.2.4</b> Problems</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html"><i class="fa fa-check"></i><b>11.3</b> Simulation of diffusion processes</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#simulating-diffusion-networks"><i class="fa fa-check"></i><b>11.3.1</b> Simulating diffusion networks</a></li>
+<li class="chapter" data-level="11.3.2" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#rumor-spreading"><i class="fa fa-check"></i><b>11.3.2</b> Rumor spreading</a></li>
+<li class="chapter" data-level="11.3.3" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#difussion"><i class="fa fa-check"></i><b>11.3.3</b> Difussion</a></li>
+<li class="chapter" data-level="11.3.4" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#mentor-matching"><i class="fa fa-check"></i><b>11.3.4</b> Mentor Matching</a></li>
+<li class="chapter" data-level="11.3.5" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#example-by-changing-threshold"><i class="fa fa-check"></i><b>11.3.5</b> Example by changing threshold</a></li>
+<li class="chapter" data-level="11.3.6" data-path="simulation-of-diffusion-processes.html"><a href="simulation-of-diffusion-processes.html#problems-1"><i class="fa fa-check"></i><b>11.3.6</b> Problems</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>11.4</b> Statistical inference</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="statistical-inference.html"><a href="statistical-inference.html#morans-i"><i class="fa fa-check"></i><b>11.4.1</b> Moran’s I</a></li>
+<li class="chapter" data-level="11.4.2" data-path="statistical-inference.html"><a href="statistical-inference.html#using-geodesics"><i class="fa fa-check"></i><b>11.4.2</b> Using geodesics</a></li>
+<li class="chapter" data-level="11.4.3" data-path="statistical-inference.html"><a href="statistical-inference.html#structural-dependence-and-permutation-tests"><i class="fa fa-check"></i><b>11.4.3</b> Structural dependence and permutation tests</a></li>
+<li class="chapter" data-level="11.4.4" data-path="statistical-inference.html"><a href="statistical-inference.html#idea"><i class="fa fa-check"></i><b>11.4.4</b> Idea</a></li>
+<li class="chapter" data-level="11.4.5" data-path="statistical-inference.html"><a href="statistical-inference.html#regression-analysis"><i class="fa fa-check"></i><b>11.4.5</b> Regression analysis</a></li>
+<li class="chapter" data-level="11.4.6" data-path="statistical-inference.html"><a href="statistical-inference.html#problems-2"><i class="fa fa-check"></i><b>11.4.6</b> Problems</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="stochastic-actor-oriented-models.html"><a href="stochastic-actor-oriented-models.html"><i class="fa fa-check"></i><b>12</b> Stochastic Actor Oriented Models</a></li>
+<li class="chapter" data-level="13" data-path="power-calculation-in-network-studies.html"><a href="power-calculation-in-network-studies.html"><i class="fa fa-check"></i><b>13</b> Power calculation in network studies</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html"><i class="fa fa-check"></i><b>13.1</b> Example 1: Spillover effects in egocentric studies</a></li>
+<li class="chapter" data-level="13.2" data-path="example-2-spillover-effects-pre-post-effect.html"><a href="example-2-spillover-effects-pre-post-effect.html"><i class="fa fa-check"></i><b>13.2</b> Example 2: Spillover effects pre-post effect</a></li>
+<li class="chapter" data-level="13.3" data-path="example-3-first-difference.html"><a href="example-3-first-difference.html"><i class="fa fa-check"></i><b>13.3</b> Example 3: First difference</a></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Foundations</b></span></li>
-<li class="chapter" data-level="13" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>13</b> Bayes’ Rule</a><ul>
-<li class="chapter" data-level="13.1" data-path="metropolis-algorithm.html"><a href="metropolis-algorithm.html"><i class="fa fa-check"></i><b>13.1</b> Metropolis Algorithm</a></li>
-<li class="chapter" data-level="13.2" data-path="metropolis-hastings.html"><a href="metropolis-hastings.html"><i class="fa fa-check"></i><b>13.2</b> Metropolis-Hastings</a></li>
-<li class="chapter" data-level="13.3" data-path="likelihood-free-mcmc.html"><a href="likelihood-free-mcmc.html"><i class="fa fa-check"></i><b>13.3</b> Likelihood-free MCMC</a></li>
+<li class="chapter" data-level="14" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>14</b> Bayes’ Rule</a></li>
+<li class="chapter" data-level="15" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>15</b> Markov Chain</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="metropolis-algorithm.html"><a href="metropolis-algorithm.html"><i class="fa fa-check"></i><b>15.1</b> Metropolis Algorithm</a></li>
+<li class="chapter" data-level="15.2" data-path="metropolis-hastings.html"><a href="metropolis-hastings.html"><i class="fa fa-check"></i><b>15.2</b> Metropolis-Hastings</a></li>
+<li class="chapter" data-level="15.3" data-path="likelihood-free-mcmc.html"><a href="likelihood-free-mcmc.html"><i class="fa fa-check"></i><b>15.3</b> Likelihood-free MCMC</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>14</b> Power and sample size</a><ul>
-<li class="chapter" data-level="14.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>14.1</b> Error types</a></li>
-<li class="chapter" data-level="14.2" data-path="example-1-sample-size-for-a-proportion.html"><a href="example-1-sample-size-for-a-proportion.html"><i class="fa fa-check"></i><b>14.2</b> Example 1: Sample size for a proportion</a></li>
-<li class="chapter" data-level="14.3" data-path="example-2-sample-size-for-a-proportion-vis.html"><a href="example-2-sample-size-for-a-proportion-vis.html"><i class="fa fa-check"></i><b>14.3</b> Example 2: Sample size for a proportion (vis)</a></li>
+<li class="chapter" data-level="16" data-path="part2-power.html"><a href="part2-power.html"><i class="fa fa-check"></i><b>16</b> Power and sample size</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="error-types.html"><a href="error-types.html"><i class="fa fa-check"></i><b>16.1</b> Error types</a></li>
+<li class="chapter" data-level="16.2" data-path="example-1-sample-size-for-a-proportion.html"><a href="example-1-sample-size-for-a-proportion.html"><i class="fa fa-check"></i><b>16.2</b> Example 1: Sample size for a proportion</a></li>
+<li class="chapter" data-level="16.3" data-path="example-2-sample-size-for-a-proportion-vis.html"><a href="example-2-sample-size-for-a-proportion-vis.html"><i class="fa fa-check"></i><b>16.3</b> Example 2: Sample size for a proportion (vis)</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a><ul>
-<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a><ul>
+<li class="chapter" data-level="A" data-path="datasets-1.html"><a href="datasets-1.html"><i class="fa fa-check"></i><b>A</b> Datasets</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sns-data.html"><a href="sns-data.html"><i class="fa fa-check"></i><b>A.1</b> SNS data</a>
+<ul>
 <li class="chapter" data-level="A.1.1" data-path="sns-data.html"><a href="sns-data.html#about-the-data"><i class="fa fa-check"></i><b>A.1.1</b> About the data</a></li>
 <li class="chapter" data-level="A.1.2" data-path="sns-data.html"><a href="sns-data.html#variables"><i class="fa fa-check"></i><b>A.1.2</b> Variables</a></li>
 </ul></li>
@@ -278,16 +327,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="example-3-first-difference" class="section level2 hasAnchor">
-<h2><span class="header-section-number">12.3</span> Example 3: First difference<a href="example-3-first-difference.html#example-3-first-difference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="example-3-first-difference" class="section level2 hasAnchor" number="13.3">
+<h2><span class="header-section-number">13.3</span> Example 3: First difference<a href="example-3-first-difference.html#example-3-first-difference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now, instead of looking at a dichotomous outcome, let’s evaluate what happens if
 the variable is continuous. The effects we are interested to identify are the ego and alter effect, <span class="math inline">\(\gamma_{ego}\)</span> and <span class="math inline">\(\gamma_{alter}\)</span>, respectively. Furthermore, the data generating process is</p>
-<p><span class="math display">\[
-\begin{align*}
+<p><span class="math display">\[\begin{align*}
 y_{itg} &amp; = \alpha_i + \kappa_g + X_i\beta + \varepsilon_{itg} \\
 y_{itg} &amp; = \alpha_i + \kappa_g + X_i\beta + D_{i}^{ego}\gamma_{ego} + D_i^{alter}\gamma_{alter} + \varepsilon_{itg}
-\end{align*}
-\]</span></p>
+\end{align*}\]</span></p>
 <p>Where <span class="math inline">\(D_i^{ego/alter}\)</span> is an indicator variable. Here, ego and alter behavior are correlated through a fixed effect. In other words,
 within each group, we are assuming that there’s a shared baseline prevalence of
 the outcome. The main difference is that ego and alter may have different results
@@ -303,82 +350,82 @@ The most straightforward approach here is to use a first difference estimator:</
 \]</span></p>
 <p>By taking the first difference, the fixed effects are removed from the equation,
 and we can proceed with a regular linear model.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">effect_size_ego   &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
-<a class="sourceLine" id="cb17-2" title="2">effect_size_alter &lt;-<span class="st"> </span><span class="fl">0.25</span></a>
-<a class="sourceLine" id="cb17-3" title="3">sizes &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dt">by =</span> <span class="dv">10</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># Simulation function</span></a>
-<a class="sourceLine" id="cb18-2" title="2">sim_data_prepost &lt;-<span class="st"> </span><span class="cf">function</span>(n) {</a>
-<a class="sourceLine" id="cb18-3" title="3"></a>
-<a class="sourceLine" id="cb18-4" title="4">  <span class="co"># Applying attrition</span></a>
-<a class="sourceLine" id="cb18-5" title="5">  n &lt;-<span class="st"> </span><span class="kw">floor</span>(n <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>attrition))</a>
-<a class="sourceLine" id="cb18-6" title="6"></a>
-<a class="sourceLine" id="cb18-7" title="7">  <span class="co"># Step 1: Sampling fixed effects</span></a>
-<a class="sourceLine" id="cb18-8" title="8">  alpha_i &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n <span class="op">*</span><span class="st"> </span>(n_a <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb18-9" title="9">  kappa_g &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">rnorm</span>(n_a <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), n)</a>
-<a class="sourceLine" id="cb18-10" title="10"></a>
-<a class="sourceLine" id="cb18-11" title="11">  <span class="co"># Step 2: Generating the outcome at t = 1</span></a>
-<a class="sourceLine" id="cb18-12" title="12">  is_ego   &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="kw">rep</span>(<span class="dv">0</span>, n_a)), n)</a>
-<a class="sourceLine" id="cb18-13" title="13">  is_alter &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>is_ego</a>
-<a class="sourceLine" id="cb18-14" title="14">  y_<span class="dv">0</span>      &lt;-<span class="st"> </span>alpha_i <span class="op">+</span><span class="st"> </span>kappa_g <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n <span class="op">*</span><span class="st"> </span>(n_a <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb18-15" title="15">  y_<span class="dv">1</span>      &lt;-<span class="st"> </span>alpha_i <span class="op">+</span><span class="st"> </span>kappa_g <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-16" title="16"><span class="st">    </span>is_ego <span class="op">*</span><span class="st"> </span>effect_size_ego <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-17" title="17"><span class="st">    </span>is_alter <span class="op">*</span><span class="st"> </span>effect_size_alter <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb18-18" title="18"><span class="st">    </span><span class="kw">rnorm</span>(n <span class="op">*</span><span class="st"> </span>(n_a <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)) </a>
-<a class="sourceLine" id="cb18-19" title="19"></a>
-<a class="sourceLine" id="cb18-20" title="20">  <span class="co"># Step 4: Computing test statistic</span></a>
-<a class="sourceLine" id="cb18-21" title="21">  res &lt;-<span class="st"> </span><span class="kw">tryCatch</span>(</a>
-<a class="sourceLine" id="cb18-22" title="22">    <span class="kw">glm</span>(<span class="kw">I</span>(y_<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>y_<span class="dv">0</span>) <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>is_ego <span class="op">+</span><span class="st"> </span>is_alter, <span class="dt">family =</span> <span class="kw">gaussian</span>(<span class="st">&quot;identity&quot;</span>)),</a>
-<a class="sourceLine" id="cb18-23" title="23">    <span class="dt">error =</span> <span class="cf">function</span>(e) e</a>
-<a class="sourceLine" id="cb18-24" title="24">  )</a>
-<a class="sourceLine" id="cb18-25" title="25"></a>
-<a class="sourceLine" id="cb18-26" title="26">  <span class="cf">if</span> (<span class="kw">inherits</span>(res, <span class="st">&quot;error&quot;</span>))</a>
-<a class="sourceLine" id="cb18-27" title="27">    <span class="kw">return</span>(<span class="kw">c</span>(<span class="dt">ego =</span>  <span class="ot">NA</span>, <span class="dt">alter =</span> <span class="ot">NA</span>))</a>
-<a class="sourceLine" id="cb18-28" title="28">  </a>
-<a class="sourceLine" id="cb18-29" title="29">  <span class="co"># Step 5: Reject?</span></a>
-<a class="sourceLine" id="cb18-30" title="30">  <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb18-31" title="31">    <span class="co"># ego      = res_ego$p.value &lt; alpha,</span></a>
-<a class="sourceLine" id="cb18-32" title="32">    <span class="dt">ego        =</span> <span class="kw">summary</span>(res)<span class="op">$</span>coefficients[<span class="st">&quot;is_ego&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>] <span class="op">&lt;</span><span class="st"> </span>alpha,</a>
-<a class="sourceLine" id="cb18-33" title="33">    <span class="dt">alter      =</span> <span class="kw">summary</span>(res)<span class="op">$</span>coefficients[<span class="st">&quot;is_alter&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>] <span class="op">&lt;</span><span class="st"> </span>alpha,</a>
-<a class="sourceLine" id="cb18-34" title="34">    <span class="kw">coef</span>(res)[<span class="dv">1</span>],</a>
-<a class="sourceLine" id="cb18-35" title="35">    <span class="kw">coef</span>(res)[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb18-36" title="36">  )</a>
-<a class="sourceLine" id="cb18-37" title="37">  </a>
-<a class="sourceLine" id="cb18-38" title="38"></a>
-<a class="sourceLine" id="cb18-39" title="39">}</a></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># We always set the seed </span></a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="kw">set.seed</span>(<span class="dv">88</span>)</a>
-<a class="sourceLine" id="cb19-3" title="3"></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="co"># Making space and running!</span></a>
-<a class="sourceLine" id="cb19-5" title="5">spower &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb19-6" title="6"><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</a>
-<a class="sourceLine" id="cb19-7" title="7"></a>
-<a class="sourceLine" id="cb19-8" title="8">  <span class="co"># Run the simulation for size s</span></a>
-<a class="sourceLine" id="cb19-9" title="9">  simres &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(</a>
-<a class="sourceLine" id="cb19-10" title="10">    <span class="kw">replicate</span>(n_sims, <span class="kw">sim_data_prepost</span>(s)),</a>
-<a class="sourceLine" id="cb19-11" title="11">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb19-12" title="12">    )</a>
-<a class="sourceLine" id="cb19-13" title="13"></a>
-<a class="sourceLine" id="cb19-14" title="14">  <span class="co"># And store the results</span></a>
-<a class="sourceLine" id="cb19-15" title="15">  spower &lt;-<span class="st"> </span><span class="kw">rbind</span>(spower, simres)</a>
-<a class="sourceLine" id="cb19-16" title="16"></a>
-<a class="sourceLine" id="cb19-17" title="17">}</a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb20-2" title="2"></a>
-<a class="sourceLine" id="cb20-3" title="3">spowerd &lt;-<span class="st"> </span><span class="kw">rbind</span>(</a>
-<a class="sourceLine" id="cb20-4" title="4">  <span class="kw">data.frame</span>(<span class="dt">size =</span> sizes, <span class="dt">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="dt">type =</span>  <span class="st">&quot;ego&quot;</span>),</a>
-<a class="sourceLine" id="cb20-5" title="5">  <span class="kw">data.frame</span>(<span class="dt">size =</span> sizes, <span class="dt">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="dt">type =</span>  <span class="st">&quot;alter&quot;</span>)</a>
-<a class="sourceLine" id="cb20-6" title="6">)</a>
-<a class="sourceLine" id="cb20-7" title="7"></a>
-<a class="sourceLine" id="cb20-8" title="8">spowerd <span class="op">|</span><span class="er">&gt;</span></a>
-<a class="sourceLine" id="cb20-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> size, <span class="dt">y =</span> power, <span class="dt">colour =</span> type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-10" title="10"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-11" title="11"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-12" title="12"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-13" title="13"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>beta_pow) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-14" title="14"><span class="st">  </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb20-15" title="15">    <span class="dt">caption =</span> <span class="kw">sprintf</span>(</a>
-<a class="sourceLine" id="cb20-16" title="16">      <span class="st">&quot;Ego effect: %.2f; Alter effect: %.2f&quot;</span>, effect_size_ego, effect_size_alter)</a>
-<a class="sourceLine" id="cb20-17" title="17">      )</a></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="example-3-first-difference.html#cb344-1" tabindex="-1"></a>effect_size_ego   <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb344-2"><a href="example-3-first-difference.html#cb344-2" tabindex="-1"></a>effect_size_alter <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb344-3"><a href="example-3-first-difference.html#cb344-3" tabindex="-1"></a>sizes <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="example-3-first-difference.html#cb345-1" tabindex="-1"></a><span class="co"># Simulation function</span></span>
+<span id="cb345-2"><a href="example-3-first-difference.html#cb345-2" tabindex="-1"></a>sim_data_prepost <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb345-3"><a href="example-3-first-difference.html#cb345-3" tabindex="-1"></a></span>
+<span id="cb345-4"><a href="example-3-first-difference.html#cb345-4" tabindex="-1"></a>  <span class="co"># Applying attrition</span></span>
+<span id="cb345-5"><a href="example-3-first-difference.html#cb345-5" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">floor</span>(n <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> attrition))</span>
+<span id="cb345-6"><a href="example-3-first-difference.html#cb345-6" tabindex="-1"></a></span>
+<span id="cb345-7"><a href="example-3-first-difference.html#cb345-7" tabindex="-1"></a>  <span class="co"># Step 1: Sampling fixed effects</span></span>
+<span id="cb345-8"><a href="example-3-first-difference.html#cb345-8" tabindex="-1"></a>  alpha_i <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n <span class="sc">*</span> (n_a <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb345-9"><a href="example-3-first-difference.html#cb345-9" tabindex="-1"></a>  kappa_g <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">rnorm</span>(n_a <span class="sc">+</span> <span class="dv">1</span>), n)</span>
+<span id="cb345-10"><a href="example-3-first-difference.html#cb345-10" tabindex="-1"></a></span>
+<span id="cb345-11"><a href="example-3-first-difference.html#cb345-11" tabindex="-1"></a>  <span class="co"># Step 2: Generating the outcome at t = 1</span></span>
+<span id="cb345-12"><a href="example-3-first-difference.html#cb345-12" tabindex="-1"></a>  is_ego   <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">rep</span>(<span class="dv">0</span>, n_a)), n)</span>
+<span id="cb345-13"><a href="example-3-first-difference.html#cb345-13" tabindex="-1"></a>  is_alter <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> is_ego</span>
+<span id="cb345-14"><a href="example-3-first-difference.html#cb345-14" tabindex="-1"></a>  y_0      <span class="ot">&lt;-</span> alpha_i <span class="sc">+</span> kappa_g <span class="sc">+</span> <span class="fu">rnorm</span>(n <span class="sc">*</span> (n_a <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb345-15"><a href="example-3-first-difference.html#cb345-15" tabindex="-1"></a>  y_1      <span class="ot">&lt;-</span> alpha_i <span class="sc">+</span> kappa_g <span class="sc">+</span></span>
+<span id="cb345-16"><a href="example-3-first-difference.html#cb345-16" tabindex="-1"></a>    is_ego <span class="sc">*</span> effect_size_ego <span class="sc">+</span></span>
+<span id="cb345-17"><a href="example-3-first-difference.html#cb345-17" tabindex="-1"></a>    is_alter <span class="sc">*</span> effect_size_alter <span class="sc">+</span> </span>
+<span id="cb345-18"><a href="example-3-first-difference.html#cb345-18" tabindex="-1"></a>    <span class="fu">rnorm</span>(n <span class="sc">*</span> (n_a <span class="sc">+</span> <span class="dv">1</span>)) </span>
+<span id="cb345-19"><a href="example-3-first-difference.html#cb345-19" tabindex="-1"></a></span>
+<span id="cb345-20"><a href="example-3-first-difference.html#cb345-20" tabindex="-1"></a>  <span class="co"># Step 4: Computing test statistic</span></span>
+<span id="cb345-21"><a href="example-3-first-difference.html#cb345-21" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb345-22"><a href="example-3-first-difference.html#cb345-22" tabindex="-1"></a>    <span class="fu">glm</span>(<span class="fu">I</span>(y_1 <span class="sc">-</span> y_0) <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> is_ego <span class="sc">+</span> is_alter, <span class="at">family =</span> <span class="fu">gaussian</span>(<span class="st">&quot;identity&quot;</span>)),</span>
+<span id="cb345-23"><a href="example-3-first-difference.html#cb345-23" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) e</span>
+<span id="cb345-24"><a href="example-3-first-difference.html#cb345-24" tabindex="-1"></a>  )</span>
+<span id="cb345-25"><a href="example-3-first-difference.html#cb345-25" tabindex="-1"></a></span>
+<span id="cb345-26"><a href="example-3-first-difference.html#cb345-26" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(res, <span class="st">&quot;error&quot;</span>))</span>
+<span id="cb345-27"><a href="example-3-first-difference.html#cb345-27" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">ego =</span>  <span class="cn">NA</span>, <span class="at">alter =</span> <span class="cn">NA</span>))</span>
+<span id="cb345-28"><a href="example-3-first-difference.html#cb345-28" tabindex="-1"></a>  </span>
+<span id="cb345-29"><a href="example-3-first-difference.html#cb345-29" tabindex="-1"></a>  <span class="co"># Step 5: Reject?</span></span>
+<span id="cb345-30"><a href="example-3-first-difference.html#cb345-30" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb345-31"><a href="example-3-first-difference.html#cb345-31" tabindex="-1"></a>    <span class="co"># ego      = res_ego$p.value &lt; alpha,</span></span>
+<span id="cb345-32"><a href="example-3-first-difference.html#cb345-32" tabindex="-1"></a>    <span class="at">ego        =</span> <span class="fu">summary</span>(res)<span class="sc">$</span>coefficients[<span class="st">&quot;is_ego&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
+<span id="cb345-33"><a href="example-3-first-difference.html#cb345-33" tabindex="-1"></a>    <span class="at">alter      =</span> <span class="fu">summary</span>(res)<span class="sc">$</span>coefficients[<span class="st">&quot;is_alter&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
+<span id="cb345-34"><a href="example-3-first-difference.html#cb345-34" tabindex="-1"></a>    <span class="fu">coef</span>(res)[<span class="dv">1</span>],</span>
+<span id="cb345-35"><a href="example-3-first-difference.html#cb345-35" tabindex="-1"></a>    <span class="fu">coef</span>(res)[<span class="dv">2</span>]</span>
+<span id="cb345-36"><a href="example-3-first-difference.html#cb345-36" tabindex="-1"></a>  )</span>
+<span id="cb345-37"><a href="example-3-first-difference.html#cb345-37" tabindex="-1"></a>  </span>
+<span id="cb345-38"><a href="example-3-first-difference.html#cb345-38" tabindex="-1"></a></span>
+<span id="cb345-39"><a href="example-3-first-difference.html#cb345-39" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="example-3-first-difference.html#cb346-1" tabindex="-1"></a><span class="co"># We always set the seed </span></span>
+<span id="cb346-2"><a href="example-3-first-difference.html#cb346-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">88</span>)</span>
+<span id="cb346-3"><a href="example-3-first-difference.html#cb346-3" tabindex="-1"></a></span>
+<span id="cb346-4"><a href="example-3-first-difference.html#cb346-4" tabindex="-1"></a><span class="co"># Making space and running!</span></span>
+<span id="cb346-5"><a href="example-3-first-difference.html#cb346-5" tabindex="-1"></a>spower <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb346-6"><a href="example-3-first-difference.html#cb346-6" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</span>
+<span id="cb346-7"><a href="example-3-first-difference.html#cb346-7" tabindex="-1"></a></span>
+<span id="cb346-8"><a href="example-3-first-difference.html#cb346-8" tabindex="-1"></a>  <span class="co"># Run the simulation for size s</span></span>
+<span id="cb346-9"><a href="example-3-first-difference.html#cb346-9" tabindex="-1"></a>  simres <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(</span>
+<span id="cb346-10"><a href="example-3-first-difference.html#cb346-10" tabindex="-1"></a>    <span class="fu">replicate</span>(n_sims, <span class="fu">sim_data_prepost</span>(s)),</span>
+<span id="cb346-11"><a href="example-3-first-difference.html#cb346-11" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb346-12"><a href="example-3-first-difference.html#cb346-12" tabindex="-1"></a>    )</span>
+<span id="cb346-13"><a href="example-3-first-difference.html#cb346-13" tabindex="-1"></a></span>
+<span id="cb346-14"><a href="example-3-first-difference.html#cb346-14" tabindex="-1"></a>  <span class="co"># And store the results</span></span>
+<span id="cb346-15"><a href="example-3-first-difference.html#cb346-15" tabindex="-1"></a>  spower <span class="ot">&lt;-</span> <span class="fu">rbind</span>(spower, simres)</span>
+<span id="cb346-16"><a href="example-3-first-difference.html#cb346-16" tabindex="-1"></a></span>
+<span id="cb346-17"><a href="example-3-first-difference.html#cb346-17" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="example-3-first-difference.html#cb347-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb347-2"><a href="example-3-first-difference.html#cb347-2" tabindex="-1"></a></span>
+<span id="cb347-3"><a href="example-3-first-difference.html#cb347-3" tabindex="-1"></a>spowerd <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb347-4"><a href="example-3-first-difference.html#cb347-4" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;ego&quot;</span>),</span>
+<span id="cb347-5"><a href="example-3-first-difference.html#cb347-5" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;alter&quot;</span>)</span>
+<span id="cb347-6"><a href="example-3-first-difference.html#cb347-6" tabindex="-1"></a>)</span>
+<span id="cb347-7"><a href="example-3-first-difference.html#cb347-7" tabindex="-1"></a></span>
+<span id="cb347-8"><a href="example-3-first-difference.html#cb347-8" tabindex="-1"></a>spowerd <span class="sc">|&gt;</span></span>
+<span id="cb347-9"><a href="example-3-first-difference.html#cb347-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> power, <span class="at">colour =</span> type)) <span class="sc">+</span></span>
+<span id="cb347-10"><a href="example-3-first-difference.html#cb347-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb347-11"><a href="example-3-first-difference.html#cb347-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
+<span id="cb347-12"><a href="example-3-first-difference.html#cb347-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb347-13"><a href="example-3-first-difference.html#cb347-13" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span> <span class="sc">-</span> beta_pow) <span class="sc">+</span></span>
+<span id="cb347-14"><a href="example-3-first-difference.html#cb347-14" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb347-15"><a href="example-3-first-difference.html#cb347-15" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">sprintf</span>(</span>
+<span id="cb347-16"><a href="example-3-first-difference.html#cb347-16" tabindex="-1"></a>      <span class="st">&quot;Ego effect: %.2f; Alter effect: %.2f&quot;</span>, effect_size_ego, effect_size_alter)</span>
+<span id="cb347-17"><a href="example-3-first-difference.html#cb347-17" tabindex="-1"></a>      )</span></code></pre></div>
 <p><img src="part-01-10-power_files/figure-html/part-01-power-plot3-1.png" width="672" /></p>
 <p>From the inferential point of view, we could still use a demean operator to estimate
 individual-level effects. In particular, we would require to use the demean operator at the group level and then fit a fixed effect model to estimate individual-level parameters.</p>
@@ -514,7 +561,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

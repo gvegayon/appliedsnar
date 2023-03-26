@@ -131,31 +131,31 @@ x <- rdiffnet(
 plot(x)
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/viz-1.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/viz-1.png" width="672" />
 
 ```r
 plot_diffnet(x)
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/viz-2.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/viz-2.png" width="672" />
 
 ```r
 plot_diffnet2(x)
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/viz-3.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/viz-3.png" width="672" />
 
 ```r
 plot_adopters(x)
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/viz-4.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/viz-4.png" width="672" />
 
 ```r
 plot_threshold(x)
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/viz-5.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/viz-5.png" width="672" />
 
 ```r
 plot_infectsuscep(x, K=2)
@@ -166,13 +166,13 @@ plot_infectsuscep(x, K=2)
 ## applying logscale some observations are missing.
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/viz-6.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/viz-6.png" width="672" />
 
 ```r
 plot_hazard(x)
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/viz-7.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/viz-7.png" width="672" />
 
 
 ### Problems
@@ -225,6 +225,12 @@ net <- rdiffnet(
   )
 ```
 
+```
+## Warning in (function (graph, p, algorithm = "endpoints", both.ends = FALSE, :
+## The option -copy.first- is set to TRUE. In this case, the first graph will be
+## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.
+```
+
 
 *   The function `rdiffnet` generates random diffusion networks. Main features:
     
@@ -272,6 +278,12 @@ diffnet_rumor <- rdiffnet(
   )
 ```
 
+```
+## Warning in (function (graph, p, algorithm = "endpoints", both.ends = FALSE, :
+## The option -copy.first- is set to TRUE. In this case, the first graph will be
+## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.
+```
+
 
 ```r
 summary(diffnet_rumor)
@@ -304,7 +316,7 @@ summary(diffnet_rumor)
 plot_diffnet(diffnet_rumor, slices = c(1, 3, 5))
 ```
 
-<img src="part-01-08-netdiffuser_files/figure-epub3/plot-rumor-1.png" style="display: block; margin: auto;" />
+<img src="part-01-08-netdiffuser_files/figure-html/plot-rumor-1.png" width="672" style="display: block; margin: auto;" />
 
 ```r
 # We want to use igraph to compute layout
@@ -314,7 +326,7 @@ pos <- igraph::layout_with_drl(igdf)
 plot_diffnet2(diffnet_rumor, vertex.size = dgr(diffnet_rumor)[,1], layout=pos)
 ```
 
-<img src="part-01-08-netdiffuser_files/figure-epub3/plot-rumor-2.png" style="display: block; margin: auto;" />
+<img src="part-01-08-netdiffuser_files/figure-html/plot-rumor-2.png" width="672" style="display: block; margin: auto;" />
 
 ### Difussion
 
@@ -339,7 +351,7 @@ legend("topleft", legend = c("Disease", "Complex"), col = c("lightblue", "tomato
        bty = "n", pch=19)
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/plot-complex-and-disease-1.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/plot-complex-and-disease-1.png" width="672" />
 
 
 ### Mentor Matching
@@ -423,7 +435,7 @@ plot(ig, vertex.color = c("azure", "tomato")[X+1], vertex.label = NA,
      vertex.size = sqrt(dgr(net)))
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/sim-sim-1.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/sim-sim-1.png" width="672" />
 
 ```r
 
@@ -534,7 +546,7 @@ legend(
 )
 ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/sim-sim-results-1.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/sim-sim-results-1.png" width="672" />
 
 
 <!-- *   Example simulating a thousand networks by changing threshold levels.
@@ -585,7 +597,7 @@ legend(
     )
     ```
     
-    ![](part-01-08-netdiffuser_files/figure-epub3/geodesic_speed-box-1.png)<!-- -->
+    <img src="part-01-08-netdiffuser_files/figure-html/geodesic_speed-box-1.png" width="672" />
 
 *   The `summary.diffnet` method already runs Moran's for you. What happens under the hood is:
     
@@ -648,7 +660,15 @@ legend(
     # Simulating network
     set.seed(1123)
     net <- rdiffnet(n=500, t=10, seed.graph = "small-world")
+    ```
     
+    ```
+    ## Warning in (function (graph, p, algorithm = "endpoints", both.ends = FALSE, :
+    ## The option -copy.first- is set to TRUE. In this case, the first graph will be
+    ## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.
+    ```
+    
+    ```r
     # Running the test
     test <- struct_test(
       graph     = net, 
@@ -656,7 +676,15 @@ legend(
       R         = 1e3,
       ncpus=4, parallel="multicore"
       )
+    ```
     
+    ```
+    ## Warning in (function (graph, p, algorithm = "endpoints", both.ends = FALSE, :
+    ## The option -copy.first- is set to TRUE. In this case, the first graph will be
+    ## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.
+    ```
+    
+    ```r
     # See the output
     test
     ```
@@ -670,10 +698,10 @@ legend(
     ## --------------------------------------------------------------------------------
     ##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
     ##     observed    expected       p.val
-    ##       0.5513      0.2513      0.0000
+    ##       0.5513      0.2516      0.0000
     ```
 
-![](part-01-08-netdiffuser_files/figure-epub3/unnamed-chunk-2-1.png)<!-- -->
+<img src="part-01-08-netdiffuser_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 -   Now we shuffle times of adoption, so that is random
     
@@ -689,7 +717,15 @@ legend(
       R         = 1e3,
       ncpus=4, parallel="multicore"
       )
+    ```
     
+    ```
+    ## Warning in (function (graph, p, algorithm = "endpoints", both.ends = FALSE, :
+    ## The option -copy.first- is set to TRUE. In this case, the first graph will be
+    ## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.
+    ```
+    
+    ```r
     # See the output
     test
     ```
@@ -703,10 +739,10 @@ legend(
     ## --------------------------------------------------------------------------------
     ##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
     ##     observed    expected       p.val
-    ##       0.2714      0.2590      0.4580
+    ##       0.2714      0.2589      0.4060
     ```
     
-    ![](part-01-08-netdiffuser_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
+    <img src="part-01-08-netdiffuser_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 ### Regression analysis
 

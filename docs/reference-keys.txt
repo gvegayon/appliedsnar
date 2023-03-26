@@ -84,6 +84,7 @@ stochastic-actor-oriented-models
 power-calculation-in-network-studies
 example-1-spillover-effects-in-egocentric-studiescredit-ego-power
 example-2-spillover-effects-pre-post-effect
+example-3-first-difference
 bayes-rule
 markov-chain
 metropolis-algorithm
@@ -97,6 +98,4 @@ datasets-1
 sns-data
 about-the-data
 variables
-example-3-autocorrelated-behavior
-example-3-first-difference
 example-4-autocorrelated-behavior

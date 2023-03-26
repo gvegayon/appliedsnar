@@ -15,21 +15,13 @@ if (file.exists("ergm.rda")) {
 vignette("ergm", package="ergm")
 ```
 
-> The purpose of ERGMs, in a nutshell, is to describe parsimoniously the local selection forces
-that shape the global structure of a network. To this end, a network dataset, like those
-depicted in Figure 1, may be considered as the response in a regression model, where the
-predictors are things like "propensity for individuals of the same sex to form partnerships" or
-"propensity for individuals to form triangles of partnerships". In Figure 1(b), for example, it
-is evident that the individual nodes appear to cluster in groups of the same numerical labels
-(which turn out to be students' grades, 7 through 12); thus, an ERGM can help us quantify
-the strength of this intra-group effect.  
+> The purpose of ERGMs, in a nutshell, is to describe parsimoniously the local selection forces that shape the global structure of a network. To this end, a network dataset, like those depicted in Figure 1, may be considered as the response in a regression model, where the predictors are things like "propensity for individuals of the same sex to form partnerships" or "propensity for individuals to form triangles of partnerships". In Figure 1(b), for example, it is evident that the individual nodes appear to cluster in groups of the same numerical labels (which turn out to be students' grades, 7 through 12); thus, an ERGM can help us quantify the strength of this intra-group effect.  
 >
 > --- [@Hunter2008]
 
 ![Source: Hunter et al. (2008)](hunter2008.png)
 
-In a nutshell, we use ERGMs as a parametric interpretation of the distribution of $\mathbf{Y}$,
-which takes the canonical form:
+In a nutshell, we use ERGMs as a parametric interpretation of the distribution of $\mathbf{Y}$, which takes the canonical form:
 
 $$
 \Pr{\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}} = \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
@@ -51,24 +43,55 @@ Recent developments include new forms of dependency structures to take into acco
 
 ## A naïve example
 
-In the simplest case, ergm is equivalent to a logistic regression
+In the simplest case, ERGMs equate a logistic regression. By simple, I mean cases in which there are no Markovian terms--motifs involving more than one edge--for example, the Bernoulli graph. In the Bernoulli graph, ties are independent of each other, so the presence/absence of a tie between nodes $i$ and $j$ won't affect the presence/absence of a tie between nodes $k$ and $l$.
+
+Let's fit an ERGM using the `sampson` dataset included in the `ergm` package.
 
 
 ```{r}
 library(ergm)
-
 data("sampson")
-
 samplike
+```
 
-y <- sort(as.vector(as.matrix(samplike)))[-c(1:18)]
-glm(y~1, family=binomial("logit"))
+Using `ergm` to fit a Bernoulli graph requires using the `edges` term, which counts how many ties are in the graph:
 
-ergm(samplike ~ edges)
+```{r}
+ergm_fit <- ergm(samplike ~ edges)
+```
+
+Since this is equivalent to a logistic regression, we can use the `glm` function to fit the same model. First, we need to prepare the data so we can pass it to `glm`:
+
+```{r}
+y <- sort(as.vector(as.matrix(samplike)))
+y <- y[-c(1:18)] # We remove the diagonal from the model, which is all 0.
+y
+```
+
+We can now fit the GLM model:
+
+
+```{r}
+glm_fit <- glm(y~1, family=binomial("logit"))
+```
+
+The coefficients of both ERGM and GLM should match:
+
+```{r}
+glm_fit
+ergm_fit
+```
+
+Furthermore, in the case of the Bernoulli graph, we can get the estimate using the Logit function:
+
+```{r}
 pr <- mean(y)
-log(pr) - log(1-pr) # Logit function
+# Logit function:
+# Alternatively we could have used log(pr) - log(1-pr)
 qlogis(pr)
 ```
+
+Again, the same result. The Bernoulli graph is not the only ERGM model that can be fitted using a Logistic regression. Moreover, if all the terms of the model are non-Markov terms, `ergm` automatically defaults to a Logistic regression.
 
 ## Estimation of ERGMs
 
@@ -118,13 +141,13 @@ For more details, see [@Hunter2008]. A sketch of the algorithm follows:
 
 2.  While (no convergence) do:
     
-    a.  Using $\theta^{(t)}$, simulate $M$ networks by means of small changes in the $\mathbf{Y}_{obs}$ (the observed network). This part is done by using an importance-sampling method which weights each proposed network by it's likelihood conditional on $\theta^{(t)}$
+    a.  Using $\theta^{(t)}$, simulate $M$ networks by means of small changes in the $\mathbf{Y}_{obs}$ (the observed network). This part is done by using an importance-sampling method which weights each proposed network by its likelihood conditional on $\theta^{(t)}$
     
     b.  With the networks simulated, we can do the Newton step to update the parameter $\theta^{(t)}$ (this is the iteration part in the `ergm` package): $\theta^{(t)}\to\theta^{(t+1)}$.
     
     c.  If convergence has been reached (which usually means that $\theta^{(t)}$ and $\theta^{(t + 1)}$ are not very different), then stop; otherwise, go to step a.
 
-For more details see [@lusher2012;@admiraal2006;@Snijders2002;@Wang2009] provides details on the algorithm used by PNet (which is the same as the one used in `RSiena`). [@lusher2012] provides a short discussion on differences between `ergm` and `PNet`. 
+For more details see [@lusher2012;@admiraal2006;@Snijders2002;@Wang2009] provides details on the algorithm used by PNet (which is the same as the one used in `RSiena`). [@lusher2012] provides a short discussion on the differences between `ergm` and `PNet`. 
 
 
 ## The `ergm` package
@@ -142,14 +165,14 @@ load("03.rda")
 ```
 
 
-In this section we will use the `ergm` package (from the `statnet` suit of packages [@R-statnet]) suit, and the `intergraph` [@R-intergraph] package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
+In this section, we will use the `ergm` package (from the `statnet` suit of packages [@R-statnet],) and the `intergraph` [@R-intergraph] package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
 
 ```{r 03-ergms-setup, message=FALSE}
 library(ergm)
 library(intergraph)
 ```
 
-As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the `network` package have the same name of some functions in the `igraph` package. When the `ergm` package is loaded, since it depends on `network`, it will load the `network`  package first, which will _mask_ some functions in `igraph`. This becomes evident once you load `ergm` after loading `igraph`:
+As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the `network` package have the same name as some functions in the `igraph` package. When the `ergm` package is loaded, since it depends on `network`, it will load the `network`  package first, which will _mask_ some functions in `igraph`. This becomes evident once you load `ergm` after loading `igraph`:
   
 ```
 The following objects are masked from ‘package:igraph’:
@@ -166,7 +189,7 @@ igraph::list.edge.attributes(my_igraph_object)
 network::list.edge.attributes(my_network_object)
 ```
 
-Anyway... Using the `asNetwork` function, we can coerce the igraph object into a network object so we can use it with the `ergm` function:
+Anyway... Using the `asNetwork` function, we can coerce the `igraph` object into a network object so we can use it with the `ergm` function:
 
 ```{r 03-ergms-intergraph, cache=TRUE}
 # Creating the new network
@@ -176,7 +199,7 @@ network_111 <- intergraph::asNetwork(ig_year1_111)
 ergm(network_111 ~ edges)
 ```
 
-So what happened here! We got a warning. It turns out that our network has loops (didn't thought about it before!). Let's take a look at that with the `which_loop` function
+So what happened here? We got a warning. It turns out that our network has loops (didn't think about it before!). Let's take a look at that with the `which_loop` function
 
 ```{r 03-ergms-which-loop}
 E(ig_year1_111)[which_loop(ig_year1_111)]
@@ -202,9 +225,7 @@ network_111 <- intergraph::asNetwork(network_111)
 `asNetwork(simplify(ig_year1_111))`
 `ig_year1_111 %>% simplify %>% asNetwork`
 
-A problem that we have on this data is the fact that some vertices have
-missing values in the variables `hispanic`, `female1`, and `eversmk1`. For now,
-we will proceed by imputing values based on the avareges:
+A problem that we have with this data is the fact that some vertices have missing values in the variables `hispanic`, `female1`, and `eversmk1`. For now, we will proceed by imputing values based on the averages:
 
 ```{r 04-impute-values}
 for (v in c("hispanic", "female1", "eversmk1")) {
@@ -227,7 +248,7 @@ Proposed workflow:
 
 What to use:
 
-1.  `control.ergms`: Maximum number of iteration, seed for Pseudo-RNG, how many cores
+1.  `control.ergms`: Maximum number of iterations, seed for Pseudo-RNG, how many cores
 
 2.  `ergm.constraints`: Where to sample the network from. Gives stability and (in some cases) faster convergence as by constraining the model you are reducing the sample size.
 
