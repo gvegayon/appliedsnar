@@ -167,7 +167,7 @@ library(sna)
 gplot(net_sim)
 ```
 
-<img src="part-01-06-network-simulation-and-viz_files/figure-html/06-first-fig-1.png" width="672" />
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-first-fig-1.png)<!-- -->
 
 We can now start to see whether we got what we wanted! Before that, let's save the 
 network as a plain-text file so we can practice reading networks back in R!
@@ -206,7 +206,7 @@ set.seed(1231)
 gplot(example_graph, label = letters[1:4])
 ```
 
-<img src="part-01-06-network-simulation-and-viz_files/figure-html/06-fake-graph-read-1.png" width="672" />
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-fake-graph-read-1.png)<!-- -->
 
 - **Adjacency matrix** a matrix of size $n$ by $n$ where the $ij$-th entry represents
 the tie between $i$ and $j$. In a directed network, we say $i$ connects to $j$,
@@ -270,19 +270,19 @@ igraph::as_adj_list(intergraph::asIgraph(example_graph))
 
 ```
 ## [[1]]
-## + 1/4 vertex, from 212dc39:
+## + 1/4 vertex, from 053d06c:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from 212dc39:
+## + 2/4 vertices, from 053d06c:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from 212dc39:
+## + 3/4 vertices, from 053d06c:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from 212dc39:
+## + 2/4 vertices, from 053d06c:
 ## [1] 3 3
 ```
 
@@ -427,7 +427,7 @@ gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/2, coord = glayout)
 gplot(net_sim, vertex.cex = (net_sim %v% "indeg")/10, coord = glayout)
 ```
 
-<img src="part-01-06-network-simulation-and-viz_files/figure-html/06-size-1.png" width="672" />
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-size-1.png)<!-- -->
 
 ```r
 # Restoring device config
@@ -482,7 +482,7 @@ plot(
 )
 ```
 
-<img src="part-01-06-network-simulation-and-viz_files/figure-html/06-size-netdiffuseR-1.png" width="672" />
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-size-netdiffuseR-1.png)<!-- -->
 
 We could also have tried netplot, which should make things easier and make a better use of the space:
 
@@ -496,7 +496,7 @@ nplot(
   )
 ```
 
-<img src="part-01-06-network-simulation-and-viz_files/figure-html/06-netplot1-1.png" width="672" />
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-netplot1-1.png)<!-- -->
 
 With a good idea for size, we can now start looking into vertex color.
 
@@ -533,7 +533,7 @@ legend(
   )
 ```
 
-<img src="part-01-06-network-simulation-and-viz_files/figure-html/06-network-color-1.png" width="672" />
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-network-color-1.png)<!-- -->
 
 Line by line, this is what we just did:
 
@@ -612,7 +612,7 @@ legend(
   )
 ```
 
-<img src="part-01-06-network-simulation-and-viz_files/figure-html/06-network-shape-1.png" width="672" />
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-network-shape-1.png)<!-- -->
 
 Let's now compare the figure to our original ERGM:
 
@@ -695,7 +695,7 @@ legend(
   )
 ```
 
-<img src="part-01-06-network-simulation-and-viz_files/figure-html/06-adjust-homophily-plot-1.png" width="672" />
+![](part-01-06-network-simulation-and-viz_files/figure-epub3/06-adjust-homophily-plot-1.png)<!-- -->
 
 As expected, there is no longer a dominant effect in homophily. One important
 thing we can learn from this final example is that phenomena will not always

@@ -47,6 +47,15 @@ visualizing-the-network
 vertex-size
 vertex-color
 vertex-shape
+egocentric-networks
+network-files-graphml
+person-files
+ego-files
+edgelist-files
+putting-all-together
+generating-statistics
+generating-statistics-based-on-ergm
+saving-the-data
 hypothesis-testing-in-networks
 comparing-networks
 network-bootstrap
@@ -98,4 +107,3 @@ datasets-1
 sns-data
 about-the-data
 variables
-example-4-autocorrelated-behavior

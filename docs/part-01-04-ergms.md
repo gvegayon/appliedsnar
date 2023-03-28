@@ -360,7 +360,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from a60079c (vertex names):
+## + 1/2638 edge from bc14b0a (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -1088,7 +1088,7 @@ ans_gof
 plot(ans_gof)
 ```
 
-<img src="part-01-04-ergms_files/figure-html/checking-gof-1.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-2.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-3.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-4.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-5.png" width="672" />
+![](part-01-04-ergms_files/figure-epub3/checking-gof-1.png)<!-- -->![](part-01-04-ergms_files/figure-epub3/checking-gof-2.png)<!-- -->![](part-01-04-ergms_files/figure-epub3/checking-gof-3.png)<!-- -->![](part-01-04-ergms_files/figure-epub3/checking-gof-4.png)<!-- -->![](part-01-04-ergms_files/figure-epub3/checking-gof-5.png)<!-- -->
 
 Try the following configuration instead
 
@@ -1123,7 +1123,7 @@ knitr::include_graphics("awful-chains.png")
 ```
 
 <div class="figure">
-<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="357" />
+<img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="714" />
 <p class="caption">(\#fig:badconvergence)An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful</p>
 </div>
 

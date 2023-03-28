@@ -162,7 +162,7 @@ ggplot(simulations, aes(x = size, y = power)) +
 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-<img src="part-02-11-power_files/figure-html/11-power-plot-1.png" width="672" />
+![](part-02-11-power_files/figure-epub3/11-power-plot-1.png)<!-- -->
 
 Alternatively, we can fit a linear regression model where we predict power as a function of sample size using linear and quadratic effects:
 

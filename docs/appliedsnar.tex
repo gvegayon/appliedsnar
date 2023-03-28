@@ -155,7 +155,7 @@
 
 \title{Applied Network Science with R}
 \author{George G. Vega Yon, Ph.D.}
-\date{2023-03-24}
+\date{2023-03-27}
 
 \begin{document}
 \maketitle
@@ -170,40 +170,22 @@
 \renewcommand{\Pr}[1]{\mbox{Pr}\left(#1\right)}
 \renewcommand{\exp}[1]{\mbox{exp}\left\{#1\right\}}
 
-Statistical methods for networked systems are present in most disciplines.
-Nonetheless, despite the language differences between disciplines, many methods
-developed to study specific types of problems can be helpful outside of their original context.
+Statistical methods for networked systems are present in most disciplines. Nonetheless, despite the language differences between disciplines, many methods developed to study specific types of problems can be helpful outside of their original context.
 
-This project began as a part of a workshop that took place at USC's
-\href{https://cana.usc.edu}{Center for Applied Network Analysis}. Now, it is a personal
-project that I use to gather and study statistical methods to analyze networks, emphasizing social and biological systems.
-Moreover, the book will use statistical computing methods as a core component
-when developing these topics.
+This project began as a part of a workshop that took place at USC's \textbf{Center for Applied Network Analysis}. Now, it is a personal project that I use to gather and study statistical methods to analyze networks, emphasizing social and biological systems. Moreover, the book will use statistical computing methods as a core component when developing these topics.
 
-In general, we will, besides R itself, we will be using R studio and the following
-R packages: dplyr for data management, stringr for data cleaning, and of course
-igraph, netdiffuseR (a bit of a bias here), and statnet for our neat network
-analysis.\footnote{Some of you may be wondering ``what about ggplot2 and friends? What about \href{https://www.tidyverse.org/}{\texttt{tidyverse}}'', well, my short answer is I jumped into R before all of that was that popular. When I started, plots were all about \href{https://CRAN.R-project.org/package=lattice}{\texttt{lattice}}, and after a couple of years on that, about base R graphics. What I'm saying is that so far, I have not found a compelling reason to leave my ``old practices'' and embrace all the \texttt{tidyverse} movement (religion?).}
+In general, we will, besides R itself, we will be using RStudio. For data management, we will use \texttt{dplyr} and \texttt{data.table}. The network data management and visualization packages we will use are \texttt{igraph}, netdiffuseR, the statnet suite, and \texttt{netplot}. Some of you may be wondering ``what about ggplot2 and friends? What about \texttt{tidyverse}'', well, my short answer is I jumped into R before all of that was that popular.
 
-You can access the book's source code at \url{https://github.com/gvegayon/appliedsnar}.
+You can access the book's source code at https://github.com/gvegayon/appliedsnar.
 
 \hypertarget{about-the-author}{%
 \chapter{About the Author}\label{about-the-author}}
 
-I am a Research Assistant Professor at the University of Utah's Division of
-Epidemiology, where I work on studying Complex Systems using Statistical Computing.
-I have over ten years of experience developing scientific software focusing on
-high-performance computing, data visualization, and social network analysis.
-My training is in Public Policy (M.A.~UAI, 2011), Economics (M.Sc. Caltech,
-2015), and Biostatistics (Ph.D.~USC, 2020).
+I am a Research Assistant Professor at the \textbf{University of Utah's Division of Epidemiology}, where I work on studying Complex Systems using Statistical Computing. I was born and raised in Chile. I have over ten years of experience developing scientific software focusing on high-performance computing, data visualization, and social network analysis. My training is in Public Policy (M.A.~UAI, 2011), Economics (M.Sc. Caltech, 2015), and Biostatistics (Ph.D.~USC, 2020).
 
-I obtained my Ph.D.~in Biostatistics under the supervision of
-\href{https://scholar.google.com/citations?user=Zj5ky5gAAAAJ\&hl=en}{Prof.~Paul Marjoram} and
-\href{https://kayladelahaye.net/}{Prof.~Kayla de la Haye}, with my dissertation titled ``Essays on
-Bioinformatics and Social Network Analysis: Statistical and Computational Methods
-for Complex Systems.''
+I obtained my Ph.D.~in Biostatistics under the supervision of \textbf{Prof.~Paul Marjoram} and\textbf{Prof.~Kayla de la Haye}, with my dissertation titled ``\emph{Essays on Bioinformatics and Social Network Analysis: Statistical and Computational Methods for Complex Systems.}''
 
-If you'd like to learn more about me, please visit my website at \url{https://ggvy.cl}.
+If you'd like to learn more about me, please visit my website at https://ggvy.cl.
 
 \hypertarget{part-applications}{%
 \part{Applications}\label{part-applications}}
@@ -1940,7 +1922,7 @@ For more details, see (\protect\hyperlink{ref-Hunter2008}{David R. Hunter et al.
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
   \item
-    Using \(\theta^{(t)}\), simulate \(M\) networks by means of small changes in the \(\mathbf{Y}_{obs}\) (the observed network). This part is done by using an importance-sampling method which weights each proposed network by it's likelihood conditional on \(\theta^{(t)}\)
+    Using \(\theta^{(t)}\), simulate \(M\) networks by means of small changes in the \(\mathbf{Y}_{obs}\) (the observed network). This part is done by using an importance-sampling method which weights each proposed network by its likelihood conditional on \(\theta^{(t)}\)
   \item
     With the networks simulated, we can do the Newton step to update the parameter \(\theta^{(t)}\) (this is the iteration part in the \texttt{ergm} package): \(\theta^{(t)}\to\theta^{(t+1)}\).
   \item
@@ -1948,7 +1930,7 @@ For more details, see (\protect\hyperlink{ref-Hunter2008}{David R. Hunter et al.
   \end{enumerate}
 \end{enumerate}
 
-For more details see (\protect\hyperlink{ref-lusher2012}{Lusher, Koskinen, and Robins 2012}; \protect\hyperlink{ref-admiraal2006}{Admiraal and Handcock 2006}; \protect\hyperlink{ref-Snijders2002}{T. A. Snijders 2002}; \protect\hyperlink{ref-Wang2009}{Wang et al. 2009}) provides details on the algorithm used by PNet (which is the same as the one used in \texttt{RSiena}). (\protect\hyperlink{ref-lusher2012}{Lusher, Koskinen, and Robins 2012}) provides a short discussion on differences between \texttt{ergm} and \texttt{PNet}.
+For more details see (\protect\hyperlink{ref-lusher2012}{Lusher, Koskinen, and Robins 2012}; \protect\hyperlink{ref-admiraal2006}{Admiraal and Handcock 2006}; \protect\hyperlink{ref-Snijders2002}{T. A. Snijders 2002}; \protect\hyperlink{ref-Wang2009}{Wang et al. 2009}) provides details on the algorithm used by PNet (which is the same as the one used in \texttt{RSiena}). (\protect\hyperlink{ref-lusher2012}{Lusher, Koskinen, and Robins 2012}) provides a short discussion on the differences between \texttt{ergm} and \texttt{PNet}.
 
 \hypertarget{the-ergm-package}{%
 \section{\texorpdfstring{The \texttt{ergm} package}{The ergm package}}\label{the-ergm-package}}
@@ -1967,7 +1949,7 @@ From the previous section:\footnote{You can download the 03.rda file from \href{
 \end{Highlighting}
 \end{Shaded}
 
-In this section we will use the \texttt{ergm} package (from the \texttt{statnet} suit of packages (\protect\hyperlink{ref-R-statnet}{Handcock et al. 2016})) suit, and the \texttt{intergraph} (\protect\hyperlink{ref-R-intergraph}{Bojanowski 2015}) package. The latter provides functions to go back and forth between \texttt{igraph} and \texttt{network} objects from the \texttt{igraph} and \texttt{network} packages respectively\footnote{Yes, the classes have the same name as the packages.}
+In this section, we will use the \texttt{ergm} package (from the \texttt{statnet} suit of packages (\protect\hyperlink{ref-R-statnet}{Handcock et al. 2016}),) and the \texttt{intergraph} (\protect\hyperlink{ref-R-intergraph}{Bojanowski 2015}) package. The latter provides functions to go back and forth between \texttt{igraph} and \texttt{network} objects from the \texttt{igraph} and \texttt{network} packages respectively\footnote{Yes, the classes have the same name as the packages.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1976,7 +1958,7 @@ In this section we will use the \texttt{ergm} package (from the \texttt{statnet}
 \end{Highlighting}
 \end{Shaded}
 
-As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the \texttt{network} package have the same name of some functions in the \texttt{igraph} package. When the \texttt{ergm} package is loaded, since it depends on \texttt{network}, it will load the \texttt{network} package first, which will \emph{mask} some functions in \texttt{igraph}. This becomes evident once you load \texttt{ergm} after loading \texttt{igraph}:
+As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the \texttt{network} package have the same name as some functions in the \texttt{igraph} package. When the \texttt{ergm} package is loaded, since it depends on \texttt{network}, it will load the \texttt{network} package first, which will \emph{mask} some functions in \texttt{igraph}. This becomes evident once you load \texttt{ergm} after loading \texttt{igraph}:
 
 \begin{verbatim}
 The following objects are masked from ‘package:igraph’:
@@ -1995,7 +1977,7 @@ What are the implications of this? If you call the function \texttt{list.edge.at
 \end{Highlighting}
 \end{Shaded}
 
-Anyway\ldots{} Using the \texttt{asNetwork} function, we can coerce the igraph object into a network object so we can use it with the \texttt{ergm} function:
+Anyway\ldots{} Using the \texttt{asNetwork} function, we can coerce the \texttt{igraph} object into a network object so we can use it with the \texttt{ergm} function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2045,7 +2027,7 @@ Anyway\ldots{} Using the \texttt{asNetwork} function, we can coerce the igraph o
 ## -4.734
 \end{verbatim}
 
-So what happened here! We got a warning. It turns out that our network has loops (didn't thought about it before!). Let's take a look at that with the \texttt{which\_loop} function
+So what happened here? We got a warning. It turns out that our network has loops (didn't think about it before!). Let's take a look at that with the \texttt{which\_loop} function
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2054,7 +2036,7 @@ So what happened here! We got a warning. It turns out that our network has loops
 \end{Shaded}
 
 \begin{verbatim}
-## + 1/2638 edge from a9952cd (vertex names):
+## + 1/2638 edge from 90564e3 (vertex names):
 ## [1] 1110111->1110111
 \end{verbatim}
 
@@ -2079,9 +2061,7 @@ We can get rid of these using the \texttt{igraph::-.igraph}. Let's remove the is
 \texttt{asNetwork(simplify(ig\_year1\_111))}
 \texttt{ig\_year1\_111\ \%\textgreater{}\%\ simplify\ \%\textgreater{}\%\ asNetwork}
 
-A problem that we have on this data is the fact that some vertices have
-missing values in the variables \texttt{hispanic}, \texttt{female1}, and \texttt{eversmk1}. For now,
-we will proceed by imputing values based on the avareges:
+A problem that we have with this data is the fact that some vertices have missing values in the variables \texttt{hispanic}, \texttt{female1}, and \texttt{eversmk1}. For now, we will proceed by imputing values based on the averages:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2113,7 +2093,7 @@ What to use:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  \texttt{control.ergms}: Maximum number of iteration, seed for Pseudo-RNG, how many cores
+  \texttt{control.ergms}: Maximum number of iterations, seed for Pseudo-RNG, how many cores
 \item
   \texttt{ergm.constraints}: Where to sample the network from. Gives stability and (in some cases) faster convergence as by constraining the model you are reducing the sample size.
 \end{enumerate}
@@ -2925,20 +2905,9 @@ Related to this, block-diagonal ERGMs can be estimated as independent models, on
 \hypertarget{using-constraints-in-ergms}{%
 \chapter{Using constraints in ERGMs}\label{using-constraints-in-ergms}}
 
-Exponential Random Graph Models {[}ERGMs{]} can represent a variety of
-network classes. We often look at ``regular'' social networks
-like students in schools, colleagues in a workplace, or families. Nonetheless,
-some social networks we study have features that restrict how connections can
-occur. Typical examples are \href{https://en.wikipedia.org/wiki/Bipartite_graph}{bi-partite graphs}
-and \href{https://cran.r-project.org/web/packages/mlergm/vignettes/mlergm_tutorial.html}{multilevel networks}.
-There are two classes of vertices in bi-partite networks, and ties can only
-occur between classes. On the other hand, Multilevel networks may feature
-multiple classes with inter-class ties somewhat restricted. In both cases,
-structural constraints exist, meaning that some configurations may not
-be plausible.
+Exponential Random Graph Models {[}ERGMs{]} can represent a variety of network classes. We often look at ``regular'' social networks like students in schools, colleagues in the workplace, or families. Nonetheless, some social networks we study have features that restrict how connections can occur. Typical examples are \href{https://en.wikipedia.org/wiki/Bipartite_graph}{bi-partite graphs} and \href{https://cran.r-project.org/web/packages/mlergm/vignettes/mlergm_tutorial.html}{multilevel networks}. There are two classes of vertices in bi-partite networks, and ties can only occur between classes. On the other hand, Multilevel networks may feature multiple classes with inter-class ties somewhat restricted. In both cases, structural constraints exist, meaning that some configurations may not be plausible.
 
-Mathematically, what we are trying to do is, instead of assuming that
-all network configurations are possible:
+Mathematically, what we are trying to do is, instead of assuming that all network configurations are possible:
 
 \[
 \left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j\right\}
@@ -2950,26 +2919,14 @@ all network configurations are possible:
 \left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j; \mathbf{y} \in C\right\}
 \],
 
-\noindent where \(C\) is a constraint, for example, only networks with no triangles.
-The \texttt{ergm} R package has built-in capabilities to deal with some of these
-cases. Nonetheless, we can specify models with arbitrary
-structural constraints built into the model. The key is in using offset terms.
+\noindent where \(C\) is a constraint, for example, only networks with no triangles. The \texttt{ergm} R package has built-in capabilities to deal with some of these cases. Nonetheless, we can specify models with arbitrary structural constraints built into the model. The key is in using offset terms.
 
 \hypertarget{example-1-interlocking-egos-and-disconnected-alters}{%
 \section{Example 1: Interlocking egos and disconnected alters}\label{example-1-interlocking-egos-and-disconnected-alters}}
 
-Imagine that we have two sets of vertices. The first, group \texttt{E}, are egos part of
-an egocentric study. The second group, called \texttt{A}, is composed of people mentioned by egos in \texttt{E} but
-were not surveyed. Assume that individuals in \texttt{A} can only connect
-to individuals in \texttt{E}; moreover, individuals in \texttt{E} have no restrictions connecting to each other.
-In other words, only two types of ties exist: \texttt{E-E} and \texttt{A-E}. The question is
-now, how can we enforce such a constraint in an ERGM?
+Imagine that we have two sets of vertices. The first, group \texttt{E}, are egos part of an egocentric study. The second group, called \texttt{A}, is composed of people mentioned by egos in \texttt{E} but were not surveyed. Assume that individuals in \texttt{A} can only connect to individuals in \texttt{E}; moreover, individuals in \texttt{E} have no restrictions on connecting. In other words, only two types of ties exist: \texttt{E-E} and \texttt{A-E}. The question is now, how can we enforce such a constraint in an ERGM?
 
-Using offsets, and in particular, setting coefficients to \texttt{-Inf} provides
-an easy way to restrict the support set of ERGMs. For example, if we wanted
-to constrain the support to include networks with no triangles, we would
-add the term \texttt{offset(triangle)} and use the option \texttt{offset.coef\ =\ -Inf} to
-indicate that realizations including triangles are not possible. Using R:
+Using offsets, and in particular, setting coefficients to \texttt{-Inf} provides an easy way to restrict the support set of ERGMs. For example, if we wanted to constrain the support to include networks with no triangles, we would add the term \texttt{offset(triangle)} and use the option \texttt{offset.coef\ =\ -Inf} to indicate that realizations including triangles are not possible. Using R:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2977,21 +2934,13 @@ indicate that realizations including triangles are not possible. Using R:
 \end{Highlighting}
 \end{Shaded}
 
-In this model, a Bernoulli graph, we reduce the sample space to networks
-with no triangles. In our example, such statistic should only take non-zero
-values whenever ties within the \texttt{A} class happen. We can use
-the \texttt{nodematch()} term to do that. Formally
+In this model, a Bernoulli graph, we reduce the sample space to networks with no triangles. In our example, such a statistic should only take non-zero values whenever ties within the \texttt{A} class happen. We can use the \texttt{nodematch()} term to do that. Formally
 
 \[
 \text{NodeMatch}(x) = \sum_{i,j} y_{ij} \mathbf{1}({x_{i} = x_{j}})
 \]
 
-This statistic will sum over all ties in which source (\(i\)) and target (\(j\))'s
-\(X\) attribute is equal. One way to make this happen is by creating an auxiliary
-variable that equals, e.g., 0 for all vertices in \texttt{A}, and a unique value
-different from zero otherwise. For example, if we had 2 \texttt{A}s and three \texttt{E}s,
-the data would look something like this: \(\{0,0,1,2,3\}\). The following code
-block creates an empty graph with 50 nodes, 10 of which are in group \texttt{E} (ego).
+This statistic will sum over all ties in which source (\(i\)) and target (\(j\))'s \(X\) attribute is equal. One way to make this happen is by creating an auxiliary variable that equals, e.g., 0 for all vertices in \texttt{A}, and a unique value different from zero otherwise. For example, if we had 2 \texttt{A}s and three \texttt{E}s, the data would look something like this: \(\{0,0,1,2,3\}\). The following code block creates an empty graph with 50 nodes, 10 of which are in group \texttt{E} (ego).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3090,9 +3039,7 @@ We can now use this data to simulate a network in which ties between
 
 \includegraphics{part-01-05-ergms-constrains_files/figure-latex/unnamed-chunk-4-1.pdf}
 
-As you can see, this network has only ties of the type \texttt{E-E} and \texttt{A-E}. We can
-double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph
-separately:
+As you can see, this network has only ties of the type \texttt{E-E} and \texttt{A-E}. We can double-check by (i) looking at the counts and (ii) visualizing each induced-subgraph separately:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3153,8 +3100,7 @@ separately:
 \end{Highlighting}
 \end{Shaded}
 
-Now, to fit an ERGM with this constraint, we simply need to make use of
-the offset terms. Here is an example:
+Now, to fit an ERGM with this constraint, we simply need to make use of the offset terms. Here is an example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3191,10 +3137,7 @@ the offset terms. Here is an example:
 \end{Highlighting}
 \end{Shaded}
 
-This ERGM model--which by the way only featured dyadic-independent terms, and
-thus can be reduced to a logistic regression--restricts the support by excluding
-all networks in which ties within the class \texttt{A} exists. To finalize, let's look
-at a few simulations based on this model:
+This ERGM model--which by the way only featured dyadic-independent terms, and thus can be reduced to a logistic regression--restricts the support by excluding all networks in which ties within the class \texttt{A} exists. To finalize, let's look at a few simulations based on this model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3220,28 +3163,9 @@ All networks with no ties between \texttt{A} nodes.
 \hypertarget{example-2-bi-partite-networks}{%
 \section{Example 2: Bi-partite networks}\label{example-2-bi-partite-networks}}
 
-In the case of bipartite networks (sometimes called affiliation networks,) we can
-use \texttt{ergm}'s terms for bipartite graphs to corroborate what we discussed
-here. For example, the two-star term. Let's start simulating a bipartite
-network using the \texttt{edges} and \texttt{two-star} parameters. Since the \texttt{k-star} term
-is usually complex to fit (tends to generate degenerate models,) we will
-take advantage of the \texttt{Log()} transformation function in the \texttt{ergm} package
-to smooth the term.\footnote{After writing this example, it became apparent the use of
-  the \texttt{Log()} transformation function may not be ideal. Since many terms used
-  in ERGMs can be zero, e.g., triangles, the term \texttt{Log(\textasciitilde{}\ ostar(2))} is undefined
-  when \texttt{ostar(2)\ =\ 0}. In practice, the ERGM package sets a lower limit for the
-  log of 0, so, instead of having \texttt{Log(0)\ \textasciitilde{}\ -Inf}, they set it to be a really
-  large negative number. This causes all sorts of issues to the estimates; in
-  our example, an over estimation of the population parameter and a positive
-  log-likelihood. With that said, I wouldn't recommend using
-  this transformation too often.}
+In the case of bipartite networks (sometimes called affiliation networks,) we can use \texttt{ergm}'s terms for bipartite graphs to corroborate what we discussed here. For example, the two-star term. Let's start simulating a bipartite network using the \texttt{edges} and \texttt{two-star} parameters. Since the \texttt{k-star} term is usually complex to fit (tends to generate degenerate models,) we will take advantage of the \texttt{Log()} transformation function in the \texttt{ergm} package to smooth the term.\footnote{After writing this example, it became apparent the use of the \texttt{Log()} transformation function may not be ideal. Since many terms used in ERGMs can be zero, e.g., triangles, the term \texttt{Log(\textasciitilde{}\ ostar(2))} is undefined when \texttt{ostar(2)\ =\ 0}. In practice, the ERGM package sets a lower limit for the log of 0, so, instead of having \texttt{Log(0)\ \textasciitilde{}\ -Inf}, they set it to be a really large negative number. This causes all sorts of issues to the estimates; in our example, an overestimation of the population parameter and a positive log-likelihood. Therefore, I wouldn't recommend using this transformation too often.}
 
-The bipartite network that we will be simulating will have 100 actors and
-50 entities. Actors, which we will map to the first level of the \texttt{ergm} terms,
-this is, \texttt{b1star} \texttt{b1nodematch}, etc. will send ties to the entities,
-the second level of the bipartite ERGM. To create a bipartite network, we will
-create an empty matrix of size \texttt{nactors\ x\ nentitites}; thus, actors are
-represented by rows and entities by columns.
+The bipartite network that we will be simulating will have 100 actors and 50 entities. Actors, which we will map to the first level of the \texttt{ergm} terms, this is, \texttt{b1star} \texttt{b1nodematch}, etc. will send ties to the entities, the second level of the bipartite ERGM. To create a bipartite network, we will create an empty matrix of size \texttt{nactors\ x\ nentitites}; thus, actors are represented by rows and entities by columns.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3281,14 +3205,7 @@ Let's see what we got here:
 
 \includegraphics{part-01-05-ergms-constrains_files/figure-latex/05-example2-simulated-graph-1.pdf}
 
-Notice that the first \texttt{nactors} vertices in the network are the actors, and
-the remaining are the entities. Now, although the \texttt{ergm} package features
-bipartite network terms, we can still fit a bipartite ERGM without explicitly
-declaring the graph as such. In such case, the \texttt{b1star(2)} term of a bipartite
-network is equivalent to an \texttt{ostar(2)} in a directed graph. Likewise, \texttt{b2star(2)}
-in a bipartite graph matches the \texttt{istar(2)} term in a directed graph. This
-information will be relevant when fitting the ERGM. Let's transform the bipartite
-network into a directed graph. The following code block does so:
+Notice that the first \texttt{nactors} vertices in the network are the actors, and the remaining are the entities. Now, although the \texttt{ergm} package features bipartite network terms, we can still fit a bipartite ERGM without explicitly declaring the graph as such. In such case, the \texttt{b1star(2)} term of a bipartite network is equivalent to an \texttt{ostar(2)} in a directed graph. Likewise, \texttt{b2star(2)} in a bipartite graph matches the \texttt{istar(2)} term in a directed graph. This information will be relevant when fitting the ERGM. Let's transform the bipartite network into a directed graph. The following code block does so:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3823,19 +3740,19 @@ The command turns the \texttt{network} object into a matrix with a set of attrib
 
 \begin{verbatim}
 ## [[1]]
-## + 1/4 vertex, from 6f13ffe:
+## + 1/4 vertex, from 2b3e026:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from 6f13ffe:
+## + 2/4 vertices, from 2b3e026:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from 6f13ffe:
+## + 3/4 vertices, from 2b3e026:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from 6f13ffe:
+## + 2/4 vertices, from 2b3e026:
 ## [1] 3 3
 \end{verbatim}
 
@@ -4296,6 +4213,520 @@ thing we can learn from this final example is that phenomena will not always
 show themselves in graph visualization. Careful analysis in complex networks
 is a must.
 
+\hypertarget{egocentric-networks}{%
+\chapter{Egocentric networks}\label{egocentric-networks}}
+
+In egocentric social network analysis (ESNA, for our book,) instead of dealing with a single network, we have as many networks as participants in the study. Egos--the main study subjects--are analyzed from the perspective of their local social network. For a more extended view of ESNA, look at Raffaele Vacca's ``\emph{Egocentric network analysis with R}''.
+
+In this chapter, I show how to work with one particular type of ESNA data: information generated by the tool Network Canvas. You can download an ``artificial'' ZIP file containing the outputs from a Network Canvas project \href{data-raw/networkCanvasExport-fake.zip}{here}\footnote{I thank Mrs.~Jaqueline Kent-Marvick who provided me with what I used as a baseline to generate the artificial Network Canvas export.}. During the entire chapter, we assume that the ZIP file was extracted to the path \texttt{data-raw/egonets}. You can go ahead and extract the ZIP by point-and-click, or use the following R code to automate the process:
+
+\begin{verbatim}
+## Warning in dir.create("docs/data-raw", recursive = TRUE): 'docs/data-raw'
+## already exists
+\end{verbatim}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{unzip}\NormalTok{(}
+  \AttributeTok{zipfile =} \StringTok{"data{-}raw/networkCanvasExport{-}fake.zip"}\NormalTok{,}
+  \AttributeTok{exdir   =} \StringTok{"data{-}raw/egonets"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+This will extract all the files in \texttt{networkCanvasExport-fake.zip} to the subfolder \texttt{egonets}. Let's take a look at the first few files:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(}\FunctionTok{list.files}\NormalTok{(}\AttributeTok{path =} \StringTok{"data{-}raw/egonets"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "I_-59190_BRB9111_attributeList_Person.csv"
+## [2] "I_-59190_BRB9111_edgeList_Knows.csv"      
+## [3] "I_-59190_BRB9111_ego.csv"                 
+## [4] "I_-59190_BRB9111.graphml"                 
+## [5] "I-100BB_00B95-90_attributeList_Person.csv"
+## [6] "I-100BB_00B95-90_edgeList_Knows.csv"
+\end{verbatim}
+
+As you can see, for each ego in the dataset there are four files:
+
+\begin{itemize}
+\item
+  \texttt{...attributeList\_Person.csv}: Attributes of the alters.
+\item
+  \texttt{...edgeList\_Knows.csv}: Edgelist indicating the ties between the alters.
+\item
+  \texttt{...ego.csv}: Information about the egos.
+\item
+  \texttt{...graphml}: And a \texttt{graphml} file that contains the egonets.
+\end{itemize}
+
+The next sections will illustrate, file by file, how to read the information into R, apply any required processing, and store the information for later use. We start with the \texttt{graphml} files.
+
+\hypertarget{network-files-graphml}{%
+\section{Network files (graphml)}\label{network-files-graphml}}
+
+The \texttt{graphml} files can be read directly with \texttt{igraph}'s \texttt{read\_graph} function. The key is to take advantage of R's lists to avoid writing over and over the same block of code, and instead, manage the data through lists.
+
+Just like any data-reading function, \texttt{read\_graph} function requires a file path to the network file. \textbf{The function we will use to list the required files is \texttt{list.files()}}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# We start by loading igraph}
+\FunctionTok{library}\NormalTok{(igraph)}
+
+\CommentTok{\# Listing all the graphml files}
+\NormalTok{graph\_files }\OtherTok{\textless{}{-}} \FunctionTok{list.files}\NormalTok{(}
+  \AttributeTok{path       =} \StringTok{"data{-}raw/egonets"}\NormalTok{, }\CommentTok{\# Where are these files}
+  \AttributeTok{pattern    =} \StringTok{"*.graphml"}\NormalTok{,        }\CommentTok{\# Specify a pattern for only listing graphml}
+  \AttributeTok{full.names =} \ConstantTok{TRUE}                \CommentTok{\# And we make sure we use the full name}
+                                   \CommentTok{\# (path.) Otherwise, we would only get names.}
+\NormalTok{  )}
+
+\CommentTok{\# Taking a look at the first three files we got}
+\NormalTok{graph\_files[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "data-raw/egonets/I_-59190_BRB9111.graphml"
+## [2] "data-raw/egonets/I-100BB_00B95-90.graphml"
+## [3] "data-raw/egonets/I-1BB79950-0-7.graphml"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Applying igraph\textquotesingle{}s read\_graph}
+\NormalTok{graphs }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}
+  \AttributeTok{X      =}\NormalTok{ graph\_files,       }\CommentTok{\# List of files to read}
+  \AttributeTok{FUN    =}\NormalTok{ read\_graph,        }\CommentTok{\# The function to apply}
+  \AttributeTok{format =} \StringTok{"graphml"}          \CommentTok{\# Argument passed to read\_graph}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+If the operation succeeded, then the previous code block should generate a list of \texttt{igraph} objects named \texttt{graphs}. Let's take a peek at the first two:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graphs[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## IGRAPH 693b4cb U--- 12 25 -- 
+## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
+## | (v/l), id (v/c)
+## + edges from 693b4cb:
+##  [1] 1-- 3 1-- 2 1-- 6 1-- 5 1-- 4 1-- 8 1--11 1--10 2-- 3 3-- 7 3-- 4 3-- 5
+## [13] 3-- 6 2-- 7 2-- 4 2-- 5 2-- 6 5-- 6 6--10 7-- 9 4-- 5 5-- 7 4--11 6-- 7
+## [25] 4-- 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graphs[[}\DecValTok{2}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## IGRAPH 79e14e9 U--- 16 47 -- 
+## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
+## | (v/l), id (v/c)
+## + edges from 79e14e9:
+##  [1]  7--13  1-- 5  1-- 6  1-- 4  1-- 2  7--15  1-- 3 11--13  1--10  1--16
+## [11]  4-- 6  2-- 6  6-- 7  1--11 11--15  6-- 9  6-- 8  3-- 9  5--15  4-- 5
+## [21]  2-- 5  5-- 8  5-- 7  5--10  3-- 5  6--14 12--13  6--13  3--13  2-- 3
+## [31]  3-- 4  3--16  3--11 10--14  7--14  2-- 4  2--10  2--15 10--12  4-- 7
+## [41]  6--10  5--11  9--10  1-- 9  1--12  3--12  4--14
+\end{verbatim}
+
+As always, one of the first things we do with networks is visualize them. We will use the \texttt{netplot} R package (by yours truly) to draw the figures:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(netplot)}
+\FunctionTok{library}\NormalTok{(gridExtra)}
+
+\CommentTok{\# Graph layout is random}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1231}\NormalTok{)}
+
+\CommentTok{\# The grid.arrange allows putting multiple netplot graphs into the same page}
+\FunctionTok{grid.arrange}\NormalTok{(}
+  \FunctionTok{nplot}\NormalTok{(graphs[[}\DecValTok{1}\NormalTok{]]),}
+  \FunctionTok{nplot}\NormalTok{(graphs[[}\DecValTok{2}\NormalTok{]]),}
+  \FunctionTok{nplot}\NormalTok{(graphs[[}\DecValTok{3}\NormalTok{]]),}
+  \FunctionTok{nplot}\NormalTok{(graphs[[}\DecValTok{4}\NormalTok{]]),}
+  \AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{part-01-07-egonets_files/figure-latex/plot-nets-1.pdf}
+
+Great! Since nodes in our network have features, we can add a little bit of color. We will use the \texttt{eat\_with\_2} variable, which is coded as \texttt{TRUE} or \texttt{FALSE}. Vertex colors can be specified using the \texttt{vertex.color} argument of the \texttt{nplot} function. In our case, we will specify colors passing a vector of length equal to the number of nodes in the graph. Furthermore, since we will be doing this multiple times, it is worthwhile writing a function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# A function to color by the eat with variable}
+\NormalTok{color\_it }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(net) \{}
+
+  \CommentTok{\# Coding eat\_with\_2 to be 1 (FALSE) or 2 (TRUE)}
+\NormalTok{  eatswith }\OtherTok{\textless{}{-}} \FunctionTok{V}\NormalTok{(net)}\SpecialCharTok{$}\NormalTok{eat\_with\_2}
+
+  \CommentTok{\# Subsetting the color}
+  \FunctionTok{ifelse}\NormalTok{(eatswith, }\StringTok{"purple"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{)}
+
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+This function takes two arguments: a network and a vector of two colors. Vertex attributes in \texttt{igraph} can be accessed through the \texttt{V(...)\$...} function. For this example, to access the attribute \texttt{eat\_with\_2} in the network \texttt{net}, we type \texttt{V(net)\$eat\_with\_2}. Finally, individuals who have \texttt{eat\_with\_2} equal to true will be colored \texttt{purple}, otherwise, if equal to \texttt{FALSE}, will be colored \texttt{darkgreen}. Before plotting the networks, let's see what we get when we access the \texttt{eat\_with\_2} attribute in the first graph:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{V}\NormalTok{(graphs[[}\DecValTok{1}\NormalTok{]])}\SpecialCharTok{$}\NormalTok{eat\_with\_2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE
+\end{verbatim}
+
+A logical vector. Now let's redraw the figures:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grid.arrange}\NormalTok{(}
+  \FunctionTok{nplot}\NormalTok{(graphs[[}\DecValTok{1}\NormalTok{]], }\AttributeTok{vertex.color =} \FunctionTok{color\_it}\NormalTok{(graphs[[}\DecValTok{1}\NormalTok{]])),}
+  \FunctionTok{nplot}\NormalTok{(graphs[[}\DecValTok{2}\NormalTok{]], }\AttributeTok{vertex.color =} \FunctionTok{color\_it}\NormalTok{(graphs[[}\DecValTok{2}\NormalTok{]])),}
+  \FunctionTok{nplot}\NormalTok{(graphs[[}\DecValTok{3}\NormalTok{]], }\AttributeTok{vertex.color =} \FunctionTok{color\_it}\NormalTok{(graphs[[}\DecValTok{3}\NormalTok{]])),}
+  \FunctionTok{nplot}\NormalTok{(graphs[[}\DecValTok{4}\NormalTok{]], }\AttributeTok{vertex.color =} \FunctionTok{color\_it}\NormalTok{(graphs[[}\DecValTok{4}\NormalTok{]])),}
+  \AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{part-01-07-egonets_files/figure-latex/part-01-07-plot-nets-colored-1.pdf}
+
+Since most of the time, we will be dealing with a large number of egonets, you may want to draw each network independently; the following code-block does exactly that. First, if needed, will create a folder to store the networks. Then, using the \texttt{lapply} function, it will use \texttt{netplot::nplot()} to draw the networks, add a legend, and save the graph as \texttt{.../graphml\_{[}number{]}.png}, where \texttt{{[}number{]}} will go from \texttt{01} to the total number of networks in \texttt{graphs}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{dir.exists}\NormalTok{(}\StringTok{"egonets/figs/egonets"}\NormalTok{))}
+  \FunctionTok{dir.create}\NormalTok{(}\StringTok{"egonets/figs/egonets"}\NormalTok{, }\AttributeTok{recursive =} \ConstantTok{TRUE}\NormalTok{)}
+
+\FunctionTok{lapply}\NormalTok{(}\FunctionTok{seq\_along}\NormalTok{(graphs), }\ControlFlowTok{function}\NormalTok{(i) \{}
+  
+  \CommentTok{\# Creating the device }
+  \FunctionTok{png}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"egonets/figs/egonets/graphml\_\%02i.png"}\NormalTok{, i))  }
+  
+  \CommentTok{\# Drawing the plot}
+\NormalTok{  p }\OtherTok{\textless{}{-}} \FunctionTok{nplot}\NormalTok{(}
+\NormalTok{    graphs[[i]],}
+    \AttributeTok{vertex.color =} \FunctionTok{color\_it}\NormalTok{(graphs[[i]])}
+\NormalTok{    )}
+  
+  \CommentTok{\# Adding a legend}
+\NormalTok{  p }\OtherTok{\textless{}{-}} \FunctionTok{nplot\_legend}\NormalTok{(}
+\NormalTok{    p,}
+    \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"eats with: FALSE"}\NormalTok{, }\StringTok{"eats with: TRUE"}\NormalTok{),}
+    \AttributeTok{pch    =} \DecValTok{21}\NormalTok{,}
+    \AttributeTok{packgrob.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{side =} \StringTok{"bottom"}\NormalTok{),}
+    \AttributeTok{gp            =} \FunctionTok{gpar}\NormalTok{(}
+      \AttributeTok{fill =} \FunctionTok{c}\NormalTok{(}\StringTok{"darkgreen"}\NormalTok{, }\StringTok{"purple"}\NormalTok{)}
+\NormalTok{    ),}
+    \AttributeTok{ncol =} \DecValTok{2}
+\NormalTok{  )}
+  
+  \FunctionTok{print}\NormalTok{(p)}
+  
+  \CommentTok{\# Closing the device}
+  \FunctionTok{dev.off}\NormalTok{()}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{person-files}{%
+\section{Person files}\label{person-files}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(data.table)}
+
+\NormalTok{person\_files }\OtherTok{\textless{}{-}} \FunctionTok{list.files}\NormalTok{(}
+  \AttributeTok{path       =} \StringTok{"data{-}raw/egonets"}\NormalTok{,}
+  \AttributeTok{pattern    =} \StringTok{"*Person.csv"}\NormalTok{,}
+  \AttributeTok{full.names =} \ConstantTok{TRUE}
+\NormalTok{  )}
+
+\NormalTok{persons }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(person\_files, fread)}
+\end{Highlighting}
+\end{Shaded}
+
+Exploring the data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{persons }\OtherTok{\textless{}{-}} \FunctionTok{rbindlist}\NormalTok{(persons)}
+
+\CommentTok{\# Histogram of age}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{ggplot}\NormalTok{(persons, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ age)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{part-01-07-egonets_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(persons}\SpecialCharTok{$}\NormalTok{age)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{part-01-07-egonets_files/figure-latex/unnamed-chunk-4-2.pdf}
+
+\hypertarget{ego-files}{%
+\section{Ego files}\label{ego-files}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ego\_files }\OtherTok{\textless{}{-}} \FunctionTok{list.files}\NormalTok{(}
+  \AttributeTok{path       =} \StringTok{"data{-}raw/egonets"}\NormalTok{,}
+  \AttributeTok{pattern    =} \StringTok{"*ego.csv"}\NormalTok{,}
+  \AttributeTok{full.names =} \ConstantTok{TRUE}
+\NormalTok{  )}
+
+\NormalTok{egos }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(ego\_files, fread)}
+
+\NormalTok{egos }\OtherTok{\textless{}{-}} \FunctionTok{rbindlist}\NormalTok{(egos)}
+\FunctionTok{head}\NormalTok{(egos)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                    networkCanvasEgoUUID networkCanvasCaseID
+## 1: I-11ca3a78c-62f131f37169-c139217a1f6    I_-59190_BRB9111
+## 2: I-fef-ab-4-5a--7-35c4f23-96eb32-34ea    I-100BB_00B95-90
+## 3: I2f1bd0b6d-f71f4664cf-d-26-97408f22d      I-1BB79950-0-7
+## 4: Id36bb-3b2bcbd2a6239b1103134c6b3d1d6    I000091I_RB010B5
+## 5: I436d32fc67fb5c6-23-244f353849b120cd    I019051R0_RRR0-0
+## 6: Ibf1f-2-34162bb5f2c36b8241--316a-fff    I01B11-I1101_44R
+##                  networkCanvasSessionID
+## 1: I612b7a1af---0880b-70698204-b-8dbf09
+## 2: If5e0-f-26cbec070760f-e6b6d26ebfb06f
+## 3: I825c293a1304-e5-cbea8a80aae05b305fa
+## 4: I1b8a7d0f6b4-8298c9-848-9186d68a7f3c
+## 5: Ie620be37b75983c49ac63-38-425227c959
+## 6: Ie3-134323ed40-0e-d954b3d-febbcb9363
+##                       networkCanvasProtocolName        sessionStart
+## 1: Postpartum social networks with sociogram_V5 2023-02-22 23:41:59
+## 2: Postpartum social networks with sociogram_V5 2023-02-10 21:46:02
+## 3: Postpartum social networks with sociogram_V5 2023-03-01 16:52:09
+## 4: Postpartum social networks with sociogram_V5 2023-01-26 20:38:07
+## 5: Postpartum social networks with sociogram_V5 2023-02-06 14:55:57
+## 6: Postpartum social networks with sociogram_V5 2023-03-16 18:20:02
+##          sessionFinish     sessionExported
+## 1: 2023-02-23 01:47:00 2023-02-23 01:47:08
+## 2: 2023-02-11 01:29:32 2023-02-11 01:34:12
+## 3: 2023-03-02 16:51:20 2023-03-02 17:04:42
+## 4: 2023-01-26 22:03:20 2023-01-26 22:03:34
+## 5: 2023-02-06 15:49:38 2023-02-06 15:56:42
+## 6: 2023-03-17 21:11:09 2023-03-17 21:16:15
+\end{verbatim}
+
+Some data processing
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# How much time?}
+\NormalTok{egos[, total\_time }\SpecialCharTok{:=}\NormalTok{ sessionFinish }\SpecialCharTok{{-}}\NormalTok{ sessionStart]}
+
+\FunctionTok{ggplot}\NormalTok{(egos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ total\_time)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Time in minutes"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Count"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Total time spent by egos"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Don't know how to automatically pick scale for object of type difftime. Defaulting to continuous.
+\end{verbatim}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{part-01-07-egonets_files/figure-latex/egos-time-1.pdf}
+
+\hypertarget{edgelist-files}{%
+\section{Edgelist files}\label{edgelist-files}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{edgelist\_files }\OtherTok{\textless{}{-}} \FunctionTok{list.files}\NormalTok{(}
+  \AttributeTok{path =} \StringTok{"data{-}raw/egonets"}\NormalTok{,}
+  \AttributeTok{pattern =} \StringTok{"*Knows.csv"}\NormalTok{,}
+  \AttributeTok{full.names =} \ConstantTok{TRUE}
+\NormalTok{  )}
+
+\NormalTok{edgelists }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(edgelist\_files, fread)}
+\NormalTok{edgelists }\OtherTok{\textless{}{-}} \FunctionTok{rbindlist}\NormalTok{(edgelists)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{putting-all-together}{%
+\section{Putting all together}\label{putting-all-together}}
+
+\hypertarget{generating-statistics}{%
+\subsection{Generating statistics}\label{generating-statistics}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{net\_stats }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(graphs, }\ControlFlowTok{function}\NormalTok{(g) \{}
+  
+  \CommentTok{\# Calculating modularity}
+\NormalTok{  groups }\OtherTok{\textless{}{-}} \FunctionTok{cluster\_edge\_betweenness}\NormalTok{(g)}
+  
+  \CommentTok{\# Computing the stats}
+  \FunctionTok{data.table}\NormalTok{(}
+    \AttributeTok{size      =} \FunctionTok{vcount}\NormalTok{(g),}
+    \AttributeTok{edges     =} \FunctionTok{ecount}\NormalTok{(g),}
+    \AttributeTok{nisolates =} \FunctionTok{sum}\NormalTok{(}\FunctionTok{degree}\NormalTok{(g) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{transit   =} \FunctionTok{transitivity}\NormalTok{(g, }\AttributeTok{type =} \StringTok{"global"}\NormalTok{),}
+    \AttributeTok{modular   =} \FunctionTok{modularity}\NormalTok{(groups)}
+\NormalTok{  )}
+\NormalTok{\})}
+
+\NormalTok{net\_stats }\OtherTok{\textless{}{-}} \FunctionTok{rbindlist}\NormalTok{(net\_stats)}
+\FunctionTok{head}\NormalTok{(net\_stats)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    size edges nisolates   transit     modular
+## 1:   12    25         1 0.6750000 0.012000000
+## 2:   16    47         0 0.4332130 0.003395201
+## 3:   16    58         0 0.5612009 0.002675386
+## 4:   15    75         0 0.8515112 0.000000000
+## 5:   15    52         0 0.5780488 0.000000000
+## 6:   17    68         0 0.6291161 0.025735294
+\end{verbatim}
+
+\hypertarget{generating-statistics-based-on-ergm}{%
+\subsection{Generating statistics based on ergm}\label{generating-statistics-based-on-ergm}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(intergraph)}
+\FunctionTok{library}\NormalTok{(ergm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: network
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 'network' 1.18.1 (2023-01-24), part of the Statnet Project
+## * 'news(package="network")' for changes since last version
+## * 'citation("network")' for citation information
+## * 'https://statnet.org' for help, support, and other information
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'network'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:igraph':
+## 
+##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
+##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
+##     is.directed, list.edge.attributes, list.vertex.attributes,
+##     set.edge.attribute, set.vertex.attribute
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 'ergm' 4.4.0 (2023-01-26), part of the Statnet Project
+## * 'news(package="ergm")' for changes since last version
+## * 'citation("ergm")' for citation information
+## * 'https://statnet.org' for help, support, and other information
+\end{verbatim}
+
+\begin{verbatim}
+## 'ergm' 4 is a major update that introduces some backwards-incompatible
+## changes. Please type 'news(package="ergm")' for a list of major
+## changes.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graphs\_network }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(graphs, asNetwork)}
+
+\NormalTok{net\_stats\_ergm }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(graphs\_network, }\ControlFlowTok{function}\NormalTok{(n) \{}
+  
+\NormalTok{  s }\OtherTok{\textless{}{-}} \FunctionTok{summary\_formula}\NormalTok{(}
+\NormalTok{    n }\SpecialCharTok{\textasciitilde{}}\NormalTok{ triangles }\SpecialCharTok{+}
+      \FunctionTok{nodematch}\NormalTok{(}\StringTok{"gender\_1"}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{nodematch}\NormalTok{(}\StringTok{"healthy\_diet"}\NormalTok{)}
+\NormalTok{    )}
+  
+  \FunctionTok{data.table}\NormalTok{(}
+    \AttributeTok{triangles       =}\NormalTok{ s[}\DecValTok{1}\NormalTok{],}
+    \AttributeTok{gender\_homoph   =}\NormalTok{ s[}\DecValTok{2}\NormalTok{],}
+    \AttributeTok{healthyd\_homoph =}\NormalTok{ s[}\DecValTok{3}\NormalTok{]}
+\NormalTok{  )}
+\NormalTok{\})}
+
+\NormalTok{net\_stats\_ergm }\OtherTok{\textless{}{-}} \FunctionTok{rbindlist}\NormalTok{(net\_stats\_ergm)}
+\FunctionTok{head}\NormalTok{(net\_stats\_ergm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    triangles gender_homoph healthyd_homoph
+## 1:        27            11               3
+## 2:        40            30              20
+## 3:        81            40              29
+## 4:       216            33              38
+## 5:        79            44              19
+## 6:       121            38              16
+\end{verbatim}
+
+\hypertarget{saving-the-data}{%
+\section{Saving the data}\label{saving-the-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Network attributes}
+\NormalTok{master }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(egos, net\_stats, net\_stats\_ergm)}
+\FunctionTok{fwrite}\NormalTok{(master, }\AttributeTok{file =} \StringTok{"data/network\_stats.csv"}\NormalTok{)}
+
+\CommentTok{\# Networks}
+\FunctionTok{saveRDS}\NormalTok{(graphs, }\AttributeTok{file =} \StringTok{"data/networks\_igraph.rds"}\NormalTok{)}
+\FunctionTok{saveRDS}\NormalTok{(graphs\_network, }\AttributeTok{file =} \StringTok{"data/networks\_network.rds"}\NormalTok{)}
+
+\CommentTok{\# Attributes}
+\FunctionTok{fwrite}\NormalTok{(persons, }\AttributeTok{file =} \StringTok{"data/persons.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{hypothesis-testing-in-networks}{%
 \chapter{Hypothesis testing in networks}\label{hypothesis-testing-in-networks}}
 
@@ -4652,7 +5083,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-1.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/viz-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4660,7 +5091,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-2.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/viz-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4668,7 +5099,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-3.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/viz-3.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4676,7 +5107,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-4.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/viz-4.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4684,7 +5115,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-5.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/viz-5.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4697,7 +5128,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 ## applying logscale some observations are missing.
 \end{verbatim}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-6.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/viz-6.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4705,7 +5136,7 @@ and \href{https://ggvy.cl}{George G. Vega Yon} (author of this book), is availab
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/viz-7.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/viz-7.pdf}
 
 \hypertarget{problems}{%
 \subsection{Problems}\label{problems}}
@@ -4889,7 +5320,7 @@ To generate this diffusion network, we can use the \texttt{rdiffnet} function in
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{part-01-08-netdiffuser_files/figure-latex/plot-rumor-1} \end{center}
+\begin{center}\includegraphics{part-01-09-netdiffuser_files/figure-latex/plot-rumor-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4901,7 +5332,7 @@ To generate this diffusion network, we can use the \texttt{rdiffnet} function in
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{part-01-08-netdiffuser_files/figure-latex/plot-rumor-2} \end{center}
+\begin{center}\includegraphics{part-01-09-netdiffuser_files/figure-latex/plot-rumor-2} \end{center}
 
 \hypertarget{difussion}{%
 \subsection{Difussion}\label{difussion}}
@@ -4929,7 +5360,7 @@ To generate this diffusion network, we can use the \texttt{rdiffnet} function in
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/plot-complex-and-disease-1.pdf}
 
 \hypertarget{mentor-matching}{%
 \subsection{Mentor Matching}\label{mentor-matching}}
@@ -5018,7 +5449,7 @@ To generate this diffusion network, we can use the \texttt{rdiffnet} function in
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/sim-sim-1.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/sim-sim-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5133,7 +5564,7 @@ We can simplify by using the function \texttt{rdiffnet\_multiple}. The following
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/sim-sim-results-1.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/sim-sim-results-1.pdf}
 
 \hypertarget{problems-1}{%
 \subsection{Problems}\label{problems-1}}
@@ -5194,7 +5625,7 @@ We can simplify by using the function \texttt{rdiffnet\_multiple}. The following
 \end{Highlighting}
 \end{Shaded}
 
-  \includegraphics{part-01-08-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf}
+  \includegraphics{part-01-09-netdiffuser_files/figure-latex/geodesic_speed-box-1.pdf}
 \item
   The \texttt{summary.diffnet} method already runs Moran's for you. What happens under the hood is:
 
@@ -5317,11 +5748,11 @@ It simulates networks with the same density, and computes a particular statistic
 ## --------------------------------------------------------------------------------
 ##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
 ##     observed    expected       p.val
-##       0.5513      0.2505      0.0000
+##       0.5513      0.2504      0.0000
 \end{verbatim}
 \end{itemize}
 
-\includegraphics{part-01-08-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf}
+\includegraphics{part-01-09-netdiffuser_files/figure-latex/unnamed-chunk-2-1.pdf}
 
 \begin{itemize}
 \item
@@ -5364,10 +5795,10 @@ It simulates networks with the same density, and computes a particular statistic
 ## --------------------------------------------------------------------------------
 ##  H0: E[beta(Y,G)|G] - E[beta(Y,G)] = 0 (no structure dependency)
 ##     observed    expected       p.val
-##       0.2714      0.2594      0.4560
+##       0.2714      0.2590      0.4420
 \end{verbatim}
 
-  \includegraphics{part-01-08-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf}
+  \includegraphics{part-01-09-netdiffuser_files/figure-latex/unnamed-chunk-3-1.pdf}
 \end{itemize}
 
 \hypertarget{regression-analysis}{%
@@ -5731,7 +6162,7 @@ The following figure shows the approximate power for finding effects at both lev
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-10-power_files/figure-latex/part-01-power-plot1-1.pdf}
+\includegraphics{part-01-11-power_files/figure-latex/part-01-power-plot1-1.pdf}
 
 As shown in Chapter \ref{part2-power}, we can use a linear regression model to predict sample size as a function of statistical power:
 
@@ -5925,7 +6356,7 @@ Now the dynamics are different. Instead of having a treated and control group, w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-10-power_files/figure-latex/part-01-power-plot2-1.pdf}
+\includegraphics{part-01-11-power_files/figure-latex/part-01-power-plot2-1.pdf}
 
 As shown in Chapter \ref{part2-power}, we can use a linear regression model to predict sample size as a function of statistical power:
 
@@ -6105,7 +6536,7 @@ and we can proceed with a regular linear model.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-10-power_files/figure-latex/part-01-power-plot3-1.pdf}
+\includegraphics{part-01-11-power_files/figure-latex/part-01-power-plot3-1.pdf}
 
 From the inferential point of view, we could still use a demean operator to estimate
 individual-level effects. In particular, we would require to use the demean operator at the group level and then fit a fixed effect model to estimate individual-level parameters.
