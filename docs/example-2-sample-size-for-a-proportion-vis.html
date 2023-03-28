@@ -351,72 +351,72 @@ div.csl-indent {
 <li><p>Repeat steps 1-3 many times. The obtained average is the corresponding power.</p></li>
 </ol>
 <p>When running simulations, it is convenient to write a function for the data generating process. In our case, the function will be called <code>sim_fun</code>. The following lines of code achieve our goal: approximate power by simulating 10,000 experiments for each sample size candidate:</p>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-1" tabindex="-1"></a><span class="co"># Model parameters</span></span>
-<span id="cb388-2"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-2" tabindex="-1"></a>p0        <span class="ot">&lt;-</span> .<span class="dv">5</span></span>
-<span id="cb388-3"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-3" tabindex="-1"></a>p1        <span class="ot">&lt;-</span> .<span class="dv">6</span></span>
-<span id="cb388-4"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-4" tabindex="-1"></a>betapower <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.8</span></span>
-<span id="cb388-5"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-5" tabindex="-1"></a>alpha     <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb388-6"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-6" tabindex="-1"></a>nsims     <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb388-7"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-7" tabindex="-1"></a></span>
-<span id="cb388-8"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-8" tabindex="-1"></a><span class="co"># Step 1: Simulate the data under H1</span></span>
-<span id="cb388-9"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-9" tabindex="-1"></a>z_one_minus_alpha_half <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb388-10"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-10" tabindex="-1"></a>sim_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb388-11"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-11" tabindex="-1"></a></span>
-<span id="cb388-12"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-12" tabindex="-1"></a>    <span class="co"># Generating the data</span></span>
-<span id="cb388-13"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-13" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">runif</span>(n) <span class="sc">&lt;</span> p1)</span>
-<span id="cb388-14"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-14" tabindex="-1"></a>    phat <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
-<span id="cb388-15"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-15" tabindex="-1"></a></span>
-<span id="cb388-16"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-16" tabindex="-1"></a>    <span class="co"># Accept or reject?</span></span>
-<span id="cb388-17"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-17" tabindex="-1"></a>    <span class="fu">sqrt</span>(n) <span class="sc">*</span> (phat <span class="sc">-</span> p0) <span class="sc">/</span> <span class="fu">sqrt</span>(p0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p0)) <span class="sc">&gt;</span></span>
-<span id="cb388-18"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-18" tabindex="-1"></a>        z_one_minus_alpha_half</span>
-<span id="cb388-19"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-19" tabindex="-1"></a></span>
-<span id="cb388-20"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-20" tabindex="-1"></a>}</span>
-<span id="cb388-21"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-21" tabindex="-1"></a></span>
-<span id="cb388-22"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-22" tabindex="-1"></a><span class="co"># Step 2: For an array of n, simulate multiple experiments</span></span>
-<span id="cb388-23"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-23" tabindex="-1"></a>n_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">150</span>, <span class="at">to =</span> <span class="dv">250</span>, <span class="at">by =</span> <span class="dv">10</span>)</span>
-<span id="cb388-24"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-24" tabindex="-1"></a></span>
-<span id="cb388-25"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-25" tabindex="-1"></a>simulations <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb388-26"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-26" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12312</span>)</span>
-<span id="cb388-27"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-27" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> n_seq) {</span>
-<span id="cb388-28"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-28" tabindex="-1"></a></span>
-<span id="cb388-29"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-29" tabindex="-1"></a>    <span class="co"># Run the nsims experiments</span></span>
-<span id="cb388-30"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-30" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">replicate</span>(nsims, <span class="fu">sim_fun</span>(n))</span>
-<span id="cb388-31"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-31" tabindex="-1"></a></span>
-<span id="cb388-32"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-32" tabindex="-1"></a>    <span class="co"># Compute power and store the value</span></span>
-<span id="cb388-33"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-33" tabindex="-1"></a>    simulations <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb388-34"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-34" tabindex="-1"></a>        simulations,</span>
-<span id="cb388-35"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-35" tabindex="-1"></a>        <span class="fu">data.frame</span>(<span class="at">size =</span> n, <span class="at">power =</span> <span class="fu">mean</span>(res))</span>
-<span id="cb388-36"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-36" tabindex="-1"></a>    )</span>
-<span id="cb388-37"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-37" tabindex="-1"></a>}</span>
-<span id="cb388-38"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-38" tabindex="-1"></a></span>
-<span id="cb388-39"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-39" tabindex="-1"></a><span class="co"># Finding out what is the closets value</span></span>
-<span id="cb388-40"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-40" tabindex="-1"></a>best <span class="ot">&lt;-</span> <span class="fu">which.min</span>(</span>
-<span id="cb388-41"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-41" tabindex="-1"></a>    <span class="fu">abs</span>((<span class="dv">1</span> <span class="sc">-</span> betapower) <span class="sc">-</span> simulations<span class="sc">$</span>power)</span>
-<span id="cb388-42"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-42" tabindex="-1"></a>    )</span>
-<span id="cb388-43"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-43" tabindex="-1"></a></span>
-<span id="cb388-44"><a href="example-2-sample-size-for-a-proportion-vis.html#cb388-44" tabindex="-1"></a>simulations[best,,drop<span class="ot">=</span><span class="cn">FALSE</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-1" tabindex="-1"></a><span class="co"># Model parameters</span></span>
+<span id="cb387-2"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-2" tabindex="-1"></a>p0        <span class="ot">&lt;-</span> .<span class="dv">5</span></span>
+<span id="cb387-3"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-3" tabindex="-1"></a>p1        <span class="ot">&lt;-</span> .<span class="dv">6</span></span>
+<span id="cb387-4"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-4" tabindex="-1"></a>betapower <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.8</span></span>
+<span id="cb387-5"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-5" tabindex="-1"></a>alpha     <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb387-6"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-6" tabindex="-1"></a>nsims     <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb387-7"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-7" tabindex="-1"></a></span>
+<span id="cb387-8"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-8" tabindex="-1"></a><span class="co"># Step 1: Simulate the data under H1</span></span>
+<span id="cb387-9"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-9" tabindex="-1"></a>z_one_minus_alpha_half <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb387-10"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-10" tabindex="-1"></a>sim_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb387-11"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-11" tabindex="-1"></a></span>
+<span id="cb387-12"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-12" tabindex="-1"></a>    <span class="co"># Generating the data</span></span>
+<span id="cb387-13"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-13" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">runif</span>(n) <span class="sc">&lt;</span> p1)</span>
+<span id="cb387-14"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-14" tabindex="-1"></a>    phat <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb387-15"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-15" tabindex="-1"></a></span>
+<span id="cb387-16"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-16" tabindex="-1"></a>    <span class="co"># Accept or reject?</span></span>
+<span id="cb387-17"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-17" tabindex="-1"></a>    <span class="fu">sqrt</span>(n) <span class="sc">*</span> (phat <span class="sc">-</span> p0) <span class="sc">/</span> <span class="fu">sqrt</span>(p0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p0)) <span class="sc">&gt;</span></span>
+<span id="cb387-18"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-18" tabindex="-1"></a>        z_one_minus_alpha_half</span>
+<span id="cb387-19"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-19" tabindex="-1"></a></span>
+<span id="cb387-20"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-20" tabindex="-1"></a>}</span>
+<span id="cb387-21"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-21" tabindex="-1"></a></span>
+<span id="cb387-22"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-22" tabindex="-1"></a><span class="co"># Step 2: For an array of n, simulate multiple experiments</span></span>
+<span id="cb387-23"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-23" tabindex="-1"></a>n_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">150</span>, <span class="at">to =</span> <span class="dv">250</span>, <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb387-24"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-24" tabindex="-1"></a></span>
+<span id="cb387-25"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-25" tabindex="-1"></a>simulations <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb387-26"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-26" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12312</span>)</span>
+<span id="cb387-27"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-27" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> n_seq) {</span>
+<span id="cb387-28"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-28" tabindex="-1"></a></span>
+<span id="cb387-29"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-29" tabindex="-1"></a>    <span class="co"># Run the nsims experiments</span></span>
+<span id="cb387-30"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-30" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">replicate</span>(nsims, <span class="fu">sim_fun</span>(n))</span>
+<span id="cb387-31"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-31" tabindex="-1"></a></span>
+<span id="cb387-32"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-32" tabindex="-1"></a>    <span class="co"># Compute power and store the value</span></span>
+<span id="cb387-33"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-33" tabindex="-1"></a>    simulations <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb387-34"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-34" tabindex="-1"></a>        simulations,</span>
+<span id="cb387-35"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-35" tabindex="-1"></a>        <span class="fu">data.frame</span>(<span class="at">size =</span> n, <span class="at">power =</span> <span class="fu">mean</span>(res))</span>
+<span id="cb387-36"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-36" tabindex="-1"></a>    )</span>
+<span id="cb387-37"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-37" tabindex="-1"></a>}</span>
+<span id="cb387-38"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-38" tabindex="-1"></a></span>
+<span id="cb387-39"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-39" tabindex="-1"></a><span class="co"># Finding out what is the closets value</span></span>
+<span id="cb387-40"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-40" tabindex="-1"></a>best <span class="ot">&lt;-</span> <span class="fu">which.min</span>(</span>
+<span id="cb387-41"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-41" tabindex="-1"></a>    <span class="fu">abs</span>((<span class="dv">1</span> <span class="sc">-</span> betapower) <span class="sc">-</span> simulations<span class="sc">$</span>power)</span>
+<span id="cb387-42"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-42" tabindex="-1"></a>    )</span>
+<span id="cb387-43"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-43" tabindex="-1"></a></span>
+<span id="cb387-44"><a href="example-2-sample-size-for-a-proportion-vis.html#cb387-44" tabindex="-1"></a>simulations[best,,drop<span class="ot">=</span><span class="cn">FALSE</span>]</span></code></pre></div>
 <pre><code>##   size  power
 ## 5  190 0.7952</code></pre>
 <p>Let’s visualize the power curve we generate from this simulation:</p>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="example-2-sample-size-for-a-proportion-vis.html#cb390-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb390-2"><a href="example-2-sample-size-for-a-proportion-vis.html#cb390-2" tabindex="-1"></a><span class="fu">ggplot</span>(simulations, <span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> power)) <span class="sc">+</span></span>
-<span id="cb390-3"><a href="example-2-sample-size-for-a-proportion-vis.html#cb390-3" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb390-4"><a href="example-2-sample-size-for-a-proportion-vis.html#cb390-4" tabindex="-1"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb390-5"><a href="example-2-sample-size-for-a-proportion-vis.html#cb390-5" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span> <span class="sc">-</span> betapower)</span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="example-2-sample-size-for-a-proportion-vis.html#cb389-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb389-2"><a href="example-2-sample-size-for-a-proportion-vis.html#cb389-2" tabindex="-1"></a><span class="fu">ggplot</span>(simulations, <span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> power)) <span class="sc">+</span></span>
+<span id="cb389-3"><a href="example-2-sample-size-for-a-proportion-vis.html#cb389-3" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb389-4"><a href="example-2-sample-size-for-a-proportion-vis.html#cb389-4" tabindex="-1"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb389-5"><a href="example-2-sample-size-for-a-proportion-vis.html#cb389-5" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span> <span class="sc">-</span> betapower)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="part-02-11-power_files/figure-html/11-power-plot-1.png" width="672" /></p>
 <p>Alternatively, we can fit a linear regression model where we predict power as a function of sample size using linear and quadratic effects:</p>
 <p><span class="math display">\[
 n = \theta_0 + \theta_1 (1 - \beta) + \theta_2 (1 - \beta)^2
 \]</span></p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="example-2-sample-size-for-a-proportion-vis.html#cb392-1" tabindex="-1"></a><span class="co"># Fitting the model</span></span>
-<span id="cb392-2"><a href="example-2-sample-size-for-a-proportion-vis.html#cb392-2" tabindex="-1"></a>power_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb392-3"><a href="example-2-sample-size-for-a-proportion-vis.html#cb392-3" tabindex="-1"></a>  size <span class="sc">~</span> power <span class="sc">+</span> <span class="fu">I</span>(power<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb392-4"><a href="example-2-sample-size-for-a-proportion-vis.html#cb392-4" tabindex="-1"></a>  <span class="at">data =</span> simulations, <span class="at">family =</span> <span class="fu">gaussian</span>()</span>
-<span id="cb392-5"><a href="example-2-sample-size-for-a-proportion-vis.html#cb392-5" tabindex="-1"></a>)</span>
-<span id="cb392-6"><a href="example-2-sample-size-for-a-proportion-vis.html#cb392-6" tabindex="-1"></a></span>
-<span id="cb392-7"><a href="example-2-sample-size-for-a-proportion-vis.html#cb392-7" tabindex="-1"></a><span class="co"># Printing the results</span></span>
-<span id="cb392-8"><a href="example-2-sample-size-for-a-proportion-vis.html#cb392-8" tabindex="-1"></a><span class="fu">summary</span>(power_model)</span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="example-2-sample-size-for-a-proportion-vis.html#cb391-1" tabindex="-1"></a><span class="co"># Fitting the model</span></span>
+<span id="cb391-2"><a href="example-2-sample-size-for-a-proportion-vis.html#cb391-2" tabindex="-1"></a>power_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb391-3"><a href="example-2-sample-size-for-a-proportion-vis.html#cb391-3" tabindex="-1"></a>  size <span class="sc">~</span> power <span class="sc">+</span> <span class="fu">I</span>(power<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb391-4"><a href="example-2-sample-size-for-a-proportion-vis.html#cb391-4" tabindex="-1"></a>  <span class="at">data =</span> simulations, <span class="at">family =</span> <span class="fu">gaussian</span>()</span>
+<span id="cb391-5"><a href="example-2-sample-size-for-a-proportion-vis.html#cb391-5" tabindex="-1"></a>)</span>
+<span id="cb391-6"><a href="example-2-sample-size-for-a-proportion-vis.html#cb391-6" tabindex="-1"></a></span>
+<span id="cb391-7"><a href="example-2-sample-size-for-a-proportion-vis.html#cb391-7" tabindex="-1"></a><span class="co"># Printing the results</span></span>
+<span id="cb391-8"><a href="example-2-sample-size-for-a-proportion-vis.html#cb391-8" tabindex="-1"></a><span class="fu">summary</span>(power_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
@@ -441,9 +441,9 @@ n = \theta_0 + \theta_1 (1 - \beta) + \theta_2 (1 - \beta)^2
 ## AIC: 74.769
 ## 
 ## Number of Fisher Scoring iterations: 2</code></pre>
-<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="example-2-sample-size-for-a-proportion-vis.html#cb394-1" tabindex="-1"></a><span class="co"># Predict</span></span>
-<span id="cb394-2"><a href="example-2-sample-size-for-a-proportion-vis.html#cb394-2" tabindex="-1"></a><span class="fu">predict</span>(power_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">power =</span> .<span class="dv">8</span>), <span class="at">type =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb394-3"><a href="example-2-sample-size-for-a-proportion-vis.html#cb394-3" tabindex="-1"></a>  <span class="fu">ceiling</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="example-2-sample-size-for-a-proportion-vis.html#cb393-1" tabindex="-1"></a><span class="co"># Predict</span></span>
+<span id="cb393-2"><a href="example-2-sample-size-for-a-proportion-vis.html#cb393-2" tabindex="-1"></a><span class="fu">predict</span>(power_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">power =</span> .<span class="dv">8</span>), <span class="at">type =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb393-3"><a href="example-2-sample-size-for-a-proportion-vis.html#cb393-3" tabindex="-1"></a>  <span class="fu">ceiling</span>()</span></code></pre></div>
 <pre><code>##   1 
 ## 193</code></pre>
 <p>According to our simulation study, the closest to our 80% power is using a sample size equal to 193, which is very close to the analytical solution of 194.</p>

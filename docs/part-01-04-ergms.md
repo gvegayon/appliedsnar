@@ -360,7 +360,7 @@ E(ig_year1_111)[which_loop(ig_year1_111)]
 ```
 
 ```
-## + 1/2638 edge from bc14b0a (vertex names):
+## + 1/2638 edge from a9214b0 (vertex names):
 ## [1] 1110111->1110111
 ```
 

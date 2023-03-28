@@ -342,16 +342,16 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="ego-files" class="section level2 hasAnchor" number="10.3">
 <h2><span class="header-section-number">10.3</span> Ego files<a href="ego-files.html#ego-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="ego-files.html#cb291-1" tabindex="-1"></a>ego_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb291-2"><a href="ego-files.html#cb291-2" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
-<span id="cb291-3"><a href="ego-files.html#cb291-3" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*ego.csv&quot;</span>,</span>
-<span id="cb291-4"><a href="ego-files.html#cb291-4" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb291-5"><a href="ego-files.html#cb291-5" tabindex="-1"></a>  )</span>
-<span id="cb291-6"><a href="ego-files.html#cb291-6" tabindex="-1"></a></span>
-<span id="cb291-7"><a href="ego-files.html#cb291-7" tabindex="-1"></a>egos <span class="ot">&lt;-</span> <span class="fu">lapply</span>(ego_files, fread)</span>
-<span id="cb291-8"><a href="ego-files.html#cb291-8" tabindex="-1"></a></span>
-<span id="cb291-9"><a href="ego-files.html#cb291-9" tabindex="-1"></a>egos <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(egos)</span>
-<span id="cb291-10"><a href="ego-files.html#cb291-10" tabindex="-1"></a><span class="fu">head</span>(egos)</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="ego-files.html#cb290-1" tabindex="-1"></a>ego_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb290-2"><a href="ego-files.html#cb290-2" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
+<span id="cb290-3"><a href="ego-files.html#cb290-3" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*ego.csv&quot;</span>,</span>
+<span id="cb290-4"><a href="ego-files.html#cb290-4" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb290-5"><a href="ego-files.html#cb290-5" tabindex="-1"></a>  )</span>
+<span id="cb290-6"><a href="ego-files.html#cb290-6" tabindex="-1"></a></span>
+<span id="cb290-7"><a href="ego-files.html#cb290-7" tabindex="-1"></a>egos <span class="ot">&lt;-</span> <span class="fu">lapply</span>(ego_files, fread)</span>
+<span id="cb290-8"><a href="ego-files.html#cb290-8" tabindex="-1"></a></span>
+<span id="cb290-9"><a href="ego-files.html#cb290-9" tabindex="-1"></a>egos <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(egos)</span>
+<span id="cb290-10"><a href="ego-files.html#cb290-10" tabindex="-1"></a><span class="fu">head</span>(egos)</span></code></pre></div>
 <pre><code>##                    networkCanvasEgoUUID networkCanvasCaseID
 ## 1: I-11ca3a78c-62f131f37169-c139217a1f6    I_-59190_BRB9111
 ## 2: I-fef-ab-4-5a--7-35c4f23-96eb32-34ea    I-100BB_00B95-90
@@ -381,13 +381,13 @@ div.csl-indent {
 ## 5: 2023-02-06 15:49:38 2023-02-06 15:56:42
 ## 6: 2023-03-17 21:11:09 2023-03-17 21:16:15</code></pre>
 <p>Some data processing</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="ego-files.html#cb293-1" tabindex="-1"></a><span class="co"># How much time?</span></span>
-<span id="cb293-2"><a href="ego-files.html#cb293-2" tabindex="-1"></a>egos[, total_time <span class="sc">:=</span> sessionFinish <span class="sc">-</span> sessionStart]</span>
-<span id="cb293-3"><a href="ego-files.html#cb293-3" tabindex="-1"></a></span>
-<span id="cb293-4"><a href="ego-files.html#cb293-4" tabindex="-1"></a><span class="fu">ggplot</span>(egos, <span class="fu">aes</span>(<span class="at">x =</span> total_time)) <span class="sc">+</span></span>
-<span id="cb293-5"><a href="ego-files.html#cb293-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb293-6"><a href="ego-files.html#cb293-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time in minutes&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span></span>
-<span id="cb293-7"><a href="ego-files.html#cb293-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Total time spent by egos&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="ego-files.html#cb292-1" tabindex="-1"></a><span class="co"># How much time?</span></span>
+<span id="cb292-2"><a href="ego-files.html#cb292-2" tabindex="-1"></a>egos[, total_time <span class="sc">:=</span> sessionFinish <span class="sc">-</span> sessionStart]</span>
+<span id="cb292-3"><a href="ego-files.html#cb292-3" tabindex="-1"></a></span>
+<span id="cb292-4"><a href="ego-files.html#cb292-4" tabindex="-1"></a><span class="fu">ggplot</span>(egos, <span class="fu">aes</span>(<span class="at">x =</span> total_time)) <span class="sc">+</span></span>
+<span id="cb292-5"><a href="ego-files.html#cb292-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb292-6"><a href="ego-files.html#cb292-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time in minutes&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span></span>
+<span id="cb292-7"><a href="ego-files.html#cb292-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Total time spent by egos&quot;</span>)</span></code></pre></div>
 <pre><code>## Don&#39;t know how to automatically pick scale for object of type difftime. Defaulting to continuous.</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="part-01-07-egonets_files/figure-html/egos-time-1.png" width="672" /></p>

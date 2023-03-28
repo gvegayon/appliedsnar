@@ -342,16 +342,16 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="saving-the-data" class="section level2 hasAnchor" number="10.6">
 <h2><span class="header-section-number">10.6</span> Saving the data<a href="saving-the-data.html#saving-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="saving-the-data.html#cb308-1" tabindex="-1"></a><span class="co"># Network attributes</span></span>
-<span id="cb308-2"><a href="saving-the-data.html#cb308-2" tabindex="-1"></a>master <span class="ot">&lt;-</span> <span class="fu">cbind</span>(egos, net_stats, net_stats_ergm)</span>
-<span id="cb308-3"><a href="saving-the-data.html#cb308-3" tabindex="-1"></a><span class="fu">fwrite</span>(master, <span class="at">file =</span> <span class="st">&quot;data/network_stats.csv&quot;</span>)</span>
-<span id="cb308-4"><a href="saving-the-data.html#cb308-4" tabindex="-1"></a></span>
-<span id="cb308-5"><a href="saving-the-data.html#cb308-5" tabindex="-1"></a><span class="co"># Networks</span></span>
-<span id="cb308-6"><a href="saving-the-data.html#cb308-6" tabindex="-1"></a><span class="fu">saveRDS</span>(graphs, <span class="at">file =</span> <span class="st">&quot;data/networks_igraph.rds&quot;</span>)</span>
-<span id="cb308-7"><a href="saving-the-data.html#cb308-7" tabindex="-1"></a><span class="fu">saveRDS</span>(graphs_network, <span class="at">file =</span> <span class="st">&quot;data/networks_network.rds&quot;</span>)</span>
-<span id="cb308-8"><a href="saving-the-data.html#cb308-8" tabindex="-1"></a></span>
-<span id="cb308-9"><a href="saving-the-data.html#cb308-9" tabindex="-1"></a><span class="co"># Attributes</span></span>
-<span id="cb308-10"><a href="saving-the-data.html#cb308-10" tabindex="-1"></a><span class="fu">fwrite</span>(persons, <span class="at">file =</span> <span class="st">&quot;data/persons.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="saving-the-data.html#cb307-1" tabindex="-1"></a><span class="co"># Network attributes</span></span>
+<span id="cb307-2"><a href="saving-the-data.html#cb307-2" tabindex="-1"></a>master <span class="ot">&lt;-</span> <span class="fu">cbind</span>(egos, net_stats, net_stats_ergm)</span>
+<span id="cb307-3"><a href="saving-the-data.html#cb307-3" tabindex="-1"></a><span class="fu">fwrite</span>(master, <span class="at">file =</span> <span class="st">&quot;data/network_stats.csv&quot;</span>)</span>
+<span id="cb307-4"><a href="saving-the-data.html#cb307-4" tabindex="-1"></a></span>
+<span id="cb307-5"><a href="saving-the-data.html#cb307-5" tabindex="-1"></a><span class="co"># Networks</span></span>
+<span id="cb307-6"><a href="saving-the-data.html#cb307-6" tabindex="-1"></a><span class="fu">saveRDS</span>(graphs, <span class="at">file =</span> <span class="st">&quot;data/networks_igraph.rds&quot;</span>)</span>
+<span id="cb307-7"><a href="saving-the-data.html#cb307-7" tabindex="-1"></a><span class="fu">saveRDS</span>(graphs_network, <span class="at">file =</span> <span class="st">&quot;data/networks_network.rds&quot;</span>)</span>
+<span id="cb307-8"><a href="saving-the-data.html#cb307-8" tabindex="-1"></a></span>
+<span id="cb307-9"><a href="saving-the-data.html#cb307-9" tabindex="-1"></a><span class="co"># Attributes</span></span>
+<span id="cb307-10"><a href="saving-the-data.html#cb307-10" tabindex="-1"></a><span class="fu">fwrite</span>(persons, <span class="at">file =</span> <span class="st">&quot;data/persons.csv&quot;</span>)</span></code></pre></div>
 
 </div>
 <!-- </div> -->

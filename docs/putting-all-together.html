@@ -344,23 +344,23 @@ div.csl-indent {
 <h2><span class="header-section-number">10.5</span> Putting all together<a href="putting-all-together.html#putting-all-together" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="generating-statistics" class="section level3 hasAnchor" number="10.5.1">
 <h3><span class="header-section-number">10.5.1</span> Generating statistics<a href="putting-all-together.html#generating-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="putting-all-together.html#cb297-1" tabindex="-1"></a>net_stats <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs, <span class="cf">function</span>(g) {</span>
-<span id="cb297-2"><a href="putting-all-together.html#cb297-2" tabindex="-1"></a>  </span>
-<span id="cb297-3"><a href="putting-all-together.html#cb297-3" tabindex="-1"></a>  <span class="co"># Calculating modularity</span></span>
-<span id="cb297-4"><a href="putting-all-together.html#cb297-4" tabindex="-1"></a>  groups <span class="ot">&lt;-</span> <span class="fu">cluster_edge_betweenness</span>(g)</span>
-<span id="cb297-5"><a href="putting-all-together.html#cb297-5" tabindex="-1"></a>  </span>
-<span id="cb297-6"><a href="putting-all-together.html#cb297-6" tabindex="-1"></a>  <span class="co"># Computing the stats</span></span>
-<span id="cb297-7"><a href="putting-all-together.html#cb297-7" tabindex="-1"></a>  <span class="fu">data.table</span>(</span>
-<span id="cb297-8"><a href="putting-all-together.html#cb297-8" tabindex="-1"></a>    <span class="at">size      =</span> <span class="fu">vcount</span>(g),</span>
-<span id="cb297-9"><a href="putting-all-together.html#cb297-9" tabindex="-1"></a>    <span class="at">edges     =</span> <span class="fu">ecount</span>(g),</span>
-<span id="cb297-10"><a href="putting-all-together.html#cb297-10" tabindex="-1"></a>    <span class="at">nisolates =</span> <span class="fu">sum</span>(<span class="fu">degree</span>(g) <span class="sc">==</span> <span class="dv">0</span>),</span>
-<span id="cb297-11"><a href="putting-all-together.html#cb297-11" tabindex="-1"></a>    <span class="at">transit   =</span> <span class="fu">transitivity</span>(g, <span class="at">type =</span> <span class="st">&quot;global&quot;</span>),</span>
-<span id="cb297-12"><a href="putting-all-together.html#cb297-12" tabindex="-1"></a>    <span class="at">modular   =</span> <span class="fu">modularity</span>(groups)</span>
-<span id="cb297-13"><a href="putting-all-together.html#cb297-13" tabindex="-1"></a>  )</span>
-<span id="cb297-14"><a href="putting-all-together.html#cb297-14" tabindex="-1"></a>})</span>
-<span id="cb297-15"><a href="putting-all-together.html#cb297-15" tabindex="-1"></a></span>
-<span id="cb297-16"><a href="putting-all-together.html#cb297-16" tabindex="-1"></a>net_stats <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(net_stats)</span>
-<span id="cb297-17"><a href="putting-all-together.html#cb297-17" tabindex="-1"></a><span class="fu">head</span>(net_stats)</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="putting-all-together.html#cb296-1" tabindex="-1"></a>net_stats <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs, <span class="cf">function</span>(g) {</span>
+<span id="cb296-2"><a href="putting-all-together.html#cb296-2" tabindex="-1"></a>  </span>
+<span id="cb296-3"><a href="putting-all-together.html#cb296-3" tabindex="-1"></a>  <span class="co"># Calculating modularity</span></span>
+<span id="cb296-4"><a href="putting-all-together.html#cb296-4" tabindex="-1"></a>  groups <span class="ot">&lt;-</span> <span class="fu">cluster_edge_betweenness</span>(g)</span>
+<span id="cb296-5"><a href="putting-all-together.html#cb296-5" tabindex="-1"></a>  </span>
+<span id="cb296-6"><a href="putting-all-together.html#cb296-6" tabindex="-1"></a>  <span class="co"># Computing the stats</span></span>
+<span id="cb296-7"><a href="putting-all-together.html#cb296-7" tabindex="-1"></a>  <span class="fu">data.table</span>(</span>
+<span id="cb296-8"><a href="putting-all-together.html#cb296-8" tabindex="-1"></a>    <span class="at">size      =</span> <span class="fu">vcount</span>(g),</span>
+<span id="cb296-9"><a href="putting-all-together.html#cb296-9" tabindex="-1"></a>    <span class="at">edges     =</span> <span class="fu">ecount</span>(g),</span>
+<span id="cb296-10"><a href="putting-all-together.html#cb296-10" tabindex="-1"></a>    <span class="at">nisolates =</span> <span class="fu">sum</span>(<span class="fu">degree</span>(g) <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb296-11"><a href="putting-all-together.html#cb296-11" tabindex="-1"></a>    <span class="at">transit   =</span> <span class="fu">transitivity</span>(g, <span class="at">type =</span> <span class="st">&quot;global&quot;</span>),</span>
+<span id="cb296-12"><a href="putting-all-together.html#cb296-12" tabindex="-1"></a>    <span class="at">modular   =</span> <span class="fu">modularity</span>(groups)</span>
+<span id="cb296-13"><a href="putting-all-together.html#cb296-13" tabindex="-1"></a>  )</span>
+<span id="cb296-14"><a href="putting-all-together.html#cb296-14" tabindex="-1"></a>})</span>
+<span id="cb296-15"><a href="putting-all-together.html#cb296-15" tabindex="-1"></a></span>
+<span id="cb296-16"><a href="putting-all-together.html#cb296-16" tabindex="-1"></a>net_stats <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(net_stats)</span>
+<span id="cb296-17"><a href="putting-all-together.html#cb296-17" tabindex="-1"></a><span class="fu">head</span>(net_stats)</span></code></pre></div>
 <pre><code>##    size edges nisolates   transit     modular
 ## 1:   12    25         1 0.6750000 0.012000000
 ## 2:   16    47         0 0.4332130 0.003395201
@@ -371,8 +371,8 @@ div.csl-indent {
 </div>
 <div id="generating-statistics-based-on-ergm" class="section level3 hasAnchor" number="10.5.2">
 <h3><span class="header-section-number">10.5.2</span> Generating statistics based on ergm<a href="putting-all-together.html#generating-statistics-based-on-ergm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="putting-all-together.html#cb299-1" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span>
-<span id="cb299-2"><a href="putting-all-together.html#cb299-2" tabindex="-1"></a><span class="fu">library</span>(ergm)</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="putting-all-together.html#cb298-1" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span>
+<span id="cb298-2"><a href="putting-all-together.html#cb298-2" tabindex="-1"></a><span class="fu">library</span>(ergm)</span></code></pre></div>
 <pre><code>## Loading required package: network</code></pre>
 <pre><code>## 
 ## &#39;network&#39; 1.18.1 (2023-01-24), part of the Statnet Project
@@ -395,25 +395,25 @@ div.csl-indent {
 <pre><code>## &#39;ergm&#39; 4 is a major update that introduces some backwards-incompatible
 ## changes. Please type &#39;news(package=&quot;ergm&quot;)&#39; for a list of major
 ## changes.</code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="putting-all-together.html#cb306-1" tabindex="-1"></a>graphs_network <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs, asNetwork)</span>
-<span id="cb306-2"><a href="putting-all-together.html#cb306-2" tabindex="-1"></a></span>
-<span id="cb306-3"><a href="putting-all-together.html#cb306-3" tabindex="-1"></a>net_stats_ergm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs_network, <span class="cf">function</span>(n) {</span>
-<span id="cb306-4"><a href="putting-all-together.html#cb306-4" tabindex="-1"></a>  </span>
-<span id="cb306-5"><a href="putting-all-together.html#cb306-5" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">summary_formula</span>(</span>
-<span id="cb306-6"><a href="putting-all-together.html#cb306-6" tabindex="-1"></a>    n <span class="sc">~</span> triangles <span class="sc">+</span></span>
-<span id="cb306-7"><a href="putting-all-together.html#cb306-7" tabindex="-1"></a>      <span class="fu">nodematch</span>(<span class="st">&quot;gender_1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb306-8"><a href="putting-all-together.html#cb306-8" tabindex="-1"></a>      <span class="fu">nodematch</span>(<span class="st">&quot;healthy_diet&quot;</span>)</span>
-<span id="cb306-9"><a href="putting-all-together.html#cb306-9" tabindex="-1"></a>    )</span>
-<span id="cb306-10"><a href="putting-all-together.html#cb306-10" tabindex="-1"></a>  </span>
-<span id="cb306-11"><a href="putting-all-together.html#cb306-11" tabindex="-1"></a>  <span class="fu">data.table</span>(</span>
-<span id="cb306-12"><a href="putting-all-together.html#cb306-12" tabindex="-1"></a>    <span class="at">triangles       =</span> s[<span class="dv">1</span>],</span>
-<span id="cb306-13"><a href="putting-all-together.html#cb306-13" tabindex="-1"></a>    <span class="at">gender_homoph   =</span> s[<span class="dv">2</span>],</span>
-<span id="cb306-14"><a href="putting-all-together.html#cb306-14" tabindex="-1"></a>    <span class="at">healthyd_homoph =</span> s[<span class="dv">3</span>]</span>
-<span id="cb306-15"><a href="putting-all-together.html#cb306-15" tabindex="-1"></a>  )</span>
-<span id="cb306-16"><a href="putting-all-together.html#cb306-16" tabindex="-1"></a>})</span>
-<span id="cb306-17"><a href="putting-all-together.html#cb306-17" tabindex="-1"></a></span>
-<span id="cb306-18"><a href="putting-all-together.html#cb306-18" tabindex="-1"></a>net_stats_ergm <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(net_stats_ergm)</span>
-<span id="cb306-19"><a href="putting-all-together.html#cb306-19" tabindex="-1"></a><span class="fu">head</span>(net_stats_ergm)</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="putting-all-together.html#cb305-1" tabindex="-1"></a>graphs_network <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs, asNetwork)</span>
+<span id="cb305-2"><a href="putting-all-together.html#cb305-2" tabindex="-1"></a></span>
+<span id="cb305-3"><a href="putting-all-together.html#cb305-3" tabindex="-1"></a>net_stats_ergm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs_network, <span class="cf">function</span>(n) {</span>
+<span id="cb305-4"><a href="putting-all-together.html#cb305-4" tabindex="-1"></a>  </span>
+<span id="cb305-5"><a href="putting-all-together.html#cb305-5" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">summary_formula</span>(</span>
+<span id="cb305-6"><a href="putting-all-together.html#cb305-6" tabindex="-1"></a>    n <span class="sc">~</span> triangles <span class="sc">+</span></span>
+<span id="cb305-7"><a href="putting-all-together.html#cb305-7" tabindex="-1"></a>      <span class="fu">nodematch</span>(<span class="st">&quot;gender_1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb305-8"><a href="putting-all-together.html#cb305-8" tabindex="-1"></a>      <span class="fu">nodematch</span>(<span class="st">&quot;healthy_diet&quot;</span>)</span>
+<span id="cb305-9"><a href="putting-all-together.html#cb305-9" tabindex="-1"></a>    )</span>
+<span id="cb305-10"><a href="putting-all-together.html#cb305-10" tabindex="-1"></a>  </span>
+<span id="cb305-11"><a href="putting-all-together.html#cb305-11" tabindex="-1"></a>  <span class="fu">data.table</span>(</span>
+<span id="cb305-12"><a href="putting-all-together.html#cb305-12" tabindex="-1"></a>    <span class="at">triangles       =</span> s[<span class="dv">1</span>],</span>
+<span id="cb305-13"><a href="putting-all-together.html#cb305-13" tabindex="-1"></a>    <span class="at">gender_homoph   =</span> s[<span class="dv">2</span>],</span>
+<span id="cb305-14"><a href="putting-all-together.html#cb305-14" tabindex="-1"></a>    <span class="at">healthyd_homoph =</span> s[<span class="dv">3</span>]</span>
+<span id="cb305-15"><a href="putting-all-together.html#cb305-15" tabindex="-1"></a>  )</span>
+<span id="cb305-16"><a href="putting-all-together.html#cb305-16" tabindex="-1"></a>})</span>
+<span id="cb305-17"><a href="putting-all-together.html#cb305-17" tabindex="-1"></a></span>
+<span id="cb305-18"><a href="putting-all-together.html#cb305-18" tabindex="-1"></a>net_stats_ergm <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(net_stats_ergm)</span>
+<span id="cb305-19"><a href="putting-all-together.html#cb305-19" tabindex="-1"></a><span class="fu">head</span>(net_stats_ergm)</span></code></pre></div>
 <pre><code>##    triangles gender_homoph healthyd_homoph
 ## 1:        27            11               3
 ## 2:        40            30              20

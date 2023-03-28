@@ -342,25 +342,25 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="person-files" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> Person files<a href="person-files.html#person-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="person-files.html#cb287-1" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb287-2"><a href="person-files.html#cb287-2" tabindex="-1"></a></span>
-<span id="cb287-3"><a href="person-files.html#cb287-3" tabindex="-1"></a>person_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb287-4"><a href="person-files.html#cb287-4" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
-<span id="cb287-5"><a href="person-files.html#cb287-5" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*Person.csv&quot;</span>,</span>
-<span id="cb287-6"><a href="person-files.html#cb287-6" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb287-7"><a href="person-files.html#cb287-7" tabindex="-1"></a>  )</span>
-<span id="cb287-8"><a href="person-files.html#cb287-8" tabindex="-1"></a></span>
-<span id="cb287-9"><a href="person-files.html#cb287-9" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">lapply</span>(person_files, fread)</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="person-files.html#cb286-1" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb286-2"><a href="person-files.html#cb286-2" tabindex="-1"></a></span>
+<span id="cb286-3"><a href="person-files.html#cb286-3" tabindex="-1"></a>person_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb286-4"><a href="person-files.html#cb286-4" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
+<span id="cb286-5"><a href="person-files.html#cb286-5" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*Person.csv&quot;</span>,</span>
+<span id="cb286-6"><a href="person-files.html#cb286-6" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb286-7"><a href="person-files.html#cb286-7" tabindex="-1"></a>  )</span>
+<span id="cb286-8"><a href="person-files.html#cb286-8" tabindex="-1"></a></span>
+<span id="cb286-9"><a href="person-files.html#cb286-9" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">lapply</span>(person_files, fread)</span></code></pre></div>
 <p>Exploring the data</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="person-files.html#cb288-1" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(persons)</span>
-<span id="cb288-2"><a href="person-files.html#cb288-2" tabindex="-1"></a></span>
-<span id="cb288-3"><a href="person-files.html#cb288-3" tabindex="-1"></a><span class="co"># Histogram of age</span></span>
-<span id="cb288-4"><a href="person-files.html#cb288-4" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb288-5"><a href="person-files.html#cb288-5" tabindex="-1"></a><span class="fu">ggplot</span>(persons, <span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
-<span id="cb288-6"><a href="person-files.html#cb288-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="person-files.html#cb287-1" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(persons)</span>
+<span id="cb287-2"><a href="person-files.html#cb287-2" tabindex="-1"></a></span>
+<span id="cb287-3"><a href="person-files.html#cb287-3" tabindex="-1"></a><span class="co"># Histogram of age</span></span>
+<span id="cb287-4"><a href="person-files.html#cb287-4" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb287-5"><a href="person-files.html#cb287-5" tabindex="-1"></a><span class="fu">ggplot</span>(persons, <span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
+<span id="cb287-6"><a href="person-files.html#cb287-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="part-01-07-egonets_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="person-files.html#cb290-1" tabindex="-1"></a><span class="fu">hist</span>(persons<span class="sc">$</span>age)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="person-files.html#cb289-1" tabindex="-1"></a><span class="fu">hist</span>(persons<span class="sc">$</span>age)</span></code></pre></div>
 <p><img src="part-01-07-egonets_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 </div>
             </section>
