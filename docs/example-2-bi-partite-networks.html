@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -344,34 +344,34 @@ div.csl-indent {
 <h2><span class="header-section-number">7.2</span> Example 2: Bi-partite networks<a href="example-2-bi-partite-networks.html#example-2-bi-partite-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the case of bipartite networks (sometimes called affiliation networks,) we can use <code>ergm</code>’s terms for bipartite graphs to corroborate what we discussed here. For example, the two-star term. Let’s start simulating a bipartite network using the <code>edges</code> and <code>two-star</code> parameters. Since the <code>k-star</code> term is usually complex to fit (tends to generate degenerate models,) we will take advantage of the <code>Log()</code> transformation function in the <code>ergm</code> package to smooth the term.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></p>
 <p>The bipartite network that we will be simulating will have 100 actors and 50 entities. Actors, which we will map to the first level of the <code>ergm</code> terms, this is, <code>b1star</code> <code>b1nodematch</code>, etc. will send ties to the entities, the second level of the bipartite ERGM. To create a bipartite network, we will create an empty matrix of size <code>nactors x nentitites</code>; thus, actors are represented by rows and entities by columns.</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="example-2-bi-partite-networks.html#cb225-1" tabindex="-1"></a><span class="co"># Parameters for the simulation</span></span>
-<span id="cb225-2"><a href="example-2-bi-partite-networks.html#cb225-2" tabindex="-1"></a>nactors   <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb225-3"><a href="example-2-bi-partite-networks.html#cb225-3" tabindex="-1"></a>nentities <span class="ot">&lt;-</span> <span class="fu">floor</span>(nactors<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb225-4"><a href="example-2-bi-partite-networks.html#cb225-4" tabindex="-1"></a>n         <span class="ot">&lt;-</span> nactors <span class="sc">+</span> nentities</span>
-<span id="cb225-5"><a href="example-2-bi-partite-networks.html#cb225-5" tabindex="-1"></a></span>
-<span id="cb225-6"><a href="example-2-bi-partite-networks.html#cb225-6" tabindex="-1"></a><span class="co"># Creating an empty bipartite network (baseline)</span></span>
-<span id="cb225-7"><a href="example-2-bi-partite-networks.html#cb225-7" tabindex="-1"></a>net_b <span class="ot">&lt;-</span> <span class="fu">network</span>(</span>
-<span id="cb225-8"><a href="example-2-bi-partite-networks.html#cb225-8" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> nactors, <span class="at">ncol =</span> nentities), <span class="at">bipartite =</span> <span class="cn">TRUE</span></span>
-<span id="cb225-9"><a href="example-2-bi-partite-networks.html#cb225-9" tabindex="-1"></a>)</span>
-<span id="cb225-10"><a href="example-2-bi-partite-networks.html#cb225-10" tabindex="-1"></a></span>
-<span id="cb225-11"><a href="example-2-bi-partite-networks.html#cb225-11" tabindex="-1"></a><span class="co"># Simulating the bipartite ERGM,</span></span>
-<span id="cb225-12"><a href="example-2-bi-partite-networks.html#cb225-12" tabindex="-1"></a>net_b <span class="ot">&lt;-</span> <span class="fu">simulate</span>(net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">b1star</span>(<span class="dv">2</span>)), <span class="at">coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="fl">1.5</span>), <span class="at">seed =</span> <span class="dv">55</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="example-2-bi-partite-networks.html#cb175-1" tabindex="-1"></a><span class="co"># Parameters for the simulation</span></span>
+<span id="cb175-2"><a href="example-2-bi-partite-networks.html#cb175-2" tabindex="-1"></a>nactors   <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb175-3"><a href="example-2-bi-partite-networks.html#cb175-3" tabindex="-1"></a>nentities <span class="ot">&lt;-</span> <span class="fu">floor</span>(nactors<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb175-4"><a href="example-2-bi-partite-networks.html#cb175-4" tabindex="-1"></a>n         <span class="ot">&lt;-</span> nactors <span class="sc">+</span> nentities</span>
+<span id="cb175-5"><a href="example-2-bi-partite-networks.html#cb175-5" tabindex="-1"></a></span>
+<span id="cb175-6"><a href="example-2-bi-partite-networks.html#cb175-6" tabindex="-1"></a><span class="co"># Creating an empty bipartite network (baseline)</span></span>
+<span id="cb175-7"><a href="example-2-bi-partite-networks.html#cb175-7" tabindex="-1"></a>net_b <span class="ot">&lt;-</span> <span class="fu">network</span>(</span>
+<span id="cb175-8"><a href="example-2-bi-partite-networks.html#cb175-8" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> nactors, <span class="at">ncol =</span> nentities), <span class="at">bipartite =</span> <span class="cn">TRUE</span></span>
+<span id="cb175-9"><a href="example-2-bi-partite-networks.html#cb175-9" tabindex="-1"></a>)</span>
+<span id="cb175-10"><a href="example-2-bi-partite-networks.html#cb175-10" tabindex="-1"></a></span>
+<span id="cb175-11"><a href="example-2-bi-partite-networks.html#cb175-11" tabindex="-1"></a><span class="co"># Simulating the bipartite ERGM,</span></span>
+<span id="cb175-12"><a href="example-2-bi-partite-networks.html#cb175-12" tabindex="-1"></a>net_b <span class="ot">&lt;-</span> <span class="fu">simulate</span>(net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">b1star</span>(<span class="dv">2</span>)), <span class="at">coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="fl">1.5</span>), <span class="at">seed =</span> <span class="dv">55</span>)</span></code></pre></div>
 <p>Let’s see what we got here:</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="example-2-bi-partite-networks.html#cb226-1" tabindex="-1"></a><span class="fu">summary</span>(net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">b1star</span>(<span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="example-2-bi-partite-networks.html#cb176-1" tabindex="-1"></a><span class="fu">summary</span>(net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">b1star</span>(<span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>##       edges Log~b1star2 
 ##  245.000000    5.746203</code></pre>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="example-2-bi-partite-networks.html#cb228-1" tabindex="-1"></a>netplot<span class="sc">::</span><span class="fu">nplot</span>(net_b, <span class="at">vertex.col =</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors) <span class="sc">+</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="example-2-bi-partite-networks.html#cb178-1" tabindex="-1"></a>netplot<span class="sc">::</span><span class="fu">nplot</span>(net_b, <span class="at">vertex.col =</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors) <span class="sc">+</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="part-01-05-ergms-constrains_files/figure-html/05-example2-simulated-graph-1.png" width="672" /></p>
 <p>Notice that the first <code>nactors</code> vertices in the network are the actors, and the remaining are the entities. Now, although the <code>ergm</code> package features bipartite network terms, we can still fit a bipartite ERGM without explicitly declaring the graph as such. In such case, the <code>b1star(2)</code> term of a bipartite network is equivalent to an <code>ostar(2)</code> in a directed graph. Likewise, <code>b2star(2)</code> in a bipartite graph matches the <code>istar(2)</code> term in a directed graph. This information will be relevant when fitting the ERGM. Let’s transform the bipartite network into a directed graph. The following code block does so:</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="example-2-bi-partite-networks.html#cb229-1" tabindex="-1"></a><span class="co"># Identifying the edges</span></span>
-<span id="cb229-2"><a href="example-2-bi-partite-networks.html#cb229-2" tabindex="-1"></a>net_not_b <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">as.matrix</span>(net_b) <span class="sc">!=</span> <span class="dv">0</span>, <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb229-3"><a href="example-2-bi-partite-networks.html#cb229-3" tabindex="-1"></a></span>
-<span id="cb229-4"><a href="example-2-bi-partite-networks.html#cb229-4" tabindex="-1"></a><span class="co"># We need to offset the endpoint of the ties by nactors</span></span>
-<span id="cb229-5"><a href="example-2-bi-partite-networks.html#cb229-5" tabindex="-1"></a><span class="co"># so that the ids go from 1 through (nactors + nentitites)</span></span>
-<span id="cb229-6"><a href="example-2-bi-partite-networks.html#cb229-6" tabindex="-1"></a>net_not_b[,<span class="dv">2</span>] <span class="ot">&lt;-</span> net_not_b[,<span class="dv">2</span>] <span class="sc">+</span> nactors</span>
-<span id="cb229-7"><a href="example-2-bi-partite-networks.html#cb229-7" tabindex="-1"></a></span>
-<span id="cb229-8"><a href="example-2-bi-partite-networks.html#cb229-8" tabindex="-1"></a><span class="co"># The resulting graph is a directed network</span></span>
-<span id="cb229-9"><a href="example-2-bi-partite-networks.html#cb229-9" tabindex="-1"></a>net_not_b <span class="ot">&lt;-</span> <span class="fu">network</span>(net_not_b, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="example-2-bi-partite-networks.html#cb179-1" tabindex="-1"></a><span class="co"># Identifying the edges</span></span>
+<span id="cb179-2"><a href="example-2-bi-partite-networks.html#cb179-2" tabindex="-1"></a>net_not_b <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">as.matrix</span>(net_b) <span class="sc">!=</span> <span class="dv">0</span>, <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb179-3"><a href="example-2-bi-partite-networks.html#cb179-3" tabindex="-1"></a></span>
+<span id="cb179-4"><a href="example-2-bi-partite-networks.html#cb179-4" tabindex="-1"></a><span class="co"># We need to offset the endpoint of the ties by nactors</span></span>
+<span id="cb179-5"><a href="example-2-bi-partite-networks.html#cb179-5" tabindex="-1"></a><span class="co"># so that the ids go from 1 through (nactors + nentitites)</span></span>
+<span id="cb179-6"><a href="example-2-bi-partite-networks.html#cb179-6" tabindex="-1"></a>net_not_b[,<span class="dv">2</span>] <span class="ot">&lt;-</span> net_not_b[,<span class="dv">2</span>] <span class="sc">+</span> nactors</span>
+<span id="cb179-7"><a href="example-2-bi-partite-networks.html#cb179-7" tabindex="-1"></a></span>
+<span id="cb179-8"><a href="example-2-bi-partite-networks.html#cb179-8" tabindex="-1"></a><span class="co"># The resulting graph is a directed network</span></span>
+<span id="cb179-9"><a href="example-2-bi-partite-networks.html#cb179-9" tabindex="-1"></a>net_not_b <span class="ot">&lt;-</span> <span class="fu">network</span>(net_not_b, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Now we are almost done. As before, we need to use node-level covariates
 to put the constraints in our model. For this ERGM to reflect an ERGM on
 a bipartite network, we need two constraints:</p>
@@ -388,55 +388,55 @@ and <code>nodeocov("isnot.actor") ~ -Inf</code>. Mathematically:</p>
 <p>In other words, we are setting that ties between nodes of the same class are
 forbidden, and outgoing ties are forbidden for entities. Let’s create the
 vertex attributes needed to use the aforementioned terms:</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="example-2-bi-partite-networks.html#cb230-1" tabindex="-1"></a>net_not_b <span class="sc">%v%</span> <span class="st">&quot;is.actor&quot;</span> <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors)</span>
-<span id="cb230-2"><a href="example-2-bi-partite-networks.html#cb230-2" tabindex="-1"></a>net_not_b <span class="sc">%v%</span> <span class="st">&quot;isnot.actor&quot;</span> <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&gt;</span> nactors)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="example-2-bi-partite-networks.html#cb180-1" tabindex="-1"></a>net_not_b <span class="sc">%v%</span> <span class="st">&quot;is.actor&quot;</span> <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors)</span>
+<span id="cb180-2"><a href="example-2-bi-partite-networks.html#cb180-2" tabindex="-1"></a>net_not_b <span class="sc">%v%</span> <span class="st">&quot;isnot.actor&quot;</span> <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&gt;</span> nactors)</span></code></pre></div>
 <p>Finally, to make sure we have done all well, let’s look how both networks–bipartite
 and unimodal–look side by side:</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="example-2-bi-partite-networks.html#cb231-1" tabindex="-1"></a><span class="co"># First, let&#39;s get the layout</span></span>
-<span id="cb231-2"><a href="example-2-bi-partite-networks.html#cb231-2" tabindex="-1"></a>fig <span class="ot">&lt;-</span> netplot<span class="sc">::</span><span class="fu">nplot</span>(net_b, <span class="at">vertex.col =</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors) <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb231-3"><a href="example-2-bi-partite-networks.html#cb231-3" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(</span>
-<span id="cb231-4"><a href="example-2-bi-partite-networks.html#cb231-4" tabindex="-1"></a>  fig,</span>
-<span id="cb231-5"><a href="example-2-bi-partite-networks.html#cb231-5" tabindex="-1"></a>  netplot<span class="sc">::</span><span class="fu">nplot</span>(</span>
-<span id="cb231-6"><a href="example-2-bi-partite-networks.html#cb231-6" tabindex="-1"></a>    net_not_b, <span class="at">vertex.col =</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors) <span class="sc">+</span> <span class="dv">1</span>,</span>
-<span id="cb231-7"><a href="example-2-bi-partite-networks.html#cb231-7" tabindex="-1"></a>    <span class="at">layout =</span> fig<span class="sc">$</span>.layout</span>
-<span id="cb231-8"><a href="example-2-bi-partite-networks.html#cb231-8" tabindex="-1"></a>     ),</span>
-<span id="cb231-9"><a href="example-2-bi-partite-networks.html#cb231-9" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">1</span></span>
-<span id="cb231-10"><a href="example-2-bi-partite-networks.html#cb231-10" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="example-2-bi-partite-networks.html#cb181-1" tabindex="-1"></a><span class="co"># First, let&#39;s get the layout</span></span>
+<span id="cb181-2"><a href="example-2-bi-partite-networks.html#cb181-2" tabindex="-1"></a>fig <span class="ot">&lt;-</span> netplot<span class="sc">::</span><span class="fu">nplot</span>(net_b, <span class="at">vertex.col =</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors) <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb181-3"><a href="example-2-bi-partite-networks.html#cb181-3" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(</span>
+<span id="cb181-4"><a href="example-2-bi-partite-networks.html#cb181-4" tabindex="-1"></a>  fig,</span>
+<span id="cb181-5"><a href="example-2-bi-partite-networks.html#cb181-5" tabindex="-1"></a>  netplot<span class="sc">::</span><span class="fu">nplot</span>(</span>
+<span id="cb181-6"><a href="example-2-bi-partite-networks.html#cb181-6" tabindex="-1"></a>    net_not_b, <span class="at">vertex.col =</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&lt;=</span> nactors) <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb181-7"><a href="example-2-bi-partite-networks.html#cb181-7" tabindex="-1"></a>    <span class="at">layout =</span> fig<span class="sc">$</span>.layout</span>
+<span id="cb181-8"><a href="example-2-bi-partite-networks.html#cb181-8" tabindex="-1"></a>     ),</span>
+<span id="cb181-9"><a href="example-2-bi-partite-networks.html#cb181-9" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">1</span></span>
+<span id="cb181-10"><a href="example-2-bi-partite-networks.html#cb181-10" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="part-01-05-ergms-constrains_files/figure-html/05-example2-side-by-side-1.png" width="672" /></p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="example-2-bi-partite-networks.html#cb232-1" tabindex="-1"></a><span class="co"># Looking at the counts</span></span>
-<span id="cb232-2"><a href="example-2-bi-partite-networks.html#cb232-2" tabindex="-1"></a><span class="fu">summary</span>(net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">b1star</span>(<span class="dv">2</span>) <span class="sc">+</span> <span class="fu">b2star</span>(<span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="example-2-bi-partite-networks.html#cb182-1" tabindex="-1"></a><span class="co"># Looking at the counts</span></span>
+<span id="cb182-2"><a href="example-2-bi-partite-networks.html#cb182-2" tabindex="-1"></a><span class="fu">summary</span>(net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">b1star</span>(<span class="dv">2</span>) <span class="sc">+</span> <span class="fu">b2star</span>(<span class="dv">2</span>))</span></code></pre></div>
 <pre><code>##   edges b1star2 b2star2 
 ##     245     313     645</code></pre>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="example-2-bi-partite-networks.html#cb234-1" tabindex="-1"></a><span class="fu">summary</span>(net_not_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">ostar</span>(<span class="dv">2</span>) <span class="sc">+</span> <span class="fu">istar</span>(<span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="example-2-bi-partite-networks.html#cb184-1" tabindex="-1"></a><span class="fu">summary</span>(net_not_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">ostar</span>(<span class="dv">2</span>) <span class="sc">+</span> <span class="fu">istar</span>(<span class="dv">2</span>))</span></code></pre></div>
 <pre><code>##  edges ostar2 istar2 
 ##    245    313    645</code></pre>
 <p>With the two networks matching, we can now fit the ERGMs with and without
 offset terms and compare the results between the two models:</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="example-2-bi-partite-networks.html#cb236-1" tabindex="-1"></a><span class="co"># ERGM with a bipartite graph</span></span>
-<span id="cb236-2"><a href="example-2-bi-partite-networks.html#cb236-2" tabindex="-1"></a>res_b     <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
-<span id="cb236-3"><a href="example-2-bi-partite-networks.html#cb236-3" tabindex="-1"></a>  <span class="co"># Main formula</span></span>
-<span id="cb236-4"><a href="example-2-bi-partite-networks.html#cb236-4" tabindex="-1"></a>  net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">b1star</span>(<span class="dv">2</span>)),</span>
-<span id="cb236-5"><a href="example-2-bi-partite-networks.html#cb236-5" tabindex="-1"></a></span>
-<span id="cb236-6"><a href="example-2-bi-partite-networks.html#cb236-6" tabindex="-1"></a>  <span class="co"># Control parameters</span></span>
-<span id="cb236-7"><a href="example-2-bi-partite-networks.html#cb236-7" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(<span class="at">seed =</span> <span class="dv">1</span>)</span>
-<span id="cb236-8"><a href="example-2-bi-partite-networks.html#cb236-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="example-2-bi-partite-networks.html#cb186-1" tabindex="-1"></a><span class="co"># ERGM with a bipartite graph</span></span>
+<span id="cb186-2"><a href="example-2-bi-partite-networks.html#cb186-2" tabindex="-1"></a>res_b     <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb186-3"><a href="example-2-bi-partite-networks.html#cb186-3" tabindex="-1"></a>  <span class="co"># Main formula</span></span>
+<span id="cb186-4"><a href="example-2-bi-partite-networks.html#cb186-4" tabindex="-1"></a>  net_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">b1star</span>(<span class="dv">2</span>)),</span>
+<span id="cb186-5"><a href="example-2-bi-partite-networks.html#cb186-5" tabindex="-1"></a></span>
+<span id="cb186-6"><a href="example-2-bi-partite-networks.html#cb186-6" tabindex="-1"></a>  <span class="co"># Control parameters</span></span>
+<span id="cb186-7"><a href="example-2-bi-partite-networks.html#cb186-7" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(<span class="at">seed =</span> <span class="dv">1</span>)</span>
+<span id="cb186-8"><a href="example-2-bi-partite-networks.html#cb186-8" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning: &#39;glpk&#39; selected as the solver, but package &#39;Rglpk&#39; is not available;
 ## falling back to &#39;lpSolveAPI&#39;. This should be fine unless the sample size and/or
 ## the number of parameters is very big.</code></pre>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="example-2-bi-partite-networks.html#cb238-1" tabindex="-1"></a><span class="co"># ERGM with a digraph with constraints</span></span>
-<span id="cb238-2"><a href="example-2-bi-partite-networks.html#cb238-2" tabindex="-1"></a>res_not_b <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
-<span id="cb238-3"><a href="example-2-bi-partite-networks.html#cb238-3" tabindex="-1"></a>  <span class="co"># Main formula</span></span>
-<span id="cb238-4"><a href="example-2-bi-partite-networks.html#cb238-4" tabindex="-1"></a>  net_not_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">ostar</span>(<span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb238-5"><a href="example-2-bi-partite-networks.html#cb238-5" tabindex="-1"></a></span>
-<span id="cb238-6"><a href="example-2-bi-partite-networks.html#cb238-6" tabindex="-1"></a>  <span class="co"># Offset terms </span></span>
-<span id="cb238-7"><a href="example-2-bi-partite-networks.html#cb238-7" tabindex="-1"></a>  <span class="fu">offset</span>(<span class="fu">nodematch</span>(<span class="st">&quot;is.actor&quot;</span>)) <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">nodeocov</span>(<span class="st">&quot;isnot.actor&quot;</span>)),</span>
-<span id="cb238-8"><a href="example-2-bi-partite-networks.html#cb238-8" tabindex="-1"></a>  <span class="at">offset.coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="cn">Inf</span>),</span>
-<span id="cb238-9"><a href="example-2-bi-partite-networks.html#cb238-9" tabindex="-1"></a></span>
-<span id="cb238-10"><a href="example-2-bi-partite-networks.html#cb238-10" tabindex="-1"></a>  <span class="co"># Control parameters</span></span>
-<span id="cb238-11"><a href="example-2-bi-partite-networks.html#cb238-11" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(<span class="at">seed =</span> <span class="dv">1</span>)</span>
-<span id="cb238-12"><a href="example-2-bi-partite-networks.html#cb238-12" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="example-2-bi-partite-networks.html#cb188-1" tabindex="-1"></a><span class="co"># ERGM with a digraph with constraints</span></span>
+<span id="cb188-2"><a href="example-2-bi-partite-networks.html#cb188-2" tabindex="-1"></a>res_not_b <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb188-3"><a href="example-2-bi-partite-networks.html#cb188-3" tabindex="-1"></a>  <span class="co"># Main formula</span></span>
+<span id="cb188-4"><a href="example-2-bi-partite-networks.html#cb188-4" tabindex="-1"></a>  net_not_b <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">Log</span>(<span class="sc">~</span><span class="fu">ostar</span>(<span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb188-5"><a href="example-2-bi-partite-networks.html#cb188-5" tabindex="-1"></a></span>
+<span id="cb188-6"><a href="example-2-bi-partite-networks.html#cb188-6" tabindex="-1"></a>  <span class="co"># Offset terms </span></span>
+<span id="cb188-7"><a href="example-2-bi-partite-networks.html#cb188-7" tabindex="-1"></a>  <span class="fu">offset</span>(<span class="fu">nodematch</span>(<span class="st">&quot;is.actor&quot;</span>)) <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">nodeocov</span>(<span class="st">&quot;isnot.actor&quot;</span>)),</span>
+<span id="cb188-8"><a href="example-2-bi-partite-networks.html#cb188-8" tabindex="-1"></a>  <span class="at">offset.coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="cn">Inf</span>),</span>
+<span id="cb188-9"><a href="example-2-bi-partite-networks.html#cb188-9" tabindex="-1"></a></span>
+<span id="cb188-10"><a href="example-2-bi-partite-networks.html#cb188-10" tabindex="-1"></a>  <span class="co"># Control parameters</span></span>
+<span id="cb188-11"><a href="example-2-bi-partite-networks.html#cb188-11" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(<span class="at">seed =</span> <span class="dv">1</span>)</span>
+<span id="cb188-12"><a href="example-2-bi-partite-networks.html#cb188-12" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Here are the estimates (using the <code>texreg</code> R package for a prettier output):</p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="example-2-bi-partite-networks.html#cb239-1" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">screenreg</span>(<span class="fu">list</span>(<span class="at">Bipartite =</span> res_b, <span class="at">Directed =</span> res_not_b))</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="example-2-bi-partite-networks.html#cb189-1" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">screenreg</span>(<span class="fu">list</span>(<span class="at">Bipartite =</span> res_b, <span class="at">Directed =</span> res_not_b))</span></code></pre></div>
 <pre><code>## 
 ## ======================================================================
 ##                               Bipartite    Directed                   
@@ -463,10 +463,10 @@ the sampling. In particular, in the bipartite case, <code>ergm</code> has specia
 routines for making the sampling more efficient, having a higher acceptance
 rate than that of the model in which the bipartite graph was not explicitly
 declared. We can tell this by inspecting rejection rates:</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="example-2-bi-partite-networks.html#cb241-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb241-2"><a href="example-2-bi-partite-networks.html#cb241-2" tabindex="-1"></a>  <span class="at">Bipartite =</span> coda<span class="sc">::</span><span class="fu">rejectionRate</span>(res_b<span class="sc">$</span>sample[[<span class="dv">1</span>]]) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb241-3"><a href="example-2-bi-partite-networks.html#cb241-3" tabindex="-1"></a>  <span class="at">Directed  =</span> coda<span class="sc">::</span><span class="fu">rejectionRate</span>(res_not_b<span class="sc">$</span>sample[[<span class="dv">1</span>]][, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)]) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb241-4"><a href="example-2-bi-partite-networks.html#cb241-4" tabindex="-1"></a>) <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Rejection rate (percent)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="example-2-bi-partite-networks.html#cb191-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb191-2"><a href="example-2-bi-partite-networks.html#cb191-2" tabindex="-1"></a>  <span class="at">Bipartite =</span> coda<span class="sc">::</span><span class="fu">rejectionRate</span>(res_b<span class="sc">$</span>sample[[<span class="dv">1</span>]]) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb191-3"><a href="example-2-bi-partite-networks.html#cb191-3" tabindex="-1"></a>  <span class="at">Directed  =</span> coda<span class="sc">::</span><span class="fu">rejectionRate</span>(res_not_b<span class="sc">$</span>sample[[<span class="dv">1</span>]][, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)]) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb191-4"><a href="example-2-bi-partite-networks.html#cb191-4" tabindex="-1"></a>) <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Rejection rate (percent)&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:05-example2-post-dist">Table 7.1: </span>Rejection rate (percent)</caption>
 <thead>

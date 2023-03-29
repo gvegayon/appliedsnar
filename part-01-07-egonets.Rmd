@@ -14,6 +14,8 @@ file.copy(
   "data-raw/networkCanvasExport-fake.zip",
   "docs/data-raw/networkCanvasExport-fake.zip"
   )
+
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 ```{r unzip}
@@ -168,30 +170,67 @@ lapply(seq_along(graphs), function(i) {
 
 ## Person files
 
+Like before, we list the files ending in `Person.csv` (with the full path,) and read them into R. While R has the function `read.csv`, here I use the function `fread` from the <a href="https://cran.r-project.org/package=data.table" target="_blank">`data.table`</a> R package. Alongside `dplyr`, `data.table` is one of the most popular data-wrangling tools in R. Besides syntax, the biggest difference between the two is performance; `data.table` is significantly faster than any other data management package in R, and is a great alternative for handling large datasets. The following code block loads the package, lists the files, and reads them into R.
+
 ```{r read-person}
+# Loading data.table
 library(data.table)
 
+# Listing the files
 person_files <- list.files(
   path       = "data-raw/egonets",
   pattern    = "*Person.csv",
   full.names = TRUE
   )
 
+# Loading all into a single list
 persons <- lapply(person_files, fread)
+
+# Looking into the first element
+persons[[1]]
 ```
 
-Exploring the data
+A common task is adding an identifier to each dataset in `persons` so we know from to which ego they belong. Again, the `lapply` function is our friend:
+
+
+```{r part-01-07-adding-ids}
+persons <- lapply(seq_along(persons), function(i) {
+  persons[[i]][, dataset_num := i]
+})
+```
+
+In `data.table`, variables are created using the `:=` symbol. The previous code chunk is equivalent to this:
+
+```r
+for (i in 1:length(persons)) {
+  persons[[i]]$dataset_num <- i
+}
+```
+
+If needed, we can transform the list `persons` into a `data.table` object (i.e., a single `data.frame`) using the `rbindlist` function[^rbindlist]. The next code block uses that function to combine the `data.table`s into a single dataset.
+
+[^rbindlist]: Although not the same, `rbindlist` (almost always) yields the same result as calling the function `do.call`. In particular, instead of executing the call `rbindlist(persons)`, we could have used `do.call(rbind, persons)`.
 
 ```{r}
+# Combining the datasets
 persons <- rbindlist(persons)
+persons
+```
+
+Now that we have a single dataset, we can do some data exploration. For example, we can use the package `ggplot2` to draw a histogram of alters' ages.
+
+```{r part-01-07-ggplot-ages}
+# Loading the ggplot2 package
+library(ggplot2)
 
 # Histogram of age
-library(ggplot2)
-ggplot(persons, aes(x = age)) +
-  geom_histogram()
-
-hist(persons$age)
+ggplot(persons, aes(x = age)) +            # Starting off the plot
+  geom_histogram(fill = "purple") +      # Adding a histogram
+  labs(x = "Age", y = "Frequency") +       # Changing the x/y axis labels
+  labs(title = "Alter's Age Distribution") # Adding a title
 ```
+
+
 
 ## Ego files
 
@@ -300,3 +339,6 @@ saveRDS(graphs_network, file = "data/networks_network.rds")
 fwrite(persons, file = "data/persons.csv")
 ```
 
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse = FALSE)
+```

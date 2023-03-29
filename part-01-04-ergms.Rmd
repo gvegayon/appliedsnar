@@ -9,6 +9,7 @@ if (file.exists("ergm.rda")) {
 } else {
   chapter_cached <- FALSE
 }
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 ```r
@@ -48,7 +49,7 @@ In the simplest case, ERGMs equate a logistic regression. By simple, I mean case
 Let's fit an ERGM using the `sampson` dataset included in the `ergm` package.
 
 
-```{r}
+```{r part-01-04-loading-data, echo=TRUE, collapse=TRUE, message=FALSE}
 library(ergm)
 data("sampson")
 samplike
@@ -56,7 +57,7 @@ samplike
 
 Using `ergm` to fit a Bernoulli graph requires using the `edges` term, which counts how many ties are in the graph:
 
-```{r}
+```{r echo = TRUE, collapse = TRUE}
 ergm_fit <- ergm(samplike ~ edges)
 ```
 
@@ -611,3 +612,7 @@ Where the last equality follows from $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_
 Related to this, block-diagonal ERGMs can be estimated as independent models, one per block. To see more about this, read [@Snijders2010margin]. Likewise, since independence depends--pun intended--on partitioning the objective function, as pointed by Snijders, non-linear functions make the model dependent, e.g., $\s{\mathbf{y}} = \sqrt{\sum_{ij}y_{ij}}$, the square root of the edgecount is no longer a bernoulli graph.
 
 \renewcommand{\Pr}[1]{\mathbb{P}{#1}}
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = FALSE)
+```

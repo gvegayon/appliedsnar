@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -349,144 +349,144 @@ div.csl-indent {
 </blockquote>
 <p>Since <code>ans0</code> is the one model which did best, let’s take a look at it’s GOF statistics. First, lets see how the MCMC did. For this we can use the <code>mcmc.diagnostics</code> function including in the package. This function is actually a wrapper of a couple of functions from the <code>coda</code> package <span class="citation">(<a href="#ref-R-coda">Plummer et al. 2006</a>)</span> which is called upon the <code>$sample</code> object which holds the <em>centered</em> statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the <code>$sample</code> object since it neither matches the observed statistics, nor the coefficients.</p>
 <p>When calling the function <code>mcmc.diagnostics(ans0, centered = FALSE)</code>, you will see a lot of output including a couple of plots showing the trace and posterior distribution of the <em>uncentered</em> statistics (<code>centered = FALSE</code>). In the next code chunks we will reproduce the output from the <code>mcmc.diagnostics</code> function step by step using the coda package. First we need to <em>uncenter</em> the sample object:</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="model-goodness-of-fit.html#cb189-1" tabindex="-1"></a><span class="co"># Getting the centered sample</span></span>
-<span id="cb189-2"><a href="model-goodness-of-fit.html#cb189-2" tabindex="-1"></a>sample_centered <span class="ot">&lt;-</span> ans0<span class="sc">$</span>sample</span>
-<span id="cb189-3"><a href="model-goodness-of-fit.html#cb189-3" tabindex="-1"></a></span>
-<span id="cb189-4"><a href="model-goodness-of-fit.html#cb189-4" tabindex="-1"></a><span class="co"># Getting the observed statistics and turning it into a matrix so we can add it</span></span>
-<span id="cb189-5"><a href="model-goodness-of-fit.html#cb189-5" tabindex="-1"></a><span class="co"># to the samples</span></span>
-<span id="cb189-6"><a href="model-goodness-of-fit.html#cb189-6" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">summary</span>(ans0<span class="sc">$</span>formula)</span>
-<span id="cb189-7"><a href="model-goodness-of-fit.html#cb189-7" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb189-8"><a href="model-goodness-of-fit.html#cb189-8" tabindex="-1"></a>  observed,</span>
-<span id="cb189-9"><a href="model-goodness-of-fit.html#cb189-9" tabindex="-1"></a>  <span class="at">nrow  =</span> <span class="fu">nrow</span>(sample_centered[[<span class="dv">1</span>]]),</span>
-<span id="cb189-10"><a href="model-goodness-of-fit.html#cb189-10" tabindex="-1"></a>  <span class="at">ncol  =</span> <span class="fu">length</span>(observed),</span>
-<span id="cb189-11"><a href="model-goodness-of-fit.html#cb189-11" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
-<span id="cb189-12"><a href="model-goodness-of-fit.html#cb189-12" tabindex="-1"></a>  )</span>
-<span id="cb189-13"><a href="model-goodness-of-fit.html#cb189-13" tabindex="-1"></a></span>
-<span id="cb189-14"><a href="model-goodness-of-fit.html#cb189-14" tabindex="-1"></a><span class="co"># Now we uncenter the sample</span></span>
-<span id="cb189-15"><a href="model-goodness-of-fit.html#cb189-15" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sample_centered, <span class="cf">function</span>(x) {</span>
-<span id="cb189-16"><a href="model-goodness-of-fit.html#cb189-16" tabindex="-1"></a>  x <span class="sc">+</span> observed</span>
-<span id="cb189-17"><a href="model-goodness-of-fit.html#cb189-17" tabindex="-1"></a>})</span>
-<span id="cb189-18"><a href="model-goodness-of-fit.html#cb189-18" tabindex="-1"></a></span>
-<span id="cb189-19"><a href="model-goodness-of-fit.html#cb189-19" tabindex="-1"></a><span class="co"># We have to make it an mcmc.list object</span></span>
-<span id="cb189-20"><a href="model-goodness-of-fit.html#cb189-20" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> coda<span class="sc">::</span><span class="fu">mcmc.list</span>(sample_uncentered)</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="model-goodness-of-fit.html#cb146-1" tabindex="-1"></a><span class="co"># Getting the centered sample</span></span>
+<span id="cb146-2"><a href="model-goodness-of-fit.html#cb146-2" tabindex="-1"></a>sample_centered <span class="ot">&lt;-</span> ans0<span class="sc">$</span>sample</span>
+<span id="cb146-3"><a href="model-goodness-of-fit.html#cb146-3" tabindex="-1"></a></span>
+<span id="cb146-4"><a href="model-goodness-of-fit.html#cb146-4" tabindex="-1"></a><span class="co"># Getting the observed statistics and turning it into a matrix so we can add it</span></span>
+<span id="cb146-5"><a href="model-goodness-of-fit.html#cb146-5" tabindex="-1"></a><span class="co"># to the samples</span></span>
+<span id="cb146-6"><a href="model-goodness-of-fit.html#cb146-6" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">summary</span>(ans0<span class="sc">$</span>formula)</span>
+<span id="cb146-7"><a href="model-goodness-of-fit.html#cb146-7" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb146-8"><a href="model-goodness-of-fit.html#cb146-8" tabindex="-1"></a>  observed,</span>
+<span id="cb146-9"><a href="model-goodness-of-fit.html#cb146-9" tabindex="-1"></a>  <span class="at">nrow  =</span> <span class="fu">nrow</span>(sample_centered[[<span class="dv">1</span>]]),</span>
+<span id="cb146-10"><a href="model-goodness-of-fit.html#cb146-10" tabindex="-1"></a>  <span class="at">ncol  =</span> <span class="fu">length</span>(observed),</span>
+<span id="cb146-11"><a href="model-goodness-of-fit.html#cb146-11" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
+<span id="cb146-12"><a href="model-goodness-of-fit.html#cb146-12" tabindex="-1"></a>  )</span>
+<span id="cb146-13"><a href="model-goodness-of-fit.html#cb146-13" tabindex="-1"></a></span>
+<span id="cb146-14"><a href="model-goodness-of-fit.html#cb146-14" tabindex="-1"></a><span class="co"># Now we uncenter the sample</span></span>
+<span id="cb146-15"><a href="model-goodness-of-fit.html#cb146-15" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sample_centered, <span class="cf">function</span>(x) {</span>
+<span id="cb146-16"><a href="model-goodness-of-fit.html#cb146-16" tabindex="-1"></a>  x <span class="sc">+</span> observed</span>
+<span id="cb146-17"><a href="model-goodness-of-fit.html#cb146-17" tabindex="-1"></a>})</span>
+<span id="cb146-18"><a href="model-goodness-of-fit.html#cb146-18" tabindex="-1"></a></span>
+<span id="cb146-19"><a href="model-goodness-of-fit.html#cb146-19" tabindex="-1"></a><span class="co"># We have to make it an mcmc.list object</span></span>
+<span id="cb146-20"><a href="model-goodness-of-fit.html#cb146-20" tabindex="-1"></a>sample_uncentered <span class="ot">&lt;-</span> coda<span class="sc">::</span><span class="fu">mcmc.list</span>(sample_uncentered)</span></code></pre></div>
 <p>Under the hood:</p>
 <ol style="list-style-type: decimal">
 <li><p><em>Empirical means and sd, and quantiles</em>:</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="model-goodness-of-fit.html#cb190-1" tabindex="-1"></a><span class="fu">summary</span>(sample_uncentered)</span></code></pre></div>
-<pre><code>## 
-## Iterations = 1769472:10944512
-## Thinning interval = 65536 
-## Number of chains = 4 
-## Sample size per chain = 141 
-## 
-## 1. Empirical mean and standard deviation for each variable,
-##    plus standard error of the mean:
-## 
-##                    Mean    SD Naive SE Time-series SE
-## edges              2485 60.26   2.5372          3.753
-## nodematch.hispanic 1838 51.25   2.1578          3.662
-## nodematch.female1  1888 52.78   2.2224          3.779
-## nodematch.eversmk1 1759 50.82   2.1400          3.072
-## mutual              493 23.40   0.9855          1.967
-## 
-## 2. Quantiles for each variable:
-## 
-##                    2.5%  25%  50%  75% 97.5%
-## edges              2373 2444 2482 2530  2612
-## nodematch.hispanic 1736 1803 1839 1872  1947
-## nodematch.female1  1791 1851 1885 1923  1993
-## nodematch.eversmk1 1662 1725 1758 1794  1858
-## mutual              449  476  493  509   537</code></pre></li>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="model-goodness-of-fit.html#cb147-1" tabindex="-1"></a><span class="fu">summary</span>(sample_uncentered)</span>
+<span id="cb147-2"><a href="model-goodness-of-fit.html#cb147-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb147-3"><a href="model-goodness-of-fit.html#cb147-3" tabindex="-1"></a><span class="do">## Iterations = 1769472:10944512</span></span>
+<span id="cb147-4"><a href="model-goodness-of-fit.html#cb147-4" tabindex="-1"></a><span class="do">## Thinning interval = 65536 </span></span>
+<span id="cb147-5"><a href="model-goodness-of-fit.html#cb147-5" tabindex="-1"></a><span class="do">## Number of chains = 4 </span></span>
+<span id="cb147-6"><a href="model-goodness-of-fit.html#cb147-6" tabindex="-1"></a><span class="do">## Sample size per chain = 141 </span></span>
+<span id="cb147-7"><a href="model-goodness-of-fit.html#cb147-7" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb147-8"><a href="model-goodness-of-fit.html#cb147-8" tabindex="-1"></a><span class="do">## 1. Empirical mean and standard deviation for each variable,</span></span>
+<span id="cb147-9"><a href="model-goodness-of-fit.html#cb147-9" tabindex="-1"></a><span class="do">##    plus standard error of the mean:</span></span>
+<span id="cb147-10"><a href="model-goodness-of-fit.html#cb147-10" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb147-11"><a href="model-goodness-of-fit.html#cb147-11" tabindex="-1"></a><span class="do">##                    Mean    SD Naive SE Time-series SE</span></span>
+<span id="cb147-12"><a href="model-goodness-of-fit.html#cb147-12" tabindex="-1"></a><span class="do">## edges              2485 60.26   2.5372          3.753</span></span>
+<span id="cb147-13"><a href="model-goodness-of-fit.html#cb147-13" tabindex="-1"></a><span class="do">## nodematch.hispanic 1838 51.25   2.1578          3.662</span></span>
+<span id="cb147-14"><a href="model-goodness-of-fit.html#cb147-14" tabindex="-1"></a><span class="do">## nodematch.female1  1888 52.78   2.2224          3.779</span></span>
+<span id="cb147-15"><a href="model-goodness-of-fit.html#cb147-15" tabindex="-1"></a><span class="do">## nodematch.eversmk1 1759 50.82   2.1400          3.072</span></span>
+<span id="cb147-16"><a href="model-goodness-of-fit.html#cb147-16" tabindex="-1"></a><span class="do">## mutual              493 23.40   0.9855          1.967</span></span>
+<span id="cb147-17"><a href="model-goodness-of-fit.html#cb147-17" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb147-18"><a href="model-goodness-of-fit.html#cb147-18" tabindex="-1"></a><span class="do">## 2. Quantiles for each variable:</span></span>
+<span id="cb147-19"><a href="model-goodness-of-fit.html#cb147-19" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb147-20"><a href="model-goodness-of-fit.html#cb147-20" tabindex="-1"></a><span class="do">##                    2.5%  25%  50%  75% 97.5%</span></span>
+<span id="cb147-21"><a href="model-goodness-of-fit.html#cb147-21" tabindex="-1"></a><span class="do">## edges              2373 2444 2482 2530  2612</span></span>
+<span id="cb147-22"><a href="model-goodness-of-fit.html#cb147-22" tabindex="-1"></a><span class="do">## nodematch.hispanic 1736 1803 1839 1872  1947</span></span>
+<span id="cb147-23"><a href="model-goodness-of-fit.html#cb147-23" tabindex="-1"></a><span class="do">## nodematch.female1  1791 1851 1885 1923  1993</span></span>
+<span id="cb147-24"><a href="model-goodness-of-fit.html#cb147-24" tabindex="-1"></a><span class="do">## nodematch.eversmk1 1662 1725 1758 1794  1858</span></span>
+<span id="cb147-25"><a href="model-goodness-of-fit.html#cb147-25" tabindex="-1"></a><span class="do">## mutual              449  476  493  509   537</span></span></code></pre></div></li>
 <li><p><em>Cross correlation</em>:</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="model-goodness-of-fit.html#cb192-1" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">crosscorr</span>(sample_uncentered)</span></code></pre></div>
-<pre><code>##                        edges nodematch.hispanic nodematch.female1
-## edges              1.0000000          0.8657369         0.8851587
-## nodematch.hispanic 0.8657369          1.0000000         0.7713632
-## nodematch.female1  0.8851587          0.7713632         1.0000000
-## nodematch.eversmk1 0.8445651          0.7122693         0.7572735
-## mutual             0.7726517          0.6801783         0.7482026
-##                    nodematch.eversmk1    mutual
-## edges                       0.8445651 0.7726517
-## nodematch.hispanic          0.7122693 0.6801783
-## nodematch.female1           0.7572735 0.7482026
-## nodematch.eversmk1          1.0000000 0.6873242
-## mutual                      0.6873242 1.0000000</code></pre></li>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="model-goodness-of-fit.html#cb148-1" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">crosscorr</span>(sample_uncentered)</span>
+<span id="cb148-2"><a href="model-goodness-of-fit.html#cb148-2" tabindex="-1"></a><span class="do">##                        edges nodematch.hispanic nodematch.female1</span></span>
+<span id="cb148-3"><a href="model-goodness-of-fit.html#cb148-3" tabindex="-1"></a><span class="do">## edges              1.0000000          0.8657369         0.8851587</span></span>
+<span id="cb148-4"><a href="model-goodness-of-fit.html#cb148-4" tabindex="-1"></a><span class="do">## nodematch.hispanic 0.8657369          1.0000000         0.7713632</span></span>
+<span id="cb148-5"><a href="model-goodness-of-fit.html#cb148-5" tabindex="-1"></a><span class="do">## nodematch.female1  0.8851587          0.7713632         1.0000000</span></span>
+<span id="cb148-6"><a href="model-goodness-of-fit.html#cb148-6" tabindex="-1"></a><span class="do">## nodematch.eversmk1 0.8445651          0.7122693         0.7572735</span></span>
+<span id="cb148-7"><a href="model-goodness-of-fit.html#cb148-7" tabindex="-1"></a><span class="do">## mutual             0.7726517          0.6801783         0.7482026</span></span>
+<span id="cb148-8"><a href="model-goodness-of-fit.html#cb148-8" tabindex="-1"></a><span class="do">##                    nodematch.eversmk1    mutual</span></span>
+<span id="cb148-9"><a href="model-goodness-of-fit.html#cb148-9" tabindex="-1"></a><span class="do">## edges                       0.8445651 0.7726517</span></span>
+<span id="cb148-10"><a href="model-goodness-of-fit.html#cb148-10" tabindex="-1"></a><span class="do">## nodematch.hispanic          0.7122693 0.6801783</span></span>
+<span id="cb148-11"><a href="model-goodness-of-fit.html#cb148-11" tabindex="-1"></a><span class="do">## nodematch.female1           0.7572735 0.7482026</span></span>
+<span id="cb148-12"><a href="model-goodness-of-fit.html#cb148-12" tabindex="-1"></a><span class="do">## nodematch.eversmk1          1.0000000 0.6873242</span></span>
+<span id="cb148-13"><a href="model-goodness-of-fit.html#cb148-13" tabindex="-1"></a><span class="do">## mutual                      0.6873242 1.0000000</span></span></code></pre></div></li>
 <li><p><em>Autocorrelation</em>: For now, we will only look at autocorrelation for chain one. Autocorrelation should be small (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no Markov property). A way out to solve this is <em>thinning</em> the sample.</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="model-goodness-of-fit.html#cb194-1" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">autocorr</span>(sample_uncentered)[[<span class="dv">1</span>]]</span></code></pre></div>
-<pre><code>## , , edges
-## 
-##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0       1.000000000        0.861920590        0.90235072         0.86215333
-## Lag 65536   0.415060923        0.326775063        0.43751588         0.38274418
-## Lag 327680  0.063993999        0.002238453        0.09094189         0.05143792
-## Lag 655360  0.002497326       -0.105210070       -0.02414091         0.00143358
-## Lag 3276800 0.026845190        0.068616366        0.03686125         0.03652383
-##                  mutual
-## Lag 0       0.785264416
-## Lag 65536   0.428519050
-## Lag 327680  0.074020671
-## Lag 655360  0.009422505
-## Lag 3276800 0.018126669
-## 
-## , , nodematch.hispanic
-## 
-##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0        0.86192059        1.000000000        0.76137201         0.74623272
-## Lag 65536    0.32680263        0.336764054        0.30353156         0.32690588
-## Lag 327680   0.05778076        0.004465856        0.07267341         0.03757479
-## Lag 655360   0.07704457        0.024226503        0.03252125         0.08420548
-## Lag 3276800 -0.02970399        0.021278122       -0.02753467        -0.03018601
-##                  mutual
-## Lag 0        0.70578514
-## Lag 65536    0.35558587
-## Lag 327680   0.05282736
-## Lag 655360   0.08176601
-## Lag 3276800 -0.07743174
-## 
-## , , nodematch.female1
-## 
-##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0       0.902350724         0.76137201        1.00000000         0.77769826
-## Lag 65536   0.453418914         0.37756721        0.51290498         0.41954866
-## Lag 327680  0.055464012        -0.01058737        0.09841770         0.04272154
-## Lag 655360  0.009910833        -0.06123858       -0.03186870         0.04679847
-## Lag 3276800 0.004163166         0.04057544        0.01548719        -0.01288236
-##                  mutual
-## Lag 0        0.76981085
-## Lag 65536    0.46327442
-## Lag 327680   0.03629824
-## Lag 655360   0.01987496
-## Lag 3276800 -0.00949882
-## 
-## , , nodematch.eversmk1
-## 
-##                  edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0       0.86215333        0.746232721        0.77769826        1.000000000
-## Lag 65536   0.37539678        0.297591397        0.41717478        0.448697559
-## Lag 327680  0.02105523       -0.040132752        0.03760486        0.019124328
-## Lag 655360  0.04566425        0.003387581        0.04761067       -0.006388743
-## Lag 3276800 0.05048735        0.084790008        0.07108989        0.045582057
-##                   mutual
-## Lag 0       0.7053009595
-## Lag 65536   0.4020746950
-## Lag 327680  0.0183308894
-## Lag 655360  0.0840948296
-## Lag 3276800 0.0009713556
-## 
-## , , mutual
-## 
-##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
-## Lag 0        0.78526442         0.70578514       0.769810849         0.70530096
-## Lag 65536    0.50645801         0.44741607       0.532817503         0.47751208
-## Lag 327680   0.12979152         0.06061696       0.147380566         0.10930214
-## Lag 655360  -0.06393205        -0.13217821      -0.008121728        -0.03814393
-## Lag 3276800 -0.01707605         0.03244214      -0.023750630         0.02781638
-##                   mutual
-## Lag 0        1.000000000
-## Lag 65536    0.580271013
-## Lag 327680   0.091309576
-## Lag 655360  -0.003521212
-## Lag 3276800 -0.025558756</code></pre></li>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="model-goodness-of-fit.html#cb149-1" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">autocorr</span>(sample_uncentered)[[<span class="dv">1</span>]]</span>
+<span id="cb149-2"><a href="model-goodness-of-fit.html#cb149-2" tabindex="-1"></a><span class="do">## , , edges</span></span>
+<span id="cb149-3"><a href="model-goodness-of-fit.html#cb149-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb149-4"><a href="model-goodness-of-fit.html#cb149-4" tabindex="-1"></a><span class="do">##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1</span></span>
+<span id="cb149-5"><a href="model-goodness-of-fit.html#cb149-5" tabindex="-1"></a><span class="do">## Lag 0       1.000000000        0.861920590        0.90235072         0.86215333</span></span>
+<span id="cb149-6"><a href="model-goodness-of-fit.html#cb149-6" tabindex="-1"></a><span class="do">## Lag 65536   0.415060923        0.326775063        0.43751588         0.38274418</span></span>
+<span id="cb149-7"><a href="model-goodness-of-fit.html#cb149-7" tabindex="-1"></a><span class="do">## Lag 327680  0.063993999        0.002238453        0.09094189         0.05143792</span></span>
+<span id="cb149-8"><a href="model-goodness-of-fit.html#cb149-8" tabindex="-1"></a><span class="do">## Lag 655360  0.002497326       -0.105210070       -0.02414091         0.00143358</span></span>
+<span id="cb149-9"><a href="model-goodness-of-fit.html#cb149-9" tabindex="-1"></a><span class="do">## Lag 3276800 0.026845190        0.068616366        0.03686125         0.03652383</span></span>
+<span id="cb149-10"><a href="model-goodness-of-fit.html#cb149-10" tabindex="-1"></a><span class="do">##                  mutual</span></span>
+<span id="cb149-11"><a href="model-goodness-of-fit.html#cb149-11" tabindex="-1"></a><span class="do">## Lag 0       0.785264416</span></span>
+<span id="cb149-12"><a href="model-goodness-of-fit.html#cb149-12" tabindex="-1"></a><span class="do">## Lag 65536   0.428519050</span></span>
+<span id="cb149-13"><a href="model-goodness-of-fit.html#cb149-13" tabindex="-1"></a><span class="do">## Lag 327680  0.074020671</span></span>
+<span id="cb149-14"><a href="model-goodness-of-fit.html#cb149-14" tabindex="-1"></a><span class="do">## Lag 655360  0.009422505</span></span>
+<span id="cb149-15"><a href="model-goodness-of-fit.html#cb149-15" tabindex="-1"></a><span class="do">## Lag 3276800 0.018126669</span></span>
+<span id="cb149-16"><a href="model-goodness-of-fit.html#cb149-16" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb149-17"><a href="model-goodness-of-fit.html#cb149-17" tabindex="-1"></a><span class="do">## , , nodematch.hispanic</span></span>
+<span id="cb149-18"><a href="model-goodness-of-fit.html#cb149-18" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb149-19"><a href="model-goodness-of-fit.html#cb149-19" tabindex="-1"></a><span class="do">##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1</span></span>
+<span id="cb149-20"><a href="model-goodness-of-fit.html#cb149-20" tabindex="-1"></a><span class="do">## Lag 0        0.86192059        1.000000000        0.76137201         0.74623272</span></span>
+<span id="cb149-21"><a href="model-goodness-of-fit.html#cb149-21" tabindex="-1"></a><span class="do">## Lag 65536    0.32680263        0.336764054        0.30353156         0.32690588</span></span>
+<span id="cb149-22"><a href="model-goodness-of-fit.html#cb149-22" tabindex="-1"></a><span class="do">## Lag 327680   0.05778076        0.004465856        0.07267341         0.03757479</span></span>
+<span id="cb149-23"><a href="model-goodness-of-fit.html#cb149-23" tabindex="-1"></a><span class="do">## Lag 655360   0.07704457        0.024226503        0.03252125         0.08420548</span></span>
+<span id="cb149-24"><a href="model-goodness-of-fit.html#cb149-24" tabindex="-1"></a><span class="do">## Lag 3276800 -0.02970399        0.021278122       -0.02753467        -0.03018601</span></span>
+<span id="cb149-25"><a href="model-goodness-of-fit.html#cb149-25" tabindex="-1"></a><span class="do">##                  mutual</span></span>
+<span id="cb149-26"><a href="model-goodness-of-fit.html#cb149-26" tabindex="-1"></a><span class="do">## Lag 0        0.70578514</span></span>
+<span id="cb149-27"><a href="model-goodness-of-fit.html#cb149-27" tabindex="-1"></a><span class="do">## Lag 65536    0.35558587</span></span>
+<span id="cb149-28"><a href="model-goodness-of-fit.html#cb149-28" tabindex="-1"></a><span class="do">## Lag 327680   0.05282736</span></span>
+<span id="cb149-29"><a href="model-goodness-of-fit.html#cb149-29" tabindex="-1"></a><span class="do">## Lag 655360   0.08176601</span></span>
+<span id="cb149-30"><a href="model-goodness-of-fit.html#cb149-30" tabindex="-1"></a><span class="do">## Lag 3276800 -0.07743174</span></span>
+<span id="cb149-31"><a href="model-goodness-of-fit.html#cb149-31" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb149-32"><a href="model-goodness-of-fit.html#cb149-32" tabindex="-1"></a><span class="do">## , , nodematch.female1</span></span>
+<span id="cb149-33"><a href="model-goodness-of-fit.html#cb149-33" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb149-34"><a href="model-goodness-of-fit.html#cb149-34" tabindex="-1"></a><span class="do">##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1</span></span>
+<span id="cb149-35"><a href="model-goodness-of-fit.html#cb149-35" tabindex="-1"></a><span class="do">## Lag 0       0.902350724         0.76137201        1.00000000         0.77769826</span></span>
+<span id="cb149-36"><a href="model-goodness-of-fit.html#cb149-36" tabindex="-1"></a><span class="do">## Lag 65536   0.453418914         0.37756721        0.51290498         0.41954866</span></span>
+<span id="cb149-37"><a href="model-goodness-of-fit.html#cb149-37" tabindex="-1"></a><span class="do">## Lag 327680  0.055464012        -0.01058737        0.09841770         0.04272154</span></span>
+<span id="cb149-38"><a href="model-goodness-of-fit.html#cb149-38" tabindex="-1"></a><span class="do">## Lag 655360  0.009910833        -0.06123858       -0.03186870         0.04679847</span></span>
+<span id="cb149-39"><a href="model-goodness-of-fit.html#cb149-39" tabindex="-1"></a><span class="do">## Lag 3276800 0.004163166         0.04057544        0.01548719        -0.01288236</span></span>
+<span id="cb149-40"><a href="model-goodness-of-fit.html#cb149-40" tabindex="-1"></a><span class="do">##                  mutual</span></span>
+<span id="cb149-41"><a href="model-goodness-of-fit.html#cb149-41" tabindex="-1"></a><span class="do">## Lag 0        0.76981085</span></span>
+<span id="cb149-42"><a href="model-goodness-of-fit.html#cb149-42" tabindex="-1"></a><span class="do">## Lag 65536    0.46327442</span></span>
+<span id="cb149-43"><a href="model-goodness-of-fit.html#cb149-43" tabindex="-1"></a><span class="do">## Lag 327680   0.03629824</span></span>
+<span id="cb149-44"><a href="model-goodness-of-fit.html#cb149-44" tabindex="-1"></a><span class="do">## Lag 655360   0.01987496</span></span>
+<span id="cb149-45"><a href="model-goodness-of-fit.html#cb149-45" tabindex="-1"></a><span class="do">## Lag 3276800 -0.00949882</span></span>
+<span id="cb149-46"><a href="model-goodness-of-fit.html#cb149-46" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb149-47"><a href="model-goodness-of-fit.html#cb149-47" tabindex="-1"></a><span class="do">## , , nodematch.eversmk1</span></span>
+<span id="cb149-48"><a href="model-goodness-of-fit.html#cb149-48" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb149-49"><a href="model-goodness-of-fit.html#cb149-49" tabindex="-1"></a><span class="do">##                  edges nodematch.hispanic nodematch.female1 nodematch.eversmk1</span></span>
+<span id="cb149-50"><a href="model-goodness-of-fit.html#cb149-50" tabindex="-1"></a><span class="do">## Lag 0       0.86215333        0.746232721        0.77769826        1.000000000</span></span>
+<span id="cb149-51"><a href="model-goodness-of-fit.html#cb149-51" tabindex="-1"></a><span class="do">## Lag 65536   0.37539678        0.297591397        0.41717478        0.448697559</span></span>
+<span id="cb149-52"><a href="model-goodness-of-fit.html#cb149-52" tabindex="-1"></a><span class="do">## Lag 327680  0.02105523       -0.040132752        0.03760486        0.019124328</span></span>
+<span id="cb149-53"><a href="model-goodness-of-fit.html#cb149-53" tabindex="-1"></a><span class="do">## Lag 655360  0.04566425        0.003387581        0.04761067       -0.006388743</span></span>
+<span id="cb149-54"><a href="model-goodness-of-fit.html#cb149-54" tabindex="-1"></a><span class="do">## Lag 3276800 0.05048735        0.084790008        0.07108989        0.045582057</span></span>
+<span id="cb149-55"><a href="model-goodness-of-fit.html#cb149-55" tabindex="-1"></a><span class="do">##                   mutual</span></span>
+<span id="cb149-56"><a href="model-goodness-of-fit.html#cb149-56" tabindex="-1"></a><span class="do">## Lag 0       0.7053009595</span></span>
+<span id="cb149-57"><a href="model-goodness-of-fit.html#cb149-57" tabindex="-1"></a><span class="do">## Lag 65536   0.4020746950</span></span>
+<span id="cb149-58"><a href="model-goodness-of-fit.html#cb149-58" tabindex="-1"></a><span class="do">## Lag 327680  0.0183308894</span></span>
+<span id="cb149-59"><a href="model-goodness-of-fit.html#cb149-59" tabindex="-1"></a><span class="do">## Lag 655360  0.0840948296</span></span>
+<span id="cb149-60"><a href="model-goodness-of-fit.html#cb149-60" tabindex="-1"></a><span class="do">## Lag 3276800 0.0009713556</span></span>
+<span id="cb149-61"><a href="model-goodness-of-fit.html#cb149-61" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb149-62"><a href="model-goodness-of-fit.html#cb149-62" tabindex="-1"></a><span class="do">## , , mutual</span></span>
+<span id="cb149-63"><a href="model-goodness-of-fit.html#cb149-63" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb149-64"><a href="model-goodness-of-fit.html#cb149-64" tabindex="-1"></a><span class="do">##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1</span></span>
+<span id="cb149-65"><a href="model-goodness-of-fit.html#cb149-65" tabindex="-1"></a><span class="do">## Lag 0        0.78526442         0.70578514       0.769810849         0.70530096</span></span>
+<span id="cb149-66"><a href="model-goodness-of-fit.html#cb149-66" tabindex="-1"></a><span class="do">## Lag 65536    0.50645801         0.44741607       0.532817503         0.47751208</span></span>
+<span id="cb149-67"><a href="model-goodness-of-fit.html#cb149-67" tabindex="-1"></a><span class="do">## Lag 327680   0.12979152         0.06061696       0.147380566         0.10930214</span></span>
+<span id="cb149-68"><a href="model-goodness-of-fit.html#cb149-68" tabindex="-1"></a><span class="do">## Lag 655360  -0.06393205        -0.13217821      -0.008121728        -0.03814393</span></span>
+<span id="cb149-69"><a href="model-goodness-of-fit.html#cb149-69" tabindex="-1"></a><span class="do">## Lag 3276800 -0.01707605         0.03244214      -0.023750630         0.02781638</span></span>
+<span id="cb149-70"><a href="model-goodness-of-fit.html#cb149-70" tabindex="-1"></a><span class="do">##                   mutual</span></span>
+<span id="cb149-71"><a href="model-goodness-of-fit.html#cb149-71" tabindex="-1"></a><span class="do">## Lag 0        1.000000000</span></span>
+<span id="cb149-72"><a href="model-goodness-of-fit.html#cb149-72" tabindex="-1"></a><span class="do">## Lag 65536    0.580271013</span></span>
+<span id="cb149-73"><a href="model-goodness-of-fit.html#cb149-73" tabindex="-1"></a><span class="do">## Lag 327680   0.091309576</span></span>
+<span id="cb149-74"><a href="model-goodness-of-fit.html#cb149-74" tabindex="-1"></a><span class="do">## Lag 655360  -0.003521212</span></span>
+<span id="cb149-75"><a href="model-goodness-of-fit.html#cb149-75" tabindex="-1"></a><span class="do">## Lag 3276800 -0.025558756</span></span></code></pre></div></li>
 <li><p><em>Geweke Diagnostic</em>: From the function’s help file:</p>
 <blockquote>
 <p>“If the samples are drawn from the stationary distribution of the chain, the two means are equal and Geweke’s statistic has an asymptotically standard normal distribution. […]
@@ -494,39 +494,39 @@ The Z-score is calculated under the assumption that the two parts of the chain a
 <p>—?coda::geweke.diag</p>
 </blockquote>
 <p>Let’s take a look at a single chain:</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="model-goodness-of-fit.html#cb196-1" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">geweke.diag</span>(sample_uncentered)[[<span class="dv">1</span>]]</span></code></pre></div>
-<pre><code>## 
-## Fraction in 1st window = 0.1
-## Fraction in 2nd window = 0.5 
-## 
-##              edges nodematch.hispanic  nodematch.female1 nodematch.eversmk1 
-##            -0.7115            -1.7204            -0.1841             0.6952 
-##             mutual 
-##            -1.2891</code></pre></li>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="model-goodness-of-fit.html#cb150-1" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">geweke.diag</span>(sample_uncentered)[[<span class="dv">1</span>]]</span>
+<span id="cb150-2"><a href="model-goodness-of-fit.html#cb150-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb150-3"><a href="model-goodness-of-fit.html#cb150-3" tabindex="-1"></a><span class="do">## Fraction in 1st window = 0.1</span></span>
+<span id="cb150-4"><a href="model-goodness-of-fit.html#cb150-4" tabindex="-1"></a><span class="do">## Fraction in 2nd window = 0.5 </span></span>
+<span id="cb150-5"><a href="model-goodness-of-fit.html#cb150-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb150-6"><a href="model-goodness-of-fit.html#cb150-6" tabindex="-1"></a><span class="do">##              edges nodematch.hispanic  nodematch.female1 nodematch.eversmk1 </span></span>
+<span id="cb150-7"><a href="model-goodness-of-fit.html#cb150-7" tabindex="-1"></a><span class="do">##            -0.7115            -1.7204            -0.1841             0.6952 </span></span>
+<span id="cb150-8"><a href="model-goodness-of-fit.html#cb150-8" tabindex="-1"></a><span class="do">##             mutual </span></span>
+<span id="cb150-9"><a href="model-goodness-of-fit.html#cb150-9" tabindex="-1"></a><span class="do">##            -1.2891</span></span></code></pre></div></li>
 <li><p><em>(not included) Gelman Diagnostic</em>: From the function’s help file:</p>
 <blockquote>
 <p>Gelman and Rubin (1992) propose a general approach to monitoring convergence of MCMC output in which m &gt; 1 parallel chains are run with starting values that are overdispersed relative to the posterior distribution. Convergence is diagnosed when the chains have ‘forgotten’ their initial values, and the output from all chains is indistinguishable. The gelman.diag diagnostic is applied to a single variable from the chain. It is based a comparison of within-chain and between-chain variances, and is similar to a classical analysis of variance.
 —?coda::gelman.diag</p>
 </blockquote>
 <p>As a difference from the previous diagnostic statistic, this uses all chains simulatenously:</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="model-goodness-of-fit.html#cb198-1" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">gelman.diag</span>(sample_uncentered)</span></code></pre></div>
-<pre><code>## Potential scale reduction factors:
-## 
-##                    Point est. Upper C.I.
-## edges                    1.03       1.10
-## nodematch.hispanic       1.03       1.10
-## nodematch.female1        1.05       1.14
-## nodematch.eversmk1       1.04       1.12
-## mutual                   1.05       1.14
-## 
-## Multivariate psrf
-## 
-## 1.05</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="model-goodness-of-fit.html#cb151-1" tabindex="-1"></a>coda<span class="sc">::</span><span class="fu">gelman.diag</span>(sample_uncentered)</span>
+<span id="cb151-2"><a href="model-goodness-of-fit.html#cb151-2" tabindex="-1"></a><span class="do">## Potential scale reduction factors:</span></span>
+<span id="cb151-3"><a href="model-goodness-of-fit.html#cb151-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb151-4"><a href="model-goodness-of-fit.html#cb151-4" tabindex="-1"></a><span class="do">##                    Point est. Upper C.I.</span></span>
+<span id="cb151-5"><a href="model-goodness-of-fit.html#cb151-5" tabindex="-1"></a><span class="do">## edges                    1.03       1.10</span></span>
+<span id="cb151-6"><a href="model-goodness-of-fit.html#cb151-6" tabindex="-1"></a><span class="do">## nodematch.hispanic       1.03       1.10</span></span>
+<span id="cb151-7"><a href="model-goodness-of-fit.html#cb151-7" tabindex="-1"></a><span class="do">## nodematch.female1        1.05       1.14</span></span>
+<span id="cb151-8"><a href="model-goodness-of-fit.html#cb151-8" tabindex="-1"></a><span class="do">## nodematch.eversmk1       1.04       1.12</span></span>
+<span id="cb151-9"><a href="model-goodness-of-fit.html#cb151-9" tabindex="-1"></a><span class="do">## mutual                   1.05       1.14</span></span>
+<span id="cb151-10"><a href="model-goodness-of-fit.html#cb151-10" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb151-11"><a href="model-goodness-of-fit.html#cb151-11" tabindex="-1"></a><span class="do">## Multivariate psrf</span></span>
+<span id="cb151-12"><a href="model-goodness-of-fit.html#cb151-12" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb151-13"><a href="model-goodness-of-fit.html#cb151-13" tabindex="-1"></a><span class="do">## 1.05</span></span></code></pre></div>
 <p>As a rule of thumb, values that are in the <span class="math inline">\([.9,1.1]\)</span> are good.</p></li>
 </ol>
 <p>One nice feature of the <code>mcmc.diagnostics</code> function is the nice trace and posterior distribution plots that it generates. If you have the R package <code>latticeExtra</code> <span class="citation">(<a href="#ref-R-latticeExtra">Sarkar and Andrews 2016</a>)</span>, the function will override the default plots used by <code>coda::plot.mcmc</code> and use lattice instead, creating a nicer looking plots. The next code chunk calls the <code>mcmc.diagnostic</code> function, but we suppress the rest of the output (see figure <a href="#fig:coda-plots"><strong>??</strong></a>).</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="model-goodness-of-fit.html#cb200-1" tabindex="-1"></a><span class="co"># [2022-03-13] This line is failing for what it could be an ergm bug</span></span>
-<span id="cb200-2"><a href="model-goodness-of-fit.html#cb200-2" tabindex="-1"></a><span class="co"># mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output</span></span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="model-goodness-of-fit.html#cb152-1" tabindex="-1"></a><span class="co"># [2022-03-13] This line is failing for what it could be an ergm bug</span></span>
+<span id="cb152-2"><a href="model-goodness-of-fit.html#cb152-2" tabindex="-1"></a><span class="co"># mcmc.diagnostics(ans0, center = FALSE) # Suppressing all the output</span></span></code></pre></div>
 <p>If we called the function <code>mcmc.diagnostics</code>, this message appears at the end:</p>
 <blockquote>
 <p>MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).</p>
@@ -541,122 +541,123 @@ The Z-score is calculated under the assumption that the two parts of the chain a
 <li>Geodesics</li>
 </ol>
 <p>Let’s take a look at it</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="model-goodness-of-fit.html#cb201-1" tabindex="-1"></a><span class="co"># Computing and printing GOF estatistics</span></span>
-<span id="cb201-2"><a href="model-goodness-of-fit.html#cb201-2" tabindex="-1"></a>ans_gof <span class="ot">&lt;-</span> <span class="fu">gof</span>(ans0)</span>
-<span id="cb201-3"><a href="model-goodness-of-fit.html#cb201-3" tabindex="-1"></a>ans_gof</span></code></pre></div>
-<pre><code>## 
-## Goodness-of-fit for in-degree 
-## 
-##           obs min  mean max MC p-value
-## idegree0   13   0  1.38   5       0.00
-## idegree1   34   2  7.84  15       0.00
-## idegree2   37  13 22.13  36       0.00
-## idegree3   48  26 40.12  60       0.12
-## idegree4   37  44 59.60  74       0.00
-## idegree5   47  52 67.86  89       0.00
-## idegree6   42  48 65.06  82       0.00
-## idegree7   39  38 53.40  69       0.04
-## idegree8   35  26 40.30  57       0.46
-## idegree9   21  17 26.48  43       0.36
-## idegree10  12   9 16.36  24       0.34
-## idegree11  19   2  8.73  15       0.00
-## idegree12   4   0  4.80  13       1.00
-## idegree13   7   0  2.23   6       0.00
-## idegree14   6   0  0.99   4       0.00
-## idegree15   3   0  0.32   2       0.00
-## idegree16   4   0  0.20   2       0.00
-## idegree17   3   0  0.09   1       0.00
-## idegree18   3   0  0.09   1       0.00
-## idegree19   2   0  0.00   0       0.00
-## idegree20   1   0  0.02   1       0.04
-## idegree22   1   0  0.00   0       0.00
-## 
-## Goodness-of-fit for out-degree 
-## 
-##           obs min  mean max MC p-value
-## odegree0    4   0  1.33   6       0.14
-## odegree1   28   2  7.67  15       0.00
-## odegree2   45  13 22.07  33       0.00
-## odegree3   50  27 40.96  55       0.16
-## odegree4   54  44 59.37  75       0.50
-## odegree5   62  40 67.12  92       0.62
-## odegree6   40  46 64.49  81       0.00
-## odegree7   28  39 54.33  78       0.00
-## odegree8   13  28 39.73  53       0.00
-## odegree9   16  17 27.48  45       0.00
-## odegree10  20   7 15.74  26       0.22
-## odegree11   8   2  9.25  16       0.86
-## odegree12  11   1  4.98  12       0.04
-## odegree13  13   0  2.12   7       0.00
-## odegree14   6   0  0.72   3       0.00
-## odegree15   6   0  0.41   3       0.00
-## odegree16   7   0  0.17   2       0.00
-## odegree17   4   0  0.03   1       0.00
-## odegree18   3   0  0.01   1       0.00
-## odegree19   0   0  0.02   1       1.00
-## 
-## Goodness-of-fit for edgewise shared partner 
-## 
-##       obs  min    mean  max MC p-value
-## esp0 1032 1991 2195.84 2289          0
-## esp1  755  170  235.05  441          0
-## esp2  352    1   14.86   86          0
-## esp3  202    0    0.84   14          0
-## esp4   79    0    0.08    2          0
-## esp5   36    0    0.00    0          0
-## esp6   14    0    0.00    0          0
-## esp7    4    0    0.00    0          0
-## esp8    1    0    0.00    0          0
-## 
-## Goodness-of-fit for minimum geodesic distance 
-## 
-##       obs   min     mean   max MC p-value
-## 1    2475  2319  2446.67  2571        0.6
-## 2   10672 12048 13548.63 14726        0.0
-## 3   31134 48016 54997.05 60096        0.0
-## 4   50673 78122 80230.34 82613        0.0
-## 5   42563 15553 20682.28 27611        0.0
-## 6   18719   383  1227.29  2611        0.0
-## 7    4808     0    40.46   214        0.0
-## 8     822     0     0.87    16        0.0
-## 9     100     0     0.00     0        0.0
-## 10      7     0     0.00     0        0.0
-## Inf 12333     0  1132.41  3324        0.0
-## 
-## Goodness-of-fit for model statistics 
-## 
-##                     obs  min    mean  max MC p-value
-## edges              2475 2319 2446.67 2571       0.60
-## nodematch.hispanic 1832 1710 1807.58 1903       0.56
-## nodematch.female1  1879 1760 1852.63 1970       0.60
-## nodematch.eversmk1 1755 1614 1724.70 1824       0.56
-## mutual              486  441  475.38  514       0.66</code></pre>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="model-goodness-of-fit.html#cb203-1" tabindex="-1"></a><span class="co"># Plotting GOF statistics</span></span>
-<span id="cb203-2"><a href="model-goodness-of-fit.html#cb203-2" tabindex="-1"></a><span class="fu">plot</span>(ans_gof)</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="model-goodness-of-fit.html#cb153-1" tabindex="-1"></a><span class="co"># Computing and printing GOF estatistics</span></span>
+<span id="cb153-2"><a href="model-goodness-of-fit.html#cb153-2" tabindex="-1"></a>ans_gof <span class="ot">&lt;-</span> <span class="fu">gof</span>(ans0)</span>
+<span id="cb153-3"><a href="model-goodness-of-fit.html#cb153-3" tabindex="-1"></a>ans_gof</span>
+<span id="cb153-4"><a href="model-goodness-of-fit.html#cb153-4" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-5"><a href="model-goodness-of-fit.html#cb153-5" tabindex="-1"></a><span class="do">## Goodness-of-fit for in-degree </span></span>
+<span id="cb153-6"><a href="model-goodness-of-fit.html#cb153-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-7"><a href="model-goodness-of-fit.html#cb153-7" tabindex="-1"></a><span class="do">##           obs min  mean max MC p-value</span></span>
+<span id="cb153-8"><a href="model-goodness-of-fit.html#cb153-8" tabindex="-1"></a><span class="do">## idegree0   13   0  1.38   5       0.00</span></span>
+<span id="cb153-9"><a href="model-goodness-of-fit.html#cb153-9" tabindex="-1"></a><span class="do">## idegree1   34   2  7.84  15       0.00</span></span>
+<span id="cb153-10"><a href="model-goodness-of-fit.html#cb153-10" tabindex="-1"></a><span class="do">## idegree2   37  13 22.13  36       0.00</span></span>
+<span id="cb153-11"><a href="model-goodness-of-fit.html#cb153-11" tabindex="-1"></a><span class="do">## idegree3   48  26 40.12  60       0.12</span></span>
+<span id="cb153-12"><a href="model-goodness-of-fit.html#cb153-12" tabindex="-1"></a><span class="do">## idegree4   37  44 59.60  74       0.00</span></span>
+<span id="cb153-13"><a href="model-goodness-of-fit.html#cb153-13" tabindex="-1"></a><span class="do">## idegree5   47  52 67.86  89       0.00</span></span>
+<span id="cb153-14"><a href="model-goodness-of-fit.html#cb153-14" tabindex="-1"></a><span class="do">## idegree6   42  48 65.06  82       0.00</span></span>
+<span id="cb153-15"><a href="model-goodness-of-fit.html#cb153-15" tabindex="-1"></a><span class="do">## idegree7   39  38 53.40  69       0.04</span></span>
+<span id="cb153-16"><a href="model-goodness-of-fit.html#cb153-16" tabindex="-1"></a><span class="do">## idegree8   35  26 40.30  57       0.46</span></span>
+<span id="cb153-17"><a href="model-goodness-of-fit.html#cb153-17" tabindex="-1"></a><span class="do">## idegree9   21  17 26.48  43       0.36</span></span>
+<span id="cb153-18"><a href="model-goodness-of-fit.html#cb153-18" tabindex="-1"></a><span class="do">## idegree10  12   9 16.36  24       0.34</span></span>
+<span id="cb153-19"><a href="model-goodness-of-fit.html#cb153-19" tabindex="-1"></a><span class="do">## idegree11  19   2  8.73  15       0.00</span></span>
+<span id="cb153-20"><a href="model-goodness-of-fit.html#cb153-20" tabindex="-1"></a><span class="do">## idegree12   4   0  4.80  13       1.00</span></span>
+<span id="cb153-21"><a href="model-goodness-of-fit.html#cb153-21" tabindex="-1"></a><span class="do">## idegree13   7   0  2.23   6       0.00</span></span>
+<span id="cb153-22"><a href="model-goodness-of-fit.html#cb153-22" tabindex="-1"></a><span class="do">## idegree14   6   0  0.99   4       0.00</span></span>
+<span id="cb153-23"><a href="model-goodness-of-fit.html#cb153-23" tabindex="-1"></a><span class="do">## idegree15   3   0  0.32   2       0.00</span></span>
+<span id="cb153-24"><a href="model-goodness-of-fit.html#cb153-24" tabindex="-1"></a><span class="do">## idegree16   4   0  0.20   2       0.00</span></span>
+<span id="cb153-25"><a href="model-goodness-of-fit.html#cb153-25" tabindex="-1"></a><span class="do">## idegree17   3   0  0.09   1       0.00</span></span>
+<span id="cb153-26"><a href="model-goodness-of-fit.html#cb153-26" tabindex="-1"></a><span class="do">## idegree18   3   0  0.09   1       0.00</span></span>
+<span id="cb153-27"><a href="model-goodness-of-fit.html#cb153-27" tabindex="-1"></a><span class="do">## idegree19   2   0  0.00   0       0.00</span></span>
+<span id="cb153-28"><a href="model-goodness-of-fit.html#cb153-28" tabindex="-1"></a><span class="do">## idegree20   1   0  0.02   1       0.04</span></span>
+<span id="cb153-29"><a href="model-goodness-of-fit.html#cb153-29" tabindex="-1"></a><span class="do">## idegree22   1   0  0.00   0       0.00</span></span>
+<span id="cb153-30"><a href="model-goodness-of-fit.html#cb153-30" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-31"><a href="model-goodness-of-fit.html#cb153-31" tabindex="-1"></a><span class="do">## Goodness-of-fit for out-degree </span></span>
+<span id="cb153-32"><a href="model-goodness-of-fit.html#cb153-32" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-33"><a href="model-goodness-of-fit.html#cb153-33" tabindex="-1"></a><span class="do">##           obs min  mean max MC p-value</span></span>
+<span id="cb153-34"><a href="model-goodness-of-fit.html#cb153-34" tabindex="-1"></a><span class="do">## odegree0    4   0  1.33   6       0.14</span></span>
+<span id="cb153-35"><a href="model-goodness-of-fit.html#cb153-35" tabindex="-1"></a><span class="do">## odegree1   28   2  7.67  15       0.00</span></span>
+<span id="cb153-36"><a href="model-goodness-of-fit.html#cb153-36" tabindex="-1"></a><span class="do">## odegree2   45  13 22.07  33       0.00</span></span>
+<span id="cb153-37"><a href="model-goodness-of-fit.html#cb153-37" tabindex="-1"></a><span class="do">## odegree3   50  27 40.96  55       0.16</span></span>
+<span id="cb153-38"><a href="model-goodness-of-fit.html#cb153-38" tabindex="-1"></a><span class="do">## odegree4   54  44 59.37  75       0.50</span></span>
+<span id="cb153-39"><a href="model-goodness-of-fit.html#cb153-39" tabindex="-1"></a><span class="do">## odegree5   62  40 67.12  92       0.62</span></span>
+<span id="cb153-40"><a href="model-goodness-of-fit.html#cb153-40" tabindex="-1"></a><span class="do">## odegree6   40  46 64.49  81       0.00</span></span>
+<span id="cb153-41"><a href="model-goodness-of-fit.html#cb153-41" tabindex="-1"></a><span class="do">## odegree7   28  39 54.33  78       0.00</span></span>
+<span id="cb153-42"><a href="model-goodness-of-fit.html#cb153-42" tabindex="-1"></a><span class="do">## odegree8   13  28 39.73  53       0.00</span></span>
+<span id="cb153-43"><a href="model-goodness-of-fit.html#cb153-43" tabindex="-1"></a><span class="do">## odegree9   16  17 27.48  45       0.00</span></span>
+<span id="cb153-44"><a href="model-goodness-of-fit.html#cb153-44" tabindex="-1"></a><span class="do">## odegree10  20   7 15.74  26       0.22</span></span>
+<span id="cb153-45"><a href="model-goodness-of-fit.html#cb153-45" tabindex="-1"></a><span class="do">## odegree11   8   2  9.25  16       0.86</span></span>
+<span id="cb153-46"><a href="model-goodness-of-fit.html#cb153-46" tabindex="-1"></a><span class="do">## odegree12  11   1  4.98  12       0.04</span></span>
+<span id="cb153-47"><a href="model-goodness-of-fit.html#cb153-47" tabindex="-1"></a><span class="do">## odegree13  13   0  2.12   7       0.00</span></span>
+<span id="cb153-48"><a href="model-goodness-of-fit.html#cb153-48" tabindex="-1"></a><span class="do">## odegree14   6   0  0.72   3       0.00</span></span>
+<span id="cb153-49"><a href="model-goodness-of-fit.html#cb153-49" tabindex="-1"></a><span class="do">## odegree15   6   0  0.41   3       0.00</span></span>
+<span id="cb153-50"><a href="model-goodness-of-fit.html#cb153-50" tabindex="-1"></a><span class="do">## odegree16   7   0  0.17   2       0.00</span></span>
+<span id="cb153-51"><a href="model-goodness-of-fit.html#cb153-51" tabindex="-1"></a><span class="do">## odegree17   4   0  0.03   1       0.00</span></span>
+<span id="cb153-52"><a href="model-goodness-of-fit.html#cb153-52" tabindex="-1"></a><span class="do">## odegree18   3   0  0.01   1       0.00</span></span>
+<span id="cb153-53"><a href="model-goodness-of-fit.html#cb153-53" tabindex="-1"></a><span class="do">## odegree19   0   0  0.02   1       1.00</span></span>
+<span id="cb153-54"><a href="model-goodness-of-fit.html#cb153-54" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-55"><a href="model-goodness-of-fit.html#cb153-55" tabindex="-1"></a><span class="do">## Goodness-of-fit for edgewise shared partner </span></span>
+<span id="cb153-56"><a href="model-goodness-of-fit.html#cb153-56" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-57"><a href="model-goodness-of-fit.html#cb153-57" tabindex="-1"></a><span class="do">##       obs  min    mean  max MC p-value</span></span>
+<span id="cb153-58"><a href="model-goodness-of-fit.html#cb153-58" tabindex="-1"></a><span class="do">## esp0 1032 1991 2195.84 2289          0</span></span>
+<span id="cb153-59"><a href="model-goodness-of-fit.html#cb153-59" tabindex="-1"></a><span class="do">## esp1  755  170  235.05  441          0</span></span>
+<span id="cb153-60"><a href="model-goodness-of-fit.html#cb153-60" tabindex="-1"></a><span class="do">## esp2  352    1   14.86   86          0</span></span>
+<span id="cb153-61"><a href="model-goodness-of-fit.html#cb153-61" tabindex="-1"></a><span class="do">## esp3  202    0    0.84   14          0</span></span>
+<span id="cb153-62"><a href="model-goodness-of-fit.html#cb153-62" tabindex="-1"></a><span class="do">## esp4   79    0    0.08    2          0</span></span>
+<span id="cb153-63"><a href="model-goodness-of-fit.html#cb153-63" tabindex="-1"></a><span class="do">## esp5   36    0    0.00    0          0</span></span>
+<span id="cb153-64"><a href="model-goodness-of-fit.html#cb153-64" tabindex="-1"></a><span class="do">## esp6   14    0    0.00    0          0</span></span>
+<span id="cb153-65"><a href="model-goodness-of-fit.html#cb153-65" tabindex="-1"></a><span class="do">## esp7    4    0    0.00    0          0</span></span>
+<span id="cb153-66"><a href="model-goodness-of-fit.html#cb153-66" tabindex="-1"></a><span class="do">## esp8    1    0    0.00    0          0</span></span>
+<span id="cb153-67"><a href="model-goodness-of-fit.html#cb153-67" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-68"><a href="model-goodness-of-fit.html#cb153-68" tabindex="-1"></a><span class="do">## Goodness-of-fit for minimum geodesic distance </span></span>
+<span id="cb153-69"><a href="model-goodness-of-fit.html#cb153-69" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-70"><a href="model-goodness-of-fit.html#cb153-70" tabindex="-1"></a><span class="do">##       obs   min     mean   max MC p-value</span></span>
+<span id="cb153-71"><a href="model-goodness-of-fit.html#cb153-71" tabindex="-1"></a><span class="do">## 1    2475  2319  2446.67  2571        0.6</span></span>
+<span id="cb153-72"><a href="model-goodness-of-fit.html#cb153-72" tabindex="-1"></a><span class="do">## 2   10672 12048 13548.63 14726        0.0</span></span>
+<span id="cb153-73"><a href="model-goodness-of-fit.html#cb153-73" tabindex="-1"></a><span class="do">## 3   31134 48016 54997.05 60096        0.0</span></span>
+<span id="cb153-74"><a href="model-goodness-of-fit.html#cb153-74" tabindex="-1"></a><span class="do">## 4   50673 78122 80230.34 82613        0.0</span></span>
+<span id="cb153-75"><a href="model-goodness-of-fit.html#cb153-75" tabindex="-1"></a><span class="do">## 5   42563 15553 20682.28 27611        0.0</span></span>
+<span id="cb153-76"><a href="model-goodness-of-fit.html#cb153-76" tabindex="-1"></a><span class="do">## 6   18719   383  1227.29  2611        0.0</span></span>
+<span id="cb153-77"><a href="model-goodness-of-fit.html#cb153-77" tabindex="-1"></a><span class="do">## 7    4808     0    40.46   214        0.0</span></span>
+<span id="cb153-78"><a href="model-goodness-of-fit.html#cb153-78" tabindex="-1"></a><span class="do">## 8     822     0     0.87    16        0.0</span></span>
+<span id="cb153-79"><a href="model-goodness-of-fit.html#cb153-79" tabindex="-1"></a><span class="do">## 9     100     0     0.00     0        0.0</span></span>
+<span id="cb153-80"><a href="model-goodness-of-fit.html#cb153-80" tabindex="-1"></a><span class="do">## 10      7     0     0.00     0        0.0</span></span>
+<span id="cb153-81"><a href="model-goodness-of-fit.html#cb153-81" tabindex="-1"></a><span class="do">## Inf 12333     0  1132.41  3324        0.0</span></span>
+<span id="cb153-82"><a href="model-goodness-of-fit.html#cb153-82" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-83"><a href="model-goodness-of-fit.html#cb153-83" tabindex="-1"></a><span class="do">## Goodness-of-fit for model statistics </span></span>
+<span id="cb153-84"><a href="model-goodness-of-fit.html#cb153-84" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb153-85"><a href="model-goodness-of-fit.html#cb153-85" tabindex="-1"></a><span class="do">##                     obs  min    mean  max MC p-value</span></span>
+<span id="cb153-86"><a href="model-goodness-of-fit.html#cb153-86" tabindex="-1"></a><span class="do">## edges              2475 2319 2446.67 2571       0.60</span></span>
+<span id="cb153-87"><a href="model-goodness-of-fit.html#cb153-87" tabindex="-1"></a><span class="do">## nodematch.hispanic 1832 1710 1807.58 1903       0.56</span></span>
+<span id="cb153-88"><a href="model-goodness-of-fit.html#cb153-88" tabindex="-1"></a><span class="do">## nodematch.female1  1879 1760 1852.63 1970       0.60</span></span>
+<span id="cb153-89"><a href="model-goodness-of-fit.html#cb153-89" tabindex="-1"></a><span class="do">## nodematch.eversmk1 1755 1614 1724.70 1824       0.56</span></span>
+<span id="cb153-90"><a href="model-goodness-of-fit.html#cb153-90" tabindex="-1"></a><span class="do">## mutual              486  441  475.38  514       0.66</span></span>
+<span id="cb153-91"><a href="model-goodness-of-fit.html#cb153-91" tabindex="-1"></a></span>
+<span id="cb153-92"><a href="model-goodness-of-fit.html#cb153-92" tabindex="-1"></a><span class="co"># Plotting GOF statistics</span></span>
+<span id="cb153-93"><a href="model-goodness-of-fit.html#cb153-93" tabindex="-1"></a><span class="fu">plot</span>(ans_gof)</span></code></pre></div>
 <p><img src="part-01-04-ergms_files/figure-html/checking-gof-1.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-2.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-3.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-4.png" width="672" /><img src="part-01-04-ergms_files/figure-html/checking-gof-5.png" width="672" /></p>
 <p>Try the following configuration instead</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="model-goodness-of-fit.html#cb204-1" tabindex="-1"></a>ans0_bis <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
-<span id="cb204-2"><a href="model-goodness-of-fit.html#cb204-2" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
-<span id="cb204-3"><a href="model-goodness-of-fit.html#cb204-3" tabindex="-1"></a>    edges <span class="sc">+</span></span>
-<span id="cb204-4"><a href="model-goodness-of-fit.html#cb204-4" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
-<span id="cb204-5"><a href="model-goodness-of-fit.html#cb204-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb204-6"><a href="model-goodness-of-fit.html#cb204-6" tabindex="-1"></a>    mutual <span class="sc">+</span> </span>
-<span id="cb204-7"><a href="model-goodness-of-fit.html#cb204-7" tabindex="-1"></a>    <span class="fu">esp</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb204-8"><a href="model-goodness-of-fit.html#cb204-8" tabindex="-1"></a>    <span class="fu">idegree</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb204-9"><a href="model-goodness-of-fit.html#cb204-9" tabindex="-1"></a>    ,</span>
-<span id="cb204-10"><a href="model-goodness-of-fit.html#cb204-10" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
-<span id="cb204-11"><a href="model-goodness-of-fit.html#cb204-11" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
-<span id="cb204-12"><a href="model-goodness-of-fit.html#cb204-12" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
-<span id="cb204-13"><a href="model-goodness-of-fit.html#cb204-13" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">15</span>,</span>
-<span id="cb204-14"><a href="model-goodness-of-fit.html#cb204-14" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
-<span id="cb204-15"><a href="model-goodness-of-fit.html#cb204-15" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">15</span>,</span>
-<span id="cb204-16"><a href="model-goodness-of-fit.html#cb204-16" tabindex="-1"></a>    <span class="at">MCMC.samplesize =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span>,</span>
-<span id="cb204-17"><a href="model-goodness-of-fit.html#cb204-17" tabindex="-1"></a>    <span class="at">MCMC.burnin =</span> <span class="dv">30000</span>,</span>
-<span id="cb204-18"><a href="model-goodness-of-fit.html#cb204-18" tabindex="-1"></a>    <span class="at">MCMC.interval =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span></span>
-<span id="cb204-19"><a href="model-goodness-of-fit.html#cb204-19" tabindex="-1"></a>    )</span>
-<span id="cb204-20"><a href="model-goodness-of-fit.html#cb204-20" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="model-goodness-of-fit.html#cb154-1" tabindex="-1"></a>ans0_bis <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb154-2"><a href="model-goodness-of-fit.html#cb154-2" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
+<span id="cb154-3"><a href="model-goodness-of-fit.html#cb154-3" tabindex="-1"></a>    edges <span class="sc">+</span></span>
+<span id="cb154-4"><a href="model-goodness-of-fit.html#cb154-4" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
+<span id="cb154-5"><a href="model-goodness-of-fit.html#cb154-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb154-6"><a href="model-goodness-of-fit.html#cb154-6" tabindex="-1"></a>    mutual <span class="sc">+</span> </span>
+<span id="cb154-7"><a href="model-goodness-of-fit.html#cb154-7" tabindex="-1"></a>    <span class="fu">esp</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb154-8"><a href="model-goodness-of-fit.html#cb154-8" tabindex="-1"></a>    <span class="fu">idegree</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb154-9"><a href="model-goodness-of-fit.html#cb154-9" tabindex="-1"></a>    ,</span>
+<span id="cb154-10"><a href="model-goodness-of-fit.html#cb154-10" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
+<span id="cb154-11"><a href="model-goodness-of-fit.html#cb154-11" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
+<span id="cb154-12"><a href="model-goodness-of-fit.html#cb154-12" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
+<span id="cb154-13"><a href="model-goodness-of-fit.html#cb154-13" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">15</span>,</span>
+<span id="cb154-14"><a href="model-goodness-of-fit.html#cb154-14" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
+<span id="cb154-15"><a href="model-goodness-of-fit.html#cb154-15" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">15</span>,</span>
+<span id="cb154-16"><a href="model-goodness-of-fit.html#cb154-16" tabindex="-1"></a>    <span class="at">MCMC.samplesize =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span>,</span>
+<span id="cb154-17"><a href="model-goodness-of-fit.html#cb154-17" tabindex="-1"></a>    <span class="at">MCMC.burnin =</span> <span class="dv">30000</span>,</span>
+<span id="cb154-18"><a href="model-goodness-of-fit.html#cb154-18" tabindex="-1"></a>    <span class="at">MCMC.interval =</span> <span class="dv">2048</span><span class="sc">*</span><span class="dv">4</span></span>
+<span id="cb154-19"><a href="model-goodness-of-fit.html#cb154-19" tabindex="-1"></a>    )</span>
+<span id="cb154-20"><a href="model-goodness-of-fit.html#cb154-20" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Increase the sample size, so the curves are smoother, longer intervals (thinning), which reduces autocorrelation, and a larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="model-goodness-of-fit.html#cb205-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;awful-chains.png&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="model-goodness-of-fit.html#cb155-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;awful-chains.png&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:badconvergence"></span>
 <img src="awful-chains.png" alt="An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful" width="357" />
 <p class="caption">

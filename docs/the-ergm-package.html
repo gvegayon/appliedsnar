@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -344,14 +344,14 @@ div.csl-indent {
 <h2><span class="header-section-number">6.3</span> The <code>ergm</code> package<a href="the-ergm-package.html#the-ergm-package" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>ergm</code> R package <span class="citation">(<a href="#ref-R-ergm">Handcock et al. 2017</a>)</span></p>
 <p>From the previous section:<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="the-ergm-package.html#cb150-1" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb150-2"><a href="the-ergm-package.html#cb150-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb150-3"><a href="the-ergm-package.html#cb150-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb150-4"><a href="the-ergm-package.html#cb150-4" tabindex="-1"></a></span>
-<span id="cb150-5"><a href="the-ergm-package.html#cb150-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;03.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="the-ergm-package.html#cb133-1" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb133-2"><a href="the-ergm-package.html#cb133-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb133-3"><a href="the-ergm-package.html#cb133-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb133-4"><a href="the-ergm-package.html#cb133-4" tabindex="-1"></a></span>
+<span id="cb133-5"><a href="the-ergm-package.html#cb133-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;03.rda&quot;</span>)</span></code></pre></div>
 <p>In this section, we will use the <code>ergm</code> package (from the <code>statnet</code> suit of packages <span class="citation">(<a href="#ref-R-statnet">Handcock et al. 2016</a>)</span>,) and the <code>intergraph</code> <span class="citation">(<a href="#ref-R-intergraph">Bojanowski 2015</a>)</span> package. The latter provides functions to go back and forth between <code>igraph</code> and <code>network</code> objects from the <code>igraph</code> and <code>network</code> packages respectively<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="the-ergm-package.html#cb151-1" tabindex="-1"></a><span class="fu">library</span>(ergm)</span>
-<span id="cb151-2"><a href="the-ergm-package.html#cb151-2" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="the-ergm-package.html#cb134-1" tabindex="-1"></a><span class="fu">library</span>(ergm)</span>
+<span id="cb134-2"><a href="the-ergm-package.html#cb134-2" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span></code></pre></div>
 <p>As a rather important side note, the order in which R packages are loaded matters. Why is this important to mention now? Well, it turns out that at least a couple of functions in the <code>network</code> package have the same name as some functions in the <code>igraph</code> package. When the <code>ergm</code> package is loaded, since it depends on <code>network</code>, it will load the <code>network</code> package first, which will <em>mask</em> some functions in <code>igraph</code>. This becomes evident once you load <code>ergm</code> after loading <code>igraph</code>:</p>
 <pre><code>The following objects are masked from ‘package:igraph’:
 
@@ -359,52 +359,52 @@ div.csl-indent {
   get.vertex.attribute, is.bipartite, is.directed, list.edge.attributes, list.vertex.attributes, %s%,
   set.edge.attribute, set.vertex.attribute</code></pre>
 <p>What are the implications of this? If you call the function <code>list.edge.attributes</code> for an object of class <code>igraph</code> R will return an error as the first function that matches that name comes from the <code>network</code> package! To avoid this you can use the double colon notation:</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="the-ergm-package.html#cb153-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">list.edge.attributes</span>(my_igraph_object)</span>
-<span id="cb153-2"><a href="the-ergm-package.html#cb153-2" tabindex="-1"></a>network<span class="sc">::</span><span class="fu">list.edge.attributes</span>(my_network_object)</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="the-ergm-package.html#cb136-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">list.edge.attributes</span>(my_igraph_object)</span>
+<span id="cb136-2"><a href="the-ergm-package.html#cb136-2" tabindex="-1"></a>network<span class="sc">::</span><span class="fu">list.edge.attributes</span>(my_network_object)</span></code></pre></div>
 <p>Anyway… Using the <code>asNetwork</code> function, we can coerce the <code>igraph</code> object into a network object so we can use it with the <code>ergm</code> function:</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="the-ergm-package.html#cb154-1" tabindex="-1"></a><span class="co"># Creating the new network</span></span>
-<span id="cb154-2"><a href="the-ergm-package.html#cb154-2" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> intergraph<span class="sc">::</span><span class="fu">asNetwork</span>(ig_year1_111)</span>
-<span id="cb154-3"><a href="the-ergm-package.html#cb154-3" tabindex="-1"></a></span>
-<span id="cb154-4"><a href="the-ergm-package.html#cb154-4" tabindex="-1"></a><span class="co"># Running a simple ergm (only fitting edge count)</span></span>
-<span id="cb154-5"><a href="the-ergm-package.html#cb154-5" tabindex="-1"></a><span class="fu">ergm</span>(network_111 <span class="sc">~</span> edges)</span></code></pre></div>
-<pre><code>## [1] &quot;Warning:  This network contains loops&quot;</code></pre>
-<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
-<pre><code>## Evaluating the predictor and response matrix.</code></pre>
-<pre><code>## Maximizing the pseudolikelihood.</code></pre>
-<pre><code>## Finished MPLE.</code></pre>
-<pre><code>## Stopping at the initial estimate.</code></pre>
-<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
-<pre><code>## 
-## Call:
-## ergm(formula = network_111 ~ edges)
-## 
-## Maximum Likelihood Coefficients:
-##  edges  
-## -4.734</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="the-ergm-package.html#cb137-1" tabindex="-1"></a><span class="co"># Creating the new network</span></span>
+<span id="cb137-2"><a href="the-ergm-package.html#cb137-2" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> intergraph<span class="sc">::</span><span class="fu">asNetwork</span>(ig_year1_111)</span>
+<span id="cb137-3"><a href="the-ergm-package.html#cb137-3" tabindex="-1"></a></span>
+<span id="cb137-4"><a href="the-ergm-package.html#cb137-4" tabindex="-1"></a><span class="co"># Running a simple ergm (only fitting edge count)</span></span>
+<span id="cb137-5"><a href="the-ergm-package.html#cb137-5" tabindex="-1"></a><span class="fu">ergm</span>(network_111 <span class="sc">~</span> edges)</span>
+<span id="cb137-6"><a href="the-ergm-package.html#cb137-6" tabindex="-1"></a><span class="do">## [1] &quot;Warning:  This network contains loops&quot;</span></span>
+<span id="cb137-7"><a href="the-ergm-package.html#cb137-7" tabindex="-1"></a><span class="do">## Starting maximum pseudolikelihood estimation (MPLE):</span></span>
+<span id="cb137-8"><a href="the-ergm-package.html#cb137-8" tabindex="-1"></a><span class="do">## Evaluating the predictor and response matrix.</span></span>
+<span id="cb137-9"><a href="the-ergm-package.html#cb137-9" tabindex="-1"></a><span class="do">## Maximizing the pseudolikelihood.</span></span>
+<span id="cb137-10"><a href="the-ergm-package.html#cb137-10" tabindex="-1"></a><span class="do">## Finished MPLE.</span></span>
+<span id="cb137-11"><a href="the-ergm-package.html#cb137-11" tabindex="-1"></a><span class="do">## Stopping at the initial estimate.</span></span>
+<span id="cb137-12"><a href="the-ergm-package.html#cb137-12" tabindex="-1"></a><span class="do">## Evaluating log-likelihood at the estimate.</span></span>
+<span id="cb137-13"><a href="the-ergm-package.html#cb137-13" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb137-14"><a href="the-ergm-package.html#cb137-14" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb137-15"><a href="the-ergm-package.html#cb137-15" tabindex="-1"></a><span class="do">## ergm(formula = network_111 ~ edges)</span></span>
+<span id="cb137-16"><a href="the-ergm-package.html#cb137-16" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb137-17"><a href="the-ergm-package.html#cb137-17" tabindex="-1"></a><span class="do">## Maximum Likelihood Coefficients:</span></span>
+<span id="cb137-18"><a href="the-ergm-package.html#cb137-18" tabindex="-1"></a><span class="do">##  edges  </span></span>
+<span id="cb137-19"><a href="the-ergm-package.html#cb137-19" tabindex="-1"></a><span class="do">## -4.734</span></span></code></pre></div>
 <p>So what happened here? We got a warning. It turns out that our network has loops (didn’t think about it before!). Let’s take a look at that with the <code>which_loop</code> function</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="the-ergm-package.html#cb163-1" tabindex="-1"></a><span class="fu">E</span>(ig_year1_111)[<span class="fu">which_loop</span>(ig_year1_111)]</span></code></pre></div>
-<pre><code>## + 1/2638 edge from 8514c0c (vertex names):
-## [1] 1110111-&gt;1110111</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="the-ergm-package.html#cb138-1" tabindex="-1"></a><span class="fu">E</span>(ig_year1_111)[<span class="fu">which_loop</span>(ig_year1_111)]</span>
+<span id="cb138-2"><a href="the-ergm-package.html#cb138-2" tabindex="-1"></a><span class="do">## + 1/2638 edge from 8632550 (vertex names):</span></span>
+<span id="cb138-3"><a href="the-ergm-package.html#cb138-3" tabindex="-1"></a><span class="do">## [1] 1110111-&gt;1110111</span></span></code></pre></div>
 <p>We can get rid of these using the <code>igraph::-.igraph</code>. Let’s remove the isolates using the same operator</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="the-ergm-package.html#cb165-1" tabindex="-1"></a><span class="co"># Creating the new network</span></span>
-<span id="cb165-2"><a href="the-ergm-package.html#cb165-2" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> ig_year1_111</span>
-<span id="cb165-3"><a href="the-ergm-package.html#cb165-3" tabindex="-1"></a></span>
-<span id="cb165-4"><a href="the-ergm-package.html#cb165-4" tabindex="-1"></a><span class="co"># Removing loops</span></span>
-<span id="cb165-5"><a href="the-ergm-package.html#cb165-5" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> network_111 <span class="sc">-</span> <span class="fu">E</span>(network_111)[<span class="fu">which</span>(<span class="fu">which_loop</span>(network_111))]</span>
-<span id="cb165-6"><a href="the-ergm-package.html#cb165-6" tabindex="-1"></a></span>
-<span id="cb165-7"><a href="the-ergm-package.html#cb165-7" tabindex="-1"></a><span class="co"># Removing isolates</span></span>
-<span id="cb165-8"><a href="the-ergm-package.html#cb165-8" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> network_111 <span class="sc">-</span> <span class="fu">which</span>(<span class="fu">degree</span>(network_111, <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb165-9"><a href="the-ergm-package.html#cb165-9" tabindex="-1"></a></span>
-<span id="cb165-10"><a href="the-ergm-package.html#cb165-10" tabindex="-1"></a><span class="co"># Converting the network</span></span>
-<span id="cb165-11"><a href="the-ergm-package.html#cb165-11" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> intergraph<span class="sc">::</span><span class="fu">asNetwork</span>(network_111)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="the-ergm-package.html#cb139-1" tabindex="-1"></a><span class="co"># Creating the new network</span></span>
+<span id="cb139-2"><a href="the-ergm-package.html#cb139-2" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> ig_year1_111</span>
+<span id="cb139-3"><a href="the-ergm-package.html#cb139-3" tabindex="-1"></a></span>
+<span id="cb139-4"><a href="the-ergm-package.html#cb139-4" tabindex="-1"></a><span class="co"># Removing loops</span></span>
+<span id="cb139-5"><a href="the-ergm-package.html#cb139-5" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> network_111 <span class="sc">-</span> <span class="fu">E</span>(network_111)[<span class="fu">which</span>(<span class="fu">which_loop</span>(network_111))]</span>
+<span id="cb139-6"><a href="the-ergm-package.html#cb139-6" tabindex="-1"></a></span>
+<span id="cb139-7"><a href="the-ergm-package.html#cb139-7" tabindex="-1"></a><span class="co"># Removing isolates</span></span>
+<span id="cb139-8"><a href="the-ergm-package.html#cb139-8" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> network_111 <span class="sc">-</span> <span class="fu">which</span>(<span class="fu">degree</span>(network_111, <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb139-9"><a href="the-ergm-package.html#cb139-9" tabindex="-1"></a></span>
+<span id="cb139-10"><a href="the-ergm-package.html#cb139-10" tabindex="-1"></a><span class="co"># Converting the network</span></span>
+<span id="cb139-11"><a href="the-ergm-package.html#cb139-11" tabindex="-1"></a>network_111 <span class="ot">&lt;-</span> intergraph<span class="sc">::</span><span class="fu">asNetwork</span>(network_111)</span></code></pre></div>
 <p><code>asNetwork(simplify(ig_year1_111))</code>
 <code>ig_year1_111 %&gt;% simplify %&gt;% asNetwork</code></p>
 <p>A problem that we have with this data is the fact that some vertices have missing values in the variables <code>hispanic</code>, <code>female1</code>, and <code>eversmk1</code>. For now, we will proceed by imputing values based on the averages:</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="the-ergm-package.html#cb166-1" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> <span class="fu">c</span>(<span class="st">&quot;hispanic&quot;</span>, <span class="st">&quot;female1&quot;</span>, <span class="st">&quot;eversmk1&quot;</span>)) {</span>
-<span id="cb166-2"><a href="the-ergm-package.html#cb166-2" tabindex="-1"></a>  tmpv <span class="ot">&lt;-</span> network_111 <span class="sc">%v%</span> v</span>
-<span id="cb166-3"><a href="the-ergm-package.html#cb166-3" tabindex="-1"></a>  tmpv[<span class="fu">is.na</span>(tmpv)] <span class="ot">&lt;-</span> <span class="fu">mean</span>(tmpv, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&gt;</span> .<span class="dv">5</span></span>
-<span id="cb166-4"><a href="the-ergm-package.html#cb166-4" tabindex="-1"></a>  network_111 <span class="sc">%v%</span> v <span class="ot">&lt;-</span> tmpv</span>
-<span id="cb166-5"><a href="the-ergm-package.html#cb166-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="the-ergm-package.html#cb140-1" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> <span class="fu">c</span>(<span class="st">&quot;hispanic&quot;</span>, <span class="st">&quot;female1&quot;</span>, <span class="st">&quot;eversmk1&quot;</span>)) {</span>
+<span id="cb140-2"><a href="the-ergm-package.html#cb140-2" tabindex="-1"></a>  tmpv <span class="ot">&lt;-</span> network_111 <span class="sc">%v%</span> v</span>
+<span id="cb140-3"><a href="the-ergm-package.html#cb140-3" tabindex="-1"></a>  tmpv[<span class="fu">is.na</span>(tmpv)] <span class="ot">&lt;-</span> <span class="fu">mean</span>(tmpv, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&gt;</span> .<span class="dv">5</span></span>
+<span id="cb140-4"><a href="the-ergm-package.html#cb140-4" tabindex="-1"></a>  network_111 <span class="sc">%v%</span> v <span class="ot">&lt;-</span> tmpv</span>
+<span id="cb140-5"><a href="the-ergm-package.html#cb140-5" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">

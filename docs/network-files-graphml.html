@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -344,118 +344,119 @@ div.csl-indent {
 <h2><span class="header-section-number">10.1</span> Network files (graphml)<a href="network-files-graphml.html#network-files-graphml" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>graphml</code> files can be read directly with <code>igraph</code>’s <code>read_graph</code> function. The key is to take advantage of R’s lists to avoid writing over and over the same block of code, and instead, manage the data through lists.</p>
 <p>Just like any data-reading function, <code>read_graph</code> function requires a file path to the network file. <strong>The function we will use to list the required files is <code>list.files()</code></strong>:</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="network-files-graphml.html#cb273-1" tabindex="-1"></a><span class="co"># We start by loading igraph</span></span>
-<span id="cb273-2"><a href="network-files-graphml.html#cb273-2" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb273-3"><a href="network-files-graphml.html#cb273-3" tabindex="-1"></a></span>
-<span id="cb273-4"><a href="network-files-graphml.html#cb273-4" tabindex="-1"></a><span class="co"># Listing all the graphml files</span></span>
-<span id="cb273-5"><a href="network-files-graphml.html#cb273-5" tabindex="-1"></a>graph_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb273-6"><a href="network-files-graphml.html#cb273-6" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>, <span class="co"># Where are these files</span></span>
-<span id="cb273-7"><a href="network-files-graphml.html#cb273-7" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*.graphml&quot;</span>,        <span class="co"># Specify a pattern for only listing graphml</span></span>
-<span id="cb273-8"><a href="network-files-graphml.html#cb273-8" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span>                <span class="co"># And we make sure we use the full name</span></span>
-<span id="cb273-9"><a href="network-files-graphml.html#cb273-9" tabindex="-1"></a>                                   <span class="co"># (path.) Otherwise, we would only get names.</span></span>
-<span id="cb273-10"><a href="network-files-graphml.html#cb273-10" tabindex="-1"></a>  )</span>
-<span id="cb273-11"><a href="network-files-graphml.html#cb273-11" tabindex="-1"></a></span>
-<span id="cb273-12"><a href="network-files-graphml.html#cb273-12" tabindex="-1"></a><span class="co"># Taking a look at the first three files we got</span></span>
-<span id="cb273-13"><a href="network-files-graphml.html#cb273-13" tabindex="-1"></a>graph_files[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
-<pre><code>## [1] &quot;data-raw/egonets/I_-59190_BRB9111.graphml&quot;
-## [2] &quot;data-raw/egonets/I-100BB_00B95-90.graphml&quot;
-## [3] &quot;data-raw/egonets/I-1BB79950-0-7.graphml&quot;</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="network-files-graphml.html#cb275-1" tabindex="-1"></a><span class="co"># Applying igraph&#39;s read_graph</span></span>
-<span id="cb275-2"><a href="network-files-graphml.html#cb275-2" tabindex="-1"></a>graphs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
-<span id="cb275-3"><a href="network-files-graphml.html#cb275-3" tabindex="-1"></a>  <span class="at">X      =</span> graph_files,       <span class="co"># List of files to read</span></span>
-<span id="cb275-4"><a href="network-files-graphml.html#cb275-4" tabindex="-1"></a>  <span class="at">FUN    =</span> read_graph,        <span class="co"># The function to apply</span></span>
-<span id="cb275-5"><a href="network-files-graphml.html#cb275-5" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">&quot;graphml&quot;</span>          <span class="co"># Argument passed to read_graph</span></span>
-<span id="cb275-6"><a href="network-files-graphml.html#cb275-6" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="network-files-graphml.html#cb222-1" tabindex="-1"></a><span class="co"># We start by loading igraph</span></span>
+<span id="cb222-2"><a href="network-files-graphml.html#cb222-2" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb222-3"><a href="network-files-graphml.html#cb222-3" tabindex="-1"></a></span>
+<span id="cb222-4"><a href="network-files-graphml.html#cb222-4" tabindex="-1"></a><span class="co"># Listing all the graphml files</span></span>
+<span id="cb222-5"><a href="network-files-graphml.html#cb222-5" tabindex="-1"></a>graph_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb222-6"><a href="network-files-graphml.html#cb222-6" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>, <span class="co"># Where are these files</span></span>
+<span id="cb222-7"><a href="network-files-graphml.html#cb222-7" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*.graphml&quot;</span>,        <span class="co"># Specify a pattern for only listing graphml</span></span>
+<span id="cb222-8"><a href="network-files-graphml.html#cb222-8" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span>                <span class="co"># And we make sure we use the full name</span></span>
+<span id="cb222-9"><a href="network-files-graphml.html#cb222-9" tabindex="-1"></a>                                   <span class="co"># (path.) Otherwise, we would only get names.</span></span>
+<span id="cb222-10"><a href="network-files-graphml.html#cb222-10" tabindex="-1"></a>  )</span>
+<span id="cb222-11"><a href="network-files-graphml.html#cb222-11" tabindex="-1"></a></span>
+<span id="cb222-12"><a href="network-files-graphml.html#cb222-12" tabindex="-1"></a><span class="co"># Taking a look at the first three files we got</span></span>
+<span id="cb222-13"><a href="network-files-graphml.html#cb222-13" tabindex="-1"></a>graph_files[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb222-14"><a href="network-files-graphml.html#cb222-14" tabindex="-1"></a><span class="do">## [1] &quot;data-raw/egonets/I_-59190_BRB9111.graphml&quot;</span></span>
+<span id="cb222-15"><a href="network-files-graphml.html#cb222-15" tabindex="-1"></a><span class="do">## [2] &quot;data-raw/egonets/I-100BB_00B95-90.graphml&quot;</span></span>
+<span id="cb222-16"><a href="network-files-graphml.html#cb222-16" tabindex="-1"></a><span class="do">## [3] &quot;data-raw/egonets/I-1BB79950-0-7.graphml&quot;</span></span>
+<span id="cb222-17"><a href="network-files-graphml.html#cb222-17" tabindex="-1"></a></span>
+<span id="cb222-18"><a href="network-files-graphml.html#cb222-18" tabindex="-1"></a><span class="co"># Applying igraph&#39;s read_graph</span></span>
+<span id="cb222-19"><a href="network-files-graphml.html#cb222-19" tabindex="-1"></a>graphs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb222-20"><a href="network-files-graphml.html#cb222-20" tabindex="-1"></a>  <span class="at">X      =</span> graph_files,       <span class="co"># List of files to read</span></span>
+<span id="cb222-21"><a href="network-files-graphml.html#cb222-21" tabindex="-1"></a>  <span class="at">FUN    =</span> read_graph,        <span class="co"># The function to apply</span></span>
+<span id="cb222-22"><a href="network-files-graphml.html#cb222-22" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">&quot;graphml&quot;</span>          <span class="co"># Argument passed to read_graph</span></span>
+<span id="cb222-23"><a href="network-files-graphml.html#cb222-23" tabindex="-1"></a>  )</span></code></pre></div>
 <p>If the operation succeeded, then the previous code block should generate a list of <code>igraph</code> objects named <code>graphs</code>. Let’s take a peek at the first two:</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="network-files-graphml.html#cb276-1" tabindex="-1"></a>graphs[[<span class="dv">1</span>]]</span></code></pre></div>
-<pre><code>## IGRAPH e626a55 U--- 12 25 -- 
-## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
-## | (v/l), id (v/c)
-## + edges from e626a55:
-##  [1] 1-- 3 1-- 2 1-- 6 1-- 5 1-- 4 1-- 8 1--11 1--10 2-- 3 3-- 7 3-- 4 3-- 5
-## [13] 3-- 6 2-- 7 2-- 4 2-- 5 2-- 6 5-- 6 6--10 7-- 9 4-- 5 5-- 7 4--11 6-- 7
-## [25] 4-- 7</code></pre>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="network-files-graphml.html#cb278-1" tabindex="-1"></a>graphs[[<span class="dv">2</span>]]</span></code></pre></div>
-<pre><code>## IGRAPH d12615c U--- 16 47 -- 
-## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
-## | (v/l), id (v/c)
-## + edges from d12615c:
-##  [1]  7--13  1-- 5  1-- 6  1-- 4  1-- 2  7--15  1-- 3 11--13  1--10  1--16
-## [11]  4-- 6  2-- 6  6-- 7  1--11 11--15  6-- 9  6-- 8  3-- 9  5--15  4-- 5
-## [21]  2-- 5  5-- 8  5-- 7  5--10  3-- 5  6--14 12--13  6--13  3--13  2-- 3
-## [31]  3-- 4  3--16  3--11 10--14  7--14  2-- 4  2--10  2--15 10--12  4-- 7
-## [41]  6--10  5--11  9--10  1-- 9  1--12  3--12  4--14</code></pre>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="network-files-graphml.html#cb223-1" tabindex="-1"></a>graphs[[<span class="dv">1</span>]]</span>
+<span id="cb223-2"><a href="network-files-graphml.html#cb223-2" tabindex="-1"></a><span class="do">## IGRAPH 0bd61e1 U--- 12 25 -- </span></span>
+<span id="cb223-3"><a href="network-files-graphml.html#cb223-3" tabindex="-1"></a><span class="do">## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2</span></span>
+<span id="cb223-4"><a href="network-files-graphml.html#cb223-4" tabindex="-1"></a><span class="do">## | (v/l), id (v/c)</span></span>
+<span id="cb223-5"><a href="network-files-graphml.html#cb223-5" tabindex="-1"></a><span class="do">## + edges from 0bd61e1:</span></span>
+<span id="cb223-6"><a href="network-files-graphml.html#cb223-6" tabindex="-1"></a><span class="do">##  [1] 1-- 3 1-- 2 1-- 6 1-- 5 1-- 4 1-- 8 1--11 1--10 2-- 3 3-- 7 3-- 4 3-- 5</span></span>
+<span id="cb223-7"><a href="network-files-graphml.html#cb223-7" tabindex="-1"></a><span class="do">## [13] 3-- 6 2-- 7 2-- 4 2-- 5 2-- 6 5-- 6 6--10 7-- 9 4-- 5 5-- 7 4--11 6-- 7</span></span>
+<span id="cb223-8"><a href="network-files-graphml.html#cb223-8" tabindex="-1"></a><span class="do">## [25] 4-- 7</span></span>
+<span id="cb223-9"><a href="network-files-graphml.html#cb223-9" tabindex="-1"></a>graphs[[<span class="dv">2</span>]]</span>
+<span id="cb223-10"><a href="network-files-graphml.html#cb223-10" tabindex="-1"></a><span class="do">## IGRAPH 60af7c6 U--- 16 47 -- </span></span>
+<span id="cb223-11"><a href="network-files-graphml.html#cb223-11" tabindex="-1"></a><span class="do">## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2</span></span>
+<span id="cb223-12"><a href="network-files-graphml.html#cb223-12" tabindex="-1"></a><span class="do">## | (v/l), id (v/c)</span></span>
+<span id="cb223-13"><a href="network-files-graphml.html#cb223-13" tabindex="-1"></a><span class="do">## + edges from 60af7c6:</span></span>
+<span id="cb223-14"><a href="network-files-graphml.html#cb223-14" tabindex="-1"></a><span class="do">##  [1]  7--13  1-- 5  1-- 6  1-- 4  1-- 2  7--15  1-- 3 11--13  1--10  1--16</span></span>
+<span id="cb223-15"><a href="network-files-graphml.html#cb223-15" tabindex="-1"></a><span class="do">## [11]  4-- 6  2-- 6  6-- 7  1--11 11--15  6-- 9  6-- 8  3-- 9  5--15  4-- 5</span></span>
+<span id="cb223-16"><a href="network-files-graphml.html#cb223-16" tabindex="-1"></a><span class="do">## [21]  2-- 5  5-- 8  5-- 7  5--10  3-- 5  6--14 12--13  6--13  3--13  2-- 3</span></span>
+<span id="cb223-17"><a href="network-files-graphml.html#cb223-17" tabindex="-1"></a><span class="do">## [31]  3-- 4  3--16  3--11 10--14  7--14  2-- 4  2--10  2--15 10--12  4-- 7</span></span>
+<span id="cb223-18"><a href="network-files-graphml.html#cb223-18" tabindex="-1"></a><span class="do">## [41]  6--10  5--11  9--10  1-- 9  1--12  3--12  4--14</span></span></code></pre></div>
 <p>As always, one of the first things we do with networks is visualize them. We will use the <a href="https://cran.r-project.org/package=netplot" target="_blank"><code>netplot</code> R package</a> (by yours truly) to draw the figures:</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="network-files-graphml.html#cb280-1" tabindex="-1"></a><span class="fu">library</span>(netplot)</span>
-<span id="cb280-2"><a href="network-files-graphml.html#cb280-2" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb280-3"><a href="network-files-graphml.html#cb280-3" tabindex="-1"></a></span>
-<span id="cb280-4"><a href="network-files-graphml.html#cb280-4" tabindex="-1"></a><span class="co"># Graph layout is random</span></span>
-<span id="cb280-5"><a href="network-files-graphml.html#cb280-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1231</span>)</span>
-<span id="cb280-6"><a href="network-files-graphml.html#cb280-6" tabindex="-1"></a></span>
-<span id="cb280-7"><a href="network-files-graphml.html#cb280-7" tabindex="-1"></a><span class="co"># The grid.arrange allows putting multiple netplot graphs into the same page</span></span>
-<span id="cb280-8"><a href="network-files-graphml.html#cb280-8" tabindex="-1"></a><span class="fu">grid.arrange</span>(</span>
-<span id="cb280-9"><a href="network-files-graphml.html#cb280-9" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">1</span>]]),</span>
-<span id="cb280-10"><a href="network-files-graphml.html#cb280-10" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">2</span>]]),</span>
-<span id="cb280-11"><a href="network-files-graphml.html#cb280-11" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">3</span>]]),</span>
-<span id="cb280-12"><a href="network-files-graphml.html#cb280-12" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">4</span>]]),</span>
-<span id="cb280-13"><a href="network-files-graphml.html#cb280-13" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span></span>
-<span id="cb280-14"><a href="network-files-graphml.html#cb280-14" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="network-files-graphml.html#cb224-1" tabindex="-1"></a><span class="fu">library</span>(netplot)</span>
+<span id="cb224-2"><a href="network-files-graphml.html#cb224-2" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb224-3"><a href="network-files-graphml.html#cb224-3" tabindex="-1"></a></span>
+<span id="cb224-4"><a href="network-files-graphml.html#cb224-4" tabindex="-1"></a><span class="co"># Graph layout is random</span></span>
+<span id="cb224-5"><a href="network-files-graphml.html#cb224-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1231</span>)</span>
+<span id="cb224-6"><a href="network-files-graphml.html#cb224-6" tabindex="-1"></a></span>
+<span id="cb224-7"><a href="network-files-graphml.html#cb224-7" tabindex="-1"></a><span class="co"># The grid.arrange allows putting multiple netplot graphs into the same page</span></span>
+<span id="cb224-8"><a href="network-files-graphml.html#cb224-8" tabindex="-1"></a><span class="fu">grid.arrange</span>(</span>
+<span id="cb224-9"><a href="network-files-graphml.html#cb224-9" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">1</span>]]),</span>
+<span id="cb224-10"><a href="network-files-graphml.html#cb224-10" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">2</span>]]),</span>
+<span id="cb224-11"><a href="network-files-graphml.html#cb224-11" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">3</span>]]),</span>
+<span id="cb224-12"><a href="network-files-graphml.html#cb224-12" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">4</span>]]),</span>
+<span id="cb224-13"><a href="network-files-graphml.html#cb224-13" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span></span>
+<span id="cb224-14"><a href="network-files-graphml.html#cb224-14" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="part-01-07-egonets_files/figure-html/plot-nets-1.png" width="672" /></p>
 <p>Great! Since nodes in our network have features, we can add a little bit of color. We will use the <code>eat_with_2</code> variable, which is coded as <code>TRUE</code> or <code>FALSE</code>. Vertex colors can be specified using the <code>vertex.color</code> argument of the <code>nplot</code> function. In our case, we will specify colors passing a vector of length equal to the number of nodes in the graph. Furthermore, since we will be doing this multiple times, it is worthwhile writing a function:</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="network-files-graphml.html#cb281-1" tabindex="-1"></a><span class="co"># A function to color by the eat with variable</span></span>
-<span id="cb281-2"><a href="network-files-graphml.html#cb281-2" tabindex="-1"></a>color_it <span class="ot">&lt;-</span> <span class="cf">function</span>(net) {</span>
-<span id="cb281-3"><a href="network-files-graphml.html#cb281-3" tabindex="-1"></a></span>
-<span id="cb281-4"><a href="network-files-graphml.html#cb281-4" tabindex="-1"></a>  <span class="co"># Coding eat_with_2 to be 1 (FALSE) or 2 (TRUE)</span></span>
-<span id="cb281-5"><a href="network-files-graphml.html#cb281-5" tabindex="-1"></a>  eatswith <span class="ot">&lt;-</span> <span class="fu">V</span>(net)<span class="sc">$</span>eat_with_2</span>
-<span id="cb281-6"><a href="network-files-graphml.html#cb281-6" tabindex="-1"></a></span>
-<span id="cb281-7"><a href="network-files-graphml.html#cb281-7" tabindex="-1"></a>  <span class="co"># Subsetting the color</span></span>
-<span id="cb281-8"><a href="network-files-graphml.html#cb281-8" tabindex="-1"></a>  <span class="fu">ifelse</span>(eatswith, <span class="st">&quot;purple&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>)</span>
-<span id="cb281-9"><a href="network-files-graphml.html#cb281-9" tabindex="-1"></a></span>
-<span id="cb281-10"><a href="network-files-graphml.html#cb281-10" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="network-files-graphml.html#cb225-1" tabindex="-1"></a><span class="co"># A function to color by the eat with variable</span></span>
+<span id="cb225-2"><a href="network-files-graphml.html#cb225-2" tabindex="-1"></a>color_it <span class="ot">&lt;-</span> <span class="cf">function</span>(net) {</span>
+<span id="cb225-3"><a href="network-files-graphml.html#cb225-3" tabindex="-1"></a></span>
+<span id="cb225-4"><a href="network-files-graphml.html#cb225-4" tabindex="-1"></a>  <span class="co"># Coding eat_with_2 to be 1 (FALSE) or 2 (TRUE)</span></span>
+<span id="cb225-5"><a href="network-files-graphml.html#cb225-5" tabindex="-1"></a>  eatswith <span class="ot">&lt;-</span> <span class="fu">V</span>(net)<span class="sc">$</span>eat_with_2</span>
+<span id="cb225-6"><a href="network-files-graphml.html#cb225-6" tabindex="-1"></a></span>
+<span id="cb225-7"><a href="network-files-graphml.html#cb225-7" tabindex="-1"></a>  <span class="co"># Subsetting the color</span></span>
+<span id="cb225-8"><a href="network-files-graphml.html#cb225-8" tabindex="-1"></a>  <span class="fu">ifelse</span>(eatswith, <span class="st">&quot;purple&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>)</span>
+<span id="cb225-9"><a href="network-files-graphml.html#cb225-9" tabindex="-1"></a></span>
+<span id="cb225-10"><a href="network-files-graphml.html#cb225-10" tabindex="-1"></a>}</span></code></pre></div>
 <p>This function takes two arguments: a network and a vector of two colors. Vertex attributes in <code>igraph</code> can be accessed through the <code>V(...)$...</code> function. For this example, to access the attribute <code>eat_with_2</code> in the network <code>net</code>, we type <code>V(net)$eat_with_2</code>. Finally, individuals who have <code>eat_with_2</code> equal to true will be colored <code>purple</code>, otherwise, if equal to <code>FALSE</code>, will be colored <code>darkgreen</code>. Before plotting the networks, let’s see what we get when we access the <code>eat_with_2</code> attribute in the first graph:</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="network-files-graphml.html#cb282-1" tabindex="-1"></a><span class="fu">V</span>(graphs[[<span class="dv">1</span>]])<span class="sc">$</span>eat_with_2</span></code></pre></div>
-<pre><code>##  [1]  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="network-files-graphml.html#cb226-1" tabindex="-1"></a><span class="fu">V</span>(graphs[[<span class="dv">1</span>]])<span class="sc">$</span>eat_with_2</span>
+<span id="cb226-2"><a href="network-files-graphml.html#cb226-2" tabindex="-1"></a><span class="do">##  [1]  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE</span></span></code></pre></div>
 <p>A logical vector. Now let’s redraw the figures:</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="network-files-graphml.html#cb284-1" tabindex="-1"></a><span class="fu">grid.arrange</span>(</span>
-<span id="cb284-2"><a href="network-files-graphml.html#cb284-2" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">1</span>]], <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[<span class="dv">1</span>]])),</span>
-<span id="cb284-3"><a href="network-files-graphml.html#cb284-3" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">2</span>]], <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[<span class="dv">2</span>]])),</span>
-<span id="cb284-4"><a href="network-files-graphml.html#cb284-4" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">3</span>]], <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[<span class="dv">3</span>]])),</span>
-<span id="cb284-5"><a href="network-files-graphml.html#cb284-5" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">4</span>]], <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[<span class="dv">4</span>]])),</span>
-<span id="cb284-6"><a href="network-files-graphml.html#cb284-6" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span></span>
-<span id="cb284-7"><a href="network-files-graphml.html#cb284-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="network-files-graphml.html#cb227-1" tabindex="-1"></a><span class="fu">grid.arrange</span>(</span>
+<span id="cb227-2"><a href="network-files-graphml.html#cb227-2" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">1</span>]], <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[<span class="dv">1</span>]])),</span>
+<span id="cb227-3"><a href="network-files-graphml.html#cb227-3" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">2</span>]], <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[<span class="dv">2</span>]])),</span>
+<span id="cb227-4"><a href="network-files-graphml.html#cb227-4" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">3</span>]], <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[<span class="dv">3</span>]])),</span>
+<span id="cb227-5"><a href="network-files-graphml.html#cb227-5" tabindex="-1"></a>  <span class="fu">nplot</span>(graphs[[<span class="dv">4</span>]], <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[<span class="dv">4</span>]])),</span>
+<span id="cb227-6"><a href="network-files-graphml.html#cb227-6" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span></span>
+<span id="cb227-7"><a href="network-files-graphml.html#cb227-7" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="part-01-07-egonets_files/figure-html/part-01-07-plot-nets-colored-1.png" width="672" /></p>
 <p>Since most of the time, we will be dealing with a large number of egonets, you may want to draw each network independently; the following code-block does exactly that. First, if needed, will create a folder to store the networks. Then, using the <code>lapply</code> function, it will use <code>netplot::nplot()</code> to draw the networks, add a legend, and save the graph as <code>.../graphml_[number].png</code>, where <code>[number]</code> will go from <code>01</code> to the total number of networks in <code>graphs</code>.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="network-files-graphml.html#cb285-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;egonets/figs/egonets&quot;</span>))</span>
-<span id="cb285-2"><a href="network-files-graphml.html#cb285-2" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">&quot;egonets/figs/egonets&quot;</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb285-3"><a href="network-files-graphml.html#cb285-3" tabindex="-1"></a></span>
-<span id="cb285-4"><a href="network-files-graphml.html#cb285-4" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">seq_along</span>(graphs), <span class="cf">function</span>(i) {</span>
-<span id="cb285-5"><a href="network-files-graphml.html#cb285-5" tabindex="-1"></a>  </span>
-<span id="cb285-6"><a href="network-files-graphml.html#cb285-6" tabindex="-1"></a>  <span class="co"># Creating the device </span></span>
-<span id="cb285-7"><a href="network-files-graphml.html#cb285-7" tabindex="-1"></a>  <span class="fu">png</span>(<span class="fu">sprintf</span>(<span class="st">&quot;egonets/figs/egonets/graphml_%02i.png&quot;</span>, i))  </span>
-<span id="cb285-8"><a href="network-files-graphml.html#cb285-8" tabindex="-1"></a>  </span>
-<span id="cb285-9"><a href="network-files-graphml.html#cb285-9" tabindex="-1"></a>  <span class="co"># Drawing the plot</span></span>
-<span id="cb285-10"><a href="network-files-graphml.html#cb285-10" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">nplot</span>(</span>
-<span id="cb285-11"><a href="network-files-graphml.html#cb285-11" tabindex="-1"></a>    graphs[[i]],</span>
-<span id="cb285-12"><a href="network-files-graphml.html#cb285-12" tabindex="-1"></a>    <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[i]])</span>
-<span id="cb285-13"><a href="network-files-graphml.html#cb285-13" tabindex="-1"></a>    )</span>
-<span id="cb285-14"><a href="network-files-graphml.html#cb285-14" tabindex="-1"></a>  </span>
-<span id="cb285-15"><a href="network-files-graphml.html#cb285-15" tabindex="-1"></a>  <span class="co"># Adding a legend</span></span>
-<span id="cb285-16"><a href="network-files-graphml.html#cb285-16" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">nplot_legend</span>(</span>
-<span id="cb285-17"><a href="network-files-graphml.html#cb285-17" tabindex="-1"></a>    p,</span>
-<span id="cb285-18"><a href="network-files-graphml.html#cb285-18" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;eats with: FALSE&quot;</span>, <span class="st">&quot;eats with: TRUE&quot;</span>),</span>
-<span id="cb285-19"><a href="network-files-graphml.html#cb285-19" tabindex="-1"></a>    <span class="at">pch    =</span> <span class="dv">21</span>,</span>
-<span id="cb285-20"><a href="network-files-graphml.html#cb285-20" tabindex="-1"></a>    <span class="at">packgrob.args =</span> <span class="fu">list</span>(<span class="at">side =</span> <span class="st">&quot;bottom&quot;</span>),</span>
-<span id="cb285-21"><a href="network-files-graphml.html#cb285-21" tabindex="-1"></a>    <span class="at">gp            =</span> <span class="fu">gpar</span>(</span>
-<span id="cb285-22"><a href="network-files-graphml.html#cb285-22" tabindex="-1"></a>      <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;purple&quot;</span>)</span>
-<span id="cb285-23"><a href="network-files-graphml.html#cb285-23" tabindex="-1"></a>    ),</span>
-<span id="cb285-24"><a href="network-files-graphml.html#cb285-24" tabindex="-1"></a>    <span class="at">ncol =</span> <span class="dv">2</span></span>
-<span id="cb285-25"><a href="network-files-graphml.html#cb285-25" tabindex="-1"></a>  )</span>
-<span id="cb285-26"><a href="network-files-graphml.html#cb285-26" tabindex="-1"></a>  </span>
-<span id="cb285-27"><a href="network-files-graphml.html#cb285-27" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
-<span id="cb285-28"><a href="network-files-graphml.html#cb285-28" tabindex="-1"></a>  </span>
-<span id="cb285-29"><a href="network-files-graphml.html#cb285-29" tabindex="-1"></a>  <span class="co"># Closing the device</span></span>
-<span id="cb285-30"><a href="network-files-graphml.html#cb285-30" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
-<span id="cb285-31"><a href="network-files-graphml.html#cb285-31" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="network-files-graphml.html#cb228-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;egonets/figs/egonets&quot;</span>))</span>
+<span id="cb228-2"><a href="network-files-graphml.html#cb228-2" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">&quot;egonets/figs/egonets&quot;</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb228-3"><a href="network-files-graphml.html#cb228-3" tabindex="-1"></a></span>
+<span id="cb228-4"><a href="network-files-graphml.html#cb228-4" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">seq_along</span>(graphs), <span class="cf">function</span>(i) {</span>
+<span id="cb228-5"><a href="network-files-graphml.html#cb228-5" tabindex="-1"></a>  </span>
+<span id="cb228-6"><a href="network-files-graphml.html#cb228-6" tabindex="-1"></a>  <span class="co"># Creating the device </span></span>
+<span id="cb228-7"><a href="network-files-graphml.html#cb228-7" tabindex="-1"></a>  <span class="fu">png</span>(<span class="fu">sprintf</span>(<span class="st">&quot;egonets/figs/egonets/graphml_%02i.png&quot;</span>, i))  </span>
+<span id="cb228-8"><a href="network-files-graphml.html#cb228-8" tabindex="-1"></a>  </span>
+<span id="cb228-9"><a href="network-files-graphml.html#cb228-9" tabindex="-1"></a>  <span class="co"># Drawing the plot</span></span>
+<span id="cb228-10"><a href="network-files-graphml.html#cb228-10" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">nplot</span>(</span>
+<span id="cb228-11"><a href="network-files-graphml.html#cb228-11" tabindex="-1"></a>    graphs[[i]],</span>
+<span id="cb228-12"><a href="network-files-graphml.html#cb228-12" tabindex="-1"></a>    <span class="at">vertex.color =</span> <span class="fu">color_it</span>(graphs[[i]])</span>
+<span id="cb228-13"><a href="network-files-graphml.html#cb228-13" tabindex="-1"></a>    )</span>
+<span id="cb228-14"><a href="network-files-graphml.html#cb228-14" tabindex="-1"></a>  </span>
+<span id="cb228-15"><a href="network-files-graphml.html#cb228-15" tabindex="-1"></a>  <span class="co"># Adding a legend</span></span>
+<span id="cb228-16"><a href="network-files-graphml.html#cb228-16" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">nplot_legend</span>(</span>
+<span id="cb228-17"><a href="network-files-graphml.html#cb228-17" tabindex="-1"></a>    p,</span>
+<span id="cb228-18"><a href="network-files-graphml.html#cb228-18" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;eats with: FALSE&quot;</span>, <span class="st">&quot;eats with: TRUE&quot;</span>),</span>
+<span id="cb228-19"><a href="network-files-graphml.html#cb228-19" tabindex="-1"></a>    <span class="at">pch    =</span> <span class="dv">21</span>,</span>
+<span id="cb228-20"><a href="network-files-graphml.html#cb228-20" tabindex="-1"></a>    <span class="at">packgrob.args =</span> <span class="fu">list</span>(<span class="at">side =</span> <span class="st">&quot;bottom&quot;</span>),</span>
+<span id="cb228-21"><a href="network-files-graphml.html#cb228-21" tabindex="-1"></a>    <span class="at">gp            =</span> <span class="fu">gpar</span>(</span>
+<span id="cb228-22"><a href="network-files-graphml.html#cb228-22" tabindex="-1"></a>      <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;purple&quot;</span>)</span>
+<span id="cb228-23"><a href="network-files-graphml.html#cb228-23" tabindex="-1"></a>    ),</span>
+<span id="cb228-24"><a href="network-files-graphml.html#cb228-24" tabindex="-1"></a>    <span class="at">ncol =</span> <span class="dv">2</span></span>
+<span id="cb228-25"><a href="network-files-graphml.html#cb228-25" tabindex="-1"></a>  )</span>
+<span id="cb228-26"><a href="network-files-graphml.html#cb228-26" tabindex="-1"></a>  </span>
+<span id="cb228-27"><a href="network-files-graphml.html#cb228-27" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
+<span id="cb228-28"><a href="network-files-graphml.html#cb228-28" tabindex="-1"></a>  </span>
+<span id="cb228-29"><a href="network-files-graphml.html#cb228-29" tabindex="-1"></a>  <span class="co"># Closing the device</span></span>
+<span id="cb228-30"><a href="network-files-graphml.html#cb228-30" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
+<span id="cb228-31"><a href="network-files-graphml.html#cb228-31" tabindex="-1"></a>})</span></code></pre></div>
 </div>
             </section>
 

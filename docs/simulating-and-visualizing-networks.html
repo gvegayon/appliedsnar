@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -357,23 +357,23 @@ R packages out there.</p>
 <li><code>rgexf</code>: For building interactive (html) figures.</li>
 </ul>
 <p>You can use the following codeblock to install any missing package:</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="simulating-and-visualizing-networks.html#cb242-1" tabindex="-1"></a><span class="co"># Creating the list to install</span></span>
-<span id="cb242-2"><a href="simulating-and-visualizing-networks.html#cb242-2" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb242-3"><a href="simulating-and-visualizing-networks.html#cb242-3" tabindex="-1"></a>  <span class="st">&quot;ergm&quot;</span>, <span class="st">&quot;sna&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;intergraph&quot;</span>, <span class="st">&quot;netplot&quot;</span>, <span class="st">&quot;netdiffuseR&quot;</span>, <span class="st">&quot;rgexf&quot;</span></span>
-<span id="cb242-4"><a href="simulating-and-visualizing-networks.html#cb242-4" tabindex="-1"></a>  )</span>
-<span id="cb242-5"><a href="simulating-and-visualizing-networks.html#cb242-5" tabindex="-1"></a></span>
-<span id="cb242-6"><a href="simulating-and-visualizing-networks.html#cb242-6" tabindex="-1"></a><span class="co"># Checking if we can load them and install them if not available</span></span>
-<span id="cb242-7"><a href="simulating-and-visualizing-networks.html#cb242-7" tabindex="-1"></a><span class="cf">for</span> (pkg <span class="cf">in</span> pkgs) {</span>
-<span id="cb242-8"><a href="simulating-and-visualizing-networks.html#cb242-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(pkg, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb242-9"><a href="simulating-and-visualizing-networks.html#cb242-9" tabindex="-1"></a></span>
-<span id="cb242-10"><a href="simulating-and-visualizing-networks.html#cb242-10" tabindex="-1"></a>    <span class="co"># If not present, will install it</span></span>
-<span id="cb242-11"><a href="simulating-and-visualizing-networks.html#cb242-11" tabindex="-1"></a>    <span class="fu">install.packages</span>(pkg, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb242-12"><a href="simulating-and-visualizing-networks.html#cb242-12" tabindex="-1"></a></span>
-<span id="cb242-13"><a href="simulating-and-visualizing-networks.html#cb242-13" tabindex="-1"></a>    <span class="co"># And load it!</span></span>
-<span id="cb242-14"><a href="simulating-and-visualizing-networks.html#cb242-14" tabindex="-1"></a>    <span class="fu">library</span>(pkg, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb242-15"><a href="simulating-and-visualizing-networks.html#cb242-15" tabindex="-1"></a></span>
-<span id="cb242-16"><a href="simulating-and-visualizing-networks.html#cb242-16" tabindex="-1"></a>  }</span>
-<span id="cb242-17"><a href="simulating-and-visualizing-networks.html#cb242-17" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="simulating-and-visualizing-networks.html#cb192-1" tabindex="-1"></a><span class="co"># Creating the list to install</span></span>
+<span id="cb192-2"><a href="simulating-and-visualizing-networks.html#cb192-2" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb192-3"><a href="simulating-and-visualizing-networks.html#cb192-3" tabindex="-1"></a>  <span class="st">&quot;ergm&quot;</span>, <span class="st">&quot;sna&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;intergraph&quot;</span>, <span class="st">&quot;netplot&quot;</span>, <span class="st">&quot;netdiffuseR&quot;</span>, <span class="st">&quot;rgexf&quot;</span></span>
+<span id="cb192-4"><a href="simulating-and-visualizing-networks.html#cb192-4" tabindex="-1"></a>  )</span>
+<span id="cb192-5"><a href="simulating-and-visualizing-networks.html#cb192-5" tabindex="-1"></a></span>
+<span id="cb192-6"><a href="simulating-and-visualizing-networks.html#cb192-6" tabindex="-1"></a><span class="co"># Checking if we can load them and install them if not available</span></span>
+<span id="cb192-7"><a href="simulating-and-visualizing-networks.html#cb192-7" tabindex="-1"></a><span class="cf">for</span> (pkg <span class="cf">in</span> pkgs) {</span>
+<span id="cb192-8"><a href="simulating-and-visualizing-networks.html#cb192-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(pkg, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb192-9"><a href="simulating-and-visualizing-networks.html#cb192-9" tabindex="-1"></a></span>
+<span id="cb192-10"><a href="simulating-and-visualizing-networks.html#cb192-10" tabindex="-1"></a>    <span class="co"># If not present, will install it</span></span>
+<span id="cb192-11"><a href="simulating-and-visualizing-networks.html#cb192-11" tabindex="-1"></a>    <span class="fu">install.packages</span>(pkg, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb192-12"><a href="simulating-and-visualizing-networks.html#cb192-12" tabindex="-1"></a></span>
+<span id="cb192-13"><a href="simulating-and-visualizing-networks.html#cb192-13" tabindex="-1"></a>    <span class="co"># And load it!</span></span>
+<span id="cb192-14"><a href="simulating-and-visualizing-networks.html#cb192-14" tabindex="-1"></a>    <span class="fu">library</span>(pkg, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb192-15"><a href="simulating-and-visualizing-networks.html#cb192-15" tabindex="-1"></a></span>
+<span id="cb192-16"><a href="simulating-and-visualizing-networks.html#cb192-16" tabindex="-1"></a>  }</span>
+<span id="cb192-17"><a href="simulating-and-visualizing-networks.html#cb192-17" tabindex="-1"></a>}</span></code></pre></div>
 <p>A recorded version is available <a href="https://youtu.be/VasQf--gT-E">here</a>.</p>
 </div>
             </section>

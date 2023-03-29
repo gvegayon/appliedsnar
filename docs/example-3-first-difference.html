@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -363,82 +363,82 @@ The most straightforward approach here is to use a first difference estimator:</
 \]</span></p>
 <p>By taking the first difference, the fixed effects are removed from the equation,
 and we can proceed with a regular linear model.</p>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="example-3-first-difference.html#cb383-1" tabindex="-1"></a>effect_size_ego   <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb383-2"><a href="example-3-first-difference.html#cb383-2" tabindex="-1"></a>effect_size_alter <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb383-3"><a href="example-3-first-difference.html#cb383-3" tabindex="-1"></a>sizes <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="example-3-first-difference.html#cb384-1" tabindex="-1"></a><span class="co"># Simulation function</span></span>
-<span id="cb384-2"><a href="example-3-first-difference.html#cb384-2" tabindex="-1"></a>sim_data_prepost <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb384-3"><a href="example-3-first-difference.html#cb384-3" tabindex="-1"></a></span>
-<span id="cb384-4"><a href="example-3-first-difference.html#cb384-4" tabindex="-1"></a>  <span class="co"># Applying attrition</span></span>
-<span id="cb384-5"><a href="example-3-first-difference.html#cb384-5" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">floor</span>(n <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> attrition))</span>
-<span id="cb384-6"><a href="example-3-first-difference.html#cb384-6" tabindex="-1"></a></span>
-<span id="cb384-7"><a href="example-3-first-difference.html#cb384-7" tabindex="-1"></a>  <span class="co"># Step 1: Sampling fixed effects</span></span>
-<span id="cb384-8"><a href="example-3-first-difference.html#cb384-8" tabindex="-1"></a>  alpha_i <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n <span class="sc">*</span> (n_a <span class="sc">+</span> <span class="dv">1</span>))</span>
-<span id="cb384-9"><a href="example-3-first-difference.html#cb384-9" tabindex="-1"></a>  kappa_g <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">rnorm</span>(n_a <span class="sc">+</span> <span class="dv">1</span>), n)</span>
-<span id="cb384-10"><a href="example-3-first-difference.html#cb384-10" tabindex="-1"></a></span>
-<span id="cb384-11"><a href="example-3-first-difference.html#cb384-11" tabindex="-1"></a>  <span class="co"># Step 2: Generating the outcome at t = 1</span></span>
-<span id="cb384-12"><a href="example-3-first-difference.html#cb384-12" tabindex="-1"></a>  is_ego   <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">rep</span>(<span class="dv">0</span>, n_a)), n)</span>
-<span id="cb384-13"><a href="example-3-first-difference.html#cb384-13" tabindex="-1"></a>  is_alter <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> is_ego</span>
-<span id="cb384-14"><a href="example-3-first-difference.html#cb384-14" tabindex="-1"></a>  y_0      <span class="ot">&lt;-</span> alpha_i <span class="sc">+</span> kappa_g <span class="sc">+</span> <span class="fu">rnorm</span>(n <span class="sc">*</span> (n_a <span class="sc">+</span> <span class="dv">1</span>))</span>
-<span id="cb384-15"><a href="example-3-first-difference.html#cb384-15" tabindex="-1"></a>  y_1      <span class="ot">&lt;-</span> alpha_i <span class="sc">+</span> kappa_g <span class="sc">+</span></span>
-<span id="cb384-16"><a href="example-3-first-difference.html#cb384-16" tabindex="-1"></a>    is_ego <span class="sc">*</span> effect_size_ego <span class="sc">+</span></span>
-<span id="cb384-17"><a href="example-3-first-difference.html#cb384-17" tabindex="-1"></a>    is_alter <span class="sc">*</span> effect_size_alter <span class="sc">+</span> </span>
-<span id="cb384-18"><a href="example-3-first-difference.html#cb384-18" tabindex="-1"></a>    <span class="fu">rnorm</span>(n <span class="sc">*</span> (n_a <span class="sc">+</span> <span class="dv">1</span>)) </span>
-<span id="cb384-19"><a href="example-3-first-difference.html#cb384-19" tabindex="-1"></a></span>
-<span id="cb384-20"><a href="example-3-first-difference.html#cb384-20" tabindex="-1"></a>  <span class="co"># Step 4: Computing test statistic</span></span>
-<span id="cb384-21"><a href="example-3-first-difference.html#cb384-21" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
-<span id="cb384-22"><a href="example-3-first-difference.html#cb384-22" tabindex="-1"></a>    <span class="fu">glm</span>(<span class="fu">I</span>(y_1 <span class="sc">-</span> y_0) <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> is_ego <span class="sc">+</span> is_alter, <span class="at">family =</span> <span class="fu">gaussian</span>(<span class="st">&quot;identity&quot;</span>)),</span>
-<span id="cb384-23"><a href="example-3-first-difference.html#cb384-23" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) e</span>
-<span id="cb384-24"><a href="example-3-first-difference.html#cb384-24" tabindex="-1"></a>  )</span>
-<span id="cb384-25"><a href="example-3-first-difference.html#cb384-25" tabindex="-1"></a></span>
-<span id="cb384-26"><a href="example-3-first-difference.html#cb384-26" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(res, <span class="st">&quot;error&quot;</span>))</span>
-<span id="cb384-27"><a href="example-3-first-difference.html#cb384-27" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">ego =</span>  <span class="cn">NA</span>, <span class="at">alter =</span> <span class="cn">NA</span>))</span>
-<span id="cb384-28"><a href="example-3-first-difference.html#cb384-28" tabindex="-1"></a>  </span>
-<span id="cb384-29"><a href="example-3-first-difference.html#cb384-29" tabindex="-1"></a>  <span class="co"># Step 5: Reject?</span></span>
-<span id="cb384-30"><a href="example-3-first-difference.html#cb384-30" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb384-31"><a href="example-3-first-difference.html#cb384-31" tabindex="-1"></a>    <span class="co"># ego      = res_ego$p.value &lt; alpha,</span></span>
-<span id="cb384-32"><a href="example-3-first-difference.html#cb384-32" tabindex="-1"></a>    <span class="at">ego        =</span> <span class="fu">summary</span>(res)<span class="sc">$</span>coefficients[<span class="st">&quot;is_ego&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
-<span id="cb384-33"><a href="example-3-first-difference.html#cb384-33" tabindex="-1"></a>    <span class="at">alter      =</span> <span class="fu">summary</span>(res)<span class="sc">$</span>coefficients[<span class="st">&quot;is_alter&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
-<span id="cb384-34"><a href="example-3-first-difference.html#cb384-34" tabindex="-1"></a>    <span class="fu">coef</span>(res)[<span class="dv">1</span>],</span>
-<span id="cb384-35"><a href="example-3-first-difference.html#cb384-35" tabindex="-1"></a>    <span class="fu">coef</span>(res)[<span class="dv">2</span>]</span>
-<span id="cb384-36"><a href="example-3-first-difference.html#cb384-36" tabindex="-1"></a>  )</span>
-<span id="cb384-37"><a href="example-3-first-difference.html#cb384-37" tabindex="-1"></a>  </span>
-<span id="cb384-38"><a href="example-3-first-difference.html#cb384-38" tabindex="-1"></a></span>
-<span id="cb384-39"><a href="example-3-first-difference.html#cb384-39" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="example-3-first-difference.html#cb385-1" tabindex="-1"></a><span class="co"># We always set the seed </span></span>
-<span id="cb385-2"><a href="example-3-first-difference.html#cb385-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">88</span>)</span>
-<span id="cb385-3"><a href="example-3-first-difference.html#cb385-3" tabindex="-1"></a></span>
-<span id="cb385-4"><a href="example-3-first-difference.html#cb385-4" tabindex="-1"></a><span class="co"># Making space and running!</span></span>
-<span id="cb385-5"><a href="example-3-first-difference.html#cb385-5" tabindex="-1"></a>spower <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb385-6"><a href="example-3-first-difference.html#cb385-6" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</span>
-<span id="cb385-7"><a href="example-3-first-difference.html#cb385-7" tabindex="-1"></a></span>
-<span id="cb385-8"><a href="example-3-first-difference.html#cb385-8" tabindex="-1"></a>  <span class="co"># Run the simulation for size s</span></span>
-<span id="cb385-9"><a href="example-3-first-difference.html#cb385-9" tabindex="-1"></a>  simres <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(</span>
-<span id="cb385-10"><a href="example-3-first-difference.html#cb385-10" tabindex="-1"></a>    <span class="fu">replicate</span>(n_sims, <span class="fu">sim_data_prepost</span>(s)),</span>
-<span id="cb385-11"><a href="example-3-first-difference.html#cb385-11" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
-<span id="cb385-12"><a href="example-3-first-difference.html#cb385-12" tabindex="-1"></a>    )</span>
-<span id="cb385-13"><a href="example-3-first-difference.html#cb385-13" tabindex="-1"></a></span>
-<span id="cb385-14"><a href="example-3-first-difference.html#cb385-14" tabindex="-1"></a>  <span class="co"># And store the results</span></span>
-<span id="cb385-15"><a href="example-3-first-difference.html#cb385-15" tabindex="-1"></a>  spower <span class="ot">&lt;-</span> <span class="fu">rbind</span>(spower, simres)</span>
-<span id="cb385-16"><a href="example-3-first-difference.html#cb385-16" tabindex="-1"></a></span>
-<span id="cb385-17"><a href="example-3-first-difference.html#cb385-17" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="example-3-first-difference.html#cb386-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb386-2"><a href="example-3-first-difference.html#cb386-2" tabindex="-1"></a></span>
-<span id="cb386-3"><a href="example-3-first-difference.html#cb386-3" tabindex="-1"></a>spowerd <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb386-4"><a href="example-3-first-difference.html#cb386-4" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;ego&quot;</span>),</span>
-<span id="cb386-5"><a href="example-3-first-difference.html#cb386-5" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;alter&quot;</span>)</span>
-<span id="cb386-6"><a href="example-3-first-difference.html#cb386-6" tabindex="-1"></a>)</span>
-<span id="cb386-7"><a href="example-3-first-difference.html#cb386-7" tabindex="-1"></a></span>
-<span id="cb386-8"><a href="example-3-first-difference.html#cb386-8" tabindex="-1"></a>spowerd <span class="sc">|&gt;</span></span>
-<span id="cb386-9"><a href="example-3-first-difference.html#cb386-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> power, <span class="at">colour =</span> type)) <span class="sc">+</span></span>
-<span id="cb386-10"><a href="example-3-first-difference.html#cb386-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb386-11"><a href="example-3-first-difference.html#cb386-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
-<span id="cb386-12"><a href="example-3-first-difference.html#cb386-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb386-13"><a href="example-3-first-difference.html#cb386-13" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span> <span class="sc">-</span> beta_pow) <span class="sc">+</span></span>
-<span id="cb386-14"><a href="example-3-first-difference.html#cb386-14" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb386-15"><a href="example-3-first-difference.html#cb386-15" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">sprintf</span>(</span>
-<span id="cb386-16"><a href="example-3-first-difference.html#cb386-16" tabindex="-1"></a>      <span class="st">&quot;Ego effect: %.2f; Alter effect: %.2f&quot;</span>, effect_size_ego, effect_size_alter)</span>
-<span id="cb386-17"><a href="example-3-first-difference.html#cb386-17" tabindex="-1"></a>      )</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="example-3-first-difference.html#cb315-1" tabindex="-1"></a>effect_size_ego   <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb315-2"><a href="example-3-first-difference.html#cb315-2" tabindex="-1"></a>effect_size_alter <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb315-3"><a href="example-3-first-difference.html#cb315-3" tabindex="-1"></a>sizes <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="example-3-first-difference.html#cb316-1" tabindex="-1"></a><span class="co"># Simulation function</span></span>
+<span id="cb316-2"><a href="example-3-first-difference.html#cb316-2" tabindex="-1"></a>sim_data_prepost <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb316-3"><a href="example-3-first-difference.html#cb316-3" tabindex="-1"></a></span>
+<span id="cb316-4"><a href="example-3-first-difference.html#cb316-4" tabindex="-1"></a>  <span class="co"># Applying attrition</span></span>
+<span id="cb316-5"><a href="example-3-first-difference.html#cb316-5" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">floor</span>(n <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> attrition))</span>
+<span id="cb316-6"><a href="example-3-first-difference.html#cb316-6" tabindex="-1"></a></span>
+<span id="cb316-7"><a href="example-3-first-difference.html#cb316-7" tabindex="-1"></a>  <span class="co"># Step 1: Sampling fixed effects</span></span>
+<span id="cb316-8"><a href="example-3-first-difference.html#cb316-8" tabindex="-1"></a>  alpha_i <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n <span class="sc">*</span> (n_a <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb316-9"><a href="example-3-first-difference.html#cb316-9" tabindex="-1"></a>  kappa_g <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">rnorm</span>(n_a <span class="sc">+</span> <span class="dv">1</span>), n)</span>
+<span id="cb316-10"><a href="example-3-first-difference.html#cb316-10" tabindex="-1"></a></span>
+<span id="cb316-11"><a href="example-3-first-difference.html#cb316-11" tabindex="-1"></a>  <span class="co"># Step 2: Generating the outcome at t = 1</span></span>
+<span id="cb316-12"><a href="example-3-first-difference.html#cb316-12" tabindex="-1"></a>  is_ego   <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">rep</span>(<span class="dv">0</span>, n_a)), n)</span>
+<span id="cb316-13"><a href="example-3-first-difference.html#cb316-13" tabindex="-1"></a>  is_alter <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> is_ego</span>
+<span id="cb316-14"><a href="example-3-first-difference.html#cb316-14" tabindex="-1"></a>  y_0      <span class="ot">&lt;-</span> alpha_i <span class="sc">+</span> kappa_g <span class="sc">+</span> <span class="fu">rnorm</span>(n <span class="sc">*</span> (n_a <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb316-15"><a href="example-3-first-difference.html#cb316-15" tabindex="-1"></a>  y_1      <span class="ot">&lt;-</span> alpha_i <span class="sc">+</span> kappa_g <span class="sc">+</span></span>
+<span id="cb316-16"><a href="example-3-first-difference.html#cb316-16" tabindex="-1"></a>    is_ego <span class="sc">*</span> effect_size_ego <span class="sc">+</span></span>
+<span id="cb316-17"><a href="example-3-first-difference.html#cb316-17" tabindex="-1"></a>    is_alter <span class="sc">*</span> effect_size_alter <span class="sc">+</span> </span>
+<span id="cb316-18"><a href="example-3-first-difference.html#cb316-18" tabindex="-1"></a>    <span class="fu">rnorm</span>(n <span class="sc">*</span> (n_a <span class="sc">+</span> <span class="dv">1</span>)) </span>
+<span id="cb316-19"><a href="example-3-first-difference.html#cb316-19" tabindex="-1"></a></span>
+<span id="cb316-20"><a href="example-3-first-difference.html#cb316-20" tabindex="-1"></a>  <span class="co"># Step 4: Computing test statistic</span></span>
+<span id="cb316-21"><a href="example-3-first-difference.html#cb316-21" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb316-22"><a href="example-3-first-difference.html#cb316-22" tabindex="-1"></a>    <span class="fu">glm</span>(<span class="fu">I</span>(y_1 <span class="sc">-</span> y_0) <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> is_ego <span class="sc">+</span> is_alter, <span class="at">family =</span> <span class="fu">gaussian</span>(<span class="st">&quot;identity&quot;</span>)),</span>
+<span id="cb316-23"><a href="example-3-first-difference.html#cb316-23" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) e</span>
+<span id="cb316-24"><a href="example-3-first-difference.html#cb316-24" tabindex="-1"></a>  )</span>
+<span id="cb316-25"><a href="example-3-first-difference.html#cb316-25" tabindex="-1"></a></span>
+<span id="cb316-26"><a href="example-3-first-difference.html#cb316-26" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(res, <span class="st">&quot;error&quot;</span>))</span>
+<span id="cb316-27"><a href="example-3-first-difference.html#cb316-27" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">ego =</span>  <span class="cn">NA</span>, <span class="at">alter =</span> <span class="cn">NA</span>))</span>
+<span id="cb316-28"><a href="example-3-first-difference.html#cb316-28" tabindex="-1"></a>  </span>
+<span id="cb316-29"><a href="example-3-first-difference.html#cb316-29" tabindex="-1"></a>  <span class="co"># Step 5: Reject?</span></span>
+<span id="cb316-30"><a href="example-3-first-difference.html#cb316-30" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb316-31"><a href="example-3-first-difference.html#cb316-31" tabindex="-1"></a>    <span class="co"># ego      = res_ego$p.value &lt; alpha,</span></span>
+<span id="cb316-32"><a href="example-3-first-difference.html#cb316-32" tabindex="-1"></a>    <span class="at">ego        =</span> <span class="fu">summary</span>(res)<span class="sc">$</span>coefficients[<span class="st">&quot;is_ego&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
+<span id="cb316-33"><a href="example-3-first-difference.html#cb316-33" tabindex="-1"></a>    <span class="at">alter      =</span> <span class="fu">summary</span>(res)<span class="sc">$</span>coefficients[<span class="st">&quot;is_alter&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
+<span id="cb316-34"><a href="example-3-first-difference.html#cb316-34" tabindex="-1"></a>    <span class="fu">coef</span>(res)[<span class="dv">1</span>],</span>
+<span id="cb316-35"><a href="example-3-first-difference.html#cb316-35" tabindex="-1"></a>    <span class="fu">coef</span>(res)[<span class="dv">2</span>]</span>
+<span id="cb316-36"><a href="example-3-first-difference.html#cb316-36" tabindex="-1"></a>  )</span>
+<span id="cb316-37"><a href="example-3-first-difference.html#cb316-37" tabindex="-1"></a>  </span>
+<span id="cb316-38"><a href="example-3-first-difference.html#cb316-38" tabindex="-1"></a></span>
+<span id="cb316-39"><a href="example-3-first-difference.html#cb316-39" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="example-3-first-difference.html#cb317-1" tabindex="-1"></a><span class="co"># We always set the seed </span></span>
+<span id="cb317-2"><a href="example-3-first-difference.html#cb317-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">88</span>)</span>
+<span id="cb317-3"><a href="example-3-first-difference.html#cb317-3" tabindex="-1"></a></span>
+<span id="cb317-4"><a href="example-3-first-difference.html#cb317-4" tabindex="-1"></a><span class="co"># Making space and running!</span></span>
+<span id="cb317-5"><a href="example-3-first-difference.html#cb317-5" tabindex="-1"></a>spower <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb317-6"><a href="example-3-first-difference.html#cb317-6" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</span>
+<span id="cb317-7"><a href="example-3-first-difference.html#cb317-7" tabindex="-1"></a></span>
+<span id="cb317-8"><a href="example-3-first-difference.html#cb317-8" tabindex="-1"></a>  <span class="co"># Run the simulation for size s</span></span>
+<span id="cb317-9"><a href="example-3-first-difference.html#cb317-9" tabindex="-1"></a>  simres <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(</span>
+<span id="cb317-10"><a href="example-3-first-difference.html#cb317-10" tabindex="-1"></a>    <span class="fu">replicate</span>(n_sims, <span class="fu">sim_data_prepost</span>(s)),</span>
+<span id="cb317-11"><a href="example-3-first-difference.html#cb317-11" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb317-12"><a href="example-3-first-difference.html#cb317-12" tabindex="-1"></a>    )</span>
+<span id="cb317-13"><a href="example-3-first-difference.html#cb317-13" tabindex="-1"></a></span>
+<span id="cb317-14"><a href="example-3-first-difference.html#cb317-14" tabindex="-1"></a>  <span class="co"># And store the results</span></span>
+<span id="cb317-15"><a href="example-3-first-difference.html#cb317-15" tabindex="-1"></a>  spower <span class="ot">&lt;-</span> <span class="fu">rbind</span>(spower, simres)</span>
+<span id="cb317-16"><a href="example-3-first-difference.html#cb317-16" tabindex="-1"></a></span>
+<span id="cb317-17"><a href="example-3-first-difference.html#cb317-17" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="example-3-first-difference.html#cb318-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb318-2"><a href="example-3-first-difference.html#cb318-2" tabindex="-1"></a></span>
+<span id="cb318-3"><a href="example-3-first-difference.html#cb318-3" tabindex="-1"></a>spowerd <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb318-4"><a href="example-3-first-difference.html#cb318-4" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;ego&quot;</span>),</span>
+<span id="cb318-5"><a href="example-3-first-difference.html#cb318-5" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;alter&quot;</span>)</span>
+<span id="cb318-6"><a href="example-3-first-difference.html#cb318-6" tabindex="-1"></a>)</span>
+<span id="cb318-7"><a href="example-3-first-difference.html#cb318-7" tabindex="-1"></a></span>
+<span id="cb318-8"><a href="example-3-first-difference.html#cb318-8" tabindex="-1"></a>spowerd <span class="sc">|&gt;</span></span>
+<span id="cb318-9"><a href="example-3-first-difference.html#cb318-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> power, <span class="at">colour =</span> type)) <span class="sc">+</span></span>
+<span id="cb318-10"><a href="example-3-first-difference.html#cb318-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb318-11"><a href="example-3-first-difference.html#cb318-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
+<span id="cb318-12"><a href="example-3-first-difference.html#cb318-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb318-13"><a href="example-3-first-difference.html#cb318-13" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span> <span class="sc">-</span> beta_pow) <span class="sc">+</span></span>
+<span id="cb318-14"><a href="example-3-first-difference.html#cb318-14" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb318-15"><a href="example-3-first-difference.html#cb318-15" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">sprintf</span>(</span>
+<span id="cb318-16"><a href="example-3-first-difference.html#cb318-16" tabindex="-1"></a>      <span class="st">&quot;Ego effect: %.2f; Alter effect: %.2f&quot;</span>, effect_size_ego, effect_size_alter)</span>
+<span id="cb318-17"><a href="example-3-first-difference.html#cb318-17" tabindex="-1"></a>      )</span></code></pre></div>
 <p><img src="part-01-11-power_files/figure-html/part-01-power-plot3-1.png" width="672" /></p>
 <p>From the inferential point of view, we could still use a demean operator to estimate
 individual-level effects. In particular, we would require to use the demean operator at the group level and then fit a fixed effect model to estimate individual-level parameters.</p>

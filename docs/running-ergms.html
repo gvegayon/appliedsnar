@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -354,22 +354,22 @@ div.csl-indent {
 <li><p><code>ergm.constraints</code>: Where to sample the network from. Gives stability and (in some cases) faster convergence as by constraining the model you are reducing the sample size.</p></li>
 </ol>
 <p>Here is an example of a couple of models that we could compare<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="running-ergms.html#cb167-1" tabindex="-1"></a>ans0 <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
-<span id="cb167-2"><a href="running-ergms.html#cb167-2" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
-<span id="cb167-3"><a href="running-ergms.html#cb167-3" tabindex="-1"></a>    edges <span class="sc">+</span></span>
-<span id="cb167-4"><a href="running-ergms.html#cb167-4" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
-<span id="cb167-5"><a href="running-ergms.html#cb167-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb167-6"><a href="running-ergms.html#cb167-6" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb167-7"><a href="running-ergms.html#cb167-7" tabindex="-1"></a>    mutual</span>
-<span id="cb167-8"><a href="running-ergms.html#cb167-8" tabindex="-1"></a>    ,</span>
-<span id="cb167-9"><a href="running-ergms.html#cb167-9" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
-<span id="cb167-10"><a href="running-ergms.html#cb167-10" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
-<span id="cb167-11"><a href="running-ergms.html#cb167-11" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
-<span id="cb167-12"><a href="running-ergms.html#cb167-12" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">10</span>,</span>
-<span id="cb167-13"><a href="running-ergms.html#cb167-13" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
-<span id="cb167-14"><a href="running-ergms.html#cb167-14" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">10</span></span>
-<span id="cb167-15"><a href="running-ergms.html#cb167-15" tabindex="-1"></a>    )</span>
-<span id="cb167-16"><a href="running-ergms.html#cb167-16" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="running-ergms.html#cb141-1" tabindex="-1"></a>ans0 <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb141-2"><a href="running-ergms.html#cb141-2" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
+<span id="cb141-3"><a href="running-ergms.html#cb141-3" tabindex="-1"></a>    edges <span class="sc">+</span></span>
+<span id="cb141-4"><a href="running-ergms.html#cb141-4" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
+<span id="cb141-5"><a href="running-ergms.html#cb141-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb141-6"><a href="running-ergms.html#cb141-6" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb141-7"><a href="running-ergms.html#cb141-7" tabindex="-1"></a>    mutual</span>
+<span id="cb141-8"><a href="running-ergms.html#cb141-8" tabindex="-1"></a>    ,</span>
+<span id="cb141-9"><a href="running-ergms.html#cb141-9" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
+<span id="cb141-10"><a href="running-ergms.html#cb141-10" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
+<span id="cb141-11"><a href="running-ergms.html#cb141-11" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
+<span id="cb141-12"><a href="running-ergms.html#cb141-12" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">10</span>,</span>
+<span id="cb141-13"><a href="running-ergms.html#cb141-13" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
+<span id="cb141-14"><a href="running-ergms.html#cb141-14" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">10</span></span>
+<span id="cb141-15"><a href="running-ergms.html#cb141-15" tabindex="-1"></a>    )</span>
+<span id="cb141-16"><a href="running-ergms.html#cb141-16" tabindex="-1"></a>  )</span></code></pre></div>
 <p>So what are we doing here:</p>
 <ol style="list-style-type: decimal">
 <li><p>The model is controlling for:</p>
@@ -380,108 +380,108 @@ div.csl-indent {
 </ol></li>
 </ol>
 <p>For more on control parameters, see <span class="citation">(<a href="#ref-Morris2008">Morris, Handcock, and Hunter 2008</a>)</span>.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="running-ergms.html#cb168-1" tabindex="-1"></a>ans1 <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
-<span id="cb168-2"><a href="running-ergms.html#cb168-2" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
-<span id="cb168-3"><a href="running-ergms.html#cb168-3" tabindex="-1"></a>    edges <span class="sc">+</span></span>
-<span id="cb168-4"><a href="running-ergms.html#cb168-4" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
-<span id="cb168-5"><a href="running-ergms.html#cb168-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb168-6"><a href="running-ergms.html#cb168-6" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>)</span>
-<span id="cb168-7"><a href="running-ergms.html#cb168-7" tabindex="-1"></a>    ,</span>
-<span id="cb168-8"><a href="running-ergms.html#cb168-8" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
-<span id="cb168-9"><a href="running-ergms.html#cb168-9" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
-<span id="cb168-10"><a href="running-ergms.html#cb168-10" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
-<span id="cb168-11"><a href="running-ergms.html#cb168-11" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">10</span>,</span>
-<span id="cb168-12"><a href="running-ergms.html#cb168-12" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
-<span id="cb168-13"><a href="running-ergms.html#cb168-13" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">10</span></span>
-<span id="cb168-14"><a href="running-ergms.html#cb168-14" tabindex="-1"></a>    )</span>
-<span id="cb168-15"><a href="running-ergms.html#cb168-15" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="running-ergms.html#cb142-1" tabindex="-1"></a>ans1 <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb142-2"><a href="running-ergms.html#cb142-2" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
+<span id="cb142-3"><a href="running-ergms.html#cb142-3" tabindex="-1"></a>    edges <span class="sc">+</span></span>
+<span id="cb142-4"><a href="running-ergms.html#cb142-4" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
+<span id="cb142-5"><a href="running-ergms.html#cb142-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb142-6"><a href="running-ergms.html#cb142-6" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>)</span>
+<span id="cb142-7"><a href="running-ergms.html#cb142-7" tabindex="-1"></a>    ,</span>
+<span id="cb142-8"><a href="running-ergms.html#cb142-8" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
+<span id="cb142-9"><a href="running-ergms.html#cb142-9" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
+<span id="cb142-10"><a href="running-ergms.html#cb142-10" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
+<span id="cb142-11"><a href="running-ergms.html#cb142-11" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">10</span>,</span>
+<span id="cb142-12"><a href="running-ergms.html#cb142-12" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
+<span id="cb142-13"><a href="running-ergms.html#cb142-13" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">10</span></span>
+<span id="cb142-14"><a href="running-ergms.html#cb142-14" tabindex="-1"></a>    )</span>
+<span id="cb142-15"><a href="running-ergms.html#cb142-15" tabindex="-1"></a>  )</span></code></pre></div>
 <p>This example takes longer to compute</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="running-ergms.html#cb169-1" tabindex="-1"></a>ans2 <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
-<span id="cb169-2"><a href="running-ergms.html#cb169-2" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
-<span id="cb169-3"><a href="running-ergms.html#cb169-3" tabindex="-1"></a>    edges <span class="sc">+</span></span>
-<span id="cb169-4"><a href="running-ergms.html#cb169-4" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
-<span id="cb169-5"><a href="running-ergms.html#cb169-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb169-6"><a href="running-ergms.html#cb169-6" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb169-7"><a href="running-ergms.html#cb169-7" tabindex="-1"></a>    mutual <span class="sc">+</span></span>
-<span id="cb169-8"><a href="running-ergms.html#cb169-8" tabindex="-1"></a>    balance</span>
-<span id="cb169-9"><a href="running-ergms.html#cb169-9" tabindex="-1"></a>    ,</span>
-<span id="cb169-10"><a href="running-ergms.html#cb169-10" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
-<span id="cb169-11"><a href="running-ergms.html#cb169-11" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
-<span id="cb169-12"><a href="running-ergms.html#cb169-12" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
-<span id="cb169-13"><a href="running-ergms.html#cb169-13" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">10</span>,</span>
-<span id="cb169-14"><a href="running-ergms.html#cb169-14" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
-<span id="cb169-15"><a href="running-ergms.html#cb169-15" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">10</span></span>
-<span id="cb169-16"><a href="running-ergms.html#cb169-16" tabindex="-1"></a>    )</span>
-<span id="cb169-17"><a href="running-ergms.html#cb169-17" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="running-ergms.html#cb143-1" tabindex="-1"></a>ans2 <span class="ot">&lt;-</span> <span class="fu">ergm</span>(</span>
+<span id="cb143-2"><a href="running-ergms.html#cb143-2" tabindex="-1"></a>  network_111 <span class="sc">~</span></span>
+<span id="cb143-3"><a href="running-ergms.html#cb143-3" tabindex="-1"></a>    edges <span class="sc">+</span></span>
+<span id="cb143-4"><a href="running-ergms.html#cb143-4" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;hispanic&quot;</span>) <span class="sc">+</span></span>
+<span id="cb143-5"><a href="running-ergms.html#cb143-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;female1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb143-6"><a href="running-ergms.html#cb143-6" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;eversmk1&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb143-7"><a href="running-ergms.html#cb143-7" tabindex="-1"></a>    mutual <span class="sc">+</span></span>
+<span id="cb143-8"><a href="running-ergms.html#cb143-8" tabindex="-1"></a>    balance</span>
+<span id="cb143-9"><a href="running-ergms.html#cb143-9" tabindex="-1"></a>    ,</span>
+<span id="cb143-10"><a href="running-ergms.html#cb143-10" tabindex="-1"></a>  <span class="at">constraints =</span> <span class="sc">~</span><span class="fu">bd</span>(<span class="at">maxout =</span> <span class="dv">19</span>),</span>
+<span id="cb143-11"><a href="running-ergms.html#cb143-11" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">control.ergm</span>(</span>
+<span id="cb143-12"><a href="running-ergms.html#cb143-12" tabindex="-1"></a>    <span class="at">seed        =</span> <span class="dv">1</span>,</span>
+<span id="cb143-13"><a href="running-ergms.html#cb143-13" tabindex="-1"></a>    <span class="at">MCMLE.maxit =</span> <span class="dv">10</span>,</span>
+<span id="cb143-14"><a href="running-ergms.html#cb143-14" tabindex="-1"></a>    <span class="at">parallel    =</span> <span class="dv">4</span>,</span>
+<span id="cb143-15"><a href="running-ergms.html#cb143-15" tabindex="-1"></a>    <span class="at">CD.maxit    =</span> <span class="dv">10</span></span>
+<span id="cb143-16"><a href="running-ergms.html#cb143-16" tabindex="-1"></a>    )</span>
+<span id="cb143-17"><a href="running-ergms.html#cb143-17" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Now, a nice trick to see all regressions in the same table, we can use the <code>texreg</code> package <span class="citation">(<a href="#ref-R-texreg">Leifeld 2013</a>)</span> which supports <code>ergm</code> ouputs!</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="running-ergms.html#cb170-1" tabindex="-1"></a><span class="fu">library</span>(texreg)</span></code></pre></div>
-<pre><code>## Version:  1.38.6
-## Date:     2022-04-06
-## Author:   Philip Leifeld (University of Essex)
-## 
-## Consider submitting praise using the praise or praise_interactive functions.
-## Please cite the JSS article in your publications -- see citation(&quot;texreg&quot;).</code></pre>
-<pre><code>## 
-## Attaching package: &#39;texreg&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:magrittr&#39;:
-## 
-##     extract</code></pre>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="running-ergms.html#cb174-1" tabindex="-1"></a><span class="fu">screenreg</span>(<span class="fu">list</span>(ans0, ans1, ans2))</span></code></pre></div>
-<pre><code>## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing
-## it with version 4.2 or later may return incorrect results or fail.</code></pre>
-<pre><code>## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</code></pre>
-<pre><code>## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing
-## it with version 4.2 or later may return incorrect results or fail.</code></pre>
-<pre><code>## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</code></pre>
-<pre><code>## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing
-## it with version 4.2 or later may return incorrect results or fail.</code></pre>
-<pre><code>## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</code></pre>
-<pre><code>## 
-## ===============================================================
-##                     Model 1        Model 2        Model 3      
-## ---------------------------------------------------------------
-## edges                   -5.63 ***      -5.49 ***      -5.60 ***
-##                         (0.05)         (0.06)         (0.06)   
-## nodematch.hispanic       0.22 ***       0.30 ***       0.22 ***
-##                         (0.04)         (0.05)         (0.04)   
-## nodematch.female1        0.87 ***       1.17 ***       0.87 ***
-##                         (0.04)         (0.05)         (0.04)   
-## nodematch.eversmk1       0.33 ***       0.45 ***       0.34 ***
-##                         (0.04)         (0.04)         (0.04)   
-## mutual                   4.10 ***                      1.75 ***
-##                         (0.07)                        (0.14)   
-## balance                                                0.01 ***
-##                                                       (0.00)   
-## ---------------------------------------------------------------
-## AIC                 -40017.80      -37511.87      -39989.59    
-## BIC                 -39967.46      -37471.60      -39929.18    
-## Log Likelihood       20013.90       18759.94       20000.79    
-## ===============================================================
-## *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="running-ergms.html#cb144-1" tabindex="-1"></a><span class="fu">library</span>(texreg)</span>
+<span id="cb144-2"><a href="running-ergms.html#cb144-2" tabindex="-1"></a><span class="do">## Version:  1.38.6</span></span>
+<span id="cb144-3"><a href="running-ergms.html#cb144-3" tabindex="-1"></a><span class="do">## Date:     2022-04-06</span></span>
+<span id="cb144-4"><a href="running-ergms.html#cb144-4" tabindex="-1"></a><span class="do">## Author:   Philip Leifeld (University of Essex)</span></span>
+<span id="cb144-5"><a href="running-ergms.html#cb144-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb144-6"><a href="running-ergms.html#cb144-6" tabindex="-1"></a><span class="do">## Consider submitting praise using the praise or praise_interactive functions.</span></span>
+<span id="cb144-7"><a href="running-ergms.html#cb144-7" tabindex="-1"></a><span class="do">## Please cite the JSS article in your publications -- see citation(&quot;texreg&quot;).</span></span>
+<span id="cb144-8"><a href="running-ergms.html#cb144-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb144-9"><a href="running-ergms.html#cb144-9" tabindex="-1"></a><span class="do">## Attaching package: &#39;texreg&#39;</span></span>
+<span id="cb144-10"><a href="running-ergms.html#cb144-10" tabindex="-1"></a><span class="do">## The following object is masked from &#39;package:magrittr&#39;:</span></span>
+<span id="cb144-11"><a href="running-ergms.html#cb144-11" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb144-12"><a href="running-ergms.html#cb144-12" tabindex="-1"></a><span class="do">##     extract</span></span>
+<span id="cb144-13"><a href="running-ergms.html#cb144-13" tabindex="-1"></a><span class="fu">screenreg</span>(<span class="fu">list</span>(ans0, ans1, ans2))</span>
+<span id="cb144-14"><a href="running-ergms.html#cb144-14" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
+<span id="cb144-15"><a href="running-ergms.html#cb144-15" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
+<span id="cb144-16"><a href="running-ergms.html#cb144-16" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
+<span id="cb144-17"><a href="running-ergms.html#cb144-17" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
+<span id="cb144-18"><a href="running-ergms.html#cb144-18" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb144-19"><a href="running-ergms.html#cb144-19" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
+<span id="cb144-20"><a href="running-ergms.html#cb144-20" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
+<span id="cb144-21"><a href="running-ergms.html#cb144-21" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
+<span id="cb144-22"><a href="running-ergms.html#cb144-22" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
+<span id="cb144-23"><a href="running-ergms.html#cb144-23" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb144-24"><a href="running-ergms.html#cb144-24" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
+<span id="cb144-25"><a href="running-ergms.html#cb144-25" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
+<span id="cb144-26"><a href="running-ergms.html#cb144-26" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
+<span id="cb144-27"><a href="running-ergms.html#cb144-27" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
+<span id="cb144-28"><a href="running-ergms.html#cb144-28" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb144-29"><a href="running-ergms.html#cb144-29" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb144-30"><a href="running-ergms.html#cb144-30" tabindex="-1"></a><span class="do">## ===============================================================</span></span>
+<span id="cb144-31"><a href="running-ergms.html#cb144-31" tabindex="-1"></a><span class="do">##                     Model 1        Model 2        Model 3      </span></span>
+<span id="cb144-32"><a href="running-ergms.html#cb144-32" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------</span></span>
+<span id="cb144-33"><a href="running-ergms.html#cb144-33" tabindex="-1"></a><span class="do">## edges                   -5.63 ***      -5.49 ***      -5.60 ***</span></span>
+<span id="cb144-34"><a href="running-ergms.html#cb144-34" tabindex="-1"></a><span class="do">##                         (0.05)         (0.06)         (0.06)   </span></span>
+<span id="cb144-35"><a href="running-ergms.html#cb144-35" tabindex="-1"></a><span class="do">## nodematch.hispanic       0.22 ***       0.30 ***       0.22 ***</span></span>
+<span id="cb144-36"><a href="running-ergms.html#cb144-36" tabindex="-1"></a><span class="do">##                         (0.04)         (0.05)         (0.04)   </span></span>
+<span id="cb144-37"><a href="running-ergms.html#cb144-37" tabindex="-1"></a><span class="do">## nodematch.female1        0.87 ***       1.17 ***       0.87 ***</span></span>
+<span id="cb144-38"><a href="running-ergms.html#cb144-38" tabindex="-1"></a><span class="do">##                         (0.04)         (0.05)         (0.04)   </span></span>
+<span id="cb144-39"><a href="running-ergms.html#cb144-39" tabindex="-1"></a><span class="do">## nodematch.eversmk1       0.33 ***       0.45 ***       0.34 ***</span></span>
+<span id="cb144-40"><a href="running-ergms.html#cb144-40" tabindex="-1"></a><span class="do">##                         (0.04)         (0.04)         (0.04)   </span></span>
+<span id="cb144-41"><a href="running-ergms.html#cb144-41" tabindex="-1"></a><span class="do">## mutual                   4.10 ***                      1.75 ***</span></span>
+<span id="cb144-42"><a href="running-ergms.html#cb144-42" tabindex="-1"></a><span class="do">##                         (0.07)                        (0.14)   </span></span>
+<span id="cb144-43"><a href="running-ergms.html#cb144-43" tabindex="-1"></a><span class="do">## balance                                                0.01 ***</span></span>
+<span id="cb144-44"><a href="running-ergms.html#cb144-44" tabindex="-1"></a><span class="do">##                                                       (0.00)   </span></span>
+<span id="cb144-45"><a href="running-ergms.html#cb144-45" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------</span></span>
+<span id="cb144-46"><a href="running-ergms.html#cb144-46" tabindex="-1"></a><span class="do">## AIC                 -40017.80      -37511.87      -39989.59    </span></span>
+<span id="cb144-47"><a href="running-ergms.html#cb144-47" tabindex="-1"></a><span class="do">## BIC                 -39967.46      -37471.60      -39929.18    </span></span>
+<span id="cb144-48"><a href="running-ergms.html#cb144-48" tabindex="-1"></a><span class="do">## Log Likelihood       20013.90       18759.94       20000.79    </span></span>
+<span id="cb144-49"><a href="running-ergms.html#cb144-49" tabindex="-1"></a><span class="do">## ===============================================================</span></span>
+<span id="cb144-50"><a href="running-ergms.html#cb144-50" tabindex="-1"></a><span class="do">## *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></span></code></pre></div>
 <p>Or, if you are using rmarkdown, you can export the results using LaTeX or html, let’s try the latter to see how it looks like here:</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="running-ergms.html#cb182-1" tabindex="-1"></a><span class="fu">library</span>(texreg)</span>
-<span id="cb182-2"><a href="running-ergms.html#cb182-2" tabindex="-1"></a><span class="fu">htmlreg</span>(<span class="fu">list</span>(ans0, ans1, ans2))</span></code></pre></div>
-<pre><code>## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing
-## it with version 4.2 or later may return incorrect results or fail.</code></pre>
-<pre><code>## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</code></pre>
-<pre><code>## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing
-## it with version 4.2 or later may return incorrect results or fail.</code></pre>
-<pre><code>## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</code></pre>
-<pre><code>## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing
-## it with version 4.2 or later may return incorrect results or fail.</code></pre>
-<pre><code>## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="running-ergms.html#cb145-1" tabindex="-1"></a><span class="fu">library</span>(texreg)</span>
+<span id="cb145-2"><a href="running-ergms.html#cb145-2" tabindex="-1"></a><span class="fu">htmlreg</span>(<span class="fu">list</span>(ans0, ans1, ans2))</span>
+<span id="cb145-3"><a href="running-ergms.html#cb145-3" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
+<span id="cb145-4"><a href="running-ergms.html#cb145-4" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
+<span id="cb145-5"><a href="running-ergms.html#cb145-5" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
+<span id="cb145-6"><a href="running-ergms.html#cb145-6" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
+<span id="cb145-7"><a href="running-ergms.html#cb145-7" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb145-8"><a href="running-ergms.html#cb145-8" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
+<span id="cb145-9"><a href="running-ergms.html#cb145-9" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
+<span id="cb145-10"><a href="running-ergms.html#cb145-10" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
+<span id="cb145-11"><a href="running-ergms.html#cb145-11" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
+<span id="cb145-12"><a href="running-ergms.html#cb145-12" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb145-13"><a href="running-ergms.html#cb145-13" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
+<span id="cb145-14"><a href="running-ergms.html#cb145-14" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
+<span id="cb145-15"><a href="running-ergms.html#cb145-15" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
+<span id="cb145-16"><a href="running-ergms.html#cb145-16" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
+<span id="cb145-17"><a href="running-ergms.html#cb145-17" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span></code></pre></div>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
 <caption>
 Statistical models

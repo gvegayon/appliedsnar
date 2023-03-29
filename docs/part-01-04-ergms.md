@@ -44,40 +44,8 @@ Let's fit an ERGM using the `sampson` dataset included in the `ergm` package.
 
 ```r
 library(ergm)
-```
-
-```
-## Loading required package: network
-```
-
-```
-## 
-## 'network' 1.18.1 (2023-01-24), part of the Statnet Project
-## * 'news(package="network")' for changes since last version
-## * 'citation("network")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-```
-
-```
-## 
-## 'ergm' 4.4.0 (2023-01-26), part of the Statnet Project
-## * 'news(package="ergm")' for changes since last version
-## * 'citation("ergm")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-```
-
-```
-## 'ergm' 4 is a major update that introduces some backwards-incompatible
-## changes. Please type 'news(package="ergm")' for a list of major
-## changes.
-```
-
-```r
 data("sampson")
 samplike
-```
-
-```
 ##  Network attributes:
 ##   vertices = 18 
 ##   directed = TRUE 
@@ -100,29 +68,11 @@ Using `ergm` to fit a Bernoulli graph requires using the `edges` term, which cou
 
 ```r
 ergm_fit <- ergm(samplike ~ edges)
-```
-
-```
 ## Starting maximum pseudolikelihood estimation (MPLE):
-```
-
-```
 ## Evaluating the predictor and response matrix.
-```
-
-```
 ## Maximizing the pseudolikelihood.
-```
-
-```
 ## Finished MPLE.
-```
-
-```
 ## Stopping at the initial estimate.
-```
-
-```
 ## Evaluating log-likelihood at the estimate.
 ```
 
@@ -133,9 +83,6 @@ Since this is equivalent to a logistic regression, we can use the `glm` function
 y <- sort(as.vector(as.matrix(samplike)))
 y <- y[-c(1:18)] # We remove the diagonal from the model, which is all 0.
 y
-```
-
-```
 ##   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ##  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ##  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -160,9 +107,6 @@ The coefficients of both ERGM and GLM should match:
 
 ```r
 glm_fit
-```
-
-```
 ## 
 ## Call:  glm(formula = y ~ 1, family = binomial("logit"))
 ## 
@@ -173,13 +117,7 @@ glm_fit
 ## Degrees of Freedom: 305 Total (i.e. Null);  305 Residual
 ## Null Deviance:	    367.2 
 ## Residual Deviance: 367.2 	AIC: 369.2
-```
-
-```r
 ergm_fit
-```
-
-```
 ## 
 ## Call:
 ## ergm(formula = samplike ~ edges)
@@ -197,9 +135,6 @@ pr <- mean(y)
 # Logit function:
 # Alternatively we could have used log(pr) - log(1-pr)
 qlogis(pr)
-```
-
-```
 ## [1] -0.9071582
 ```
 
@@ -312,37 +247,13 @@ network_111 <- intergraph::asNetwork(ig_year1_111)
 
 # Running a simple ergm (only fitting edge count)
 ergm(network_111 ~ edges)
-```
-
-```
 ## [1] "Warning:  This network contains loops"
-```
-
-```
 ## Starting maximum pseudolikelihood estimation (MPLE):
-```
-
-```
 ## Evaluating the predictor and response matrix.
-```
-
-```
 ## Maximizing the pseudolikelihood.
-```
-
-```
 ## Finished MPLE.
-```
-
-```
 ## Stopping at the initial estimate.
-```
-
-```
 ## Evaluating log-likelihood at the estimate.
-```
-
-```
 ## 
 ## Call:
 ## ergm(formula = network_111 ~ edges)
@@ -357,10 +268,7 @@ So what happened here? We got a warning. It turns out that our network has loops
 
 ```r
 E(ig_year1_111)[which_loop(ig_year1_111)]
-```
-
-```
-## + 1/2638 edge from a9214b0 (vertex names):
+## + 1/2638 edge from 999398d (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -494,66 +402,22 @@ Now, a nice trick to see all regressions in the same table, we can use the `texr
 
 ```r
 library(texreg)
-```
-
-```
-## Version:  1.38.6
-## Date:     2022-04-06
-## Author:   Philip Leifeld (University of Essex)
-## 
-## Consider submitting praise using the praise or praise_interactive functions.
-## Please cite the JSS article in your publications -- see citation("texreg").
-```
-
-```
-## 
-## Attaching package: 'texreg'
-```
-
-```
-## The following object is masked from 'package:magrittr':
-## 
-##     extract
-```
-
-```r
 screenreg(list(ans0, ans1, ans2))
-```
-
-```
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
-```
-
-```
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
 ## ill-defined due to complex constraints on the sample space. Disable this warning
 ## with 'options(ergm.loglik.warn_dyads=FALSE)'.
-```
-
-```
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
-```
-
-```
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
 ## ill-defined due to complex constraints on the sample space. Disable this warning
 ## with 'options(ergm.loglik.warn_dyads=FALSE)'.
-```
-
-```
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
-```
-
-```
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
 ## ill-defined due to complex constraints on the sample space. Disable this warning
 ## with 'options(ergm.loglik.warn_dyads=FALSE)'.
-```
-
-```
 ## 
 ## ===============================================================
 ##                     Model 1        Model 2        Model 3      
@@ -584,36 +448,18 @@ Or, if you are using rmarkdown, you can export the results using LaTeX or html, 
 ```r
 library(texreg)
 htmlreg(list(ans0, ans1, ans2))
-```
-
-```
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
-```
-
-```
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
 ## ill-defined due to complex constraints on the sample space. Disable this warning
 ## with 'options(ergm.loglik.warn_dyads=FALSE)'.
-```
-
-```
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
-```
-
-```
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
 ## ill-defined due to complex constraints on the sample space. Disable this warning
 ## with 'options(ergm.loglik.warn_dyads=FALSE)'.
-```
-
-```
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
-```
-
-```
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
 ## ill-defined due to complex constraints on the sample space. Disable this warning
 ## with 'options(ergm.loglik.warn_dyads=FALSE)'.
@@ -775,9 +621,6 @@ Under the hood:
     
     ```r
     summary(sample_uncentered)
-    ```
-    
-    ```
     ## 
     ## Iterations = 1769472:10944512
     ## Thinning interval = 65536 
@@ -807,9 +650,6 @@ Under the hood:
     
     ```r
     coda::crosscorr(sample_uncentered)
-    ```
-    
-    ```
     ##                        edges nodematch.hispanic nodematch.female1
     ## edges              1.0000000          0.8657369         0.8851587
     ## nodematch.hispanic 0.8657369          1.0000000         0.7713632
@@ -827,9 +667,6 @@ Under the hood:
     
     ```r
     coda::autocorr(sample_uncentered)[[1]]
-    ```
-    
-    ```
     ## , , edges
     ## 
     ##                   edges nodematch.hispanic nodematch.female1 nodematch.eversmk1
@@ -917,9 +754,6 @@ Under the hood:
     
     ```r
     coda::geweke.diag(sample_uncentered)[[1]]
-    ```
-    
-    ```
     ## 
     ## Fraction in 1st window = 0.1
     ## Fraction in 2nd window = 0.5 
@@ -939,9 +773,6 @@ Under the hood:
     
     ```r
     coda::gelman.diag(sample_uncentered)
-    ```
-    
-    ```
     ## Potential scale reduction factors:
     ## 
     ##                    Point est. Upper C.I.
@@ -991,9 +822,6 @@ Let's take a look at it
 # Computing and printing GOF estatistics
 ans_gof <- gof(ans0)
 ans_gof
-```
-
-```
 ## 
 ## Goodness-of-fit for in-degree 
 ## 
@@ -1081,9 +909,7 @@ ans_gof
 ## nodematch.female1  1879 1760 1852.63 1970       0.60
 ## nodematch.eversmk1 1755 1614 1724.70 1824       0.56
 ## mutual              486  441  475.38  514       0.66
-```
 
-```r
 # Plotting GOF statistics
 plot(ans_gof)
 ```
@@ -1248,3 +1074,5 @@ Where the last equality follows from $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_
 Related to this, block-diagonal ERGMs can be estimated as independent models, one per block. To see more about this, read [@Snijders2010margin]. Likewise, since independence depends--pun intended--on partitioning the objective function, as pointed by Snijders, non-linear functions make the model dependent, e.g., $\s{\mathbf{y}} = \sqrt{\sum_{ij}y_{ij}}$, the square root of the edgecount is no longer a bernoulli graph.
 
 \renewcommand{\Pr}[1]{\mathbb{P}{#1}}
+
+

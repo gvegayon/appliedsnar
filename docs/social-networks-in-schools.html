@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -364,29 +364,29 @@ i.e., “the friend of my friend is my friend.”</p>
 <li><p>Simulate the ties in the empty network.</p></li>
 </ol>
 <p>Here is the code</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="social-networks-in-schools.html#cb243-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">712</span>)</span>
-<span id="cb243-2"><a href="social-networks-in-schools.html#cb243-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb243-3"><a href="social-networks-in-schools.html#cb243-3" tabindex="-1"></a></span>
-<span id="cb243-4"><a href="social-networks-in-schools.html#cb243-4" tabindex="-1"></a><span class="co"># Step 1: Students</span></span>
-<span id="cb243-5"><a href="social-networks-in-schools.html#cb243-5" tabindex="-1"></a>race   <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;non-white&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb243-6"><a href="social-networks-in-schools.html#cb243-6" tabindex="-1"></a>age    <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">17</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb243-7"><a href="social-networks-in-schools.html#cb243-7" tabindex="-1"></a></span>
-<span id="cb243-8"><a href="social-networks-in-schools.html#cb243-8" tabindex="-1"></a><span class="co"># Step 2: Create an empty network</span></span>
-<span id="cb243-9"><a href="social-networks-in-schools.html#cb243-9" tabindex="-1"></a><span class="fu">library</span>(ergm)</span>
-<span id="cb243-10"><a href="social-networks-in-schools.html#cb243-10" tabindex="-1"></a><span class="fu">library</span>(network)</span>
-<span id="cb243-11"><a href="social-networks-in-schools.html#cb243-11" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">network.initialize</span>(n)</span>
-<span id="cb243-12"><a href="social-networks-in-schools.html#cb243-12" tabindex="-1"></a></span>
-<span id="cb243-13"><a href="social-networks-in-schools.html#cb243-13" tabindex="-1"></a>net <span class="sc">%v%</span> <span class="st">&quot;race&quot;</span>   <span class="ot">&lt;-</span> race</span>
-<span id="cb243-14"><a href="social-networks-in-schools.html#cb243-14" tabindex="-1"></a>net <span class="sc">%v%</span> <span class="st">&quot;age&quot;</span>    <span class="ot">&lt;-</span> age</span>
-<span id="cb243-15"><a href="social-networks-in-schools.html#cb243-15" tabindex="-1"></a></span>
-<span id="cb243-16"><a href="social-networks-in-schools.html#cb243-16" tabindex="-1"></a><span class="co"># Step 3: Simulate a graph</span></span>
-<span id="cb243-17"><a href="social-networks-in-schools.html#cb243-17" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> <span class="fu">simulate</span>(</span>
-<span id="cb243-18"><a href="social-networks-in-schools.html#cb243-18" tabindex="-1"></a>    net <span class="sc">~</span> edges <span class="sc">+</span></span>
-<span id="cb243-19"><a href="social-networks-in-schools.html#cb243-19" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;race&quot;</span>) <span class="sc">+</span></span>
-<span id="cb243-20"><a href="social-networks-in-schools.html#cb243-20" tabindex="-1"></a>    ttriad <span class="sc">+</span></span>
-<span id="cb243-21"><a href="social-networks-in-schools.html#cb243-21" tabindex="-1"></a>    <span class="fu">absdiff</span>(<span class="st">&quot;age&quot;</span>),</span>
-<span id="cb243-22"><a href="social-networks-in-schools.html#cb243-22" tabindex="-1"></a>    <span class="at">coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, .<span class="dv">5</span>, .<span class="dv">25</span>, <span class="sc">-</span>.<span class="dv">5</span>)</span>
-<span id="cb243-23"><a href="social-networks-in-schools.html#cb243-23" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="social-networks-in-schools.html#cb193-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">712</span>)</span>
+<span id="cb193-2"><a href="social-networks-in-schools.html#cb193-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb193-3"><a href="social-networks-in-schools.html#cb193-3" tabindex="-1"></a></span>
+<span id="cb193-4"><a href="social-networks-in-schools.html#cb193-4" tabindex="-1"></a><span class="co"># Step 1: Students</span></span>
+<span id="cb193-5"><a href="social-networks-in-schools.html#cb193-5" tabindex="-1"></a>race   <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;non-white&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb193-6"><a href="social-networks-in-schools.html#cb193-6" tabindex="-1"></a>age    <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">17</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb193-7"><a href="social-networks-in-schools.html#cb193-7" tabindex="-1"></a></span>
+<span id="cb193-8"><a href="social-networks-in-schools.html#cb193-8" tabindex="-1"></a><span class="co"># Step 2: Create an empty network</span></span>
+<span id="cb193-9"><a href="social-networks-in-schools.html#cb193-9" tabindex="-1"></a><span class="fu">library</span>(ergm)</span>
+<span id="cb193-10"><a href="social-networks-in-schools.html#cb193-10" tabindex="-1"></a><span class="fu">library</span>(network)</span>
+<span id="cb193-11"><a href="social-networks-in-schools.html#cb193-11" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">network.initialize</span>(n)</span>
+<span id="cb193-12"><a href="social-networks-in-schools.html#cb193-12" tabindex="-1"></a></span>
+<span id="cb193-13"><a href="social-networks-in-schools.html#cb193-13" tabindex="-1"></a>net <span class="sc">%v%</span> <span class="st">&quot;race&quot;</span>   <span class="ot">&lt;-</span> race</span>
+<span id="cb193-14"><a href="social-networks-in-schools.html#cb193-14" tabindex="-1"></a>net <span class="sc">%v%</span> <span class="st">&quot;age&quot;</span>    <span class="ot">&lt;-</span> age</span>
+<span id="cb193-15"><a href="social-networks-in-schools.html#cb193-15" tabindex="-1"></a></span>
+<span id="cb193-16"><a href="social-networks-in-schools.html#cb193-16" tabindex="-1"></a><span class="co"># Step 3: Simulate a graph</span></span>
+<span id="cb193-17"><a href="social-networks-in-schools.html#cb193-17" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> <span class="fu">simulate</span>(</span>
+<span id="cb193-18"><a href="social-networks-in-schools.html#cb193-18" tabindex="-1"></a>    net <span class="sc">~</span> edges <span class="sc">+</span></span>
+<span id="cb193-19"><a href="social-networks-in-schools.html#cb193-19" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;race&quot;</span>) <span class="sc">+</span></span>
+<span id="cb193-20"><a href="social-networks-in-schools.html#cb193-20" tabindex="-1"></a>    ttriad <span class="sc">+</span></span>
+<span id="cb193-21"><a href="social-networks-in-schools.html#cb193-21" tabindex="-1"></a>    <span class="fu">absdiff</span>(<span class="st">&quot;age&quot;</span>),</span>
+<span id="cb193-22"><a href="social-networks-in-schools.html#cb193-22" tabindex="-1"></a>    <span class="at">coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, .<span class="dv">5</span>, .<span class="dv">25</span>, <span class="sc">-</span>.<span class="dv">5</span>)</span>
+<span id="cb193-23"><a href="social-networks-in-schools.html#cb193-23" tabindex="-1"></a>    )</span></code></pre></div>
 <p>What just happened? Here is a line-by-line breakout:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>set.seed(712)</code> Since this is a random simulation, we need to fix a seed so it is reproducible. Otherwise, results would change with every iteration.</p></li>
@@ -414,22 +414,22 @@ heterophily is the opposite of homophily.</p></li>
 </ol></li>
 </ol>
 <p>Let’s take a quick look at the resulting graph</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="social-networks-in-schools.html#cb244-1" tabindex="-1"></a><span class="fu">library</span>(sna)</span>
-<span id="cb244-2"><a href="social-networks-in-schools.html#cb244-2" tabindex="-1"></a><span class="fu">gplot</span>(net_sim)</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="social-networks-in-schools.html#cb194-1" tabindex="-1"></a><span class="fu">library</span>(sna)</span>
+<span id="cb194-2"><a href="social-networks-in-schools.html#cb194-2" tabindex="-1"></a><span class="fu">gplot</span>(net_sim)</span></code></pre></div>
 <p><img src="part-01-06-network-simulation-and-viz_files/figure-html/06-first-fig-1.png" width="672" /></p>
 <p>We can now start to see whether we got what we wanted! Before that, let’s save the
 network as a plain-text file so we can practice reading networks back in R!</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="social-networks-in-schools.html#cb245-1" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
-<span id="cb245-2"><a href="social-networks-in-schools.html#cb245-2" tabindex="-1"></a>  <span class="at">x         =</span> <span class="fu">as.edgelist</span>(net_sim),</span>
-<span id="cb245-3"><a href="social-networks-in-schools.html#cb245-3" tabindex="-1"></a>  <span class="at">file      =</span> <span class="st">&quot;06-edgelist.csv&quot;</span>,</span>
-<span id="cb245-4"><a href="social-networks-in-schools.html#cb245-4" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">FALSE</span></span>
-<span id="cb245-5"><a href="social-networks-in-schools.html#cb245-5" tabindex="-1"></a>  )</span>
-<span id="cb245-6"><a href="social-networks-in-schools.html#cb245-6" tabindex="-1"></a></span>
-<span id="cb245-7"><a href="social-networks-in-schools.html#cb245-7" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
-<span id="cb245-8"><a href="social-networks-in-schools.html#cb245-8" tabindex="-1"></a>  <span class="at">x         =</span> <span class="fu">as.data.frame</span>(net_sim, <span class="at">unit =</span> <span class="st">&quot;vertices&quot;</span>),</span>
-<span id="cb245-9"><a href="social-networks-in-schools.html#cb245-9" tabindex="-1"></a>  <span class="at">file      =</span> <span class="st">&quot;06-nodes.csv&quot;</span>,</span>
-<span id="cb245-10"><a href="social-networks-in-schools.html#cb245-10" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">FALSE</span></span>
-<span id="cb245-11"><a href="social-networks-in-schools.html#cb245-11" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="social-networks-in-schools.html#cb195-1" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
+<span id="cb195-2"><a href="social-networks-in-schools.html#cb195-2" tabindex="-1"></a>  <span class="at">x         =</span> <span class="fu">as.edgelist</span>(net_sim),</span>
+<span id="cb195-3"><a href="social-networks-in-schools.html#cb195-3" tabindex="-1"></a>  <span class="at">file      =</span> <span class="st">&quot;06-edgelist.csv&quot;</span>,</span>
+<span id="cb195-4"><a href="social-networks-in-schools.html#cb195-4" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">FALSE</span></span>
+<span id="cb195-5"><a href="social-networks-in-schools.html#cb195-5" tabindex="-1"></a>  )</span>
+<span id="cb195-6"><a href="social-networks-in-schools.html#cb195-6" tabindex="-1"></a></span>
+<span id="cb195-7"><a href="social-networks-in-schools.html#cb195-7" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
+<span id="cb195-8"><a href="social-networks-in-schools.html#cb195-8" tabindex="-1"></a>  <span class="at">x         =</span> <span class="fu">as.data.frame</span>(net_sim, <span class="at">unit =</span> <span class="st">&quot;vertices&quot;</span>),</span>
+<span id="cb195-9"><a href="social-networks-in-schools.html#cb195-9" tabindex="-1"></a>  <span class="at">file      =</span> <span class="st">&quot;06-nodes.csv&quot;</span>,</span>
+<span id="cb195-10"><a href="social-networks-in-schools.html#cb195-10" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">FALSE</span></span>
+<span id="cb195-11"><a href="social-networks-in-schools.html#cb195-11" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
             </section>
 

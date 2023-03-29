@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -361,28 +361,28 @@ it is more convenient to calculate the distance matrix taking this into account.
 <li><p><strong>netdiffuseR</strong> has a function to do so, the <code>approx_geodesic</code> function, which,
 using graph powers, computes the shortest path up to <code>n</code> steps. This could be
 faster (if you only care up to <code>n</code> steps) than <code>igraph</code> or <code>sns</code>:</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="statistical-inference.html#cb346-1" tabindex="-1"></a><span class="co"># Extracting the large adjacency matrix (stacked)</span></span>
-<span id="cb346-2"><a href="statistical-inference.html#cb346-2" tabindex="-1"></a>dgc <span class="ot">&lt;-</span> <span class="fu">diag_expand</span>(medInnovationsDiffNet<span class="sc">$</span>graph)</span>
-<span id="cb346-3"><a href="statistical-inference.html#cb346-3" tabindex="-1"></a>ig  <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(dgc)</span>
-<span id="cb346-4"><a href="statistical-inference.html#cb346-4" tabindex="-1"></a>mat <span class="ot">&lt;-</span> network<span class="sc">::</span><span class="fu">as.network</span>(<span class="fu">as.matrix</span>(dgc))</span>
-<span id="cb346-5"><a href="statistical-inference.html#cb346-5" tabindex="-1"></a></span>
-<span id="cb346-6"><a href="statistical-inference.html#cb346-6" tabindex="-1"></a><span class="co"># Measuring times</span></span>
-<span id="cb346-7"><a href="statistical-inference.html#cb346-7" tabindex="-1"></a>times <span class="ot">&lt;-</span> microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
-<span id="cb346-8"><a href="statistical-inference.html#cb346-8" tabindex="-1"></a>  <span class="at">netdiffuseR =</span> netdiffuseR<span class="sc">::</span><span class="fu">approx_geodesic</span>(dgc),</span>
-<span id="cb346-9"><a href="statistical-inference.html#cb346-9" tabindex="-1"></a>  <span class="at">igraph =</span> igraph<span class="sc">::</span><span class="fu">distances</span>(ig),</span>
-<span id="cb346-10"><a href="statistical-inference.html#cb346-10" tabindex="-1"></a>  <span class="at">sna =</span> sna<span class="sc">::</span><span class="fu">geodist</span>(mat),</span>
-<span id="cb346-11"><a href="statistical-inference.html#cb346-11" tabindex="-1"></a>  <span class="at">times =</span> <span class="dv">50</span>, <span class="at">unit=</span><span class="st">&quot;ms&quot;</span></span>
-<span id="cb346-12"><a href="statistical-inference.html#cb346-12" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="statistical-inference.html#cb278-1" tabindex="-1"></a><span class="co"># Extracting the large adjacency matrix (stacked)</span></span>
+<span id="cb278-2"><a href="statistical-inference.html#cb278-2" tabindex="-1"></a>dgc <span class="ot">&lt;-</span> <span class="fu">diag_expand</span>(medInnovationsDiffNet<span class="sc">$</span>graph)</span>
+<span id="cb278-3"><a href="statistical-inference.html#cb278-3" tabindex="-1"></a>ig  <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(dgc)</span>
+<span id="cb278-4"><a href="statistical-inference.html#cb278-4" tabindex="-1"></a>mat <span class="ot">&lt;-</span> network<span class="sc">::</span><span class="fu">as.network</span>(<span class="fu">as.matrix</span>(dgc))</span>
+<span id="cb278-5"><a href="statistical-inference.html#cb278-5" tabindex="-1"></a></span>
+<span id="cb278-6"><a href="statistical-inference.html#cb278-6" tabindex="-1"></a><span class="co"># Measuring times</span></span>
+<span id="cb278-7"><a href="statistical-inference.html#cb278-7" tabindex="-1"></a>times <span class="ot">&lt;-</span> microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
+<span id="cb278-8"><a href="statistical-inference.html#cb278-8" tabindex="-1"></a>  <span class="at">netdiffuseR =</span> netdiffuseR<span class="sc">::</span><span class="fu">approx_geodesic</span>(dgc),</span>
+<span id="cb278-9"><a href="statistical-inference.html#cb278-9" tabindex="-1"></a>  <span class="at">igraph =</span> igraph<span class="sc">::</span><span class="fu">distances</span>(ig),</span>
+<span id="cb278-10"><a href="statistical-inference.html#cb278-10" tabindex="-1"></a>  <span class="at">sna =</span> sna<span class="sc">::</span><span class="fu">geodist</span>(mat),</span>
+<span id="cb278-11"><a href="statistical-inference.html#cb278-11" tabindex="-1"></a>  <span class="at">times =</span> <span class="dv">50</span>, <span class="at">unit=</span><span class="st">&quot;ms&quot;</span></span>
+<span id="cb278-12"><a href="statistical-inference.html#cb278-12" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="part-01-09-netdiffuser_files/figure-html/geodesic_speed-box-1.png" width="672" /></p></li>
 <li><p>The <code>summary.diffnet</code> method already runs Moran’s for you. What happens under the hood is:</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="statistical-inference.html#cb347-1" tabindex="-1"></a><span class="co"># For each time point we compute the geodesic distances matrix</span></span>
-<span id="cb347-2"><a href="statistical-inference.html#cb347-2" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">approx_geodesic</span>(medInnovationsDiffNet<span class="sc">$</span>graph[[<span class="dv">1</span>]])</span>
-<span id="cb347-3"><a href="statistical-inference.html#cb347-3" tabindex="-1"></a></span>
-<span id="cb347-4"><a href="statistical-inference.html#cb347-4" tabindex="-1"></a><span class="co"># We get the element-wise inverse</span></span>
-<span id="cb347-5"><a href="statistical-inference.html#cb347-5" tabindex="-1"></a>W<span class="sc">@</span>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>W<span class="sc">@</span>x</span>
-<span id="cb347-6"><a href="statistical-inference.html#cb347-6" tabindex="-1"></a></span>
-<span id="cb347-7"><a href="statistical-inference.html#cb347-7" tabindex="-1"></a><span class="co"># And then compute moran</span></span>
-<span id="cb347-8"><a href="statistical-inference.html#cb347-8" tabindex="-1"></a><span class="fu">moran</span>(medInnovationsDiffNet<span class="sc">$</span>cumadopt[,<span class="dv">1</span>], W)</span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="statistical-inference.html#cb279-1" tabindex="-1"></a><span class="co"># For each time point we compute the geodesic distances matrix</span></span>
+<span id="cb279-2"><a href="statistical-inference.html#cb279-2" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">approx_geodesic</span>(medInnovationsDiffNet<span class="sc">$</span>graph[[<span class="dv">1</span>]])</span>
+<span id="cb279-3"><a href="statistical-inference.html#cb279-3" tabindex="-1"></a></span>
+<span id="cb279-4"><a href="statistical-inference.html#cb279-4" tabindex="-1"></a><span class="co"># We get the element-wise inverse</span></span>
+<span id="cb279-5"><a href="statistical-inference.html#cb279-5" tabindex="-1"></a>W<span class="sc">@</span>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>W<span class="sc">@</span>x</span>
+<span id="cb279-6"><a href="statistical-inference.html#cb279-6" tabindex="-1"></a></span>
+<span id="cb279-7"><a href="statistical-inference.html#cb279-7" tabindex="-1"></a><span class="co"># And then compute moran</span></span>
+<span id="cb279-8"><a href="statistical-inference.html#cb279-8" tabindex="-1"></a><span class="fu">moran</span>(medInnovationsDiffNet<span class="sc">$</span>cumadopt[,<span class="dv">1</span>], W)</span></code></pre></div>
 <pre><code>## $observed
 ## [1] 0.06624028
 ## 
@@ -420,24 +420,24 @@ faster (if you only care up to <code>n</code> steps) than <code>igraph</code> or
 <ul>
 <li><pre><code>To use this test, __netdiffuseR__ has the `struct_test` function.</code></pre></li>
 <li><pre><code>It simulates networks with the same density, and computes a particular statistic every time, generating an EDF (Empirical Distribution Function) under the Null hypothesis (p-values).</code></pre>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="statistical-inference.html#cb351-1" tabindex="-1"></a><span class="co"># Simulating network</span></span>
-<span id="cb351-2"><a href="statistical-inference.html#cb351-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1123</span>)</span>
-<span id="cb351-3"><a href="statistical-inference.html#cb351-3" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(<span class="at">n=</span><span class="dv">500</span>, <span class="at">t=</span><span class="dv">10</span>, <span class="at">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="statistical-inference.html#cb283-1" tabindex="-1"></a><span class="co"># Simulating network</span></span>
+<span id="cb283-2"><a href="statistical-inference.html#cb283-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1123</span>)</span>
+<span id="cb283-3"><a href="statistical-inference.html#cb283-3" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(<span class="at">n=</span><span class="dv">500</span>, <span class="at">t=</span><span class="dv">10</span>, <span class="at">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning in (function (graph, p, algorithm = &quot;endpoints&quot;, both.ends = FALSE, :
 ## The option -copy.first- is set to TRUE. In this case, the first graph will be
 ## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.</code></pre>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="statistical-inference.html#cb353-1" tabindex="-1"></a><span class="co"># Running the test</span></span>
-<span id="cb353-2"><a href="statistical-inference.html#cb353-2" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">struct_test</span>(</span>
-<span id="cb353-3"><a href="statistical-inference.html#cb353-3" tabindex="-1"></a>  <span class="at">graph     =</span> net, </span>
-<span id="cb353-4"><a href="statistical-inference.html#cb353-4" tabindex="-1"></a>  <span class="at">statistic =</span> <span class="cf">function</span>(x) <span class="fu">mean</span>(<span class="fu">threshold</span>(x), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb353-5"><a href="statistical-inference.html#cb353-5" tabindex="-1"></a>  <span class="at">R         =</span> <span class="fl">1e3</span>,</span>
-<span id="cb353-6"><a href="statistical-inference.html#cb353-6" tabindex="-1"></a>  <span class="at">ncpus=</span><span class="dv">4</span>, <span class="at">parallel=</span><span class="st">&quot;multicore&quot;</span></span>
-<span id="cb353-7"><a href="statistical-inference.html#cb353-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="statistical-inference.html#cb285-1" tabindex="-1"></a><span class="co"># Running the test</span></span>
+<span id="cb285-2"><a href="statistical-inference.html#cb285-2" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">struct_test</span>(</span>
+<span id="cb285-3"><a href="statistical-inference.html#cb285-3" tabindex="-1"></a>  <span class="at">graph     =</span> net, </span>
+<span id="cb285-4"><a href="statistical-inference.html#cb285-4" tabindex="-1"></a>  <span class="at">statistic =</span> <span class="cf">function</span>(x) <span class="fu">mean</span>(<span class="fu">threshold</span>(x), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb285-5"><a href="statistical-inference.html#cb285-5" tabindex="-1"></a>  <span class="at">R         =</span> <span class="fl">1e3</span>,</span>
+<span id="cb285-6"><a href="statistical-inference.html#cb285-6" tabindex="-1"></a>  <span class="at">ncpus=</span><span class="dv">4</span>, <span class="at">parallel=</span><span class="st">&quot;multicore&quot;</span></span>
+<span id="cb285-7"><a href="statistical-inference.html#cb285-7" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning in (function (graph, p, algorithm = &quot;endpoints&quot;, both.ends = FALSE, :
 ## The option -copy.first- is set to TRUE. In this case, the first graph will be
 ## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.</code></pre>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="statistical-inference.html#cb355-1" tabindex="-1"></a><span class="co"># See the output</span></span>
-<span id="cb355-2"><a href="statistical-inference.html#cb355-2" tabindex="-1"></a>test</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="statistical-inference.html#cb287-1" tabindex="-1"></a><span class="co"># See the output</span></span>
+<span id="cb287-2"><a href="statistical-inference.html#cb287-2" tabindex="-1"></a>test</span></code></pre></div>
 <pre><code>## 
 ## Structure dependence test
 ## # Simulations     : 1,000
@@ -451,21 +451,21 @@ faster (if you only care up to <code>n</code> steps) than <code>igraph</code> or
 <p><img src="part-01-09-netdiffuser_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <ul>
 <li><p>Now we shuffle times of adoption, so that is random</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="statistical-inference.html#cb357-1" tabindex="-1"></a><span class="co"># Resetting TOAs (now will be completely random)</span></span>
-<span id="cb357-2"><a href="statistical-inference.html#cb357-2" tabindex="-1"></a><span class="fu">diffnet.toa</span>(net) <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">diffnet.toa</span>(net), <span class="fu">nnodes</span>(net), <span class="cn">TRUE</span>)</span>
-<span id="cb357-3"><a href="statistical-inference.html#cb357-3" tabindex="-1"></a></span>
-<span id="cb357-4"><a href="statistical-inference.html#cb357-4" tabindex="-1"></a><span class="co"># Running the test</span></span>
-<span id="cb357-5"><a href="statistical-inference.html#cb357-5" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">struct_test</span>(</span>
-<span id="cb357-6"><a href="statistical-inference.html#cb357-6" tabindex="-1"></a>  <span class="at">graph     =</span> net, </span>
-<span id="cb357-7"><a href="statistical-inference.html#cb357-7" tabindex="-1"></a>  <span class="at">statistic =</span> <span class="cf">function</span>(x) <span class="fu">mean</span>(<span class="fu">threshold</span>(x), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb357-8"><a href="statistical-inference.html#cb357-8" tabindex="-1"></a>  <span class="at">R         =</span> <span class="fl">1e3</span>,</span>
-<span id="cb357-9"><a href="statistical-inference.html#cb357-9" tabindex="-1"></a>  <span class="at">ncpus=</span><span class="dv">4</span>, <span class="at">parallel=</span><span class="st">&quot;multicore&quot;</span></span>
-<span id="cb357-10"><a href="statistical-inference.html#cb357-10" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="statistical-inference.html#cb289-1" tabindex="-1"></a><span class="co"># Resetting TOAs (now will be completely random)</span></span>
+<span id="cb289-2"><a href="statistical-inference.html#cb289-2" tabindex="-1"></a><span class="fu">diffnet.toa</span>(net) <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">diffnet.toa</span>(net), <span class="fu">nnodes</span>(net), <span class="cn">TRUE</span>)</span>
+<span id="cb289-3"><a href="statistical-inference.html#cb289-3" tabindex="-1"></a></span>
+<span id="cb289-4"><a href="statistical-inference.html#cb289-4" tabindex="-1"></a><span class="co"># Running the test</span></span>
+<span id="cb289-5"><a href="statistical-inference.html#cb289-5" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">struct_test</span>(</span>
+<span id="cb289-6"><a href="statistical-inference.html#cb289-6" tabindex="-1"></a>  <span class="at">graph     =</span> net, </span>
+<span id="cb289-7"><a href="statistical-inference.html#cb289-7" tabindex="-1"></a>  <span class="at">statistic =</span> <span class="cf">function</span>(x) <span class="fu">mean</span>(<span class="fu">threshold</span>(x), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb289-8"><a href="statistical-inference.html#cb289-8" tabindex="-1"></a>  <span class="at">R         =</span> <span class="fl">1e3</span>,</span>
+<span id="cb289-9"><a href="statistical-inference.html#cb289-9" tabindex="-1"></a>  <span class="at">ncpus=</span><span class="dv">4</span>, <span class="at">parallel=</span><span class="st">&quot;multicore&quot;</span></span>
+<span id="cb289-10"><a href="statistical-inference.html#cb289-10" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## Warning in (function (graph, p, algorithm = &quot;endpoints&quot;, both.ends = FALSE, :
 ## The option -copy.first- is set to TRUE. In this case, the first graph will be
 ## treated as a baseline, and thus, networks after T=1 will be replaced with T-1.</code></pre>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="statistical-inference.html#cb359-1" tabindex="-1"></a><span class="co"># See the output</span></span>
-<span id="cb359-2"><a href="statistical-inference.html#cb359-2" tabindex="-1"></a>test</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="statistical-inference.html#cb291-1" tabindex="-1"></a><span class="co"># See the output</span></span>
+<span id="cb291-2"><a href="statistical-inference.html#cb291-2" tabindex="-1"></a>test</span></code></pre></div>
 <pre><code>## 
 ## Structure dependence test
 ## # Simulations     : 1,000
@@ -509,27 +509,27 @@ y_{it} = \left\{
 \right.
 \]</span></p></li>
 <li><p>In netdiffuseR is as easy as doing the following:</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="statistical-inference.html#cb361-1" tabindex="-1"></a><span class="co"># fakedata</span></span>
-<span id="cb361-2"><a href="statistical-inference.html#cb361-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">121</span>)</span>
-<span id="cb361-3"><a href="statistical-inference.html#cb361-3" tabindex="-1"></a></span>
-<span id="cb361-4"><a href="statistical-inference.html#cb361-4" tabindex="-1"></a>W   <span class="ot">&lt;-</span> <span class="fu">rgraph_ws</span>(<span class="fl">1e3</span>, <span class="dv">8</span>, .<span class="dv">2</span>)</span>
-<span id="cb361-5"><a href="statistical-inference.html#cb361-5" tabindex="-1"></a>X   <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">var1 =</span> <span class="fu">rnorm</span>(<span class="fl">1e3</span>))</span>
-<span id="cb361-6"><a href="statistical-inference.html#cb361-6" tabindex="-1"></a>toa <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">NA</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="fl">1e3</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb361-7"><a href="statistical-inference.html#cb361-7" tabindex="-1"></a></span>
-<span id="cb361-8"><a href="statistical-inference.html#cb361-8" tabindex="-1"></a>dn  <span class="ot">&lt;-</span> <span class="fu">new_diffnet</span>(W, <span class="at">toa=</span>toa, <span class="at">vertex.static.attrs =</span> X)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="statistical-inference.html#cb293-1" tabindex="-1"></a><span class="co"># fakedata</span></span>
+<span id="cb293-2"><a href="statistical-inference.html#cb293-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">121</span>)</span>
+<span id="cb293-3"><a href="statistical-inference.html#cb293-3" tabindex="-1"></a></span>
+<span id="cb293-4"><a href="statistical-inference.html#cb293-4" tabindex="-1"></a>W   <span class="ot">&lt;-</span> <span class="fu">rgraph_ws</span>(<span class="fl">1e3</span>, <span class="dv">8</span>, .<span class="dv">2</span>)</span>
+<span id="cb293-5"><a href="statistical-inference.html#cb293-5" tabindex="-1"></a>X   <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">var1 =</span> <span class="fu">rnorm</span>(<span class="fl">1e3</span>))</span>
+<span id="cb293-6"><a href="statistical-inference.html#cb293-6" tabindex="-1"></a>toa <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">NA</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="fl">1e3</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb293-7"><a href="statistical-inference.html#cb293-7" tabindex="-1"></a></span>
+<span id="cb293-8"><a href="statistical-inference.html#cb293-8" tabindex="-1"></a>dn  <span class="ot">&lt;-</span> <span class="fu">new_diffnet</span>(W, <span class="at">toa=</span>toa, <span class="at">vertex.static.attrs =</span> X)</span></code></pre></div>
 <pre><code>## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is static
 ## and will be recycled (see ?new_diffnet).</code></pre>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="statistical-inference.html#cb363-1" tabindex="-1"></a><span class="co"># Computing exposure and adoption for regression</span></span>
-<span id="cb363-2"><a href="statistical-inference.html#cb363-2" tabindex="-1"></a>dn[[<span class="st">&quot;cohesive_expo&quot;</span>]] <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="cn">NA</span>, <span class="fu">exposure</span>(dn)[,<span class="sc">-</span><span class="fu">nslices</span>(dn)])</span>
-<span id="cb363-3"><a href="statistical-inference.html#cb363-3" tabindex="-1"></a>dn[[<span class="st">&quot;adopt&quot;</span>]]         <span class="ot">&lt;-</span> dn<span class="sc">$</span>cumadopt</span>
-<span id="cb363-4"><a href="statistical-inference.html#cb363-4" tabindex="-1"></a></span>
-<span id="cb363-5"><a href="statistical-inference.html#cb363-5" tabindex="-1"></a><span class="co"># Generating the data and running the model</span></span>
-<span id="cb363-6"><a href="statistical-inference.html#cb363-6" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dn)</span>
-<span id="cb363-7"><a href="statistical-inference.html#cb363-7" tabindex="-1"></a>ans <span class="ot">&lt;-</span> <span class="fu">glm</span>(adopt <span class="sc">~</span> cohesive_expo <span class="sc">+</span> var1 <span class="sc">+</span> <span class="fu">factor</span>(per),</span>
-<span id="cb363-8"><a href="statistical-inference.html#cb363-8" tabindex="-1"></a>           <span class="at">data =</span> dat,</span>
-<span id="cb363-9"><a href="statistical-inference.html#cb363-9" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;probit&quot;</span>),</span>
-<span id="cb363-10"><a href="statistical-inference.html#cb363-10" tabindex="-1"></a>           <span class="at">subset =</span> <span class="fu">is.na</span>(toa) <span class="sc">|</span> (per <span class="sc">&lt;=</span> toa))</span>
-<span id="cb363-11"><a href="statistical-inference.html#cb363-11" tabindex="-1"></a><span class="fu">summary</span>(ans)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="statistical-inference.html#cb295-1" tabindex="-1"></a><span class="co"># Computing exposure and adoption for regression</span></span>
+<span id="cb295-2"><a href="statistical-inference.html#cb295-2" tabindex="-1"></a>dn[[<span class="st">&quot;cohesive_expo&quot;</span>]] <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="cn">NA</span>, <span class="fu">exposure</span>(dn)[,<span class="sc">-</span><span class="fu">nslices</span>(dn)])</span>
+<span id="cb295-3"><a href="statistical-inference.html#cb295-3" tabindex="-1"></a>dn[[<span class="st">&quot;adopt&quot;</span>]]         <span class="ot">&lt;-</span> dn<span class="sc">$</span>cumadopt</span>
+<span id="cb295-4"><a href="statistical-inference.html#cb295-4" tabindex="-1"></a></span>
+<span id="cb295-5"><a href="statistical-inference.html#cb295-5" tabindex="-1"></a><span class="co"># Generating the data and running the model</span></span>
+<span id="cb295-6"><a href="statistical-inference.html#cb295-6" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dn)</span>
+<span id="cb295-7"><a href="statistical-inference.html#cb295-7" tabindex="-1"></a>ans <span class="ot">&lt;-</span> <span class="fu">glm</span>(adopt <span class="sc">~</span> cohesive_expo <span class="sc">+</span> var1 <span class="sc">+</span> <span class="fu">factor</span>(per),</span>
+<span id="cb295-8"><a href="statistical-inference.html#cb295-8" tabindex="-1"></a>           <span class="at">data =</span> dat,</span>
+<span id="cb295-9"><a href="statistical-inference.html#cb295-9" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;probit&quot;</span>),</span>
+<span id="cb295-10"><a href="statistical-inference.html#cb295-10" tabindex="-1"></a>           <span class="at">subset =</span> <span class="fu">is.na</span>(toa) <span class="sc">|</span> (per <span class="sc">&lt;=</span> toa))</span>
+<span id="cb295-11"><a href="statistical-inference.html#cb295-11" tabindex="-1"></a><span class="fu">summary</span>(ans)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = adopt ~ cohesive_expo + var1 + factor(per), family = binomial(link = &quot;probit&quot;), 
@@ -559,8 +559,8 @@ y_{it} = \left\{
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
 <p>Alternatively, we could have used the new function <code>diffreg</code></p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="statistical-inference.html#cb365-1" tabindex="-1"></a>ans <span class="ot">&lt;-</span> <span class="fu">diffreg</span>(dn <span class="sc">~</span> exposure <span class="sc">+</span> var1 <span class="sc">+</span> <span class="fu">factor</span>(per), <span class="at">type =</span> <span class="st">&quot;probit&quot;</span>)</span>
-<span id="cb365-2"><a href="statistical-inference.html#cb365-2" tabindex="-1"></a><span class="fu">summary</span>(ans)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="statistical-inference.html#cb297-1" tabindex="-1"></a>ans <span class="ot">&lt;-</span> <span class="fu">diffreg</span>(dn <span class="sc">~</span> exposure <span class="sc">+</span> var1 <span class="sc">+</span> <span class="fu">factor</span>(per), <span class="at">type =</span> <span class="st">&quot;probit&quot;</span>)</span>
+<span id="cb297-2"><a href="statistical-inference.html#cb297-2" tabindex="-1"></a><span class="fu">summary</span>(ans)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Adopt ~ exposure + var1 + factor(per), family = binomial(link = &quot;probit&quot;), 

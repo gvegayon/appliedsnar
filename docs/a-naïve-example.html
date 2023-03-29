@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -344,87 +344,73 @@ div.csl-indent {
 <h2><span class="header-section-number">6.1</span> A naïve example<a href="a-naïve-example.html#a-naïve-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the simplest case, ERGMs equate a logistic regression. By simple, I mean cases in which there are no Markovian terms–motifs involving more than one edge–for example, the Bernoulli graph. In the Bernoulli graph, ties are independent of each other, so the presence/absence of a tie between nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> won’t affect the presence/absence of a tie between nodes <span class="math inline">\(k\)</span> and <span class="math inline">\(l\)</span>.</p>
 <p>Let’s fit an ERGM using the <code>sampson</code> dataset included in the <code>ergm</code> package.</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="a-naïve-example.html#cb127-1" tabindex="-1"></a><span class="fu">library</span>(ergm)</span></code></pre></div>
-<pre><code>## Loading required package: network</code></pre>
-<pre><code>## 
-## &#39;network&#39; 1.18.1 (2023-01-24), part of the Statnet Project
-## * &#39;news(package=&quot;network&quot;)&#39; for changes since last version
-## * &#39;citation(&quot;network&quot;)&#39; for citation information
-## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
-<pre><code>## 
-## &#39;ergm&#39; 4.4.0 (2023-01-26), part of the Statnet Project
-## * &#39;news(package=&quot;ergm&quot;)&#39; for changes since last version
-## * &#39;citation(&quot;ergm&quot;)&#39; for citation information
-## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
-<pre><code>## &#39;ergm&#39; 4 is a major update that introduces some backwards-incompatible
-## changes. Please type &#39;news(package=&quot;ergm&quot;)&#39; for a list of major
-## changes.</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="a-naïve-example.html#cb132-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sampson&quot;</span>)</span>
-<span id="cb132-2"><a href="a-naïve-example.html#cb132-2" tabindex="-1"></a>samplike</span></code></pre></div>
-<pre><code>##  Network attributes:
-##   vertices = 18 
-##   directed = TRUE 
-##   hyper = FALSE 
-##   loops = FALSE 
-##   multiple = FALSE 
-##   total edges= 88 
-##     missing edges= 0 
-##     non-missing edges= 88 
-## 
-##  Vertex attribute names: 
-##     cloisterville group vertex.names 
-## 
-##  Edge attribute names: 
-##     nominations</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="a-naïve-example.html#cb127-1" tabindex="-1"></a><span class="fu">library</span>(ergm)</span>
+<span id="cb127-2"><a href="a-naïve-example.html#cb127-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sampson&quot;</span>)</span>
+<span id="cb127-3"><a href="a-naïve-example.html#cb127-3" tabindex="-1"></a>samplike</span>
+<span id="cb127-4"><a href="a-naïve-example.html#cb127-4" tabindex="-1"></a><span class="do">##  Network attributes:</span></span>
+<span id="cb127-5"><a href="a-naïve-example.html#cb127-5" tabindex="-1"></a><span class="do">##   vertices = 18 </span></span>
+<span id="cb127-6"><a href="a-naïve-example.html#cb127-6" tabindex="-1"></a><span class="do">##   directed = TRUE </span></span>
+<span id="cb127-7"><a href="a-naïve-example.html#cb127-7" tabindex="-1"></a><span class="do">##   hyper = FALSE </span></span>
+<span id="cb127-8"><a href="a-naïve-example.html#cb127-8" tabindex="-1"></a><span class="do">##   loops = FALSE </span></span>
+<span id="cb127-9"><a href="a-naïve-example.html#cb127-9" tabindex="-1"></a><span class="do">##   multiple = FALSE </span></span>
+<span id="cb127-10"><a href="a-naïve-example.html#cb127-10" tabindex="-1"></a><span class="do">##   total edges= 88 </span></span>
+<span id="cb127-11"><a href="a-naïve-example.html#cb127-11" tabindex="-1"></a><span class="do">##     missing edges= 0 </span></span>
+<span id="cb127-12"><a href="a-naïve-example.html#cb127-12" tabindex="-1"></a><span class="do">##     non-missing edges= 88 </span></span>
+<span id="cb127-13"><a href="a-naïve-example.html#cb127-13" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb127-14"><a href="a-naïve-example.html#cb127-14" tabindex="-1"></a><span class="do">##  Vertex attribute names: </span></span>
+<span id="cb127-15"><a href="a-naïve-example.html#cb127-15" tabindex="-1"></a><span class="do">##     cloisterville group vertex.names </span></span>
+<span id="cb127-16"><a href="a-naïve-example.html#cb127-16" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb127-17"><a href="a-naïve-example.html#cb127-17" tabindex="-1"></a><span class="do">##  Edge attribute names: </span></span>
+<span id="cb127-18"><a href="a-naïve-example.html#cb127-18" tabindex="-1"></a><span class="do">##     nominations</span></span></code></pre></div>
 <p>Using <code>ergm</code> to fit a Bernoulli graph requires using the <code>edges</code> term, which counts how many ties are in the graph:</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="a-naïve-example.html#cb134-1" tabindex="-1"></a>ergm_fit <span class="ot">&lt;-</span> <span class="fu">ergm</span>(samplike <span class="sc">~</span> edges)</span></code></pre></div>
-<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
-<pre><code>## Evaluating the predictor and response matrix.</code></pre>
-<pre><code>## Maximizing the pseudolikelihood.</code></pre>
-<pre><code>## Finished MPLE.</code></pre>
-<pre><code>## Stopping at the initial estimate.</code></pre>
-<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="a-naïve-example.html#cb128-1" tabindex="-1"></a>ergm_fit <span class="ot">&lt;-</span> <span class="fu">ergm</span>(samplike <span class="sc">~</span> edges)</span>
+<span id="cb128-2"><a href="a-naïve-example.html#cb128-2" tabindex="-1"></a><span class="do">## Starting maximum pseudolikelihood estimation (MPLE):</span></span>
+<span id="cb128-3"><a href="a-naïve-example.html#cb128-3" tabindex="-1"></a><span class="do">## Evaluating the predictor and response matrix.</span></span>
+<span id="cb128-4"><a href="a-naïve-example.html#cb128-4" tabindex="-1"></a><span class="do">## Maximizing the pseudolikelihood.</span></span>
+<span id="cb128-5"><a href="a-naïve-example.html#cb128-5" tabindex="-1"></a><span class="do">## Finished MPLE.</span></span>
+<span id="cb128-6"><a href="a-naïve-example.html#cb128-6" tabindex="-1"></a><span class="do">## Stopping at the initial estimate.</span></span>
+<span id="cb128-7"><a href="a-naïve-example.html#cb128-7" tabindex="-1"></a><span class="do">## Evaluating log-likelihood at the estimate.</span></span></code></pre></div>
 <p>Since this is equivalent to a logistic regression, we can use the <code>glm</code> function to fit the same model. First, we need to prepare the data so we can pass it to <code>glm</code>:</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="a-naïve-example.html#cb141-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">as.vector</span>(<span class="fu">as.matrix</span>(samplike)))</span>
-<span id="cb141-2"><a href="a-naïve-example.html#cb141-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> y[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>)] <span class="co"># We remove the diagonal from the model, which is all 0.</span></span>
-<span id="cb141-3"><a href="a-naïve-example.html#cb141-3" tabindex="-1"></a>y</span></code></pre></div>
-<pre><code>##   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-##  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-##  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-## [112] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-## [149] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-## [186] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1
-## [223] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-## [260] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-## [297] 1 1 1 1 1 1 1 1 1 1</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="a-naïve-example.html#cb129-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">as.vector</span>(<span class="fu">as.matrix</span>(samplike)))</span>
+<span id="cb129-2"><a href="a-naïve-example.html#cb129-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> y[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>)] <span class="co"># We remove the diagonal from the model, which is all 0.</span></span>
+<span id="cb129-3"><a href="a-naïve-example.html#cb129-3" tabindex="-1"></a>y</span>
+<span id="cb129-4"><a href="a-naïve-example.html#cb129-4" tabindex="-1"></a><span class="do">##   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span>
+<span id="cb129-5"><a href="a-naïve-example.html#cb129-5" tabindex="-1"></a><span class="do">##  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span>
+<span id="cb129-6"><a href="a-naïve-example.html#cb129-6" tabindex="-1"></a><span class="do">##  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span>
+<span id="cb129-7"><a href="a-naïve-example.html#cb129-7" tabindex="-1"></a><span class="do">## [112] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span>
+<span id="cb129-8"><a href="a-naïve-example.html#cb129-8" tabindex="-1"></a><span class="do">## [149] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span>
+<span id="cb129-9"><a href="a-naïve-example.html#cb129-9" tabindex="-1"></a><span class="do">## [186] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1</span></span>
+<span id="cb129-10"><a href="a-naïve-example.html#cb129-10" tabindex="-1"></a><span class="do">## [223] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span></span>
+<span id="cb129-11"><a href="a-naïve-example.html#cb129-11" tabindex="-1"></a><span class="do">## [260] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span></span>
+<span id="cb129-12"><a href="a-naïve-example.html#cb129-12" tabindex="-1"></a><span class="do">## [297] 1 1 1 1 1 1 1 1 1 1</span></span></code></pre></div>
 <p>We can now fit the GLM model:</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="a-naïve-example.html#cb143-1" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(y<span class="sc">~</span><span class="dv">1</span>, <span class="at">family=</span><span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="a-naïve-example.html#cb130-1" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(y<span class="sc">~</span><span class="dv">1</span>, <span class="at">family=</span><span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
 <p>The coefficients of both ERGM and GLM should match:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="a-naïve-example.html#cb144-1" tabindex="-1"></a>glm_fit</span></code></pre></div>
-<pre><code>## 
-## Call:  glm(formula = y ~ 1, family = binomial(&quot;logit&quot;))
-## 
-## Coefficients:
-## (Intercept)  
-##     -0.9072  
-## 
-## Degrees of Freedom: 305 Total (i.e. Null);  305 Residual
-## Null Deviance:       367.2 
-## Residual Deviance: 367.2     AIC: 369.2</code></pre>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="a-naïve-example.html#cb146-1" tabindex="-1"></a>ergm_fit</span></code></pre></div>
-<pre><code>## 
-## Call:
-## ergm(formula = samplike ~ edges)
-## 
-## Maximum Likelihood Coefficients:
-##   edges  
-## -0.9072</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="a-naïve-example.html#cb131-1" tabindex="-1"></a>glm_fit</span>
+<span id="cb131-2"><a href="a-naïve-example.html#cb131-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb131-3"><a href="a-naïve-example.html#cb131-3" tabindex="-1"></a><span class="do">## Call:  glm(formula = y ~ 1, family = binomial(&quot;logit&quot;))</span></span>
+<span id="cb131-4"><a href="a-naïve-example.html#cb131-4" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb131-5"><a href="a-naïve-example.html#cb131-5" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb131-6"><a href="a-naïve-example.html#cb131-6" tabindex="-1"></a><span class="do">## (Intercept)  </span></span>
+<span id="cb131-7"><a href="a-naïve-example.html#cb131-7" tabindex="-1"></a><span class="do">##     -0.9072  </span></span>
+<span id="cb131-8"><a href="a-naïve-example.html#cb131-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb131-9"><a href="a-naïve-example.html#cb131-9" tabindex="-1"></a><span class="do">## Degrees of Freedom: 305 Total (i.e. Null);  305 Residual</span></span>
+<span id="cb131-10"><a href="a-naïve-example.html#cb131-10" tabindex="-1"></a><span class="do">## Null Deviance:       367.2 </span></span>
+<span id="cb131-11"><a href="a-naïve-example.html#cb131-11" tabindex="-1"></a><span class="do">## Residual Deviance: 367.2     AIC: 369.2</span></span>
+<span id="cb131-12"><a href="a-naïve-example.html#cb131-12" tabindex="-1"></a>ergm_fit</span>
+<span id="cb131-13"><a href="a-naïve-example.html#cb131-13" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb131-14"><a href="a-naïve-example.html#cb131-14" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb131-15"><a href="a-naïve-example.html#cb131-15" tabindex="-1"></a><span class="do">## ergm(formula = samplike ~ edges)</span></span>
+<span id="cb131-16"><a href="a-naïve-example.html#cb131-16" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb131-17"><a href="a-naïve-example.html#cb131-17" tabindex="-1"></a><span class="do">## Maximum Likelihood Coefficients:</span></span>
+<span id="cb131-18"><a href="a-naïve-example.html#cb131-18" tabindex="-1"></a><span class="do">##   edges  </span></span>
+<span id="cb131-19"><a href="a-naïve-example.html#cb131-19" tabindex="-1"></a><span class="do">## -0.9072</span></span></code></pre></div>
 <p>Furthermore, in the case of the Bernoulli graph, we can get the estimate using the Logit function:</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="a-naïve-example.html#cb148-1" tabindex="-1"></a>pr <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
-<span id="cb148-2"><a href="a-naïve-example.html#cb148-2" tabindex="-1"></a><span class="co"># Logit function:</span></span>
-<span id="cb148-3"><a href="a-naïve-example.html#cb148-3" tabindex="-1"></a><span class="co"># Alternatively we could have used log(pr) - log(1-pr)</span></span>
-<span id="cb148-4"><a href="a-naïve-example.html#cb148-4" tabindex="-1"></a><span class="fu">qlogis</span>(pr)</span></code></pre></div>
-<pre><code>## [1] -0.9071582</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="a-naïve-example.html#cb132-1" tabindex="-1"></a>pr <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb132-2"><a href="a-naïve-example.html#cb132-2" tabindex="-1"></a><span class="co"># Logit function:</span></span>
+<span id="cb132-3"><a href="a-naïve-example.html#cb132-3" tabindex="-1"></a><span class="co"># Alternatively we could have used log(pr) - log(1-pr)</span></span>
+<span id="cb132-4"><a href="a-naïve-example.html#cb132-4" tabindex="-1"></a><span class="fu">qlogis</span>(pr)</span>
+<span id="cb132-5"><a href="a-naïve-example.html#cb132-5" tabindex="-1"></a><span class="do">## [1] -0.9071582</span></span></code></pre></div>
 <p>Again, the same result. The Bernoulli graph is not the only ERGM model that can be fitted using a Logistic regression. Moreover, if all the terms of the model are non-Markov terms, <code>ergm</code> automatically defaults to a Logistic regression.</p>
 </div>
             </section>

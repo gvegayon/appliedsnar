@@ -24,9 +24,6 @@ This will extract all the files in `networkCanvasExport-fake.zip` to the subfold
 
 ```r
 head(list.files(path = "data-raw/egonets"))
-```
-
-```
 ## [1] "I_-59190_BRB9111_attributeList_Person.csv"
 ## [2] "I_-59190_BRB9111_edgeList_Knows.csv"      
 ## [3] "I_-59190_BRB9111_ego.csv"                 
@@ -68,15 +65,10 @@ graph_files <- list.files(
 
 # Taking a look at the first three files we got
 graph_files[1:3]
-```
-
-```
 ## [1] "data-raw/egonets/I_-59190_BRB9111.graphml"
 ## [2] "data-raw/egonets/I-100BB_00B95-90.graphml"
 ## [3] "data-raw/egonets/I-1BB79950-0-7.graphml"
-```
 
-```r
 # Applying igraph's read_graph
 graphs <- lapply(
   X      = graph_files,       # List of files to read
@@ -90,27 +82,18 @@ If the operation succeeded, then the previous code block should generate a list 
 
 ```r
 graphs[[1]]
-```
-
-```
-## IGRAPH 4362618 U--- 12 25 -- 
+## IGRAPH 3ca2dba U--- 12 25 -- 
 ## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
 ## | (v/l), id (v/c)
-## + edges from 4362618:
+## + edges from 3ca2dba:
 ##  [1] 1-- 3 1-- 2 1-- 6 1-- 5 1-- 4 1-- 8 1--11 1--10 2-- 3 3-- 7 3-- 4 3-- 5
 ## [13] 3-- 6 2-- 7 2-- 4 2-- 5 2-- 6 5-- 6 6--10 7-- 9 4-- 5 5-- 7 4--11 6-- 7
 ## [25] 4-- 7
-```
-
-```r
 graphs[[2]]
-```
-
-```
-## IGRAPH 97818d5 U--- 16 47 -- 
+## IGRAPH fb7ce92 U--- 16 47 -- 
 ## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
 ## | (v/l), id (v/c)
-## + edges from 97818d5:
+## + edges from fb7ce92:
 ##  [1]  7--13  1-- 5  1-- 6  1-- 4  1-- 2  7--15  1-- 3 11--13  1--10  1--16
 ## [11]  4-- 6  2-- 6  6-- 7  1--11 11--15  6-- 9  6-- 8  3-- 9  5--15  4-- 5
 ## [21]  2-- 5  5-- 8  5-- 7  5--10  3-- 5  6--14 12--13  6--13  3--13  2-- 3
@@ -161,9 +144,6 @@ This function takes two arguments: a network and a vector of two colors. Vertex 
 
 ```r
 V(graphs[[1]])$eat_with_2
-```
-
-```
 ##  [1]  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE
 ```
 
@@ -222,42 +202,103 @@ lapply(seq_along(graphs), function(i) {
 
 ## Person files
 
+Like before, we list the files ending in `Person.csv` (with the full path,) and read them into R. While R has the function `read.csv`, here I use the function `fread` from the <a href="https://cran.r-project.org/package=data.table" target="_blank">`data.table`</a> R package. Alongside `dplyr`, `data.table` is one of the most popular data-wrangling tools in R. Besides syntax, the biggest difference between the two is performance; `data.table` is significantly faster than any other data management package in R, and is a great alternative for handling large datasets. The following code block loads the package, lists the files, and reads them into R.
+
 
 ```r
+# Loading data.table
 library(data.table)
 
+# Listing the files
 person_files <- list.files(
   path       = "data-raw/egonets",
   pattern    = "*Person.csv",
   full.names = TRUE
   )
 
+# Loading all into a single list
 persons <- lapply(person_files, fread)
+
+# Looking into the first element
+persons[[1]]
+##     nodeID age
+##  1:      1  45
+##  2:      2  32
+##  3:      3  31
+##  4:      4  45
+##  5:      5  43
+##  6:      6  47
+##  7:      7  45
+##  8:      8  62
+##  9:      9  28
+## 10:     10  41
+## 11:     11  41
+## 12:     12  46
+## 13:     13  46
+## 14:     14  46
+## 15:     15  62
+## 16:     16  41
 ```
 
-Exploring the data
+A common task is adding an identifier to each dataset in `persons` so we know from to which ego they belong. Again, the `lapply` function is our friend:
+
 
 
 ```r
+persons <- lapply(seq_along(persons), function(i) {
+  persons[[i]][, dataset_num := i]
+})
+```
+
+In `data.table`, variables are created using the `:=` symbol. The previous code chunk is equivalent to this:
+
+```r
+for (i in 1:length(persons)) {
+  persons[[i]]$dataset_num <- i
+}
+```
+
+If needed, we can transform the list `persons` into a `data.table` object (i.e., a single `data.frame`) using the `rbindlist` function[^rbindlist]. The next code block uses that function to combine the `data.table`s into a single dataset.
+
+[^rbindlist]: Although not the same, `rbindlist` (almost always) yields the same result as calling the function `do.call`. In particular, instead of executing the call `rbindlist(persons)`, we could have used `do.call(rbind, persons)`.
+
+
+```r
+# Combining the datasets
 persons <- rbindlist(persons)
+persons
+##      nodeID age dataset_num
+##   1:      1  45           1
+##   2:      2  32           1
+##   3:      3  31           1
+##   4:      4  45           1
+##   5:      5  43           1
+##  ---                       
+## 271:      7  43          19
+## 272:      8  48          19
+## 273:      9  70          19
+## 274:     10  46          19
+## 275:     11  50          19
+```
+
+Now that we have a single dataset, we can do some data exploration. For example, we can use the package `ggplot2` to draw a histogram of alters' ages.
+
+
+```r
+# Loading the ggplot2 package
+library(ggplot2)
 
 # Histogram of age
-library(ggplot2)
-ggplot(persons, aes(x = age)) +
-  geom_histogram()
-```
-
-```
+ggplot(persons, aes(x = age)) +            # Starting off the plot
+  geom_histogram(fill = "purple") +      # Adding a histogram
+  labs(x = "Age", y = "Frequency") +       # Changing the x/y axis labels
+  labs(title = "Alter's Age Distribution") # Adding a title
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](part-01-07-egonets_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
+![](part-01-07-egonets_files/figure-epub3/part-01-07-ggplot-ages-1.png)<!-- -->
 
-```r
-hist(persons$age)
-```
 
-![](part-01-07-egonets_files/figure-epub3/unnamed-chunk-4-2.png)<!-- -->
 
 ## Ego files
 
@@ -273,9 +314,6 @@ egos <- lapply(ego_files, fread)
 
 egos <- rbindlist(egos)
 head(egos)
-```
-
-```
 ##                    networkCanvasEgoUUID networkCanvasCaseID
 ## 1: I-11ca3a78c-62f131f37169-c139217a1f6    I_-59190_BRB9111
 ## 2: I-fef-ab-4-5a--7-35c4f23-96eb32-34ea    I-100BB_00B95-90
@@ -317,13 +355,7 @@ ggplot(egos, aes(x = total_time)) +
   geom_histogram() +
   labs(x = "Time in minutes", y = "Count") +
   labs(title = "Total time spent by egos")
-```
-
-```
 ## Don't know how to automatically pick scale for object of type difftime. Defaulting to continuous.
-```
-
-```
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
@@ -367,9 +399,6 @@ net_stats <- lapply(graphs, function(g) {
 
 net_stats <- rbindlist(net_stats)
 head(net_stats)
-```
-
-```
 ##    size edges nisolates   transit     modular
 ## 1:   12    25         1 0.6750000 0.012000000
 ## 2:   16    47         0 0.4332130 0.003395201
@@ -385,49 +414,29 @@ head(net_stats)
 ```r
 library(intergraph)
 library(ergm)
-```
-
-```
 ## Loading required package: network
-```
-
-```
 ## 
 ## 'network' 1.18.1 (2023-01-24), part of the Statnet Project
 ## * 'news(package="network")' for changes since last version
 ## * 'citation("network")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
-```
-
-```
 ## 
 ## Attaching package: 'network'
-```
-
-```
 ## The following objects are masked from 'package:igraph':
 ## 
 ##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
 ##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
 ##     is.directed, list.edge.attributes, list.vertex.attributes,
 ##     set.edge.attribute, set.vertex.attribute
-```
-
-```
 ## 
 ## 'ergm' 4.4.0 (2023-01-26), part of the Statnet Project
 ## * 'news(package="ergm")' for changes since last version
 ## * 'citation("ergm")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
-```
-
-```
 ## 'ergm' 4 is a major update that introduces some backwards-incompatible
 ## changes. Please type 'news(package="ergm")' for a list of major
 ## changes.
-```
 
-```r
 graphs_network <- lapply(graphs, asNetwork)
 
 net_stats_ergm <- lapply(graphs_network, function(n) {
@@ -447,9 +456,6 @@ net_stats_ergm <- lapply(graphs_network, function(n) {
 
 net_stats_ergm <- rbindlist(net_stats_ergm)
 head(net_stats_ergm)
-```
-
-```
 ##    triangles gender_homoph healthyd_homoph
 ## 1:        27            11               3
 ## 2:        40            30              20
@@ -474,4 +480,5 @@ saveRDS(graphs_network, file = "data/networks_network.rds")
 # Attributes
 fwrite(persons, file = "data/persons.csv")
 ```
+
 

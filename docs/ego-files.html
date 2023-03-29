@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -342,54 +342,54 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="ego-files" class="section level2 hasAnchor" number="10.3">
 <h2><span class="header-section-number">10.3</span> Ego files<a href="ego-files.html#ego-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="ego-files.html#cb290-1" tabindex="-1"></a>ego_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb290-2"><a href="ego-files.html#cb290-2" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
-<span id="cb290-3"><a href="ego-files.html#cb290-3" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*ego.csv&quot;</span>,</span>
-<span id="cb290-4"><a href="ego-files.html#cb290-4" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb290-5"><a href="ego-files.html#cb290-5" tabindex="-1"></a>  )</span>
-<span id="cb290-6"><a href="ego-files.html#cb290-6" tabindex="-1"></a></span>
-<span id="cb290-7"><a href="ego-files.html#cb290-7" tabindex="-1"></a>egos <span class="ot">&lt;-</span> <span class="fu">lapply</span>(ego_files, fread)</span>
-<span id="cb290-8"><a href="ego-files.html#cb290-8" tabindex="-1"></a></span>
-<span id="cb290-9"><a href="ego-files.html#cb290-9" tabindex="-1"></a>egos <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(egos)</span>
-<span id="cb290-10"><a href="ego-files.html#cb290-10" tabindex="-1"></a><span class="fu">head</span>(egos)</span></code></pre></div>
-<pre><code>##                    networkCanvasEgoUUID networkCanvasCaseID
-## 1: I-11ca3a78c-62f131f37169-c139217a1f6    I_-59190_BRB9111
-## 2: I-fef-ab-4-5a--7-35c4f23-96eb32-34ea    I-100BB_00B95-90
-## 3: I2f1bd0b6d-f71f4664cf-d-26-97408f22d      I-1BB79950-0-7
-## 4: Id36bb-3b2bcbd2a6239b1103134c6b3d1d6    I000091I_RB010B5
-## 5: I436d32fc67fb5c6-23-244f353849b120cd    I019051R0_RRR0-0
-## 6: Ibf1f-2-34162bb5f2c36b8241--316a-fff    I01B11-I1101_44R
-##                  networkCanvasSessionID
-## 1: I612b7a1af---0880b-70698204-b-8dbf09
-## 2: If5e0-f-26cbec070760f-e6b6d26ebfb06f
-## 3: I825c293a1304-e5-cbea8a80aae05b305fa
-## 4: I1b8a7d0f6b4-8298c9-848-9186d68a7f3c
-## 5: Ie620be37b75983c49ac63-38-425227c959
-## 6: Ie3-134323ed40-0e-d954b3d-febbcb9363
-##                       networkCanvasProtocolName        sessionStart
-## 1: Postpartum social networks with sociogram_V5 2023-02-22 23:41:59
-## 2: Postpartum social networks with sociogram_V5 2023-02-10 21:46:02
-## 3: Postpartum social networks with sociogram_V5 2023-03-01 16:52:09
-## 4: Postpartum social networks with sociogram_V5 2023-01-26 20:38:07
-## 5: Postpartum social networks with sociogram_V5 2023-02-06 14:55:57
-## 6: Postpartum social networks with sociogram_V5 2023-03-16 18:20:02
-##          sessionFinish     sessionExported
-## 1: 2023-02-23 01:47:00 2023-02-23 01:47:08
-## 2: 2023-02-11 01:29:32 2023-02-11 01:34:12
-## 3: 2023-03-02 16:51:20 2023-03-02 17:04:42
-## 4: 2023-01-26 22:03:20 2023-01-26 22:03:34
-## 5: 2023-02-06 15:49:38 2023-02-06 15:56:42
-## 6: 2023-03-17 21:11:09 2023-03-17 21:16:15</code></pre>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="ego-files.html#cb234-1" tabindex="-1"></a>ego_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb234-2"><a href="ego-files.html#cb234-2" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
+<span id="cb234-3"><a href="ego-files.html#cb234-3" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*ego.csv&quot;</span>,</span>
+<span id="cb234-4"><a href="ego-files.html#cb234-4" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb234-5"><a href="ego-files.html#cb234-5" tabindex="-1"></a>  )</span>
+<span id="cb234-6"><a href="ego-files.html#cb234-6" tabindex="-1"></a></span>
+<span id="cb234-7"><a href="ego-files.html#cb234-7" tabindex="-1"></a>egos <span class="ot">&lt;-</span> <span class="fu">lapply</span>(ego_files, fread)</span>
+<span id="cb234-8"><a href="ego-files.html#cb234-8" tabindex="-1"></a></span>
+<span id="cb234-9"><a href="ego-files.html#cb234-9" tabindex="-1"></a>egos <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(egos)</span>
+<span id="cb234-10"><a href="ego-files.html#cb234-10" tabindex="-1"></a><span class="fu">head</span>(egos)</span>
+<span id="cb234-11"><a href="ego-files.html#cb234-11" tabindex="-1"></a><span class="do">##                    networkCanvasEgoUUID networkCanvasCaseID</span></span>
+<span id="cb234-12"><a href="ego-files.html#cb234-12" tabindex="-1"></a><span class="do">## 1: I-11ca3a78c-62f131f37169-c139217a1f6    I_-59190_BRB9111</span></span>
+<span id="cb234-13"><a href="ego-files.html#cb234-13" tabindex="-1"></a><span class="do">## 2: I-fef-ab-4-5a--7-35c4f23-96eb32-34ea    I-100BB_00B95-90</span></span>
+<span id="cb234-14"><a href="ego-files.html#cb234-14" tabindex="-1"></a><span class="do">## 3: I2f1bd0b6d-f71f4664cf-d-26-97408f22d      I-1BB79950-0-7</span></span>
+<span id="cb234-15"><a href="ego-files.html#cb234-15" tabindex="-1"></a><span class="do">## 4: Id36bb-3b2bcbd2a6239b1103134c6b3d1d6    I000091I_RB010B5</span></span>
+<span id="cb234-16"><a href="ego-files.html#cb234-16" tabindex="-1"></a><span class="do">## 5: I436d32fc67fb5c6-23-244f353849b120cd    I019051R0_RRR0-0</span></span>
+<span id="cb234-17"><a href="ego-files.html#cb234-17" tabindex="-1"></a><span class="do">## 6: Ibf1f-2-34162bb5f2c36b8241--316a-fff    I01B11-I1101_44R</span></span>
+<span id="cb234-18"><a href="ego-files.html#cb234-18" tabindex="-1"></a><span class="do">##                  networkCanvasSessionID</span></span>
+<span id="cb234-19"><a href="ego-files.html#cb234-19" tabindex="-1"></a><span class="do">## 1: I612b7a1af---0880b-70698204-b-8dbf09</span></span>
+<span id="cb234-20"><a href="ego-files.html#cb234-20" tabindex="-1"></a><span class="do">## 2: If5e0-f-26cbec070760f-e6b6d26ebfb06f</span></span>
+<span id="cb234-21"><a href="ego-files.html#cb234-21" tabindex="-1"></a><span class="do">## 3: I825c293a1304-e5-cbea8a80aae05b305fa</span></span>
+<span id="cb234-22"><a href="ego-files.html#cb234-22" tabindex="-1"></a><span class="do">## 4: I1b8a7d0f6b4-8298c9-848-9186d68a7f3c</span></span>
+<span id="cb234-23"><a href="ego-files.html#cb234-23" tabindex="-1"></a><span class="do">## 5: Ie620be37b75983c49ac63-38-425227c959</span></span>
+<span id="cb234-24"><a href="ego-files.html#cb234-24" tabindex="-1"></a><span class="do">## 6: Ie3-134323ed40-0e-d954b3d-febbcb9363</span></span>
+<span id="cb234-25"><a href="ego-files.html#cb234-25" tabindex="-1"></a><span class="do">##                       networkCanvasProtocolName        sessionStart</span></span>
+<span id="cb234-26"><a href="ego-files.html#cb234-26" tabindex="-1"></a><span class="do">## 1: Postpartum social networks with sociogram_V5 2023-02-22 23:41:59</span></span>
+<span id="cb234-27"><a href="ego-files.html#cb234-27" tabindex="-1"></a><span class="do">## 2: Postpartum social networks with sociogram_V5 2023-02-10 21:46:02</span></span>
+<span id="cb234-28"><a href="ego-files.html#cb234-28" tabindex="-1"></a><span class="do">## 3: Postpartum social networks with sociogram_V5 2023-03-01 16:52:09</span></span>
+<span id="cb234-29"><a href="ego-files.html#cb234-29" tabindex="-1"></a><span class="do">## 4: Postpartum social networks with sociogram_V5 2023-01-26 20:38:07</span></span>
+<span id="cb234-30"><a href="ego-files.html#cb234-30" tabindex="-1"></a><span class="do">## 5: Postpartum social networks with sociogram_V5 2023-02-06 14:55:57</span></span>
+<span id="cb234-31"><a href="ego-files.html#cb234-31" tabindex="-1"></a><span class="do">## 6: Postpartum social networks with sociogram_V5 2023-03-16 18:20:02</span></span>
+<span id="cb234-32"><a href="ego-files.html#cb234-32" tabindex="-1"></a><span class="do">##          sessionFinish     sessionExported</span></span>
+<span id="cb234-33"><a href="ego-files.html#cb234-33" tabindex="-1"></a><span class="do">## 1: 2023-02-23 01:47:00 2023-02-23 01:47:08</span></span>
+<span id="cb234-34"><a href="ego-files.html#cb234-34" tabindex="-1"></a><span class="do">## 2: 2023-02-11 01:29:32 2023-02-11 01:34:12</span></span>
+<span id="cb234-35"><a href="ego-files.html#cb234-35" tabindex="-1"></a><span class="do">## 3: 2023-03-02 16:51:20 2023-03-02 17:04:42</span></span>
+<span id="cb234-36"><a href="ego-files.html#cb234-36" tabindex="-1"></a><span class="do">## 4: 2023-01-26 22:03:20 2023-01-26 22:03:34</span></span>
+<span id="cb234-37"><a href="ego-files.html#cb234-37" tabindex="-1"></a><span class="do">## 5: 2023-02-06 15:49:38 2023-02-06 15:56:42</span></span>
+<span id="cb234-38"><a href="ego-files.html#cb234-38" tabindex="-1"></a><span class="do">## 6: 2023-03-17 21:11:09 2023-03-17 21:16:15</span></span></code></pre></div>
 <p>Some data processing</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="ego-files.html#cb292-1" tabindex="-1"></a><span class="co"># How much time?</span></span>
-<span id="cb292-2"><a href="ego-files.html#cb292-2" tabindex="-1"></a>egos[, total_time <span class="sc">:=</span> sessionFinish <span class="sc">-</span> sessionStart]</span>
-<span id="cb292-3"><a href="ego-files.html#cb292-3" tabindex="-1"></a></span>
-<span id="cb292-4"><a href="ego-files.html#cb292-4" tabindex="-1"></a><span class="fu">ggplot</span>(egos, <span class="fu">aes</span>(<span class="at">x =</span> total_time)) <span class="sc">+</span></span>
-<span id="cb292-5"><a href="ego-files.html#cb292-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb292-6"><a href="ego-files.html#cb292-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time in minutes&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span></span>
-<span id="cb292-7"><a href="ego-files.html#cb292-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Total time spent by egos&quot;</span>)</span></code></pre></div>
-<pre><code>## Don&#39;t know how to automatically pick scale for object of type difftime. Defaulting to continuous.</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="ego-files.html#cb235-1" tabindex="-1"></a><span class="co"># How much time?</span></span>
+<span id="cb235-2"><a href="ego-files.html#cb235-2" tabindex="-1"></a>egos[, total_time <span class="sc">:=</span> sessionFinish <span class="sc">-</span> sessionStart]</span>
+<span id="cb235-3"><a href="ego-files.html#cb235-3" tabindex="-1"></a></span>
+<span id="cb235-4"><a href="ego-files.html#cb235-4" tabindex="-1"></a><span class="fu">ggplot</span>(egos, <span class="fu">aes</span>(<span class="at">x =</span> total_time)) <span class="sc">+</span></span>
+<span id="cb235-5"><a href="ego-files.html#cb235-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb235-6"><a href="ego-files.html#cb235-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time in minutes&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span></span>
+<span id="cb235-7"><a href="ego-files.html#cb235-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Total time spent by egos&quot;</span>)</span>
+<span id="cb235-8"><a href="ego-files.html#cb235-8" tabindex="-1"></a><span class="do">## Don&#39;t know how to automatically pick scale for object of type difftime. Defaulting to continuous.</span></span>
+<span id="cb235-9"><a href="ego-files.html#cb235-9" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
 <p><img src="part-01-07-egonets_files/figure-html/egos-time-1.png" width="672" /></p>
 </div>
             </section>

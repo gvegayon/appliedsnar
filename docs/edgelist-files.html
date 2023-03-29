@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -342,14 +342,14 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="edgelist-files" class="section level2 hasAnchor" number="10.4">
 <h2><span class="header-section-number">10.4</span> Edgelist files<a href="edgelist-files.html#edgelist-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="edgelist-files.html#cb295-1" tabindex="-1"></a>edgelist_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb295-2"><a href="edgelist-files.html#cb295-2" tabindex="-1"></a>  <span class="at">path =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
-<span id="cb295-3"><a href="edgelist-files.html#cb295-3" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;*Knows.csv&quot;</span>,</span>
-<span id="cb295-4"><a href="edgelist-files.html#cb295-4" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb295-5"><a href="edgelist-files.html#cb295-5" tabindex="-1"></a>  )</span>
-<span id="cb295-6"><a href="edgelist-files.html#cb295-6" tabindex="-1"></a></span>
-<span id="cb295-7"><a href="edgelist-files.html#cb295-7" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">lapply</span>(edgelist_files, fread)</span>
-<span id="cb295-8"><a href="edgelist-files.html#cb295-8" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(edgelists)</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="edgelist-files.html#cb236-1" tabindex="-1"></a>edgelist_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb236-2"><a href="edgelist-files.html#cb236-2" tabindex="-1"></a>  <span class="at">path =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
+<span id="cb236-3"><a href="edgelist-files.html#cb236-3" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;*Knows.csv&quot;</span>,</span>
+<span id="cb236-4"><a href="edgelist-files.html#cb236-4" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb236-5"><a href="edgelist-files.html#cb236-5" tabindex="-1"></a>  )</span>
+<span id="cb236-6"><a href="edgelist-files.html#cb236-6" tabindex="-1"></a></span>
+<span id="cb236-7"><a href="edgelist-files.html#cb236-7" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">lapply</span>(edgelist_files, fread)</span>
+<span id="cb236-8"><a href="edgelist-files.html#cb236-8" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(edgelists)</span></code></pre></div>
 </div>
             </section>
 

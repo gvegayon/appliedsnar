@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -342,26 +342,80 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="person-files" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> Person files<a href="person-files.html#person-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="person-files.html#cb286-1" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb286-2"><a href="person-files.html#cb286-2" tabindex="-1"></a></span>
-<span id="cb286-3"><a href="person-files.html#cb286-3" tabindex="-1"></a>person_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb286-4"><a href="person-files.html#cb286-4" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
-<span id="cb286-5"><a href="person-files.html#cb286-5" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*Person.csv&quot;</span>,</span>
-<span id="cb286-6"><a href="person-files.html#cb286-6" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb286-7"><a href="person-files.html#cb286-7" tabindex="-1"></a>  )</span>
-<span id="cb286-8"><a href="person-files.html#cb286-8" tabindex="-1"></a></span>
-<span id="cb286-9"><a href="person-files.html#cb286-9" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">lapply</span>(person_files, fread)</span></code></pre></div>
-<p>Exploring the data</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="person-files.html#cb287-1" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(persons)</span>
-<span id="cb287-2"><a href="person-files.html#cb287-2" tabindex="-1"></a></span>
-<span id="cb287-3"><a href="person-files.html#cb287-3" tabindex="-1"></a><span class="co"># Histogram of age</span></span>
-<span id="cb287-4"><a href="person-files.html#cb287-4" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb287-5"><a href="person-files.html#cb287-5" tabindex="-1"></a><span class="fu">ggplot</span>(persons, <span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
-<span id="cb287-6"><a href="person-files.html#cb287-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="part-01-07-egonets_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="person-files.html#cb289-1" tabindex="-1"></a><span class="fu">hist</span>(persons<span class="sc">$</span>age)</span></code></pre></div>
-<p><img src="part-01-07-egonets_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p>Like before, we list the files ending in <code>Person.csv</code> (with the full path,) and read them into R. While R has the function <code>read.csv</code>, here I use the function <code>fread</code> from the <a href="https://cran.r-project.org/package=data.table" target="_blank"><code>data.table</code></a> R package. Alongside <code>dplyr</code>, <code>data.table</code> is one of the most popular data-wrangling tools in R. Besides syntax, the biggest difference between the two is performance; <code>data.table</code> is significantly faster than any other data management package in R, and is a great alternative for handling large datasets. The following code block loads the package, lists the files, and reads them into R.</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="person-files.html#cb229-1" tabindex="-1"></a><span class="co"># Loading data.table</span></span>
+<span id="cb229-2"><a href="person-files.html#cb229-2" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb229-3"><a href="person-files.html#cb229-3" tabindex="-1"></a></span>
+<span id="cb229-4"><a href="person-files.html#cb229-4" tabindex="-1"></a><span class="co"># Listing the files</span></span>
+<span id="cb229-5"><a href="person-files.html#cb229-5" tabindex="-1"></a>person_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb229-6"><a href="person-files.html#cb229-6" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
+<span id="cb229-7"><a href="person-files.html#cb229-7" tabindex="-1"></a>  <span class="at">pattern    =</span> <span class="st">&quot;*Person.csv&quot;</span>,</span>
+<span id="cb229-8"><a href="person-files.html#cb229-8" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb229-9"><a href="person-files.html#cb229-9" tabindex="-1"></a>  )</span>
+<span id="cb229-10"><a href="person-files.html#cb229-10" tabindex="-1"></a></span>
+<span id="cb229-11"><a href="person-files.html#cb229-11" tabindex="-1"></a><span class="co"># Loading all into a single list</span></span>
+<span id="cb229-12"><a href="person-files.html#cb229-12" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">lapply</span>(person_files, fread)</span>
+<span id="cb229-13"><a href="person-files.html#cb229-13" tabindex="-1"></a></span>
+<span id="cb229-14"><a href="person-files.html#cb229-14" tabindex="-1"></a><span class="co"># Looking into the first element</span></span>
+<span id="cb229-15"><a href="person-files.html#cb229-15" tabindex="-1"></a>persons[[<span class="dv">1</span>]]</span>
+<span id="cb229-16"><a href="person-files.html#cb229-16" tabindex="-1"></a><span class="do">##     nodeID age</span></span>
+<span id="cb229-17"><a href="person-files.html#cb229-17" tabindex="-1"></a><span class="do">##  1:      1  45</span></span>
+<span id="cb229-18"><a href="person-files.html#cb229-18" tabindex="-1"></a><span class="do">##  2:      2  32</span></span>
+<span id="cb229-19"><a href="person-files.html#cb229-19" tabindex="-1"></a><span class="do">##  3:      3  31</span></span>
+<span id="cb229-20"><a href="person-files.html#cb229-20" tabindex="-1"></a><span class="do">##  4:      4  45</span></span>
+<span id="cb229-21"><a href="person-files.html#cb229-21" tabindex="-1"></a><span class="do">##  5:      5  43</span></span>
+<span id="cb229-22"><a href="person-files.html#cb229-22" tabindex="-1"></a><span class="do">##  6:      6  47</span></span>
+<span id="cb229-23"><a href="person-files.html#cb229-23" tabindex="-1"></a><span class="do">##  7:      7  45</span></span>
+<span id="cb229-24"><a href="person-files.html#cb229-24" tabindex="-1"></a><span class="do">##  8:      8  62</span></span>
+<span id="cb229-25"><a href="person-files.html#cb229-25" tabindex="-1"></a><span class="do">##  9:      9  28</span></span>
+<span id="cb229-26"><a href="person-files.html#cb229-26" tabindex="-1"></a><span class="do">## 10:     10  41</span></span>
+<span id="cb229-27"><a href="person-files.html#cb229-27" tabindex="-1"></a><span class="do">## 11:     11  41</span></span>
+<span id="cb229-28"><a href="person-files.html#cb229-28" tabindex="-1"></a><span class="do">## 12:     12  46</span></span>
+<span id="cb229-29"><a href="person-files.html#cb229-29" tabindex="-1"></a><span class="do">## 13:     13  46</span></span>
+<span id="cb229-30"><a href="person-files.html#cb229-30" tabindex="-1"></a><span class="do">## 14:     14  46</span></span>
+<span id="cb229-31"><a href="person-files.html#cb229-31" tabindex="-1"></a><span class="do">## 15:     15  62</span></span>
+<span id="cb229-32"><a href="person-files.html#cb229-32" tabindex="-1"></a><span class="do">## 16:     16  41</span></span></code></pre></div>
+<p>A common task is adding an identifier to each dataset in <code>persons</code> so we know from to which ego they belong. Again, the <code>lapply</code> function is our friend:</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="person-files.html#cb230-1" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq_along</span>(persons), <span class="cf">function</span>(i) {</span>
+<span id="cb230-2"><a href="person-files.html#cb230-2" tabindex="-1"></a>  persons[[i]][, dataset_num <span class="sc">:=</span> i]</span>
+<span id="cb230-3"><a href="person-files.html#cb230-3" tabindex="-1"></a>})</span></code></pre></div>
+<p>In <code>data.table</code>, variables are created using the <code>:=</code> symbol. The previous code chunk is equivalent to this:</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="person-files.html#cb231-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(persons)) {</span>
+<span id="cb231-2"><a href="person-files.html#cb231-2" tabindex="-1"></a>  persons[[i]]<span class="sc">$</span>dataset_num <span class="ot">&lt;-</span> i</span>
+<span id="cb231-3"><a href="person-files.html#cb231-3" tabindex="-1"></a>}</span></code></pre></div>
+<p>If needed, we can transform the list <code>persons</code> into a <code>data.table</code> object (i.e., a single <code>data.frame</code>) using the <code>rbindlist</code> function<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>. The next code block uses that function to combine the <code>data.table</code>s into a single dataset.</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="person-files.html#cb232-1" tabindex="-1"></a><span class="co"># Combining the datasets</span></span>
+<span id="cb232-2"><a href="person-files.html#cb232-2" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(persons)</span>
+<span id="cb232-3"><a href="person-files.html#cb232-3" tabindex="-1"></a>persons</span>
+<span id="cb232-4"><a href="person-files.html#cb232-4" tabindex="-1"></a><span class="do">##      nodeID age dataset_num</span></span>
+<span id="cb232-5"><a href="person-files.html#cb232-5" tabindex="-1"></a><span class="do">##   1:      1  45           1</span></span>
+<span id="cb232-6"><a href="person-files.html#cb232-6" tabindex="-1"></a><span class="do">##   2:      2  32           1</span></span>
+<span id="cb232-7"><a href="person-files.html#cb232-7" tabindex="-1"></a><span class="do">##   3:      3  31           1</span></span>
+<span id="cb232-8"><a href="person-files.html#cb232-8" tabindex="-1"></a><span class="do">##   4:      4  45           1</span></span>
+<span id="cb232-9"><a href="person-files.html#cb232-9" tabindex="-1"></a><span class="do">##   5:      5  43           1</span></span>
+<span id="cb232-10"><a href="person-files.html#cb232-10" tabindex="-1"></a><span class="do">##  ---                       </span></span>
+<span id="cb232-11"><a href="person-files.html#cb232-11" tabindex="-1"></a><span class="do">## 271:      7  43          19</span></span>
+<span id="cb232-12"><a href="person-files.html#cb232-12" tabindex="-1"></a><span class="do">## 272:      8  48          19</span></span>
+<span id="cb232-13"><a href="person-files.html#cb232-13" tabindex="-1"></a><span class="do">## 273:      9  70          19</span></span>
+<span id="cb232-14"><a href="person-files.html#cb232-14" tabindex="-1"></a><span class="do">## 274:     10  46          19</span></span>
+<span id="cb232-15"><a href="person-files.html#cb232-15" tabindex="-1"></a><span class="do">## 275:     11  50          19</span></span></code></pre></div>
+<p>Now that we have a single dataset, we can do some data exploration. For example, we can use the package <code>ggplot2</code> to draw a histogram of alters’ ages.</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="person-files.html#cb233-1" tabindex="-1"></a><span class="co"># Loading the ggplot2 package</span></span>
+<span id="cb233-2"><a href="person-files.html#cb233-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb233-3"><a href="person-files.html#cb233-3" tabindex="-1"></a></span>
+<span id="cb233-4"><a href="person-files.html#cb233-4" tabindex="-1"></a><span class="co"># Histogram of age</span></span>
+<span id="cb233-5"><a href="person-files.html#cb233-5" tabindex="-1"></a><span class="fu">ggplot</span>(persons, <span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span>            <span class="co"># Starting off the plot</span></span>
+<span id="cb233-6"><a href="person-files.html#cb233-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">&quot;purple&quot;</span>) <span class="sc">+</span>      <span class="co"># Adding a histogram</span></span>
+<span id="cb233-7"><a href="person-files.html#cb233-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="sc">+</span>       <span class="co"># Changing the x/y axis labels</span></span>
+<span id="cb233-8"><a href="person-files.html#cb233-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Alter&#39;s Age Distribution&quot;</span>) <span class="co"># Adding a title</span></span>
+<span id="cb233-9"><a href="person-files.html#cb233-9" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
+<p><img src="part-01-07-egonets_files/figure-html/part-01-07-ggplot-ages-1.png" width="672" /></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="12">
+<li id="fn12"><p>Although not the same, <code>rbindlist</code> (almost always) yields the same result as calling the function <code>do.call</code>. In particular, instead of executing the call <code>rbindlist(persons)</code>, we could have used <code>do.call(rbind, persons)</code>.<a href="person-files.html#fnref12" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

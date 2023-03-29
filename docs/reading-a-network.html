@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -347,13 +347,13 @@ data in the form of an adjacency matrix. Other times, data will come in the form
 of an edgelist. Another common format is the adjacency list, which is a compressed
 version of an edgelist. Let’s see how the formats look like for the following
 network:</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="reading-a-network.html#cb246-1" tabindex="-1"></a>example_graph <span class="ot">&lt;-</span> <span class="fu">matrix</span>(0L, <span class="dv">4</span>, <span class="dv">4</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]))</span>
-<span id="cb246-2"><a href="reading-a-network.html#cb246-2" tabindex="-1"></a>example_graph[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">7</span>)] <span class="ot">&lt;-</span> 1L</span>
-<span id="cb246-3"><a href="reading-a-network.html#cb246-3" tabindex="-1"></a>example_graph[<span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>] <span class="ot">&lt;-</span> 1L</span>
-<span id="cb246-4"><a href="reading-a-network.html#cb246-4" tabindex="-1"></a>example_graph[<span class="st">&quot;d&quot;</span>, <span class="st">&quot;c&quot;</span>] <span class="ot">&lt;-</span> 1L</span>
-<span id="cb246-5"><a href="reading-a-network.html#cb246-5" tabindex="-1"></a>example_graph <span class="ot">&lt;-</span> <span class="fu">as.network</span>(example_graph)</span>
-<span id="cb246-6"><a href="reading-a-network.html#cb246-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1231</span>)</span>
-<span id="cb246-7"><a href="reading-a-network.html#cb246-7" tabindex="-1"></a><span class="fu">gplot</span>(example_graph, <span class="at">label =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="reading-a-network.html#cb196-1" tabindex="-1"></a>example_graph <span class="ot">&lt;-</span> <span class="fu">matrix</span>(0L, <span class="dv">4</span>, <span class="dv">4</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]))</span>
+<span id="cb196-2"><a href="reading-a-network.html#cb196-2" tabindex="-1"></a>example_graph[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">7</span>)] <span class="ot">&lt;-</span> 1L</span>
+<span id="cb196-3"><a href="reading-a-network.html#cb196-3" tabindex="-1"></a>example_graph[<span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>] <span class="ot">&lt;-</span> 1L</span>
+<span id="cb196-4"><a href="reading-a-network.html#cb196-4" tabindex="-1"></a>example_graph[<span class="st">&quot;d&quot;</span>, <span class="st">&quot;c&quot;</span>] <span class="ot">&lt;-</span> 1L</span>
+<span id="cb196-5"><a href="reading-a-network.html#cb196-5" tabindex="-1"></a>example_graph <span class="ot">&lt;-</span> <span class="fu">as.network</span>(example_graph)</span>
+<span id="cb196-6"><a href="reading-a-network.html#cb196-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1231</span>)</span>
+<span id="cb196-7"><a href="reading-a-network.html#cb196-7" tabindex="-1"></a><span class="fu">gplot</span>(example_graph, <span class="at">label =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div>
 <p><img src="part-01-06-network-simulation-and-viz_files/figure-html/06-fake-graph-read-1.png" width="672" /></p>
 <ul>
 <li><strong>Adjacency matrix</strong> a matrix of size <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> where the <span class="math inline">\(ij\)</span>-th entry represents
@@ -364,7 +364,7 @@ graphs, the adjacency matrix is usually upper or lower diagonal. The adjacency
 matrix of an undirected graph is symmetric, so we don’t need to report the same
 information twice. For example:</li>
 </ul>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="reading-a-network.html#cb247-1" tabindex="-1"></a><span class="fu">as.matrix</span>(example_graph)</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="reading-a-network.html#cb197-1" tabindex="-1"></a><span class="fu">as.matrix</span>(example_graph)</span></code></pre></div>
 <pre><code>##   a b c d
 ## a 0 0 0 0
 ## b 1 0 0 0
@@ -374,7 +374,7 @@ information twice. For example:</li>
 <li><strong>Edge list</strong> a matrix of size <span class="math inline">\(|E|\)</span> by <span class="math inline">\(2\)</span>, where <span class="math inline">\(|E|\)</span> is the number of edges.
 Each entry represents a tie in the graph.</li>
 </ul>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="reading-a-network.html#cb249-1" tabindex="-1"></a><span class="fu">as.edgelist</span>(example_graph)</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="reading-a-network.html#cb199-1" tabindex="-1"></a><span class="fu">as.edgelist</span>(example_graph)</span></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]    2    1
 ## [2,]    3    2
@@ -398,21 +398,21 @@ Each entry represents a tie in the graph.</li>
 <li><strong>Adjacency list</strong> This data format uses less space than edgelists as ties are
 grouped by ego (source.)</li>
 </ul>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="reading-a-network.html#cb251-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">as_adj_list</span>(intergraph<span class="sc">::</span><span class="fu">asIgraph</span>(example_graph)) </span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="reading-a-network.html#cb201-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">as_adj_list</span>(intergraph<span class="sc">::</span><span class="fu">asIgraph</span>(example_graph)) </span></code></pre></div>
 <pre><code>## [[1]]
-## + 1/4 vertex, from f909808:
+## + 1/4 vertex, from 27e9d66:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from f909808:
+## + 2/4 vertices, from 27e9d66:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from f909808:
+## + 3/4 vertices, from 27e9d66:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from f909808:
+## + 2/4 vertices, from 27e9d66:
 ## [1] 3 3</code></pre>
 <p>The function <code>igraph::as_adj_list</code> turns the igraph object into a list of
 type adjacency list. In plain text it would look something like this:</p>
@@ -423,11 +423,11 @@ type adjacency list. In plain text it would look something like this:</p>
 <p>Here we will deal with an edgelist that includes node information.
 In my opinion, this is one of the best ways to share network data. Let’s read
 the data into R using the function <code>read.csv</code>:</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="reading-a-network.html#cb254-1" tabindex="-1"></a>edges <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;06-edgelist.csv&quot;</span>)</span>
-<span id="cb254-2"><a href="reading-a-network.html#cb254-2" tabindex="-1"></a>nodes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;06-nodes.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="reading-a-network.html#cb204-1" tabindex="-1"></a>edges <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;06-edgelist.csv&quot;</span>)</span>
+<span id="cb204-2"><a href="reading-a-network.html#cb204-2" tabindex="-1"></a>nodes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;06-nodes.csv&quot;</span>)</span></code></pre></div>
 <p>We now have two objects of class <code>data.frame</code>, edges and nodes. Let’s inspect
 them using the <code>head</code> function:</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="reading-a-network.html#cb255-1" tabindex="-1"></a><span class="fu">head</span>(edges)</span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="reading-a-network.html#cb205-1" tabindex="-1"></a><span class="fu">head</span>(edges)</span></code></pre></div>
 <pre><code>##   V1  V2
 ## 1  2   7
 ## 2  2  41
@@ -435,7 +435,7 @@ them using the <code>head</code> function:</p>
 ## 4  3  16
 ## 5  4 138
 ## 6  5   9</code></pre>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="reading-a-network.html#cb257-1" tabindex="-1"></a><span class="fu">head</span>(nodes)</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="reading-a-network.html#cb207-1" tabindex="-1"></a><span class="fu">head</span>(nodes)</span></code></pre></div>
 <pre><code>##   vertex.names      race age
 ## 1            1 non-white  10
 ## 2            2     white  10
@@ -461,17 +461,17 @@ nodelist; the functions <code>graph_from_data_frame</code> and <code>as.nework</
 you will (a) make sure that isolates are included and (b) become aware of possible
 problems in the data. A frequent error in <code>graph_from_data_frame</code> is nodes present
 in the edgelist but not in the set of nodes.</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="reading-a-network.html#cb259-1" tabindex="-1"></a>net_ig <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_data_frame</span>(</span>
-<span id="cb259-2"><a href="reading-a-network.html#cb259-2" tabindex="-1"></a>  <span class="at">d        =</span> edges,</span>
-<span id="cb259-3"><a href="reading-a-network.html#cb259-3" tabindex="-1"></a>  <span class="at">directed =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb259-4"><a href="reading-a-network.html#cb259-4" tabindex="-1"></a>  <span class="at">vertices =</span> nodes</span>
-<span id="cb259-5"><a href="reading-a-network.html#cb259-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="reading-a-network.html#cb209-1" tabindex="-1"></a>net_ig <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_data_frame</span>(</span>
+<span id="cb209-2"><a href="reading-a-network.html#cb209-2" tabindex="-1"></a>  <span class="at">d        =</span> edges,</span>
+<span id="cb209-3"><a href="reading-a-network.html#cb209-3" tabindex="-1"></a>  <span class="at">directed =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb209-4"><a href="reading-a-network.html#cb209-4" tabindex="-1"></a>  <span class="at">vertices =</span> nodes</span>
+<span id="cb209-5"><a href="reading-a-network.html#cb209-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>Using <code>as.network</code> from the <code>network</code> package:</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="reading-a-network.html#cb260-1" tabindex="-1"></a>net_net <span class="ot">&lt;-</span> network<span class="sc">::</span><span class="fu">as.network</span>(</span>
-<span id="cb260-2"><a href="reading-a-network.html#cb260-2" tabindex="-1"></a>  <span class="at">x        =</span> edges,</span>
-<span id="cb260-3"><a href="reading-a-network.html#cb260-3" tabindex="-1"></a>  <span class="at">directed =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb260-4"><a href="reading-a-network.html#cb260-4" tabindex="-1"></a>  <span class="at">vertices =</span> nodes</span>
-<span id="cb260-5"><a href="reading-a-network.html#cb260-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="reading-a-network.html#cb210-1" tabindex="-1"></a>net_net <span class="ot">&lt;-</span> network<span class="sc">::</span><span class="fu">as.network</span>(</span>
+<span id="cb210-2"><a href="reading-a-network.html#cb210-2" tabindex="-1"></a>  <span class="at">x        =</span> edges,</span>
+<span id="cb210-3"><a href="reading-a-network.html#cb210-3" tabindex="-1"></a>  <span class="at">directed =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb210-4"><a href="reading-a-network.html#cb210-4" tabindex="-1"></a>  <span class="at">vertices =</span> nodes</span>
+<span id="cb210-5"><a href="reading-a-network.html#cb210-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>As you can see, both syntaxes are very similar. The main point here is that the
 more explicit we are, the better. Nevertheless, R can be brilliant; being
 <em>shy</em>, i.e., not throwing warnings or errors, is not uncommon. In the next
