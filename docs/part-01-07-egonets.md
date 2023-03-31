@@ -82,18 +82,18 @@ If the operation succeeded, then the previous code block should generate a list 
 
 ```r
 graphs[[1]]
-## IGRAPH 3ca2dba U--- 12 25 -- 
+## IGRAPH b931cae U--- 12 25 -- 
 ## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
 ## | (v/l), id (v/c)
-## + edges from 3ca2dba:
+## + edges from b931cae:
 ##  [1] 1-- 3 1-- 2 1-- 6 1-- 5 1-- 4 1-- 8 1--11 1--10 2-- 3 3-- 7 3-- 4 3-- 5
 ## [13] 3-- 6 2-- 7 2-- 4 2-- 5 2-- 6 5-- 6 6--10 7-- 9 4-- 5 5-- 7 4--11 6-- 7
 ## [25] 4-- 7
 graphs[[2]]
-## IGRAPH fb7ce92 U--- 16 47 -- 
+## IGRAPH 6e09f83 U--- 16 47 -- 
 ## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
 ## | (v/l), id (v/c)
-## + edges from fb7ce92:
+## + edges from 6e09f83:
 ##  [1]  7--13  1-- 5  1-- 6  1-- 4  1-- 2  7--15  1-- 3 11--13  1--10  1--16
 ## [11]  4-- 6  2-- 6  6-- 7  1--11 11--15  6-- 9  6-- 8  3-- 9  5--15  4-- 5
 ## [21]  2-- 5  5-- 8  5-- 7  5--10  3-- 5  6--14 12--13  6--13  3--13  2-- 3
@@ -302,16 +302,21 @@ ggplot(persons, aes(x = age)) +            # Starting off the plot
 
 ## Ego files
 
+The ego files contain information about egos (duh!.) Again, we will read them all at once using `list.files` + `lapply`:
+
 
 ```r
+# Listing files ending with *ego.csv
 ego_files <- list.files(
   path       = "data-raw/egonets",
   pattern    = "*ego.csv",
   full.names = TRUE
   )
 
+# Reading the files with fread
 egos <- lapply(ego_files, fread)
 
+# Combining them
 egos <- rbindlist(egos)
 head(egos)
 ##                    networkCanvasEgoUUID networkCanvasCaseID
@@ -344,13 +349,24 @@ head(egos)
 ## 6: 2023-03-17 21:11:09 2023-03-17 21:16:15
 ```
 
-Some data processing
+A cool thing about `data.table` is that, within square brackets, we can manipulate the data referring to the variables directly. For example, if we wanted to calculate the difference between `sessionFinish` and `sessionStart`, using base R we would do the following:
+
+```r
+egos$total_time <- egos$sessionFinish - egos$sessionStart
+```
+
+Whereas with `data.table`, variable creation is much more straightforward (notice that instead of using `<-` or `=` to assign a variable, we use the `:=` operator):
 
 
 ```r
 # How much time?
 egos[, total_time := sessionFinish - sessionStart]
+```
 
+We can also visualize this using `ggplot2`:
+
+
+```r
 ggplot(egos, aes(x = total_time)) +
   geom_histogram() +
   labs(x = "Time in minutes", y = "Count") +
@@ -359,26 +375,67 @@ ggplot(egos, aes(x = total_time)) +
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](part-01-07-egonets_files/figure-epub3/egos-time-1.png)<!-- -->
+![](part-01-07-egonets_files/figure-epub3/egos-time-plot-1.png)<!-- -->
 
 ## Edgelist files
 
+As I mentioned earlier, since we are reading the `graphml` files, using the edgelist may not be needed. Nevertheless, the process to import the edgelist file to R is the same we have been applying: list the files and read them all at once using `lapply`:
+
 
 ```r
+# Listing all files ending in Knows.csv
 edgelist_files <- list.files(
   path = "data-raw/egonets",
   pattern = "*Knows.csv",
   full.names = TRUE
   )
 
+# Reading all files at once
 edgelists <- lapply(edgelist_files, fread)
+```
+
+To avoid confusion, we can also add ids corresponding to the file number. Once we do that, we can combine all files into a single `data.table` object using `rbindlist`:
+
+
+```r
+edgelists <- lapply(seq_along(edgelists), function(i) {
+  edgelists[[i]][, dataset_num := i]
+})
+
 edgelists <- rbindlist(edgelists)
+
+head(edgelists)
+##    edgeID from to                 networkCanvasEgoUUID
+## 1:      1    1  5 I839f-8fa8f8aeb8-eaf---ba8-cf3908f3a
+## 2:      2    1 10 If81a9c0f-9f4f28ccf-c4c923a-8-0f5fce
+## 3:      3    1  9 I899ffe-27-3-a3-ca2fb7f7-ca8e7715ce9
+## 4:      4    1 10 I814efaba88cbb02caa8c89790-83beeaf9-
+## 5:      5    7  6 Ifd-0eec2e08974eaf2b79f-9efb7e3-8998
+## 6:      6    2  6 I-28fe89cc-fc5db3825b92-ae87c-c18e3d
+##                       networkCanvasUUID              networkCanvasSourceUUID
+## 1: I720400eb19bccce-77cee773289b02-fe7e I4d5--16a08f8ba463c6458f8979e-65fa9d
+## 2: I-b469c0-60f8bbb543-32-628-216f9-038 I-6cf8-f3da-4-96-87efaf5daaa48ba5e5c
+## 3: Ifa4933-9baaf5fc-f-e4f5c5e5-ff34-f-f I5-f69a6eaa-5956e8897ca999-ffb6ed-e1
+## 4: I4cb-904496b1-6194bcb51b58444b40-ef8 I3e5-6c8d5e0f086--e-5ab45-4-5aaa5-0e
+## 5: I0ab7--b7a0ee71e54c1e93cdb-4ca5ab1-b I5-b-9-7eca5ab5-91915ba9b6565a6e42cc
+## 6: Ic80142fc4c431009e84b3-ab3f-9b0eab03 Ie0a24eea4e01a4340343a0-66723-a-9970
+##                 networkCanvasTargetUUID dataset_num
+## 1: Id1c8befd46bdd195c-ce91a8-bc0---4f0e           1
+## 2: I757b4a-3ea4d95--b9ebb9db3d55dcbaf-c           1
+## 3: I92a62925ff9-e2f27-6ef97d-29fb729624           1
+## 4: I7f--da48-46a64-b972c-ef6bbec--64cb4           1
+## 5: I-eaa7e95659-9cf01a4f5fd69af54e6-d60           1
+## 6: I69060e8a-454609-faa04cd3eeb-5-9550-           1
 ```
 
 
 ## Putting all together
 
-### Generating statistics
+In this last part of the chapter, we will use the `igraph` and `ergm` packages to generate features (covariates, controls, independent variables, or whatever you call them) at the ego-network level. Once again, the `lapply` function is our friend
+
+### Generating statistics using igraph
+
+The `igraph` R package has multiple high-performing routines to compute graph-level statistics. For now, we will focus on the following statistics: vertex count, edge count, number of isolates, transitivity, and modularity based on betweenness centrality:
 
 
 ```r
@@ -396,8 +453,14 @@ net_stats <- lapply(graphs, function(g) {
     modular   = modularity(groups)
   )
 })
+```
 
+Observe we count isolates using the `degree()` function. We can combine the statistics into a single `data.table` using the `rbindlist` function:
+
+
+```r
 net_stats <- rbindlist(net_stats)
+
 head(net_stats)
 ##    size edges nisolates   transit     modular
 ## 1:   12    25         1 0.6750000 0.012000000
@@ -410,8 +473,13 @@ head(net_stats)
 
 ### Generating statistics based on ergm
 
+The `ergm` R package has a much larger set of graph-level statistics we can add to our models.[^ergm-stats] The key to generating statistics based on the `ergm` package is the `summary_formula` function. Before we start using that function, we first need to convert the `igraph` networks to `network` objects, which are the native object class for the `ergm` package. We use the <a href="https://cran.r-project.org/package=intergraph" target="_blank">`intergraph`</a> R package for that, and in particular, the `asNetwork` function:
+
+[^ergm-stats]: There's an obvious reason, ERGMs are all about graph-level statistics!
+
 
 ```r
+# Loading the required packages
 library(intergraph)
 library(ergm)
 ## Loading required package: network
@@ -437,23 +505,36 @@ library(ergm)
 ## changes. Please type 'news(package="ergm")' for a list of major
 ## changes.
 
+# Converting all "igraph" objects in graphs to network "objects"
 graphs_network <- lapply(graphs, asNetwork)
+```
 
+With the network objects ready, we can proceed to compute graph-level statistics using the `summary_formula` function. Here we will only look into: the number of triangles, gender homophily, and healthy-diet homophily:
+
+
+```r
 net_stats_ergm <- lapply(graphs_network, function(n) {
   
+  # Computing the statistics
   s <- summary_formula(
     n ~ triangles +
       nodematch("gender_1") +
       nodematch("healthy_diet")
     )
   
+  # Saving them as a data.table object
   data.table(
     triangles       = s[1],
     gender_homoph   = s[2],
     healthyd_homoph = s[3]
   )
 })
+```
 
+Once again, we use `rbindlist` to combine all the network statistics into a single `data.table` object:
+
+
+```r
 net_stats_ergm <- rbindlist(net_stats_ergm)
 head(net_stats_ergm)
 ##    triangles gender_homoph healthyd_homoph
@@ -466,6 +547,18 @@ head(net_stats_ergm)
 ```
 
 ## Saving the data
+
+We end the chapter saving all our work into four datasets:
+
+- Network statistics (as a csv file)
+
+- Igraph objects (as a rda file, which we can read back using `read.rds`)
+
+- Network objects (idem)
+
+- Person files (alter's information, as a csv file.)
+
+CSV files can be saved either using `write.csv` or, as we do here, `fwrite` from the `data.table` package:
 
 
 ```r

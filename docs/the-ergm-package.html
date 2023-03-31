@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-28" />
+<meta name="date" content="2023-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -238,7 +238,7 @@ div.csl-indent {
 <li class="chapter" data-level="10.4" data-path="edgelist-files.html"><a href="edgelist-files.html"><i class="fa fa-check"></i><b>10.4</b> Edgelist files</a></li>
 <li class="chapter" data-level="10.5" data-path="putting-all-together.html"><a href="putting-all-together.html"><i class="fa fa-check"></i><b>10.5</b> Putting all together</a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics"><i class="fa fa-check"></i><b>10.5.1</b> Generating statistics</a></li>
+<li class="chapter" data-level="10.5.1" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics-using-igraph"><i class="fa fa-check"></i><b>10.5.1</b> Generating statistics using igraph</a></li>
 <li class="chapter" data-level="10.5.2" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics-based-on-ergm"><i class="fa fa-check"></i><b>10.5.2</b> Generating statistics based on ergm</a></li>
 </ul></li>
 <li class="chapter" data-level="10.6" data-path="saving-the-data.html"><a href="saving-the-data.html"><i class="fa fa-check"></i><b>10.6</b> Saving the data</a></li>
@@ -383,7 +383,7 @@ div.csl-indent {
 <span id="cb137-19"><a href="the-ergm-package.html#cb137-19" tabindex="-1"></a><span class="do">## -4.734</span></span></code></pre></div>
 <p>So what happened here? We got a warning. It turns out that our network has loops (didn’t think about it before!). Let’s take a look at that with the <code>which_loop</code> function</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="the-ergm-package.html#cb138-1" tabindex="-1"></a><span class="fu">E</span>(ig_year1_111)[<span class="fu">which_loop</span>(ig_year1_111)]</span>
-<span id="cb138-2"><a href="the-ergm-package.html#cb138-2" tabindex="-1"></a><span class="do">## + 1/2638 edge from 8632550 (vertex names):</span></span>
+<span id="cb138-2"><a href="the-ergm-package.html#cb138-2" tabindex="-1"></a><span class="do">## + 1/2638 edge from 66e79d7 (vertex names):</span></span>
 <span id="cb138-3"><a href="the-ergm-package.html#cb138-3" tabindex="-1"></a><span class="do">## [1] 1110111-&gt;1110111</span></span></code></pre></div>
 <p>We can get rid of these using the <code>igraph::-.igraph</code>. Let’s remove the isolates using the same operator</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="the-ergm-package.html#cb139-1" tabindex="-1"></a><span class="co"># Creating the new network</span></span>

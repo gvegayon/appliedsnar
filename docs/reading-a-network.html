@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-28" />
+<meta name="date" content="2023-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -238,7 +238,7 @@ div.csl-indent {
 <li class="chapter" data-level="10.4" data-path="edgelist-files.html"><a href="edgelist-files.html"><i class="fa fa-check"></i><b>10.4</b> Edgelist files</a></li>
 <li class="chapter" data-level="10.5" data-path="putting-all-together.html"><a href="putting-all-together.html"><i class="fa fa-check"></i><b>10.5</b> Putting all together</a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics"><i class="fa fa-check"></i><b>10.5.1</b> Generating statistics</a></li>
+<li class="chapter" data-level="10.5.1" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics-using-igraph"><i class="fa fa-check"></i><b>10.5.1</b> Generating statistics using igraph</a></li>
 <li class="chapter" data-level="10.5.2" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics-based-on-ergm"><i class="fa fa-check"></i><b>10.5.2</b> Generating statistics based on ergm</a></li>
 </ul></li>
 <li class="chapter" data-level="10.6" data-path="saving-the-data.html"><a href="saving-the-data.html"><i class="fa fa-check"></i><b>10.6</b> Saving the data</a></li>
@@ -400,19 +400,19 @@ grouped by ego (source.)</li>
 </ul>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="reading-a-network.html#cb201-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">as_adj_list</span>(intergraph<span class="sc">::</span><span class="fu">asIgraph</span>(example_graph)) </span></code></pre></div>
 <pre><code>## [[1]]
-## + 1/4 vertex, from 27e9d66:
+## + 1/4 vertex, from ff6e724:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from 27e9d66:
+## + 2/4 vertices, from ff6e724:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from 27e9d66:
+## + 3/4 vertices, from ff6e724:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from 27e9d66:
+## + 2/4 vertices, from ff6e724:
 ## [1] 3 3</code></pre>
 <p>The function <code>igraph::as_adj_list</code> turns the igraph object into a list of
 type adjacency list. In plain text it would look something like this:</p>

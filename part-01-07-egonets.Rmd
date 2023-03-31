@@ -234,25 +234,40 @@ ggplot(persons, aes(x = age)) +            # Starting off the plot
 
 ## Ego files
 
+The ego files contain information about egos (duh!.) Again, we will read them all at once using `list.files` + `lapply`:
+
 ```{r read-ego}
+# Listing files ending with *ego.csv
 ego_files <- list.files(
   path       = "data-raw/egonets",
   pattern    = "*ego.csv",
   full.names = TRUE
   )
 
+# Reading the files with fread
 egos <- lapply(ego_files, fread)
 
+# Combining them
 egos <- rbindlist(egos)
 head(egos)
 ```
 
-Some data processing
+A cool thing about `data.table` is that, within square brackets, we can manipulate the data referring to the variables directly. For example, if we wanted to calculate the difference between `sessionFinish` and `sessionStart`, using base R we would do the following:
+
+```r
+egos$total_time <- egos$sessionFinish - egos$sessionStart
+```
+
+Whereas with `data.table`, variable creation is much more straightforward (notice that instead of using `<-` or `=` to assign a variable, we use the `:=` operator):
 
 ```{r egos-time}
 # How much time?
 egos[, total_time := sessionFinish - sessionStart]
+```
 
+We can also visualize this using `ggplot2`:
+
+```{r egos-time-plot}
 ggplot(egos, aes(x = total_time)) +
   geom_histogram() +
   labs(x = "Time in minutes", y = "Count") +
@@ -261,21 +276,40 @@ ggplot(egos, aes(x = total_time)) +
 
 ## Edgelist files
 
+As I mentioned earlier, since we are reading the `graphml` files, using the edgelist may not be needed. Nevertheless, the process to import the edgelist file to R is the same we have been applying: list the files and read them all at once using `lapply`:
+
 ```{r read-edgelist}
+# Listing all files ending in Knows.csv
 edgelist_files <- list.files(
   path = "data-raw/egonets",
   pattern = "*Knows.csv",
   full.names = TRUE
   )
 
+# Reading all files at once
 edgelists <- lapply(edgelist_files, fread)
+```
+
+To avoid confusion, we can also add ids corresponding to the file number. Once we do that, we can combine all files into a single `data.table` object using `rbindlist`:
+
+```{r part-01-07-adding-ids-edgelist}
+edgelists <- lapply(seq_along(edgelists), function(i) {
+  edgelists[[i]][, dataset_num := i]
+})
+
 edgelists <- rbindlist(edgelists)
+
+head(edgelists)
 ```
 
 
 ## Putting all together
 
-### Generating statistics
+In this last part of the chapter, we will use the `igraph` and `ergm` packages to generate features (covariates, controls, independent variables, or whatever you call them) at the ego-network level. Once again, the `lapply` function is our friend
+
+### Generating statistics using igraph
+
+The `igraph` R package has multiple high-performing routines to compute graph-level statistics. For now, we will focus on the following statistics: vertex count, edge count, number of isolates, transitivity, and modularity based on betweenness centrality:
 
 ```{r gen-stats}
 net_stats <- lapply(graphs, function(g) {
@@ -292,39 +326,72 @@ net_stats <- lapply(graphs, function(g) {
     modular   = modularity(groups)
   )
 })
+```
 
+Observe we count isolates using the `degree()` function. We can combine the statistics into a single `data.table` using the `rbindlist` function:
+
+```{r}
 net_stats <- rbindlist(net_stats)
+
 head(net_stats)
 ```
 
 ### Generating statistics based on ergm
 
-```{r gen-stats-ergm}
+The `ergm` R package has a much larger set of graph-level statistics we can add to our models.[^ergm-stats] The key to generating statistics based on the `ergm` package is the `summary_formula` function. Before we start using that function, we first need to convert the `igraph` networks to `network` objects, which are the native object class for the `ergm` package. We use the <a href="https://cran.r-project.org/package=intergraph" target="_blank">`intergraph`</a> R package for that, and in particular, the `asNetwork` function:
+
+[^ergm-stats]: There's an obvious reason, ERGMs are all about graph-level statistics!
+
+```{r part-01-07-igraph-to-network}
+# Loading the required packages
 library(intergraph)
 library(ergm)
 
+# Converting all "igraph" objects in graphs to network "objects"
 graphs_network <- lapply(graphs, asNetwork)
+```
 
+With the network objects ready, we can proceed to compute graph-level statistics using the `summary_formula` function. Here we will only look into: the number of triangles, gender homophily, and healthy-diet homophily:
+
+```{r part-01-07-gen-stats-ergm}
 net_stats_ergm <- lapply(graphs_network, function(n) {
   
+  # Computing the statistics
   s <- summary_formula(
     n ~ triangles +
       nodematch("gender_1") +
       nodematch("healthy_diet")
     )
   
+  # Saving them as a data.table object
   data.table(
     triangles       = s[1],
     gender_homoph   = s[2],
     healthyd_homoph = s[3]
   )
 })
+```
 
+Once again, we use `rbindlist` to combine all the network statistics into a single `data.table` object:
+
+```{r part-01-07-combine-ergm-stats}
 net_stats_ergm <- rbindlist(net_stats_ergm)
 head(net_stats_ergm)
 ```
 
 ## Saving the data
+
+We end the chapter saving all our work into four datasets:
+
+- Network statistics (as a csv file)
+
+- Igraph objects (as a rda file, which we can read back using `read.rds`)
+
+- Network objects (idem)
+
+- Person files (alter's information, as a csv file.)
+
+CSV files can be saved either using `write.csv` or, as we do here, `fwrite` from the `data.table` package:
 
 ```{r saving}
 # Network attributes

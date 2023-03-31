@@ -268,7 +268,7 @@ So what happened here? We got a warning. It turns out that our network has loops
 
 ```r
 E(ig_year1_111)[which_loop(ig_year1_111)]
-## + 1/2638 edge from 999398d (vertex names):
+## + 1/2638 edge from 3c28299 (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -402,6 +402,17 @@ Now, a nice trick to see all regressions in the same table, we can use the `texr
 
 ```r
 library(texreg)
+## Version:  1.38.6
+## Date:     2022-04-06
+## Author:   Philip Leifeld (University of Essex)
+## 
+## Consider submitting praise using the praise or praise_interactive functions.
+## Please cite the JSS article in your publications -- see citation("texreg").
+## 
+## Attaching package: 'texreg'
+## The following object is masked from 'package:magrittr':
+## 
+##     extract
 screenreg(list(ans0, ans1, ans2))
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.

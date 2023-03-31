@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-28" />
+<meta name="date" content="2023-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -238,7 +238,7 @@ div.csl-indent {
 <li class="chapter" data-level="10.4" data-path="edgelist-files.html"><a href="edgelist-files.html"><i class="fa fa-check"></i><b>10.4</b> Edgelist files</a></li>
 <li class="chapter" data-level="10.5" data-path="putting-all-together.html"><a href="putting-all-together.html"><i class="fa fa-check"></i><b>10.5</b> Putting all together</a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics"><i class="fa fa-check"></i><b>10.5.1</b> Generating statistics</a></li>
+<li class="chapter" data-level="10.5.1" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics-using-igraph"><i class="fa fa-check"></i><b>10.5.1</b> Generating statistics using igraph</a></li>
 <li class="chapter" data-level="10.5.2" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics-based-on-ergm"><i class="fa fa-check"></i><b>10.5.2</b> Generating statistics based on ergm</a></li>
 </ul></li>
 <li class="chapter" data-level="10.6" data-path="saving-the-data.html"><a href="saving-the-data.html"><i class="fa fa-check"></i><b>10.6</b> Saving the data</a></li>
@@ -342,16 +342,24 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="saving-the-data" class="section level2 hasAnchor" number="10.6">
 <h2><span class="header-section-number">10.6</span> Saving the data<a href="saving-the-data.html#saving-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="saving-the-data.html#cb239-1" tabindex="-1"></a><span class="co"># Network attributes</span></span>
-<span id="cb239-2"><a href="saving-the-data.html#cb239-2" tabindex="-1"></a>master <span class="ot">&lt;-</span> <span class="fu">cbind</span>(egos, net_stats, net_stats_ergm)</span>
-<span id="cb239-3"><a href="saving-the-data.html#cb239-3" tabindex="-1"></a><span class="fu">fwrite</span>(master, <span class="at">file =</span> <span class="st">&quot;data/network_stats.csv&quot;</span>)</span>
-<span id="cb239-4"><a href="saving-the-data.html#cb239-4" tabindex="-1"></a></span>
-<span id="cb239-5"><a href="saving-the-data.html#cb239-5" tabindex="-1"></a><span class="co"># Networks</span></span>
-<span id="cb239-6"><a href="saving-the-data.html#cb239-6" tabindex="-1"></a><span class="fu">saveRDS</span>(graphs, <span class="at">file =</span> <span class="st">&quot;data/networks_igraph.rds&quot;</span>)</span>
-<span id="cb239-7"><a href="saving-the-data.html#cb239-7" tabindex="-1"></a><span class="fu">saveRDS</span>(graphs_network, <span class="at">file =</span> <span class="st">&quot;data/networks_network.rds&quot;</span>)</span>
-<span id="cb239-8"><a href="saving-the-data.html#cb239-8" tabindex="-1"></a></span>
-<span id="cb239-9"><a href="saving-the-data.html#cb239-9" tabindex="-1"></a><span class="co"># Attributes</span></span>
-<span id="cb239-10"><a href="saving-the-data.html#cb239-10" tabindex="-1"></a><span class="fu">fwrite</span>(persons, <span class="at">file =</span> <span class="st">&quot;data/persons.csv&quot;</span>)</span></code></pre></div>
+<p>We end the chapter saving all our work into four datasets:</p>
+<ul>
+<li><p>Network statistics (as a csv file)</p></li>
+<li><p>Igraph objects (as a rda file, which we can read back using <code>read.rds</code>)</p></li>
+<li><p>Network objects (idem)</p></li>
+<li><p>Person files (alter’s information, as a csv file.)</p></li>
+</ul>
+<p>CSV files can be saved either using <code>write.csv</code> or, as we do here, <code>fwrite</code> from the <code>data.table</code> package:</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="saving-the-data.html#cb245-1" tabindex="-1"></a><span class="co"># Network attributes</span></span>
+<span id="cb245-2"><a href="saving-the-data.html#cb245-2" tabindex="-1"></a>master <span class="ot">&lt;-</span> <span class="fu">cbind</span>(egos, net_stats, net_stats_ergm)</span>
+<span id="cb245-3"><a href="saving-the-data.html#cb245-3" tabindex="-1"></a><span class="fu">fwrite</span>(master, <span class="at">file =</span> <span class="st">&quot;data/network_stats.csv&quot;</span>)</span>
+<span id="cb245-4"><a href="saving-the-data.html#cb245-4" tabindex="-1"></a></span>
+<span id="cb245-5"><a href="saving-the-data.html#cb245-5" tabindex="-1"></a><span class="co"># Networks</span></span>
+<span id="cb245-6"><a href="saving-the-data.html#cb245-6" tabindex="-1"></a><span class="fu">saveRDS</span>(graphs, <span class="at">file =</span> <span class="st">&quot;data/networks_igraph.rds&quot;</span>)</span>
+<span id="cb245-7"><a href="saving-the-data.html#cb245-7" tabindex="-1"></a><span class="fu">saveRDS</span>(graphs_network, <span class="at">file =</span> <span class="st">&quot;data/networks_network.rds&quot;</span>)</span>
+<span id="cb245-8"><a href="saving-the-data.html#cb245-8" tabindex="-1"></a></span>
+<span id="cb245-9"><a href="saving-the-data.html#cb245-9" tabindex="-1"></a><span class="co"># Attributes</span></span>
+<span id="cb245-10"><a href="saving-the-data.html#cb245-10" tabindex="-1"></a><span class="fu">fwrite</span>(persons, <span class="at">file =</span> <span class="st">&quot;data/persons.csv&quot;</span>)</span></code></pre></div>
 
 </div>
 <!-- </div> -->

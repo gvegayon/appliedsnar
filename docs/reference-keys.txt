@@ -53,7 +53,7 @@ person-files
 ego-files
 edgelist-files
 putting-all-together
-generating-statistics
+generating-statistics-using-igraph
 generating-statistics-based-on-ergm
 saving-the-data
 hypothesis-testing-in-networks

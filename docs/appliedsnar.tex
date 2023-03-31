@@ -155,7 +155,7 @@
 
 \title{Applied Network Science with R}
 \author{George G. Vega Yon, Ph.D.}
-\date{2023-03-28}
+\date{2023-03-31}
 
 \begin{document}
 \maketitle
@@ -1939,7 +1939,7 @@ So what happened here? We got a warning. It turns out that our network has loops
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{E}\NormalTok{(ig\_year1\_111)[}\FunctionTok{which\_loop}\NormalTok{(ig\_year1\_111)]}
-\DocumentationTok{\#\# + 1/2638 edge from 079fa0f (vertex names):}
+\DocumentationTok{\#\# + 1/2638 edge from 56d2ba9 (vertex names):}
 \DocumentationTok{\#\# [1] 1110111{-}\textgreater{}1110111}
 \end{Highlighting}
 \end{Shaded}
@@ -2094,6 +2094,17 @@ Now, a nice trick to see all regressions in the same table, we can use the \text
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(texreg)}
+\DocumentationTok{\#\# Version:  1.38.6}
+\DocumentationTok{\#\# Date:     2022{-}04{-}06}
+\DocumentationTok{\#\# Author:   Philip Leifeld (University of Essex)}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Consider submitting praise using the praise or praise\_interactive functions.}
+\DocumentationTok{\#\# Please cite the JSS article in your publications {-}{-} see citation("texreg").}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Attaching package: \textquotesingle{}texreg\textquotesingle{}}
+\DocumentationTok{\#\# The following object is masked from \textquotesingle{}package:magrittr\textquotesingle{}:}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#     extract}
 \FunctionTok{screenreg}\NormalTok{(}\FunctionTok{list}\NormalTok{(ans0, ans1, ans2))}
 \DocumentationTok{\#\# Warning: This object was fit with \textquotesingle{}ergm\textquotesingle{} version 4.1.2 or earlier. Summarizing}
 \DocumentationTok{\#\# it with version 4.2 or later may return incorrect results or fail.}
@@ -3558,19 +3569,19 @@ The command turns the \texttt{network} object into a matrix with a set of attrib
 
 \begin{verbatim}
 ## [[1]]
-## + 1/4 vertex, from 20d83e2:
+## + 1/4 vertex, from 474eb42:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from 20d83e2:
+## + 2/4 vertices, from 474eb42:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from 20d83e2:
+## + 3/4 vertices, from 474eb42:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from 20d83e2:
+## + 2/4 vertices, from 474eb42:
 ## [1] 3 3
 \end{verbatim}
 
@@ -4120,18 +4131,18 @@ If the operation succeeded, then the previous code block should generate a list 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{graphs[[}\DecValTok{1}\NormalTok{]]}
-\DocumentationTok{\#\# IGRAPH 892b891 U{-}{-}{-} 12 25 {-}{-} }
+\DocumentationTok{\#\# IGRAPH c660b76 U{-}{-}{-} 12 25 {-}{-} }
 \DocumentationTok{\#\# + attr: age (v/n), healthy\_diet (v/n), gender\_1 (v/l), eat\_with\_2}
 \DocumentationTok{\#\# | (v/l), id (v/c)}
-\DocumentationTok{\#\# + edges from 892b891:}
+\DocumentationTok{\#\# + edges from c660b76:}
 \DocumentationTok{\#\#  [1] 1{-}{-} 3 1{-}{-} 2 1{-}{-} 6 1{-}{-} 5 1{-}{-} 4 1{-}{-} 8 1{-}{-}11 1{-}{-}10 2{-}{-} 3 3{-}{-} 7 3{-}{-} 4 3{-}{-} 5}
 \DocumentationTok{\#\# [13] 3{-}{-} 6 2{-}{-} 7 2{-}{-} 4 2{-}{-} 5 2{-}{-} 6 5{-}{-} 6 6{-}{-}10 7{-}{-} 9 4{-}{-} 5 5{-}{-} 7 4{-}{-}11 6{-}{-} 7}
 \DocumentationTok{\#\# [25] 4{-}{-} 7}
 \NormalTok{graphs[[}\DecValTok{2}\NormalTok{]]}
-\DocumentationTok{\#\# IGRAPH 2ea7cae U{-}{-}{-} 16 47 {-}{-} }
+\DocumentationTok{\#\# IGRAPH 6726e83 U{-}{-}{-} 16 47 {-}{-} }
 \DocumentationTok{\#\# + attr: age (v/n), healthy\_diet (v/n), gender\_1 (v/l), eat\_with\_2}
 \DocumentationTok{\#\# | (v/l), id (v/c)}
-\DocumentationTok{\#\# + edges from 2ea7cae:}
+\DocumentationTok{\#\# + edges from 6726e83:}
 \DocumentationTok{\#\#  [1]  7{-}{-}13  1{-}{-} 5  1{-}{-} 6  1{-}{-} 4  1{-}{-} 2  7{-}{-}15  1{-}{-} 3 11{-}{-}13  1{-}{-}10  1{-}{-}16}
 \DocumentationTok{\#\# [11]  4{-}{-} 6  2{-}{-} 6  6{-}{-} 7  1{-}{-}11 11{-}{-}15  6{-}{-} 9  6{-}{-} 8  3{-}{-} 9  5{-}{-}15  4{-}{-} 5}
 \DocumentationTok{\#\# [21]  2{-}{-} 5  5{-}{-} 8  5{-}{-} 7  5{-}{-}10  3{-}{-} 5  6{-}{-}14 12{-}{-}13  6{-}{-}13  3{-}{-}13  2{-}{-} 3}
@@ -4348,16 +4359,21 @@ Now that we have a single dataset, we can do some data exploration. For example,
 \hypertarget{ego-files}{%
 \section{Ego files}\label{ego-files}}
 
+The ego files contain information about egos (duh!.) Again, we will read them all at once using \texttt{list.files} + \texttt{lapply}:
+
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# Listing files ending with *ego.csv}
 \NormalTok{ego\_files }\OtherTok{\textless{}{-}} \FunctionTok{list.files}\NormalTok{(}
   \AttributeTok{path       =} \StringTok{"data{-}raw/egonets"}\NormalTok{,}
   \AttributeTok{pattern    =} \StringTok{"*ego.csv"}\NormalTok{,}
   \AttributeTok{full.names =} \ConstantTok{TRUE}
 \NormalTok{  )}
 
+\CommentTok{\# Reading the files with fread}
 \NormalTok{egos }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(ego\_files, fread)}
 
+\CommentTok{\# Combining them}
 \NormalTok{egos }\OtherTok{\textless{}{-}} \FunctionTok{rbindlist}\NormalTok{(egos)}
 \FunctionTok{head}\NormalTok{(egos)}
 \DocumentationTok{\#\#                    networkCanvasEgoUUID networkCanvasCaseID}
@@ -4391,13 +4407,27 @@ Now that we have a single dataset, we can do some data exploration. For example,
 \end{Highlighting}
 \end{Shaded}
 
-Some data processing
+A cool thing about \texttt{data.table} is that, within square brackets, we can manipulate the data referring to the variables directly. For example, if we wanted to calculate the difference between \texttt{sessionFinish} and \texttt{sessionStart}, using base R we would do the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{egos}\SpecialCharTok{$}\NormalTok{total\_time }\OtherTok{\textless{}{-}}\NormalTok{ egos}\SpecialCharTok{$}\NormalTok{sessionFinish }\SpecialCharTok{{-}}\NormalTok{ egos}\SpecialCharTok{$}\NormalTok{sessionStart}
+\end{Highlighting}
+\end{Shaded}
+
+Whereas with \texttt{data.table}, variable creation is much more straightforward (notice that instead of using \texttt{\textless{}-} or \texttt{=} to assign a variable, we use the \texttt{:=} operator):
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# How much time?}
 \NormalTok{egos[, total\_time }\SpecialCharTok{:=}\NormalTok{ sessionFinish }\SpecialCharTok{{-}}\NormalTok{ sessionStart]}
+\end{Highlighting}
+\end{Shaded}
 
+We can also visualize this using \texttt{ggplot2}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(egos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ total\_time)) }\SpecialCharTok{+}
   \FunctionTok{geom\_histogram}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Time in minutes"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Count"}\NormalTok{) }\SpecialCharTok{+}
@@ -4407,29 +4437,71 @@ Some data processing
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{part-01-07-egonets_files/figure-latex/egos-time-1.pdf}
+\includegraphics{part-01-07-egonets_files/figure-latex/egos-time-plot-1.pdf}
 
 \hypertarget{edgelist-files}{%
 \section{Edgelist files}\label{edgelist-files}}
 
+As I mentioned earlier, since we are reading the \texttt{graphml} files, using the edgelist may not be needed. Nevertheless, the process to import the edgelist file to R is the same we have been applying: list the files and read them all at once using \texttt{lapply}:
+
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# Listing all files ending in Knows.csv}
 \NormalTok{edgelist\_files }\OtherTok{\textless{}{-}} \FunctionTok{list.files}\NormalTok{(}
   \AttributeTok{path =} \StringTok{"data{-}raw/egonets"}\NormalTok{,}
   \AttributeTok{pattern =} \StringTok{"*Knows.csv"}\NormalTok{,}
   \AttributeTok{full.names =} \ConstantTok{TRUE}
 \NormalTok{  )}
 
+\CommentTok{\# Reading all files at once}
 \NormalTok{edgelists }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(edgelist\_files, fread)}
+\end{Highlighting}
+\end{Shaded}
+
+To avoid confusion, we can also add ids corresponding to the file number. Once we do that, we can combine all files into a single \texttt{data.table} object using \texttt{rbindlist}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{edgelists }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\FunctionTok{seq\_along}\NormalTok{(edgelists), }\ControlFlowTok{function}\NormalTok{(i) \{}
+\NormalTok{  edgelists[[i]][, dataset\_num }\SpecialCharTok{:=}\NormalTok{ i]}
+\NormalTok{\})}
+
 \NormalTok{edgelists }\OtherTok{\textless{}{-}} \FunctionTok{rbindlist}\NormalTok{(edgelists)}
+
+\FunctionTok{head}\NormalTok{(edgelists)}
+\DocumentationTok{\#\#    edgeID from to                 networkCanvasEgoUUID}
+\DocumentationTok{\#\# 1:      1    1  5 I839f{-}8fa8f8aeb8{-}eaf{-}{-}{-}ba8{-}cf3908f3a}
+\DocumentationTok{\#\# 2:      2    1 10 If81a9c0f{-}9f4f28ccf{-}c4c923a{-}8{-}0f5fce}
+\DocumentationTok{\#\# 3:      3    1  9 I899ffe{-}27{-}3{-}a3{-}ca2fb7f7{-}ca8e7715ce9}
+\DocumentationTok{\#\# 4:      4    1 10 I814efaba88cbb02caa8c89790{-}83beeaf9{-}}
+\DocumentationTok{\#\# 5:      5    7  6 Ifd{-}0eec2e08974eaf2b79f{-}9efb7e3{-}8998}
+\DocumentationTok{\#\# 6:      6    2  6 I{-}28fe89cc{-}fc5db3825b92{-}ae87c{-}c18e3d}
+\DocumentationTok{\#\#                       networkCanvasUUID              networkCanvasSourceUUID}
+\DocumentationTok{\#\# 1: I720400eb19bccce{-}77cee773289b02{-}fe7e I4d5{-}{-}16a08f8ba463c6458f8979e{-}65fa9d}
+\DocumentationTok{\#\# 2: I{-}b469c0{-}60f8bbb543{-}32{-}628{-}216f9{-}038 I{-}6cf8{-}f3da{-}4{-}96{-}87efaf5daaa48ba5e5c}
+\DocumentationTok{\#\# 3: Ifa4933{-}9baaf5fc{-}f{-}e4f5c5e5{-}ff34{-}f{-}f I5{-}f69a6eaa{-}5956e8897ca999{-}ffb6ed{-}e1}
+\DocumentationTok{\#\# 4: I4cb{-}904496b1{-}6194bcb51b58444b40{-}ef8 I3e5{-}6c8d5e0f086{-}{-}e{-}5ab45{-}4{-}5aaa5{-}0e}
+\DocumentationTok{\#\# 5: I0ab7{-}{-}b7a0ee71e54c1e93cdb{-}4ca5ab1{-}b I5{-}b{-}9{-}7eca5ab5{-}91915ba9b6565a6e42cc}
+\DocumentationTok{\#\# 6: Ic80142fc4c431009e84b3{-}ab3f{-}9b0eab03 Ie0a24eea4e01a4340343a0{-}66723{-}a{-}9970}
+\DocumentationTok{\#\#                 networkCanvasTargetUUID dataset\_num}
+\DocumentationTok{\#\# 1: Id1c8befd46bdd195c{-}ce91a8{-}bc0{-}{-}{-}4f0e           1}
+\DocumentationTok{\#\# 2: I757b4a{-}3ea4d95{-}{-}b9ebb9db3d55dcbaf{-}c           1}
+\DocumentationTok{\#\# 3: I92a62925ff9{-}e2f27{-}6ef97d{-}29fb729624           1}
+\DocumentationTok{\#\# 4: I7f{-}{-}da48{-}46a64{-}b972c{-}ef6bbec{-}{-}64cb4           1}
+\DocumentationTok{\#\# 5: I{-}eaa7e95659{-}9cf01a4f5fd69af54e6{-}d60           1}
+\DocumentationTok{\#\# 6: I69060e8a{-}454609{-}faa04cd3eeb{-}5{-}9550{-}           1}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{putting-all-together}{%
 \section{Putting all together}\label{putting-all-together}}
 
-\hypertarget{generating-statistics}{%
-\subsection{Generating statistics}\label{generating-statistics}}
+In this last part of the chapter, we will use the \texttt{igraph} and \texttt{ergm} packages to generate features (covariates, controls, independent variables, or whatever you call them) at the ego-network level. Once again, the \texttt{lapply} function is our friend
+
+\hypertarget{generating-statistics-using-igraph}{%
+\subsection{Generating statistics using igraph}\label{generating-statistics-using-igraph}}
+
+The \texttt{igraph} R package has multiple high-performing routines to compute graph-level statistics. For now, we will focus on the following statistics: vertex count, edge count, number of isolates, transitivity, and modularity based on betweenness centrality:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4447,8 +4519,15 @@ Some data processing
     \AttributeTok{modular   =} \FunctionTok{modularity}\NormalTok{(groups)}
 \NormalTok{  )}
 \NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
 
+Observe we count isolates using the \texttt{degree()} function. We can combine the statistics into a single \texttt{data.table} using the \texttt{rbindlist} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{net\_stats }\OtherTok{\textless{}{-}} \FunctionTok{rbindlist}\NormalTok{(net\_stats)}
+
 \FunctionTok{head}\NormalTok{(net\_stats)}
 \DocumentationTok{\#\#    size edges nisolates   transit     modular}
 \DocumentationTok{\#\# 1:   12    25         1 0.6750000 0.012000000}
@@ -4463,8 +4542,11 @@ Some data processing
 \hypertarget{generating-statistics-based-on-ergm}{%
 \subsection{Generating statistics based on ergm}\label{generating-statistics-based-on-ergm}}
 
+The \texttt{ergm} R package has a much larger set of graph-level statistics we can add to our models.\footnote{There's an obvious reason, ERGMs are all about graph-level statistics!} The key to generating statistics based on the \texttt{ergm} package is the \texttt{summary\_formula} function. Before we start using that function, we first need to convert the \texttt{igraph} networks to \texttt{network} objects, which are the native object class for the \texttt{ergm} package. We use the \texttt{intergraph} R package for that, and in particular, the \texttt{asNetwork} function:
+
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# Loading the required packages}
 \FunctionTok{library}\NormalTok{(intergraph)}
 \FunctionTok{library}\NormalTok{(ergm)}
 \DocumentationTok{\#\# Loading required package: network}
@@ -4490,23 +4572,38 @@ Some data processing
 \DocumentationTok{\#\# changes. Please type \textquotesingle{}news(package="ergm")\textquotesingle{} for a list of major}
 \DocumentationTok{\#\# changes.}
 
+\CommentTok{\# Converting all "igraph" objects in graphs to network "objects"}
 \NormalTok{graphs\_network }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(graphs, asNetwork)}
+\end{Highlighting}
+\end{Shaded}
 
+With the network objects ready, we can proceed to compute graph-level statistics using the \texttt{summary\_formula} function. Here we will only look into: the number of triangles, gender homophily, and healthy-diet homophily:
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{net\_stats\_ergm }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(graphs\_network, }\ControlFlowTok{function}\NormalTok{(n) \{}
   
+  \CommentTok{\# Computing the statistics}
 \NormalTok{  s }\OtherTok{\textless{}{-}} \FunctionTok{summary\_formula}\NormalTok{(}
 \NormalTok{    n }\SpecialCharTok{\textasciitilde{}}\NormalTok{ triangles }\SpecialCharTok{+}
       \FunctionTok{nodematch}\NormalTok{(}\StringTok{"gender\_1"}\NormalTok{) }\SpecialCharTok{+}
       \FunctionTok{nodematch}\NormalTok{(}\StringTok{"healthy\_diet"}\NormalTok{)}
 \NormalTok{    )}
   
+  \CommentTok{\# Saving them as a data.table object}
   \FunctionTok{data.table}\NormalTok{(}
     \AttributeTok{triangles       =}\NormalTok{ s[}\DecValTok{1}\NormalTok{],}
     \AttributeTok{gender\_homoph   =}\NormalTok{ s[}\DecValTok{2}\NormalTok{],}
     \AttributeTok{healthyd\_homoph =}\NormalTok{ s[}\DecValTok{3}\NormalTok{]}
 \NormalTok{  )}
 \NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
 
+Once again, we use \texttt{rbindlist} to combine all the network statistics into a single \texttt{data.table} object:
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{net\_stats\_ergm }\OtherTok{\textless{}{-}} \FunctionTok{rbindlist}\NormalTok{(net\_stats\_ergm)}
 \FunctionTok{head}\NormalTok{(net\_stats\_ergm)}
 \DocumentationTok{\#\#    triangles gender\_homoph healthyd\_homoph}
@@ -4521,6 +4618,21 @@ Some data processing
 
 \hypertarget{saving-the-data}{%
 \section{Saving the data}\label{saving-the-data}}
+
+We end the chapter saving all our work into four datasets:
+
+\begin{itemize}
+\item
+  Network statistics (as a csv file)
+\item
+  Igraph objects (as a rda file, which we can read back using \texttt{read.rds})
+\item
+  Network objects (idem)
+\item
+  Person files (alter's information, as a csv file.)
+\end{itemize}
+
+CSV files can be saved either using \texttt{write.csv} or, as we do here, \texttt{fwrite} from the \texttt{data.table} package:
 
 \begin{Shaded}
 \begin{Highlighting}[]

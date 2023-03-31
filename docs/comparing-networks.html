@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-28" />
+<meta name="date" content="2023-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -238,7 +238,7 @@ div.csl-indent {
 <li class="chapter" data-level="10.4" data-path="edgelist-files.html"><a href="edgelist-files.html"><i class="fa fa-check"></i><b>10.4</b> Edgelist files</a></li>
 <li class="chapter" data-level="10.5" data-path="putting-all-together.html"><a href="putting-all-together.html"><i class="fa fa-check"></i><b>10.5</b> Putting all together</a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics"><i class="fa fa-check"></i><b>10.5.1</b> Generating statistics</a></li>
+<li class="chapter" data-level="10.5.1" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics-using-igraph"><i class="fa fa-check"></i><b>10.5.1</b> Generating statistics using igraph</a></li>
 <li class="chapter" data-level="10.5.2" data-path="putting-all-together.html"><a href="putting-all-together.html#generating-statistics-based-on-ergm"><i class="fa fa-check"></i><b>10.5.2</b> Generating statistics based on ergm</a></li>
 </ul></li>
 <li class="chapter" data-level="10.6" data-path="saving-the-data.html"><a href="saving-the-data.html"><i class="fa fa-check"></i><b>10.6</b> Saving the data</a></li>
@@ -358,7 +358,7 @@ package <a href="https://cran.r-project.org/package=netdiffuseR"><code>netdiffus
 <div id="when-the-statistic-is-normal" class="section level3 hasAnchor" number="11.1.2">
 <h3><span class="header-section-number">11.1.2</span> When the statistic is normal<a href="comparing-networks.html#when-the-statistic-is-normal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When the we deal with things that are normally distributed, e.g., sample means
-like density<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>,
+like density<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>,
 we can make use of the Student’s distribution for making inference. In particular,
 we can use Bootstrap/Jackknife to approximate the standard errors of the statistic
 for each network:</p>
@@ -380,29 +380,29 @@ Where We now proceede to approximate the variances.</p></li>
 <li><p>Using the <em>plugin principle</em> <span class="citation">(<a href="#ref-Efron1994">Efron and Tibshirani 1994</a>)</span>, we can approximate the variances
 using Bootstrap/Jackknife, i.e., compute <span class="math inline">\(\hat\sigma_1^2\approx\sigma_1^2/m_1\)</span> and
 <span class="math inline">\(\hat\sigma_2^2\approx\sigma_2^2/m_2\)</span>. Using netdiffuseR</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="comparing-networks.html#cb240-1" tabindex="-1"></a><span class="fu">library</span>(netdiffuseR)</span>
-<span id="cb240-2"><a href="comparing-networks.html#cb240-2" tabindex="-1"></a></span>
-<span id="cb240-3"><a href="comparing-networks.html#cb240-3" tabindex="-1"></a><span class="co"># Obtain a 100 replicates</span></span>
-<span id="cb240-4"><a href="comparing-networks.html#cb240-4" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g1, <span class="cf">function</span>(i, ...) <span class="fu">sum</span>(i)<span class="sc">/</span>(<span class="fu">nnodes</span>(i) <span class="sc">*</span> (<span class="fu">nnodes</span>(i) <span class="sc">-</span> <span class="dv">1</span>)), <span class="at">R =</span> <span class="dv">100</span>)</span>
-<span id="cb240-5"><a href="comparing-networks.html#cb240-5" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g2, <span class="cf">function</span>(i, ...) <span class="fu">sum</span>(i)<span class="sc">/</span>(<span class="fu">nnodes</span>(i) <span class="sc">*</span> (<span class="fu">nnodes</span>(i) <span class="sc">-</span> <span class="dv">1</span>)), <span class="at">R =</span> <span class="dv">100</span>)</span>
-<span id="cb240-6"><a href="comparing-networks.html#cb240-6" tabindex="-1"></a></span>
-<span id="cb240-7"><a href="comparing-networks.html#cb240-7" tabindex="-1"></a><span class="co"># Retrieving the variances</span></span>
-<span id="cb240-8"><a href="comparing-networks.html#cb240-8" tabindex="-1"></a>hat_sigma1 <span class="ot">&lt;-</span> sg1<span class="sc">$</span>var_t</span>
-<span id="cb240-9"><a href="comparing-networks.html#cb240-9" tabindex="-1"></a>hat_sigma2 <span class="ot">&lt;-</span> sg2<span class="sc">$</span>var_t</span>
-<span id="cb240-10"><a href="comparing-networks.html#cb240-10" tabindex="-1"></a></span>
-<span id="cb240-11"><a href="comparing-networks.html#cb240-11" tabindex="-1"></a><span class="co"># And the actual values</span></span>
-<span id="cb240-12"><a href="comparing-networks.html#cb240-12" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> sg1<span class="sc">$</span>t0</span>
-<span id="cb240-13"><a href="comparing-networks.html#cb240-13" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> sg2<span class="sc">$</span>t0</span></code></pre></div></li>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="comparing-networks.html#cb246-1" tabindex="-1"></a><span class="fu">library</span>(netdiffuseR)</span>
+<span id="cb246-2"><a href="comparing-networks.html#cb246-2" tabindex="-1"></a></span>
+<span id="cb246-3"><a href="comparing-networks.html#cb246-3" tabindex="-1"></a><span class="co"># Obtain a 100 replicates</span></span>
+<span id="cb246-4"><a href="comparing-networks.html#cb246-4" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g1, <span class="cf">function</span>(i, ...) <span class="fu">sum</span>(i)<span class="sc">/</span>(<span class="fu">nnodes</span>(i) <span class="sc">*</span> (<span class="fu">nnodes</span>(i) <span class="sc">-</span> <span class="dv">1</span>)), <span class="at">R =</span> <span class="dv">100</span>)</span>
+<span id="cb246-5"><a href="comparing-networks.html#cb246-5" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g2, <span class="cf">function</span>(i, ...) <span class="fu">sum</span>(i)<span class="sc">/</span>(<span class="fu">nnodes</span>(i) <span class="sc">*</span> (<span class="fu">nnodes</span>(i) <span class="sc">-</span> <span class="dv">1</span>)), <span class="at">R =</span> <span class="dv">100</span>)</span>
+<span id="cb246-6"><a href="comparing-networks.html#cb246-6" tabindex="-1"></a></span>
+<span id="cb246-7"><a href="comparing-networks.html#cb246-7" tabindex="-1"></a><span class="co"># Retrieving the variances</span></span>
+<span id="cb246-8"><a href="comparing-networks.html#cb246-8" tabindex="-1"></a>hat_sigma1 <span class="ot">&lt;-</span> sg1<span class="sc">$</span>var_t</span>
+<span id="cb246-9"><a href="comparing-networks.html#cb246-9" tabindex="-1"></a>hat_sigma2 <span class="ot">&lt;-</span> sg2<span class="sc">$</span>var_t</span>
+<span id="cb246-10"><a href="comparing-networks.html#cb246-10" tabindex="-1"></a></span>
+<span id="cb246-11"><a href="comparing-networks.html#cb246-11" tabindex="-1"></a><span class="co"># And the actual values</span></span>
+<span id="cb246-12"><a href="comparing-networks.html#cb246-12" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> sg1<span class="sc">$</span>t0</span>
+<span id="cb246-13"><a href="comparing-networks.html#cb246-13" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> sg2<span class="sc">$</span>t0</span></code></pre></div></li>
 <li><p>With the approximates in hand, we can then use the the “t-test table” to
 retrieve the corresponding value, in R:</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="comparing-networks.html#cb241-1" tabindex="-1"></a><span class="co"># Building the statistic</span></span>
-<span id="cb241-2"><a href="comparing-networks.html#cb241-2" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># For equal variances</span></span>
-<span id="cb241-3"><a href="comparing-networks.html#cb241-3" tabindex="-1"></a>tstat <span class="ot">&lt;-</span> (sg1 <span class="sc">-</span> sg2 <span class="sc">-</span> k)<span class="sc">/</span>(<span class="fu">sqrt</span>(hat_sigma1 <span class="sc">+</span> hat_sigma2))</span>
-<span id="cb241-4"><a href="comparing-networks.html#cb241-4" tabindex="-1"></a></span>
-<span id="cb241-5"><a href="comparing-networks.html#cb241-5" tabindex="-1"></a><span class="co"># Computing the pvalue</span></span>
-<span id="cb241-6"><a href="comparing-networks.html#cb241-6" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">nnodes</span>(g1)<span class="sc">*</span>(<span class="fu">nnodes</span>(g1) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb241-7"><a href="comparing-networks.html#cb241-7" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">nnodes</span>(g2)<span class="sc">*</span>(<span class="fu">nnodes</span>(g2) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb241-8"><a href="comparing-networks.html#cb241-8" tabindex="-1"></a><span class="fu">pt</span>(tstat, <span class="at">df =</span> m1 <span class="sc">+</span> m2 <span class="sc">-</span> <span class="dv">2</span>)</span></code></pre></div></li>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="comparing-networks.html#cb247-1" tabindex="-1"></a><span class="co"># Building the statistic</span></span>
+<span id="cb247-2"><a href="comparing-networks.html#cb247-2" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># For equal variances</span></span>
+<span id="cb247-3"><a href="comparing-networks.html#cb247-3" tabindex="-1"></a>tstat <span class="ot">&lt;-</span> (sg1 <span class="sc">-</span> sg2 <span class="sc">-</span> k)<span class="sc">/</span>(<span class="fu">sqrt</span>(hat_sigma1 <span class="sc">+</span> hat_sigma2))</span>
+<span id="cb247-4"><a href="comparing-networks.html#cb247-4" tabindex="-1"></a></span>
+<span id="cb247-5"><a href="comparing-networks.html#cb247-5" tabindex="-1"></a><span class="co"># Computing the pvalue</span></span>
+<span id="cb247-6"><a href="comparing-networks.html#cb247-6" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">nnodes</span>(g1)<span class="sc">*</span>(<span class="fu">nnodes</span>(g1) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb247-7"><a href="comparing-networks.html#cb247-7" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">nnodes</span>(g2)<span class="sc">*</span>(<span class="fu">nnodes</span>(g2) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb247-8"><a href="comparing-networks.html#cb247-8" tabindex="-1"></a><span class="fu">pt</span>(tstat, <span class="at">df =</span> m1 <span class="sc">+</span> m2 <span class="sc">-</span> <span class="dv">2</span>)</span></code></pre></div></li>
 </ol>
 </div>
 <div id="when-the-statistic-is-not-normal" class="section level3 hasAnchor" number="11.1.3">
@@ -421,19 +421,19 @@ The procedure is very similar:</p>
 Building confidence intervals with bootstrap could be more intuitive.</p></li>
 <li><p>Like before, we use bootstrap to generate a distribution of <span class="math inline">\(s(G_1)\)</span> and
 <span class="math inline">\(s(G_2)\)</span>, in R:</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="comparing-networks.html#cb242-1" tabindex="-1"></a><span class="co"># Obtain a 1000 replicates</span></span>
-<span id="cb242-2"><a href="comparing-networks.html#cb242-2" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g1, <span class="cf">function</span>(i, ...) <span class="fu">range</span>(<span class="fu">threshold</span>(i)), <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb242-3"><a href="comparing-networks.html#cb242-3" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g2, <span class="cf">function</span>(i, ...) <span class="fu">range</span>(<span class="fu">threshold</span>(i)), <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb242-4"><a href="comparing-networks.html#cb242-4" tabindex="-1"></a></span>
-<span id="cb242-5"><a href="comparing-networks.html#cb242-5" tabindex="-1"></a><span class="co"># Retrieving the distributions</span></span>
-<span id="cb242-6"><a href="comparing-networks.html#cb242-6" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> sg1<span class="sc">$</span>boot<span class="sc">$</span>t</span>
-<span id="cb242-7"><a href="comparing-networks.html#cb242-7" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> sg2<span class="sc">$</span>boot<span class="sc">$</span>t</span>
-<span id="cb242-8"><a href="comparing-networks.html#cb242-8" tabindex="-1"></a></span>
-<span id="cb242-9"><a href="comparing-networks.html#cb242-9" tabindex="-1"></a><span class="co"># Define the statistic</span></span>
-<span id="cb242-10"><a href="comparing-networks.html#cb242-10" tabindex="-1"></a>sdiff <span class="ot">&lt;-</span> sg1 <span class="sc">-</span> sg2</span></code></pre></div></li>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="comparing-networks.html#cb248-1" tabindex="-1"></a><span class="co"># Obtain a 1000 replicates</span></span>
+<span id="cb248-2"><a href="comparing-networks.html#cb248-2" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g1, <span class="cf">function</span>(i, ...) <span class="fu">range</span>(<span class="fu">threshold</span>(i)), <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb248-3"><a href="comparing-networks.html#cb248-3" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> <span class="fu">bootnet</span>(g2, <span class="cf">function</span>(i, ...) <span class="fu">range</span>(<span class="fu">threshold</span>(i)), <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb248-4"><a href="comparing-networks.html#cb248-4" tabindex="-1"></a></span>
+<span id="cb248-5"><a href="comparing-networks.html#cb248-5" tabindex="-1"></a><span class="co"># Retrieving the distributions</span></span>
+<span id="cb248-6"><a href="comparing-networks.html#cb248-6" tabindex="-1"></a>sg1 <span class="ot">&lt;-</span> sg1<span class="sc">$</span>boot<span class="sc">$</span>t</span>
+<span id="cb248-7"><a href="comparing-networks.html#cb248-7" tabindex="-1"></a>sg2 <span class="ot">&lt;-</span> sg2<span class="sc">$</span>boot<span class="sc">$</span>t</span>
+<span id="cb248-8"><a href="comparing-networks.html#cb248-8" tabindex="-1"></a></span>
+<span id="cb248-9"><a href="comparing-networks.html#cb248-9" tabindex="-1"></a><span class="co"># Define the statistic</span></span>
+<span id="cb248-10"><a href="comparing-networks.html#cb248-10" tabindex="-1"></a>sdiff <span class="ot">&lt;-</span> sg1 <span class="sc">-</span> sg2</span></code></pre></div></li>
 <li><p>Once we have <code>sdiff</code>, we can proceed and compute the, for example, 95%
 confidence interval, and evaluate whether <span class="math inline">\(k\)</span> falls within. In R:</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="comparing-networks.html#cb243-1" tabindex="-1"></a>diff_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sdiff, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, .<span class="dv">975</span>))</span></code></pre></div></li>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="comparing-networks.html#cb249-1" tabindex="-1"></a>diff_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sdiff, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, .<span class="dv">975</span>))</span></code></pre></div></li>
 </ol>
 <p>This corresponds to what Efron and Tibshirani call “percentile interval.”
 This is easy to compute, but a better approach is using the “BCa” method,
@@ -451,10 +451,10 @@ Snijders, Tom A B, and Stephen P Borgatti. 1999. <span>“<span class="nocase">N
 </div>
 <div class="footnotes">
 <hr />
-<ol start="13">
-<li id="fn13"><p>Density is indeed a sample mean as we are, in principle
+<ol start="14">
+<li id="fn14"><p>Density is indeed a sample mean as we are, in principle
 computing the average of a sequence of Bernoulli variables. Formally:
-<span class="math inline">\(\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}\)</span>.<a href="comparing-networks.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<span class="math inline">\(\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}\)</span>.<a href="comparing-networks.html#fnref14" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
