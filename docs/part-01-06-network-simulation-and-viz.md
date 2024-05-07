@@ -1,9 +1,6 @@
 # Simulating and visualizing networks
 
-In this chapter, we will build and visualize artificial networks using Exponential
-Random Graph Models [ERGMs.] Together with chapter 3, this will be an extended 
-example of how to read network data and visualize it using some of the available
-R packages out there.
+In this chapter, we will build and visualize artificial networks using Exponential Random Graph Models [ERGMs.] Together with Chapter 3; this will be an extended example of how to read network data and visualize it using some of the available R packages.
 
 For this chapter, we will be using the following R packages:
 
@@ -15,7 +12,7 @@ For this chapter, we will be using the following R packages:
 - `netdiffuseR`: For a single function we use for adjusting vertex size in igraph.
 - `rgexf`: For building interactive (html) figures.
 
-You can use the following codeblock to install any missing package:
+You can use the following code block to install any missing package:
 
 
 ```r

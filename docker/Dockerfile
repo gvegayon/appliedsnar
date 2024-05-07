@@ -10,7 +10,9 @@ RUN install2.r -n 4 \
 	ergm \
 	intergraph \
 	texreg \
-	readstata13
+	readstata13 \
+	gridExtra \
+	rgexf 
 
 # Installing specific packages for building
 RUN install2.r bookdown tinytex && \
@@ -23,5 +25,8 @@ RUN install2.r spatialreg
 
 # Adding /root/bin/ to the PATH
 ENV PATH="/root/bin/:${PATH}"
+
+# Missing libraries
+RUN apt install --no-install-recommends -y libglpk-dev
 
 CMD ["bash"]

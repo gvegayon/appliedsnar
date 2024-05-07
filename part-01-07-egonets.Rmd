@@ -45,7 +45,7 @@ The next sections will illustrate, file by file, how to read the information int
 
 ## Network files (graphml)
 
-The `graphml` files can be read directly with `igraph`'s `read_graph` function. The key is to take advantage of R's lists to avoid writing over and over the same block of code, and instead, manage the data through lists. 
+The `graphml` files can be read directly with `igraph`'s `read_graph` function. The key is to take advantage of R's lists to avoid writing over and over the same block of code, and, instead, manage the data through lists. 
 
 Just like any data-reading function, `read_graph` function requires a file path to the network file. **The function we will use to list the required files is `list.files()`**:
 
@@ -394,6 +394,10 @@ We end the chapter saving all our work into four datasets:
 CSV files can be saved either using `write.csv` or, as we do here, `fwrite` from the `data.table` package:
 
 ```{r saving}
+# Checking directory exists
+if (!dir.exists("data"))
+  dir.create("data")
+
 # Network attributes
 master <- cbind(egos, net_stats, net_stats_ergm)
 fwrite(master, file = "data/network_stats.csv")
