@@ -7,7 +7,7 @@ on:
     branches: [master, main]
 
 jobs:
-  build:
+  build-html:
     runs-on: ubuntu-22.04
 
     container:
@@ -18,20 +18,71 @@ jobs:
 
     - name: Render
       run: |
-        Rscript --vanilla -e "rmarkdown::render_site(encoding = 'UTF-8')"
+        Rscript --vanilla -e "rmarkdown::render_site(encoding = 'UTF-8', output_format = 'bookdown::html_book')"
+
+    - name: Upload artifact
+      # uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v3
+      with:
+        path: docs
+        name: gh-page-html
+
+  build-pdf:
+    runs-on: ubuntu-22.04
+
+    container:
+      image: gvegayon/appliedsnar:latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Render
+      run: |
+        Rscript --vanilla -e "rmarkdown::render_site(encoding = 'UTF-8', output_format = 'bookdown::pdf_book')"
+
+    - name: Upload artifact
+      # uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v3
+      with:
+        path: _book
+        name: gh-page-pdf
+
+  combine:
+    runs-on: ubuntu-22.04
+
+    needs: [build-html, build-pdf]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: gh-page-html
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: gh-page-pdf
+
+    - name: Combine
+      run: |
+        cp -r gh-page-html/* gh-page-pdf/
+        mv gh-page-pdf/* docs/
+        rm -rf gh-page-html gh-page-pdf
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
+      # uses: actions/upload-artifact@v3
       with:
         path: docs
 
-    
-  # deploy:
-  #   runs-on: ubuntu-22.04
+  deploy:
+    runs-on: ubuntu-22.04
 
-  #   needs: build
+    needs: combine
 
-  #   steps:
-  #   - uses: actions/checkout@v3
+    steps:
+    - uses: actions/checkout@v3
     
-  #   - uses: actions/pages-deploy
+    - uses: actions/deploy-pages@v3
