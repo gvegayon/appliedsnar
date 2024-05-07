@@ -179,6 +179,7 @@ ig_year1 <- net %>%
 Ups! It seems that individuals are making nominations to other students not included in the survey. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
 
 ```{r 03-igraph-bis, cache=TRUE}
+library(igraph)
 
 ig_year1 <- net %>%
   filter(year == "1") %>%
