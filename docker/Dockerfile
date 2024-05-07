@@ -28,4 +28,6 @@ RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.554/qua
 	apt install ./quarto-1.4.554-linux-amd64.deb && \
 	quarto install tool tinytex --log-level warning
 
+ENV PATH="/root/.TinyTeX/bin/x86_64-linux:${PATH}"
+
 CMD ["bash"]

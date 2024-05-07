@@ -53,29 +53,28 @@ jobs:
     needs: [build-html, build-pdf]
 
     steps:
-    - uses: actions/checkout@v3
 
     - name: Download artifacts
       uses: actions/download-artifact@v3
       with:
         name: gh-page-html
+        path: _docs
 
     - name: Download artifacts
       uses: actions/download-artifact@v3
       with:
         name: gh-page-pdf
+        path: pdf
 
     - name: Combine
       run: |
-        cp -r gh-page-html/* gh-page-pdf/
-        mv gh-page-pdf/* docs/
-        rm -rf gh-page-html gh-page-pdf
+        cp -r pdf/* _docs
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       # uses: actions/upload-artifact@v3
       with:
-        path: docs
+        path: _docs
 
   deploy:
     runs-on: ubuntu-22.04
@@ -83,6 +82,4 @@ jobs:
     needs: combine
 
     steps:
-    - uses: actions/checkout@v3
-    
     - uses: actions/deploy-pages@v3
