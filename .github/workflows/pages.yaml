@@ -24,7 +24,7 @@ jobs:
       # uses: actions/upload-pages-artifact@v3
       uses: actions/upload-artifact@v3
       with:
-        path: docs
+        path: _docs
         name: gh-page-html
 
   build-pdf:
@@ -44,7 +44,7 @@ jobs:
       # uses: actions/upload-pages-artifact@v3
       uses: actions/upload-artifact@v3
       with:
-        path: _book
+        path: _docs
         name: gh-page-pdf
 
   combine:
