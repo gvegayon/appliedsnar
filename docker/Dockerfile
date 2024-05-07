@@ -27,7 +27,7 @@ RUN install2.r spatialreg
 # Adding /root/bin/ to the PATH
 ENV PATH="/root/bin/:${PATH}"
 
-RUN tlmgr install soul setspace
+RUN tlmgr install soul setspace arev apacite
 
 # Missing libraries
 RUN apt install --no-install-recommends -y libglpk-dev
