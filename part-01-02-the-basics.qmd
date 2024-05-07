@@ -3,7 +3,9 @@
 ## What is R
 
 A good reference book for both novice and advanced users is ["The Art of R programming"](https://nostarch.com/artofr.htm) 
-[@Matloff2011]^[[Here](http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf) a free pdf version distributed by the author.]
+@Matloff2011[^matlof].
+
+[^matlof]: [Here](http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf) a free pdf version distributed by the author.
 
 ## How to install packages
 

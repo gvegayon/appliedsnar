@@ -18,7 +18,7 @@ jobs:
 
     - name: Render
       run: |
-        Rscript --vanilla -e "rmarkdown::render_site(encoding = 'UTF-8', output_format = 'bookdown::html_book')"
+        quarto render --to html
 
     - name: Upload artifact
       # uses: actions/upload-pages-artifact@v3
@@ -38,7 +38,7 @@ jobs:
 
     - name: Render
       run: |
-        Rscript --vanilla -e "rmarkdown::render_site(encoding = 'UTF-8', output_format = 'bookdown::pdf_book')"
+        quarto render --to pdf
 
     - name: Upload artifact
       # uses: actions/upload-pages-artifact@v3

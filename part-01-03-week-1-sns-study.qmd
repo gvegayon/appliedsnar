@@ -178,7 +178,7 @@ ig_year1 <- net %>%
 
 Ups! It seems that individuals are making nominations to other students not included in the survey. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
 
-```{r 03-igraph-bis, cache=TRUE}
+```{r 03-igraph-bis}
 library(igraph)
 
 ig_year1 <- net %>%
@@ -303,7 +303,7 @@ knitr::kable(cbind(
 
 Let's take a look at how does our network looks like when we use the default parameters in the plot method of the igraph object:
 
-```{r 03-plot-raw, cache=TRUE, fig.cap='A not very nice network plot. This is what we get with the default parameters in igraph.', fig.align='center'}
+```{r 03-plot-raw, fig.cap='A not very nice network plot. This is what we get with the default parameters in igraph.', fig.align='center'}
 plot(ig_year1)
 ```
 
@@ -342,7 +342,7 @@ cbind(
 
 With our nice vector of colors, now we can pass it to `plot.igraph` (which we call implicitly by just calling `plot`), via the `vertex.color` argument:
 
-```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111. ", cache=TRUE}
+```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111."}
 # Fancy graph
 set.seed(1)
 plot(
@@ -367,7 +367,7 @@ ig_year1_111_sub <- induced_subgraph(ig_year1_111, which_ids)
 col_hispanic <- col_hispanic[which_ids]
 ```
 
-```{r 03-plot-neat2, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates.", cache=TRUE}
+```{r 03-plot-neat2, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates."}
 # Fancy graph
 set.seed(1)
 plot(
@@ -424,7 +424,7 @@ The function definition:
 
 In the following lines of code, using our new function, we will plot each schools' network in the same plotting device (window) with the help of the `par` function, and add legend with the `legend`:
 
-```{r 03-myplot-call, fig.cap="All 5 schools in time 1. Again, the graphs exclude isolates.", cache=TRUE}
+```{r 03-myplot-call, fig.cap="All 5 schools in time 1. Again, the graphs exclude isolates."}
 # Plotting all together
 oldpar <- par(no.readonly = TRUE)
 par(mfrow = c(2, 3), mai = rep(0, 4), oma= c(1, 0, 0, 0))
@@ -466,7 +466,7 @@ So what happened here?
 
 Hypothesis: Individuals that, on average, are among the first nominations of their peers are more popular
 
-```{r 03-nomination-indegree, cache=TRUE}
+```{r 03-nomination-indegree}
 
 # Getting all the data in long format
 edgelist <- as_long_data_frame(ig_year1) %>%

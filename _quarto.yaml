@@ -1,0 +1,65 @@
+project:
+  type: book
+  output-dir: _docs
+
+execute: 
+  cache: true
+
+book:
+  google-analytics: UA-40608305-4
+  title: Applied Network Science with R
+  author: George G. Vega Yon, Ph.D.
+  date: 2024-05-07
+  # cover-image: figs/ai-image-cover.jpeg
+  # cover-image-alt: An AI image generated with Bing representing statistical inference in networks.
+  page-footer: Applied Network Science with R - [https://ggvy.cl](https://ggvy.cl){target="_blank"}
+  repo-url: https://github.com/gvegayon/appliedsnar
+  repo-actions: [edit]
+  navbar:
+    background: light
+    search: true
+
+  chapters: 
+    - index.qmd
+    - part: Applications
+      chapters:
+        - part-01-01-intro.qmd
+        - part-01-02-the-basics.qmd
+        - part-01-03-week-1-sns-study.qmd
+        - part-01-04-ergms.qmd
+        - part-01-05-ergms-constrains.qmd
+        - part-01-05-stergm.qmd
+        - part-01-06-network-simulation-and-viz.qmd
+        - part-01-07-egonets.qmd
+        - part-01-08-netboot.qmd
+        - part-01-09-netdiffuser.qmd
+        - part-01-10-siena.qmd
+        - part-01-11-power.qmd
+    - part: Statistical Foundations
+        - part-02-10-statistical-foundations.qmd
+        - part-02-11-power.qmd
+    - part: Appendix
+        - part-03-12-data-appendix.qmd
+    - references.qmd
+  downloads:
+  - pdf
+
+
+bibliography: book.bib
+
+biblio-style: apalike
+
+format:
+  html:
+    html-math-method: katex
+    toc: true
+    number-sections: true
+  pdf:
+    geometry: 
+      - top=1in
+      - bottom=1in
+      - left=1in
+      - right=1in
+    fontsize: 12pt
+    fontenc: T1
+    include-in-header: preamble.tex

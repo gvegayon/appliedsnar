@@ -13,23 +13,19 @@ RUN install2.r -n 4 \
 	readstata13 \
 	gridExtra \
 	rgexf \
-	microbenchmark \
-	bookdown \
-	tinytex && \
-	Rscript --vanilla -e "tinytex::install_tinytex()" 
-
+	microbenchmark
 
 # Installing the R package spatialreg
 RUN apt update && apt install --no-install-recommends \
 	-y libudunits2-dev libproj-dev libgdal-dev
 RUN install2.r spatialreg
 
-# Adding /root/bin/ to the PATH
-ENV PATH="/root/bin/:${PATH}"
-
-RUN tlmgr install soul setspace arev apacite
-
 # Missing libraries
 RUN apt install --no-install-recommends -y libglpk-dev
+
+# Installing quarto
+RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.554/quarto-1.4.554-linux-amd64.deb && \
+	apt install ./quarto-1.4.554-linux-amd64.deb && \
+	quarto install tool tinytex --log-level warning
 
 CMD ["bash"]
