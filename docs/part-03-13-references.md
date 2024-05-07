@@ -1,5 +1,0 @@
-<!-- # References {-}-->
-
-\bibliographystyle{apacite}
-
-# References {-}

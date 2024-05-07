@@ -1,0 +1,496 @@
+# Network Nomination Data
+
+You can download the data for this chapter [here](https://cdn.rawgit.com/gvegayon/appliedsnar/fdc0d26f/03-sns.dta).
+
+The codebook for the data provided here is in [the appendix](#sns-data).
+
+The goals for this chapter are:
+
+1.  Read the data into R,
+
+2.  Create a network with it,
+
+3.  Compute descriptive statistics
+
+4.  Visualize the network
+
+## Data preprocessing
+
+### Reading the data into R
+
+R has several ways of reading data. Your data can be Raw plain files like CSV, tab-delimited, or specified by column width. To read plain-text data, you can use the [`readr`](https://cran.r-project.org/package=readr) package [@R-readr]. In the case of binary files, like Stata, Octave, or SPSS files, you can use the R package [`foreign`](https://cran.r-project.org/package=readr) [@R-foreign]. If your data is formatted as Microsoft spreadsheets, the [`readxl`](https://cran.r-project.org/package=readxl) R package [@R-readxl] is the alternative to use. In our case, the data for this session is in Stata format:
+
+```{r 03-read-data, message=FALSE}
+library(foreign)
+
+# Reading the data
+dat <- foreign::read.dta("03-sns.dta")
+
+# Taking a look at the data's first 5 columns and 5 rows
+dat[1:5, 1:10]
+```
+
+### Creating a unique id for each participant
+
+Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id. For example, the last three numbers are the photoid and the first ones are the school id. To do this, we need to take into account the range of the variables:
+
+```{r 03-idrange}
+(photo_id_ran <- range(dat$photoid))
+```
+
+As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. We will use `dplyr` [@R-dplyr] and `magrittr` [@R-magrittr]] (the pipe operator, `%>%`) to create this variable, and we will call it... `id` (mind blowing, right?):
+
+```{r 03-newid}
+library(dplyr)
+library(magrittr)
+
+(dat %<>% mutate(id = school*10000 + photoid)) %>%
+  head %>%
+  select(school, photoid, id)
+```
+
+Wow, what happened in the last three lines of code! What is that `%>%`? Well, that's the [pipe operator](http://r4ds.had.co.nz/pipes.html), and it is an appealing way of writing nested function calls. In this case, instead of writing something like:
+
+```r
+dat_filtered$id <- dat_filtered$school*10000 + dat_filtered$photoid
+subset(head(dat_filtered), select = c(school, photoid, id))
+```
+
+## Creating a network
+
+*   We want to build a social network. For that, we either use an adjacency matrix or an edgelist.
+
+*   Each individual of the SNS data nominated 19 friends from school. We will use those nominations to create the social network.
+
+*   In this case, we will create the network by coercing the dataset into an edgelist.
+
+### From survey to edgelist
+
+Let's start by loading a couple of handy R packages. We will load `tidyr` [@R-tidyr] and `stringr` [@R-stringr]. We will use the first, `tidyr`, to reshape the data. The second, `stringr`, will help us processing strings using _regular expressions_^[Please refer to the help file `?'regular expression'` in R. The R package `rex` [@R-rex] is a very nice companion for writing regular expressions. There's also a neat (but experimental) RStudio add-in that can be very helpful for understanding how regular expressions work, the [regexplain](https://github.com/gadenbuie/regexplain) add-in.].
+
+```{r 03-loading-tidyr-stringr, message=FALSE}
+library(tidyr)
+library(stringr)
+```
+
+Optionally, we can use the `tibble` type of object, which is an alternative to the actual `data.frame`. This object is said to provide _more efficient methods for matrices and data frames_.
+
+```{r 03-tibble}
+dat <- as_tibble(dat)
+```
+
+What I like from `tibbles` is that when you print them on the console, these actually look nice:
+ 
+```{r 03-tibble-print}
+dat
+```
+
+
+
+```{r 03-reshape}
+# Maybe too much piping... but its cool!
+net <- dat %>% 
+  select(id, school, starts_with("sch_friend")) %>%
+  gather(key = "varname", value = "content", -id, -school) %>%
+  filter(!is.na(content)) %>%
+  mutate(
+    friendid = school*10000 + content,
+    year     = as.integer(str_extract(varname, "(?<=[a-z])[0-9]")),
+    nnom     = as.integer(str_extract(varname, "(?<=[a-z][0-9])[0-9]+"))
+  )
+```
+
+Let's take a look at this step by step:
+
+1.  First, we subset the data: We want to keep `id, school, sch_friend*.` For the later, we use the function `starts_with` (from the `tidyselect` package). The latter allows us to select all variables that start with the word "`sch_friend`", which means that `sch_friend11, sch_friend12, ...` will be selected.
+
+    ```{r}
+    dat %>% 
+      select(id, school, starts_with("sch_friend"))
+    ```
+    
+2.  Then, we reshape it to _long_ format: By transposing all the `sch_friend*` to long format. We do this using the function `gather` (from the `tidyr` package); an alternative to the `reshape` function, which I find easier to use. Let's see how it works:
+
+    ```{r}
+    dat %>% 
+      select(id, school, starts_with("sch_friend")) %>%
+      gather(key = "varname", value = "content", -id, -school)
+    ```
+    
+    In this case, the `key` parameter sets the name of the variable that will contain the name of the variable that was reshaped, while `value` is the name of the variable that will hold the content of the data (that's why I named those like that). The `-id, -school` bit tells the function to "drop" those variables before reshaping. In other words, "reshape everything but `id` and `school.`"
+    
+    Also, notice that we passed from `r nrow(dat)` rows to 19 (nominations) * `r nrow(dat)` (subjects) * 4 (waves) = `r sprintf("%i", 19*nrow(dat)*4)` rows, as expected.
+    
+3.  As the nomination data can be empty for some cells, we need to take care of those cases, the `NA`s, so we filter the data:
+
+    ```{r}
+    dat %>% 
+      select(id, school, starts_with("sch_friend")) %>%
+      gather(key = "varname", value = "content", -id, -school) %>%
+      filter(!is.na(content))
+    ```
+    
+4.  And finally, we create three new variables from this dataset: `friendid,`, `year`, and `nom_num` (nomination number). All using regular expressions:
+    
+    ```{r}
+    dat %>% 
+      select(id, school, starts_with("sch_friend")) %>%
+      gather(key = "varname", value = "content", -id, -school) %>%
+      filter(!is.na(content)) %>%
+      mutate(
+        friendid = school*10000 + content,
+        year     = as.integer(str_extract(varname, "(?<=[a-z])[0-9]")),
+        nnom     = as.integer(str_extract(varname, "(?<=[a-z][0-9])[0-9]+"))
+        )
+    ```
+    
+    The regular expression `(?<=[a-z])` matches a string preceded by any letter from _a_ to _z_. In contrast, the expression `[0-9]` matches a single number. Hence, from the string `"sch_friend12"`, the regular expression will only match the `1`, as it is the only number followed by a letter. The expression `(?<=[a-z][0-9])` matches a string preceded by a lower case letter and a one-digit number. Finally, the expression `[0-9]+` matches a string of numbers--so it could be more than one. Hence, from the string `"sch_friend12"`, we will get `2`:
+    
+    ```{r 03-miniregex}
+    str_extract("sch_friend12", "(?<=[a-z])[0-9]")
+    str_extract("sch_friend12", "(?<=[a-z][0-9])[0-9]+")
+    ```
+And finally, the `as.integer` function coerces the returning value from the `str_extract` function from `character` to `integer`. Now that we have this edgelist, we can create an igraph object
+
+### igraph network
+
+For coercing the edgelist into an igraph object, we will be using the `graph_from_data_frame` function in igraph [@R-igraph]. This function receives the following arguments: a data frame where the two first columns are "source" (ego) and "target" (alter), an indicator of whether the network is directed or not, and an optional data frame with vertices, in which's first column should contain the vertex ids.
+
+Using the optional `vertices` argument is a good practice since, by doing so, you are telling the function what ids that you are expecting to find. Using the original dataset, we will create a data frame name vertices:
+
+```{r 03-vertex}
+vertex_attrs <- dat %>% 
+  select(id, school, hispanic, female1, starts_with("eversmk"))
+```
+
+Now, let's now use the function `graph_from_data_frame` to create an `igraph` object:
+
+```{r 03-igraph, message=FALSE, error = TRUE}
+library(igraph)
+
+ig_year1 <- net %>%
+  filter(year == "1") %>% 
+  select(id, friendid, nnom) %>%
+  graph_from_data_frame(
+    vertices = vertex_attrs
+  )
+```
+
+Ups! It seems that individuals are making nominations to other students not included in the survey. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
+
+```{r 03-igraph-bis}
+library(igraph)
+
+ig_year1 <- net %>%
+  filter(year == "1") %>%
+  
+  # Extra line, all nominations must be in ego too.
+  filter(friendid %in% id) %>% 
+  
+  select(id, friendid, nnom) %>%
+  graph_from_data_frame(
+    vertices = vertex_attrs
+    )
+
+ig_year1
+```
+
+So there we have our network with `r vcount(ig_year1)` nodes and `r ecount(ig_year1)` edges. The following steps: get some descriptive stats and visualize our network.
+
+## Network descriptive stats
+
+While we could do all networks at once, in this part, we will focus on computing some network statistics for one of the schools only. We start by school 111. The first question that you should be asking yourself now is, "how can I get that information from the igraph object?." Vertex and edges attributes can be accessed via the `V` and `E` functions, respectively; moreover, we can list what vertex/edge attributes are available:
+
+```{r 03-listing-attributes}
+list.vertex.attributes(ig_year1)
+list.edge.attributes(ig_year1) 
+```
+
+Just like we would do with data frames, accessing vertex attributes is done via the dollar sign operator `$`. Together with the `V` function; for example, accessing the first ten elements of the variable `hispanic` can be done as follows:
+
+```{r 03-first-10-hispanic}
+V(ig_year1)$hispanic[1:10]
+```
+
+Now that you know how to access vertex attributes, we can get the network corresponding to school 111 by identifying which vertices are part of it and pass that information to the `induced_subgraph` function:
+
+```{r 03-igraph-year1-111}
+# Which ids are from school 111?
+school111ids <- which(V(ig_year1)$school == 111)
+
+# Creating a subgraph
+ig_year1_111 <- induced_subgraph(
+  graph = ig_year1,
+  vids  = school111ids
+)
+```
+
+The `which` function in R returns a vector of indices indicating which elements pass the test, returning true and false, otherwise. In our case, it will result in a vector of indices of the vertices which have the attribute `school` equal to 111. With the subgraph, we can compute different centrality measures^[For more information about the different centrality measurements, please take a look at the "Centrality" article on [Wikipedia](https://en.wikipedia.org/wiki/Centrality).] for each vertex and store them in the igraph object itself:
+
+```{r 03-centrality-measures}
+# Computing centrality measures for each vertex
+V(ig_year1_111)$indegree   <- degree(ig_year1_111, mode = "in")
+V(ig_year1_111)$outdegree  <- degree(ig_year1_111, mode = "out")
+V(ig_year1_111)$closeness  <- closeness(ig_year1_111, mode = "total")
+V(ig_year1_111)$betweeness <- betweenness(ig_year1_111, normalized = TRUE)
+```
+
+From here, we can _go back_ to our old habits and get the set of vertex attributes as a data frame so we can compute some summary statistics on the centrality measurements that we just got
+
+```{r 03-centrality-stats}
+# Extracting each vectex features as a data.frame
+stats <- as_data_frame(ig_year1_111, what = "vertices")
+
+# Computing quantiles for each variable
+stats_degree <- with(stats, {
+ cbind(
+   indegree   = quantile(indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(betweeness, c(.025, .5, .975), na.rm = TRUE)
+ )
+})
+
+stats_degree
+```
+
+The `with` function is somewhat similar to what `dplyr` allows us to do when we want to work with the dataset but without mentioning its name everytime that we ask for a variable. Without using the `with` function, the previous could have been done as follows:
+
+```r
+stats_degree <- 
+ cbind(
+   indegree   = quantile(stats$indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(stats$outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(stats$closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(stats$betweeness, c(.025, .5, .975), na.rm = TRUE)
+ )
+
+```
+
+Now we will compute some statistics at the graph level:
+
+```{r 03-network-stats}
+cbind(
+  size    = vcount(ig_year1_111),
+  nedges  = ecount(ig_year1_111),
+  density = edge_density(ig_year1_111),
+  recip   = reciprocity(ig_year1_111),
+  centr   = centr_betw(ig_year1_111)$centralization,
+  pathLen = mean_distance(ig_year1_111)
+  )
+```
+
+Triadic census
+
+```{r 03-triadic-census, echo=TRUE}
+triadic <- triad_census(ig_year1_111)
+triadic
+```
+
+To get a nicer view of this, we can use a table that I retrieved from `?triad_census`. Moreover, we can normalize the `triadic` object by its sum instead of looking at raw counts. That way, we get proportions instead^[During our workshop, Prof. De la Haye suggested using ${n \choose 3}$ as a normalizing constant. It turns out that `sum(triadic) = choose(n, 3)`! So either approach is correct.]
+
+```{r 03-triadic-census-print}
+knitr::kable(cbind(
+  Pcent = triadic/sum(triadic)*100,
+  read.csv("triadic_census.csv")
+  ), digits = 2)
+```
+
+
+## Plotting the network in igraph
+
+### Single plot
+
+Let's take a look at how does our network looks like when we use the default parameters in the plot method of the igraph object:
+
+```{r 03-plot-raw, fig.cap='A not very nice network plot. This is what we get with the default parameters in igraph.', fig.align='center'}
+plot(ig_year1)
+```
+
+Not very nice, right? A couple of things with this plot:
+
+1.  We are looking at all schools simultaneously, which does not make sense. So, instead of plotting `ig_year1`, we will focus on `ig_year1_111`.
+
+2.  All the vertices have the same size and are overlapping. Instead of using the default size, we will size the vertices by indegree using the `degree` function and passing the vector of degrees to `vertex.size`.^[Figuring out what is the optimal vertex size is a bit tricky. Without getting too technical, there's no other way of getting _nice_ vertex size other than just playing with different values of it. A nice solution to this is using [`netdiffuseR::igraph_vertex_rescale`](https://www.rdocumentation.org/packages/netdiffuseR/versions/1.17.0/topics/rescale_vertex_igraph) which rescales the vertices so that these keep their aspect ratio to a predefined proportion of the screen.]
+
+3.  Given the number of vertices in these networks, the labels are not useful here. So we will remove them by setting `vertex.label = NA`. Moreover, we will reduce the size of the arrows' tip by setting `edge.arrow.size = 0.25`.
+
+4.  And finally, we will set the color of each vertex to be a function of whether the individual is Hispanic or not. For this last bit we need to go a bit more of programming:
+
+```{r 03-color-hispanic}
+col_hispanic <- V(ig_year1_111)$hispanic + 1
+col_hispanic <- coalesce(col_hispanic, 3) 
+col_hispanic <- c("steelblue", "tomato", "white")[col_hispanic]
+```
+
+Line by line, we did the following:
+
+1.  The first line added one to all no `NA` values so that the 0s (non-Hispanic) turned to 1s and the 1s (Hispanic) turned to 2s.
+
+2.  The second line replaced all `NA`s with the number three so that our vector `col_hispanic` now ranges from one to three with no `NA`s in it.
+
+3.  In the last line, we created a vector of colors. Essentially, what we are doing here is telling R to create a vector of length `length(col_hispanic)` by selecting elements by index from the vector `c("steelblue", "tomato", "white")`. This way, if, for example, the first element of the vector `col_hispanic` was a 3, our new vector of colors would have a `"white"` in it.
+
+To make sure we know we are right, let's print the first 10 elements of our new vector of colors together with the original `hispanic` column:
+
+```{r 03-colors-ok}
+cbind(
+  original = V(ig_year1_111)$hispanic[1:10],
+  colors   = col_hispanic[1:10]
+  )
+```
+
+With our nice vector of colors, now we can pass it to `plot.igraph` (which we call implicitly by just calling `plot`), via the `vertex.color` argument:
+
+```{r 03-plot-neat1, fig.cap="Friends network in time 1 for school 111."}
+# Fancy graph
+set.seed(1)
+plot(
+  ig_year1_111,
+  vertex.size     = degree(ig_year1_111)/10 +1,
+  vertex.label    = NA,
+  edge.arrow.size = .25,
+  vertex.color    = col_hispanic
+  )
+```
+
+Nice! So it does look better. The only problem is that we have a lot of isolates. Let's try again by drawing the same plot without isolates. To do so, we need to filter the graph, for which we will use the function `induced_subgraph`
+
+```{r 03-subgraph}
+# Which vertices are not isolates?
+which_ids <- which(degree(ig_year1_111, mode = "total") > 0)
+
+# Getting the subgraph
+ig_year1_111_sub <- induced_subgraph(ig_year1_111, which_ids)
+
+# We need to get the same subset in col_hispanic
+col_hispanic <- col_hispanic[which_ids]
+```
+
+```{r 03-plot-neat2, fig.cap="Friends network in time 1 for school 111. The graph excludes isolates."}
+# Fancy graph
+set.seed(1)
+plot(
+  ig_year1_111_sub,
+  vertex.size     = degree(ig_year1_111_sub)/5 +1,
+  vertex.label    = NA,
+  edge.arrow.size = .25,
+  vertex.color    = col_hispanic
+  )
+```
+
+Now that's better! An interesting pattern that shows up is that individuals seem to cluster by whether they are Hispanic or not. 
+
+We can write this as a function to avoid copying and pasting the code $n$ times (supposing that we want to create a plot similar to this $n$ times). We do the latter in the following subsection.
+
+### Multiple plots
+
+When you are repeating yourself repeatedly, it is a good idea to write down a sequence of commands as a function. In this case, since we will be running the same type of plot for all schools/waves, we write a function in which the only things that change are: (a) the school id, and (b) the color of the nodes. 
+
+```{r 03-myplot-def}
+myplot <- function(
+  net,
+  schoolid,
+  mindgr = 1,
+  vcol   = "tomato",
+  ...) {
+  
+  # Creating a subgraph
+  subnet <- induced_subgraph(
+    net,
+    which(degree(net, mode = "all") >= mindgr & V(net)$school == schoolid)
+  )
+  
+  # Fancy graph
+  set.seed(1)
+  plot(
+    subnet,
+    vertex.size     = degree(subnet)/5,
+    vertex.label    = NA,
+    edge.arrow.size = .25,
+    vertex.color    = vcol,
+    ...
+    )
+}
+```
+
+The function definition:
+
+1.  The `myplot <- function([arguments]) {[body of the function]}` tells R that we are going to create a function called `myplot`.
+
+2.  We declare four specific arguments: `net`, `schoolid`, `mindgr`, and `vcol`. These are an igraph object, the school id, the minimum degree that vertices must have to be included in the figure, and the color of the vertices. Observe that, compared to other programming languages, R does not require declaring the data types.
+
+3.  The ellipsis object, `...`, is an especial object in R that allows us to pass other arguments without specifying which. If you take a look at the `plot` bit in the function body, you will see that we also added `...`. We use the ellipsis to pass extra arguments (different from the ones that we explicitly defined) directly to `plot`. In practice, this implies that we can, for example, set the argument `edge.arrow.size` when calling `myplot`, even though we did not include it in the function definition! (See `?dotsMethods` in R for more details).
+
+In the following lines of code, using our new function, we will plot each schools' network in the same plotting device (window) with the help of the `par` function, and add legend with the `legend`:
+
+```{r 03-myplot-call, fig.cap="All 5 schools in time 1. Again, the graphs exclude isolates."}
+# Plotting all together
+oldpar <- par(no.readonly = TRUE)
+par(mfrow = c(2, 3), mai = rep(0, 4), oma= c(1, 0, 0, 0))
+myplot(ig_year1, 111, vcol = "tomato")
+myplot(ig_year1, 112, vcol = "steelblue")
+myplot(ig_year1, 113, vcol = "black")
+myplot(ig_year1, 114, vcol = "gold")
+myplot(ig_year1, 115, vcol = "white")
+par(oldpar)
+
+# A fancy legend
+legend(
+  "bottomright",
+  legend = c(111, 112, 113, 114, 115),
+  pt.bg  = c("tomato", "steelblue", "black", "gold", "white"),
+  pch    = 21,
+  cex    = 1,
+  bty    = "n",
+  title  = "School"
+  )
+```
+
+So what happened here?
+
+*   `oldpar <- par(no.readonly = TRUE)` This line stores the current parameters for plotting. Since we are going to be changing them, we better make sure we are able to go back!.
+
+*   `par(mfrow = c(2, 3), mai = rep(0, 4), oma=rep(0, 4))` Here we are setting various things at the same time. `mfrow` specifies how many _figures_ will be drawn, and in what order. In particular, we are asking the plotting device to make room for 2*3 = 6 figures organized in two rows and three columns drawn by row.
+    
+    `mai` specifies the size of the margins in inches, setting all margins equal to zero (which is what we are doing now) gives more space to the graph. The same is true for `oma`. See `?par` for more info.
+    
+
+*   `myplot(ig_year1, ...)` This is simply calling our plotting function. The neat part of this is that, since we set `mfrow = c(2, 3)`, R takes care of _distributing_ the plots in the device.
+
+*   `par(oldpar)` This line allows us to restore the plotting parameters.
+
+## Statistical tests
+
+### Is nomination number correlated with indegree?
+
+Hypothesis: Individuals that, on average, are among the first nominations of their peers are more popular
+
+```{r 03-nomination-indegree}
+
+# Getting all the data in long format
+edgelist <- as_long_data_frame(ig_year1) %>%
+  as_tibble
+
+# Computing indegree (again) and average nomination number
+# Include "On a scale from one to five how close do you feel"
+# Also for egocentric friends (A. Friends)
+indeg_nom_cor <- group_by(edgelist, to, to_name, to_school) %>%
+  summarise(
+    indeg   = length(nnom),
+    nom_avg = 1/mean(nnom)
+  ) %>%
+  rename(
+    school = to_school
+  )
+
+indeg_nom_cor
+
+# Using pearson's correlation
+with(indeg_nom_cor, cor.test(indeg, nom_avg))
+```
+
+```{r 03-saving}
+save.image("03.rda")
+```
+

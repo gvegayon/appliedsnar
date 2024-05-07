@@ -4,3 +4,10 @@ _*/
 .Rhistory
 know_script_v2_14\.R
 
+
+/.quarto/
+_docs
+docs
+data
+*_cache
+*_files

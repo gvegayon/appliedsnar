@@ -1,0 +1,101 @@
+name: Build and Deploy
+
+on:
+  pull_request:
+    branches: [master, main]
+  push:
+    branches: [master, main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-html:
+    runs-on: ubuntu-22.04
+
+    container:
+      image: gvegayon/appliedsnar:latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Render
+      run: |
+        quarto render --to html
+
+    - name: Upload artifact
+      # uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v3
+      with:
+        path: _docs
+        name: gh-page-html
+
+  build-pdf:
+    runs-on: ubuntu-22.04
+
+    container:
+      image: gvegayon/appliedsnar:latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Render
+      run: |
+        quarto render --to pdf
+
+    - name: Upload artifact
+      # uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v3
+      with:
+        path: _docs
+        name: gh-page-pdf
+
+  combine:
+    runs-on: ubuntu-22.04
+
+    needs: [build-html, build-pdf]
+
+    steps:
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: gh-page-html
+        path: _docs
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: gh-page-pdf
+        path: pdf
+
+    - name: Combine
+      run: |
+        cp -r pdf/* _docs
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      # uses: actions/upload-artifact@v3
+      with:
+        name: github-pages
+        path: _docs
+
+  deploy:
+    if: ${{ github.event_name != 'pull_request' }}
+    runs-on: ubuntu-22.04
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.url }}
+
+    needs: combine
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v3
+      with:
+        artifact_name: github-pages
+        preview: false
