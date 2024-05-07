@@ -36,9 +36,11 @@ book:
         - part-01-10-siena.qmd
         - part-01-11-power.qmd
     - part: Statistical Foundations
+      chapters:
         - part-02-10-statistical-foundations.qmd
         - part-02-11-power.qmd
     - part: Appendix
+      chapters:
         - part-03-12-data-appendix.qmd
     - references.qmd
   downloads:
