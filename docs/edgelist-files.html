@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10.4 Edgelist files | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10.4 Edgelist files | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2024-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -343,44 +347,44 @@ div.csl-indent {
 <div id="edgelist-files" class="section level2 hasAnchor" number="10.4">
 <h2><span class="header-section-number">10.4</span> Edgelist files<a href="edgelist-files.html#edgelist-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>As I mentioned earlier, since we are reading the <code>graphml</code> files, using the edgelist may not be needed. Nevertheless, the process to import the edgelist file to R is the same we have been applying: list the files and read them all at once using <code>lapply</code>:</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="edgelist-files.html#cb238-1" tabindex="-1"></a><span class="co"># Listing all files ending in Knows.csv</span></span>
-<span id="cb238-2"><a href="edgelist-files.html#cb238-2" tabindex="-1"></a>edgelist_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb238-3"><a href="edgelist-files.html#cb238-3" tabindex="-1"></a>  <span class="at">path =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
-<span id="cb238-4"><a href="edgelist-files.html#cb238-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;*Knows.csv&quot;</span>,</span>
-<span id="cb238-5"><a href="edgelist-files.html#cb238-5" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb238-6"><a href="edgelist-files.html#cb238-6" tabindex="-1"></a>  )</span>
-<span id="cb238-7"><a href="edgelist-files.html#cb238-7" tabindex="-1"></a></span>
-<span id="cb238-8"><a href="edgelist-files.html#cb238-8" tabindex="-1"></a><span class="co"># Reading all files at once</span></span>
-<span id="cb238-9"><a href="edgelist-files.html#cb238-9" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">lapply</span>(edgelist_files, fread)</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="edgelist-files.html#cb236-1" tabindex="-1"></a><span class="co"># Listing all files ending in Knows.csv</span></span>
+<span id="cb236-2"><a href="edgelist-files.html#cb236-2" tabindex="-1"></a>edgelist_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb236-3"><a href="edgelist-files.html#cb236-3" tabindex="-1"></a>  <span class="at">path =</span> <span class="st">&quot;data-raw/egonets&quot;</span>,</span>
+<span id="cb236-4"><a href="edgelist-files.html#cb236-4" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;*Knows.csv&quot;</span>,</span>
+<span id="cb236-5"><a href="edgelist-files.html#cb236-5" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb236-6"><a href="edgelist-files.html#cb236-6" tabindex="-1"></a>  )</span>
+<span id="cb236-7"><a href="edgelist-files.html#cb236-7" tabindex="-1"></a></span>
+<span id="cb236-8"><a href="edgelist-files.html#cb236-8" tabindex="-1"></a><span class="co"># Reading all files at once</span></span>
+<span id="cb236-9"><a href="edgelist-files.html#cb236-9" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">lapply</span>(edgelist_files, fread)</span></code></pre></div>
 <p>To avoid confusion, we can also add ids corresponding to the file number. Once we do that, we can combine all files into a single <code>data.table</code> object using <code>rbindlist</code>:</p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="edgelist-files.html#cb239-1" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq_along</span>(edgelists), <span class="cf">function</span>(i) {</span>
-<span id="cb239-2"><a href="edgelist-files.html#cb239-2" tabindex="-1"></a>  edgelists[[i]][, dataset_num <span class="sc">:=</span> i]</span>
-<span id="cb239-3"><a href="edgelist-files.html#cb239-3" tabindex="-1"></a>})</span>
-<span id="cb239-4"><a href="edgelist-files.html#cb239-4" tabindex="-1"></a></span>
-<span id="cb239-5"><a href="edgelist-files.html#cb239-5" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(edgelists)</span>
-<span id="cb239-6"><a href="edgelist-files.html#cb239-6" tabindex="-1"></a></span>
-<span id="cb239-7"><a href="edgelist-files.html#cb239-7" tabindex="-1"></a><span class="fu">head</span>(edgelists)</span>
-<span id="cb239-8"><a href="edgelist-files.html#cb239-8" tabindex="-1"></a><span class="do">##    edgeID from to                 networkCanvasEgoUUID</span></span>
-<span id="cb239-9"><a href="edgelist-files.html#cb239-9" tabindex="-1"></a><span class="do">## 1:      1    1  5 I839f-8fa8f8aeb8-eaf---ba8-cf3908f3a</span></span>
-<span id="cb239-10"><a href="edgelist-files.html#cb239-10" tabindex="-1"></a><span class="do">## 2:      2    1 10 If81a9c0f-9f4f28ccf-c4c923a-8-0f5fce</span></span>
-<span id="cb239-11"><a href="edgelist-files.html#cb239-11" tabindex="-1"></a><span class="do">## 3:      3    1  9 I899ffe-27-3-a3-ca2fb7f7-ca8e7715ce9</span></span>
-<span id="cb239-12"><a href="edgelist-files.html#cb239-12" tabindex="-1"></a><span class="do">## 4:      4    1 10 I814efaba88cbb02caa8c89790-83beeaf9-</span></span>
-<span id="cb239-13"><a href="edgelist-files.html#cb239-13" tabindex="-1"></a><span class="do">## 5:      5    7  6 Ifd-0eec2e08974eaf2b79f-9efb7e3-8998</span></span>
-<span id="cb239-14"><a href="edgelist-files.html#cb239-14" tabindex="-1"></a><span class="do">## 6:      6    2  6 I-28fe89cc-fc5db3825b92-ae87c-c18e3d</span></span>
-<span id="cb239-15"><a href="edgelist-files.html#cb239-15" tabindex="-1"></a><span class="do">##                       networkCanvasUUID              networkCanvasSourceUUID</span></span>
-<span id="cb239-16"><a href="edgelist-files.html#cb239-16" tabindex="-1"></a><span class="do">## 1: I720400eb19bccce-77cee773289b02-fe7e I4d5--16a08f8ba463c6458f8979e-65fa9d</span></span>
-<span id="cb239-17"><a href="edgelist-files.html#cb239-17" tabindex="-1"></a><span class="do">## 2: I-b469c0-60f8bbb543-32-628-216f9-038 I-6cf8-f3da-4-96-87efaf5daaa48ba5e5c</span></span>
-<span id="cb239-18"><a href="edgelist-files.html#cb239-18" tabindex="-1"></a><span class="do">## 3: Ifa4933-9baaf5fc-f-e4f5c5e5-ff34-f-f I5-f69a6eaa-5956e8897ca999-ffb6ed-e1</span></span>
-<span id="cb239-19"><a href="edgelist-files.html#cb239-19" tabindex="-1"></a><span class="do">## 4: I4cb-904496b1-6194bcb51b58444b40-ef8 I3e5-6c8d5e0f086--e-5ab45-4-5aaa5-0e</span></span>
-<span id="cb239-20"><a href="edgelist-files.html#cb239-20" tabindex="-1"></a><span class="do">## 5: I0ab7--b7a0ee71e54c1e93cdb-4ca5ab1-b I5-b-9-7eca5ab5-91915ba9b6565a6e42cc</span></span>
-<span id="cb239-21"><a href="edgelist-files.html#cb239-21" tabindex="-1"></a><span class="do">## 6: Ic80142fc4c431009e84b3-ab3f-9b0eab03 Ie0a24eea4e01a4340343a0-66723-a-9970</span></span>
-<span id="cb239-22"><a href="edgelist-files.html#cb239-22" tabindex="-1"></a><span class="do">##                 networkCanvasTargetUUID dataset_num</span></span>
-<span id="cb239-23"><a href="edgelist-files.html#cb239-23" tabindex="-1"></a><span class="do">## 1: Id1c8befd46bdd195c-ce91a8-bc0---4f0e           1</span></span>
-<span id="cb239-24"><a href="edgelist-files.html#cb239-24" tabindex="-1"></a><span class="do">## 2: I757b4a-3ea4d95--b9ebb9db3d55dcbaf-c           1</span></span>
-<span id="cb239-25"><a href="edgelist-files.html#cb239-25" tabindex="-1"></a><span class="do">## 3: I92a62925ff9-e2f27-6ef97d-29fb729624           1</span></span>
-<span id="cb239-26"><a href="edgelist-files.html#cb239-26" tabindex="-1"></a><span class="do">## 4: I7f--da48-46a64-b972c-ef6bbec--64cb4           1</span></span>
-<span id="cb239-27"><a href="edgelist-files.html#cb239-27" tabindex="-1"></a><span class="do">## 5: I-eaa7e95659-9cf01a4f5fd69af54e6-d60           1</span></span>
-<span id="cb239-28"><a href="edgelist-files.html#cb239-28" tabindex="-1"></a><span class="do">## 6: I69060e8a-454609-faa04cd3eeb-5-9550-           1</span></span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="edgelist-files.html#cb237-1" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq_along</span>(edgelists), <span class="cf">function</span>(i) {</span>
+<span id="cb237-2"><a href="edgelist-files.html#cb237-2" tabindex="-1"></a>  edgelists[[i]][, dataset_num <span class="sc">:=</span> i]</span>
+<span id="cb237-3"><a href="edgelist-files.html#cb237-3" tabindex="-1"></a>})</span>
+<span id="cb237-4"><a href="edgelist-files.html#cb237-4" tabindex="-1"></a></span>
+<span id="cb237-5"><a href="edgelist-files.html#cb237-5" tabindex="-1"></a>edgelists <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(edgelists)</span>
+<span id="cb237-6"><a href="edgelist-files.html#cb237-6" tabindex="-1"></a></span>
+<span id="cb237-7"><a href="edgelist-files.html#cb237-7" tabindex="-1"></a><span class="fu">head</span>(edgelists)</span>
+<span id="cb237-8"><a href="edgelist-files.html#cb237-8" tabindex="-1"></a><span class="do">##    edgeID from to                 networkCanvasEgoUUID</span></span>
+<span id="cb237-9"><a href="edgelist-files.html#cb237-9" tabindex="-1"></a><span class="do">## 1:      1    1  5 I839f-8fa8f8aeb8-eaf---ba8-cf3908f3a</span></span>
+<span id="cb237-10"><a href="edgelist-files.html#cb237-10" tabindex="-1"></a><span class="do">## 2:      2    1 10 If81a9c0f-9f4f28ccf-c4c923a-8-0f5fce</span></span>
+<span id="cb237-11"><a href="edgelist-files.html#cb237-11" tabindex="-1"></a><span class="do">## 3:      3    1  9 I899ffe-27-3-a3-ca2fb7f7-ca8e7715ce9</span></span>
+<span id="cb237-12"><a href="edgelist-files.html#cb237-12" tabindex="-1"></a><span class="do">## 4:      4    1 10 I814efaba88cbb02caa8c89790-83beeaf9-</span></span>
+<span id="cb237-13"><a href="edgelist-files.html#cb237-13" tabindex="-1"></a><span class="do">## 5:      5    7  6 Ifd-0eec2e08974eaf2b79f-9efb7e3-8998</span></span>
+<span id="cb237-14"><a href="edgelist-files.html#cb237-14" tabindex="-1"></a><span class="do">## 6:      6    2  6 I-28fe89cc-fc5db3825b92-ae87c-c18e3d</span></span>
+<span id="cb237-15"><a href="edgelist-files.html#cb237-15" tabindex="-1"></a><span class="do">##                       networkCanvasUUID              networkCanvasSourceUUID</span></span>
+<span id="cb237-16"><a href="edgelist-files.html#cb237-16" tabindex="-1"></a><span class="do">## 1: I720400eb19bccce-77cee773289b02-fe7e I4d5--16a08f8ba463c6458f8979e-65fa9d</span></span>
+<span id="cb237-17"><a href="edgelist-files.html#cb237-17" tabindex="-1"></a><span class="do">## 2: I-b469c0-60f8bbb543-32-628-216f9-038 I-6cf8-f3da-4-96-87efaf5daaa48ba5e5c</span></span>
+<span id="cb237-18"><a href="edgelist-files.html#cb237-18" tabindex="-1"></a><span class="do">## 3: Ifa4933-9baaf5fc-f-e4f5c5e5-ff34-f-f I5-f69a6eaa-5956e8897ca999-ffb6ed-e1</span></span>
+<span id="cb237-19"><a href="edgelist-files.html#cb237-19" tabindex="-1"></a><span class="do">## 4: I4cb-904496b1-6194bcb51b58444b40-ef8 I3e5-6c8d5e0f086--e-5ab45-4-5aaa5-0e</span></span>
+<span id="cb237-20"><a href="edgelist-files.html#cb237-20" tabindex="-1"></a><span class="do">## 5: I0ab7--b7a0ee71e54c1e93cdb-4ca5ab1-b I5-b-9-7eca5ab5-91915ba9b6565a6e42cc</span></span>
+<span id="cb237-21"><a href="edgelist-files.html#cb237-21" tabindex="-1"></a><span class="do">## 6: Ic80142fc4c431009e84b3-ab3f-9b0eab03 Ie0a24eea4e01a4340343a0-66723-a-9970</span></span>
+<span id="cb237-22"><a href="edgelist-files.html#cb237-22" tabindex="-1"></a><span class="do">##                 networkCanvasTargetUUID dataset_num</span></span>
+<span id="cb237-23"><a href="edgelist-files.html#cb237-23" tabindex="-1"></a><span class="do">## 1: Id1c8befd46bdd195c-ce91a8-bc0---4f0e           1</span></span>
+<span id="cb237-24"><a href="edgelist-files.html#cb237-24" tabindex="-1"></a><span class="do">## 2: I757b4a-3ea4d95--b9ebb9db3d55dcbaf-c           1</span></span>
+<span id="cb237-25"><a href="edgelist-files.html#cb237-25" tabindex="-1"></a><span class="do">## 3: I92a62925ff9-e2f27-6ef97d-29fb729624           1</span></span>
+<span id="cb237-26"><a href="edgelist-files.html#cb237-26" tabindex="-1"></a><span class="do">## 4: I7f--da48-46a64-b972c-ef6bbec--64cb4           1</span></span>
+<span id="cb237-27"><a href="edgelist-files.html#cb237-27" tabindex="-1"></a><span class="do">## 5: I-eaa7e95659-9cf01a4f5fd69af54e6-d60           1</span></span>
+<span id="cb237-28"><a href="edgelist-files.html#cb237-28" tabindex="-1"></a><span class="do">## 6: I69060e8a-454609-faa04cd3eeb-5-9550-           1</span></span></code></pre></div>
 </div>
             </section>
 

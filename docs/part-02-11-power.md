@@ -159,7 +159,7 @@ ggplot(simulations, aes(x = size, y = power)) +
 ```
 
 ```
-## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 ```
 
 ![](part-02-11-power_files/figure-epub3/11-power-plot-1.png)<!-- -->
@@ -187,10 +187,6 @@ summary(power_model)
 ## Call:
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
 ##     data = simulations)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -7.7850  -3.7716  -0.5132   3.3510   8.0064  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)   

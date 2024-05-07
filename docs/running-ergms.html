@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.4 Running ERGMs | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.4 Running ERGMs | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2024-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -415,8 +419,8 @@ div.csl-indent {
 <span id="cb143-17"><a href="running-ergms.html#cb143-17" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Now, a nice trick to see all regressions in the same table, we can use the <code>texreg</code> package <span class="citation">(<a href="#ref-R-texreg">Leifeld 2013</a>)</span> which supports <code>ergm</code> ouputs!</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="running-ergms.html#cb144-1" tabindex="-1"></a><span class="fu">library</span>(texreg)</span>
-<span id="cb144-2"><a href="running-ergms.html#cb144-2" tabindex="-1"></a><span class="do">## Version:  1.38.6</span></span>
-<span id="cb144-3"><a href="running-ergms.html#cb144-3" tabindex="-1"></a><span class="do">## Date:     2022-04-06</span></span>
+<span id="cb144-2"><a href="running-ergms.html#cb144-2" tabindex="-1"></a><span class="do">## Version:  1.39.3</span></span>
+<span id="cb144-3"><a href="running-ergms.html#cb144-3" tabindex="-1"></a><span class="do">## Date:     2023-11-09</span></span>
 <span id="cb144-4"><a href="running-ergms.html#cb144-4" tabindex="-1"></a><span class="do">## Author:   Philip Leifeld (University of Essex)</span></span>
 <span id="cb144-5"><a href="running-ergms.html#cb144-5" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb144-6"><a href="running-ergms.html#cb144-6" tabindex="-1"></a><span class="do">## Consider submitting praise using the praise or praise_interactive functions.</span></span>
@@ -430,18 +434,18 @@ div.csl-indent {
 <span id="cb144-14"><a href="running-ergms.html#cb144-14" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
 <span id="cb144-15"><a href="running-ergms.html#cb144-15" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
 <span id="cb144-16"><a href="running-ergms.html#cb144-16" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
-<span id="cb144-17"><a href="running-ergms.html#cb144-17" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
-<span id="cb144-18"><a href="running-ergms.html#cb144-18" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb144-17"><a href="running-ergms.html#cb144-17" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this</span></span>
+<span id="cb144-18"><a href="running-ergms.html#cb144-18" tabindex="-1"></a><span class="do">## warning with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
 <span id="cb144-19"><a href="running-ergms.html#cb144-19" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
 <span id="cb144-20"><a href="running-ergms.html#cb144-20" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
 <span id="cb144-21"><a href="running-ergms.html#cb144-21" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
-<span id="cb144-22"><a href="running-ergms.html#cb144-22" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
-<span id="cb144-23"><a href="running-ergms.html#cb144-23" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb144-22"><a href="running-ergms.html#cb144-22" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this</span></span>
+<span id="cb144-23"><a href="running-ergms.html#cb144-23" tabindex="-1"></a><span class="do">## warning with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
 <span id="cb144-24"><a href="running-ergms.html#cb144-24" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
 <span id="cb144-25"><a href="running-ergms.html#cb144-25" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
 <span id="cb144-26"><a href="running-ergms.html#cb144-26" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
-<span id="cb144-27"><a href="running-ergms.html#cb144-27" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
-<span id="cb144-28"><a href="running-ergms.html#cb144-28" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb144-27"><a href="running-ergms.html#cb144-27" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this</span></span>
+<span id="cb144-28"><a href="running-ergms.html#cb144-28" tabindex="-1"></a><span class="do">## warning with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
 <span id="cb144-29"><a href="running-ergms.html#cb144-29" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb144-30"><a href="running-ergms.html#cb144-30" tabindex="-1"></a><span class="do">## ===============================================================</span></span>
 <span id="cb144-31"><a href="running-ergms.html#cb144-31" tabindex="-1"></a><span class="do">##                     Model 1        Model 2        Model 3      </span></span>
@@ -470,18 +474,18 @@ div.csl-indent {
 <span id="cb145-3"><a href="running-ergms.html#cb145-3" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
 <span id="cb145-4"><a href="running-ergms.html#cb145-4" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
 <span id="cb145-5"><a href="running-ergms.html#cb145-5" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
-<span id="cb145-6"><a href="running-ergms.html#cb145-6" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
-<span id="cb145-7"><a href="running-ergms.html#cb145-7" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb145-6"><a href="running-ergms.html#cb145-6" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this</span></span>
+<span id="cb145-7"><a href="running-ergms.html#cb145-7" tabindex="-1"></a><span class="do">## warning with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
 <span id="cb145-8"><a href="running-ergms.html#cb145-8" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
 <span id="cb145-9"><a href="running-ergms.html#cb145-9" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
 <span id="cb145-10"><a href="running-ergms.html#cb145-10" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
-<span id="cb145-11"><a href="running-ergms.html#cb145-11" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
-<span id="cb145-12"><a href="running-ergms.html#cb145-12" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
+<span id="cb145-11"><a href="running-ergms.html#cb145-11" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this</span></span>
+<span id="cb145-12"><a href="running-ergms.html#cb145-12" tabindex="-1"></a><span class="do">## warning with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span>
 <span id="cb145-13"><a href="running-ergms.html#cb145-13" tabindex="-1"></a><span class="do">## Warning: This object was fit with &#39;ergm&#39; version 4.1.2 or earlier. Summarizing</span></span>
 <span id="cb145-14"><a href="running-ergms.html#cb145-14" tabindex="-1"></a><span class="do">## it with version 4.2 or later may return incorrect results or fail.</span></span>
 <span id="cb145-15"><a href="running-ergms.html#cb145-15" tabindex="-1"></a><span class="do">## Warning in nobs.ergm(object): The number of observed dyads in this network is</span></span>
-<span id="cb145-16"><a href="running-ergms.html#cb145-16" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this warning</span></span>
-<span id="cb145-17"><a href="running-ergms.html#cb145-17" tabindex="-1"></a><span class="do">## with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span></code></pre></div>
+<span id="cb145-16"><a href="running-ergms.html#cb145-16" tabindex="-1"></a><span class="do">## ill-defined due to complex constraints on the sample space. Disable this</span></span>
+<span id="cb145-17"><a href="running-ergms.html#cb145-17" tabindex="-1"></a><span class="do">## warning with &#39;options(ergm.loglik.warn_dyads=FALSE)&#39;.</span></span></code></pre></div>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
 <caption>
 Statistical models

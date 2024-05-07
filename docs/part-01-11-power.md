@@ -145,10 +145,6 @@ summary(power_model)
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
 ##     data = spower, subset = type == "alter")
 ## 
-## Deviance Residuals: 
-##        6         7         8         9        10  
-##   0.2658  -11.2195   10.5568  -13.8852   14.2821  
-## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)
 ## (Intercept)     1460       1342   1.088    0.390
@@ -330,10 +326,6 @@ summary(power_model)
 ## Call:
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
 ##     data = spowerd, subset = type == "alter")
-## 
-## Deviance Residuals: 
-##       6        7        8        9       10  
-## -0.8182   1.7278   0.9180  -7.9188   6.0912  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)

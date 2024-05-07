@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.3 The ergm package | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.3 The ergm package | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2024-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -383,7 +387,7 @@ div.csl-indent {
 <span id="cb137-19"><a href="the-ergm-package.html#cb137-19" tabindex="-1"></a><span class="do">## -4.734</span></span></code></pre></div>
 <p>So what happened here? We got a warning. It turns out that our network has loops (didn’t think about it before!). Let’s take a look at that with the <code>which_loop</code> function</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="the-ergm-package.html#cb138-1" tabindex="-1"></a><span class="fu">E</span>(ig_year1_111)[<span class="fu">which_loop</span>(ig_year1_111)]</span>
-<span id="cb138-2"><a href="the-ergm-package.html#cb138-2" tabindex="-1"></a><span class="do">## + 1/2638 edge from 66e79d7 (vertex names):</span></span>
+<span id="cb138-2"><a href="the-ergm-package.html#cb138-2" tabindex="-1"></a><span class="do">## + 1/2638 edge from d5e3a45 (vertex names):</span></span>
 <span id="cb138-3"><a href="the-ergm-package.html#cb138-3" tabindex="-1"></a><span class="do">## [1] 1110111-&gt;1110111</span></span></code></pre></div>
 <p>We can get rid of these using the <code>igraph::-.igraph</code>. Let’s remove the isolates using the same operator</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="the-ergm-package.html#cb139-1" tabindex="-1"></a><span class="co"># Creating the new network</span></span>

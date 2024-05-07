@@ -794,8 +794,8 @@ legend(
     ```
     
     ```
-    ## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is static
-    ## and will be recycled (see ?new_diffnet).
+    ## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is
+    ## static and will be recycled (see ?new_diffnet).
     ```
     
     ```r
@@ -817,10 +817,6 @@ legend(
     ## Call:
     ## glm(formula = adopt ~ cohesive_expo + var1 + factor(per), family = binomial(link = "probit"), 
     ##     data = dat, subset = is.na(toa) | (per <= toa))
-    ## 
-    ## Deviance Residuals: 
-    ##     Min       1Q   Median       3Q      Max  
-    ## -1.1754  -0.8462  -0.6645   1.2878   1.9523  
     ## 
     ## Coefficients:
     ##               Estimate Std. Error z value Pr(>|z|)    
@@ -856,10 +852,6 @@ legend(
     ## Call:
     ## glm(formula = Adopt ~ exposure + var1 + factor(per), family = binomial(link = "probit"), 
     ##     data = dat, subset = ifelse(is.na(toa), TRUE, toa >= per))
-    ## 
-    ## Deviance Residuals: 
-    ##     Min       1Q   Median       3Q      Max  
-    ## -1.1754  -0.8462  -0.6645   1.2878   1.9523  
     ## 
     ## Coefficients:
     ##              Estimate Std. Error z value Pr(>|z|)    

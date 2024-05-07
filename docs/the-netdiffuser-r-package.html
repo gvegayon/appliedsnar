@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>12.2 The netdiffuseR R package | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="12.2 The netdiffuseR R package | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2024-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -367,7 +371,7 @@ div.csl-indent {
 <li><code>brfarmersDiffNet</code> Brazilian farmers and the innovation of Hybrid Corn Seed (1966).</li>
 <li><code>kfamilyDiffNet</code> Korean women and Family Planning methods (1973).</li>
 </ul>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="the-netdiffuser-r-package.html#cb250-1" tabindex="-1"></a>brfarmersDiffNet</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="the-netdiffuser-r-package.html#cb248-1" tabindex="-1"></a>brfarmersDiffNet</span></code></pre></div>
 <pre><code>## Dynamic network of class -diffnet-
 ##  Name               : Brazilian Farmers
 ##  Behavior           : Adoption of Hybrid Corn Seeds
@@ -377,7 +381,7 @@ div.csl-indent {
 ##  Final prevalence   : 1.00
 ##  Static attributes  : village, idold, age, liveout, visits, contact, coo... (146)
 ##  Dynamic attributes : -</code></pre>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="the-netdiffuser-r-package.html#cb252-1" tabindex="-1"></a>medInnovationsDiffNet</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="the-netdiffuser-r-package.html#cb250-1" tabindex="-1"></a>medInnovationsDiffNet</span></code></pre></div>
 <pre><code>## Dynamic network of class -diffnet-
 ##  Name               : Medical Innovation
 ##  Behavior           : Adoption of Tetracycline
@@ -387,7 +391,7 @@ div.csl-indent {
 ##  Final prevalence   : 1.00
 ##  Static attributes  : city, detail, meet, coll, attend, proage, length, ... (58)
 ##  Dynamic attributes : -</code></pre>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="the-netdiffuser-r-package.html#cb254-1" tabindex="-1"></a>kfamilyDiffNet</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="the-netdiffuser-r-package.html#cb252-1" tabindex="-1"></a>kfamilyDiffNet</span></code></pre></div>
 <pre><code>## Dynamic network of class -diffnet-
 ##  Name               : Korean Family Planning
 ##  Behavior           : Family Planning Methods
@@ -401,27 +405,27 @@ div.csl-indent {
 </div>
 <div id="visualization-methods" class="section level3 hasAnchor" number="12.2.3">
 <h3><span class="header-section-number">12.2.3</span> Visualization methods<a href="the-netdiffuser-r-package.html#visualization-methods" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="the-netdiffuser-r-package.html#cb256-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12315</span>)</span>
-<span id="cb256-2"><a href="the-netdiffuser-r-package.html#cb256-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(</span>
-<span id="cb256-3"><a href="the-netdiffuser-r-package.html#cb256-3" tabindex="-1"></a>  <span class="dv">400</span>, <span class="at">t =</span> <span class="dv">6</span>, <span class="at">rgraph.args =</span> <span class="fu">list</span>(<span class="at">k=</span><span class="dv">6</span>, <span class="at">p=</span>.<span class="dv">3</span>),</span>
-<span id="cb256-4"><a href="the-netdiffuser-r-package.html#cb256-4" tabindex="-1"></a>  <span class="at">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>,</span>
-<span id="cb256-5"><a href="the-netdiffuser-r-package.html#cb256-5" tabindex="-1"></a>  <span class="at">seed.nodes =</span> <span class="st">&quot;central&quot;</span>, <span class="at">rewire =</span> <span class="cn">FALSE</span>, <span class="at">threshold.dist =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span></span>
-<span id="cb256-6"><a href="the-netdiffuser-r-package.html#cb256-6" tabindex="-1"></a>  )</span>
-<span id="cb256-7"><a href="the-netdiffuser-r-package.html#cb256-7" tabindex="-1"></a><span class="fu">plot</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="the-netdiffuser-r-package.html#cb254-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12315</span>)</span>
+<span id="cb254-2"><a href="the-netdiffuser-r-package.html#cb254-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(</span>
+<span id="cb254-3"><a href="the-netdiffuser-r-package.html#cb254-3" tabindex="-1"></a>  <span class="dv">400</span>, <span class="at">t =</span> <span class="dv">6</span>, <span class="at">rgraph.args =</span> <span class="fu">list</span>(<span class="at">k=</span><span class="dv">6</span>, <span class="at">p=</span>.<span class="dv">3</span>),</span>
+<span id="cb254-4"><a href="the-netdiffuser-r-package.html#cb254-4" tabindex="-1"></a>  <span class="at">seed.graph =</span> <span class="st">&quot;small-world&quot;</span>,</span>
+<span id="cb254-5"><a href="the-netdiffuser-r-package.html#cb254-5" tabindex="-1"></a>  <span class="at">seed.nodes =</span> <span class="st">&quot;central&quot;</span>, <span class="at">rewire =</span> <span class="cn">FALSE</span>, <span class="at">threshold.dist =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span></span>
+<span id="cb254-6"><a href="the-netdiffuser-r-package.html#cb254-6" tabindex="-1"></a>  )</span>
+<span id="cb254-7"><a href="the-netdiffuser-r-package.html#cb254-7" tabindex="-1"></a><span class="fu">plot</span>(x)</span></code></pre></div>
 <p><img src="part-01-09-netdiffuser_files/figure-html/viz-1.png" width="672" /></p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="the-netdiffuser-r-package.html#cb257-1" tabindex="-1"></a><span class="fu">plot_diffnet</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="the-netdiffuser-r-package.html#cb255-1" tabindex="-1"></a><span class="fu">plot_diffnet</span>(x)</span></code></pre></div>
 <p><img src="part-01-09-netdiffuser_files/figure-html/viz-2.png" width="672" /></p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="the-netdiffuser-r-package.html#cb258-1" tabindex="-1"></a><span class="fu">plot_diffnet2</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="the-netdiffuser-r-package.html#cb256-1" tabindex="-1"></a><span class="fu">plot_diffnet2</span>(x)</span></code></pre></div>
 <p><img src="part-01-09-netdiffuser_files/figure-html/viz-3.png" width="672" /></p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="the-netdiffuser-r-package.html#cb259-1" tabindex="-1"></a><span class="fu">plot_adopters</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="the-netdiffuser-r-package.html#cb257-1" tabindex="-1"></a><span class="fu">plot_adopters</span>(x)</span></code></pre></div>
 <p><img src="part-01-09-netdiffuser_files/figure-html/viz-4.png" width="672" /></p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="the-netdiffuser-r-package.html#cb260-1" tabindex="-1"></a><span class="fu">plot_threshold</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="the-netdiffuser-r-package.html#cb258-1" tabindex="-1"></a><span class="fu">plot_threshold</span>(x)</span></code></pre></div>
 <p><img src="part-01-09-netdiffuser_files/figure-html/viz-5.png" width="672" /></p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="the-netdiffuser-r-package.html#cb261-1" tabindex="-1"></a><span class="fu">plot_infectsuscep</span>(x, <span class="at">K=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="the-netdiffuser-r-package.html#cb259-1" tabindex="-1"></a><span class="fu">plot_infectsuscep</span>(x, <span class="at">K=</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## Warning in plot_infectsuscep.list(graph$graph, graph$toa, t0, normalize, : When
 ## applying logscale some observations are missing.</code></pre>
 <p><img src="part-01-09-netdiffuser_files/figure-html/viz-6.png" width="672" /></p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="the-netdiffuser-r-package.html#cb263-1" tabindex="-1"></a><span class="fu">plot_hazard</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="the-netdiffuser-r-package.html#cb261-1" tabindex="-1"></a><span class="fu">plot_hazard</span>(x)</span></code></pre></div>
 <p><img src="part-01-09-netdiffuser_files/figure-html/viz-7.png" width="672" /></p>
 </div>
 <div id="problems" class="section level3 hasAnchor" number="12.2.4">

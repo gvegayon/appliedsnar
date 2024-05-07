@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10.5 Putting all together | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10.5 Putting all together | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2024-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -346,90 +350,90 @@ div.csl-indent {
 <div id="generating-statistics-using-igraph" class="section level3 hasAnchor" number="10.5.1">
 <h3><span class="header-section-number">10.5.1</span> Generating statistics using igraph<a href="putting-all-together.html#generating-statistics-using-igraph" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>igraph</code> R package has multiple high-performing routines to compute graph-level statistics. For now, we will focus on the following statistics: vertex count, edge count, number of isolates, transitivity, and modularity based on betweenness centrality:</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="putting-all-together.html#cb240-1" tabindex="-1"></a>net_stats <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs, <span class="cf">function</span>(g) {</span>
-<span id="cb240-2"><a href="putting-all-together.html#cb240-2" tabindex="-1"></a>  </span>
-<span id="cb240-3"><a href="putting-all-together.html#cb240-3" tabindex="-1"></a>  <span class="co"># Calculating modularity</span></span>
-<span id="cb240-4"><a href="putting-all-together.html#cb240-4" tabindex="-1"></a>  groups <span class="ot">&lt;-</span> <span class="fu">cluster_edge_betweenness</span>(g)</span>
-<span id="cb240-5"><a href="putting-all-together.html#cb240-5" tabindex="-1"></a>  </span>
-<span id="cb240-6"><a href="putting-all-together.html#cb240-6" tabindex="-1"></a>  <span class="co"># Computing the stats</span></span>
-<span id="cb240-7"><a href="putting-all-together.html#cb240-7" tabindex="-1"></a>  <span class="fu">data.table</span>(</span>
-<span id="cb240-8"><a href="putting-all-together.html#cb240-8" tabindex="-1"></a>    <span class="at">size      =</span> <span class="fu">vcount</span>(g),</span>
-<span id="cb240-9"><a href="putting-all-together.html#cb240-9" tabindex="-1"></a>    <span class="at">edges     =</span> <span class="fu">ecount</span>(g),</span>
-<span id="cb240-10"><a href="putting-all-together.html#cb240-10" tabindex="-1"></a>    <span class="at">nisolates =</span> <span class="fu">sum</span>(<span class="fu">degree</span>(g) <span class="sc">==</span> <span class="dv">0</span>),</span>
-<span id="cb240-11"><a href="putting-all-together.html#cb240-11" tabindex="-1"></a>    <span class="at">transit   =</span> <span class="fu">transitivity</span>(g, <span class="at">type =</span> <span class="st">&quot;global&quot;</span>),</span>
-<span id="cb240-12"><a href="putting-all-together.html#cb240-12" tabindex="-1"></a>    <span class="at">modular   =</span> <span class="fu">modularity</span>(groups)</span>
-<span id="cb240-13"><a href="putting-all-together.html#cb240-13" tabindex="-1"></a>  )</span>
-<span id="cb240-14"><a href="putting-all-together.html#cb240-14" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="putting-all-together.html#cb238-1" tabindex="-1"></a>net_stats <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs, <span class="cf">function</span>(g) {</span>
+<span id="cb238-2"><a href="putting-all-together.html#cb238-2" tabindex="-1"></a>  </span>
+<span id="cb238-3"><a href="putting-all-together.html#cb238-3" tabindex="-1"></a>  <span class="co"># Calculating modularity</span></span>
+<span id="cb238-4"><a href="putting-all-together.html#cb238-4" tabindex="-1"></a>  groups <span class="ot">&lt;-</span> <span class="fu">cluster_edge_betweenness</span>(g)</span>
+<span id="cb238-5"><a href="putting-all-together.html#cb238-5" tabindex="-1"></a>  </span>
+<span id="cb238-6"><a href="putting-all-together.html#cb238-6" tabindex="-1"></a>  <span class="co"># Computing the stats</span></span>
+<span id="cb238-7"><a href="putting-all-together.html#cb238-7" tabindex="-1"></a>  <span class="fu">data.table</span>(</span>
+<span id="cb238-8"><a href="putting-all-together.html#cb238-8" tabindex="-1"></a>    <span class="at">size      =</span> <span class="fu">vcount</span>(g),</span>
+<span id="cb238-9"><a href="putting-all-together.html#cb238-9" tabindex="-1"></a>    <span class="at">edges     =</span> <span class="fu">ecount</span>(g),</span>
+<span id="cb238-10"><a href="putting-all-together.html#cb238-10" tabindex="-1"></a>    <span class="at">nisolates =</span> <span class="fu">sum</span>(<span class="fu">degree</span>(g) <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb238-11"><a href="putting-all-together.html#cb238-11" tabindex="-1"></a>    <span class="at">transit   =</span> <span class="fu">transitivity</span>(g, <span class="at">type =</span> <span class="st">&quot;global&quot;</span>),</span>
+<span id="cb238-12"><a href="putting-all-together.html#cb238-12" tabindex="-1"></a>    <span class="at">modular   =</span> <span class="fu">modularity</span>(groups)</span>
+<span id="cb238-13"><a href="putting-all-together.html#cb238-13" tabindex="-1"></a>  )</span>
+<span id="cb238-14"><a href="putting-all-together.html#cb238-14" tabindex="-1"></a>})</span></code></pre></div>
 <p>Observe we count isolates using the <code>degree()</code> function. We can combine the statistics into a single <code>data.table</code> using the <code>rbindlist</code> function:</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="putting-all-together.html#cb241-1" tabindex="-1"></a>net_stats <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(net_stats)</span>
-<span id="cb241-2"><a href="putting-all-together.html#cb241-2" tabindex="-1"></a></span>
-<span id="cb241-3"><a href="putting-all-together.html#cb241-3" tabindex="-1"></a><span class="fu">head</span>(net_stats)</span>
-<span id="cb241-4"><a href="putting-all-together.html#cb241-4" tabindex="-1"></a><span class="do">##    size edges nisolates   transit     modular</span></span>
-<span id="cb241-5"><a href="putting-all-together.html#cb241-5" tabindex="-1"></a><span class="do">## 1:   12    25         1 0.6750000 0.012000000</span></span>
-<span id="cb241-6"><a href="putting-all-together.html#cb241-6" tabindex="-1"></a><span class="do">## 2:   16    47         0 0.4332130 0.003395201</span></span>
-<span id="cb241-7"><a href="putting-all-together.html#cb241-7" tabindex="-1"></a><span class="do">## 3:   16    58         0 0.5612009 0.002675386</span></span>
-<span id="cb241-8"><a href="putting-all-together.html#cb241-8" tabindex="-1"></a><span class="do">## 4:   15    75         0 0.8515112 0.000000000</span></span>
-<span id="cb241-9"><a href="putting-all-together.html#cb241-9" tabindex="-1"></a><span class="do">## 5:   15    52         0 0.5780488 0.000000000</span></span>
-<span id="cb241-10"><a href="putting-all-together.html#cb241-10" tabindex="-1"></a><span class="do">## 6:   17    68         0 0.6291161 0.025735294</span></span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="putting-all-together.html#cb239-1" tabindex="-1"></a>net_stats <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(net_stats)</span>
+<span id="cb239-2"><a href="putting-all-together.html#cb239-2" tabindex="-1"></a></span>
+<span id="cb239-3"><a href="putting-all-together.html#cb239-3" tabindex="-1"></a><span class="fu">head</span>(net_stats)</span>
+<span id="cb239-4"><a href="putting-all-together.html#cb239-4" tabindex="-1"></a><span class="do">##    size edges nisolates   transit     modular</span></span>
+<span id="cb239-5"><a href="putting-all-together.html#cb239-5" tabindex="-1"></a><span class="do">## 1:   12    25         1 0.6750000 0.012000000</span></span>
+<span id="cb239-6"><a href="putting-all-together.html#cb239-6" tabindex="-1"></a><span class="do">## 2:   16    47         0 0.4332130 0.003395201</span></span>
+<span id="cb239-7"><a href="putting-all-together.html#cb239-7" tabindex="-1"></a><span class="do">## 3:   16    58         0 0.5612009 0.002675386</span></span>
+<span id="cb239-8"><a href="putting-all-together.html#cb239-8" tabindex="-1"></a><span class="do">## 4:   15    75         0 0.8515112 0.000000000</span></span>
+<span id="cb239-9"><a href="putting-all-together.html#cb239-9" tabindex="-1"></a><span class="do">## 5:   15    52         0 0.5780488 0.000000000</span></span>
+<span id="cb239-10"><a href="putting-all-together.html#cb239-10" tabindex="-1"></a><span class="do">## 6:   17    68         0 0.6291161 0.025735294</span></span></code></pre></div>
 </div>
 <div id="generating-statistics-based-on-ergm" class="section level3 hasAnchor" number="10.5.2">
 <h3><span class="header-section-number">10.5.2</span> Generating statistics based on ergm<a href="putting-all-together.html#generating-statistics-based-on-ergm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>ergm</code> R package has a much larger set of graph-level statistics we can add to our models.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> The key to generating statistics based on the <code>ergm</code> package is the <code>summary_formula</code> function. Before we start using that function, we first need to convert the <code>igraph</code> networks to <code>network</code> objects, which are the native object class for the <code>ergm</code> package. We use the <a href="https://cran.r-project.org/package=intergraph" target="_blank"><code>intergraph</code></a> R package for that, and in particular, the <code>asNetwork</code> function:</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="putting-all-together.html#cb242-1" tabindex="-1"></a><span class="co"># Loading the required packages</span></span>
-<span id="cb242-2"><a href="putting-all-together.html#cb242-2" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span>
-<span id="cb242-3"><a href="putting-all-together.html#cb242-3" tabindex="-1"></a><span class="fu">library</span>(ergm)</span>
-<span id="cb242-4"><a href="putting-all-together.html#cb242-4" tabindex="-1"></a><span class="do">## Loading required package: network</span></span>
-<span id="cb242-5"><a href="putting-all-together.html#cb242-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb242-6"><a href="putting-all-together.html#cb242-6" tabindex="-1"></a><span class="do">## &#39;network&#39; 1.18.1 (2023-01-24), part of the Statnet Project</span></span>
-<span id="cb242-7"><a href="putting-all-together.html#cb242-7" tabindex="-1"></a><span class="do">## * &#39;news(package=&quot;network&quot;)&#39; for changes since last version</span></span>
-<span id="cb242-8"><a href="putting-all-together.html#cb242-8" tabindex="-1"></a><span class="do">## * &#39;citation(&quot;network&quot;)&#39; for citation information</span></span>
-<span id="cb242-9"><a href="putting-all-together.html#cb242-9" tabindex="-1"></a><span class="do">## * &#39;https://statnet.org&#39; for help, support, and other information</span></span>
-<span id="cb242-10"><a href="putting-all-together.html#cb242-10" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb242-11"><a href="putting-all-together.html#cb242-11" tabindex="-1"></a><span class="do">## Attaching package: &#39;network&#39;</span></span>
-<span id="cb242-12"><a href="putting-all-together.html#cb242-12" tabindex="-1"></a><span class="do">## The following objects are masked from &#39;package:igraph&#39;:</span></span>
-<span id="cb242-13"><a href="putting-all-together.html#cb242-13" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb242-14"><a href="putting-all-together.html#cb242-14" tabindex="-1"></a><span class="do">##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,</span></span>
-<span id="cb242-15"><a href="putting-all-together.html#cb242-15" tabindex="-1"></a><span class="do">##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,</span></span>
-<span id="cb242-16"><a href="putting-all-together.html#cb242-16" tabindex="-1"></a><span class="do">##     is.directed, list.edge.attributes, list.vertex.attributes,</span></span>
-<span id="cb242-17"><a href="putting-all-together.html#cb242-17" tabindex="-1"></a><span class="do">##     set.edge.attribute, set.vertex.attribute</span></span>
-<span id="cb242-18"><a href="putting-all-together.html#cb242-18" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb242-19"><a href="putting-all-together.html#cb242-19" tabindex="-1"></a><span class="do">## &#39;ergm&#39; 4.4.0 (2023-01-26), part of the Statnet Project</span></span>
-<span id="cb242-20"><a href="putting-all-together.html#cb242-20" tabindex="-1"></a><span class="do">## * &#39;news(package=&quot;ergm&quot;)&#39; for changes since last version</span></span>
-<span id="cb242-21"><a href="putting-all-together.html#cb242-21" tabindex="-1"></a><span class="do">## * &#39;citation(&quot;ergm&quot;)&#39; for citation information</span></span>
-<span id="cb242-22"><a href="putting-all-together.html#cb242-22" tabindex="-1"></a><span class="do">## * &#39;https://statnet.org&#39; for help, support, and other information</span></span>
-<span id="cb242-23"><a href="putting-all-together.html#cb242-23" tabindex="-1"></a><span class="do">## &#39;ergm&#39; 4 is a major update that introduces some backwards-incompatible</span></span>
-<span id="cb242-24"><a href="putting-all-together.html#cb242-24" tabindex="-1"></a><span class="do">## changes. Please type &#39;news(package=&quot;ergm&quot;)&#39; for a list of major</span></span>
-<span id="cb242-25"><a href="putting-all-together.html#cb242-25" tabindex="-1"></a><span class="do">## changes.</span></span>
-<span id="cb242-26"><a href="putting-all-together.html#cb242-26" tabindex="-1"></a></span>
-<span id="cb242-27"><a href="putting-all-together.html#cb242-27" tabindex="-1"></a><span class="co"># Converting all &quot;igraph&quot; objects in graphs to network &quot;objects&quot;</span></span>
-<span id="cb242-28"><a href="putting-all-together.html#cb242-28" tabindex="-1"></a>graphs_network <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs, asNetwork)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="putting-all-together.html#cb240-1" tabindex="-1"></a><span class="co"># Loading the required packages</span></span>
+<span id="cb240-2"><a href="putting-all-together.html#cb240-2" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span>
+<span id="cb240-3"><a href="putting-all-together.html#cb240-3" tabindex="-1"></a><span class="fu">library</span>(ergm)</span>
+<span id="cb240-4"><a href="putting-all-together.html#cb240-4" tabindex="-1"></a><span class="do">## Loading required package: network</span></span>
+<span id="cb240-5"><a href="putting-all-together.html#cb240-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb240-6"><a href="putting-all-together.html#cb240-6" tabindex="-1"></a><span class="do">## &#39;network&#39; 1.18.2 (2023-12-04), part of the Statnet Project</span></span>
+<span id="cb240-7"><a href="putting-all-together.html#cb240-7" tabindex="-1"></a><span class="do">## * &#39;news(package=&quot;network&quot;)&#39; for changes since last version</span></span>
+<span id="cb240-8"><a href="putting-all-together.html#cb240-8" tabindex="-1"></a><span class="do">## * &#39;citation(&quot;network&quot;)&#39; for citation information</span></span>
+<span id="cb240-9"><a href="putting-all-together.html#cb240-9" tabindex="-1"></a><span class="do">## * &#39;https://statnet.org&#39; for help, support, and other information</span></span>
+<span id="cb240-10"><a href="putting-all-together.html#cb240-10" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb240-11"><a href="putting-all-together.html#cb240-11" tabindex="-1"></a><span class="do">## Attaching package: &#39;network&#39;</span></span>
+<span id="cb240-12"><a href="putting-all-together.html#cb240-12" tabindex="-1"></a><span class="do">## The following objects are masked from &#39;package:igraph&#39;:</span></span>
+<span id="cb240-13"><a href="putting-all-together.html#cb240-13" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb240-14"><a href="putting-all-together.html#cb240-14" tabindex="-1"></a><span class="do">##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,</span></span>
+<span id="cb240-15"><a href="putting-all-together.html#cb240-15" tabindex="-1"></a><span class="do">##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,</span></span>
+<span id="cb240-16"><a href="putting-all-together.html#cb240-16" tabindex="-1"></a><span class="do">##     is.directed, list.edge.attributes, list.vertex.attributes,</span></span>
+<span id="cb240-17"><a href="putting-all-together.html#cb240-17" tabindex="-1"></a><span class="do">##     set.edge.attribute, set.vertex.attribute</span></span>
+<span id="cb240-18"><a href="putting-all-together.html#cb240-18" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb240-19"><a href="putting-all-together.html#cb240-19" tabindex="-1"></a><span class="do">## &#39;ergm&#39; 4.6-7262 (2023-09-04), part of the Statnet Project</span></span>
+<span id="cb240-20"><a href="putting-all-together.html#cb240-20" tabindex="-1"></a><span class="do">## * &#39;news(package=&quot;ergm&quot;)&#39; for changes since last version</span></span>
+<span id="cb240-21"><a href="putting-all-together.html#cb240-21" tabindex="-1"></a><span class="do">## * &#39;citation(&quot;ergm&quot;)&#39; for citation information</span></span>
+<span id="cb240-22"><a href="putting-all-together.html#cb240-22" tabindex="-1"></a><span class="do">## * &#39;https://statnet.org&#39; for help, support, and other information</span></span>
+<span id="cb240-23"><a href="putting-all-together.html#cb240-23" tabindex="-1"></a><span class="do">## &#39;ergm&#39; 4 is a major update that introduces some backwards-incompatible</span></span>
+<span id="cb240-24"><a href="putting-all-together.html#cb240-24" tabindex="-1"></a><span class="do">## changes. Please type &#39;news(package=&quot;ergm&quot;)&#39; for a list of major</span></span>
+<span id="cb240-25"><a href="putting-all-together.html#cb240-25" tabindex="-1"></a><span class="do">## changes.</span></span>
+<span id="cb240-26"><a href="putting-all-together.html#cb240-26" tabindex="-1"></a></span>
+<span id="cb240-27"><a href="putting-all-together.html#cb240-27" tabindex="-1"></a><span class="co"># Converting all &quot;igraph&quot; objects in graphs to network &quot;objects&quot;</span></span>
+<span id="cb240-28"><a href="putting-all-together.html#cb240-28" tabindex="-1"></a>graphs_network <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs, asNetwork)</span></code></pre></div>
 <p>With the network objects ready, we can proceed to compute graph-level statistics using the <code>summary_formula</code> function. Here we will only look into: the number of triangles, gender homophily, and healthy-diet homophily:</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="putting-all-together.html#cb243-1" tabindex="-1"></a>net_stats_ergm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs_network, <span class="cf">function</span>(n) {</span>
-<span id="cb243-2"><a href="putting-all-together.html#cb243-2" tabindex="-1"></a>  </span>
-<span id="cb243-3"><a href="putting-all-together.html#cb243-3" tabindex="-1"></a>  <span class="co"># Computing the statistics</span></span>
-<span id="cb243-4"><a href="putting-all-together.html#cb243-4" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">summary_formula</span>(</span>
-<span id="cb243-5"><a href="putting-all-together.html#cb243-5" tabindex="-1"></a>    n <span class="sc">~</span> triangles <span class="sc">+</span></span>
-<span id="cb243-6"><a href="putting-all-together.html#cb243-6" tabindex="-1"></a>      <span class="fu">nodematch</span>(<span class="st">&quot;gender_1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb243-7"><a href="putting-all-together.html#cb243-7" tabindex="-1"></a>      <span class="fu">nodematch</span>(<span class="st">&quot;healthy_diet&quot;</span>)</span>
-<span id="cb243-8"><a href="putting-all-together.html#cb243-8" tabindex="-1"></a>    )</span>
-<span id="cb243-9"><a href="putting-all-together.html#cb243-9" tabindex="-1"></a>  </span>
-<span id="cb243-10"><a href="putting-all-together.html#cb243-10" tabindex="-1"></a>  <span class="co"># Saving them as a data.table object</span></span>
-<span id="cb243-11"><a href="putting-all-together.html#cb243-11" tabindex="-1"></a>  <span class="fu">data.table</span>(</span>
-<span id="cb243-12"><a href="putting-all-together.html#cb243-12" tabindex="-1"></a>    <span class="at">triangles       =</span> s[<span class="dv">1</span>],</span>
-<span id="cb243-13"><a href="putting-all-together.html#cb243-13" tabindex="-1"></a>    <span class="at">gender_homoph   =</span> s[<span class="dv">2</span>],</span>
-<span id="cb243-14"><a href="putting-all-together.html#cb243-14" tabindex="-1"></a>    <span class="at">healthyd_homoph =</span> s[<span class="dv">3</span>]</span>
-<span id="cb243-15"><a href="putting-all-together.html#cb243-15" tabindex="-1"></a>  )</span>
-<span id="cb243-16"><a href="putting-all-together.html#cb243-16" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="putting-all-together.html#cb241-1" tabindex="-1"></a>net_stats_ergm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(graphs_network, <span class="cf">function</span>(n) {</span>
+<span id="cb241-2"><a href="putting-all-together.html#cb241-2" tabindex="-1"></a>  </span>
+<span id="cb241-3"><a href="putting-all-together.html#cb241-3" tabindex="-1"></a>  <span class="co"># Computing the statistics</span></span>
+<span id="cb241-4"><a href="putting-all-together.html#cb241-4" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">summary_formula</span>(</span>
+<span id="cb241-5"><a href="putting-all-together.html#cb241-5" tabindex="-1"></a>    n <span class="sc">~</span> triangles <span class="sc">+</span></span>
+<span id="cb241-6"><a href="putting-all-together.html#cb241-6" tabindex="-1"></a>      <span class="fu">nodematch</span>(<span class="st">&quot;gender_1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb241-7"><a href="putting-all-together.html#cb241-7" tabindex="-1"></a>      <span class="fu">nodematch</span>(<span class="st">&quot;healthy_diet&quot;</span>)</span>
+<span id="cb241-8"><a href="putting-all-together.html#cb241-8" tabindex="-1"></a>    )</span>
+<span id="cb241-9"><a href="putting-all-together.html#cb241-9" tabindex="-1"></a>  </span>
+<span id="cb241-10"><a href="putting-all-together.html#cb241-10" tabindex="-1"></a>  <span class="co"># Saving them as a data.table object</span></span>
+<span id="cb241-11"><a href="putting-all-together.html#cb241-11" tabindex="-1"></a>  <span class="fu">data.table</span>(</span>
+<span id="cb241-12"><a href="putting-all-together.html#cb241-12" tabindex="-1"></a>    <span class="at">triangles       =</span> s[<span class="dv">1</span>],</span>
+<span id="cb241-13"><a href="putting-all-together.html#cb241-13" tabindex="-1"></a>    <span class="at">gender_homoph   =</span> s[<span class="dv">2</span>],</span>
+<span id="cb241-14"><a href="putting-all-together.html#cb241-14" tabindex="-1"></a>    <span class="at">healthyd_homoph =</span> s[<span class="dv">3</span>]</span>
+<span id="cb241-15"><a href="putting-all-together.html#cb241-15" tabindex="-1"></a>  )</span>
+<span id="cb241-16"><a href="putting-all-together.html#cb241-16" tabindex="-1"></a>})</span></code></pre></div>
 <p>Once again, we use <code>rbindlist</code> to combine all the network statistics into a single <code>data.table</code> object:</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="putting-all-together.html#cb244-1" tabindex="-1"></a>net_stats_ergm <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(net_stats_ergm)</span>
-<span id="cb244-2"><a href="putting-all-together.html#cb244-2" tabindex="-1"></a><span class="fu">head</span>(net_stats_ergm)</span>
-<span id="cb244-3"><a href="putting-all-together.html#cb244-3" tabindex="-1"></a><span class="do">##    triangles gender_homoph healthyd_homoph</span></span>
-<span id="cb244-4"><a href="putting-all-together.html#cb244-4" tabindex="-1"></a><span class="do">## 1:        27            11               3</span></span>
-<span id="cb244-5"><a href="putting-all-together.html#cb244-5" tabindex="-1"></a><span class="do">## 2:        40            30              20</span></span>
-<span id="cb244-6"><a href="putting-all-together.html#cb244-6" tabindex="-1"></a><span class="do">## 3:        81            40              29</span></span>
-<span id="cb244-7"><a href="putting-all-together.html#cb244-7" tabindex="-1"></a><span class="do">## 4:       216            33              38</span></span>
-<span id="cb244-8"><a href="putting-all-together.html#cb244-8" tabindex="-1"></a><span class="do">## 5:        79            44              19</span></span>
-<span id="cb244-9"><a href="putting-all-together.html#cb244-9" tabindex="-1"></a><span class="do">## 6:       121            38              16</span></span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="putting-all-together.html#cb242-1" tabindex="-1"></a>net_stats_ergm <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(net_stats_ergm)</span>
+<span id="cb242-2"><a href="putting-all-together.html#cb242-2" tabindex="-1"></a><span class="fu">head</span>(net_stats_ergm)</span>
+<span id="cb242-3"><a href="putting-all-together.html#cb242-3" tabindex="-1"></a><span class="do">##    triangles gender_homoph healthyd_homoph</span></span>
+<span id="cb242-4"><a href="putting-all-together.html#cb242-4" tabindex="-1"></a><span class="do">## 1:        27            11               3</span></span>
+<span id="cb242-5"><a href="putting-all-together.html#cb242-5" tabindex="-1"></a><span class="do">## 2:        40            30              20</span></span>
+<span id="cb242-6"><a href="putting-all-together.html#cb242-6" tabindex="-1"></a><span class="do">## 3:        81            40              29</span></span>
+<span id="cb242-7"><a href="putting-all-together.html#cb242-7" tabindex="-1"></a><span class="do">## 4:       216            33              38</span></span>
+<span id="cb242-8"><a href="putting-all-together.html#cb242-8" tabindex="-1"></a><span class="do">## 5:        79            44              19</span></span>
+<span id="cb242-9"><a href="putting-all-together.html#cb242-9" tabindex="-1"></a><span class="do">## 6:       121            38              16</span></span></code></pre></div>
 </div>
 </div>
 <div class="footnotes">

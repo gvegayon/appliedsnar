@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>14.2 Example 2: Spillover effects pre-post effect | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="14.2 Example 2: Spillover effects pre-post effect | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2024-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -350,122 +354,118 @@ div.csl-indent {
 <li><p>To control for the underlying probability that an individual has <span class="math inline">\(y = 1\)</span>, we use conditional logistic regression (also known as matched case-control logit,) to estimate the treatment effects.</p></li>
 <li><p>Accept/reject the null and store the result.</p></li>
 </ol>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-1" tabindex="-1"></a>beta_pars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>)</span>
-<span id="cb313-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-2" tabindex="-1"></a>odds_h_1  <span class="ot">&lt;-</span> <span class="fl">2.0</span></span></code></pre></div>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-1" tabindex="-1"></a><span class="co"># Simulation function</span></span>
-<span id="cb314-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-2" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb314-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-3" tabindex="-1"></a>sim_data_prepost <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb314-4"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-4" tabindex="-1"></a></span>
-<span id="cb314-5"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-5" tabindex="-1"></a></span>
-<span id="cb314-6"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-6" tabindex="-1"></a>  <span class="co"># Step 1: Sampling population of egos</span></span>
-<span id="cb314-7"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-7" tabindex="-1"></a>  y_ego_star <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</span>
-<span id="cb314-8"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-8" tabindex="-1"></a>  y_ego_0    <span class="ot">&lt;-</span> <span class="fu">runif</span>(n) <span class="sc">&lt;</span> y_ego_star</span>
-<span id="cb314-9"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-9" tabindex="-1"></a></span>
-<span id="cb314-10"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-10" tabindex="-1"></a>  <span class="co"># Step 2: Simulating attrition</span></span>
-<span id="cb314-11"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-11" tabindex="-1"></a>  todrop     <span class="ot">&lt;-</span> <span class="fu">order</span>(<span class="fu">runif</span>(n))[<span class="dv">1</span><span class="sc">:</span>(n <span class="sc">*</span> attrition)]</span>
-<span id="cb314-12"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-12" tabindex="-1"></a>  y_ego_0    <span class="ot">&lt;-</span> y_ego_0[<span class="sc">-</span>todrop]</span>
-<span id="cb314-13"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-13" tabindex="-1"></a>  n          <span class="ot">&lt;-</span> n <span class="sc">-</span> <span class="fu">length</span>(todrop)</span>
-<span id="cb314-14"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-14" tabindex="-1"></a>  y_ego_star <span class="ot">&lt;-</span> y_ego_star[<span class="sc">-</span>todrop]</span>
-<span id="cb314-15"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-15" tabindex="-1"></a></span>
-<span id="cb314-16"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-16" tabindex="-1"></a>  <span class="co"># Step 3: Simulating alter&#39;s effect. We assume the same as in</span></span>
-<span id="cb314-17"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-17" tabindex="-1"></a>  <span class="co"># ego</span></span>
-<span id="cb314-18"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-18" tabindex="-1"></a>  y_alter_star <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n <span class="sc">*</span> n_a, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</span>
-<span id="cb314-19"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-19" tabindex="-1"></a>  y_alter_0    <span class="ot">&lt;-</span> <span class="fu">runif</span>(n <span class="sc">*</span> n_a) <span class="sc">&lt;</span> y_alter_star</span>
-<span id="cb314-20"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-20" tabindex="-1"></a></span>
-<span id="cb314-21"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-21" tabindex="-1"></a>  <span class="co"># Simulating post</span></span>
-<span id="cb314-22"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-22" tabindex="-1"></a>  y_ego_1   <span class="ot">&lt;-</span> <span class="fu">runif</span>(n) <span class="sc">&lt;</span> <span class="fu">plogis</span>(<span class="fu">qlogis</span>(y_ego_star) <span class="sc">+</span> <span class="fu">log</span>(odds_h_1))</span>
-<span id="cb314-23"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-23" tabindex="-1"></a>  tr_alter  <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">rep</span>(y_ego_1, n_a))</span>
-<span id="cb314-24"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-24" tabindex="-1"></a>  y_alter_1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n <span class="sc">*</span> n_a) <span class="sc">&lt;</span> <span class="fu">plogis</span>(<span class="fu">qlogis</span>(y_alter_star) <span class="sc">+</span> <span class="fu">log</span>(odds_h_1) <span class="sc">*</span> tr_alter) <span class="co"># So only if ego did something</span></span>
-<span id="cb314-25"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-25" tabindex="-1"></a></span>
-<span id="cb314-26"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-26" tabindex="-1"></a>  <span class="co"># Step 4: Computing test statistic</span></span>
-<span id="cb314-27"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-27" tabindex="-1"></a>  y_ego_0 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(y_ego_0)</span>
-<span id="cb314-28"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-28" tabindex="-1"></a>  y_ego_1 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(y_ego_1)</span>
-<span id="cb314-29"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-29" tabindex="-1"></a>  y_alter_0 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(y_alter_0)</span>
-<span id="cb314-30"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-30" tabindex="-1"></a>  y_alter_1 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(y_alter_1)</span>
-<span id="cb314-31"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-31" tabindex="-1"></a></span>
-<span id="cb314-32"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-32" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb314-33"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-33" tabindex="-1"></a>    <span class="at">y  =</span> <span class="fu">c</span>(y_ego_0, y_ego_1),</span>
-<span id="cb314-34"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-34" tabindex="-1"></a>    <span class="at">tr =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, n), <span class="fu">rep</span>(<span class="dv">1</span>, n)),</span>
-<span id="cb314-35"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-35" tabindex="-1"></a>    <span class="at">g  =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb314-36"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-36" tabindex="-1"></a>  )</span>
-<span id="cb314-37"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-37" tabindex="-1"></a></span>
-<span id="cb314-38"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-38" tabindex="-1"></a>  res_ego   <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
-<span id="cb314-39"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-39" tabindex="-1"></a>    <span class="fu">clogit</span>(y <span class="sc">~</span> tr <span class="sc">+</span> <span class="fu">strata</span>(g), <span class="at">data =</span> d, <span class="at">method =</span> <span class="st">&quot;exact&quot;</span>),</span>
-<span id="cb314-40"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-40" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) e</span>
-<span id="cb314-41"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-41" tabindex="-1"></a>    )</span>
-<span id="cb314-42"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-42" tabindex="-1"></a></span>
-<span id="cb314-43"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-43" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb314-44"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-44" tabindex="-1"></a>    <span class="at">y  =</span> <span class="fu">c</span>(y_alter_0, y_alter_1),</span>
-<span id="cb314-45"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-45" tabindex="-1"></a>    <span class="at">tr =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, n <span class="sc">*</span> n_a), tr_alter),</span>
-<span id="cb314-46"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-46" tabindex="-1"></a>    <span class="at">g  =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>(n <span class="sc">*</span> n_a), <span class="dv">1</span><span class="sc">:</span>(n <span class="sc">*</span> n_a))</span>
-<span id="cb314-47"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-47" tabindex="-1"></a>  )</span>
-<span id="cb314-48"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-48" tabindex="-1"></a></span>
-<span id="cb314-49"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-49" tabindex="-1"></a>  res_alter <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
-<span id="cb314-50"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-50" tabindex="-1"></a>    <span class="fu">clogit</span>(y <span class="sc">~</span> tr <span class="sc">+</span> <span class="fu">strata</span>(g), <span class="at">data =</span> d, <span class="at">method =</span> <span class="st">&quot;exact&quot;</span>),</span>
-<span id="cb314-51"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-51" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) e</span>
-<span id="cb314-52"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-52" tabindex="-1"></a>    )</span>
-<span id="cb314-53"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-53" tabindex="-1"></a></span>
-<span id="cb314-54"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-54" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(res_ego, <span class="st">&quot;error&quot;</span>) <span class="sc">|</span> <span class="fu">inherits</span>(res_alter, <span class="st">&quot;error&quot;</span>))</span>
-<span id="cb314-55"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-55" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">ego =</span>  <span class="cn">NA</span>, <span class="at">alter =</span> <span class="cn">NA</span>))</span>
-<span id="cb314-56"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-56" tabindex="-1"></a>  </span>
-<span id="cb314-57"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-57" tabindex="-1"></a>  <span class="co"># Step 5: Reject?</span></span>
-<span id="cb314-58"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-58" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb314-59"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-59" tabindex="-1"></a>    <span class="co"># ego        = res_ego$p.value &lt; alpha,</span></span>
-<span id="cb314-60"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-60" tabindex="-1"></a>    <span class="at">ego        =</span> <span class="fu">summary</span>(res_ego)<span class="sc">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
-<span id="cb314-61"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-61" tabindex="-1"></a>    <span class="at">alter      =</span> <span class="fu">summary</span>(res_alter)<span class="sc">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
-<span id="cb314-62"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-62" tabindex="-1"></a>    <span class="at">ego_test   =</span> <span class="fu">coef</span>(res_ego),</span>
-<span id="cb314-63"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-63" tabindex="-1"></a>    <span class="at">alter_glm  =</span> <span class="fu">coef</span>(res_alter)</span>
-<span id="cb314-64"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-64" tabindex="-1"></a>  )</span>
-<span id="cb314-65"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-65" tabindex="-1"></a>  </span>
-<span id="cb314-66"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-66" tabindex="-1"></a></span>
-<span id="cb314-67"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-67" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-1" tabindex="-1"></a><span class="co"># We always set the seed </span></span>
-<span id="cb315-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">88</span>)</span>
-<span id="cb315-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-3" tabindex="-1"></a></span>
-<span id="cb315-4"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-4" tabindex="-1"></a><span class="co"># Making space and running!</span></span>
-<span id="cb315-5"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-5" tabindex="-1"></a>spower <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb315-6"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-6" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</span>
-<span id="cb315-7"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-7" tabindex="-1"></a></span>
-<span id="cb315-8"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-8" tabindex="-1"></a>  <span class="co"># Run the simulation for size s</span></span>
-<span id="cb315-9"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-9" tabindex="-1"></a>  simres <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(</span>
-<span id="cb315-10"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-10" tabindex="-1"></a>    <span class="fu">replicate</span>(n_sims, <span class="fu">sim_data_prepost</span>(s)),</span>
-<span id="cb315-11"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-11" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
-<span id="cb315-12"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-12" tabindex="-1"></a>    )</span>
-<span id="cb315-13"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-13" tabindex="-1"></a></span>
-<span id="cb315-14"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-14" tabindex="-1"></a>  <span class="co"># And store the results</span></span>
-<span id="cb315-15"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-15" tabindex="-1"></a>  spower <span class="ot">&lt;-</span> <span class="fu">rbind</span>(spower, simres)</span>
-<span id="cb315-16"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-16" tabindex="-1"></a></span>
-<span id="cb315-17"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-17" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb316-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-2" tabindex="-1"></a></span>
-<span id="cb316-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-3" tabindex="-1"></a>spowerd <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb316-4"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-4" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;ego&quot;</span>),</span>
-<span id="cb316-5"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-5" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;alter&quot;</span>)</span>
-<span id="cb316-6"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-6" tabindex="-1"></a>)</span>
-<span id="cb316-7"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-7" tabindex="-1"></a></span>
-<span id="cb316-8"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-8" tabindex="-1"></a>spowerd <span class="sc">|&gt;</span></span>
-<span id="cb316-9"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> power, <span class="at">colour =</span> type)) <span class="sc">+</span></span>
-<span id="cb316-10"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb316-11"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
-<span id="cb316-12"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb316-13"><a href="example-2-spillover-effects-pre-post-effect.html#cb316-13" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span> <span class="sc">-</span> beta_pow)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb311-1" tabindex="-1"></a>beta_pars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>)</span>
+<span id="cb311-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb311-2" tabindex="-1"></a>odds_h_1  <span class="ot">&lt;-</span> <span class="fl">2.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-1" tabindex="-1"></a><span class="co"># Simulation function</span></span>
+<span id="cb312-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-2" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb312-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-3" tabindex="-1"></a>sim_data_prepost <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb312-4"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-4" tabindex="-1"></a></span>
+<span id="cb312-5"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-5" tabindex="-1"></a></span>
+<span id="cb312-6"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-6" tabindex="-1"></a>  <span class="co"># Step 1: Sampling population of egos</span></span>
+<span id="cb312-7"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-7" tabindex="-1"></a>  y_ego_star <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</span>
+<span id="cb312-8"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-8" tabindex="-1"></a>  y_ego_0    <span class="ot">&lt;-</span> <span class="fu">runif</span>(n) <span class="sc">&lt;</span> y_ego_star</span>
+<span id="cb312-9"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-9" tabindex="-1"></a></span>
+<span id="cb312-10"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-10" tabindex="-1"></a>  <span class="co"># Step 2: Simulating attrition</span></span>
+<span id="cb312-11"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-11" tabindex="-1"></a>  todrop     <span class="ot">&lt;-</span> <span class="fu">order</span>(<span class="fu">runif</span>(n))[<span class="dv">1</span><span class="sc">:</span>(n <span class="sc">*</span> attrition)]</span>
+<span id="cb312-12"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-12" tabindex="-1"></a>  y_ego_0    <span class="ot">&lt;-</span> y_ego_0[<span class="sc">-</span>todrop]</span>
+<span id="cb312-13"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-13" tabindex="-1"></a>  n          <span class="ot">&lt;-</span> n <span class="sc">-</span> <span class="fu">length</span>(todrop)</span>
+<span id="cb312-14"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-14" tabindex="-1"></a>  y_ego_star <span class="ot">&lt;-</span> y_ego_star[<span class="sc">-</span>todrop]</span>
+<span id="cb312-15"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-15" tabindex="-1"></a></span>
+<span id="cb312-16"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-16" tabindex="-1"></a>  <span class="co"># Step 3: Simulating alter&#39;s effect. We assume the same as in</span></span>
+<span id="cb312-17"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-17" tabindex="-1"></a>  <span class="co"># ego</span></span>
+<span id="cb312-18"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-18" tabindex="-1"></a>  y_alter_star <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n <span class="sc">*</span> n_a, beta_pars[<span class="dv">1</span>], beta_pars[<span class="dv">2</span>])</span>
+<span id="cb312-19"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-19" tabindex="-1"></a>  y_alter_0    <span class="ot">&lt;-</span> <span class="fu">runif</span>(n <span class="sc">*</span> n_a) <span class="sc">&lt;</span> y_alter_star</span>
+<span id="cb312-20"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-20" tabindex="-1"></a></span>
+<span id="cb312-21"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-21" tabindex="-1"></a>  <span class="co"># Simulating post</span></span>
+<span id="cb312-22"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-22" tabindex="-1"></a>  y_ego_1   <span class="ot">&lt;-</span> <span class="fu">runif</span>(n) <span class="sc">&lt;</span> <span class="fu">plogis</span>(<span class="fu">qlogis</span>(y_ego_star) <span class="sc">+</span> <span class="fu">log</span>(odds_h_1))</span>
+<span id="cb312-23"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-23" tabindex="-1"></a>  tr_alter  <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">rep</span>(y_ego_1, n_a))</span>
+<span id="cb312-24"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-24" tabindex="-1"></a>  y_alter_1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n <span class="sc">*</span> n_a) <span class="sc">&lt;</span> <span class="fu">plogis</span>(<span class="fu">qlogis</span>(y_alter_star) <span class="sc">+</span> <span class="fu">log</span>(odds_h_1) <span class="sc">*</span> tr_alter) <span class="co"># So only if ego did something</span></span>
+<span id="cb312-25"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-25" tabindex="-1"></a></span>
+<span id="cb312-26"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-26" tabindex="-1"></a>  <span class="co"># Step 4: Computing test statistic</span></span>
+<span id="cb312-27"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-27" tabindex="-1"></a>  y_ego_0 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(y_ego_0)</span>
+<span id="cb312-28"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-28" tabindex="-1"></a>  y_ego_1 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(y_ego_1)</span>
+<span id="cb312-29"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-29" tabindex="-1"></a>  y_alter_0 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(y_alter_0)</span>
+<span id="cb312-30"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-30" tabindex="-1"></a>  y_alter_1 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(y_alter_1)</span>
+<span id="cb312-31"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-31" tabindex="-1"></a></span>
+<span id="cb312-32"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-32" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb312-33"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-33" tabindex="-1"></a>    <span class="at">y  =</span> <span class="fu">c</span>(y_ego_0, y_ego_1),</span>
+<span id="cb312-34"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-34" tabindex="-1"></a>    <span class="at">tr =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, n), <span class="fu">rep</span>(<span class="dv">1</span>, n)),</span>
+<span id="cb312-35"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-35" tabindex="-1"></a>    <span class="at">g  =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb312-36"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-36" tabindex="-1"></a>  )</span>
+<span id="cb312-37"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-37" tabindex="-1"></a></span>
+<span id="cb312-38"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-38" tabindex="-1"></a>  res_ego   <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb312-39"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-39" tabindex="-1"></a>    <span class="fu">clogit</span>(y <span class="sc">~</span> tr <span class="sc">+</span> <span class="fu">strata</span>(g), <span class="at">data =</span> d, <span class="at">method =</span> <span class="st">&quot;exact&quot;</span>),</span>
+<span id="cb312-40"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-40" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) e</span>
+<span id="cb312-41"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-41" tabindex="-1"></a>    )</span>
+<span id="cb312-42"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-42" tabindex="-1"></a></span>
+<span id="cb312-43"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-43" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb312-44"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-44" tabindex="-1"></a>    <span class="at">y  =</span> <span class="fu">c</span>(y_alter_0, y_alter_1),</span>
+<span id="cb312-45"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-45" tabindex="-1"></a>    <span class="at">tr =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, n <span class="sc">*</span> n_a), tr_alter),</span>
+<span id="cb312-46"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-46" tabindex="-1"></a>    <span class="at">g  =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>(n <span class="sc">*</span> n_a), <span class="dv">1</span><span class="sc">:</span>(n <span class="sc">*</span> n_a))</span>
+<span id="cb312-47"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-47" tabindex="-1"></a>  )</span>
+<span id="cb312-48"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-48" tabindex="-1"></a></span>
+<span id="cb312-49"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-49" tabindex="-1"></a>  res_alter <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb312-50"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-50" tabindex="-1"></a>    <span class="fu">clogit</span>(y <span class="sc">~</span> tr <span class="sc">+</span> <span class="fu">strata</span>(g), <span class="at">data =</span> d, <span class="at">method =</span> <span class="st">&quot;exact&quot;</span>),</span>
+<span id="cb312-51"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-51" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) e</span>
+<span id="cb312-52"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-52" tabindex="-1"></a>    )</span>
+<span id="cb312-53"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-53" tabindex="-1"></a></span>
+<span id="cb312-54"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-54" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(res_ego, <span class="st">&quot;error&quot;</span>) <span class="sc">|</span> <span class="fu">inherits</span>(res_alter, <span class="st">&quot;error&quot;</span>))</span>
+<span id="cb312-55"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-55" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">ego =</span>  <span class="cn">NA</span>, <span class="at">alter =</span> <span class="cn">NA</span>))</span>
+<span id="cb312-56"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-56" tabindex="-1"></a>  </span>
+<span id="cb312-57"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-57" tabindex="-1"></a>  <span class="co"># Step 5: Reject?</span></span>
+<span id="cb312-58"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-58" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb312-59"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-59" tabindex="-1"></a>    <span class="co"># ego        = res_ego$p.value &lt; alpha,</span></span>
+<span id="cb312-60"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-60" tabindex="-1"></a>    <span class="at">ego        =</span> <span class="fu">summary</span>(res_ego)<span class="sc">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
+<span id="cb312-61"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-61" tabindex="-1"></a>    <span class="at">alter      =</span> <span class="fu">summary</span>(res_alter)<span class="sc">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
+<span id="cb312-62"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-62" tabindex="-1"></a>    <span class="at">ego_test   =</span> <span class="fu">coef</span>(res_ego),</span>
+<span id="cb312-63"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-63" tabindex="-1"></a>    <span class="at">alter_glm  =</span> <span class="fu">coef</span>(res_alter)</span>
+<span id="cb312-64"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-64" tabindex="-1"></a>  )</span>
+<span id="cb312-65"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-65" tabindex="-1"></a>  </span>
+<span id="cb312-66"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-66" tabindex="-1"></a></span>
+<span id="cb312-67"><a href="example-2-spillover-effects-pre-post-effect.html#cb312-67" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-1" tabindex="-1"></a><span class="co"># We always set the seed </span></span>
+<span id="cb313-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">88</span>)</span>
+<span id="cb313-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-3" tabindex="-1"></a></span>
+<span id="cb313-4"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-4" tabindex="-1"></a><span class="co"># Making space and running!</span></span>
+<span id="cb313-5"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-5" tabindex="-1"></a>spower <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb313-6"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-6" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</span>
+<span id="cb313-7"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-7" tabindex="-1"></a></span>
+<span id="cb313-8"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-8" tabindex="-1"></a>  <span class="co"># Run the simulation for size s</span></span>
+<span id="cb313-9"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-9" tabindex="-1"></a>  simres <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(</span>
+<span id="cb313-10"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-10" tabindex="-1"></a>    <span class="fu">replicate</span>(n_sims, <span class="fu">sim_data_prepost</span>(s)),</span>
+<span id="cb313-11"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-11" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb313-12"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-12" tabindex="-1"></a>    )</span>
+<span id="cb313-13"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-13" tabindex="-1"></a></span>
+<span id="cb313-14"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-14" tabindex="-1"></a>  <span class="co"># And store the results</span></span>
+<span id="cb313-15"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-15" tabindex="-1"></a>  spower <span class="ot">&lt;-</span> <span class="fu">rbind</span>(spower, simres)</span>
+<span id="cb313-16"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-16" tabindex="-1"></a></span>
+<span id="cb313-17"><a href="example-2-spillover-effects-pre-post-effect.html#cb313-17" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb314-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-2" tabindex="-1"></a></span>
+<span id="cb314-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-3" tabindex="-1"></a>spowerd <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb314-4"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-4" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;ego&quot;</span>),</span>
+<span id="cb314-5"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-5" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;alter&quot;</span>)</span>
+<span id="cb314-6"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-6" tabindex="-1"></a>)</span>
+<span id="cb314-7"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-7" tabindex="-1"></a></span>
+<span id="cb314-8"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-8" tabindex="-1"></a>spowerd <span class="sc">|&gt;</span></span>
+<span id="cb314-9"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> power, <span class="at">colour =</span> type)) <span class="sc">+</span></span>
+<span id="cb314-10"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb314-11"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
+<span id="cb314-12"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb314-13"><a href="example-2-spillover-effects-pre-post-effect.html#cb314-13" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span> <span class="sc">-</span> beta_pow)</span></code></pre></div>
 <p><img src="part-01-11-power_files/figure-html/part-01-power-plot2-1.png" width="672" /></p>
 <p>As shown in Chapter <a href="part2-power.html#part2-power">17</a>, we can use a linear regression model to predict sample size as a function of statistical power:</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-1" tabindex="-1"></a><span class="co"># Fitting the model</span></span>
-<span id="cb317-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-2" tabindex="-1"></a>power_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb317-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-3" tabindex="-1"></a>  size <span class="sc">~</span> power <span class="sc">+</span> <span class="fu">I</span>(power<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb317-4"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-4" tabindex="-1"></a>  <span class="at">data =</span> spowerd, <span class="at">family =</span> <span class="fu">gaussian</span>(), <span class="at">subset =</span> type <span class="sc">==</span> <span class="st">&quot;alter&quot;</span></span>
-<span id="cb317-5"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-5" tabindex="-1"></a>)</span>
-<span id="cb317-6"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-6" tabindex="-1"></a></span>
-<span id="cb317-7"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-7" tabindex="-1"></a><span class="fu">summary</span>(power_model)</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-1" tabindex="-1"></a><span class="co"># Fitting the model</span></span>
+<span id="cb315-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-2" tabindex="-1"></a>power_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb315-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-3" tabindex="-1"></a>  size <span class="sc">~</span> power <span class="sc">+</span> <span class="fu">I</span>(power<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb315-4"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-4" tabindex="-1"></a>  <span class="at">data =</span> spowerd, <span class="at">family =</span> <span class="fu">gaussian</span>(), <span class="at">subset =</span> type <span class="sc">==</span> <span class="st">&quot;alter&quot;</span></span>
+<span id="cb315-5"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-5" tabindex="-1"></a>)</span>
+<span id="cb315-6"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-6" tabindex="-1"></a></span>
+<span id="cb315-7"><a href="example-2-spillover-effects-pre-post-effect.html#cb315-7" tabindex="-1"></a><span class="fu">summary</span>(power_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
 ##     data = spowerd, subset = type == &quot;alter&quot;)
-## 
-## Deviance Residuals: 
-##       6        7        8        9       10  
-## -0.8182   1.7278   0.9180  -7.9188   6.0912  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
@@ -480,9 +480,9 @@ div.csl-indent {
 ## AIC: 37.379
 ## 
 ## Number of Fisher Scoring iterations: 2</code></pre>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb319-1" tabindex="-1"></a><span class="co"># Predict</span></span>
-<span id="cb319-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb319-2" tabindex="-1"></a><span class="fu">predict</span>(power_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">power =</span> .<span class="dv">8</span>), <span class="at">type =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb319-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb319-3" tabindex="-1"></a>  <span class="fu">ceiling</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-1" tabindex="-1"></a><span class="co"># Predict</span></span>
+<span id="cb317-2"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-2" tabindex="-1"></a><span class="fu">predict</span>(power_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">power =</span> .<span class="dv">8</span>), <span class="at">type =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb317-3"><a href="example-2-spillover-effects-pre-post-effect.html#cb317-3" tabindex="-1"></a>  <span class="fu">ceiling</span>()</span></code></pre></div>
 <pre><code>##   1 
 ## 104</code></pre>
 </div>

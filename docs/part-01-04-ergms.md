@@ -69,10 +69,10 @@ Using `ergm` to fit a Bernoulli graph requires using the `edges` term, which cou
 ```r
 ergm_fit <- ergm(samplike ~ edges)
 ## Starting maximum pseudolikelihood estimation (MPLE):
+## Obtaining the responsible dyads.
 ## Evaluating the predictor and response matrix.
 ## Maximizing the pseudolikelihood.
 ## Finished MPLE.
-## Stopping at the initial estimate.
 ## Evaluating log-likelihood at the estimate.
 ```
 
@@ -268,7 +268,7 @@ So what happened here? We got a warning. It turns out that our network has loops
 
 ```r
 E(ig_year1_111)[which_loop(ig_year1_111)]
-## + 1/2638 edge from 3c28299 (vertex names):
+## + 1/2638 edge from 5399651 (vertex names):
 ## [1] 1110111->1110111
 ```
 
@@ -402,8 +402,8 @@ Now, a nice trick to see all regressions in the same table, we can use the `texr
 
 ```r
 library(texreg)
-## Version:  1.38.6
-## Date:     2022-04-06
+## Version:  1.39.3
+## Date:     2023-11-09
 ## Author:   Philip Leifeld (University of Essex)
 ## 
 ## Consider submitting praise using the praise or praise_interactive functions.
@@ -417,18 +417,18 @@ screenreg(list(ans0, ans1, ans2))
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+## ill-defined due to complex constraints on the sample space. Disable this
+## warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+## ill-defined due to complex constraints on the sample space. Disable this
+## warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+## ill-defined due to complex constraints on the sample space. Disable this
+## warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
 ## 
 ## ===============================================================
 ##                     Model 1        Model 2        Model 3      
@@ -462,18 +462,18 @@ htmlreg(list(ans0, ans1, ans2))
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+## ill-defined due to complex constraints on the sample space. Disable this
+## warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+## ill-defined due to complex constraints on the sample space. Disable this
+## warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
 ## Warning: This object was fit with 'ergm' version 4.1.2 or earlier. Summarizing
 ## it with version 4.2 or later may return incorrect results or fail.
 ## Warning in nobs.ergm(object): The number of observed dyads in this network is
-## ill-defined due to complex constraints on the sample space. Disable this warning
-## with 'options(ergm.loglik.warn_dyads=FALSE)'.
+## ill-defined due to complex constraints on the sample space. Disable this
+## warning with 'options(ergm.loglik.warn_dyads=FALSE)'.
 ```
 
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
@@ -1075,7 +1075,7 @@ Where $\s{}_{ij}$ is a function such that $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf
 & = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\transpose{\theta}\s{\mathbf{y}}}
 \end{align*}
 
-Where the last equality follows from $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. This way, we can now write:
+Where the last equality follows from the fact that the sum *is* the sum over all possible combinations of networks, starting from $exp(0) = 1$, up to $exp(all)$. This way, we can now write:
 
 \begin{equation}
 \frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} = 

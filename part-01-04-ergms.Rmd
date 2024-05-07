@@ -602,7 +602,7 @@ Where $\s{}_{ij}$ is a function such that $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf
 & = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\transpose{\theta}\s{\mathbf{y}}}
 \end{align*}
 
-Where the last equality follows from $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. This way, we can now write:
+Where the last equality follows from the fact that the sum *is* the sum over all possible combinations of networks, starting from $exp(0) = 1$, up to $exp(all)$. This way, we can now write:
 
 \begin{equation}
 \frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} = 

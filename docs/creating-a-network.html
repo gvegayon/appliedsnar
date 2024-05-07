@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.2 Creating a network | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.2 Creating a network | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2024-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -369,13 +373,13 @@ div.csl-indent {
 ##  8      22    111        1      NA      NA       0       0    NA      NA  
 ##  9      25    111        0       1       1      NA       1     4.5     3.5
 ## 10      27    111        1       0      NA       0       0     3.5    NA  
-## # … with 2,154 more rows, and 91 more variables: grades3 &lt;dbl&gt;, grades4 &lt;dbl&gt;,
-## #   eversmk1 &lt;int&gt;, eversmk2 &lt;int&gt;, eversmk3 &lt;int&gt;, eversmk4 &lt;int&gt;,
-## #   everdrk1 &lt;int&gt;, everdrk2 &lt;int&gt;, everdrk3 &lt;int&gt;, everdrk4 &lt;int&gt;,
-## #   home1 &lt;int&gt;, home2 &lt;int&gt;, home3 &lt;int&gt;, home4 &lt;int&gt;, sch_friend11 &lt;int&gt;,
-## #   sch_friend12 &lt;int&gt;, sch_friend13 &lt;int&gt;, sch_friend14 &lt;int&gt;,
-## #   sch_friend15 &lt;int&gt;, sch_friend16 &lt;int&gt;, sch_friend17 &lt;int&gt;,
-## #   sch_friend18 &lt;int&gt;, sch_friend19 &lt;int&gt;, sch_friend110 &lt;int&gt;, …</code></pre>
+## # ℹ 2,154 more rows
+## # ℹ 91 more variables: grades3 &lt;dbl&gt;, grades4 &lt;dbl&gt;, eversmk1 &lt;int&gt;,
+## #   eversmk2 &lt;int&gt;, eversmk3 &lt;int&gt;, eversmk4 &lt;int&gt;, everdrk1 &lt;int&gt;,
+## #   everdrk2 &lt;int&gt;, everdrk3 &lt;int&gt;, everdrk4 &lt;int&gt;, home1 &lt;int&gt;, home2 &lt;int&gt;,
+## #   home3 &lt;int&gt;, home4 &lt;int&gt;, sch_friend11 &lt;int&gt;, sch_friend12 &lt;int&gt;,
+## #   sch_friend13 &lt;int&gt;, sch_friend14 &lt;int&gt;, sch_friend15 &lt;int&gt;,
+## #   sch_friend16 &lt;int&gt;, sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;, …</code></pre>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="creating-a-network.html#cb76-1" tabindex="-1"></a><span class="co"># Maybe too much piping... but its cool!</span></span>
 <span id="cb76-2"><a href="creating-a-network.html#cb76-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
 <span id="cb76-3"><a href="creating-a-network.html#cb76-3" tabindex="-1"></a>  <span class="fu">select</span>(id, school, <span class="fu">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="sc">%&gt;%</span></span>
@@ -404,13 +408,13 @@ div.csl-indent {
 ##  8 1110022    111           NA           NA           NA           NA
 ##  9 1110025    111          135          185          553           84
 ## 10 1110027    111          346          168          559            5
-## # … with 2,154 more rows, and 72 more variables: sch_friend15 &lt;int&gt;,
-## #   sch_friend16 &lt;int&gt;, sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;,
-## #   sch_friend19 &lt;int&gt;, sch_friend110 &lt;int&gt;, sch_friend111 &lt;int&gt;,
-## #   sch_friend112 &lt;int&gt;, sch_friend113 &lt;int&gt;, sch_friend114 &lt;int&gt;,
-## #   sch_friend115 &lt;int&gt;, sch_friend116 &lt;int&gt;, sch_friend117 &lt;int&gt;,
-## #   sch_friend118 &lt;int&gt;, sch_friend119 &lt;int&gt;, sch_friend21 &lt;int&gt;,
-## #   sch_friend22 &lt;int&gt;, sch_friend23 &lt;int&gt;, sch_friend24 &lt;int&gt;, …</code></pre></li>
+## # ℹ 2,154 more rows
+## # ℹ 72 more variables: sch_friend15 &lt;int&gt;, sch_friend16 &lt;int&gt;,
+## #   sch_friend17 &lt;int&gt;, sch_friend18 &lt;int&gt;, sch_friend19 &lt;int&gt;,
+## #   sch_friend110 &lt;int&gt;, sch_friend111 &lt;int&gt;, sch_friend112 &lt;int&gt;,
+## #   sch_friend113 &lt;int&gt;, sch_friend114 &lt;int&gt;, sch_friend115 &lt;int&gt;,
+## #   sch_friend116 &lt;int&gt;, sch_friend117 &lt;int&gt;, sch_friend118 &lt;int&gt;,
+## #   sch_friend119 &lt;int&gt;, sch_friend21 &lt;int&gt;, sch_friend22 &lt;int&gt;, …</code></pre></li>
 <li><p>Then, we reshape it to <em>long</em> format: By transposing all the <code>sch_friend*</code> to long format. We do this using the function <code>gather</code> (from the <code>tidyr</code> package); an alternative to the <code>reshape</code> function, which I find easier to use. Let’s see how it works:</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="creating-a-network.html#cb79-1" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb79-2"><a href="creating-a-network.html#cb79-2" tabindex="-1"></a>  <span class="fu">select</span>(id, school, <span class="fu">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="sc">%&gt;%</span></span>
@@ -428,7 +432,7 @@ div.csl-indent {
 ##  8 1110022    111 sch_friend11      NA
 ##  9 1110025    111 sch_friend11     135
 ## 10 1110027    111 sch_friend11     346
-## # … with 164,454 more rows</code></pre>
+## # ℹ 164,454 more rows</code></pre>
 <p>In this case, the <code>key</code> parameter sets the name of the variable that will contain the name of the variable that was reshaped, while <code>value</code> is the name of the variable that will hold the content of the data (that’s why I named those like that). The <code>-id, -school</code> bit tells the function to “drop” those variables before reshaping. In other words, “reshape everything but <code>id</code> and <code>school.</code>”</p>
 <p>Also, notice that we passed from 2164 rows to 19 (nominations) * 2164 (subjects) * 4 (waves) = 164464 rows, as expected.</p></li>
 <li><p>As the nomination data can be empty for some cells, we need to take care of those cases, the <code>NA</code>s, so we filter the data:</p>
@@ -449,7 +453,7 @@ div.csl-indent {
 ##  8 1110027    111 sch_friend11     346
 ##  9 1110029    111 sch_friend11     369
 ## 10 1110030    111 sch_friend11     462
-## # … with 39,551 more rows</code></pre></li>
+## # ℹ 39,551 more rows</code></pre></li>
 <li><p>And finally, we create three new variables from this dataset: <code>friendid,</code>, <code>year</code>, and <code>nom_num</code> (nomination number). All using regular expressions:</p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="creating-a-network.html#cb83-1" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb83-2"><a href="creating-a-network.html#cb83-2" tabindex="-1"></a>  <span class="fu">select</span>(id, school, <span class="fu">starts_with</span>(<span class="st">&quot;sch_friend&quot;</span>)) <span class="sc">%&gt;%</span></span>
@@ -473,7 +477,7 @@ div.csl-indent {
 ##  8 1110027    111 sch_friend11     346  1110346     1     1
 ##  9 1110029    111 sch_friend11     369  1110369     1     1
 ## 10 1110030    111 sch_friend11     462  1110462     1     1
-## # … with 39,551 more rows</code></pre>
+## # ℹ 39,551 more rows</code></pre>
 <p>The regular expression <code>(?&lt;=[a-z])</code> matches a string preceded by any letter from <em>a</em> to <em>z</em>. In contrast, the expression <code>[0-9]</code> matches a single number. Hence, from the string <code>"sch_friend12"</code>, the regular expression will only match the <code>1</code>, as it is the only number followed by a letter. The expression <code>(?&lt;=[a-z][0-9])</code> matches a string preceded by a lower case letter and a one-digit number. Finally, the expression <code>[0-9]+</code> matches a string of numbers–so it could be more than one. Hence, from the string <code>"sch_friend12"</code>, we will get <code>2</code>:</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="creating-a-network.html#cb85-1" tabindex="-1"></a><span class="fu">str_extract</span>(<span class="st">&quot;sch_friend12&quot;</span>, <span class="st">&quot;(?&lt;=[a-z])[0-9]&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;1&quot;</code></pre>

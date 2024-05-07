@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.4 Visualizing the network | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.4 Visualizing the network | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2024-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -361,20 +365,20 @@ later on. Let’s start by size.</p>
 <h3><span class="header-section-number">9.4.1</span> Vertex size<a href="visualizing-the-network.html#vertex-size" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Finding the right scale can be somewhat difficult. We
 will draw the graph four times to see what size would be the best:</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="visualizing-the-network.html#cb211-1" tabindex="-1"></a><span class="co"># Sized by indegree</span></span>
-<span id="cb211-2"><a href="visualizing-the-network.html#cb211-2" tabindex="-1"></a>net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span> <span class="ot">&lt;-</span> sna<span class="sc">::</span><span class="fu">degree</span>(net_sim, <span class="at">cmode =</span> <span class="st">&quot;indegree&quot;</span>)</span>
-<span id="cb211-3"><a href="visualizing-the-network.html#cb211-3" tabindex="-1"></a></span>
-<span id="cb211-4"><a href="visualizing-the-network.html#cb211-4" tabindex="-1"></a><span class="co"># Changing device config</span></span>
-<span id="cb211-5"><a href="visualizing-the-network.html#cb211-5" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mai =</span> <span class="fu">c</span>(.<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>))</span>
-<span id="cb211-6"><a href="visualizing-the-network.html#cb211-6" tabindex="-1"></a></span>
-<span id="cb211-7"><a href="visualizing-the-network.html#cb211-7" tabindex="-1"></a><span class="co"># Plotting</span></span>
-<span id="cb211-8"><a href="visualizing-the-network.html#cb211-8" tabindex="-1"></a>glayout <span class="ot">&lt;-</span> <span class="fu">gplot</span>(net_sim, <span class="at">vertex.cex =</span> (net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span>) <span class="sc">*</span> <span class="dv">2</span>)</span>
-<span id="cb211-9"><a href="visualizing-the-network.html#cb211-9" tabindex="-1"></a><span class="fu">gplot</span>(net_sim, <span class="at">vertex.cex =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span>, <span class="at">coord =</span> glayout)</span>
-<span id="cb211-10"><a href="visualizing-the-network.html#cb211-10" tabindex="-1"></a><span class="fu">gplot</span>(net_sim, <span class="at">vertex.cex =</span> (net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span>)<span class="sc">/</span><span class="dv">2</span>, <span class="at">coord =</span> glayout)</span>
-<span id="cb211-11"><a href="visualizing-the-network.html#cb211-11" tabindex="-1"></a><span class="fu">gplot</span>(net_sim, <span class="at">vertex.cex =</span> (net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span>)<span class="sc">/</span><span class="dv">10</span>, <span class="at">coord =</span> glayout)</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="visualizing-the-network.html#cb209-1" tabindex="-1"></a><span class="co"># Sized by indegree</span></span>
+<span id="cb209-2"><a href="visualizing-the-network.html#cb209-2" tabindex="-1"></a>net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span> <span class="ot">&lt;-</span> sna<span class="sc">::</span><span class="fu">degree</span>(net_sim, <span class="at">cmode =</span> <span class="st">&quot;indegree&quot;</span>)</span>
+<span id="cb209-3"><a href="visualizing-the-network.html#cb209-3" tabindex="-1"></a></span>
+<span id="cb209-4"><a href="visualizing-the-network.html#cb209-4" tabindex="-1"></a><span class="co"># Changing device config</span></span>
+<span id="cb209-5"><a href="visualizing-the-network.html#cb209-5" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mai =</span> <span class="fu">c</span>(.<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>))</span>
+<span id="cb209-6"><a href="visualizing-the-network.html#cb209-6" tabindex="-1"></a></span>
+<span id="cb209-7"><a href="visualizing-the-network.html#cb209-7" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb209-8"><a href="visualizing-the-network.html#cb209-8" tabindex="-1"></a>glayout <span class="ot">&lt;-</span> <span class="fu">gplot</span>(net_sim, <span class="at">vertex.cex =</span> (net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span>) <span class="sc">*</span> <span class="dv">2</span>)</span>
+<span id="cb209-9"><a href="visualizing-the-network.html#cb209-9" tabindex="-1"></a><span class="fu">gplot</span>(net_sim, <span class="at">vertex.cex =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span>, <span class="at">coord =</span> glayout)</span>
+<span id="cb209-10"><a href="visualizing-the-network.html#cb209-10" tabindex="-1"></a><span class="fu">gplot</span>(net_sim, <span class="at">vertex.cex =</span> (net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span>)<span class="sc">/</span><span class="dv">2</span>, <span class="at">coord =</span> glayout)</span>
+<span id="cb209-11"><a href="visualizing-the-network.html#cb209-11" tabindex="-1"></a><span class="fu">gplot</span>(net_sim, <span class="at">vertex.cex =</span> (net_sim <span class="sc">%v%</span> <span class="st">&quot;indeg&quot;</span>)<span class="sc">/</span><span class="dv">10</span>, <span class="at">coord =</span> glayout)</span></code></pre></div>
 <p><img src="part-01-06-network-simulation-and-viz_files/figure-html/06-size-1.png" width="672" /></p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="visualizing-the-network.html#cb212-1" tabindex="-1"></a><span class="co"># Restoring device config</span></span>
-<span id="cb212-2"><a href="visualizing-the-network.html#cb212-2" tabindex="-1"></a><span class="fu">par</span>(op)</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="visualizing-the-network.html#cb210-1" tabindex="-1"></a><span class="co"># Restoring device config</span></span>
+<span id="cb210-2"><a href="visualizing-the-network.html#cb210-2" tabindex="-1"></a><span class="fu">par</span>(op)</span></code></pre></div>
 <p>Line-by-line we did the following:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>net_sim %v% "indeg" &lt;- degree(net_sim, cmode = "indegree")</code> Created a new
@@ -399,30 +403,30 @@ the vertices are half the size of the original figure.</p></li>
 <p>The other two calls are similar to four. If we used igraph, setting the
 size can be more accessible thanks to the netdiffuseR R package. Let’s start by converting
 our network to an igraph object with the R package <code>intergraph</code>.</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="visualizing-the-network.html#cb213-1" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span>
-<span id="cb213-2"><a href="visualizing-the-network.html#cb213-2" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb213-3"><a href="visualizing-the-network.html#cb213-3" tabindex="-1"></a></span>
-<span id="cb213-4"><a href="visualizing-the-network.html#cb213-4" tabindex="-1"></a><span class="co"># Converting the network object to an igraph object</span></span>
-<span id="cb213-5"><a href="visualizing-the-network.html#cb213-5" tabindex="-1"></a>net_sim_i <span class="ot">&lt;-</span> <span class="fu">asIgraph</span>(net_sim)</span>
-<span id="cb213-6"><a href="visualizing-the-network.html#cb213-6" tabindex="-1"></a></span>
-<span id="cb213-7"><a href="visualizing-the-network.html#cb213-7" tabindex="-1"></a><span class="co"># Plotting with igraph</span></span>
-<span id="cb213-8"><a href="visualizing-the-network.html#cb213-8" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb213-9"><a href="visualizing-the-network.html#cb213-9" tabindex="-1"></a>  net_sim_i,</span>
-<span id="cb213-10"><a href="visualizing-the-network.html#cb213-10" tabindex="-1"></a>  <span class="at">vertex.size =</span> netdiffuseR<span class="sc">::</span><span class="fu">rescale_vertex_igraph</span>(</span>
-<span id="cb213-11"><a href="visualizing-the-network.html#cb213-11" tabindex="-1"></a>    <span class="at">vertex.size =</span> <span class="fu">V</span>(net_sim_i)<span class="sc">$</span>indeg,</span>
-<span id="cb213-12"><a href="visualizing-the-network.html#cb213-12" tabindex="-1"></a>    <span class="at">minmax.relative.size =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">1</span>)</span>
-<span id="cb213-13"><a href="visualizing-the-network.html#cb213-13" tabindex="-1"></a>  ), </span>
-<span id="cb213-14"><a href="visualizing-the-network.html#cb213-14" tabindex="-1"></a>  <span class="at">layout       =</span> glayout,</span>
-<span id="cb213-15"><a href="visualizing-the-network.html#cb213-15" tabindex="-1"></a>  <span class="at">vertex.label =</span> <span class="cn">NA</span></span>
-<span id="cb213-16"><a href="visualizing-the-network.html#cb213-16" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="visualizing-the-network.html#cb211-1" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span>
+<span id="cb211-2"><a href="visualizing-the-network.html#cb211-2" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb211-3"><a href="visualizing-the-network.html#cb211-3" tabindex="-1"></a></span>
+<span id="cb211-4"><a href="visualizing-the-network.html#cb211-4" tabindex="-1"></a><span class="co"># Converting the network object to an igraph object</span></span>
+<span id="cb211-5"><a href="visualizing-the-network.html#cb211-5" tabindex="-1"></a>net_sim_i <span class="ot">&lt;-</span> <span class="fu">asIgraph</span>(net_sim)</span>
+<span id="cb211-6"><a href="visualizing-the-network.html#cb211-6" tabindex="-1"></a></span>
+<span id="cb211-7"><a href="visualizing-the-network.html#cb211-7" tabindex="-1"></a><span class="co"># Plotting with igraph</span></span>
+<span id="cb211-8"><a href="visualizing-the-network.html#cb211-8" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb211-9"><a href="visualizing-the-network.html#cb211-9" tabindex="-1"></a>  net_sim_i,</span>
+<span id="cb211-10"><a href="visualizing-the-network.html#cb211-10" tabindex="-1"></a>  <span class="at">vertex.size =</span> netdiffuseR<span class="sc">::</span><span class="fu">rescale_vertex_igraph</span>(</span>
+<span id="cb211-11"><a href="visualizing-the-network.html#cb211-11" tabindex="-1"></a>    <span class="at">vertex.size =</span> <span class="fu">V</span>(net_sim_i)<span class="sc">$</span>indeg,</span>
+<span id="cb211-12"><a href="visualizing-the-network.html#cb211-12" tabindex="-1"></a>    <span class="at">minmax.relative.size =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">1</span>)</span>
+<span id="cb211-13"><a href="visualizing-the-network.html#cb211-13" tabindex="-1"></a>  ), </span>
+<span id="cb211-14"><a href="visualizing-the-network.html#cb211-14" tabindex="-1"></a>  <span class="at">layout       =</span> glayout,</span>
+<span id="cb211-15"><a href="visualizing-the-network.html#cb211-15" tabindex="-1"></a>  <span class="at">vertex.label =</span> <span class="cn">NA</span></span>
+<span id="cb211-16"><a href="visualizing-the-network.html#cb211-16" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="part-01-06-network-simulation-and-viz_files/figure-html/06-size-netdiffuseR-1.png" width="672" /></p>
 <p>We could also have tried netplot, which should make things easier and make a better use of the space:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="visualizing-the-network.html#cb214-1" tabindex="-1"></a><span class="fu">library</span>(netplot)</span>
-<span id="cb214-2"><a href="visualizing-the-network.html#cb214-2" tabindex="-1"></a><span class="fu">nplot</span>(</span>
-<span id="cb214-3"><a href="visualizing-the-network.html#cb214-3" tabindex="-1"></a>  net_sim, <span class="at">layout =</span> glayout,</span>
-<span id="cb214-4"><a href="visualizing-the-network.html#cb214-4" tabindex="-1"></a>  <span class="at">vertex.color =</span> <span class="st">&quot;tomato&quot;</span>,</span>
-<span id="cb214-5"><a href="visualizing-the-network.html#cb214-5" tabindex="-1"></a>  <span class="at">vertex.frame.color =</span> <span class="st">&quot;darkred&quot;</span></span>
-<span id="cb214-6"><a href="visualizing-the-network.html#cb214-6" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="visualizing-the-network.html#cb212-1" tabindex="-1"></a><span class="fu">library</span>(netplot)</span>
+<span id="cb212-2"><a href="visualizing-the-network.html#cb212-2" tabindex="-1"></a><span class="fu">nplot</span>(</span>
+<span id="cb212-3"><a href="visualizing-the-network.html#cb212-3" tabindex="-1"></a>  net_sim, <span class="at">layout =</span> glayout,</span>
+<span id="cb212-4"><a href="visualizing-the-network.html#cb212-4" tabindex="-1"></a>  <span class="at">vertex.color =</span> <span class="st">&quot;tomato&quot;</span>,</span>
+<span id="cb212-5"><a href="visualizing-the-network.html#cb212-5" tabindex="-1"></a>  <span class="at">vertex.frame.color =</span> <span class="st">&quot;darkred&quot;</span></span>
+<span id="cb212-6"><a href="visualizing-the-network.html#cb212-6" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="part-01-06-network-simulation-and-viz_files/figure-html/06-netplot1-1.png" width="672" /></p>
 <p>With a good idea for size, we can now start looking into vertex color.</p>
 </div>
@@ -434,26 +438,26 @@ Instead of using <code>nplot</code> we will go ahead with <code>nplot_base</code
 the book, the <code>netplot</code> package does not have an easy way to add legends with the
 core function, <code>nplot</code>; therefore, we use <code>nplot_base</code> which is compatible with
 the R function <code>legend</code>, as we will now see:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="visualizing-the-network.html#cb215-1" tabindex="-1"></a><span class="co"># Specifying colors for each vertex</span></span>
-<span id="cb215-2"><a href="visualizing-the-network.html#cb215-2" tabindex="-1"></a>vcolors_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;10&quot;</span> <span class="ot">=</span> <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;14&quot;</span> <span class="ot">=</span> <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;17&quot;</span> <span class="ot">=</span> <span class="st">&quot;steelblue&quot;</span>)</span>
-<span id="cb215-3"><a href="visualizing-the-network.html#cb215-3" tabindex="-1"></a>vcolors <span class="ot">&lt;-</span> vcolors_palette[<span class="fu">as.character</span>(net_sim <span class="sc">%v%</span> <span class="st">&quot;age&quot;</span>)]</span>
-<span id="cb215-4"><a href="visualizing-the-network.html#cb215-4" tabindex="-1"></a>net_sim <span class="sc">%v%</span> <span class="st">&quot;color&quot;</span> <span class="ot">&lt;-</span> vcolors</span>
-<span id="cb215-5"><a href="visualizing-the-network.html#cb215-5" tabindex="-1"></a></span>
-<span id="cb215-6"><a href="visualizing-the-network.html#cb215-6" tabindex="-1"></a><span class="co"># Plotting</span></span>
-<span id="cb215-7"><a href="visualizing-the-network.html#cb215-7" tabindex="-1"></a><span class="fu">nplot_base</span>(</span>
-<span id="cb215-8"><a href="visualizing-the-network.html#cb215-8" tabindex="-1"></a>  net_ig,</span>
-<span id="cb215-9"><a href="visualizing-the-network.html#cb215-9" tabindex="-1"></a>  <span class="at">layout =</span> glayout,</span>
-<span id="cb215-10"><a href="visualizing-the-network.html#cb215-10" tabindex="-1"></a>  <span class="at">vertex.color =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;color&quot;</span>,</span>
-<span id="cb215-11"><a href="visualizing-the-network.html#cb215-11" tabindex="-1"></a>  )</span>
-<span id="cb215-12"><a href="visualizing-the-network.html#cb215-12" tabindex="-1"></a></span>
-<span id="cb215-13"><a href="visualizing-the-network.html#cb215-13" tabindex="-1"></a><span class="co"># Color legend</span></span>
-<span id="cb215-14"><a href="visualizing-the-network.html#cb215-14" tabindex="-1"></a><span class="fu">legend</span>(</span>
-<span id="cb215-15"><a href="visualizing-the-network.html#cb215-15" tabindex="-1"></a>  <span class="st">&quot;bottomright&quot;</span>,</span>
-<span id="cb215-16"><a href="visualizing-the-network.html#cb215-16" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vcolors_palette),</span>
-<span id="cb215-17"><a href="visualizing-the-network.html#cb215-17" tabindex="-1"></a>  <span class="at">fill   =</span> vcolors_palette, </span>
-<span id="cb215-18"><a href="visualizing-the-network.html#cb215-18" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb215-19"><a href="visualizing-the-network.html#cb215-19" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Age&quot;</span></span>
-<span id="cb215-20"><a href="visualizing-the-network.html#cb215-20" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="visualizing-the-network.html#cb213-1" tabindex="-1"></a><span class="co"># Specifying colors for each vertex</span></span>
+<span id="cb213-2"><a href="visualizing-the-network.html#cb213-2" tabindex="-1"></a>vcolors_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;10&quot;</span> <span class="ot">=</span> <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;14&quot;</span> <span class="ot">=</span> <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;17&quot;</span> <span class="ot">=</span> <span class="st">&quot;steelblue&quot;</span>)</span>
+<span id="cb213-3"><a href="visualizing-the-network.html#cb213-3" tabindex="-1"></a>vcolors <span class="ot">&lt;-</span> vcolors_palette[<span class="fu">as.character</span>(net_sim <span class="sc">%v%</span> <span class="st">&quot;age&quot;</span>)]</span>
+<span id="cb213-4"><a href="visualizing-the-network.html#cb213-4" tabindex="-1"></a>net_sim <span class="sc">%v%</span> <span class="st">&quot;color&quot;</span> <span class="ot">&lt;-</span> vcolors</span>
+<span id="cb213-5"><a href="visualizing-the-network.html#cb213-5" tabindex="-1"></a></span>
+<span id="cb213-6"><a href="visualizing-the-network.html#cb213-6" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb213-7"><a href="visualizing-the-network.html#cb213-7" tabindex="-1"></a><span class="fu">nplot_base</span>(</span>
+<span id="cb213-8"><a href="visualizing-the-network.html#cb213-8" tabindex="-1"></a>  net_ig,</span>
+<span id="cb213-9"><a href="visualizing-the-network.html#cb213-9" tabindex="-1"></a>  <span class="at">layout =</span> glayout,</span>
+<span id="cb213-10"><a href="visualizing-the-network.html#cb213-10" tabindex="-1"></a>  <span class="at">vertex.color =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;color&quot;</span>,</span>
+<span id="cb213-11"><a href="visualizing-the-network.html#cb213-11" tabindex="-1"></a>  )</span>
+<span id="cb213-12"><a href="visualizing-the-network.html#cb213-12" tabindex="-1"></a></span>
+<span id="cb213-13"><a href="visualizing-the-network.html#cb213-13" tabindex="-1"></a><span class="co"># Color legend</span></span>
+<span id="cb213-14"><a href="visualizing-the-network.html#cb213-14" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb213-15"><a href="visualizing-the-network.html#cb213-15" tabindex="-1"></a>  <span class="st">&quot;bottomright&quot;</span>,</span>
+<span id="cb213-16"><a href="visualizing-the-network.html#cb213-16" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vcolors_palette),</span>
+<span id="cb213-17"><a href="visualizing-the-network.html#cb213-17" tabindex="-1"></a>  <span class="at">fill   =</span> vcolors_palette, </span>
+<span id="cb213-18"><a href="visualizing-the-network.html#cb213-18" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb213-19"><a href="visualizing-the-network.html#cb213-19" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Age&quot;</span></span>
+<span id="cb213-20"><a href="visualizing-the-network.html#cb213-20" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="part-01-06-network-simulation-and-viz_files/figure-html/06-network-color-1.png" width="672" /></p>
 <p>Line by line, this is what we just did:</p>
 <ol style="list-style-type: decimal">
@@ -490,36 +494,36 @@ the ages of individuals.</p></li>
 <h3><span class="header-section-number">9.4.3</span> Vertex shape<a href="visualizing-the-network.html#vertex-shape" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For the color, we will use vertex age. Although age is, by definition, continuous,
 we only have three values for age. Because of this, we can treat age as categorical.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="visualizing-the-network.html#cb216-1" tabindex="-1"></a><span class="co"># Specifying the shapes for each vertex</span></span>
-<span id="cb216-2"><a href="visualizing-the-network.html#cb216-2" tabindex="-1"></a>vshape_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;white&quot;</span> <span class="ot">=</span> <span class="dv">15</span>, <span class="st">&quot;non-white&quot;</span> <span class="ot">=</span> <span class="dv">3</span>)</span>
-<span id="cb216-3"><a href="visualizing-the-network.html#cb216-3" tabindex="-1"></a>vshape      <span class="ot">&lt;-</span> vshape_list[<span class="fu">as.character</span>(net_sim <span class="sc">%v%</span> <span class="st">&quot;race&quot;</span>)]</span>
-<span id="cb216-4"><a href="visualizing-the-network.html#cb216-4" tabindex="-1"></a>net_sim <span class="sc">%v%</span> <span class="st">&quot;shape&quot;</span> <span class="ot">&lt;-</span> vshape</span>
-<span id="cb216-5"><a href="visualizing-the-network.html#cb216-5" tabindex="-1"></a></span>
-<span id="cb216-6"><a href="visualizing-the-network.html#cb216-6" tabindex="-1"></a><span class="co"># Plotting</span></span>
-<span id="cb216-7"><a href="visualizing-the-network.html#cb216-7" tabindex="-1"></a><span class="fu">nplot_base</span>(</span>
-<span id="cb216-8"><a href="visualizing-the-network.html#cb216-8" tabindex="-1"></a>  net_ig,</span>
-<span id="cb216-9"><a href="visualizing-the-network.html#cb216-9" tabindex="-1"></a>  <span class="at">layout =</span> glayout,</span>
-<span id="cb216-10"><a href="visualizing-the-network.html#cb216-10" tabindex="-1"></a>  <span class="at">vertex.color =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;color&quot;</span>,</span>
-<span id="cb216-11"><a href="visualizing-the-network.html#cb216-11" tabindex="-1"></a>  <span class="at">vertex.nsides =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;shape&quot;</span></span>
-<span id="cb216-12"><a href="visualizing-the-network.html#cb216-12" tabindex="-1"></a>  )</span>
-<span id="cb216-13"><a href="visualizing-the-network.html#cb216-13" tabindex="-1"></a></span>
-<span id="cb216-14"><a href="visualizing-the-network.html#cb216-14" tabindex="-1"></a><span class="co"># Color legend</span></span>
-<span id="cb216-15"><a href="visualizing-the-network.html#cb216-15" tabindex="-1"></a><span class="fu">legend</span>(</span>
-<span id="cb216-16"><a href="visualizing-the-network.html#cb216-16" tabindex="-1"></a>  <span class="st">&quot;bottomright&quot;</span>,</span>
-<span id="cb216-17"><a href="visualizing-the-network.html#cb216-17" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vcolors_palette),</span>
-<span id="cb216-18"><a href="visualizing-the-network.html#cb216-18" tabindex="-1"></a>  <span class="at">fill   =</span> vcolors_palette, </span>
-<span id="cb216-19"><a href="visualizing-the-network.html#cb216-19" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb216-20"><a href="visualizing-the-network.html#cb216-20" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Age&quot;</span></span>
-<span id="cb216-21"><a href="visualizing-the-network.html#cb216-21" tabindex="-1"></a>  )</span>
-<span id="cb216-22"><a href="visualizing-the-network.html#cb216-22" tabindex="-1"></a></span>
-<span id="cb216-23"><a href="visualizing-the-network.html#cb216-23" tabindex="-1"></a><span class="co"># Shape legend</span></span>
-<span id="cb216-24"><a href="visualizing-the-network.html#cb216-24" tabindex="-1"></a><span class="fu">legend</span>(</span>
-<span id="cb216-25"><a href="visualizing-the-network.html#cb216-25" tabindex="-1"></a>  <span class="st">&quot;bottomleft&quot;</span>,</span>
-<span id="cb216-26"><a href="visualizing-the-network.html#cb216-26" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vshape_list),</span>
-<span id="cb216-27"><a href="visualizing-the-network.html#cb216-27" tabindex="-1"></a>  <span class="at">pch    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </span>
-<span id="cb216-28"><a href="visualizing-the-network.html#cb216-28" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb216-29"><a href="visualizing-the-network.html#cb216-29" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Race&quot;</span></span>
-<span id="cb216-30"><a href="visualizing-the-network.html#cb216-30" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="visualizing-the-network.html#cb214-1" tabindex="-1"></a><span class="co"># Specifying the shapes for each vertex</span></span>
+<span id="cb214-2"><a href="visualizing-the-network.html#cb214-2" tabindex="-1"></a>vshape_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;white&quot;</span> <span class="ot">=</span> <span class="dv">15</span>, <span class="st">&quot;non-white&quot;</span> <span class="ot">=</span> <span class="dv">3</span>)</span>
+<span id="cb214-3"><a href="visualizing-the-network.html#cb214-3" tabindex="-1"></a>vshape      <span class="ot">&lt;-</span> vshape_list[<span class="fu">as.character</span>(net_sim <span class="sc">%v%</span> <span class="st">&quot;race&quot;</span>)]</span>
+<span id="cb214-4"><a href="visualizing-the-network.html#cb214-4" tabindex="-1"></a>net_sim <span class="sc">%v%</span> <span class="st">&quot;shape&quot;</span> <span class="ot">&lt;-</span> vshape</span>
+<span id="cb214-5"><a href="visualizing-the-network.html#cb214-5" tabindex="-1"></a></span>
+<span id="cb214-6"><a href="visualizing-the-network.html#cb214-6" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb214-7"><a href="visualizing-the-network.html#cb214-7" tabindex="-1"></a><span class="fu">nplot_base</span>(</span>
+<span id="cb214-8"><a href="visualizing-the-network.html#cb214-8" tabindex="-1"></a>  net_ig,</span>
+<span id="cb214-9"><a href="visualizing-the-network.html#cb214-9" tabindex="-1"></a>  <span class="at">layout =</span> glayout,</span>
+<span id="cb214-10"><a href="visualizing-the-network.html#cb214-10" tabindex="-1"></a>  <span class="at">vertex.color =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;color&quot;</span>,</span>
+<span id="cb214-11"><a href="visualizing-the-network.html#cb214-11" tabindex="-1"></a>  <span class="at">vertex.nsides =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;shape&quot;</span></span>
+<span id="cb214-12"><a href="visualizing-the-network.html#cb214-12" tabindex="-1"></a>  )</span>
+<span id="cb214-13"><a href="visualizing-the-network.html#cb214-13" tabindex="-1"></a></span>
+<span id="cb214-14"><a href="visualizing-the-network.html#cb214-14" tabindex="-1"></a><span class="co"># Color legend</span></span>
+<span id="cb214-15"><a href="visualizing-the-network.html#cb214-15" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb214-16"><a href="visualizing-the-network.html#cb214-16" tabindex="-1"></a>  <span class="st">&quot;bottomright&quot;</span>,</span>
+<span id="cb214-17"><a href="visualizing-the-network.html#cb214-17" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vcolors_palette),</span>
+<span id="cb214-18"><a href="visualizing-the-network.html#cb214-18" tabindex="-1"></a>  <span class="at">fill   =</span> vcolors_palette, </span>
+<span id="cb214-19"><a href="visualizing-the-network.html#cb214-19" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb214-20"><a href="visualizing-the-network.html#cb214-20" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Age&quot;</span></span>
+<span id="cb214-21"><a href="visualizing-the-network.html#cb214-21" tabindex="-1"></a>  )</span>
+<span id="cb214-22"><a href="visualizing-the-network.html#cb214-22" tabindex="-1"></a></span>
+<span id="cb214-23"><a href="visualizing-the-network.html#cb214-23" tabindex="-1"></a><span class="co"># Shape legend</span></span>
+<span id="cb214-24"><a href="visualizing-the-network.html#cb214-24" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb214-25"><a href="visualizing-the-network.html#cb214-25" tabindex="-1"></a>  <span class="st">&quot;bottomleft&quot;</span>,</span>
+<span id="cb214-26"><a href="visualizing-the-network.html#cb214-26" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vshape_list),</span>
+<span id="cb214-27"><a href="visualizing-the-network.html#cb214-27" tabindex="-1"></a>  <span class="at">pch    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </span>
+<span id="cb214-28"><a href="visualizing-the-network.html#cb214-28" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb214-29"><a href="visualizing-the-network.html#cb214-29" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Race&quot;</span></span>
+<span id="cb214-30"><a href="visualizing-the-network.html#cb214-30" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="part-01-06-network-simulation-and-viz_files/figure-html/06-network-shape-1.png" width="672" /></p>
 <p>Let’s now compare the figure to our original ERGM:</p>
 <ol style="list-style-type: decimal">
@@ -550,43 +554,43 @@ quick-n-dirty way to achieve this is to re-run the simulation with the <code>nod
 term instead of the <code>absdiff</code> term. This way, we (a) explicitly operationalize
 the term as homophily (before it was heterophily,) and (b) have both homophily
 effects have the same influence in the model:</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="visualizing-the-network.html#cb217-1" tabindex="-1"></a>net_sim2 <span class="ot">&lt;-</span> <span class="fu">simulate</span>(</span>
-<span id="cb217-2"><a href="visualizing-the-network.html#cb217-2" tabindex="-1"></a>    net <span class="sc">~</span> edges <span class="sc">+</span></span>
-<span id="cb217-3"><a href="visualizing-the-network.html#cb217-3" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;race&quot;</span>) <span class="sc">+</span></span>
-<span id="cb217-4"><a href="visualizing-the-network.html#cb217-4" tabindex="-1"></a>    ttriad <span class="sc">+</span></span>
-<span id="cb217-5"><a href="visualizing-the-network.html#cb217-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;age&quot;</span>),</span>
-<span id="cb217-6"><a href="visualizing-the-network.html#cb217-6" tabindex="-1"></a>    <span class="at">coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, .<span class="dv">5</span>, .<span class="dv">25</span>, .<span class="dv">5</span>) <span class="co"># This line changed</span></span>
-<span id="cb217-7"><a href="visualizing-the-network.html#cb217-7" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="visualizing-the-network.html#cb215-1" tabindex="-1"></a>net_sim2 <span class="ot">&lt;-</span> <span class="fu">simulate</span>(</span>
+<span id="cb215-2"><a href="visualizing-the-network.html#cb215-2" tabindex="-1"></a>    net <span class="sc">~</span> edges <span class="sc">+</span></span>
+<span id="cb215-3"><a href="visualizing-the-network.html#cb215-3" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;race&quot;</span>) <span class="sc">+</span></span>
+<span id="cb215-4"><a href="visualizing-the-network.html#cb215-4" tabindex="-1"></a>    ttriad <span class="sc">+</span></span>
+<span id="cb215-5"><a href="visualizing-the-network.html#cb215-5" tabindex="-1"></a>    <span class="fu">nodematch</span>(<span class="st">&quot;age&quot;</span>),</span>
+<span id="cb215-6"><a href="visualizing-the-network.html#cb215-6" tabindex="-1"></a>    <span class="at">coef =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, .<span class="dv">5</span>, .<span class="dv">25</span>, .<span class="dv">5</span>) <span class="co"># This line changed</span></span>
+<span id="cb215-7"><a href="visualizing-the-network.html#cb215-7" tabindex="-1"></a>    )</span></code></pre></div>
 <p>Re-doing the plot. From the previous graph-drawing, only the graph structure
 changed. The vertex attributes are the same so we can go ahead and re-use them.
 Like I mentioned earlier, the <code>nplot_base</code> function currently supports <code>igraph</code>
 objects, so we will use <code>intergraph::asIgraph</code> to make it work:</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="visualizing-the-network.html#cb218-1" tabindex="-1"></a><span class="co"># Plotting</span></span>
-<span id="cb218-2"><a href="visualizing-the-network.html#cb218-2" tabindex="-1"></a><span class="fu">nplot_base</span>(</span>
-<span id="cb218-3"><a href="visualizing-the-network.html#cb218-3" tabindex="-1"></a>  <span class="fu">asIgraph</span>(net_sim2),</span>
-<span id="cb218-4"><a href="visualizing-the-network.html#cb218-4" tabindex="-1"></a>  <span class="co"># We comment this out to allow for a new layout</span></span>
-<span id="cb218-5"><a href="visualizing-the-network.html#cb218-5" tabindex="-1"></a>  <span class="co"># layout = glayout, </span></span>
-<span id="cb218-6"><a href="visualizing-the-network.html#cb218-6" tabindex="-1"></a>  <span class="at">vertex.color =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;color&quot;</span>,</span>
-<span id="cb218-7"><a href="visualizing-the-network.html#cb218-7" tabindex="-1"></a>  <span class="at">vertex.nsides =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;shape&quot;</span></span>
-<span id="cb218-8"><a href="visualizing-the-network.html#cb218-8" tabindex="-1"></a>  )</span>
-<span id="cb218-9"><a href="visualizing-the-network.html#cb218-9" tabindex="-1"></a></span>
-<span id="cb218-10"><a href="visualizing-the-network.html#cb218-10" tabindex="-1"></a><span class="co"># Color legend</span></span>
-<span id="cb218-11"><a href="visualizing-the-network.html#cb218-11" tabindex="-1"></a><span class="fu">legend</span>(</span>
-<span id="cb218-12"><a href="visualizing-the-network.html#cb218-12" tabindex="-1"></a>  <span class="st">&quot;bottomright&quot;</span>,</span>
-<span id="cb218-13"><a href="visualizing-the-network.html#cb218-13" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vcolors_palette),</span>
-<span id="cb218-14"><a href="visualizing-the-network.html#cb218-14" tabindex="-1"></a>  <span class="at">fill   =</span> vcolors_palette, </span>
-<span id="cb218-15"><a href="visualizing-the-network.html#cb218-15" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb218-16"><a href="visualizing-the-network.html#cb218-16" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Age&quot;</span></span>
-<span id="cb218-17"><a href="visualizing-the-network.html#cb218-17" tabindex="-1"></a>  )</span>
-<span id="cb218-18"><a href="visualizing-the-network.html#cb218-18" tabindex="-1"></a></span>
-<span id="cb218-19"><a href="visualizing-the-network.html#cb218-19" tabindex="-1"></a><span class="co"># Shape legend</span></span>
-<span id="cb218-20"><a href="visualizing-the-network.html#cb218-20" tabindex="-1"></a><span class="fu">legend</span>(</span>
-<span id="cb218-21"><a href="visualizing-the-network.html#cb218-21" tabindex="-1"></a>  <span class="st">&quot;bottomleft&quot;</span>,</span>
-<span id="cb218-22"><a href="visualizing-the-network.html#cb218-22" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vshape_list),</span>
-<span id="cb218-23"><a href="visualizing-the-network.html#cb218-23" tabindex="-1"></a>  <span class="at">pch    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </span>
-<span id="cb218-24"><a href="visualizing-the-network.html#cb218-24" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb218-25"><a href="visualizing-the-network.html#cb218-25" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Race&quot;</span></span>
-<span id="cb218-26"><a href="visualizing-the-network.html#cb218-26" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="visualizing-the-network.html#cb216-1" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb216-2"><a href="visualizing-the-network.html#cb216-2" tabindex="-1"></a><span class="fu">nplot_base</span>(</span>
+<span id="cb216-3"><a href="visualizing-the-network.html#cb216-3" tabindex="-1"></a>  <span class="fu">asIgraph</span>(net_sim2),</span>
+<span id="cb216-4"><a href="visualizing-the-network.html#cb216-4" tabindex="-1"></a>  <span class="co"># We comment this out to allow for a new layout</span></span>
+<span id="cb216-5"><a href="visualizing-the-network.html#cb216-5" tabindex="-1"></a>  <span class="co"># layout = glayout, </span></span>
+<span id="cb216-6"><a href="visualizing-the-network.html#cb216-6" tabindex="-1"></a>  <span class="at">vertex.color =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;color&quot;</span>,</span>
+<span id="cb216-7"><a href="visualizing-the-network.html#cb216-7" tabindex="-1"></a>  <span class="at">vertex.nsides =</span> net_sim <span class="sc">%v%</span> <span class="st">&quot;shape&quot;</span></span>
+<span id="cb216-8"><a href="visualizing-the-network.html#cb216-8" tabindex="-1"></a>  )</span>
+<span id="cb216-9"><a href="visualizing-the-network.html#cb216-9" tabindex="-1"></a></span>
+<span id="cb216-10"><a href="visualizing-the-network.html#cb216-10" tabindex="-1"></a><span class="co"># Color legend</span></span>
+<span id="cb216-11"><a href="visualizing-the-network.html#cb216-11" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb216-12"><a href="visualizing-the-network.html#cb216-12" tabindex="-1"></a>  <span class="st">&quot;bottomright&quot;</span>,</span>
+<span id="cb216-13"><a href="visualizing-the-network.html#cb216-13" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vcolors_palette),</span>
+<span id="cb216-14"><a href="visualizing-the-network.html#cb216-14" tabindex="-1"></a>  <span class="at">fill   =</span> vcolors_palette, </span>
+<span id="cb216-15"><a href="visualizing-the-network.html#cb216-15" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb216-16"><a href="visualizing-the-network.html#cb216-16" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Age&quot;</span></span>
+<span id="cb216-17"><a href="visualizing-the-network.html#cb216-17" tabindex="-1"></a>  )</span>
+<span id="cb216-18"><a href="visualizing-the-network.html#cb216-18" tabindex="-1"></a></span>
+<span id="cb216-19"><a href="visualizing-the-network.html#cb216-19" tabindex="-1"></a><span class="co"># Shape legend</span></span>
+<span id="cb216-20"><a href="visualizing-the-network.html#cb216-20" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb216-21"><a href="visualizing-the-network.html#cb216-21" tabindex="-1"></a>  <span class="st">&quot;bottomleft&quot;</span>,</span>
+<span id="cb216-22"><a href="visualizing-the-network.html#cb216-22" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(vshape_list),</span>
+<span id="cb216-23"><a href="visualizing-the-network.html#cb216-23" tabindex="-1"></a>  <span class="at">pch    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </span>
+<span id="cb216-24"><a href="visualizing-the-network.html#cb216-24" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb216-25"><a href="visualizing-the-network.html#cb216-25" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">&quot;Race&quot;</span></span>
+<span id="cb216-26"><a href="visualizing-the-network.html#cb216-26" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="part-01-06-network-simulation-and-viz_files/figure-html/06-adjust-homophily-plot-1.png" width="672" /></p>
 <p>As expected, there is no longer a dominant effect in homophily. One important
 thing we can learn from this final example is that phenomena will not always

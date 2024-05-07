@@ -1,0 +1,33 @@
+name: Build and Deploy
+
+on: [pull_request, push]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    container:
+      image: gvegayon/appliedsnar:latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Render
+      run: |
+        Rscript --vanilla -e "rmarkdown::render_site(encoding = 'UTF-8')"
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: docs
+
+    
+  # deploy:
+  #   runs-on: ubuntu-22.04
+
+  #   needs: build
+
+  #   steps:
+  #   - uses: actions/checkout@v3
+    
+  #   - uses: actions/pages-deploy

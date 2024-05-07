@@ -1,7 +1,7 @@
 --- 
 title: "Applied Network Science with R"
 author: "George G. Vega Yon, Ph.D."
-date: "2023-03-31"
+date: "2024-01-07"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

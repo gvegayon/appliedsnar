@@ -155,7 +155,7 @@
 
 \title{Applied Network Science with R}
 \author{George G. Vega Yon, Ph.D.}
-\date{2023-03-31}
+\date{2024-01-07}
 
 \begin{document}
 \maketitle
@@ -887,13 +887,13 @@ What I like from \texttt{tibbles} is that when you print them on the console, th
 ##  8      22    111        1      NA      NA       0       0    NA      NA  
 ##  9      25    111        0       1       1      NA       1     4.5     3.5
 ## 10      27    111        1       0      NA       0       0     3.5    NA  
-## # ... with 2,154 more rows, and 91 more variables: grades3 <dbl>,
-## #   grades4 <dbl>, eversmk1 <int>, eversmk2 <int>, eversmk3 <int>,
-## #   eversmk4 <int>, everdrk1 <int>, everdrk2 <int>, everdrk3 <int>,
-## #   everdrk4 <int>, home1 <int>, home2 <int>, home3 <int>, home4 <int>,
-## #   sch_friend11 <int>, sch_friend12 <int>, sch_friend13 <int>,
-## #   sch_friend14 <int>, sch_friend15 <int>, sch_friend16 <int>,
-## #   sch_friend17 <int>, sch_friend18 <int>, sch_friend19 <int>, ...
+## # i 2,154 more rows
+## # i 91 more variables: grades3 <dbl>, grades4 <dbl>, eversmk1 <int>,
+## #   eversmk2 <int>, eversmk3 <int>, eversmk4 <int>, everdrk1 <int>,
+## #   everdrk2 <int>, everdrk3 <int>, everdrk4 <int>, home1 <int>, home2 <int>,
+## #   home3 <int>, home4 <int>, sch_friend11 <int>, sch_friend12 <int>,
+## #   sch_friend13 <int>, sch_friend14 <int>, sch_friend15 <int>,
+## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>, ...
 \end{verbatim}
 
 \begin{Shaded}
@@ -939,13 +939,13 @@ Let's take a look at this step by step:
 ##  8 1110022    111           NA           NA           NA           NA
 ##  9 1110025    111          135          185          553           84
 ## 10 1110027    111          346          168          559            5
-## # ... with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
-## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
-## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,
-## #   sch_friend112 <int>, sch_friend113 <int>, sch_friend114 <int>,
-## #   sch_friend115 <int>, sch_friend116 <int>, sch_friend117 <int>,
-## #   sch_friend118 <int>, sch_friend119 <int>, sch_friend21 <int>,
-## #   sch_friend22 <int>, sch_friend23 <int>, sch_friend24 <int>, ...
+## # i 2,154 more rows
+## # i 72 more variables: sch_friend15 <int>, sch_friend16 <int>,
+## #   sch_friend17 <int>, sch_friend18 <int>, sch_friend19 <int>,
+## #   sch_friend110 <int>, sch_friend111 <int>, sch_friend112 <int>,
+## #   sch_friend113 <int>, sch_friend114 <int>, sch_friend115 <int>,
+## #   sch_friend116 <int>, sch_friend117 <int>, sch_friend118 <int>,
+## #   sch_friend119 <int>, sch_friend21 <int>, sch_friend22 <int>, ...
 \end{verbatim}
 \item
   Then, we reshape it to \emph{long} format: By transposing all the \texttt{sch\_friend*} to long format. We do this using the function \texttt{gather} (from the \texttt{tidyr} package); an alternative to the \texttt{reshape} function, which I find easier to use. Let's see how it works:
@@ -972,7 +972,7 @@ Let's take a look at this step by step:
 ##  8 1110022    111 sch_friend11      NA
 ##  9 1110025    111 sch_friend11     135
 ## 10 1110027    111 sch_friend11     346
-## # ... with 164,454 more rows
+## # i 164,454 more rows
 \end{verbatim}
 
   In this case, the \texttt{key} parameter sets the name of the variable that will contain the name of the variable that was reshaped, while \texttt{value} is the name of the variable that will hold the content of the data (that's why I named those like that). The \texttt{-id,\ -school} bit tells the function to ``drop'' those variables before reshaping. In other words, ``reshape everything but \texttt{id} and \texttt{school.}''
@@ -1004,7 +1004,7 @@ Let's take a look at this step by step:
 ##  8 1110027    111 sch_friend11     346
 ##  9 1110029    111 sch_friend11     369
 ## 10 1110030    111 sch_friend11     462
-## # ... with 39,551 more rows
+## # i 39,551 more rows
 \end{verbatim}
 \item
   And finally, we create three new variables from this dataset: \texttt{friendid,}, \texttt{year}, and \texttt{nom\_num} (nomination number). All using regular expressions:
@@ -1037,7 +1037,7 @@ Let's take a look at this step by step:
 ##  8 1110027    111 sch_friend11     346  1110346     1     1
 ##  9 1110029    111 sch_friend11     369  1110369     1     1
 ## 10 1110030    111 sch_friend11     462  1110462     1     1
-## # ... with 39,551 more rows
+## # i 39,551 more rows
 \end{verbatim}
 
   The regular expression \texttt{(?\textless{}={[}a-z{]})} matches a string preceded by any letter from \emph{a} to \emph{z}. In contrast, the expression \texttt{{[}0-9{]}} matches a single number. Hence, from the string \texttt{"sch\_friend12"}, the regular expression will only match the \texttt{1}, as it is the only number followed by a letter. The expression \texttt{(?\textless{}={[}a-z{]}{[}0-9{]})} matches a string preceded by a lower case letter and a one-digit number. Finally, the expression \texttt{{[}0-9{]}+} matches a string of numbers--so it could be more than one. Hence, from the string \texttt{"sch\_friend12"}, we will get \texttt{2}:
@@ -1723,10 +1723,10 @@ Using \texttt{ergm} to fit a Bernoulli graph requires using the \texttt{edges} t
 \begin{Highlighting}[]
 \NormalTok{ergm\_fit }\OtherTok{\textless{}{-}} \FunctionTok{ergm}\NormalTok{(samplike }\SpecialCharTok{\textasciitilde{}}\NormalTok{ edges)}
 \DocumentationTok{\#\# Starting maximum pseudolikelihood estimation (MPLE):}
+\DocumentationTok{\#\# Obtaining the responsible dyads.}
 \DocumentationTok{\#\# Evaluating the predictor and response matrix.}
 \DocumentationTok{\#\# Maximizing the pseudolikelihood.}
 \DocumentationTok{\#\# Finished MPLE.}
-\DocumentationTok{\#\# Stopping at the initial estimate.}
 \DocumentationTok{\#\# Evaluating log{-}likelihood at the estimate.}
 \end{Highlighting}
 \end{Shaded}
@@ -1939,7 +1939,7 @@ So what happened here? We got a warning. It turns out that our network has loops
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{E}\NormalTok{(ig\_year1\_111)[}\FunctionTok{which\_loop}\NormalTok{(ig\_year1\_111)]}
-\DocumentationTok{\#\# + 1/2638 edge from 56d2ba9 (vertex names):}
+\DocumentationTok{\#\# + 1/2638 edge from 837e5f4 (vertex names):}
 \DocumentationTok{\#\# [1] 1110111{-}\textgreater{}1110111}
 \end{Highlighting}
 \end{Shaded}
@@ -2094,8 +2094,8 @@ Now, a nice trick to see all regressions in the same table, we can use the \text
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(texreg)}
-\DocumentationTok{\#\# Version:  1.38.6}
-\DocumentationTok{\#\# Date:     2022{-}04{-}06}
+\DocumentationTok{\#\# Version:  1.39.3}
+\DocumentationTok{\#\# Date:     2023{-}11{-}09}
 \DocumentationTok{\#\# Author:   Philip Leifeld (University of Essex)}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Consider submitting praise using the praise or praise\_interactive functions.}
@@ -2109,18 +2109,18 @@ Now, a nice trick to see all regressions in the same table, we can use the \text
 \DocumentationTok{\#\# Warning: This object was fit with \textquotesingle{}ergm\textquotesingle{} version 4.1.2 or earlier. Summarizing}
 \DocumentationTok{\#\# it with version 4.2 or later may return incorrect results or fail.}
 \DocumentationTok{\#\# Warning in nobs.ergm(object): The number of observed dyads in this network is}
-\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this warning}
-\DocumentationTok{\#\# with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
+\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this}
+\DocumentationTok{\#\# warning with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
 \DocumentationTok{\#\# Warning: This object was fit with \textquotesingle{}ergm\textquotesingle{} version 4.1.2 or earlier. Summarizing}
 \DocumentationTok{\#\# it with version 4.2 or later may return incorrect results or fail.}
 \DocumentationTok{\#\# Warning in nobs.ergm(object): The number of observed dyads in this network is}
-\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this warning}
-\DocumentationTok{\#\# with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
+\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this}
+\DocumentationTok{\#\# warning with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
 \DocumentationTok{\#\# Warning: This object was fit with \textquotesingle{}ergm\textquotesingle{} version 4.1.2 or earlier. Summarizing}
 \DocumentationTok{\#\# it with version 4.2 or later may return incorrect results or fail.}
 \DocumentationTok{\#\# Warning in nobs.ergm(object): The number of observed dyads in this network is}
-\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this warning}
-\DocumentationTok{\#\# with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
+\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this}
+\DocumentationTok{\#\# warning with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# ===============================================================}
 \DocumentationTok{\#\#                     Model 1        Model 2        Model 3      }
@@ -2155,18 +2155,18 @@ Or, if you are using rmarkdown, you can export the results using LaTeX or html, 
 \DocumentationTok{\#\# Warning: This object was fit with \textquotesingle{}ergm\textquotesingle{} version 4.1.2 or earlier. Summarizing}
 \DocumentationTok{\#\# it with version 4.2 or later may return incorrect results or fail.}
 \DocumentationTok{\#\# Warning in nobs.ergm(object): The number of observed dyads in this network is}
-\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this warning}
-\DocumentationTok{\#\# with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
+\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this}
+\DocumentationTok{\#\# warning with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
 \DocumentationTok{\#\# Warning: This object was fit with \textquotesingle{}ergm\textquotesingle{} version 4.1.2 or earlier. Summarizing}
 \DocumentationTok{\#\# it with version 4.2 or later may return incorrect results or fail.}
 \DocumentationTok{\#\# Warning in nobs.ergm(object): The number of observed dyads in this network is}
-\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this warning}
-\DocumentationTok{\#\# with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
+\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this}
+\DocumentationTok{\#\# warning with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
 \DocumentationTok{\#\# Warning: This object was fit with \textquotesingle{}ergm\textquotesingle{} version 4.1.2 or earlier. Summarizing}
 \DocumentationTok{\#\# it with version 4.2 or later may return incorrect results or fail.}
 \DocumentationTok{\#\# Warning in nobs.ergm(object): The number of observed dyads in this network is}
-\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this warning}
-\DocumentationTok{\#\# with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
+\DocumentationTok{\#\# ill{-}defined due to complex constraints on the sample space. Disable this}
+\DocumentationTok{\#\# warning with \textquotesingle{}options(ergm.loglik.warn\_dyads=FALSE)\textquotesingle{}.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2720,7 +2720,7 @@ Where \(s\left(\right)_{ij}\) is a function such that \(s\left(\mathbf{y}\right)
 & = \sum_{\mathbf{y}\in\mathcal{Y}}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)\right\}
 \end{align*}
 
-Where the last equality follows from \(s\left(\mathbf{y}\right) = \sum_{ij}{s\left(\mathbf{y}\right)_{ij}}\). This way, we can now write:
+Where the last equality follows from the fact that the sum \emph{is} the sum over all possible combinations of networks, starting from \(exp(0) = 1\), up to \(exp(all)\). This way, we can now write:
 
 \begin{equation}
 \frac{\prod_{ij}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)_{ij}\right\}}{\sum_{y}\mbox{exp}\left\{{\theta}^\mathbf{t}s\left(\mathbf{y}\right)\right\}} = 
@@ -2938,10 +2938,10 @@ Now, to fit an ERGM with this constraint, we simply need to make use of the offs
   \AttributeTok{offset.coef =} \SpecialCharTok{{-}}\ConstantTok{Inf}                              \CommentTok{\# The offset coefficient}
 \NormalTok{  )}
 \DocumentationTok{\#\# Starting maximum pseudolikelihood estimation (MPLE):}
+\DocumentationTok{\#\# Obtaining the responsible dyads.}
 \DocumentationTok{\#\# Evaluating the predictor and response matrix.}
 \DocumentationTok{\#\# Maximizing the pseudolikelihood.}
 \DocumentationTok{\#\# Finished MPLE.}
-\DocumentationTok{\#\# Stopping at the initial estimate.}
 \DocumentationTok{\#\# Evaluating log{-}likelihood at the estimate.}
 \FunctionTok{summary}\NormalTok{(ans)}
 \DocumentationTok{\#\# Call:}
@@ -3138,17 +3138,7 @@ offset terms and compare the results between the two models:
   \CommentTok{\# Control parameters}
   \AttributeTok{control =} \FunctionTok{control.ergm}\NormalTok{(}\AttributeTok{seed =} \DecValTok{1}\NormalTok{)}
 \NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## Warning: 'glpk' selected as the solver, but package 'Rglpk' is not available;
-## falling back to 'lpSolveAPI'. This should be fine unless the sample size and/or
-## the number of parameters is very big.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \CommentTok{\# ERGM with a digraph with constraints}
 \NormalTok{res\_not\_b }\OtherTok{\textless{}{-}} \FunctionTok{ergm}\NormalTok{(}
   \CommentTok{\# Main formula}
@@ -3569,19 +3559,19 @@ The command turns the \texttt{network} object into a matrix with a set of attrib
 
 \begin{verbatim}
 ## [[1]]
-## + 1/4 vertex, from 474eb42:
+## + 1/4 vertex, from 38b50ee:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from 474eb42:
+## + 2/4 vertices, from 38b50ee:
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from 474eb42:
+## + 3/4 vertices, from 38b50ee:
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from 474eb42:
+## + 2/4 vertices, from 38b50ee:
 ## [1] 3 3
 \end{verbatim}
 
@@ -4131,18 +4121,18 @@ If the operation succeeded, then the previous code block should generate a list 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{graphs[[}\DecValTok{1}\NormalTok{]]}
-\DocumentationTok{\#\# IGRAPH c660b76 U{-}{-}{-} 12 25 {-}{-} }
+\DocumentationTok{\#\# IGRAPH 41d3cfa U{-}{-}{-} 12 25 {-}{-} }
 \DocumentationTok{\#\# + attr: age (v/n), healthy\_diet (v/n), gender\_1 (v/l), eat\_with\_2}
 \DocumentationTok{\#\# | (v/l), id (v/c)}
-\DocumentationTok{\#\# + edges from c660b76:}
+\DocumentationTok{\#\# + edges from 41d3cfa:}
 \DocumentationTok{\#\#  [1] 1{-}{-} 3 1{-}{-} 2 1{-}{-} 6 1{-}{-} 5 1{-}{-} 4 1{-}{-} 8 1{-}{-}11 1{-}{-}10 2{-}{-} 3 3{-}{-} 7 3{-}{-} 4 3{-}{-} 5}
 \DocumentationTok{\#\# [13] 3{-}{-} 6 2{-}{-} 7 2{-}{-} 4 2{-}{-} 5 2{-}{-} 6 5{-}{-} 6 6{-}{-}10 7{-}{-} 9 4{-}{-} 5 5{-}{-} 7 4{-}{-}11 6{-}{-} 7}
 \DocumentationTok{\#\# [25] 4{-}{-} 7}
 \NormalTok{graphs[[}\DecValTok{2}\NormalTok{]]}
-\DocumentationTok{\#\# IGRAPH 6726e83 U{-}{-}{-} 16 47 {-}{-} }
+\DocumentationTok{\#\# IGRAPH f4204e3 U{-}{-}{-} 16 47 {-}{-} }
 \DocumentationTok{\#\# + attr: age (v/n), healthy\_diet (v/n), gender\_1 (v/l), eat\_with\_2}
 \DocumentationTok{\#\# | (v/l), id (v/c)}
-\DocumentationTok{\#\# + edges from 6726e83:}
+\DocumentationTok{\#\# + edges from f4204e3:}
 \DocumentationTok{\#\#  [1]  7{-}{-}13  1{-}{-} 5  1{-}{-} 6  1{-}{-} 4  1{-}{-} 2  7{-}{-}15  1{-}{-} 3 11{-}{-}13  1{-}{-}10  1{-}{-}16}
 \DocumentationTok{\#\# [11]  4{-}{-} 6  2{-}{-} 6  6{-}{-} 7  1{-}{-}11 11{-}{-}15  6{-}{-} 9  6{-}{-} 8  3{-}{-} 9  5{-}{-}15  4{-}{-} 5}
 \DocumentationTok{\#\# [21]  2{-}{-} 5  5{-}{-} 8  5{-}{-} 7  5{-}{-}10  3{-}{-} 5  6{-}{-}14 12{-}{-}13  6{-}{-}13  3{-}{-}13  2{-}{-} 3}
@@ -4432,7 +4422,7 @@ We can also visualize this using \texttt{ggplot2}:
   \FunctionTok{geom\_histogram}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Time in minutes"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Count"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Total time spent by egos"}\NormalTok{)}
-\DocumentationTok{\#\# Don\textquotesingle{}t know how to automatically pick scale for object of type difftime. Defaulting to continuous.}
+\DocumentationTok{\#\# Don\textquotesingle{}t know how to automatically pick scale for object of type \textless{}difftime\textgreater{}. Defaulting to continuous.}
 \DocumentationTok{\#\# \textasciigrave{}stat\_bin()\textasciigrave{} using \textasciigrave{}bins = 30\textasciigrave{}. Pick better value with \textasciigrave{}binwidth\textasciigrave{}.}
 \end{Highlighting}
 \end{Shaded}
@@ -4551,7 +4541,7 @@ The \texttt{ergm} R package has a much larger set of graph-level statistics we c
 \FunctionTok{library}\NormalTok{(ergm)}
 \DocumentationTok{\#\# Loading required package: network}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# \textquotesingle{}network\textquotesingle{} 1.18.1 (2023{-}01{-}24), part of the Statnet Project}
+\DocumentationTok{\#\# \textquotesingle{}network\textquotesingle{} 1.18.2 (2023{-}12{-}04), part of the Statnet Project}
 \DocumentationTok{\#\# * \textquotesingle{}news(package="network")\textquotesingle{} for changes since last version}
 \DocumentationTok{\#\# * \textquotesingle{}citation("network")\textquotesingle{} for citation information}
 \DocumentationTok{\#\# * \textquotesingle{}https://statnet.org\textquotesingle{} for help, support, and other information}
@@ -4564,7 +4554,7 @@ The \texttt{ergm} R package has a much larger set of graph-level statistics we c
 \DocumentationTok{\#\#     is.directed, list.edge.attributes, list.vertex.attributes,}
 \DocumentationTok{\#\#     set.edge.attribute, set.vertex.attribute}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# \textquotesingle{}ergm\textquotesingle{} 4.4.0 (2023{-}01{-}26), part of the Statnet Project}
+\DocumentationTok{\#\# \textquotesingle{}ergm\textquotesingle{} 4.6{-}7262 (2023{-}09{-}04), part of the Statnet Project}
 \DocumentationTok{\#\# * \textquotesingle{}news(package="ergm")\textquotesingle{} for changes since last version}
 \DocumentationTok{\#\# * \textquotesingle{}citation("ergm")\textquotesingle{} for citation information}
 \DocumentationTok{\#\# * \textquotesingle{}https://statnet.org\textquotesingle{} for help, support, and other information}
@@ -5780,8 +5770,8 @@ It simulates networks with the same density, and computes a particular statistic
 \end{Shaded}
 
 \begin{verbatim}
-## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is static
-## and will be recycled (see ?new_diffnet).
+## Warning in new_diffnet(W, toa = toa, vertex.static.attrs = X): -graph- is
+## static and will be recycled (see ?new_diffnet).
 \end{verbatim}
 
 \begin{Shaded}
@@ -5805,10 +5795,6 @@ It simulates networks with the same density, and computes a particular statistic
 ## Call:
 ## glm(formula = adopt ~ cohesive_expo + var1 + factor(per), family = binomial(link = "probit"), 
 ##     data = dat, subset = is.na(toa) | (per <= toa))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.1754  -0.8462  -0.6645   1.2878   1.9523  
 ## 
 ## Coefficients:
 ##               Estimate Std. Error z value Pr(>|z|)    
@@ -5845,10 +5831,6 @@ It simulates networks with the same density, and computes a particular statistic
 ## Call:
 ## glm(formula = Adopt ~ exposure + var1 + factor(per), family = binomial(link = "probit"), 
 ##     data = dat, subset = ifelse(is.na(toa), TRUE, toa >= per))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.1754  -0.8462  -0.6645   1.2878   1.9523  
 ## 
 ## Coefficients:
 ##              Estimate Std. Error z value Pr(>|z|)    
@@ -6106,10 +6088,6 @@ As shown in Chapter \ref{part2-power}, we can use a linear regression model to p
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
 ##     data = spower, subset = type == "alter")
 ## 
-## Deviance Residuals: 
-##        6         7         8         9        10  
-##   0.2658  -11.2195   10.5568  -13.8852   14.2821  
-## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)
 ## (Intercept)     1460       1342   1.088    0.390
@@ -6299,10 +6277,6 @@ As shown in Chapter \ref{part2-power}, we can use a linear regression model to p
 ## Call:
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
 ##     data = spowerd, subset = type == "alter")
-## 
-## Deviance Residuals: 
-##       6        7        8        9       10  
-## -0.8182   1.7278   0.9180  -7.9188   6.0912  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)
@@ -6755,7 +6729,7 @@ Let's visualize the power curve we generate from this simulation:
 \end{Shaded}
 
 \begin{verbatim}
-## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 \end{verbatim}
 
 \includegraphics{part-02-11-power_files/figure-latex/11-power-plot-1.pdf}
@@ -6784,10 +6758,6 @@ n = \theta_0 + \theta_1 (1 - \beta) + \theta_2 (1 - \beta)^2
 ## Call:
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
 ##     data = simulations)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -7.7850  -3.7716  -0.5132   3.3510   8.0064  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)   

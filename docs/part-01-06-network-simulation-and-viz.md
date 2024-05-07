@@ -270,19 +270,19 @@ igraph::as_adj_list(intergraph::asIgraph(example_graph))
 
 ```
 ## [[1]]
-## + 1/4 vertex, from 1e25b13:
+## + 1/4 vertex, from 71de82c:
 ## [1] 2
 ## 
 ## [[2]]
-## + 2/4 vertices, from 1e25b13:
+## + 2/? vertices, from 71de82c (deleted):
 ## [1] 1 3
 ## 
 ## [[3]]
-## + 3/4 vertices, from 1e25b13:
+## + 3/? vertices, from 71de82c (deleted):
 ## [1] 2 4 4
 ## 
 ## [[4]]
-## + 2/4 vertices, from 1e25b13:
+## + 2/? vertices, from 71de82c (deleted):
 ## [1] 3 3
 ```
 

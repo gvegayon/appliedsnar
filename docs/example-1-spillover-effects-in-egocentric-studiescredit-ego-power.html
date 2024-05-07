@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>14.1 Example 1: Spillover effects in egocentric studies15 | Applied Network Science with R</title>
   <meta name="description" content="An improvised book on applied Network Science with R." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="14.1 Example 1: Spillover effects in egocentric studies15 | Applied Network Science with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="George G. Vega Yon, Ph.D." />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2024-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -352,108 +356,104 @@ div.csl-indent {
 <li><p>Accept/reject the null and store the result.</p></li>
 </ol>
 <p>The previous steps will be repeated 500 for each value of <span class="math inline">\(n\)</span> we analyze. We will finalize by plotting power against sample sizes. Let’s first start by writing down the simulation parameters:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-1" tabindex="-1"></a><span class="co"># Design</span></span>
-<span id="cb305-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-2" tabindex="-1"></a>n_sims    <span class="ot">&lt;-</span> <span class="dv">500</span> <span class="co"># Number of simulations</span></span>
-<span id="cb305-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-3" tabindex="-1"></a>n_a       <span class="ot">&lt;-</span> <span class="dv">4</span>   <span class="co"># Number of alters</span></span>
-<span id="cb305-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-4" tabindex="-1"></a>sizes     <span class="ot">&lt;-</span>     <span class="co"># Sizes to try</span></span>
-<span id="cb305-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-5" tabindex="-1"></a>  <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">100</span>, <span class="at">to =</span> <span class="dv">200</span>, <span class="at">by =</span> <span class="dv">25</span>)</span>
-<span id="cb305-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-6" tabindex="-1"></a></span>
-<span id="cb305-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-7" tabindex="-1"></a><span class="co"># Assumptions</span></span>
-<span id="cb305-8"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-8" tabindex="-1"></a>odds_h_1  <span class="ot">&lt;-</span> <span class="fl">2.0</span> <span class="co"># Odds of Increase/</span></span>
-<span id="cb305-9"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-9" tabindex="-1"></a>attrition <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
-<span id="cb305-10"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-10" tabindex="-1"></a>baseline  <span class="ot">&lt;-</span> .<span class="dv">2</span>  <span class="co"># Low prevalence in 1s</span></span>
-<span id="cb305-11"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-11" tabindex="-1"></a></span>
-<span id="cb305-12"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-12" tabindex="-1"></a><span class="co"># Parameters</span></span>
-<span id="cb305-13"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-13" tabindex="-1"></a>alpha    <span class="ot">&lt;-</span> .<span class="dv">05</span></span>
-<span id="cb305-14"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-14" tabindex="-1"></a>beta_pow <span class="ot">&lt;-</span> <span class="fl">0.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-1" tabindex="-1"></a><span class="co"># Design</span></span>
+<span id="cb303-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-2" tabindex="-1"></a>n_sims    <span class="ot">&lt;-</span> <span class="dv">500</span> <span class="co"># Number of simulations</span></span>
+<span id="cb303-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-3" tabindex="-1"></a>n_a       <span class="ot">&lt;-</span> <span class="dv">4</span>   <span class="co"># Number of alters</span></span>
+<span id="cb303-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-4" tabindex="-1"></a>sizes     <span class="ot">&lt;-</span>     <span class="co"># Sizes to try</span></span>
+<span id="cb303-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-5" tabindex="-1"></a>  <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">100</span>, <span class="at">to =</span> <span class="dv">200</span>, <span class="at">by =</span> <span class="dv">25</span>)</span>
+<span id="cb303-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-6" tabindex="-1"></a></span>
+<span id="cb303-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-7" tabindex="-1"></a><span class="co"># Assumptions</span></span>
+<span id="cb303-8"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-8" tabindex="-1"></a>odds_h_1  <span class="ot">&lt;-</span> <span class="fl">2.0</span> <span class="co"># Odds of Increase/</span></span>
+<span id="cb303-9"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-9" tabindex="-1"></a>attrition <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb303-10"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-10" tabindex="-1"></a>baseline  <span class="ot">&lt;-</span> .<span class="dv">2</span>  <span class="co"># Low prevalence in 1s</span></span>
+<span id="cb303-11"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-11" tabindex="-1"></a></span>
+<span id="cb303-12"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-12" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb303-13"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-13" tabindex="-1"></a>alpha    <span class="ot">&lt;-</span> .<span class="dv">05</span></span>
+<span id="cb303-14"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb303-14" tabindex="-1"></a>beta_pow <span class="ot">&lt;-</span> <span class="fl">0.2</span></span></code></pre></div>
 <p>As we discuss in <a href="part2-power.html#part2-power">17</a>, it is always a good idea to encapsulate the simulation into a function:</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-1" tabindex="-1"></a><span class="co"># The odds turned to a prob</span></span>
-<span id="cb306-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-2" tabindex="-1"></a>theta_h_1 <span class="ot">&lt;-</span> <span class="fu">plogis</span>(<span class="fu">log</span>(odds_h_1))</span>
-<span id="cb306-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-3" tabindex="-1"></a></span>
-<span id="cb306-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-4" tabindex="-1"></a><span class="co"># Simulation function</span></span>
-<span id="cb306-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-5" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb306-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-6" tabindex="-1"></a></span>
-<span id="cb306-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-7" tabindex="-1"></a>  <span class="co"># Treatment assignment</span></span>
-<span id="cb306-8"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-8" tabindex="-1"></a>  tr  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, n<span class="sc">/</span><span class="dv">2</span>), <span class="fu">rep</span>(<span class="dv">0</span>, n<span class="sc">/</span><span class="dv">2</span>))</span>
-<span id="cb306-9"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-9" tabindex="-1"></a></span>
-<span id="cb306-10"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-10" tabindex="-1"></a>  <span class="co"># Step 1: Sampling population of egos</span></span>
-<span id="cb306-11"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-11" tabindex="-1"></a>  y_ego <span class="ot">&lt;-</span> <span class="fu">runif</span>(n) <span class="sc">&lt;</span> <span class="fu">c</span>(</span>
-<span id="cb306-12"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-12" tabindex="-1"></a>    <span class="fu">rep</span>(theta_h_1, n<span class="sc">/</span><span class="dv">2</span>),</span>
-<span id="cb306-13"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-13" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="fl">0.5</span>, n<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb306-14"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-14" tabindex="-1"></a>  )</span>
-<span id="cb306-15"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-15" tabindex="-1"></a></span>
-<span id="cb306-16"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-16" tabindex="-1"></a>  <span class="co"># Step 2: Simulating attrition</span></span>
-<span id="cb306-17"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-17" tabindex="-1"></a>  todrop <span class="ot">&lt;-</span> <span class="fu">order</span>(<span class="fu">runif</span>(n))[<span class="dv">1</span><span class="sc">:</span>(n <span class="sc">*</span> attrition)]</span>
-<span id="cb306-18"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-18" tabindex="-1"></a>  y_ego  <span class="ot">&lt;-</span> y_ego[<span class="sc">-</span>todrop]</span>
-<span id="cb306-19"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-19" tabindex="-1"></a>  tr     <span class="ot">&lt;-</span> tr[<span class="sc">-</span>todrop]</span>
-<span id="cb306-20"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-20" tabindex="-1"></a>  n      <span class="ot">&lt;-</span> n <span class="sc">-</span> <span class="fu">length</span>(todrop)</span>
-<span id="cb306-21"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-21" tabindex="-1"></a></span>
-<span id="cb306-22"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-22" tabindex="-1"></a>  <span class="co"># Step 3: Simulating alter&#39;s effect. We assume the same as in</span></span>
-<span id="cb306-23"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-23" tabindex="-1"></a>  <span class="co"># ego</span></span>
-<span id="cb306-24"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-24" tabindex="-1"></a>  tr_alter <span class="ot">&lt;-</span> <span class="fu">rep</span>(y_ego <span class="sc">*</span> tr, n_a)</span>
-<span id="cb306-25"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-25" tabindex="-1"></a>  y_alter  <span class="ot">&lt;-</span> <span class="fu">runif</span>(n <span class="sc">*</span> n_a) <span class="sc">&lt;</span> <span class="fu">ifelse</span>(tr_alter, theta_h_1, <span class="fl">0.5</span>)</span>
-<span id="cb306-26"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-26" tabindex="-1"></a></span>
-<span id="cb306-27"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-27" tabindex="-1"></a>  <span class="co"># Step 4: Computing test statistic</span></span>
-<span id="cb306-28"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-28" tabindex="-1"></a>  res_ego   <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">glm</span>(y_ego <span class="sc">~</span> tr, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>)), <span class="at">error =</span> <span class="cf">function</span>(e) e)</span>
-<span id="cb306-29"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-29" tabindex="-1"></a>  res_alter <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">glm</span>(y_alter <span class="sc">~</span> tr_alter, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>)), <span class="at">error =</span> <span class="cf">function</span>(e) e)</span>
-<span id="cb306-30"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-30" tabindex="-1"></a></span>
-<span id="cb306-31"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-31" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(res_ego, <span class="st">&quot;error&quot;</span>) <span class="sc">|</span> <span class="fu">inherits</span>(res_alter, <span class="st">&quot;error&quot;</span>))</span>
-<span id="cb306-32"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-32" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">ego =</span>  <span class="cn">NA</span>, <span class="at">alter =</span> <span class="cn">NA</span>))</span>
-<span id="cb306-33"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-33" tabindex="-1"></a>  </span>
-<span id="cb306-34"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-34" tabindex="-1"></a>  <span class="co"># Step 5: Reject?</span></span>
-<span id="cb306-35"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-35" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb306-36"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-36" tabindex="-1"></a>    <span class="at">ego   =</span> <span class="fu">summary</span>(res_ego)<span class="sc">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
-<span id="cb306-37"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-37" tabindex="-1"></a>    <span class="at">alter =</span> <span class="fu">summary</span>(res_alter)<span class="sc">$</span>coefficients[<span class="st">&quot;tr_alter&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="sc">&lt;</span> alpha</span>
-<span id="cb306-38"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-38" tabindex="-1"></a>  )</span>
-<span id="cb306-39"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-39" tabindex="-1"></a>  </span>
-<span id="cb306-40"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-40" tabindex="-1"></a></span>
-<span id="cb306-41"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-41" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-1" tabindex="-1"></a><span class="co"># The odds turned to a prob</span></span>
+<span id="cb304-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-2" tabindex="-1"></a>theta_h_1 <span class="ot">&lt;-</span> <span class="fu">plogis</span>(<span class="fu">log</span>(odds_h_1))</span>
+<span id="cb304-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-3" tabindex="-1"></a></span>
+<span id="cb304-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-4" tabindex="-1"></a><span class="co"># Simulation function</span></span>
+<span id="cb304-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-5" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb304-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-6" tabindex="-1"></a></span>
+<span id="cb304-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-7" tabindex="-1"></a>  <span class="co"># Treatment assignment</span></span>
+<span id="cb304-8"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-8" tabindex="-1"></a>  tr  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, n<span class="sc">/</span><span class="dv">2</span>), <span class="fu">rep</span>(<span class="dv">0</span>, n<span class="sc">/</span><span class="dv">2</span>))</span>
+<span id="cb304-9"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-9" tabindex="-1"></a></span>
+<span id="cb304-10"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-10" tabindex="-1"></a>  <span class="co"># Step 1: Sampling population of egos</span></span>
+<span id="cb304-11"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-11" tabindex="-1"></a>  y_ego <span class="ot">&lt;-</span> <span class="fu">runif</span>(n) <span class="sc">&lt;</span> <span class="fu">c</span>(</span>
+<span id="cb304-12"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-12" tabindex="-1"></a>    <span class="fu">rep</span>(theta_h_1, n<span class="sc">/</span><span class="dv">2</span>),</span>
+<span id="cb304-13"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-13" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="fl">0.5</span>, n<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb304-14"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-14" tabindex="-1"></a>  )</span>
+<span id="cb304-15"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-15" tabindex="-1"></a></span>
+<span id="cb304-16"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-16" tabindex="-1"></a>  <span class="co"># Step 2: Simulating attrition</span></span>
+<span id="cb304-17"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-17" tabindex="-1"></a>  todrop <span class="ot">&lt;-</span> <span class="fu">order</span>(<span class="fu">runif</span>(n))[<span class="dv">1</span><span class="sc">:</span>(n <span class="sc">*</span> attrition)]</span>
+<span id="cb304-18"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-18" tabindex="-1"></a>  y_ego  <span class="ot">&lt;-</span> y_ego[<span class="sc">-</span>todrop]</span>
+<span id="cb304-19"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-19" tabindex="-1"></a>  tr     <span class="ot">&lt;-</span> tr[<span class="sc">-</span>todrop]</span>
+<span id="cb304-20"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-20" tabindex="-1"></a>  n      <span class="ot">&lt;-</span> n <span class="sc">-</span> <span class="fu">length</span>(todrop)</span>
+<span id="cb304-21"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-21" tabindex="-1"></a></span>
+<span id="cb304-22"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-22" tabindex="-1"></a>  <span class="co"># Step 3: Simulating alter&#39;s effect. We assume the same as in</span></span>
+<span id="cb304-23"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-23" tabindex="-1"></a>  <span class="co"># ego</span></span>
+<span id="cb304-24"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-24" tabindex="-1"></a>  tr_alter <span class="ot">&lt;-</span> <span class="fu">rep</span>(y_ego <span class="sc">*</span> tr, n_a)</span>
+<span id="cb304-25"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-25" tabindex="-1"></a>  y_alter  <span class="ot">&lt;-</span> <span class="fu">runif</span>(n <span class="sc">*</span> n_a) <span class="sc">&lt;</span> <span class="fu">ifelse</span>(tr_alter, theta_h_1, <span class="fl">0.5</span>)</span>
+<span id="cb304-26"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-26" tabindex="-1"></a></span>
+<span id="cb304-27"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-27" tabindex="-1"></a>  <span class="co"># Step 4: Computing test statistic</span></span>
+<span id="cb304-28"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-28" tabindex="-1"></a>  res_ego   <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">glm</span>(y_ego <span class="sc">~</span> tr, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>)), <span class="at">error =</span> <span class="cf">function</span>(e) e)</span>
+<span id="cb304-29"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-29" tabindex="-1"></a>  res_alter <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">glm</span>(y_alter <span class="sc">~</span> tr_alter, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>)), <span class="at">error =</span> <span class="cf">function</span>(e) e)</span>
+<span id="cb304-30"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-30" tabindex="-1"></a></span>
+<span id="cb304-31"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-31" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(res_ego, <span class="st">&quot;error&quot;</span>) <span class="sc">|</span> <span class="fu">inherits</span>(res_alter, <span class="st">&quot;error&quot;</span>))</span>
+<span id="cb304-32"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-32" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">ego =</span>  <span class="cn">NA</span>, <span class="at">alter =</span> <span class="cn">NA</span>))</span>
+<span id="cb304-33"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-33" tabindex="-1"></a>  </span>
+<span id="cb304-34"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-34" tabindex="-1"></a>  <span class="co"># Step 5: Reject?</span></span>
+<span id="cb304-35"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-35" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb304-36"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-36" tabindex="-1"></a>    <span class="at">ego   =</span> <span class="fu">summary</span>(res_ego)<span class="sc">$</span>coefficients[<span class="st">&quot;tr&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="sc">&lt;</span> alpha,</span>
+<span id="cb304-37"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-37" tabindex="-1"></a>    <span class="at">alter =</span> <span class="fu">summary</span>(res_alter)<span class="sc">$</span>coefficients[<span class="st">&quot;tr_alter&quot;</span>, <span class="st">&quot;Pr(&gt;|z|)&quot;</span>] <span class="sc">&lt;</span> alpha</span>
+<span id="cb304-38"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-38" tabindex="-1"></a>  )</span>
+<span id="cb304-39"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-39" tabindex="-1"></a>  </span>
+<span id="cb304-40"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-40" tabindex="-1"></a></span>
+<span id="cb304-41"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb304-41" tabindex="-1"></a>}</span></code></pre></div>
 <p>Now that we have the data generating function, we can run the simulations to approximate statistical power given the sample size. The results will be stored in the matrix <code>spower</code>. Since we are simulating data, it is crucial to set the seed so we can reproduce the results.</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-1" tabindex="-1"></a><span class="co"># We always set the seed</span></span>
-<span id="cb307-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">88</span>) </span>
-<span id="cb307-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-3" tabindex="-1"></a></span>
-<span id="cb307-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-4" tabindex="-1"></a><span class="co"># Making space, and running!</span></span>
-<span id="cb307-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-5" tabindex="-1"></a>spower <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb307-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-6" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</span>
-<span id="cb307-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-7" tabindex="-1"></a></span>
-<span id="cb307-8"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-8" tabindex="-1"></a>  <span class="co"># Run the simulation for size s</span></span>
-<span id="cb307-9"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-9" tabindex="-1"></a>  simres <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(<span class="fu">replicate</span>(n_sims, <span class="fu">sim_data</span>(s)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb307-10"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-10" tabindex="-1"></a></span>
-<span id="cb307-11"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-11" tabindex="-1"></a>  <span class="co"># And store the results</span></span>
-<span id="cb307-12"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-12" tabindex="-1"></a>  spower <span class="ot">&lt;-</span> <span class="fu">rbind</span>(spower, simres)</span>
-<span id="cb307-13"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-13" tabindex="-1"></a></span>
-<span id="cb307-14"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-14" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-1" tabindex="-1"></a><span class="co"># We always set the seed</span></span>
+<span id="cb305-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">88</span>) </span>
+<span id="cb305-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-3" tabindex="-1"></a></span>
+<span id="cb305-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-4" tabindex="-1"></a><span class="co"># Making space, and running!</span></span>
+<span id="cb305-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-5" tabindex="-1"></a>spower <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb305-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-6" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> sizes) {</span>
+<span id="cb305-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-7" tabindex="-1"></a></span>
+<span id="cb305-8"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-8" tabindex="-1"></a>  <span class="co"># Run the simulation for size s</span></span>
+<span id="cb305-9"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-9" tabindex="-1"></a>  simres <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(<span class="fu">replicate</span>(n_sims, <span class="fu">sim_data</span>(s)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb305-10"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-10" tabindex="-1"></a></span>
+<span id="cb305-11"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-11" tabindex="-1"></a>  <span class="co"># And store the results</span></span>
+<span id="cb305-12"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-12" tabindex="-1"></a>  spower <span class="ot">&lt;-</span> <span class="fu">rbind</span>(spower, simres)</span>
+<span id="cb305-13"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-13" tabindex="-1"></a></span>
+<span id="cb305-14"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb305-14" tabindex="-1"></a>}</span></code></pre></div>
 <p>The following figure shows the approximate power for finding effects at both levels, ego and alter:</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb308-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-2" tabindex="-1"></a></span>
-<span id="cb308-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-3" tabindex="-1"></a>spower <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb308-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-4" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;ego&quot;</span>),</span>
-<span id="cb308-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-5" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;alter&quot;</span>)</span>
-<span id="cb308-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-6" tabindex="-1"></a>)</span>
-<span id="cb308-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-7" tabindex="-1"></a></span>
-<span id="cb308-8"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-8" tabindex="-1"></a>spower <span class="sc">|&gt;</span></span>
-<span id="cb308-9"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> power, <span class="at">colour =</span> type)) <span class="sc">+</span></span>
-<span id="cb308-10"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb308-11"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
-<span id="cb308-12"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb308-13"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb308-13" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span> <span class="sc">-</span> beta_pow)</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb306-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-2" tabindex="-1"></a></span>
+<span id="cb306-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-3" tabindex="-1"></a>spower <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb306-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-4" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;ego&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;ego&quot;</span>),</span>
+<span id="cb306-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-5" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">size =</span> sizes, <span class="at">power =</span> spower[,<span class="st">&quot;alter&quot;</span>], <span class="at">type =</span>  <span class="st">&quot;alter&quot;</span>)</span>
+<span id="cb306-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-6" tabindex="-1"></a>)</span>
+<span id="cb306-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-7" tabindex="-1"></a></span>
+<span id="cb306-8"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-8" tabindex="-1"></a>spower <span class="sc">|&gt;</span></span>
+<span id="cb306-9"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> power, <span class="at">colour =</span> type)) <span class="sc">+</span></span>
+<span id="cb306-10"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb306-11"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
+<span id="cb306-12"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of Egos&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Approx. Power&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Node type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb306-13"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb306-13" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span> <span class="sc">-</span> beta_pow)</span></code></pre></div>
 <p><img src="part-01-11-power_files/figure-html/part-01-power-plot1-1.png" width="672" /></p>
 <p>As shown in Chapter <a href="part2-power.html#part2-power">17</a>, we can use a linear regression model to predict sample size as a function of statistical power:</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-1" tabindex="-1"></a><span class="co"># Fitting the model</span></span>
-<span id="cb309-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-2" tabindex="-1"></a>power_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb309-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-3" tabindex="-1"></a>  size <span class="sc">~</span> power <span class="sc">+</span> <span class="fu">I</span>(power<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb309-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-4" tabindex="-1"></a>  <span class="at">data =</span> spower, <span class="at">family =</span> <span class="fu">gaussian</span>(), <span class="at">subset =</span> type <span class="sc">==</span> <span class="st">&quot;alter&quot;</span></span>
-<span id="cb309-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-5" tabindex="-1"></a>)</span>
-<span id="cb309-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-6" tabindex="-1"></a></span>
-<span id="cb309-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-7" tabindex="-1"></a><span class="fu">summary</span>(power_model)</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-1" tabindex="-1"></a><span class="co"># Fitting the model</span></span>
+<span id="cb307-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-2" tabindex="-1"></a>power_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb307-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-3" tabindex="-1"></a>  size <span class="sc">~</span> power <span class="sc">+</span> <span class="fu">I</span>(power<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb307-4"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-4" tabindex="-1"></a>  <span class="at">data =</span> spower, <span class="at">family =</span> <span class="fu">gaussian</span>(), <span class="at">subset =</span> type <span class="sc">==</span> <span class="st">&quot;alter&quot;</span></span>
+<span id="cb307-5"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-5" tabindex="-1"></a>)</span>
+<span id="cb307-6"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-6" tabindex="-1"></a></span>
+<span id="cb307-7"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb307-7" tabindex="-1"></a><span class="fu">summary</span>(power_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = size ~ power + I(power^2), family = gaussian(), 
 ##     data = spower, subset = type == &quot;alter&quot;)
-## 
-## Deviance Residuals: 
-##        6         7         8         9        10  
-##   0.2658  -11.2195   10.5568  -13.8852   14.2821  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
@@ -468,9 +468,9 @@ div.csl-indent {
 ## AIC: 46.404
 ## 
 ## Number of Fisher Scoring iterations: 2</code></pre>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb311-1" tabindex="-1"></a><span class="co"># Predict</span></span>
-<span id="cb311-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb311-2" tabindex="-1"></a><span class="fu">predict</span>(power_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">power =</span> .<span class="dv">8</span>), <span class="at">type =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb311-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb311-3" tabindex="-1"></a>  <span class="fu">ceiling</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-1" tabindex="-1"></a><span class="co"># Predict</span></span>
+<span id="cb309-2"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-2" tabindex="-1"></a><span class="fu">predict</span>(power_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">power =</span> .<span class="dv">8</span>), <span class="at">type =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb309-3"><a href="example-1-spillover-effects-in-egocentric-studiescredit-ego-power.html#cb309-3" tabindex="-1"></a>  <span class="fu">ceiling</span>()</span></code></pre></div>
 <pre><code>##   1 
 ## 102</code></pre>
 <p>From the figure, it becomes apparent that, although there is not enough power to identify effects at the ego level, because each ego brings in five alters, the alter sample size is high enough that we can reach above 0.8 statistical power with relatively small sample size.</p>

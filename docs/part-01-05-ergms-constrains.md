@@ -190,10 +190,10 @@ ans <- ergm(
   offset.coef = -Inf                              # The offset coefficient
   )
 ## Starting maximum pseudolikelihood estimation (MPLE):
+## Obtaining the responsible dyads.
 ## Evaluating the predictor and response matrix.
 ## Maximizing the pseudolikelihood.
 ## Finished MPLE.
-## Stopping at the initial estimate.
 ## Evaluating log-likelihood at the estimate.
 summary(ans)
 ## Call:
@@ -370,15 +370,7 @@ res_b     <- ergm(
   # Control parameters
   control = control.ergm(seed = 1)
   )
-```
 
-```
-## Warning: 'glpk' selected as the solver, but package 'Rglpk' is not available;
-## falling back to 'lpSolveAPI'. This should be fine unless the sample size and/or
-## the number of parameters is very big.
-```
-
-```r
 # ERGM with a digraph with constraints
 res_not_b <- ergm(
   # Main formula

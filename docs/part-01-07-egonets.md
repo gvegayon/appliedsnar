@@ -82,18 +82,18 @@ If the operation succeeded, then the previous code block should generate a list 
 
 ```r
 graphs[[1]]
-## IGRAPH b931cae U--- 12 25 -- 
+## IGRAPH 1027612 U--- 12 25 -- 
 ## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
 ## | (v/l), id (v/c)
-## + edges from b931cae:
+## + edges from 1027612:
 ##  [1] 1-- 3 1-- 2 1-- 6 1-- 5 1-- 4 1-- 8 1--11 1--10 2-- 3 3-- 7 3-- 4 3-- 5
 ## [13] 3-- 6 2-- 7 2-- 4 2-- 5 2-- 6 5-- 6 6--10 7-- 9 4-- 5 5-- 7 4--11 6-- 7
 ## [25] 4-- 7
 graphs[[2]]
-## IGRAPH 6e09f83 U--- 16 47 -- 
+## IGRAPH 1348508 U--- 16 47 -- 
 ## + attr: age (v/n), healthy_diet (v/n), gender_1 (v/l), eat_with_2
 ## | (v/l), id (v/c)
-## + edges from 6e09f83:
+## + edges from 1348508:
 ##  [1]  7--13  1-- 5  1-- 6  1-- 4  1-- 2  7--15  1-- 3 11--13  1--10  1--16
 ## [11]  4-- 6  2-- 6  6-- 7  1--11 11--15  6-- 9  6-- 8  3-- 9  5--15  4-- 5
 ## [21]  2-- 5  5-- 8  5-- 7  5--10  3-- 5  6--14 12--13  6--13  3--13  2-- 3
@@ -371,7 +371,7 @@ ggplot(egos, aes(x = total_time)) +
   geom_histogram() +
   labs(x = "Time in minutes", y = "Count") +
   labs(title = "Total time spent by egos")
-## Don't know how to automatically pick scale for object of type difftime. Defaulting to continuous.
+## Don't know how to automatically pick scale for object of type <difftime>. Defaulting to continuous.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
@@ -484,7 +484,7 @@ library(intergraph)
 library(ergm)
 ## Loading required package: network
 ## 
-## 'network' 1.18.1 (2023-01-24), part of the Statnet Project
+## 'network' 1.18.2 (2023-12-04), part of the Statnet Project
 ## * 'news(package="network")' for changes since last version
 ## * 'citation("network")' for citation information
 ## * 'https://statnet.org' for help, support, and other information
@@ -497,7 +497,7 @@ library(ergm)
 ##     is.directed, list.edge.attributes, list.vertex.attributes,
 ##     set.edge.attribute, set.vertex.attribute
 ## 
-## 'ergm' 4.4.0 (2023-01-26), part of the Statnet Project
+## 'ergm' 4.6-7262 (2023-09-04), part of the Statnet Project
 ## * 'news(package="ergm")' for changes since last version
 ## * 'citation("ergm")' for citation information
 ## * 'https://statnet.org' for help, support, and other information

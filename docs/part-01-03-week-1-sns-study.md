@@ -154,13 +154,13 @@ dat
 ##  8      22    111        1      NA      NA       0       0    NA      NA  
 ##  9      25    111        0       1       1      NA       1     4.5     3.5
 ## 10      27    111        1       0      NA       0       0     3.5    NA  
-## # … with 2,154 more rows, and 91 more variables: grades3 <dbl>, grades4 <dbl>,
-## #   eversmk1 <int>, eversmk2 <int>, eversmk3 <int>, eversmk4 <int>,
-## #   everdrk1 <int>, everdrk2 <int>, everdrk3 <int>, everdrk4 <int>,
-## #   home1 <int>, home2 <int>, home3 <int>, home4 <int>, sch_friend11 <int>,
-## #   sch_friend12 <int>, sch_friend13 <int>, sch_friend14 <int>,
-## #   sch_friend15 <int>, sch_friend16 <int>, sch_friend17 <int>,
-## #   sch_friend18 <int>, sch_friend19 <int>, sch_friend110 <int>, …
+## # ℹ 2,154 more rows
+## # ℹ 91 more variables: grades3 <dbl>, grades4 <dbl>, eversmk1 <int>,
+## #   eversmk2 <int>, eversmk3 <int>, eversmk4 <int>, everdrk1 <int>,
+## #   everdrk2 <int>, everdrk3 <int>, everdrk4 <int>, home1 <int>, home2 <int>,
+## #   home3 <int>, home4 <int>, sch_friend11 <int>, sch_friend12 <int>,
+## #   sch_friend13 <int>, sch_friend14 <int>, sch_friend15 <int>,
+## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>, …
 ```
 
 
@@ -203,13 +203,13 @@ Let's take a look at this step by step:
     ##  8 1110022    111           NA           NA           NA           NA
     ##  9 1110025    111          135          185          553           84
     ## 10 1110027    111          346          168          559            5
-    ## # … with 2,154 more rows, and 72 more variables: sch_friend15 <int>,
-    ## #   sch_friend16 <int>, sch_friend17 <int>, sch_friend18 <int>,
-    ## #   sch_friend19 <int>, sch_friend110 <int>, sch_friend111 <int>,
-    ## #   sch_friend112 <int>, sch_friend113 <int>, sch_friend114 <int>,
-    ## #   sch_friend115 <int>, sch_friend116 <int>, sch_friend117 <int>,
-    ## #   sch_friend118 <int>, sch_friend119 <int>, sch_friend21 <int>,
-    ## #   sch_friend22 <int>, sch_friend23 <int>, sch_friend24 <int>, …
+    ## # ℹ 2,154 more rows
+    ## # ℹ 72 more variables: sch_friend15 <int>, sch_friend16 <int>,
+    ## #   sch_friend17 <int>, sch_friend18 <int>, sch_friend19 <int>,
+    ## #   sch_friend110 <int>, sch_friend111 <int>, sch_friend112 <int>,
+    ## #   sch_friend113 <int>, sch_friend114 <int>, sch_friend115 <int>,
+    ## #   sch_friend116 <int>, sch_friend117 <int>, sch_friend118 <int>,
+    ## #   sch_friend119 <int>, sch_friend21 <int>, sch_friend22 <int>, …
     ```
     
 2.  Then, we reshape it to _long_ format: By transposing all the `sch_friend*` to long format. We do this using the function `gather` (from the `tidyr` package); an alternative to the `reshape` function, which I find easier to use. Let's see how it works:
@@ -235,7 +235,7 @@ Let's take a look at this step by step:
     ##  8 1110022    111 sch_friend11      NA
     ##  9 1110025    111 sch_friend11     135
     ## 10 1110027    111 sch_friend11     346
-    ## # … with 164,454 more rows
+    ## # ℹ 164,454 more rows
     ```
     
     In this case, the `key` parameter sets the name of the variable that will contain the name of the variable that was reshaped, while `value` is the name of the variable that will hold the content of the data (that's why I named those like that). The `-id, -school` bit tells the function to "drop" those variables before reshaping. In other words, "reshape everything but `id` and `school.`"
@@ -266,7 +266,7 @@ Let's take a look at this step by step:
     ##  8 1110027    111 sch_friend11     346
     ##  9 1110029    111 sch_friend11     369
     ## 10 1110030    111 sch_friend11     462
-    ## # … with 39,551 more rows
+    ## # ℹ 39,551 more rows
     ```
     
 4.  And finally, we create three new variables from this dataset: `friendid,`, `year`, and `nom_num` (nomination number). All using regular expressions:
@@ -298,7 +298,7 @@ Let's take a look at this step by step:
     ##  8 1110027    111 sch_friend11     346  1110346     1     1
     ##  9 1110029    111 sch_friend11     369  1110369     1     1
     ## 10 1110030    111 sch_friend11     462  1110462     1     1
-    ## # … with 39,551 more rows
+    ## # ℹ 39,551 more rows
     ```
     
     The regular expression `(?<=[a-z])` matches a string preceded by any letter from _a_ to _z_. In contrast, the expression `[0-9]` matches a single number. Hence, from the string `"sch_friend12"`, the regular expression will only match the `1`, as it is the only number followed by a letter. The expression `(?<=[a-z][0-9])` matches a string preceded by a lower case letter and a one-digit number. Finally, the expression `[0-9]+` matches a string of numbers--so it could be more than one. Hence, from the string `"sch_friend12"`, we will get `2`:
