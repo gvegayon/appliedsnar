@@ -20,7 +20,7 @@ vignette("ergm", package="ergm")
 >
 > --- [@Hunter2008]
 
-![Source: Hunter et al. (2008)](hunter2008.png)
+![Source: Hunter et al. (2008)](img/hunter2008.png)
 
 In a nutshell, we use ERGMs as a parametric interpretation of the distribution of $\mathbf{Y}$, which takes the canonical form:
 
