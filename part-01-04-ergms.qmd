@@ -487,9 +487,7 @@ ans0_bis <- ergm(
 
 Increase the sample size, so the curves are smoother, longer intervals (thinning), which reduces autocorrelation, and a larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.
 
-```{r badconvergence, fig.cap='An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful', fig.pos='!h'}
-knitr::include_graphics("awful-chains.png")
-```
+![An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful](img/awful-chains.png){fig-align="center"}
 
 
 ## More on MCMC convergence
