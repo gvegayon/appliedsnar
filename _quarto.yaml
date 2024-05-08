@@ -10,10 +10,11 @@ book:
   title: Applied Network Science with R
   author: George G. Vega Yon, Ph.D.
   date: 2024-05-07
-  cover-image: front-page-dalle.png
+  cover-image: img/front-page-dalle.png
   cover-image-alt: 'An AI image generated with Bing: Draw an image of a social network. Include a person examining the network and holding a laptop in one hand. The laptop should have the logo of the R programming language.'
   page-footer: Applied Network Science with R - [https://ggvy.cl](https://ggvy.cl){target="_blank"}
   repo-url: https://github.com/gvegayon/appliedsnar
+  repo-branch: master
   repo-actions: [edit]
   navbar:
     background: light

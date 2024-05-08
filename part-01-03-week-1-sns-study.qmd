@@ -38,22 +38,24 @@ We must create a unique `id` using the school and photo `id`. Since both variabl
 (photo_id_ran <- range(dat$photoid))
 ```
 
-As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. We will use `dplyr` [@R-dplyr] and the pipe operator `|>` to create this variable, and we will call it... `id`:[^onpipes]
-
-[^onpipes]: Introduced in R version 4.1.0, base R's pipe operator `|>` works similarly to the `magrittr` pipe `%>%`. The key differences between these two are explained in [https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/).
+As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. We will use `dplyr` [@R-dplyr] to create this variable, and call it `id`:
 
 ```{r 03-newid}
 library(dplyr)
 
+# Creating the variable
 dat <- dat |>
   mutate(id = school*10000 + photoid)
 
+# First few rows
 dat |>
   head() |>
   select(school, photoid, id)
 ```
 
-Wow, what happened in the last three lines of code! What is that `|>`? Well, that's the [pipe operator](http://r4ds.had.co.nz/pipes.html), and it is an appealing way of writing nested function calls. In this case, instead of writing something like:
+Wow, what happened in the last lines of code! What is that `|>`? Well, that's the pipe operator[^onpipes], and it is an appealing way of writing nested function calls. In this case, instead of writing something like:
+
+[^onpipes]: Introduced in R version 4.1.0, base R's pipe operator `|>` works similarly to the `magrittr` pipe `%>%`. The key differences between these two are explained in [https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/).
 
 ```r
 dat_filtered$id <- dat_filtered$school*10000 + dat_filtered$photoid
@@ -206,8 +208,8 @@ So we have our network with `r vcount(ig_year1)` nodes and `r ecount(ig_year1)` 
 While we could do all networks at once, in this part, we will focus on computing some network statistics for one of the schools only. We start by school 111. The first question that you should be asking yourself now is, "how can I get that information from the igraph object?." Vertex and edges attributes can be accessed via the `V` and `E` functions, respectively; moreover, we can list what vertex/edge attributes are available:
 
 ```{r 03-listing-attributes}
-list.vertex.attributes(ig_year1)
-list.edge.attributes(ig_year1) 
+vertex_attr_names(ig_year1)
+edge_attr_names(ig_year1) 
 ```
 
 Just like we would do with data frames, accessing vertex attributes is done via the dollar sign operator `$`. Together with the `V` function; for example, accessing the first ten elements of the variable `hispanic` can be done as follows:
