@@ -533,10 +533,10 @@ Of the four features, **age homophily** is the one that stands out. Why is this
 tha case? If we look again at the parameters used in the ERGM and how these
 interact with vertices' attributes, we will find the answer:
 
-- The log-odds of a new race-homophilic tie are $1\times\theta_{\mbox{race-homophily}} = 0.5$.
+- The log-odds of a new race-homophilic tie are $1\times\theta_{\text{race-homophily}} = 0.5$.
 
 - But, the log-odd of an age heterophilic tie between, say, 14 and 17 year
-  olds is $|17-14|\theta_{\mbox{age-homophily}} = 3\times -0.5  = -1.5$.
+  olds is $|17-14|\theta_{\text{age-homophily}} = 3\times -0.5  = -1.5$.
 
 - Therefore, the effect of heterophily (which is just the opposite of homophily)
   is significantly larger, actually three times in this case, than the race-homophily

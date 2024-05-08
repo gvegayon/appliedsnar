@@ -1,5 +1,3 @@
-# Statistical Foundations {-}
-
 # Bayes' Rule
 
 Bayes' Rule is a fundamental equation in Bayesian statistics. With it, we can reformulate inferential problems by writing probabilities in terms of known quantities. Bayes' rule can be stated as follows:
@@ -20,7 +18,7 @@ Since the denominator of the equation does not depend on $\theta$, we can, inste
 \Pr{\left(\theta|D\right)} \propto \Pr{\left(\theta|D\right)}\Pr{\left(\theta\right)}
 \end{equation*}
 
-In the Bayesian world, the unconditional distribution of the model parameters is assumed to come from a particular distribution, whereas in the frequentist world, no distributional assumptions are made about the model parameters. The latter is then equivalent to saying that $\theta\sim \mbox{Uniform}(-\infty, +\infty)$; therefore, even frequentists assume something about the model parameters![^frequentists]
+In the Bayesian world, the unconditional distribution of the model parameters is assumed to come from a particular distribution, whereas in the frequentist world, no distributional assumptions are made about the model parameters. The latter is then equivalent to saying that $\theta\sim \text{Uniform}(-\infty, +\infty)$; therefore, even frequentists assume something about the model parameters![^frequentists]
 
 [^frequentists]: The discussion about differences and similarities between frequentists and Bayesians has a long tradition. Bottom line, no one can say 100% that they are either-or. In rigor, frequentists say model parameters are not random but deterministic.
 

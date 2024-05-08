@@ -42,13 +42,13 @@ for each network:
 
 [^density-sample-mean]: Density is indeed a sample mean as we are, in principle
 computing the average of a sequence of Bernoulli variables. Formally:
-$\mbox{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
+$\text{density}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
 
-1. Since $s(G_i)\sim \mbox{N}(\mu_i,\sigma_i^2/m_i)$ for $i\in\{1,2\}$, in the case
+1. Since $s(G_i)\sim \text{N}(\mu_i,\sigma_i^2/m_i)$ for $i\in\{1,2\}$, in the case
    of the density, $m_i = n_i * (n_i - 1)$. The statistic is then:
 
    $$
-   s(G_1) - s(G_0)\sim \mbox{N}(\mu_1-\mu_0, \sigma_1^2/m_1 + \sigma_1^2/m_2)
+   s(G_1) - s(G_0)\sim \text{N}(\mu_1-\mu_0, \sigma_1^2/m_1 + \sigma_1^2/m_2)
    $$
    
    Thus
@@ -110,7 +110,7 @@ different networks, and we would like to asses whether we can reject $H_0$
 or [fail to reject](https://www.thoughtco.com/fail-to-reject-in-a-hypothesis-test-3126424) it.
 The procedure is very similar:
 
-1. One approach that we can test is whether $k \in \mbox{ConfInt}(s(G_1) - s(G_2))$.
+1. One approach that we can test is whether $k \in \text{ConfInt}(s(G_1) - s(G_2))$.
    Building confidence intervals with bootstrap could be more intuitive.
    
 2. Like before, we use bootstrap to generate a distribution of $s(G_1)$ and
@@ -149,12 +149,12 @@ In particular, for both networks, $G_1$ and $G_2$, we compute the average
 indegree per node:
 
 $$
-s(G_1) = \mbox{AvgIndeg}(G_1) = \frac{1}{n}\sum_{i}\sum_{j\neq i}A^1_{ji}
+s(G_1) = \text{AvgIndeg}(G_1) = \frac{1}{n}\sum_{i}\sum_{j\neq i}A^1_{ji}
 $$
 
 \noindent where $A^1_{ji}$ equals one if vertex $j$ sends a tie to $i$. In this
 case, since we are looking at an average, we have that 
-$\mbox{AvgIndeg}(G_1) \sim N(\mu_1, \sigma^2_1/n)$. Thus, taking advantage of
+$\text{AvgIndeg}(G_1) \sim N(\mu_1, \sigma^2_1/n)$. Thus, taking advantage of
 the normality of the statistic, we can build a test statistic as follows:
 
 $$

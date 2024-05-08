@@ -6,13 +6,13 @@ The codebook for the data provided here is in [the appendix](#sns-data).
 
 The goals for this chapter are:
 
-1.  Read the data into R,
+1.  Read the data into R.
 
-2.  Create a network with it,
+2.  Create a network with it.
 
-3.  Compute descriptive statistics
+3.  Compute descriptive statistics.
 
-4.  Visualize the network
+4.  Visualize the network.
 
 ## Data preprocessing
 
@@ -32,24 +32,28 @@ dat[1:5, 1:10]
 
 ### Creating a unique id for each participant
 
-Now suppose that we want to create a unique id using the school and photo id. In this case, since both variables are numeric, a good way of doing it is to encode the id. For example, the last three numbers are the photoid and the first ones are the school id. To do this, we need to take into account the range of the variables:
+We must create a unique `id` using the school and photo `id`. Since both variables are numeric, encoding the id is a good way of doing this. For example, the last three numbers are the `photoid`, and the first numbers are the school `id`. To do this, we need to take into account the range of the variables:
 
 ```{r 03-idrange}
 (photo_id_ran <- range(dat$photoid))
 ```
 
-As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. We will use `dplyr` [@R-dplyr] and `magrittr` [@R-magrittr]] (the pipe operator, `%>%`) to create this variable, and we will call it... `id` (mind blowing, right?):
+As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. We will use `dplyr` [@R-dplyr] and the pipe operator `|>` to create this variable, and we will call it... `id`:[^onpipes]
+
+[^onpipes]: Introduced in R version 4.1.0, base R's pipe operator `|>` works similarly to the `magrittr` pipe `%>%`. The key differences between these two are explained in [https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/).
 
 ```{r 03-newid}
 library(dplyr)
-library(magrittr)
 
-(dat %<>% mutate(id = school*10000 + photoid)) %>%
-  head %>%
+dat <- dat |>
+  mutate(id = school*10000 + photoid)
+
+dat |>
+  head() |>
   select(school, photoid, id)
 ```
 
-Wow, what happened in the last three lines of code! What is that `%>%`? Well, that's the [pipe operator](http://r4ds.had.co.nz/pipes.html), and it is an appealing way of writing nested function calls. In this case, instead of writing something like:
+Wow, what happened in the last three lines of code! What is that `|>`? Well, that's the [pipe operator](http://r4ds.had.co.nz/pipes.html), and it is an appealing way of writing nested function calls. In this case, instead of writing something like:
 
 ```r
 dat_filtered$id <- dat_filtered$school*10000 + dat_filtered$photoid
@@ -89,10 +93,10 @@ dat
 
 ```{r 03-reshape}
 # Maybe too much piping... but its cool!
-net <- dat %>% 
-  select(id, school, starts_with("sch_friend")) %>%
-  gather(key = "varname", value = "content", -id, -school) %>%
-  filter(!is.na(content)) %>%
+net <- dat |> 
+  select(id, school, starts_with("sch_friend")) |>
+  gather(key = "varname", value = "content", -id, -school) |>
+  filter(!is.na(content)) |>
   mutate(
     friendid = school*10000 + content,
     year     = as.integer(str_extract(varname, "(?<=[a-z])[0-9]")),
@@ -105,15 +109,15 @@ Let's take a look at this step by step:
 1.  First, we subset the data: We want to keep `id, school, sch_friend*.` For the later, we use the function `starts_with` (from the `tidyselect` package). The latter allows us to select all variables that start with the word "`sch_friend`", which means that `sch_friend11, sch_friend12, ...` will be selected.
 
     ```{r}
-    dat %>% 
+    dat |> 
       select(id, school, starts_with("sch_friend"))
     ```
     
 2.  Then, we reshape it to _long_ format: By transposing all the `sch_friend*` to long format. We do this using the function `gather` (from the `tidyr` package); an alternative to the `reshape` function, which I find easier to use. Let's see how it works:
 
     ```{r}
-    dat %>% 
-      select(id, school, starts_with("sch_friend")) %>%
+    dat |> 
+      select(id, school, starts_with("sch_friend")) |>
       gather(key = "varname", value = "content", -id, -school)
     ```
     
@@ -124,19 +128,19 @@ Let's take a look at this step by step:
 3.  As the nomination data can be empty for some cells, we need to take care of those cases, the `NA`s, so we filter the data:
 
     ```{r}
-    dat %>% 
-      select(id, school, starts_with("sch_friend")) %>%
-      gather(key = "varname", value = "content", -id, -school) %>%
+    dat |> 
+      select(id, school, starts_with("sch_friend")) |>
+      gather(key = "varname", value = "content", -id, -school) |>
       filter(!is.na(content))
     ```
     
 4.  And finally, we create three new variables from this dataset: `friendid,`, `year`, and `nom_num` (nomination number). All using regular expressions:
     
     ```{r}
-    dat %>% 
-      select(id, school, starts_with("sch_friend")) %>%
-      gather(key = "varname", value = "content", -id, -school) %>%
-      filter(!is.na(content)) %>%
+    dat |> 
+      select(id, school, starts_with("sch_friend")) |>
+      gather(key = "varname", value = "content", -id, -school) |>
+      filter(!is.na(content)) |>
       mutate(
         friendid = school*10000 + content,
         year     = as.integer(str_extract(varname, "(?<=[a-z])[0-9]")),
@@ -144,7 +148,7 @@ Let's take a look at this step by step:
         )
     ```
     
-    The regular expression `(?<=[a-z])` matches a string preceded by any letter from _a_ to _z_. In contrast, the expression `[0-9]` matches a single number. Hence, from the string `"sch_friend12"`, the regular expression will only match the `1`, as it is the only number followed by a letter. The expression `(?<=[a-z][0-9])` matches a string preceded by a lower case letter and a one-digit number. Finally, the expression `[0-9]+` matches a string of numbers--so it could be more than one. Hence, from the string `"sch_friend12"`, we will get `2`:
+    The regular expression `(?<=[a-z])` matches a string preceded by any letter from _a_ to _z_. In contrast, the expression `[0-9]` matches a single number. Hence, from the string `"sch_friend12"`, the regular expression will only match the `1`, as it is the only number followed by a letter. The expression `(?<=[a-z][0-9])` matches a string preceded by a lowercase letter and a one-digit number. Finally, the expression `[0-9]+` matches a string of numbers--so it could be more than one. Hence, from the string `"sch_friend12"`, we will get `2`:
     
     ```{r 03-miniregex}
     str_extract("sch_friend12", "(?<=[a-z])[0-9]")
@@ -159,7 +163,7 @@ For coercing the edgelist into an igraph object, we will be using the `graph_fro
 Using the optional `vertices` argument is a good practice since, by doing so, you are telling the function what ids that you are expecting to find. Using the original dataset, we will create a data frame name vertices:
 
 ```{r 03-vertex}
-vertex_attrs <- dat %>% 
+vertex_attrs <- dat |> 
   select(id, school, hispanic, female1, starts_with("eversmk"))
 ```
 
@@ -168,26 +172,26 @@ Now, let's now use the function `graph_from_data_frame` to create an `igraph` ob
 ```{r 03-igraph, message=FALSE, error = TRUE}
 library(igraph)
 
-ig_year1 <- net %>%
-  filter(year == "1") %>% 
-  select(id, friendid, nnom) %>%
+ig_year1 <- net |>
+  filter(year == "1") |> 
+  select(id, friendid, nnom) |>
   graph_from_data_frame(
     vertices = vertex_attrs
   )
 ```
 
-Ups! It seems that individuals are making nominations to other students not included in the survey. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
+Ups! It seems that individuals are nominating other students not included in the survey. How to solve that? Well, it all depends on what you need to do! In this case, we will go for the _quietly-remove-em'-and-don't-tell_ strategy:
 
 ```{r 03-igraph-bis}
 library(igraph)
 
-ig_year1 <- net %>%
-  filter(year == "1") %>%
+ig_year1 <- net |>
+  filter(year == "1") |>
   
   # Extra line, all nominations must be in ego too.
-  filter(friendid %in% id) %>% 
+  filter(friendid %in% id) |> 
   
-  select(id, friendid, nnom) %>%
+  select(id, friendid, nnom) |>
   graph_from_data_frame(
     vertices = vertex_attrs
     )
@@ -195,7 +199,7 @@ ig_year1 <- net %>%
 ig_year1
 ```
 
-So there we have our network with `r vcount(ig_year1)` nodes and `r ecount(ig_year1)` edges. The following steps: get some descriptive stats and visualize our network.
+So we have our network with `r vcount(ig_year1)` nodes and `r ecount(ig_year1)` edges. The following steps: get some descriptive stats and visualize our network.
 
 ## Network descriptive stats
 
@@ -238,7 +242,7 @@ V(ig_year1_111)$betweeness <- betweenness(ig_year1_111, normalized = TRUE)
 From here, we can _go back_ to our old habits and get the set of vertex attributes as a data frame so we can compute some summary statistics on the centrality measurements that we just got
 
 ```{r 03-centrality-stats}
-# Extracting each vectex features as a data.frame
+# Extracting each vertex features as a data.frame
 stats <- as_data_frame(ig_year1_111, what = "vertices")
 
 # Computing quantiles for each variable
@@ -267,7 +271,7 @@ stats_degree <-
 
 ```
 
-Now we will compute some statistics at the graph level:
+Next, we will compute some statistics at the graph level:
 
 ```{r 03-network-stats}
 cbind(
@@ -467,19 +471,18 @@ So what happened here?
 Hypothesis: Individuals that, on average, are among the first nominations of their peers are more popular
 
 ```{r 03-nomination-indegree}
-
 # Getting all the data in long format
-edgelist <- as_long_data_frame(ig_year1) %>%
-  as_tibble
+edgelist <- as_long_data_frame(ig_year1) |>
+  as_tibble()
 
 # Computing indegree (again) and average nomination number
 # Include "On a scale from one to five how close do you feel"
 # Also for egocentric friends (A. Friends)
-indeg_nom_cor <- group_by(edgelist, to, to_name, to_school) %>%
+indeg_nom_cor <- group_by(edgelist, to, to_name, to_school) |>
   summarise(
     indeg   = length(nnom),
     nom_avg = 1/mean(nnom)
-  ) %>%
+  ) |>
   rename(
     school = to_school
   )

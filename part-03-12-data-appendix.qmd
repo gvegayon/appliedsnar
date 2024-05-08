@@ -1,7 +1,3 @@
-\cleardoublepage 
-
-# (APPENDIX) Appendix {-}
-
 # Datasets
 
 ## SNS data {#sns-data}

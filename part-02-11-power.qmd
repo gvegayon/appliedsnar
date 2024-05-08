@@ -22,12 +22,12 @@ tab <- matrix(tab, ncol = 2, byrow = TRUE, dimnames = list(c("H0 is true", "H1 i
 knitr::kable(tab)
 ```
 
-With $\Pr{(\mbox{Type I error})} = \alpha$ and $\Pr{(\mbox{Type II error})} = \beta$. This way, power can be defined as the
-probability of rejecting the null given the alternative is true, $\Pr{(\mbox{Reject H0}|\mbox{H1 is true})} = 1-\beta$.
+With $\Pr{(\text{Type I error})} = \alpha$ and $\Pr{(\text{Type II error})} = \beta$. This way, power can be defined as the
+probability of rejecting the null given the alternative is true, $\Pr{(\text{Reject H0}|\text{H1 is true})} = 1-\beta$.
 
 ## Example 1: Sample size for a proportion
 
-Let's imagine we are preparing a study in which we would like to estimate the proportion of individuals with a given status. Formally, we then say that the variable $Y\sim\mbox{Bernoulli}(p)$. To do so, we will need to survey $n$ individuals and estimate such a number by taking the sample average. Furthermore, we hypothesize that under the null the proportion is $H_0: p = p_0$.
+Let's imagine we are preparing a study in which we would like to estimate the proportion of individuals with a given status. Formally, we then say that the variable $Y\sim\text{Bernoulli}(p)$. To do so, we will need to survey $n$ individuals and estimate such a number by taking the sample average. Furthermore, we hypothesize that under the null the proportion is $H_0: p = p_0$.
 
 The key here is to think about a simple rejection rule. Again, power is the probability of **rejecting the null** given that **the alternative is true**. So, to write down the equation, we need to think about acceptance and rejection regions. Let $\hat p$ be our estimate for the population parameter, furthermore, $\hat p = n^{-1}\sum_i y_i$. Our test statistic can be--and will be, most of the cases--standardized to leverage the law of large numbers; under the null, we write the following:
 
@@ -39,7 +39,7 @@ The key here is to think about a simple rejection rule. Again, power is the prob
 Therefore, the statistic:
 
 \begin{equation*}
-\frac{\hat p - p_0}{\sqrt{p_0(1-p_0)/n}} = \frac{\sqrt{n}(\hat p - p_0)}{\sqrt{p_0(1-p_0)}} \sim \mbox{N}(0, 1)
+\frac{\hat p - p_0}{\sqrt{p_0(1-p_0)/n}} = \frac{\sqrt{n}(\hat p - p_0)}{\sqrt{p_0(1-p_0)}} \sim \text{N}(0, 1)
 \end{equation*}
 
 Since the statistic is normally distributed, we can then say when we will reject the null. For this case, that depends on the critical value, which most of the time is defined in terms of the type I error rate. Formally, we reject the null if
@@ -51,7 +51,7 @@ Since the statistic is normally distributed, we can then say when we will reject
 This is equivalent to saying that the **test statistic fell into the rejection region**. With this in hand, we can now write out the equation that we will be using for calculating the sample size. Going back to the definition of power:
 
 \begin{align*}
-\Pr{(\mbox{Reject H0}|\mbox{H1 is true})} & = 1-\beta \\
+\Pr{(\text{Reject H0}|\text{H1 is true})} & = 1-\beta \\
 \Pr{\left(\frac{\sqrt{n}(\hat p - p_0)}{\sqrt{p_0(1-p_0)}} > Z_{1-\alpha/2}\right.\left|\vphantom{\frac{1}{2}}p = p_1\right)} & = 1 - \beta
 \end{align*}
 

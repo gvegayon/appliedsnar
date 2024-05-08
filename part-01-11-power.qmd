@@ -415,7 +415,7 @@ use a Spatial Autocorrelation Model [SAR.] SAR models are common in Spatial
 statistics. A general form is:
 
 $$
-\mathbf{y} = \rho W \mathbf{y} + \mathbf{X} \beta + \varepsilon,\quad \varepsilon \sim \mbox{MVN}(0, \sigma^2 I_n),
+\mathbf{y} = \rho W \mathbf{y} + \mathbf{X} \beta + \varepsilon,\quad \varepsilon \sim \text{MVN}(0, \sigma^2 I_n),
 $$
 
 \noindent where $\rho$ is the correlation coefficient, $W$ is a row-stochastic 

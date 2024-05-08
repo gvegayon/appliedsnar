@@ -31,8 +31,8 @@ library(netdiffuseR)
     
     $$
     a_i = \left\{\begin{array}{ll}
-    1 &\mbox{if } \tau_i\leq E_i \\
-    0 & \mbox{Otherwise}
+    1 &\text{if } \tau_i\leq E_i \\
+    0 & \text{Otherwise}
     \end{array}\right. \qquad
     E_i \equiv \frac{\sum_{j\neq i}\mathbf{X}_{ij}a_j}{\sum_{j\neq i}\mathbf{X}_{ij}}
     $$
@@ -519,8 +519,8 @@ hist(test)
     $$
     y_{it} = \left\{
     \begin{array}{ll}
-    1 & \mbox{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt-1}y_{it-1}}{\sum_{j\neq i}W_{ijt-1}} + X_{it}\beta > 0\\
-    0 & \mbox{otherwise}
+    1 & \text{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt-1}y_{it-1}}{\sum_{j\neq i}W_{ijt-1}} + X_{it}\beta > 0\\
+    0 & \text{otherwise}
     \end{array}
     \right.
     $$
@@ -571,8 +571,8 @@ hist(test)
     $$
     y_{it} = \left\{
     \begin{array}{ll}
-    1 & \mbox{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt}y_{it}}{\sum_{j\neq i}W_{ijt}} + X_{it}\beta > 0\\
-    0 & \mbox{otherwise}
+    1 & \text{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt}y_{it}}{\sum_{j\neq i}W_{ijt}} + X_{it}\beta > 0\\
+    0 & \text{otherwise}
     \end{array}
     \right.
     $$

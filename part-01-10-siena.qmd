@@ -5,7 +5,7 @@ Stochastic Actor Oriented Models (SOAM), also known as Siena models were introdu
 As a difference from ERGMs, Siena models look at the data generating process from the individuals' point of view. Based on McFadden's ideas of probabilistic choice, the model is founded in the following equation
 
 $$
-U_i(x) - U_i(x') \sim \mbox{Extreame Value Distribution}
+U_i(x) - U_i(x') \sim \text{Extreame Value Distribution}
 $$
 
 In other words, individuals choose between states $x$ and $x'$ in a probabilistic way (with some noise),  
