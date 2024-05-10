@@ -3,7 +3,7 @@ project:
   output-dir: _docs
 
 execute: 
-  cache: true
+  cache: false
 
 book:
   google-analytics: UA-40608305-4
@@ -54,7 +54,7 @@ biblio-style: apalike
 
 format:
   html:
-    html-math-method: katex
+    html-math-method: mathjax
     toc: true
     number-sections: true
   pdf:

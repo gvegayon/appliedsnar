@@ -1,8 +1,13 @@
 # Exponential Random Graph Models
 
-I strongly suggest reading the vignette included in the `ergm` R package
+I strongly suggest reading the vignette included in the `ergm` R package.
 
-```{r echo=FALSE}
+:::{.content-hidden}
+{{< include math.tex >}}
+:::
+
+```{r}
+#| echo: false
 if (file.exists("ergm.rda")) {
   load("ergm.rda")
   chapter_cached <- TRUE
@@ -26,19 +31,18 @@ In a nutshell, we use ERGMs as a parametric interpretation of the distribution o
 
 $$
 \Pr{\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}} = \frac{\exp{\theta^{\text{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
-(\#eq:04-1)
-$$
+$$ {#eq-main-ergm}
 
 Where $\theta\in\Omega\subset\mathbb{R}^q$ is the vector of model coefficients and $\mathbf{g}(\mathbf{y})$ is a *q*-vector of statistics based on the adjacency matrix $\mathbf{y}$.
 
-Model \@ref(eq:04-1) may be expanded by replacing $\mathbf{g}(\mathbf{y})$ with $\mathbf{g}(\mathbf{y}, \mathbf{X})$ to allow for additional covariate information $\mathbf{X}$ about the network. The denominator,
+Model @eq-main-ergm may be expanded by replacing $\mathbf{g}(\mathbf{y})$ with $\mathbf{g}(\mathbf{y}, \mathbf{X})$ to allow for additional covariate information $\mathbf{X}$ about the network. The denominator,
 
 
 $$
 \kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\theta^{\text{T}}\mathbf{g}(\mathbf{y})}
 $$
 
-,is the normalizing factor that ensures that equation \@ref(eq:04-1) is a legitimate probability distribution. Even after fixing $\mathcal{Y}$ to be all the networks that have size $n$, the size of $\mathcal{Y}$ makes this type of statistical model hard to estimate as there are $N = 2^{n(n-1)}$ possible networks! [@Hunter2008]
+,is the normalizing factor that ensures that equation @eq-main-ergm is a legitimate probability distribution. Even after fixing $\mathcal{Y}$ to be all the networks that have size $n$, the size of $\mathcal{Y}$ makes this type of statistical model hard to estimate as there are $N = 2^{n(n-1)}$ possible networks! [@Hunter2008]
 
 Recent developments include new forms of dependency structures to take into account more general neighborhood effects. These models relax the one-step Markovian dependence assumptions, allowing investigation of longer-range configurations, such as longer paths in the network or larger cycles (Pattison and Robins 2002). Models for bipartite (Faust and Skvoretz 1999) and tripartite (Mische and Robins 2000) network structures have been developed. [@Hunter2008 p. 9]
 
@@ -98,11 +102,11 @@ Again, the same result. The Bernoulli graph is not the only ERGM model that can 
 
 The ultimate goal is to perform statistical inference on the proposed model. In a *standard* setting, we would be able to use Maximum-Likelihood-Estimation (MLE), which consists of finding the model parameters $\theta$ that, given the observed data, maximize the likelihood of the model. For the latter, we generally use [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization). Newton's method requires been able to compute the log-likelihood of the model, which in ERGMs can be challenging.
 
-For ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straightforward as in the regular setting. Because of it, most estimation methods rely on simulations.
+For ERGMs, since part of the likelihood involves a normalizing constant that is a function of all possible networks, this is not as straightforward as in the regular setting. Because of this, most estimation methods rely on simulations.
 
 In `statnet`, the default estimation method is based on a method proposed by [@Geyer1992], Markov-Chain MLE, which uses Markov-Chain Monte Carlo for simulating networks and a modified version of the Newton-Raphson algorithm to estimate the parameters.
 
-The idea of MC-MLE for this family of statistical models is that we can approximate the expectation of normalizing constant ratios using the law of large numbers. In particular, the following:
+The idea of MC-MLE for this family of statistical models is to approximate the expectation of normalizing constant ratios using the law of large numbers. In particular, the following:
 
 \begin{align*}
 \frac{\kappa\left(\theta,\mathcal{Y}\right)}{\kappa\left(\theta_0,\mathcal{Y}\right)} & = 
@@ -433,14 +437,14 @@ One nice feature of the `mcmc.diagnostics` function is the nice trace and poster
 ```
 
 
-If we called the function `mcmc.diagnostics`, this message appears at the end:
+If we call the function `mcmc.diagnostics`, this message appears at the end:
 
 >
 MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).
 >
 > ---`mcmc.diagnostics(ans0)`
 
-Not that bad (although the `mutual` term could do better)!^[The statnet wiki website as a very nice example of (very) bad and good MCMC diagnostics plots [here](https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf).] First, observe that in the figure we see four different lines; why is that? Since we were running in parallel using four cores, the algorithm ran four chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place; in such a case, we can start thinking about model convergence from the MCMC perspective.
+Not that bad (although the `mutual` term could do better)!^[The statnet wiki website as a very nice example of (very) bad and good MCMC diagnostics plots [here](https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf).] First, observe that in the figure, we see four different lines; why is that? Since we were running in parallel using four cores, the algorithm ran four chains of the MCMC algorithm. An eyeball test is to see if all the chains moved at about the same place; in such a case, we can start thinking about model convergence from the MCMC perspective.
 
 Once we are sure to have reach convergence on the MCMC algorithm, we can start thinking about how well does our model predicts the observed network's proterties. Besides the statistics that define our ERGM, the `gof` function's default behavior show GOF for:
 
@@ -507,36 +511,6 @@ literature sometimes describes as the Gibbs-sampler.
 
 In particular, the log-odds of the $ij$ tie ocurring conditional on the rest of
 the network can be written as:
-
-\newcommand{\sufstats}[1]{s\left(#1\right)}
-\renewcommand{\exp}[1]{\text{exp}\left\{#1\right\}}
-\renewcommand{\log}[1]{\text{log}\left\{#1\right\}}
-\newcommand{\transpose}[1]{{#1}^\mathbf{t}}
-\renewcommand{\t}[1]{\transpose{#1}}
-
-\newcommand{\s}[1]{\sufstats{#1}}
-\newcommand{\SUFF}{\mathcal{S}}
-\newcommand{\Suff}{\mathbf{S}}
-\newcommand{\suff}{\mathbf{s}}
-
-\newcommand{\isone}[1]{{\boldsymbol{1}\left( #1 \right)}}
-\renewcommand{\Pr}[1]{{\mathbb{P}\left(#1\right) }}
-\newcommand{\f}[1]{{f\left(#1\right) }}
-\newcommand{\Prcond}[2]{{\mathbb{P}\left(#1\vphantom{#2}\;\right|\left.\vphantom{#1}#2\right)}}
-\newcommand{\fcond}[2]{{f\left(#1|#2\right) }}
-\newcommand{\Expected}[1]{{\mathbb{E}\left\{#1\right\}}}
-\newcommand{\ExpectedCond}[2]{{\mathbb{E}\left\{#1\vphantom{#2}\right|\left.\vphantom{#1}#2\right\}}}
-\renewcommand{\exp}[1]{\text{exp}\left\{#1\right\}}
-
-\newcommand{\Likelihood}[2]{\text{L}\left(#1 \left|\vphantom{#1}#2\right.\right)}
-
-\newcommand{\loglik}[1]{l\left(#1\right)}
-\newcommand{\logit}[1]{\text{logit}\left(#1\right)}
-\newcommand{\chng}[1]{\delta\left(y_{#1}:0\to1\right)}
-
-\newcommand{\pgraph}{\mathbf{x}}
-\newcommand{\snamed}[2]{\s{#1}_{\text{#2}}}
-
 
 \begin{equation}
 	\logit{\Pr{y_{ij} = 1|y_{-ij}}} = \transpose{\theta}\Delta\chng{ij},

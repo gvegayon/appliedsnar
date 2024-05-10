@@ -1,3 +1,7 @@
+---
+date-modified: 2024-05-09
+---
+
 # R Basics
 
 R [@R] is a programming language oriented to statistical computing. In the social network community, R has become the *de facto* due to the large number of packages available for network analysis.
@@ -35,13 +39,16 @@ To get RStudio, visit [https://posit.co/products/open-source/rstudio/](https://p
 Some common tasks in R
 
 0.  Getting help (and reading the manual) is *THE MOST IMPORTANT* thing you should know about. For example, if you want to read the manual (help file) of the `read.csv` function, you can type either of these:
+
     ```r
     ?read.csv
     ?"read.csv"
     help(read.csv)
     help("read.csv")
     ```
+
     If you are not fully aware of what is the name of the function, you can always use the *fuzzy search*
+
     ```r
     help.search("linear regression")
     ??"linear regression"
@@ -58,7 +65,8 @@ Some common tasks in R
 
 2.  R has several types of objects. The most basic structures in R are `vectors`, `matrix`, `list`, `data.frame`. Here is an example of creating several of these (each line is enclosed with parenthesis so that R prints the resulting element):
 
-    ```{r creating}
+    ```{r}
+    #| label: creating
     (a_vector     <- 1:9)
     (another_vect <- c(1, 2, 3, 4, 5, 6, 7, 8, 9))
     (a_string_vec <- c("I", "like", "netdiffuseR"))

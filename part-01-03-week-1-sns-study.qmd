@@ -1,8 +1,10 @@
+---
+date-modified: 2024-05-09
+---
+
 # Network Nomination Data
 
-You can download the data for this chapter [here](https://cdn.rawgit.com/gvegayon/appliedsnar/fdc0d26f/03-sns.dta).
-
-The codebook for the data provided here is in [the appendix](#sns-data).
+This chapter provides a start-to-finish example for processing survey-type data in R. The chapter features the Social Network Study [SNS] dataset. You can download the data for this chapter [here](https://cdn.rawgit.com/gvegayon/appliedsnar/fdc0d26f/03-sns.dta); and the codebook for the data provided here is in [the appendix](#sns-data).
 
 The goals for this chapter are:
 
@@ -12,7 +14,7 @@ The goals for this chapter are:
 
 3.  Compute descriptive statistics.
 
-4.  Visualize the network.
+4.  Visualize the network. 
 
 ## Data preprocessing
 
