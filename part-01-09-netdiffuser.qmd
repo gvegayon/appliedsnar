@@ -1,7 +1,10 @@
-# Network diffussion with `netdiffuseR`
+---
+date-modified: 2024-05-10
+---
 
+# Network diffusion
 
-This chapter mainly was based on the 2018 and 2019 tutorials of netdiffuseR
+This chapter is based on the 2018 and 2019 tutorials of netdiffuseR
 at the Sunbelt conference. The source code of the tutorials, taught by [Thomas W. Valente](https://keck.usc.edu/faculty-search/thomas-william-valente/)
 and [George G. Vega Yon](https://ggvy.cl) (author of this book), is available [here](https://github.com/USCCANA/netdiffuser-sunbelt2018/tree/sunbelt2019).
 
@@ -20,26 +23,26 @@ library(netdiffuseR)
   communities.
 
 *   While a lot of factors have been shown to influence diffusion (Spatial,
-    Economic, Cultural, Biological, etc.), Social Networks is a prominent one.
+    Economic, Cultural, Biological, etc.), Social Networks are prominent.
 
-*   There are many components in the diffusion network model including network exposures, thresholds, infectiousness, susceptibility, hazard rates, diffusion rates (bass model), clustering (Moran's I), and so on.
+*   There are many components in the diffusion network model, including network exposures, thresholds, infectiousness, susceptibility, hazard rates, diffusion rates (bass model), clustering (Moran's I), and so on.
 
 
 ### Thresholds
 
-*   One of the canonical concepts is the network threshold. Network thresholds (Valente, 1995; 1996), $\tau$, are defined as the required proportion or number of neighbors that lead you to adopt a particular behavior (innovation), $a=1$. In (very) general terms
+* One of the canonical concepts is the network threshold. Network thresholds (Valente, 1995; 1996), $\tau$, are defined as the required proportion or number of neighbors that lead you to adopt a particular behavior (innovation), $a=1$. In (very) general terms
     
-    $$
-    a_i = \left\{\begin{array}{ll}
-    1 &\text{if } \tau_i\leq E_i \\
-    0 & \text{Otherwise}
-    \end{array}\right. \qquad
-    E_i \equiv \frac{\sum_{j\neq i}\mathbf{X}_{ij}a_j}{\sum_{j\neq i}\mathbf{X}_{ij}}
-    $$
+  $$
+  a_i = \left\{\begin{array}{ll}
+  1 &\text{if } \tau_i\leq E_i \\
+  0 & \text{Otherwise}
+  \end{array}\right. \qquad
+  E_i \equiv \frac{\sum_{j\neq i}\mathbf{X}_{ij}a_j}{\sum_{j\neq i}\mathbf{X}_{ij}}
+  $$
     
     Where $E_i$ is i's exposure to the innovation and $\mathbf{X}$ is the adjacency matrix (the network).
 
-*   This can be generalized and extended to include covariates and other network weighting schemes (that's what __netdiffuseR__ is all about).
+* This can be generalized and extended to include covariates and other network weighting schemes (that's what __netdiffuseR__ is all about).
 
 
 ## The netdiffuseR R package
@@ -48,38 +51,41 @@ library(netdiffuseR)
 
 __netdiffuseR__ is an R package that:
 
-*   Is designed for Visualizing, Analyzing, and Simulating network diffusion data (in general).
+* It is designed to Visualize, Analyze, and simulate network diffusion data (in general).
 
-*   Depends on some pretty popular packages:
+* Depends on some pretty popular packages:
 
-    *   _RcppArmadillo_: So it's fast,
-    *   _Matrix_: So it's big,
-    *   _statnet_ and _igraph_: So it's not from scratch
+  * _RcppArmadillo_: So it's fast,
+  * _Matrix_: So it's big,
+  * _statnet_ and _igraph_: So it's not from scratch
 
-*   Can handle big graphs, e.g., an adjacency matrix with more than 4 billion elements (PR for RcppArmadillo)
+* Can handle big graphs, e.g., an adjacency matrix with more than 4 billion elements (PR for RcppArmadillo)
 
-*   Already on CRAN  with ~6,000 downloads since its first version, Feb 2016,
+* Already on CRAN  with ~6,000 downloads since its first version, Feb 2016,
 
-*   A lot of features to make it easy to read network (dynamic) data, making it a companion of other net packages.
+* A lot of features to make it easy to read network (dynamic) data, making it a companion of other net packages.
 
 
 ### Datasets
 
 - __netdiffuseR__ has the three classic Diffusion Network Datasets:
     
-    - `medInnovationsDiffNet` Doctors and the innovation of Tetracycline (1955).
-    - `brfarmersDiffNet` Brazilian farmers and the innovation of Hybrid Corn Seed (1966).
-    - `kfamilyDiffNet` Korean women and Family Planning methods (1973).
-    
-    ```{r printing}
-    brfarmersDiffNet
-    medInnovationsDiffNet
-    kfamilyDiffNet
-    ```
+  - `medInnovationsDiffNet` Doctors and the innovation of Tetracycline (1955).
+  - `brfarmersDiffNet` Brazilian farmers and the innovation of Hybrid Corn Seed (1966).
+  - `kfamilyDiffNet` Korean women and Family Planning methods (1973).
+  
+  ```{r}
+  #| label: printing
+  brfarmersDiffNet
+  medInnovationsDiffNet
+  kfamilyDiffNet
+  ```
 
 ### Visualization methods
 
-```{r viz, cache=TRUE, eval=TRUE}
+```{r}
+#| label: viz
+#| cache: true
 set.seed(12315)
 x <- rdiffnet(
   400, t = 6, rgraph.args = list(k=6, p=.3),
@@ -98,8 +104,7 @@ plot_hazard(x)
 
 ### Problems
 
-1. Using the diffnet object in [`intro.rda`](intro.rda), use the function `plot_threshold` specifying
-    shapes and colors according to the variables ItrustMyFriends and Age. Do you see any pattern?
+1. Using the diffnet object in [`intro.rda`](intro.rda), use the function `plot_threshold` specifying shapes and colors according to the variables ItrustMyFriends and Age. Do you see any pattern?
 
 ## Simulation of diffusion processes
 
@@ -148,31 +153,30 @@ net <- rdiffnet(
 ```
 
 
-*   The function `rdiffnet` generates random diffusion networks. Main features:
+* The function `rdiffnet` generates random diffusion networks. Main features:
     
-    1. Simulating random graph or using your own,
+  1. Simulating random graph or using your own,
+  
+  2. Setting threshold levels per node,
+  
+  3. Network rewiring throughout the simulation, and
+  
+  4. Setting the seed nodes.
     
-    2. Setting threshold levels per node,
     
-    3. Network rewiring throughout the simulation, and
+* The simulation algorithm is as follows:
     
-    4. Setting the seed nodes.
-    
-    
-*   The simulation algorithm is as follows:
-    
-    1. If required, a baseline graph is created,
-    
-    2. Set of initial adopters and threshold distribution are established,
-    
-    3. The set of t networks is created (if required), and
-    
-    4. Simulation starts at t=2, assigning adopters based on exposures and thresholds:
-    
-        a.  For each $i \in N$, if its exposure at $t-1$ is greater than its threshold, then 
-            adopts, otherwise, continue without change.
-            
-        b.  next $i$
+  1. If required, a baseline graph is created,
+  
+  2. Set of initial adopters and threshold distribution are established,
+  
+  3. The set of t networks is created (if required), and
+  
+  4. Simulation starts at t=2, assigning adopters based on exposures and thresholds:
+  
+    a. For each $i \in N$, if its exposure at $t-1$ is greater than its threshold, then adopts, otherwise, continue without change.
+        
+    b. next $i$
     
 ### Rumor spreading
 
@@ -363,8 +367,7 @@ legend(
 
 ### Problems
 
-1.  Given the following types of networks: Small-world, Scale-free, Bernoulli,
-    what set of $n$ initiators maximizes diffusion?
+1.  Given the following types of networks: Small-world, Scale-free, Bernoulli, what set of $n$ initiators maximizes diffusion?
     <!-- (<a href="sim-solutions.r" target="_blank">solution script</a> and <a href="sim-solutions.png" target="_blank">solution plot</a>) -->
     
 ## Statistical inference
@@ -375,230 +378,213 @@ legend(
     
 *   __netdiffuseR__ implements the test in `moran`, which is suited for sparse matrices.
 
-*   We can use Moran's I as a first look to whether there is something happening:
-    let that be influence or homophily.
+*   We can use Moran's I as a first look to whether there is something happening: let that be influence or homophily.
 
 ### Using geodesics
 
-*   One approach is to use the geodesic (shortest path length) matrix to account for indirect
-    influence.
-    
-*   In the case of sparse matrices, and furthermore, in the presence of structural holes
-    it is more convenient to calculate the distance matrix taking this into account.
-    
-*   __netdiffuseR__ has a function to do so, the `approx_geodesic` function, which,
-    using graph powers, computes the shortest path up to `n` steps. This could be
-    faster (if you only care up to `n` steps) than `igraph` or `sns`:
+* One approach is to use the geodesic (shortest path length) matrix to account for indirect influence.
+        
+* __netdiffuseR__ has a function to do so, the `approx_geodesic` function, which, using graph powers, computes the shortest path up to `n` steps. This could be faster (if you only care up to `n` steps) than `igraph` or `sns`:
 
-    ```{r geodesic_speed, cache=TRUE}
-    # Extracting the large adjacency matrix (stacked)
-    dgc <- diag_expand(medInnovationsDiffNet$graph)
-    ig  <- igraph::graph_from_adjacency_matrix(dgc)
-    mat <- network::as.network(as.matrix(dgc))
+  ```{r geodesic_speed, cache=TRUE}
+  # Extracting the large adjacency matrix (stacked)
+  dgc <- diag_expand(medInnovationsDiffNet$graph)
+  ig  <- igraph::graph_from_adjacency_matrix(dgc)
+  mat <- network::as.network(as.matrix(dgc))
+  
+  # Measuring times
+  times <- microbenchmark::microbenchmark(
+    netdiffuseR = netdiffuseR::approx_geodesic(dgc),
+    igraph = igraph::distances(ig),
+    sna = sna::geodist(mat),
+    times = 50, unit="ms"
+  )
+  ```
     
-    # Measuring times
-    times <- microbenchmark::microbenchmark(
-      netdiffuseR = netdiffuseR::approx_geodesic(dgc),
-      igraph = igraph::distances(ig),
-      sna = sna::geodist(mat),
-      times = 50, unit="ms"
-    )
-    ```
-    
-    ```{r geodesic_speed-box, autodep=TRUE, echo=FALSE}
-    microbenchmark:::boxplot.microbenchmark(times)
-    ```
+  ```{r geodesic_speed-box, autodep=TRUE, echo=FALSE}
+  microbenchmark:::boxplot.microbenchmark(times)
+  ```
 
-*   The `summary.diffnet` method already runs Moran's for you. What happens under the hood is:
+* The `summary.diffnet` method already runs Moran's for you. What happens under the hood is:
     
-    ```{r}
-    # For each time point we compute the geodesic distances matrix
-    W <- approx_geodesic(medInnovationsDiffNet$graph[[1]])
-    
-    # We get the element-wise inverse
-    W@x <- 1/W@x
-    
-    # And then compute moran
-    moran(medInnovationsDiffNet$cumadopt[,1], W)
-    ```
+  ```{r}
+  # For each time point we compute the geodesic distances matrix
+  W <- approx_geodesic(medInnovationsDiffNet$graph[[1]])
+  
+  # We get the element-wise inverse
+  W@x <- 1/W@x
+  
+  # And then compute moran
+  moran(medInnovationsDiffNet$cumadopt[,1], W)
+  ```
 
 
 
 ### Structural dependence and permutation tests
 
 
-- A novel statistical method (work-in-progress) that allows conducting inference.
+- A novel statistical method (work-in-progress) for testing network influence effects.
 - Included in the package, tests whether a particular network statistic depends on network structure
 - Suitable to be applied to network thresholds (you can't use thresholds in regression-like models!)
 
 ### Idea
 
--   Let $\mathcal{G} = (V,E)$ be a graph, $\gamma$ a vertex attribute, and $\beta = f(\gamma,\mathcal{G})$, then
+- Let $\mathcal{G} = (V,E)$ be a graph, $\gamma$ a vertex attribute, and $\beta = f(\gamma,\mathcal{G})$, then
 
-    $$\gamma \perp \mathcal{G} \implies \mathbb{E}\left[\beta(\gamma,\mathcal{G})|\mathcal{G}\right] = \mathbb{E}\left[\beta(\gamma,\mathcal{G})\right]$$
+  $$\gamma \perp \mathcal{G} \implies \mathbb{E}\left[\beta(\gamma,\mathcal{G})|\mathcal{G}\right] = \mathbb{E}\left[\beta(\gamma,\mathcal{G})\right]$$
 
-- This is, if for example time of adoption is independent on the structure of the network, then the average threshold level will be independent from the network structure as well.
+- For example, if time of adoption is independent of the structure of the network, then the average threshold level will be independent from the network structure as well.
 
-- Another way of looking at this is that the test will allow us to see how probable is to have this combination of network structure and network threshold (if it is uncommon then we say that the diffusion model is highly likely)
+- Another way of looking at this is that the test will allow us to see how probable it is to have this combination of network structure and network threshold (if it is uncommon, then we say that the diffusion model is highly likely)
 
 
 #### Example Not random TOA
 
--     To use this test, __netdiffuseR__ has the `struct_test` function.
--     It simulates networks with the same density, and computes a particular statistic every time, generating an EDF (Empirical Distribution Function) under the Null hypothesis (p-values).
+- To use this test, __netdiffuseR__ has the `struct_test` function.
+- It simulates networks with the same density, and computes a particular statistic every time, generating an EDF (Empirical Distribution Function) under the Null hypothesis (p-values).
     
-    ```{r Struct non-random-toa, cache=TRUE}
-    # Simulating network
-    set.seed(1123)
-    net <- rdiffnet(n=500, t=10, seed.graph = "small-world")
-    
-    # Running the test
-    test <- struct_test(
-      graph     = net, 
-      statistic = function(x) mean(threshold(x), na.rm = TRUE),
-      R         = 1e3,
-      ncpus=4, parallel="multicore"
-      )
-    
-    # See the output
-    test
-    ```
+  ```{r Struct non-random-toa, cache=TRUE}
+  # Simulating network
+  set.seed(1123)
+  net <- rdiffnet(n=500, t=10, seed.graph = "small-world")
+  
+  # Running the test
+  test <- struct_test(
+    graph     = net, 
+    statistic = function(x) mean(threshold(x), na.rm = TRUE),
+    R         = 1e3,
+    ncpus=4, parallel="multicore"
+    )
+  
+  # See the output
+  test
+  ```
 
 ```{r, echo=FALSE}
 hist(test)
 ```
 
--   Now we shuffle times of adoption, so that is random
+- Now we shuffle times of adoption, so that is random
     
-    ```{r random-toa, cache=TRUE}
-    # Resetting TOAs (now will be completely random)
-    diffnet.toa(net) <- sample(diffnet.toa(net), nnodes(net), TRUE)
-    
-    # Running the test
-    test <- struct_test(
-      graph     = net, 
-      statistic = function(x) mean(threshold(x), na.rm = TRUE),
-      R         = 1e3,
-      ncpus=4, parallel="multicore"
-      )
-    
-    # See the output
-    test
-    ```
-    
-    ```{r, echo=FALSE}
-    hist(test)
-    ```
+  ```{r random-toa, cache=TRUE}
+  # Resetting TOAs (now will be completely random)
+  diffnet.toa(net) <- sample(diffnet.toa(net), nnodes(net), TRUE)
+  
+  # Running the test
+  test <- struct_test(
+    graph     = net, 
+    statistic = function(x) mean(threshold(x), na.rm = TRUE),
+    R         = 1e3,
+    ncpus=4, parallel="multicore"
+    )
+  
+  # See the output
+  test
+  ```
+  
+  ```{r, echo=FALSE}
+  hist(test)
+  ```
 
 ### Regression analysis
 
-*   In regression analysis, we want to see if exposure, once we control for other
-    covariates had any effect on the adoption of a behavior.
+* In regression analysis, we want to see if exposure, once we control for other covariates, had any effect on adopting a behavior.
 
-*   In general, the big problem here is when we have a latent variable that 
-    co-determines both network and behavior.
+* The big problem is when we have a latent variable that co-determines both network and behavior.
     
-*   Unless we can control for such variable, regression analysis will be
-    generically biased.
+* Regression analysis will be generically biased Unless we can control for that variable.
     
-*   On the other hand, if you can claim that either such variable doesn't exist
-    or you actually can control for it, then we have two options: lagged exposure
-    models or contemporaneous exposure models. We will focus on the former.
+* On the other hand, if you can claim that either such variable doesn't exist or you actually can control for it, then we have two options: lagged exposure models or contemporaneous exposure models. We will focus on the former.
 
 
 #### Lagged exposure models
 
-*   In this type of model, we usually have the following
+* In this type of model, we usually have the following
 
-    $$
-    y_t = f(W_{t-1}, y_{t-1}, X_i) + \varepsilon
-    $$
+  $$
+  y_t = f(W_{t-1}, y_{t-1}, X_i) + \varepsilon
+  $$
+  
+  Furthermore, in the case of adoption, we have
+  
+  $$
+  y_{it} = \left\{
+  \begin{array}{ll}
+  1 & \text{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt-1}y_{it-1}}{\sum_{j\neq i}W_{ijt-1}} + X_{it}\beta > 0\\
+  0 & \text{otherwise}
+  \end{array}
+  \right.
+  $$
+  
+* In netdiffuseR, it is as easy as doing the following:
     
-    Furthermore, in the case of adoption, we have
-    
-    $$
-    y_{it} = \left\{
-    \begin{array}{ll}
-    1 & \text{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt-1}y_{it-1}}{\sum_{j\neq i}W_{ijt-1}} + X_{it}\beta > 0\\
-    0 & \text{otherwise}
-    \end{array}
-    \right.
-    $$
-    
-*   In netdiffuseR is as easy as doing the following:
-    
-    ```{r dataforreg}
-    # fakedata
-    set.seed(121)
-    
-    W   <- rgraph_ws(1e3, 8, .2)
-    X   <- cbind(var1 = rnorm(1e3))
-    toa <- sample(c(NA,1:5), 1e3, TRUE)
-    
-    dn  <- new_diffnet(W, toa=toa, vertex.static.attrs = X)
-    
-    # Computing exposure and adoption for regression
-    dn[["cohesive_expo"]] <- cbind(NA, exposure(dn)[,-nslices(dn)])
-    dn[["adopt"]]         <- dn$cumadopt
-    
-    # Generating the data and running the model
-    dat <- as.data.frame(dn)
-    ans <- glm(adopt ~ cohesive_expo + var1 + factor(per),
-               data = dat,
-               family = binomial(link="probit"),
-               subset = is.na(toa) | (per <= toa))
-    summary(ans)
-    ```
-    
-    Alternatively, we could have used the new function `diffreg`
-    
-    ```{r}
-    ans <- diffreg(dn ~ exposure + var1 + factor(per), type = "probit")
-    summary(ans)
-    ```
+  ```{r dataforreg}
+  # fakedata
+  set.seed(121)
+  
+  W   <- rgraph_ws(1e3, 8, .2)
+  X   <- cbind(var1 = rnorm(1e3))
+  toa <- sample(c(NA,1:5), 1e3, TRUE)
+  
+  dn  <- new_diffnet(W, toa=toa, vertex.static.attrs = X)
+  
+  # Computing exposure and adoption for regression
+  dn[["cohesive_expo"]] <- cbind(NA, exposure(dn)[,-nslices(dn)])
+  dn[["adopt"]]         <- dn$cumadopt
+  
+  # Generating the data and running the model
+  dat <- as.data.frame(dn)
+  ans <- glm(adopt ~ cohesive_expo + var1 + factor(per),
+              data = dat,
+              family = binomial(link="probit"),
+              subset = is.na(toa) | (per <= toa))
+  summary(ans)
+  ```
+  
+  Alternatively, we could have used the new function `diffreg`
+  
+  ```{r}
+  ans <- diffreg(dn ~ exposure + var1 + factor(per), type = "probit")
+  summary(ans)
+  ```
     
 
 #### Contemporaneous exposure models
 
-*   Similar to the lagged exposure models, we usually have the following
+* Similar to the lagged exposure models, we usually have the following
 
-    $$
-    y_t = f(W_t, y_t, X_t) + \varepsilon
-    $$
+  $$
+  y_t = f(W_t, y_t, X_t) + \varepsilon
+  $$
+  
+  Furthermore, in the case of adoption, we have
+  
+  $$
+  y_{it} = \left\{
+  \begin{array}{ll}
+  1 & \text{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt}y_{it}}{\sum_{j\neq i}W_{ijt}} + X_{it}\beta > 0\\
+  0 & \text{otherwise}
+  \end{array}
+  \right.
+  $$
+  
+* Unfortunately, since $y_t$ is in both sides of the equation, these models cannot be fitted using a standard probit or logit regression.
     
-    Furthermore, in the case of adoption, we have
-    
-    $$
-    y_{it} = \left\{
-    \begin{array}{ll}
-    1 & \text{if}\quad \rho\sum_{j\neq i}\frac{W_{ijt}y_{it}}{\sum_{j\neq i}W_{ijt}} + X_{it}\beta > 0\\
-    0 & \text{otherwise}
-    \end{array}
-    \right.
-    $$
-    
-*   Unfortunately, since $y_t$ is in both sides of the equation, this models cannot
-    be fitted using a standard probit or logit regression.
-    
-*   Two alternatives to solve this:
-    
-    a.  Using Instrumental Variables Probit (ivprobit in both R and Stata)
-    
-    b.  Use a Spatial Autoregressive (SAR) Probit (SpatialProbit and ProbitSpatial in R).
-    
-*   We won't cover these here.
+* Two alternatives to solve this:
+
+  a. Using Instrumental Variables Probit (ivprobit in both R and Stata)
+  
+  b. Use a Spatial Autoregressive (SAR) Probit (SpatialProbit and ProbitSpatial in R).
+  
+* We won't cover these here.
 
 ### Problems
 
 Using the dataset [stats.rda](stats.rda):
 
-1.  Compute Moran's I as the function `summary.diffnet` does. For this you'll need
-to use the function `toa_mat` (which calculates the cumulative adoption matrix),
-and `approx_geodesic` (which computes the geodesic matrix). (see `?summary.diffnet`
-for more details).
+1. Compute Moran's I as the function `summary.diffnet` does. To do so, you'll need to use the function `toa_mat` (which calculates the cumulative adoption matrix), and `approx_geodesic` (which computes the geodesic matrix). (see `?summary.diffnet` for more details).
 
-2.  Read the data as diffnet object, and fit the following logit model $adopt = Exposure*\gamma + Measure*\beta + \varepsilon$.
-    What happens if you exclude the time-fixed effects?
+2.  Read the data as diffnet object, and fit the following logit model $adopt = Exposure*\gamma + Measure*\beta + \varepsilon$. What happens if you exclude the time-fixed effects?
     
 <!-- (<a href="stats-solutions.r" target="_blank">solution script</a>) -->
 

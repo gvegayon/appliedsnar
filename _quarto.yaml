@@ -9,38 +9,46 @@ book:
   google-analytics: UA-40608305-4
   title: Applied Network Science with R
   author: George G. Vega Yon, Ph.D.
-  date: 2024-05-07
+  date: today
   cover-image: img/front-page-dalle.png
   cover-image-alt: 'An AI image generated with Bing: Draw an image of a social network. Include a person examining the network and holding a laptop in one hand. The laptop should have the logo of the R programming language.'
   page-footer: Applied Network Science with R - [https://ggvy.cl](https://ggvy.cl){target="_blank"}
   repo-url: https://github.com/gvegayon/appliedsnar
   repo-branch: master
   repo-actions: [edit]
+  image: img/front-page-dalle.png
+  twitter-card:
+    description: 'This (WIP) book is a collection of examples using the R programming for network science. It includes examples of network data processing, visualization, simulation, and modeling.'
+    creator: "@gvegayon"
+  site-url: https://book.ggvy.cl
+  sharing: [twitter, linkedin]
   navbar:
-    background: light
+    # background: light
     search: true
 
   chapters: 
     - index.qmd
-    - part: Applications
+    - part-01-01-intro.qmd
+    - part-01-02-the-basics.qmd
+    - part: "**Applications**"
       chapters:
-        - part-01-01-intro.qmd
-        - part-01-02-the-basics.qmd
         - part-01-03-week-1-sns-study.qmd
+        - part-01-06-network-simulation-and-viz.qmd
+        - part-01-07-egonets.qmd
+        - part-01-09-netdiffuser.qmd
+    - part: "**Statistical inference**"
+      chapters: 
         - part-01-04-ergms.qmd
         - part-01-05-ergms-constrains.qmd
         - part-01-05-stergm.qmd
-        - part-01-06-network-simulation-and-viz.qmd
-        - part-01-07-egonets.qmd
         - part-01-08-netboot.qmd
-        - part-01-09-netdiffuser.qmd
         - part-01-10-siena.qmd
         - part-01-11-power.qmd
-    - part: Statistical Foundations
+    - part: "**Foundations**"
       chapters:
         - part-02-10-statistical-foundations.qmd
         - part-02-11-power.qmd
-    - part: Appendix
+    - part: "**Appendix**"
       chapters:
         - part-03-12-data-appendix.qmd
     - references.qmd
@@ -52,11 +60,12 @@ bibliography: book.bib
 
 biblio-style: apalike
 
-format:
+format: 
   html:
     html-math-method: mathjax
     toc: true
-    number-sections: true
+    number-sections: false
+    theme: cerulean
   pdf:
     geometry: 
       - top=1in

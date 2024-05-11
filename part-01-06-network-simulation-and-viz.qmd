@@ -1,4 +1,4 @@
-# Simulating and visualizing networks
+# Simulation and vizualization
 
 In this chapter, we will build and visualize artificial networks using Exponential
 Random Graph Models [ERGMs.] Together with chapter 3, this will be an extended 
