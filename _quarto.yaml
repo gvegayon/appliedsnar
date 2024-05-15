@@ -6,7 +6,7 @@ execute:
   cache: false
 
 book:
-  google-analytics: UA-40608305-4
+  google-analytics: G-QLDYNPCHDY
   title: Applied Network Science with R
   author: George G. Vega Yon, Ph.D.
   date: today
