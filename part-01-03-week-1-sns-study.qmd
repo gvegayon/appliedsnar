@@ -40,7 +40,7 @@ We must create a unique `id` using the school and photo `id`. Since both variabl
 (photo_id_ran <- range(dat$photoid))
 ```
 
-As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. We will use `dplyr` [@R-dplyr] to create this variable, and call it `id`:
+As the variable spans up to `r photo_id_ran[2]`, we need to set the last `r nchar(photo_id_ran[2])` units of the variable to store the `photoid`. We will use `dplyr` [@R-dplyr] to create this variable and call it `id`:
 
 ```{r 03-newid}
 library(dplyr)
@@ -55,7 +55,7 @@ dat |>
   select(school, photoid, id)
 ```
 
-Wow, what happened in the last lines of code! What is that `|>`? Well, that's the pipe operator[^onpipes], and it is an appealing way of writing nested function calls. In this case, instead of writing something like:
+Wow, what happened in the last lines of code?! What is that `|>`? Well, that's the pipe operator[^onpipes], and it is an appealing way of writing nested function calls. In this case, instead of writing something like:
 
 [^onpipes]: Introduced in R version 4.1.0, base R's pipe operator `|>` works similarly to the `magrittr` pipe `%>%`. The key differences between these two are explained in [https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/).
 
@@ -74,20 +74,20 @@ subset(head(dat_filtered), select = c(school, photoid, id))
 
 ### From survey to edgelist
 
-Let's start by loading a couple of handy R packages. We will load `tidyr` [@R-tidyr] and `stringr` [@R-stringr]. We will use the first, `tidyr`, to reshape the data. The second, `stringr`, will help us processing strings using _regular expressions_^[Please refer to the help file `?'regular expression'` in R. The R package `rex` [@R-rex] is a very nice companion for writing regular expressions. There's also a neat (but experimental) RStudio add-in that can be very helpful for understanding how regular expressions work, the [regexplain](https://github.com/gadenbuie/regexplain) add-in.].
+Let's start by loading a couple of handy R packages. We will load `tidyr` [@R-tidyr] and `stringr` [@R-stringr]. We will use the first, `tidyr`, to reshape the data. The second, `stringr`, will help us processing strings using _regular expressions_^[Please refer to the help file `?'regular expression'` in R. The R package `rex` [@R-rex] is a friendly companion for writing regular expressions. There's also a neat (but experimental) RStudio add-in that can be very helpful for understanding how regular expressions work, the [regexplain](https://github.com/gadenbuie/regexplain) add-in.].
 
 ```{r 03-loading-tidyr-stringr, message=FALSE}
 library(tidyr)
 library(stringr)
 ```
 
-Optionally, we can use the `tibble` type of object, which is an alternative to the actual `data.frame`. This object is said to provide _more efficient methods for matrices and data frames_.
+Optionally, we can use the `tibble` type of object, an alternative to the actual `data.frame`. This object provides _more efficient methods for matrices and data frames_.
 
 ```{r 03-tibble}
 dat <- as_tibble(dat)
 ```
 
-What I like from `tibbles` is that when you print them on the console, these actually look nice:
+What I like about `tibbles` is that when you print them on the console, these look nice:
  
 ```{r 03-tibble-print}
 dat
@@ -110,7 +110,7 @@ net <- dat |>
 
 Let's take a look at this step by step:
 
-1.  First, we subset the data: We want to keep `id, school, sch_friend*.` For the later, we use the function `starts_with` (from the `tidyselect` package). The latter allows us to select all variables that start with the word "`sch_friend`", which means that `sch_friend11, sch_friend12, ...` will be selected.
+1.  First, we subset the data: We want to keep `id, school, sch_friend*.` For the latter, we use the function `starts_with` (from the `tidyselect` package). The latter allows us to select all variables that start with the word "`sch_friend`", which means that `sch_friend11, sch_friend12, ...` will be selected.
 
     ```{r}
     dat |> 
@@ -164,7 +164,7 @@ And finally, the `as.integer` function coerces the returning value from the `str
 
 For coercing the edgelist into an igraph object, we will be using the `graph_from_data_frame` function in igraph [@R-igraph]. This function receives the following arguments: a data frame where the two first columns are "source" (ego) and "target" (alter), an indicator of whether the network is directed or not, and an optional data frame with vertices, in which's first column should contain the vertex ids.
 
-Using the optional `vertices` argument is a good practice since, by doing so, you are telling the function what ids that you are expecting to find. Using the original dataset, we will create a data frame name vertices:
+Using the optional `vertices` argument is a good practice: It tells the function what `id`s should expect. Using the original dataset, we will create a data frame with name vertices:
 
 ```{r 03-vertex}
 vertex_attrs <- dat |> 

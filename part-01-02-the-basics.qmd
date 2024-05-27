@@ -1,14 +1,18 @@
 ---
-date-modified: 2024-05-09
+date-modified: 2024-05-27
 ---
 
 # R Basics
 
-R [@R] is a programming language oriented to statistical computing. In the social network community, R has become the *de facto* due to the large number of packages available for network analysis.
-
-A good reference book for both novice and advanced users is ["The Art of R programming"](https://nostarch.com/artofr.htm) @Matloff2011[^matlof].
+R [@R] is a programming language oriented to statistical computing. In the social network community, R has become the *de facto* due to the large number of packages available for network analysis. A good reference book for both novice and advanced users is ["The Art of R programming"](https://nostarch.com/artofr.htm) @Matloff2011[^matlof].
 
 [^matlof]: [Here](http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf) a free pdf version distributed by the author.
+
+## Getting R
+
+You can get R from the Comprehensive R Archive Network website [CRAN] ([link](https://cran.r-project.org/){target="_blank"}). CRAN is a network of servers worldwide that store identical, up-to-date versions of code and documentation for R. CRAN website also has a lot of information about R, including manuals, FAQs, and mailing lists.
+
+Although R comes with a Graphical User Interface [GUI], I recommend getting an alternative like [RStudio](https://posit.com){target="_blank"} or [VSCode](https://code.visualstudio.com/){target="_blank"}. RStudio and VSCode are excellent companions for programming in R. While RStudio is more common among R users, VSCode is a more general-purpose IDE that can be used for many other programming languages, including Python and C++.
 
 ## How to install packages
 

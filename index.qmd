@@ -1,3 +1,7 @@
+---
+date-modified: 2024-05-27
+---
+
 \renewcommand{\Pr}[1]{\text{Pr}\left(#1\right)}
 \renewcommand{\exp}[1]{\text{exp}\left\{#1\right\}}
 
@@ -17,7 +21,10 @@ This project began as a part of a workshop that took place at USC's <a href="htt
 
 I am a Research Assistant Professor at the <a href="https://medicine.utah.edu/internal-medicine/epidemiology" target="_blank">**University of Utah's Division of Epidemiology**</a>, where I work on studying Complex Systems using Statistical Computing. I was born and raised in Chile. I have over ten years of experience <a href="https://github.com/gvegayon" target="_blank">developing scientific software</a> focusing on high-performance computing, data visualization, and social network analysis. My training is in Public Policy (M.A. <a href="https://uai.cl" target="_blank">UAI</a>, 2011), Economics (M.Sc. <a href="https://caltech.edu" target="_blank">Caltech</a>, 2015), and Biostatistics (Ph.D. <a href="https://usc.edu" target="_blank">USC</a>, 2020).
 
-I obtained my Ph.D. in Biostatistics under the supervision of <a href="https://scholar.google.com/citations?user=Zj5ky5gAAAAJ&hl=en" target="_blank">**Prof. Paul Marjoram**</a> and<a href="https://kayladelahaye.net/" target="_blank">**Prof. Kayla de la Haye**</a>, with my dissertation titled "*Essays on Bioinformatics and Social Network Analysis: Statistical and Computational Methods for Complex Systems.*"
+I obtained my Ph.D. in Biostatistics under the supervision of <a href="https://scholar.google.com/citations?user=Zj5ky5gAAAAJ&hl=en" target="_blank">**Prof. Paul Marjoram**</a> and <a href="https://kayladelahaye.net/" target="_blank">**Prof. Kayla de la Haye**</a>, with my dissertation titled "*Essays on Bioinformatics and Social Network Analysis: Statistical and Computational Methods for Complex Systems.*"
 
 If you'd like to learn more about me, please visit my website at <a href="https://ggvy.cl" target="_blank">https://ggvy.cl</a>.
 
+## AI Disclosure
+
+Starting in mid-2023, I have been using AI to help me write this book. Mainly, I use a combination of [GitHub co-pilot](https://github.com/features/copilot){target="_blank"}, which aids with code and text, and [Grammarly](https://grammarly.com){target="_blank"}, which aids with grammar and style. AI's role has been to help me write faster and more accurately, but it has not been involved in the book's conceptualization or the development of the methods presented here.
