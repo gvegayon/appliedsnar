@@ -15,7 +15,7 @@ Besides the R programming, we will be using <a href="https://posit.co" target="_
 
 ## About the project
 
-This project began as a part of a workshop that took place at USC's <a href="https://cana.usc.edu" target="_blank">**Center for Applied Network Analysis**</a>. Today, I use it to gather and study statistical methods to analyze networks, emphasizing social and biological systems. Moreover, the book will use statistical computing methods as a core component.
+This project began over six years ago as a part of a series of workshops and tutorials I ran at USC's <a href="https://cana.usc.edu" target="_blank">**Center for Applied Network Analysis**</a>. Today, I use it to gather and study statistical methods to analyze networks, emphasizing social and biological systems. Moreover, the book will use statistical computing methods as a core component.
 
 ## About the Author
 
