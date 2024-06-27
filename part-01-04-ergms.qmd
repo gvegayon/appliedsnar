@@ -1,5 +1,5 @@
 ---
-date-modified: 2024-05-27
+date-modified: 2024-06-27
 ---
 
 # Exponential Random Graph Models
@@ -50,15 +50,23 @@ In the simplest case, ERGMs equate a logistic regression. By simple, I mean case
 Let's fit an ERGM using the `sampson` dataset in the `ergm` package.
 
 
-```{r part-01-04-loading-data, echo=TRUE, collapse=TRUE, message=FALSE}
+```{r}
+#| label: part-01-04-loading-data
+#| echo: true
+#| collapse: true
+#| message: false
 library(ergm)
+library(netplot)
 data("sampson")
-samplike
+nplot(samplike)
 ```
 
 Using `ergm` to fit a Bernoulli graph requires using the `edges` term, which counts how many ties are in the graph:
 
-```{r echo = TRUE, collapse = TRUE}
+```{r}
+#| label: first-fit
+#| echo: true
+#| collapse: true
 ergm_fit <- ergm(samplike ~ edges)
 ```
 
@@ -229,7 +237,8 @@ network_111 <- intergraph::asNetwork(network_111)
 
 A problem that we have with this data is the fact that some vertices have missing values in the variables `hispanic`, `female1`, and `eversmk1`. For now, we will proceed by imputing values based on the averages:
 
-```{r 04-impute-values}
+```{r}
+#| label: 04-impute-values
 for (v in c("hispanic", "female1", "eversmk1")) {
   tmpv <- network_111 %v% v
   tmpv[is.na(tmpv)] <- mean(tmpv, na.rm = TRUE) > .5
@@ -237,6 +246,15 @@ for (v in c("hispanic", "female1", "eversmk1")) {
 }
 ```
 
+Let's take a look at the network
+
+```{r}
+#| label: fig-before-big-fit
+nplot(
+  network_111,
+  vertex.color = ~ hispanic
+  )
+```
 
 ## Running ERGMs
 
@@ -256,15 +274,17 @@ What to use:
 
 Here is an example of a couple of models that we could compare^[Notice that this document may not include the usual messages that the `ergm` command generates during the estimation procedure. This is just to make it more printable-friendly.]
 
-```{r 04-ergms-model0, cache=TRUE, eval=!chapter_cached, message=FALSE}
+```{r}
+#| label: 04-ergms-model0
+#| cache: true
+#| message: false
 ans0 <- ergm(
   network_111 ~
     edges +
     nodematch("hispanic") +
     nodematch("female1") +
     nodematch("eversmk1") +
-    mutual
-    ,
+    mutual,
   constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
@@ -353,15 +373,15 @@ save.image("ergm.rda", compress = TRUE)
 
 ## Model Goodness-of-Fit
 
-In raw terms, once each chain has reach stationary distribution, we can say that there are no problems with autocorrelation and that each sample point is iid. This implies that, since we are running the model with more than 1 chain, we can use all the samples (chains) as a single dataset.
+In raw terms, once each chain has reached stationary distribution, we can say that there are no problems with autocorrelation and that each sample point is iid. The latter implies that, since we are running the model with more than one chain, we can use all the samples (chains) as a single dataset.
 
-> Recent changes in the ergm estimation algorithm mean that these plots can no longer be used to ensure that the mean statistics from the model match the observed network statistics. For that functionality, please use the GOF command: gof(object, GOF=~model).
+> Recent changes in the ergm estimation algorithm mean that these plots can no longer be used to ensure that the mean statistics from the model match the observed network statistics. For that functionality, please use the GOF command: `gof(object, GOF=~model)`.
 >
 > ---?ergm::mcmc.diagnostics
 
-Since `ans0` is the one model which did best, let's take a look at it's GOF statistics. First, lets see how the MCMC did. For this we can use the `mcmc.diagnostics` function including in the package. This function is actually a wrapper of a couple of functions from the `coda` package [@R-coda] which is called upon the `$sample` object which holds the *centered* statistics from the sampled networks. This last point is important to consider since at first look it can be confusing to look at the `$sample` object since it neither matches the observed statistics, nor the coefficients. 
+Since `ans0` is the best model, let's look at the GOF statistics. First, let's see how the MCMC did. We can use the `mcmc.diagnostics` function included in the package. The function is a wrapper of a couple of functions from the `coda` package [@R-coda], which are called upon the `$sample` object holding the *centered* statistics from the sampled networks. At first, it can be confusing to look at the `$sample` object; it neither matches the observed statistics nor the coefficients. 
 
-When calling the function `mcmc.diagnostics(ans0, centered = FALSE)`, you will see a lot of output including a couple of plots showing the trace and posterior distribution of the *uncentered* statistics (`centered = FALSE`). In the next code chunks we will reproduce the output from the `mcmc.diagnostics` function step by step using the coda package. First we need to *uncenter* the sample object:
+When calling `mcmc.diagnostics(ans0, centered = FALSE)`, you will see many outputs, including a couple of plots showing the trace and posterior distribution of the *uncentered* statistics (`centered = FALSE`). The following code chunks will reproduce the output from the `mcmc.diagnostics` function step by step using the coda package. First, we need to *uncenter* the sample object:
 
 ```{r ergm-uncentering}
 # Getting the centered sample
