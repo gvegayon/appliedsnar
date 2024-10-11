@@ -60,13 +60,13 @@ jobs:
     steps:
 
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: gh-page-html
         path: _docs
 
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: gh-page-pdf
         path: pdf
