@@ -24,9 +24,7 @@ RUN install2.r spatialreg
 RUN apt install --no-install-recommends -y libglpk-dev
 
 # Installing quarto
-RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.554/quarto-1.4.554-linux-amd64.deb && \
-	apt install ./quarto-1.4.554-linux-amd64.deb && \
-	quarto install tool tinytex --log-level warning
+RUN quarto install tool tinytex --log-level warning
 
 ENV PATH="/root/.TinyTeX/bin/x86_64-linux:${PATH}"
 

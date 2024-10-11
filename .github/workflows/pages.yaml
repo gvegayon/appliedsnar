@@ -88,7 +88,6 @@ jobs:
 
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.url }}
 
     needs: combine
 
