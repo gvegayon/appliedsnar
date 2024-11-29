@@ -1,6 +1,5 @@
 ---
 date-modified: 2024-10-11
-canonical-url: true
 ---
 
 \renewcommand{\Pr}[1]{\text{Pr}\left(#1\right)}
