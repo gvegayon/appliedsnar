@@ -19,7 +19,7 @@ jobs:
       image: gvegayon/appliedsnar:latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Render
       run: |
@@ -27,7 +27,7 @@ jobs:
 
     - name: Upload artifact
       # uses: actions/upload-pages-artifact@v3
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         path: _docs
         name: gh-page-html
@@ -39,7 +39,7 @@ jobs:
       image: gvegayon/appliedsnar:latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Render
       run: |
@@ -47,7 +47,7 @@ jobs:
 
     - name: Upload artifact
       # uses: actions/upload-pages-artifact@v3
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         path: _docs
         name: gh-page-pdf
@@ -60,13 +60,13 @@ jobs:
     steps:
 
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: gh-page-html
         path: _docs
 
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: gh-page-pdf
         path: pdf
@@ -76,7 +76,7 @@ jobs:
         cp -r pdf/* _docs
 
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v4
       # uses: actions/upload-artifact@v3
       with:
         name: github-pages
