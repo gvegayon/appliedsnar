@@ -6,10 +6,6 @@ date-modified: 2024-06-27
 
 I strongly suggest reading the vignette in the `ergm` R package.
 
-:::{.content-hidden}
-{{< include math.tex >}}
-:::
-
 ```{r}
 #| echo: false
 if (file.exists("ergm.rda")) {
