@@ -52,6 +52,17 @@ jobs:
         path: _docs
         name: gh-page-pdf
 
+    - name: Upload LaTeX file
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        path: |
+          _docs/*.tex
+          *.tex
+          *.log
+          _docs/*log
+        name: gh-page-latex-logs
+
   combine:
     runs-on: ubuntu-22.04
 

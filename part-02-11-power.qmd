@@ -1,4 +1,4 @@
-# Power and sample size {#part2-power}
+# Power and sample size {#sec-part2-power}
 
 Computing power and sample size are common tasks in study design. This chapter will walk you
 through power analysis for network studies. First, we will start with some preliminaries

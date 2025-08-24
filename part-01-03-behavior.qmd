@@ -1,5 +1,9 @@
 # Behavior and coevolution
 
+:::{.content-hidden}
+{{< include math.tex >}}
+:::
+
 ::: {.callout-note}
 All the content of this section was presented during the Escuela de Verano Sistemas Complejos 2024 at Universidad del Desarrollo. The original version can be found [here](https://gvegayon.github.io/networks-udd2024/){target="_blank"}.
 :::
@@ -12,7 +16,7 @@ All the content of this section was presented during the Escuela de Verano Siste
 \newcommand{\X}[0]{\bm{{X}}}
 \newcommand{\x}[0]{\bm{{x}}}
 \newcommand{\thetas}[0]{\bm{{\theta}}}
-\newcommand{\isone}[1]{\mathbb{1}\left(#1\right)}
+<!-- \newcommand{\isone}[1]{\mathbb{1}\left(#1\right)} -->
 
 
 ## Introduction
@@ -166,7 +170,7 @@ Since $\bm{{W}}$ is row-stochastic, $\bm{{Wy}}$ is a weighted average of the out
 **ALAAM** The simplest way we can think of this class of models is as if a given covariate switched places with the network in an ERGM, so the network is now fixed and the covariate is the random variable. While ALAAMs can also estimate network exposure effects, we can use them to build more complex models beyond exposure. The general form is:
 
 $$
-\Pr\left(\bm{{Y}} = \bm{{y}}|\bm{{W}},\bm{{X}}\right) = \exp{\left(\bm{{\theta}}^{\mathbf{t}}s(\bm{{y}},\bm{{W}}, \bm{{X}})\right)}\times\eta(\bm{{\theta}})^{-1}
+\Prcond{\bm{{Y}} = \bm{{y}}}{\bm{{W}},\bm{{X}}} = \exp{\left(\bm{{\theta}}^{\mathbf{t}}s(\bm{{y}},\bm{{W}}, \bm{{X}})\right)}\times\eta(\bm{{\theta}})^{-1}
 $$
 
 $$

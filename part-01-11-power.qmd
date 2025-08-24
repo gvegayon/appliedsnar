@@ -1,6 +1,6 @@
 # Power calculation in network studies
 
-In survey and study design, calculating the required sample size is critical. Nowadays, tools and methods for calculating the required sample size abound; nonetheless, sample size calculation for studies involving social networks is still underdeveloped. This chapter will illustrate how we can use computer simulations to estimate the required sample size. Chapter @part2-power provides a general overview of power analysis.
+In survey and study design, calculating the required sample size is critical. Nowadays, tools and methods for calculating the required sample size abound; nonetheless, sample size calculation for studies involving social networks is still underdeveloped. This chapter will illustrate how we can use computer simulations to estimate the required sample size. Chapter @sec-part2-power provides a general overview of power analysis.
 
 ## Example 1: Spillover effects in egocentric studies[^credit-ego-power]
 
@@ -37,7 +37,7 @@ alpha    <- .05
 beta_pow <- 0.2
 ```
 
-As we discuss in @part2-power, it is always a good idea to encapsulate the simulation into a function:
+As we discuss in @sec-part2-power, it is always a good idea to encapsulate the simulation into a function:
 
 ```{r part-01-power-simfun}
 # The odds turned to a prob
@@ -120,7 +120,7 @@ spower |>
   geom_hline(yintercept = 1 - beta_pow)
 ```
 
-As shown in Chapter @part2-power, we can use a linear regression model to predict sample size as a function of statistical power:
+As shown in Chapter @sec-part2-power, we can use a linear regression model to predict sample size as a function of statistical power:
 
 ```{r part-01-power-ols-example1}
 # Fitting the model
@@ -267,7 +267,7 @@ spowerd |>
   geom_hline(yintercept = 1 - beta_pow)
 ```
 
-As shown in Chapter @part2-power, we can use a linear regression model to predict sample size as a function of statistical power:
+As shown in Chapter @sec-part2-power, we can use a linear regression model to predict sample size as a function of statistical power:
 
 ```{r part-01-power-ols-example2}
 # Fitting the model
