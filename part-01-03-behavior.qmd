@@ -1,0 +1,367 @@
+# Behavior and coevolution
+
+::: {.callout-note}
+All the content of this section was presented during the Escuela de Verano Sistemas Complejos 2024 at Universidad del Desarrollo. The original version can be found [here](https://gvegayon.github.io/networks-udd2024/){target="_blank"}.
+:::
+
+<!-- \newcommand{\bmi}[1]{\bm{{#1}}} -->
+\newcommand{\tpose}[1]{#1^{\mathbf{t}}}
+\newcommand{\Prergm}[0]{P_{\mathcal{Y}, \bm{{\theta}}}}
+\newcommand{\Y}[0]{\bm{{Y}}}
+\newcommand{\y}[0]{\bm{{y}}}
+\newcommand{\X}[0]{\bm{{X}}}
+\newcommand{\x}[0]{\bm{{x}}}
+\newcommand{\thetas}[0]{\bm{{\theta}}}
+\newcommand{\isone}[1]{\mathbb{1}\left(#1\right)}
+
+
+## Introduction
+
+This section focuses on inference involving network and a secondary outcome. While there are many ways of studying the coevolution or dependence between network and behavior, this section focuses on two classes of analysis: When the network is fixed and when both network and behavior influence each other.
+
+Whether we treat the network as given or endogenous sets the complexity of conducting statistical inference. Data analysis becomes much more straightforward if our research focuses on individual-level outcomes embedded in a network and not on the network itself. Here, we will deal with three particular cases: (1) when network effects are lagged, (2) egocentric networks, and (3) when network effects are contemporaneous.
+
+## Lagged exposure
+
+If we assume that network influence in the form of exposure is lagged, we have one of the most straightforward cases for network inference [@hayeSmokingDiffusionNetworks2019; @valenteDiffusionContagionProcesses2020; @valenteNetworkInfluencesPolicy2019]. Here, instead of dealing with convoluted statistical models, the problem reduces to estimating a simple linear regression model. Generally, lagged exposure effects look like this:
+
+$$
+y_{it} = \rho \left(\sum_{j\neq i}X_{ij}\right)^{-1}\left(\sum_{j\neq i}y_{jt-1} X_{ij}\right) + {\bm{{\theta}}}^{\mathbf{t}}\bm{{w_i}} + \varepsilon,\quad \varepsilon \sim \text{N}(0, \sigma^2)
+$$
+
+where $y_{it}$ is the outcome of individual $i$ at time $t$, $X_{ij}$ is the $ij$-th entry of the adjacency matrix, $\bm{{\theta}}$ is a vector of coefficients, $\bm{{w_i}}$ is a vector of features/covariates of individual $i$, and $\varepsilon_i$ is a normally distributed error. Here, the key component is $\rho$: the coefficient associated with the network exposure effect.
+
+The exposure statistic, $\left(\sum_{j\neq i}X_{ij}\right)^{-1}\left(\sum_{j\neq i}y_{jt-1} X_{ij}\right)$, is the weighted average of $i$'s neighbors' outcomes at time $t-1$. 
+
+## Code example: Lagged exposure
+
+The following code example shows how to estimate a lagged exposure effect using the `glm` function in R. The model we will simulate and estimate features a Bernoulli graph with 1,000 nodes and a density of 0.01.
+
+$$
+y_{it} = \theta_1 + \rho \text{Exposure}_{it} + \theta_2 w_i + \varepsilon
+$$
+  
+
+where $\text{Exposure}_{it}$ is the exposure statistic defined above, and $w_i$ is a vector of covariates. 
+
+```{r}
+#| label: lagged-exposure
+## Simulating data
+n <- 1000
+time <- 2
+theta <- c(-1, 3)
+
+## Sampling a bernoilli network
+set.seed(3132)
+p <- 0.01
+X <- matrix(rbinom(n^2, 1, p), nrow = n)
+diag(X) <- 0
+
+## Covariate
+W <- matrix(rnorm(n), nrow = n)
+
+## Simulating the outcome
+rho <- 0.5
+Y0 <- cbind(rnorm(n))
+
+## The lagged exposure
+expo <- (X %*% Y0)/rowSums(X)
+Y1 <- theta[1] + rho * expo + W * theta[2] + rnorm(n)
+```
+
+Now we fit the model using GLM, in this case, linear Regression
+
+```{r}
+#| label: lagged-exposure-fit
+fit <- glm(Y1 ~ expo + W, family = "gaussian")
+summary(fit)
+```
+
+
+## Egocentric networks
+
+Generally, when we use egocentric networks and egos' outcomes, we are thinking in a model where one observation is the pair $(y_i, X_i)$, this is, the outcome of individual $i$ and the egocentric network of individual $i$. When such is the case, since (a) networks are independent across egos and (b) the networks are fixed, like the previous case, a simple linear regression model is enough to conduct the analyses. A typical model looks like this:
+
+$$
+\bm{{y}} = \tpose{\bm{{\theta}}_{x}}s(\bm{{X}}) + \tpose{\thetas}\bm{{w}} + \varepsilon,\quad \varepsilon \sim \text{N}(0, \sigma^2)
+$$
+
+Where $\bm{{y}}$ is a vector of outcomes, $\bm{{X}}$ is a matrix of egocentric networks, $\bm{{w}}$ is a vector of covariates, $\bm{{\theta}}$ is a vector of coefficients, and $\varepsilon$ is a vector of errors. The key component here is $s(\bm{{X}})$, which is a vector of sufficient statistics of the egocentric networks. For example, if we are interested in the number of ties, $s(\bm{{X}})$ is a vector of the number of ties of each ego.
+
+## Code example: Egocentric networks
+
+For this example, we will simulate a stream of 1,000 Bernoulli graphs looking into the probability of school dropout. Each network will have between 4 and 10 nodes and have a density of 0.4. The data-generating process is as follows:
+
+$$
+{\Pr{}}_{\bm{{\theta}}}\left(Y_i=1\right) = \text{logit}^{-1}\left(\thetas_x s(\bm{{X}}_i) \right)
+$$
+
+Where $s(X) \equiv \left(\text{density}, \text{n mutual ties}\right)$, and $\bm{{\theta}}_x = (0.5, -1)$. This model only features sufficient statistics. We start by simulating the networks
+
+```{r}
+#| label: egocentric-networks
+set.seed(331)
+n <- 1000
+sizes <- sample(4:10, n, replace = TRUE)
+
+## Simulating the networks
+X <- lapply(sizes, function(x) matrix(rbinom(x^2, 1, 0.4), nrow = x))
+X <- lapply(X, \(x) {diag(x) <- 0; x})
+
+## Inspecting the first 5
+head(X, 5)
+```
+
+Using the `ergm` R package [@R-ergm; @Hunter2008], we can extract the associated sufficient statistics of the egocentric networks:
+
+```{r}
+#| label: egocentric-networks-stats
+#| message: false
+#| warning: false
+#| cache: true
+library(ergm)
+stats <- lapply(X, \(x) summary_formula(x ~ density + mutual))
+
+## Turning the list into a matrix
+stats <- do.call(rbind, stats)
+
+## Inspecting the first 5
+head(stats, 5)
+```
+
+We now simulate the outcomes
+
+```{r}
+#| label: egocentric-networks-outcomes
+y <- rbinom(n, 1, plogis(stats %*% c(0.5, -1)))
+glm(y ~ stats, family = binomial(link = "logit")) |>
+  summary()
+```
+
+## Network effects are endogenous
+
+Here we have two different approaches: Spatial Autocorrelation [SAR], and 
+Autologistic actor attribute model [ALAAM] [@robinsNetworkModelsSocial2001b]. The first one is a generalization of the linear regression model that accounts for spatial dependence. The second is a close relative of ERGMs that treats covariates as endogenous and network as exogenous. Overall, ALAAMs are more flexible than SARs, but SARs are easier to estimate.
+
+**SAR** Formally, SAR models [see @lesageIntroductionSpatialEconometrics2008] can be used to estimate network exposure effects. The general form is:
+
+$$
+\bm{{y}} = \rho \bm{{W}} \bm{{y}} + \bm{{\theta}}^{\mathbf{t}} \bm{{X}} + \epsilon,\quad \epsilon \sim \text{MVN}(0, \Sigma)
+$$
+
+where $\bm{{y}}\equiv \{y_i\}$ is a vector of outcomes the outcome, $\rho$ is an autocorrelation coefficient, $\bm{{W}} \in \{w_{ij}\}$ is a row-stochastic square matrix of size $n$, $\bm{{\theta}}$ is a vector of model parameters, $\bm{{X}}$ is the corresponding matrix with exogenous variables, and $\epsilon$ is a vector of errors that distributes multivariate normal with mean 0 and covariance make$\Sigma$.[^notation] The SAR model is a generalization of the linear regression model that accounts for spatial dependence. The SAR model can be estimated using the `spatialreg` package in R [@Bivand2022].
+
+::: {.callout-tip}
+What is the appropriate network to use in the SAR model? According to @lesageBiggestMythSpatial2014, it is not very important. Since $(I_n - \rho \mathbf{W})^{-1} = \rho \mathbf{W} + \rho^2 \mathbf{W}^2 + \dots$.
+:::
+
+Although the SAR model was developed for spatial data, it is easy to apply it to network data. Furthermore, each entry of the vector $\bm{{Wy}}$ has the same definition as network exposure, namely
+
+$$
+\bm{{Wy}} \equiv \left\{\sum_{j}y_j w_{ij}\right\}_i
+$$
+
+Since $\bm{{W}}$ is row-stochastic, $\bm{{Wy}}$ is a weighted average of the outcome of the neighbors of $i$, *i.e.*, a vector of network exposures.
+
+**ALAAM** The simplest way we can think of this class of models is as if a given covariate switched places with the network in an ERGM, so the network is now fixed and the covariate is the random variable. While ALAAMs can also estimate network exposure effects, we can use them to build more complex models beyond exposure. The general form is:
+
+$$
+\Pr\left(\bm{{Y}} = \bm{{y}}|\bm{{W}},\bm{{X}}\right) = \exp{\left(\bm{{\theta}}^{\mathbf{t}}s(\bm{{y}},\bm{{W}}, \bm{{X}})\right)}\times\eta(\bm{{\theta}})^{-1}
+$$
+
+$$
+\eta(\bm{{\theta}}) = \sum_{\bm{{y}}}\exp{\left(\bm{{\theta}}^{\mathbf{t}}s(\bm{{y}},\bm{{W}}, \bm{{X}})\right)}
+$$
+
+Where $\bm{{Y}}\equiv \{y_i \in (0, 1)\}$ is a vector of binary individual outcomes, $\bm{{W}}$ denotes the social network, $\bm{{X}}$ is a matrix of exogenous variables, $\bm{{\theta}}$ is a vector of model parameters, $s(\bm{{y}},\bm{{W}}, \bm{{X}})$ is a vector of sufficient statistics, and $\eta(\bm{{\theta}})$ is a normalizing constant.
+
+
+## Code example: SAR
+
+Simulation of SAR models can be done using the following observation: Although the outcome shows on both sides of the equation, we can isolate it in one side and solve for it; formally:
+
+$$
+\bm{{y}} = \rho \bm{{X}} \bm{{y}} + \tpose{\bm{{\theta}}}\bm{{W}} + \varepsilon \implies \bm{{y}} = \left(\bm{{I}} - \rho \bm{{X}}\right)^{-1}\tpose{\bm{{\theta}}}\bm{{W}} + \left(\bm{{I}} - \rho \bm{{X}}\right)^{-1}\varepsilon
+$$
+
+The following code chunk simulates a SAR model with a Bernoulli graph with 1,000 nodes and a density of 0.01. The data-generating process is as follows:
+
+```{r}
+#| label: sar
+#| cache: true
+set.seed(4114)
+n <- 1000
+
+## Simulating the network
+p <- 0.01
+X <- matrix(rbinom(n^2, 1, p), nrow = n)
+
+## Covariate
+W <- matrix(rnorm(n), nrow = n)
+
+## Simulating the outcome
+rho <- 0.5
+library(MASS) # For the mvrnorm function
+
+## Identity minus rho * X
+X_rowstoch <- X / rowSums(X)
+I <- diag(n) - rho * X_rowstoch
+
+## The outcome
+Y <- solve(I) %*% (2 * W) + solve(I) %*% mvrnorm(1, rep(0, n), diag(n))
+```
+
+Using the `spatialreg` R package, we can fit the model using the `lagsarlm` function:
+
+```{r}
+#| label: sar-fit
+#| cache: true
+#| warning: false
+#| message: false
+library(spdep) # for the function mat2listw
+library(spatialreg)
+fit <- lagsarlm(
+  Y ~ W,
+  data  = as.data.frame(X),
+  listw = mat2listw(X_rowstoch)
+  )
+```
+
+```{r}
+#| label: sar-fit-summary
+#| cache: true
+## Using texreg to get a pretty print
+texreg::screenreg(fit, single.row = TRUE)
+```
+
+The interpretation of this model is almost the same as a linear regression, with the difference that we have the autocorrelation effect (`rho`). As expected, the model got an estimate close enough to the population parameter: $\rho = 0.5$.
+
+## Code example: ALAAM
+
+To date, there is no R package implementing the ALAAM framework. Nevertheless, you can fit ALAAMs using the PNet software developed by the Melnet group at the University of Melbourne (click [here](https://www.melnet.org.au/pnet/){target="_blank"}).
+
+Because of the similarities, ALAAMs can be implemented using ERGMs. Because of the novelty of it, the coding example will be left as a potential class project. We will post a fully-featured example after the workshop.
+
+## Coevolution
+
+Finally, we discuss coevolution when both network and behavior are embedded in a feedback loop. Coevolution should be the default assumption when dealing with social networks. Nevertheless, models capable of capturing coevolution are hard to estimate. Here, we will discuss two of such models: Stochastic Actor-Oriented Models (or Siena Models) (first introduced in @snijdersStochasticActorOriented1996; see also @snijdersStochasticActorOrientedModels2017) and Exponential-family Random Exponential-family Random Network Models [ERNMs,] a generalization of ERGMs [@wangUnderstandingNetworksExponentialfamily2023; @ernmsFellows2023].
+
+**Siena** Stochastic Actor-Oriented Models [SOAMs] or Siena Models are dynamic models of network and behavior that describe the transition of a network system within two or more time points. 
+
+**ERNMs** This model is closely related to ERGMs, with the difference that they incorporate a vertex-level output. Conceptually, it is moving from a having a random network, to a model where a given vertex feature and network are random:
+
+$$
+\Prergm(\Y=\y|\X=\x) \to \Prergm(\Y=\y, \X=\x)
+$$
+
+## Code example: Siena
+
+This example was adapted from the `RSiena` R package (see `?sienaGOF-auxiliary` page).We start by loading the package and taking a look at the data we will use:
+
+```{r}
+#| label: siena-data-struct
+library(RSiena)
+
+## Visualizing the adjacency matrix & behavior
+op <- par(mfrow=c(2, 2))
+image(s501, main = "Net: s501")
+image(s502, main = "Net: s502")
+hist(s50a[,1], main = "Beh1")
+hist(s50a[,2], main = "Beh2")
+par(op)
+```
+
+The next step is the data preparation process. `RSiena` does not receive raw data as is. We need to explicitly declare the networks and outcome variable. Siena models can also model network changes
+
+```{r}
+#| label: siena-data-prep
+## Initializing the dependent variable (network)
+mynet1 <- sienaDependent(array(c(s501, s502), dim=c(50, 50, 2)))
+mynet1
+mybeh  <- sienaDependent(s50a[,1:2], type="behavior")
+mybeh
+
+## Node-level covariates (artificial)
+mycov  <- c(rep(1:3,16),1,2)
+
+## Edge-level covariates (also artificial)
+mydycov <- matrix(rep(1:5, 500), 50, 50) 
+```
+
+```{r}
+#| label: siena-model-build
+#| collapse: true
+## Creating the data object
+mydata <- sienaDataCreate(mynet1, mybeh)
+
+## Adding the effects (first get them!)
+myeff <- getEffects(mydata)
+
+## Notice that Siena adds some default effects
+myeff
+
+## Adding a few extra effects (automatically prints them out)
+myeff <- includeEffects(myeff, transTies, cycle3)
+```
+
+To add more effects, first, call the function `effectsDocumentation(myeff)`. It will show you explicitly how to add a particular effect. For instance, if we wanted to add network exposure (`avExposure`,) under the documentation of `effectsDocumentation(myeff)` we need to pass the following arguments:
+
+```{r}
+#| label: siena-exposure
+## And now, exposure effect
+myeff <- includeEffects(
+  myeff,
+  avExposure,
+  # These last three are specified by effectsDocum...
+  name         = "mybeh",
+  interaction1 = "mynet1",
+  type         = "rate"
+  )
+```
+
+The next step involves creating the model with (`sienaAlgorithmCreate`,) where we specify all the parameters for fitting the model (e.g., MCMC steps.) Here, we modified the values of `n3` and `nsub` to half of the default values to reduce the time it would take to fit the model; yet this degrades the quality of the fit.
+
+```{r}
+#| label: siena-model-fit
+#| collapse: true
+#| cache: true
+## Shorter phases 2 and 3, just for example:
+myalgorithm <- sienaAlgorithmCreate(
+  nsub = 2, n3 = 500, seed = 122, projname = NULL
+  )
+ 
+## Fitting and printing the model
+ans <- siena07(
+  myalgorithm,
+  data = mydata, effects = myeff,
+  returnDeps = TRUE, batch = TRUE
+  )
+
+ans
+```
+
+As a rule of thumb, absolute t-values below 0.1 show good convergence, below 0.2 we say "reasonably well," and above is no convergence. Let's highlight two of the effects we have in our model
+
+1. Transitive ties (number five) are positive 0.78 with a t-value of smaller than 0.01. Thus, we say that the network has a tendency towards transitivity (balance) that is significant.
+
+2. Exposure effect (number seven) is also positive, but small, 0.03, but still significant (t-value of -0.01)
+
+:Like with ERGMs, we also do goodness-of-fit:
+
+```{r}
+#| label: siena-gof
+#| cache: true
+sienaGOF(ans, OutdegreeDistribution, varName="mynet1") |>
+  plot()
+sienaGOF(ans, BehaviorDistribution, varName = "mybeh") |> 
+  plot()
+```
+
+
+## Code example: ERNM
+
+To date, there is no CRAN release for the ERNM model. The only implementation I am aware of is one of the leading authors, which is available on GitHub: [https://github.com/fellstat/ernm](https://github.com/fellstat/ernm){target="_blank"}. Unfortunately, the current version of the package seems to be broken.
+
+Just like the ALAAM case, as ERNMs are closely related to ERGMS, building an example using the ERGM package could be a great opportunity for a class project!
+
+

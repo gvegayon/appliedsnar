@@ -34,7 +34,7 @@ vignette("ergm", package="ergm")
 In a nutshell, we use ERGMs as a parametric interpretation of the distribution of $\mathbf{Y}$, which takes the canonical form:
 
 $$
-\Pr{\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}} = \frac{\exp{\theta^{\text{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
+\Pr{\mathbf{Y}=\mathbf{y};\mathbf{\theta}}{\mathcal{Y}} = \frac{\exp{\theta^{\text{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y} 
 $$ {#eq-main-ergm}
 
 Where $\theta\in\Omega\subset\mathbb{R}^q$ is the vector of model coefficients and $\mathbf{g}(\mathbf{y})$ is a *q*-vector of statistics based on the adjacency matrix $\mathbf{y}$.
@@ -157,7 +157,7 @@ For more details, see [@Hunter2008]. A sketch of the algorithm follows:
   
   c. If convergence has been reached (which usually means that $\theta^{(t)}$ and $\theta^{(t + 1)}$ are not very different), then stop; otherwise, go to step a.
 
-[@lusher2012;@admiraal2006;@Snijders2002;@Wang2009] provides details on the algorithm used by PNet (the same as the one used in `RSiena`), and [@lusher2012] provides a short discussion on the differences between `ergm` and `PNet`. 
+@lusherExponentialRandomGraph2013;@admiraal2006;@Snijders2002;@Wang2009 provides details on the algorithm used by PNet (the same as the one used in `RSiena`), and @lusherExponentialRandomGraph2013 provides a short discussion on the differences between `ergm` and `PNet`. 
 
 
 ## The `ergm` package
@@ -175,7 +175,7 @@ load("03.rda")
 ```
 
 
-In this section, we will use the `ergm` package (from the `statnet` suit of packages [@R-ergm],) and the `intergraph` [@R-intergraph] package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
+In this section, we will use the `ergm` package (from the `statnet` suit of packages @R-ergm,) and the `intergraph` [@R-intergraph] package. The latter provides functions to go back and forth between `igraph` and `network` objects from the `igraph` and `network` packages respectively^[Yes, the classes have the same name as the packages.]
 
 ```{r 03-ergms-setup, message=FALSE}
 library(ergm)
@@ -410,21 +410,21 @@ Under the hood:
 
 1. _Empirical means and sd, and quantiles_: 
 
-  ```{r coda-summary}
-  summary(sample_uncentered)
-  ```
+```{r coda-summary}
+summary(sample_uncentered)
+```
 
 2. _Cross correlation_: 
 
-  ```{r coda-corr}
-  coda::crosscorr(sample_uncentered)
-  ```
+```{r coda-corr}
+coda::crosscorr(sample_uncentered)
+```
 
 3. Autocorrelation_: For now, we will only look at autocorrelation for chain one. Autocorrelation should be small (in a general MCMC setting). If autocorrelation is high, then it means that your sample is not idd (no Markov property). A way to solve this is *thinning* the sample.
 
-  ```{r coda-autocorr}
-  coda::autocorr(sample_uncentered)[[1]]
-  ```
+```{r coda-autocorr}
+coda::autocorr(sample_uncentered)[[1]]
+```
 
 4. _Geweke Diagnostic_: From the function's help file:
   
@@ -434,10 +434,10 @@ Under the hood:
   > ---?coda::geweke.diag 
   
   Let's take a look at a single chain:
-  
-  ```{r coda-geweke.diag}
-  coda::geweke.diag(sample_uncentered)[[1]]
-  ```
+    
+```{r coda-geweke.diag}
+coda::geweke.diag(sample_uncentered)[[1]]
+```
 
 5. _(not included) Gelman Diagnostic_: From the function's help file:
     
@@ -446,9 +446,9 @@ Under the hood:
   
   As a difference from the previous diagnostic statistic, this uses all chains simultaneously:
   
-  ```{r coda-gelman.diag}
-  coda::gelman.diag(sample_uncentered)
-  ```
+```{r coda-gelman.diag}
+coda::gelman.diag(sample_uncentered)
+```
   
   As a rule of thumb, values in the $[.9,1.1]$ are good.
  

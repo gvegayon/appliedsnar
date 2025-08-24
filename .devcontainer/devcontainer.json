@@ -3,9 +3,20 @@
 {
 	"name": "appliedsnar",
 	"build": {
-		"dockerfile": "Dockerfile"
+		"dockerfile": "Containerfile"
 	},
-
+	"customizations": {
+			"vscode": {
+					"extensions": [
+							"reditorsupport.r",
+							"rdebugger.r-debugger",
+							"quarto.quarto",
+							"tianyishi.rmarkdown",
+							"ms-vscode.live-server",
+							"ritwickdey.LiveServer"
+					]
+			}
+	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 

@@ -2,7 +2,7 @@ ifndef CNTBUILDER
   CNTBUILDER=podman
 endif
 
-build: Dockerfile
+build: Containerfile
 	$(CNTBUILDER) build -t appliedsnar:latest .
 
 run:

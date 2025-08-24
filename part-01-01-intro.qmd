@@ -19,4 +19,3 @@ Social Network Analysis and Network Science have a long scholarly tradition. Fro
 With a long history (and insufficient inter-discipline collaboration, if you allow me to say) of scientific advances happening somewhat isolatedly, the potential for cross-pollination between disciplines within network science is immense.
 
 This book attempts to compile the many methods available in the realm of complexity sciences, provide an in-depth mathematical examination--when possible--and provide a few examples illustrating their usage. 
-

@@ -15,7 +15,7 @@ book:
   page-footer: Applied Network Science with R - [https://ggvy.cl](https://ggvy.cl){target="_blank"}
   repo-url: https://github.com/gvegayon/appliedsnar
   repo-branch: master
-  repo-actions: [edit]
+  repo-actions: [edit, source, issue]
   image: img/front-page-dalle.png
   twitter-card:
     description: 'This (WIP) book is a collection of examples using the R programming for network science. It includes examples of network data processing, visualization, simulation, and modeling.'
@@ -38,6 +38,7 @@ book:
         - part-01-09-netdiffuser.qmd
     - part: "**Statistical inference**"
       chapters: 
+        - part-01-03-behavior.qmd
         - part-01-04-ergms.qmd
         - part-01-05-ergms-constrains.qmd
         - part-01-05-stergm.qmd
@@ -62,7 +63,7 @@ biblio-style: apalike
 
 format: 
   html:
-    html-math-method: mathjax
+    html-math-method: katex
     toc: true
     number-sections: false
     theme: cerulean
