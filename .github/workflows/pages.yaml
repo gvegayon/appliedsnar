@@ -31,7 +31,8 @@ jobs:
 
     - name: Combine versions
       run: |
-        cp -r es/_docs/* _docs/es/ 2>/dev/null || mkdir -p _docs/es && cp -r es/_docs/* _docs/es/
+        mkdir -p _docs/es
+        cp -r es/_docs/* _docs/es/ 2>/dev/null || true
 
     - name: Upload artifact
       # uses: actions/upload-pages-artifact@v3
@@ -59,7 +60,7 @@ jobs:
 
     - name: Combine PDFs
       run: |
-        mkdir -p _docs/es 2>/dev/null || true
+        mkdir -p _docs/es
         cp -r es/_docs/* _docs/es/ 2>/dev/null || true
 
     - name: Upload artifact
