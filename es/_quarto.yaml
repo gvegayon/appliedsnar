@@ -16,6 +16,7 @@ book:
   page-footer: Ciencia de Redes Aplicada con R - [https://ggvy.cl](https://ggvy.cl){target="_blank"}
   repo-url: https://github.com/gvegayon/appliedsnar
   repo-branch: master
+  repo-subdir: 'es'
   repo-actions: [edit, source, issue]
   image: img/front-page-dalle.png
   twitter-card:

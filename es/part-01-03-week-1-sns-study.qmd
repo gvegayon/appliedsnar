@@ -1,8 +1,507 @@
-# TBD
+---
+date-modified: 2024-05-10
+---
+
+# Redes escolares
 
 ::: {.callout-warning}
 ## Nota de Traducción
 Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
 :::
 
-*Este capítulo está pendiente de traducción.*
+Este capítulo proporciona un ejemplo de principio a fin para procesar datos tipo encuesta en R. El capítulo presenta el conjunto de datos del Estudio de Redes Sociales [SNS]. Puedes descargar los datos para este capítulo [aquí](https://cdn.rawgit.com/gvegayon/appliedsnar/fdc0d26f/03-sns.dta), y el libro de códigos para los datos proporcionados aquí está en [el apéndice](#sns-data).
+
+Los objetivos para este capítulo son:
+
+1.  Leer los datos en R.
+
+2.  Crear una red con ellos.
+
+3.  Calcular estadísticas descriptivas.
+
+4.  Visualizar la red. 
+
+## Preprocesamiento de datos
+
+### Leyendo los datos en R
+
+R tiene varias formas de leer datos. Tus datos pueden ser archivos de texto plano como CSV, delimitados por tabulaciones, o especificados por ancho de columna. Para leer datos de texto plano, puedes usar el paquete [`readr`](https://cran.r-project.org/package=readr) [@R-readr]. En el caso de archivos binarios, como archivos de Stata, Octave, o SPSS, puedes usar el paquete de R [`foreign`](https://cran.r-project.org/package=readr) [@R-foreign]. Si tus datos están formateados como hojas de cálculo de Microsoft, el paquete de R [`readxl`](https://cran.r-project.org/package=readxl) [@R-readxl] es la alternativa a usar. En nuestro caso, los datos para esta sesión están en formato Stata:
+
+```{r 03-read-data, message=FALSE}
+library(foreign)
+
+# Leyendo los datos
+dat <- foreign::read.dta("03-sns.dta")
+
+# Echando un vistazo a las primeras 5 columnas y 5 filas de los datos
+dat[1:5, 1:10]
+```
+
+### Creando un id único para cada participante
+
+Debemos crear un `id` único usando la escuela y el `id` de foto. Dado que ambas variables son numéricas, codificar el id es una buena forma de hacer esto. Por ejemplo, los últimos tres números son el `photoid`, y los primeros números son el `id` de la escuela. Para hacer esto, necesitamos tomar en cuenta el rango de las variables:
+
+```{r 03-idrange}
+(photo_id_ran <- range(dat$photoid))
+```
+
+Como la variable se extiende hasta `r photo_id_ran[2]`, necesitamos establecer las últimas `r nchar(photo_id_ran[2])` unidades de la variable para almacenar el `photoid`. Usaremos `dplyr` [@R-dplyr] para crear esta variable y la llamaremos `id`:
+
+```{r 03-newid}
+library(dplyr)
+
+# Creando la variable
+dat <- dat |>
+  mutate(id = school*10000 + photoid)
+
+# Primeras filas
+dat |>
+  head() |>
+  select(school, photoid, id)
+```
+
+¡Vaya, qué pasó en las últimas líneas de código! ¿Qué es ese `|>`? Bueno, ese es el operador pipe[^onpipes], y es una forma atractiva de escribir llamadas a funciones anidadas. En este caso, en lugar de escribir algo como:
+
+[^onpipes]: Introducido en R versión 4.1.0, el operador pipe de R base `|>` funciona de manera similar al pipe de `magrittr` `%>%`. Las diferencias clave entre estos dos se explican en [https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/).
+
+```r
+dat_filtered$id <- dat_filtered$school*10000 + dat_filtered$photoid
+subset(head(dat_filtered), select = c(school, photoid, id))
+```
+
+## Creando una red
+
+*   Queremos construir una red social. Para eso, usamos una matriz de adyacencia o una lista de enlaces.
+
+*   Cada individuo de los datos SNS nominó 19 amigos de la escuela. Usaremos esas nominaciones para crear la red social.
+
+*   En este caso, crearemos la red coercionando el conjunto de datos en una lista de enlaces.
+
+### De encuesta a lista de enlaces
+
+Comencemos cargando un par de paquetes útiles de R. Cargaremos `tidyr` [@R-tidyr] y `stringr` [@R-stringr]. Usaremos el primero, `tidyr`, para remodelar los datos. El segundo, `stringr`, nos ayudará a procesar cadenas usando _expresiones regulares_^[Por favor, consulta el archivo de ayuda `?'regular expression'` en R. El paquete de R `rex` [@R-rex] es un compañero amigable para escribir expresiones regulares. También hay un complemento de RStudio ordenado (pero experimental) que puede ser muy útil para entender cómo funcionan las expresiones regulares, el complemento [regexplain](https://github.com/gadenbuie/regexplain).].
+
+```{r 03-loading-tidyr-stringr, message=FALSE}
+library(tidyr)
+library(stringr)
+```
+
+Opcionalmente, podemos usar el tipo de objeto `tibble`, una alternativa al `data.frame` actual. Este objeto proporciona _métodos más eficientes para matrices y marcos de datos_.
+
+```{r 03-tibble}
+dat <- as_tibble(dat)
+```
+
+Lo que me gusta de los `tibbles` es que cuando los imprimes en la consola, estos se ven bien:
+ 
+```{r 03-tibble-print}
+dat
+```
+
+
+
+```{r 03-reshape}
+# Tal vez demasiados pipes... ¡pero es genial!
+net <- dat |> 
+  select(id, school, starts_with("sch_friend")) |>
+  gather(key = "varname", value = "content", -id, -school) |>
+  filter(!is.na(content)) |>
+  mutate(
+    friendid = school*10000 + content,
+    year     = as.integer(str_extract(varname, "(?<=[a-z])[0-9]")),
+    nnom     = as.integer(str_extract(varname, "(?<=[a-z][0-9])[0-9]+"))
+  )
+```
+
+Veamos esto paso a paso:
+
+1.  Primero, subconjuntamos los datos: Queremos mantener `id, school, sch_friend*.` Para este último, usamos la función `starts_with` (del paquete `tidyselect`). Este último nos permite seleccionar todas las variables que comienzan con la palabra "`sch_friend`", lo que significa que `sch_friend11, sch_friend12, ...` serán seleccionadas.
+
+    ```{r}
+    dat |> 
+      select(id, school, starts_with("sch_friend"))
+    ```
+    
+2.  Luego, lo remodelamos a formato _largo_: Transponiendo todos los `sch_friend*` a formato largo. Hacemos esto usando la función `gather` (del paquete `tidyr`); una alternativa a la función `reshape`, que encuentro más fácil de usar. Veamos cómo funciona:
+
+    ```{r}
+    dat |> 
+      select(id, school, starts_with("sch_friend")) |>
+      gather(key = "varname", value = "content", -id, -school)
+    ```
+    
+    En este caso, el parámetro `key` establece el nombre de la variable que contendrá el nombre de la variable que fue remodelada, mientras que `value` es el nombre de la variable que contendrá el contenido de los datos (por eso los nombré así). El bit `-id, -school` le dice a la función que "elimine" esas variables antes de remodelar. En otras palabras, "remodela todo excepto `id` y `school.`"
+    
+    También, nota que pasamos de `r nrow(dat)` filas a 19 (nominaciones) * `r nrow(dat)` (sujetos) * 4 (ondas) = `r sprintf("%i", 19*nrow(dat)*4)` filas, como se esperaba.
+    
+3.  Como los datos de nominación pueden estar vacíos para algunas celdas, necesitamos cuidar esos casos, los `NA`s, así que filtramos los datos:
+
+    ```{r}
+    dat |> 
+      select(id, school, starts_with("sch_friend")) |>
+      gather(key = "varname", value = "content", -id, -school) |>
+      filter(!is.na(content))
+    ```
+    
+4.  Y finalmente, creamos tres nuevas variables de este conjunto de datos: `friendid,`, `year`, y `nom_num` (número de nominación). Todo usando expresiones regulares:
+    
+    ```{r}
+    dat |> 
+      select(id, school, starts_with("sch_friend")) |>
+      gather(key = "varname", value = "content", -id, -school) |>
+      filter(!is.na(content)) |>
+      mutate(
+        friendid = school*10000 + content,
+        year     = as.integer(str_extract(varname, "(?<=[a-z])[0-9]")),
+        nnom     = as.integer(str_extract(varname, "(?<=[a-z][0-9])[0-9]+"))
+        )
+    ```
+    
+    La expresión regular `(?<=[a-z])` coincide con una cadena precedida por cualquier letra de _a_ a _z_. En contraste, la expresión `[0-9]` coincide con un solo número. Por lo tanto, de la cadena `"sch_friend12"`, la expresión regular solo coincidirá con el `1`, ya que es el único número seguido por una letra. La expresión `(?<=[a-z][0-9])` coincide con una cadena precedida por una letra minúscula y un número de un dígito. Finalmente, la expresión `[0-9]+` coincide con una cadena de números--así que podría ser más de uno. Por lo tanto, de la cadena `"sch_friend12"`, obtendremos `2`:
+    
+    ```{r 03-miniregex}
+    str_extract("sch_friend12", "(?<=[a-z])[0-9]")
+    str_extract("sch_friend12", "(?<=[a-z][0-9])[0-9]+")
+    ```
+Y finalmente, la función `as.integer` coerciona el valor de retorno de la función `str_extract` de `character` a `integer`. Ahora que tenemos esta lista de enlaces, podemos crear un objeto igraph
+
+### Red igraph
+
+Para coercionar la lista de enlaces en un objeto igraph, usaremos la función `graph_from_data_frame` en igraph [@R-igraph]. Esta función recibe los siguientes argumentos: un marco de datos donde las dos primeras columnas son "source" (ego) y "target" (alter), un indicador de si la red es dirigida o no, y un marco de datos opcional con vértices, en cuya primera columna debería contener los ids de vértice.
+
+Usar el argumento opcional `vertices` es una buena práctica: Le dice a la función qué `id`s debería esperar. Usando el conjunto de datos original, crearemos un marco de datos con vértices de nombre:
+
+```{r 03-vertex}
+vertex_attrs <- dat |> 
+  select(id, school, hispanic, female1, starts_with("eversmk"))
+```
+
+Ahora, usemos la función `graph_from_data_frame` para crear un objeto `igraph`:
+
+```{r 03-igraph, message=FALSE, error = TRUE}
+library(igraph)
+
+ig_year1 <- net |>
+  filter(year == "1") |> 
+  select(id, friendid, nnom) |>
+  graph_from_data_frame(
+    vertices = vertex_attrs
+  )
+```
+
+¡Ups! Parece que los individuos están nominando a otros estudiantes no incluidos en la encuesta. ¿Cómo resolver eso? Bueno, ¡todo depende de lo que necesites hacer! En este caso, iremos por la estrategia de _elimínalos-silenciosamente-y-no-digas-nada_:
+
+```{r 03-igraph-bis}
+library(igraph)
+
+ig_year1 <- net |>
+  filter(year == "1") |>
+  
+  # Línea extra, todas las nominaciones deben estar en ego también.
+  filter(friendid %in% id) |> 
+  
+  select(id, friendid, nnom) |>
+  graph_from_data_frame(
+    vertices = vertex_attrs
+    )
+
+ig_year1
+```
+
+Así que tenemos nuestra red con `r vcount(ig_year1)` nodos y `r ecount(ig_year1)` enlaces. Los siguientes pasos: obtener algunas estadísticas descriptivas y visualizar nuestra red.
+
+## Estadísticas descriptivas de red
+
+Aunque podríamos hacer todas las redes a la vez, en esta parte, nos enfocaremos en calcular algunas estadísticas de red para una sola escuela. Comenzamos por la escuela 111. La primera pregunta que deberías estar haciéndote ahora es, "¿cómo puedo obtener esa información del objeto igraph?." Los atributos de vértices y enlaces se pueden acceder a través de las funciones `V` y `E`, respectivamente; además, podemos listar qué atributos de vértice/enlace están disponibles:
+
+```{r 03-listing-attributes}
+vertex_attr_names(ig_year1)
+edge_attr_names(ig_year1) 
+```
+
+Tal como haríamos con marcos de datos, acceder a atributos de vértice se hace a través del operador signo de dólar `$`. Junto con la función `V`; por ejemplo, acceder a los primeros diez elementos de la variable `hispanic` se puede hacer de la siguiente manera:
+
+```{r 03-first-10-hispanic}
+V(ig_year1)$hispanic[1:10]
+```
+
+Ahora que sabes cómo acceder a atributos de vértice, podemos obtener la red correspondiente a la escuela 111 identificando qué vértices son parte de ella y pasar esa información a la función `induced_subgraph`:
+
+```{r 03-igraph-year1-111}
+# ¿Qué ids son de la escuela 111?
+school111ids <- which(V(ig_year1)$school == 111)
+
+# Creando un subgrafo
+ig_year1_111 <- induced_subgraph(
+  graph = ig_year1,
+  vids  = school111ids
+)
+```
+
+La función `which` en R devuelve un vector de índices indicando qué elementos pasan la prueba, devolviendo verdadero y falso, de lo contrario. En nuestro caso, resultará en un vector de índices de los vértices que tienen el atributo `school` igual a 111. Con el subgrafo, podemos calcular diferentes medidas de centralidad^[Para más información sobre las diferentes medidas de centralidad, por favor echa un vistazo al artículo "Centrality" en [Wikipedia](https://en.wikipedia.org/wiki/Centrality).] para cada vértice y almacenarlas en el objeto igraph mismo:
+
+```{r 03-centrality-measures}
+# Calculando medidas de centralidad para cada vértice
+V(ig_year1_111)$indegree   <- degree(ig_year1_111, mode = "in")
+V(ig_year1_111)$outdegree  <- degree(ig_year1_111, mode = "out")
+V(ig_year1_111)$closeness  <- closeness(ig_year1_111, mode = "total")
+V(ig_year1_111)$betweeness <- betweenness(ig_year1_111, normalized = TRUE)
+```
+
+Desde aquí, podemos _volver_ a nuestros viejos hábitos y obtener el conjunto de atributos de vértice como un marco de datos para que podamos calcular algunas estadísticas de resumen sobre las medidas de centralidad que acabamos de obtener
+
+```{r 03-centrality-stats}
+# Extrayendo cada característica de vértice como un data.frame
+stats <- as_data_frame(ig_year1_111, what = "vertices")
+
+# Calculando cuantiles para cada variable
+stats_degree <- with(stats, {
+ cbind(
+   indegree   = quantile(indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(betweeness, c(.025, .5, .975), na.rm = TRUE)
+ )
+})
+
+stats_degree
+```
+
+La función `with` es algo similar a lo que `dplyr` nos permite hacer cuando queremos trabajar con el conjunto de datos pero sin mencionar su nombre cada vez que pedimos una variable. Sin usar la función `with`, lo anterior podría haberse hecho de la siguiente manera:
+
+```r
+stats_degree <- 
+ cbind(
+   indegree   = quantile(stats$indegree, c(.025, .5, .975), na.rm = TRUE),
+   outdegree  = quantile(stats$outdegree, c(.025, .5, .975), na.rm = TRUE),
+   closeness  = quantile(stats$closeness, c(.025, .5, .975), na.rm = TRUE),
+   betweeness = quantile(stats$betweeness, c(.025, .5, .975), na.rm = TRUE)
+ )
+
+```
+
+A continuación, calcularemos algunas estadísticas a nivel de grafo:
+
+```{r 03-network-stats}
+cbind(
+  size    = vcount(ig_year1_111),
+  nedges  = ecount(ig_year1_111),
+  density = edge_density(ig_year1_111),
+  recip   = reciprocity(ig_year1_111),
+  centr   = centr_betw(ig_year1_111)$centralization,
+  pathLen = mean_distance(ig_year1_111)
+  )
+```
+
+Censo triádico
+
+```{r 03-triadic-census, echo=TRUE}
+triadic <- triad_census(ig_year1_111)
+triadic
+```
+
+Para obtener una vista más agradable de esto, podemos usar una tabla que recuperé de `?triad_census`. Además, podemos normalizar el objeto `triadic` por su suma en lugar de mirar conteos en bruto. De esa manera, obtenemos proporciones en su lugar^[Durante nuestro taller, la Prof. De la Haye sugirió usar ${n \choose 3}$ como una constante normalizadora. ¡Resulta que `sum(triadic) = choose(n, 3)`! Así que cualquier enfoque es correcto.]
+
+```{r 03-triadic-census-print}
+knitr::kable(cbind(
+  Pcent = triadic/sum(triadic)*100,
+  read.csv("triadic_census.csv")
+  ), digits = 2)
+```
+
+
+## Graficando la red en igraph
+
+### Gráfico único
+
+Echemos un vistazo a cómo se ve nuestra red cuando usamos los parámetros predeterminados en el método plot del objeto igraph:
+
+```{r 03-plot-raw, fig.cap='Un gráfico de red no muy agradable. Esto es lo que obtenemos con los parámetros predeterminados en igraph.', fig.align='center'}
+plot(ig_year1)
+```
+
+No muy agradable, ¿verdad? Un par de cosas con este gráfico:
+
+1.  Estamos viendo todas las escuelas simultáneamente, lo que no tiene sentido. Así que, en lugar de graficar `ig_year1`, nos enfocaremos en `ig_year1_111`.
+
+2.  Todos los vértices tienen el mismo tamaño y se están solapando. En lugar de usar el tamaño predeterminado, dimensionaremos los vértices por indegree usando la función `degree` y pasando el vector de grados a `vertex.size`.^[Descubrir cuál es el tamaño de vértice óptimo es un poco complicado. Sin ponerse demasiado técnico, no hay otra forma de obtener un tamaño de vértice _agradable_ que no sea simplemente jugar con diferentes valores de él. Una solución agradable a esto es usar [`netdiffuseR::igraph_vertex_rescale`](https://www.rdocumentation.org/packages/netdiffuseR/versions/1.17.0/topics/rescale_vertex_igraph) que reescala los vértices para que estos mantengan su relación de aspecto a una proporción predefinida de la pantalla.]
+
+3.  Dado el número de vértices en estas redes, las etiquetas no son útiles aquí. Así que las eliminaremos estableciendo `vertex.label = NA`. Además, reduciremos el tamaño de la punta de las flechas estableciendo `edge.arrow.size = 0.25`.
+
+4.  Y finalmente, estableceremos el color de cada vértice para que sea una función de si el individuo es hispano o no. Para esta última parte necesitamos ir un poco más de programación:
+
+```{r 03-color-hispanic}
+col_hispanic <- V(ig_year1_111)$hispanic + 1
+col_hispanic <- coalesce(col_hispanic, 3) 
+col_hispanic <- c("steelblue", "tomato", "white")[col_hispanic]
+```
+
+Línea por línea, hicimos lo siguiente:
+
+1.  La primera línea agregó uno a todos los valores no `NA` para que los 0s (no hispanos) se convirtieran en 1s y los 1s (hispanos) se convirtieran en 2s.
+
+2.  La segunda línea reemplazó todos los `NA`s con el número tres para que nuestro vector `col_hispanic` ahora vaya de uno a tres sin `NA`s en él.
+
+3.  En la última línea, creamos un vector de colores. Esencialmente, lo que estamos haciendo aquí es decirle a R que cree un vector de longitud `length(col_hispanic)` seleccionando elementos por índice del vector `c("steelblue", "tomato", "white")`. De esta manera, si, por ejemplo, el primer elemento del vector `col_hispanic` fuera un 3, nuestro nuevo vector de colores tendría un `"white"` en él.
+
+Para asegurarnos de que sabemos que estamos en lo correcto, imprimamos los primeros 10 elementos de nuestro nuevo vector de colores junto con la columna original `hispanic`:
+
+```{r 03-colors-ok}
+cbind(
+  original = V(ig_year1_111)$hispanic[1:10],
+  colors   = col_hispanic[1:10]
+  )
+```
+
+Con nuestro agradable vector de colores, ahora podemos pasarlo a `plot.igraph` (que llamamos implícitamente simplemente llamando `plot`), a través del argumento `vertex.color`:
+
+```{r 03-plot-neat1, fig.cap="Red de amigos en tiempo 1 para la escuela 111."}
+# Gráfico elegante
+set.seed(1)
+plot(
+  ig_year1_111,
+  vertex.size     = degree(ig_year1_111)/10 +1,
+  vertex.label    = NA,
+  edge.arrow.size = .25,
+  vertex.color    = col_hispanic
+  )
+```
+
+¡Agradable! Así que se ve mejor. El único problema es que tenemos muchos aislados. Intentemos de nuevo dibujando el mismo gráfico sin aislados. Para hacer eso, necesitamos filtrar el grafo, para lo cual usaremos la función `induced_subgraph`
+
+```{r 03-subgraph}
+# ¿Qué vértices no son aislados?
+which_ids <- which(degree(ig_year1_111, mode = "total") > 0)
+
+# Obteniendo el subgrafo
+ig_year1_111_sub <- induced_subgraph(ig_year1_111, which_ids)
+
+# Necesitamos obtener el mismo subconjunto en col_hispanic
+col_hispanic <- col_hispanic[which_ids]
+```
+
+```{r 03-plot-neat2, fig.cap="Red de amigos en tiempo 1 para la escuela 111. El grafo excluye aislados."}
+# Gráfico elegante
+set.seed(1)
+plot(
+  ig_year1_111_sub,
+  vertex.size     = degree(ig_year1_111_sub)/5 +1,
+  vertex.label    = NA,
+  edge.arrow.size = .25,
+  vertex.color    = col_hispanic
+  )
+```
+
+¡Ahora eso está mejor! Un patrón interesante que surge es que los individuos parecen agruparse por si son hispanos o no. 
+
+Podemos escribir esto como una función para evitar copiar y pegar el código $n$ veces (suponiendo que queremos crear un gráfico similar a este $n$ veces). Hacemos esto último en la siguiente subsección.
+
+### Múltiples gráficos
+
+Cuando te estás repitiendo repetidamente, es una buena idea escribir una secuencia de comandos como una función. En este caso, dado que ejecutaremos el mismo tipo de gráfico para todas las escuelas/ondas, escribimos una función en la que las únicas cosas que cambian son: (a) el id de la escuela, y (b) el color de los nodos. 
+
+```{r 03-myplot-def}
+myplot <- function(
+  net,
+  schoolid,
+  mindgr = 1,
+  vcol   = "tomato",
+  ...) {
+  
+  # Creando un subgrafo
+  subnet <- induced_subgraph(
+    net,
+    which(degree(net, mode = "all") >= mindgr & V(net)$school == schoolid)
+  )
+  
+  # Gráfico elegante
+  set.seed(1)
+  plot(
+    subnet,
+    vertex.size     = degree(subnet)/5,
+    vertex.label    = NA,
+    edge.arrow.size = .25,
+    vertex.color    = vcol,
+    ...
+    )
+}
+```
+
+La definición de la función:
+
+1.  El `myplot <- function([argumentos]) {[cuerpo de la función]}` le dice a R que vamos a crear una función llamada `myplot`.
+
+2.  Declaramos cuatro argumentos específicos: `net`, `schoolid`, `mindgr`, y `vcol`. Estos son un objeto igraph, el id de la escuela, el grado mínimo que los vértices deben tener para ser incluidos en la figura, y el color de los vértices. Observa que, comparado con otros lenguajes de programación, R no requiere declarar los tipos de datos.
+
+3.  El objeto de puntos suspensivos, `...`, es un objeto especial en R que nos permite pasar otros argumentos sin especificar cuáles. Si echas un vistazo al bit `plot` en el cuerpo de la función, verás que también agregamos `...`. Usamos los puntos suspensivos para pasar argumentos extra (diferentes de los que definimos explícitamente) directamente a `plot`. En la práctica, esto implica que podemos, por ejemplo, establecer el argumento `edge.arrow.size` al llamar `myplot`, ¡incluso aunque no lo incluimos en la definición de la función! (Ver `?dotsMethods` en R para más detalles).
+
+En las siguientes líneas de código, usando nuestra nueva función, graficaremos la red de cada escuela en el mismo dispositivo de graficado (ventana) con la ayuda de la función `par`, y agregaremos leyenda con el `legend`:
+
+```{r 03-myplot-call, fig.cap="Las 5 escuelas en tiempo 1. Nuevamente, los grafos excluyen aislados."}
+# Graficando todos juntos
+oldpar <- par(no.readonly = TRUE)
+par(mfrow = c(2, 3), mai = rep(0, 4), oma= c(1, 0, 0, 0))
+myplot(ig_year1, 111, vcol = "tomato")
+myplot(ig_year1, 112, vcol = "steelblue")
+myplot(ig_year1, 113, vcol = "black")
+myplot(ig_year1, 114, vcol = "gold")
+myplot(ig_year1, 115, vcol = "white")
+par(oldpar)
+
+# Una leyenda elegante
+legend(
+  "bottomright",
+  legend = c(111, 112, 113, 114, 115),
+  pt.bg  = c("tomato", "steelblue", "black", "gold", "white"),
+  pch    = 21,
+  cex    = 1,
+  bty    = "n",
+  title  = "Escuela"
+  )
+```
+
+Entonces, ¿qué pasó aquí?
+
+*   `oldpar <- par(no.readonly = TRUE)` Esta línea almacena los parámetros actuales para graficar. Dado que vamos a estar cambiándolos, ¡más vale asegurarnos de que podemos volver!.
+
+*   `par(mfrow = c(2, 3), mai = rep(0, 4), oma=rep(0, 4))` Aquí estamos estableciendo varias cosas al mismo tiempo. `mfrow` especifica cuántas _figuras_ se dibujarán, y en qué orden. En particular, estamos pidiendo al dispositivo de graficado que haga espacio para 2*3 = 6 figuras organizadas en dos filas y tres columnas dibujadas por fila.
+    
+    `mai` especifica el tamaño de los márgenes en pulgadas, establecer todos los márgenes iguales a cero (que es lo que estamos haciendo ahora) da más espacio al gráfico. Lo mismo es cierto para `oma`. Ver `?par` para más información.
+    
+
+*   `myplot(ig_year1, ...)` Esto es simplemente llamar nuestra función de graficado. La parte elegante de esto es que, dado que establecimos `mfrow = c(2, 3)`, R se encarga de _distribuir_ los gráficos en el dispositivo.
+
+*   `par(oldpar)` Esta línea nos permite restaurar los parámetros de graficado.
+
+## Pruebas estadísticas
+
+### ¿Está correlacionado el número de nominación con el indegree?
+
+Hipótesis: Los individuos que, en promedio, están entre las primeras nominaciones de sus pares son más populares
+
+```{r 03-nomination-indegree}
+# Obteniendo todos los datos en formato largo
+edgelist <- as_long_data_frame(ig_year1) |>
+  as_tibble()
+
+# Calculando indegree (de nuevo) y número promedio de nominación
+# Incluir "En una escala del uno al cinco qué tan cerca te sientes"
+# También para amigos egocéntricos (A. Amigos)
+indeg_nom_cor <- group_by(edgelist, to, to_name, to_school) |>
+  summarise(
+    indeg   = length(nnom),
+    nom_avg = 1/mean(nnom)
+  ) |>
+  rename(
+    school = to_school
+  )
+
+indeg_nom_cor
+
+# Usando correlación de Pearson
+with(indeg_nom_cor, cor.test(indeg, nom_avg))
+```
+
+```{r 03-saving}
+save.image("03.rda")
+```
