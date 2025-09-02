@@ -1,8 +1,173 @@
-# TBD
+# Pruebas de hipótesis en redes
 
 ::: {.callout-warning}
 ## Nota de Traducción
 Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
 :::
 
-*Este capítulo está pendiente de traducción.*
+En general, hay muchas formas en las que podemos ver las pruebas de hipótesis dentro
+del contexto de redes:
+
+1. **Comparar dos o más redes**, p. ej., queremos ver si la densidad de
+dos redes son *iguales*.
+
+2. **Prevalencia de un motivo/patrón**, p. ej., verificar si el número observado
+de tríadas transitivas es diferente del esperado por casualidad.
+
+3. **Multivariado usando ERGMs**, p. ej., probar conjuntamente si la homofilia y 
+las estrellas de dos puntos son los motivos que impulsan la estructura de red.
+
+Esta última ya la revisamos en el capítulo de ERGM. En esta parte, veremos
+los tipos uno y dos; ambos usando métodos no paramétricos.
+
+## Comparando redes
+
+Imagina que tenemos dos grafos, $(G_1,G_2) \in \mathcal{G}$, y nos gustaría
+evaluar si una estadística dada $s(\cdot)$, p. ej., densidad, es igual en ambos.
+Formalmente, nos gustaría evaluar si $H_0: s(G_1) - s(G_2) = k$ vs
+$H_a: s(G_1) - s(G_2) \neq k$. 
+
+Como es usual, la distribución verdadera de $s(\cdot)$ es desconocida, por lo tanto, un enfoque que
+podríamos usar es una prueba bootstrap no paramétrica.
+
+### Bootstrap de redes
+
+Los métodos bootstrap no paramétrico y jackknife para redes sociales fueron
+introducidos por [@Snijders1999]. El método mismo se usa para generar errores
+estándar para estadísticas a nivel de red. Ambos métodos están implementados en el paquete de R
+[`netdiffuseR`](https://cran.r-project.org/package=netdiffuseR).
+
+### Cuando la estadística es normal
+
+Cuando tratamos con cosas que están distribuidas normalmente, p. ej., medias muestrales
+como la densidad[^density-sample-mean],
+podemos hacer uso de la distribución de Student para hacer inferencia. En particular,
+podemos usar Bootstrap/Jackknife para aproximar los errores estándar de la estadística
+para cada red:
+
+[^density-sample-mean]: La densidad es en efecto una media muestral ya que estamos, en principio
+calculando el promedio de una secuencia de variables de Bernoulli. Formalmente:
+$\text{densidad}(G) = \frac{1}{n(n-1)}\sum_{ij}A_{ij}$.
+
+1. Dado que $s(G_i)\sim \text{N}(\mu_i,\sigma_i^2/m_i)$ para $i\in\{1,2\}$, en el caso
+   de la densidad, $m_i = n_i * (n_i - 1)$. La estadística es entonces:
+
+   $$
+   s(G_1) - s(G_0)\sim \text{N}(\mu_1-\mu_0, \sigma_1^2/m_1 + \sigma_1^2/m_2)
+   $$
+   
+   Por lo tanto
+   
+   $$
+   \frac{s(G_1) - s(G_0) - \mu_1 + \mu_2}{\sqrt{\sigma_1^2/{m_1} + \sigma_1^2/{m_2}}} \sim t_{m_1 + m_2 - 2}
+   $$
+   Pero, si estamos probando $H_0: \mu_1 - \mu_2 = k$, entonces, bajo la nula
+   
+   $$
+   \frac{s(G_1) - s(G_0) - k}{\sqrt{\sigma_1^2/{m_1} + \sigma_1^2/{m_2}}} \sim t_{m_1 + m_2 - 2}
+   $$
+   Donde ahora procedemos a aproximar las varianzas.
+   
+2. Usando el *principio plugin* [@Efron1994], podemos aproximar las varianzas
+   usando Bootstrap/Jackknife, es decir, calcular $\hat\sigma_1^2\approx\sigma_1^2/m_1$ y
+   $\hat\sigma_2^2\approx\sigma_2^2/m_2$. Usando netdiffuseR
+   
+   ```r
+   library(netdiffuseR)
+   
+   # Obtener 100 réplicas
+   sg1 <- bootnet(g1, function(i, ...) sum(i)/(nnodes(i) * (nnodes(i) - 1)), R = 100)
+   sg2 <- bootnet(g2, function(i, ...) sum(i)/(nnodes(i) * (nnodes(i) - 1)), R = 100)
+   
+   # Recuperando las varianzas
+   hat_sigma1 <- sg1$var_t
+   hat_sigma2 <- sg2$var_t
+   
+   # Y los valores reales
+   sg1 <- sg1$t0
+   sg2 <- sg2$t0
+   ```
+   
+3. Con las aproximaciones en mano, podemos entonces usar la "tabla de prueba t" para
+   recuperar el valor correspondiente, en R:
+   
+   ```r
+   # Construyendo la estadística
+   k <- 0 # Para varianzas iguales
+   tstat <- (sg1 - sg2 - k)/(sqrt(hat_sigma1 + hat_sigma2))
+   
+   # Calculando el valor p
+   m1 <- nnodes(g1)*(nnodes(g1) - 1)
+   m2 <- nnodes(g2)*(nnodes(g2) - 1)
+   pt(tstat, df = m1 + m2 - 2)
+   ```
+
+### Cuando la estadística NO es normal
+
+En el caso de que la estadística no esté distribuida normalmente, ya no podemos usar la
+estadística t. Sin embargo, el Bootstrap puede venir a ayudar. Aunque
+en general es mejor usar distribuciones de estadísticas pivote (ver [@Efron1994]),
+aún podemos aprovechar el poder de este método para hacer inferencias. Para este
+ejemplo, $s(\cdot)$ será el rango del umbral en un grafo de difusión.
+
+Como antes, imagina que estamos tratando con una estadística $s(\cdot)$ para dos
+redes diferentes, y nos gustaría evaluar si podemos rechazar $H_0$ 
+o [fallar en rechazarla](https://www.thoughtco.com/fail-to-reject-in-a-hypothesis-test-3126424).
+El procedimiento es muy similar:
+
+1. Un enfoque que podemos probar es si $k \in \text{ConfInt}(s(G_1) - s(G_2))$.
+   Construir intervalos de confianza con bootstrap podría ser más intuitivo.
+   
+2. Como antes, usamos bootstrap para generar una distribución de $s(G_1)$ y
+   $s(G_2)$, en R:
+   
+   ```r
+   # Obtener 1000 réplicas
+   sg1 <- bootnet(g1, function(i, ...) range(threshold(i)), R = 1000)
+   sg2 <- bootnet(g2, function(i, ...) range(threshold(i)), R = 1000)
+   
+   # Recuperando las distribuciones
+   sg1 <- sg1$boot$t
+   sg2 <- sg2$boot$t
+   
+   # Definir la estadística
+   sdiff <- sg1 - sg2
+   ```
+   
+3. Una vez que tenemos `sdiff`, podemos proceder y calcular el, por ejemplo, 95\%
+   intervalo de confianza, y evaluar si $k$ cae dentro. En R:
+   
+   ```r
+   diff_ci <- quantile(sdiff, probs = c(0.025, .975))
+   ```
+   
+Esto corresponde a lo que Efron y Tibshirani llaman "intervalo de percentil."
+Esto es fácil de calcular, pero un mejor enfoque es usar el método "BCa",
+"Corregido por Sesgo y Acelerado." (TBD)
+
+## Ejemplos
+
+### Promedio de estadísticas a nivel de nodo
+
+Supón que nos gustaría comparar algo como el grado de entrada promedio. 
+En particular, para ambas redes, $G_1$ y $G_2$, calculamos el grado de entrada
+promedio por nodo:
+
+$$
+s(G_1) = \text{GradoEntProm}(G_1) = \frac{1}{n}\sum_{i}\sum_{j\neq i}A^1_{ji}
+$$
+
+\noindent donde $A^1_{ji}$ es igual a uno si el vértice $j$ envía un vínculo a $i$. En este
+caso, dado que estamos viendo un promedio, tenemos que 
+$\text{GradoEntProm}(G_1) \sim N(\mu_1, \sigma^2_1/n)$. Por lo tanto, aprovechando
+la normalidad de la estadística, podemos construir una estadística de prueba como sigue:
+
+$$
+\frac{s(G_1) - s(G_2) - k}{\sqrt{\hat\sigma_{1}^2 + \hat\sigma_{2}^2}} \sim t_{n_1 + n_2 - 2}
+$$
+Donde $\hat\sigma_i$ es el error estándar bootstrap, y $k = 0$ cuando estamos probando
+igualdad. Esto se distribuye $t$ con
+$n_1+n_2-2$ grados de libertad. Como diferencia del ejemplo anterior usando
+densidad, los grados de libertad para esta prueba son menores ya que, en lugar de tener un
+promedio a través de todas las entradas de la matriz de adyacencia, tenemos un promedio a través de todos
+los vértices.

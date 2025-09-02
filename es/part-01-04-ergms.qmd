@@ -1,8 +1,617 @@
-# TBD
+---
+date-modified: 2024-06-27
+---
+
+# Modelos de Grafos Aleatorios Exponenciales
 
 ::: {.callout-warning}
 ## Nota de Traducción
 Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
 :::
 
-*Este capítulo está pendiente de traducción.*
+Recomiendo encarecidamente leer la viñeta del paquete de R `ergm`.
+
+```{r}
+#| echo: false
+if (file.exists("ergm.rda")) {
+  load("ergm.rda")
+  chapter_cached <- TRUE
+} else {
+  chapter_cached <- FALSE
+}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+```r
+vignette("ergm", package="ergm")
+```
+
+> El propósito de los ERGMs, en pocas palabras, es describir de manera parsimoniosa las fuerzas de selección local que dan forma a la estructura global de una red. Para este fin, un conjunto de datos de red, como los que se muestran en la Figura 1, puede ser considerado como la respuesta en un modelo de regresión, donde los predictores son cosas como "propensión de individuos del mismo sexo a formar asociaciones" o "propensión de individuos a formar triángulos de asociaciones". En la Figura 1(b), por ejemplo, es evidente que los nodos individuales parecen agruparse en grupos de las mismas etiquetas numéricas (que resultan ser las calificaciones de los estudiantes, del 7 al 12); por lo tanto, un ERGM puede ayudarnos a cuantificar la fuerza de este efecto intra-grupo.
+>
+> --- [@Hunter2008]
+
+![Fuente: Hunter et al. (2008)](img/hunter2008.png)
+
+En pocas palabras, usamos ERGMs como una interpretación paramétrica de la distribución de $\mathbf{Y}$, que toma la forma canónica:
+
+$$
+\Pr{\mathbf{Y}=\mathbf{y};\mathbf{\theta}}{\mathcal{Y}} = \frac{\exp{\theta^{\text{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y} 
+$$ {#eq-main-ergm}
+
+Donde $\theta\in\Omega\subset\mathbb{R}^q$ es el vector de coeficientes del modelo y $\mathbf{g}(\mathbf{y})$ es un *q*-vector de estadísticas basadas en la matriz de adyacencia $\mathbf{y}$.
+
+El modelo @eq-main-ergm puede expandirse reemplazando $\mathbf{g}(\mathbf{y})$ con $\mathbf{g}(\mathbf{y}, \mathbf{X})$ para permitir información adicional de covariables $\mathbf{X}$ sobre la red. El denominador $\kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\theta^{\text{T}}\mathbf{g}(\mathbf{y})}$ es el factor normalizador que asegura que la ecuación @eq-main-ergm sea una distribución de probabilidad legítima. Incluso después de fijar $\mathcal{Y}$ para que sean todas las redes que tienen tamaño $n$, el tamaño de $\mathcal{Y}$ hace que este tipo de modelo estadístico sea difícil de estimar ya que hay $N = 2^{n(n-1)}$ redes posibles! [@Hunter2008]
+
+Desarrollos posteriores incluyen nuevas estructuras de dependencia para considerar efectos de vecindario más generales. Estos modelos relajan las suposiciones de dependencia markoviana de un paso, permitiendo la investigación de configuraciones de mayor alcance, como rutas más largas en la red o ciclos más grandes (Pattison y Robins 2002). Se han desarrollado modelos para estructuras de red bipartitas (Faust y Skvoretz 1999) y tripartitas (Mische y Robins 2000). [@Hunter2008 p. 9]
+
+## Un ejemplo ingenuo
+
+En el caso más simple, los ERGMs equivalen a una regresión logística. Por simple, me refiero a casos sin términos markovianos--motivos que involucran más de un enlace--por ejemplo, el grafo de Bernoulli. En el grafo de Bernoulli, los vínculos son independientes, por lo que la presencia/ausencia de un vínculo entre los nodos $i$ y $j$ no afectará la presencia/ausencia de un vínculo entre los nodos $k$ y $l$.
+
+Ajustemos un ERGM usando el conjunto de datos `sampson` en el paquete `ergm`.
+
+
+```{r}
+#| label: part-01-04-loading-data
+#| echo: true
+#| collapse: true
+#| message: false
+library(ergm)
+library(netplot)
+data("sampson")
+nplot(samplike)
+```
+
+Usar `ergm` para ajustar un grafo de Bernoulli requiere usar el término `edges`, que cuenta cuántos vínculos hay en el grafo:
+
+```{r}
+#| label: first-fit
+#| echo: true
+#| collapse: true
+ergm_fit <- ergm(samplike ~ edges)
+```
+
+Dado que esto es equivalente a una regresión logística, podemos usar la función `glm` para ajustar el mismo modelo. Primero, necesitamos preparar los datos para que podamos pasarlos a `glm`:
+
+```{r}
+y <- sort(as.vector(as.matrix(samplike)))
+y <- y[-c(1:18)] # Eliminamos la diagonal del modelo, que es todo 0.
+y
+```
+
+Ahora podemos ajustar el modelo GLM:
+
+
+```{r}
+glm_fit <- glm(y~1, family=binomial("logit"))
+```
+
+Los coeficientes de ambos ERGM y GLM deberían coincidir:
+
+```{r}
+glm_fit
+ergm_fit
+```
+
+Además, en el caso del grafo de Bernoulli, podemos obtener la estimación usando la función Logit:
+
+```{r}
+pr <- mean(y)
+# Función Logit:
+# Alternativamente podríamos haber usado log(pr) - log(1-pr)
+qlogis(pr)
+```
+
+De nuevo, el mismo resultado. El grafo de Bernoulli no es el único modelo ERGM que puede ajustarse usando una regresión logística. Además, si todos los términos del modelo son términos no-Markov, `ergm` automáticamente usa por defecto una regresión logística.
+
+## Estimación de ERGMs
+
+El objetivo final es realizar inferencia estadística sobre el modelo propuesto. En un entorno *estándar*, podríamos usar Estimación de Máxima Verosimilitud (MLE), que consiste en encontrar los parámetros del modelo $\theta$ que, dados los datos observados, maximicen la verosimilitud del modelo. Para esto último, generalmente usamos [el método de Newton](https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization). El método de Newton requiere calcular la log-verosimilitud del modelo, lo que puede ser desafiante en ERGMs.
+
+Para ERGMs, dado que parte de la verosimilitud involucra una constante normalizadora que es una función de todas las redes posibles, esto no es tan directo como en el entorno regular. Debido a esto, la mayoría de los métodos de estimación se basan en simulaciones.
+
+En `statnet`, el método de estimación predeterminado se basa en un método propuesto por [@Geyer1992], MLE de Cadena de Markov, que usa Monte Carlo de Cadena de Markov para simular redes y una versión modificada del algoritmo Newton-Raphson para estimar los parámetros.
+
+La idea del MC-MLE para esta familia de modelos estadísticos es aproximar la expectativa de las razones de constantes normalizadoras usando la ley de los grandes números. En particular, lo siguiente:
+
+\begin{align*}
+\frac{\kappa\left(\theta,\mathcal{Y}\right)}{\kappa\left(\theta_0,\mathcal{Y}\right)} & = 
+  \frac{
+    \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\theta^{\text{T}}\mathbf{g}(\mathbf{y})}}{ 
+    \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\theta_0^{\text{T}}\mathbf{g}(\mathbf{y})} 
+  } \\
+& = \sum_{\mathbf{y}\in\mathcal{Y}}\left( %
+  \frac{1}{%
+    \sum_{\mathbf{y}\in\mathcal{Y}\exp{\theta_0^{\text{T}}\mathbf{g}(\mathbf{y})}}%
+  } \times %
+  \exp{\theta^{\text{T}}\mathbf{g}(\mathbf{y})} %
+  \right) \\
+& = \sum_{\mathbf{y}\in\mathcal{Y}}\left( %
+  \frac{\exp{\theta_0^{\text{T}}\mathbf{g}(\mathbf{y})}}{%
+    \sum_{\mathbf{y}\in\mathcal{Y}\exp{\theta_0^{\text{T}}\mathbf{g}(\mathbf{y})}}%
+  } \times %
+  \exp{(\theta - \theta_0)^{\text{T}}\mathbf{g}(\mathbf{y})} %
+  \right) \\
+& = \sum_{\mathbf{y}\in\mathcal{Y}}\left( %
+  \Pr{Y = y|\mathcal{Y}, \theta_0} \times %
+  \exp{(\theta - \theta_0)^{\text{T}}\mathbf{g}(\mathbf{y})} %
+  \right) \\
+& = \text{E}_{\theta_0}\left(\exp{(\theta - \theta_0)^{\text{T}}\mathbf{g}(\mathbf{y})} \right)
+\end{align*}
+
+En particular, el algoritmo MC-MLE usa este hecho para maximizar la razón de log-verosimilitud. La función objetivo misma puede aproximarse simulando $m$ redes de la distribución con parámetro $\theta_0$:
+
+$$
+l(\theta) - l(\theta_0) \approx (\theta - \theta_0)^{\text{T}}\mathbf{g}(\mathbf{y}_{obs}) - 
+\text{log}{\left[\frac{1}{m}\sum_{i = 1}^m\exp{(\theta-\theta_0)^{\text{T}}}\mathbf{g}(\mathbf{Y}_i)\right]}
+$$
+
+Para más detalles, ver [@Hunter2008]. Un bosquejo del algoritmo sigue:
+
+1.  Inicializar el algoritmo con una conjetura inicial de $\theta$, llamarlo $\theta^{(t)}$ (debe ser una conjetura bastante buena)
+
+2. Mientras (no haya convergencia) hacer:
+    
+  a. Usando $\theta^{(t)}$, simular $M$ redes por medio de pequeños cambios en la $\mathbf{Y}_{obs}$ (la red observada). Esta parte se hace usando un método de muestreo de importancia que pondera cada red propuesta por su verosimilitud condicional en $\theta^{(t)}$
+  
+  b. Con las redes simuladas, podemos hacer el paso de Newton para actualizar el parámetro $\theta^{(t)}$ (esta es la parte de iteración en el paquete `ergm`): $\theta^{(t)}\to\theta^{(t+1)}$.
+  
+  c. Si se ha alcanzado la convergencia (lo que usualmente significa que $\theta^{(t)}$ y $\theta^{(t + 1)}$ no son muy diferentes), entonces parar; de lo contrario, ir al paso a.
+
+@lusherExponentialRandomGraph2013;@admiraal2006;@Snijders2002;@Wang2009 proporcionan detalles sobre el algoritmo usado por PNet (el mismo que el usado en `RSiena`), y @lusherExponentialRandomGraph2013 proporciona una breve discusión sobre las diferencias entre `ergm` y `PNet`. 
+
+
+## El paquete `ergm`
+
+El paquete de R `ergm` [@R-ergm]
+
+De la sección anterior:^[Puedes descargar el archivo 03.rda desde [este enlace](https://github.com/gvegayon/appliedsnar).]
+
+```{r 04-setup, message=FALSE, warning=FALSE}
+library(igraph)
+
+library(dplyr)
+
+load("03.rda")
+```
+
+
+En esta sección, usaremos el paquete `ergm` (del conjunto de paquetes `statnet` @R-ergm,) y el paquete `intergraph` [@R-intergraph]. Este último proporciona funciones para ir y venir entre objetos `igraph` y `network` de los paquetes `igraph` y `network` respectivamente^[Sí, las clases tienen el mismo nombre que los paquetes.]
+
+```{r 03-ergms-setup, message=FALSE}
+library(ergm)
+library(intergraph)
+```
+
+Como una nota lateral bastante importante, el orden en que se cargan los paquetes de R importa. ¿Por qué es importante mencionarlo ahora? Bueno, resulta que al menos un par de funciones en el paquete `network` tienen el mismo nombre que algunas funciones en el paquete `igraph`. Cuando se carga el paquete `ergm`, dado que depende de `network`, cargará el paquete `network` primero, lo que _enmascarará_ algunas funciones en `igraph`. Esto se vuelve evidente una vez que cargas `ergm` después de cargar `igraph`:
+  
+```
+Los siguientes objetos están enmascarados desde 'package:igraph':
+
+  add.edges, add.vertices, %c%, delete.edges, delete.vertices, get.edge.attribute, get.edges,
+  get.vertex.attribute, is.bipartite, is.directed, list.edge.attributes, list.vertex.attributes, %s%,
+  set.edge.attribute, set.vertex.attribute
+```
+
+¿Cuáles son las implicaciones de esto? Si llamas la función `list.edge.attributes` para un objeto de clase `igraph` R devolverá un error ya que la primera función que coincide con ese nombre viene del paquete `network`! Para evitar esto puedes usar la notación de doble dos puntos:
+
+```r
+igraph::list.edge.attributes(my_igraph_object)
+network::list.edge.attributes(my_network_object)
+```
+
+De todos modos... Usando la función `asNetwork`, podemos coercionar el objeto `igraph` en un objeto network para que podamos usarlo con la función `ergm`:
+
+```{r 03-ergms-intergraph, cache=TRUE}
+# Creando la nueva red
+network_111 <- intergraph::asNetwork(ig_year1_111)
+
+# Ejecutando un ergm simple (solo ajustando cuenta de enlaces)
+ergm(network_111 ~ edges)
+```
+
+Entonces, ¿qué pasó aquí? Obtuvimos una advertencia. Resulta que nuestra red tiene bucles (¡no pensé en eso antes!). Echemos un vistazo a eso con la función `which_loop`
+
+```{r 03-ergms-which-loop}
+E(ig_year1_111)[which_loop(ig_year1_111)]
+```
+
+Podemos deshacernos de estos usando el `igraph::-.igraph`. Eliminemos los aislados usando el mismo operador
+
+```{r 03-ergms-intergraph2, cache=TRUE, eval=TRUE}
+# Creando la nueva red
+network_111 <- ig_year1_111
+
+# Eliminando bucles
+network_111 <- network_111 - E(network_111)[which(which_loop(network_111))]
+
+# Eliminando aislados
+network_111 <- network_111 - which(degree(network_111, mode = "all") == 0)
+
+# Convirtiendo la red
+network_111 <- intergraph::asNetwork(network_111)
+```
+
+
+`asNetwork(simplify(ig_year1_111))`
+`ig_year1_111 |> simplify() |> asNetwork()`
+
+Un problema que tenemos con estos datos es el hecho de que algunos vértices tienen valores faltantes en las variables `hispanic`, `female1`, y `eversmk1`. Por ahora, procederemos imputando valores basados en los promedios:
+
+```{r}
+#| label: 04-impute-values
+for (v in c("hispanic", "female1", "eversmk1")) {
+  tmpv <- network_111 %v% v
+  tmpv[is.na(tmpv)] <- mean(tmpv, na.rm = TRUE) > .5
+  network_111 %v% v <- tmpv
+}
+```
+
+Echemos un vistazo a la red
+
+```{r}
+#| label: fig-before-big-fit
+nplot(
+  network_111,
+  vertex.color = ~ hispanic
+  )
+```
+
+## Ejecutando ERGMs
+
+Flujo de trabajo propuesto:
+
+1.  Estimar el modelo más simple, agregando una variable a la vez.
+
+2.  Después de cada estimación, ejecutar la función `mcmc.diagnostics` para ver qué tan bien (o mal) se comportaron las cadenas.
+
+3.  Ejecutar la función `gof` y verificar qué tan bien el modelo coincide con las estadísticas estructurales de la red.
+
+Qué usar:
+
+1.  `control.ergms`: Número máximo de iteraciones, semilla para Pseudo-RNG, cuántos núcleos
+
+2.  `ergm.constraints`: De dónde muestrear la red. Da estabilidad y (en algunos casos) convergencia más rápida ya que al restringir el modelo estás reduciendo el tamaño de la muestra.
+
+Aquí hay un ejemplo de un par de modelos que podríamos comparar^[Nota que este documento puede no incluir los mensajes usuales que el comando `ergm` genera durante el procedimiento de estimación. Esto es solo para hacerlo más amigable para imprimir.]
+
+```{r}
+#| label: 04-ergms-model0
+#| cache: true
+#| message: false
+ans0 <- ergm(
+  network_111 ~
+    edges +
+    nodematch("hispanic") +
+    nodematch("female1") +
+    nodematch("eversmk1") +
+    mutual,
+  constraints = ~bd(maxout = 19),
+  control = control.ergm(
+    seed        = 1,
+    MCMLE.maxit = 10,
+    parallel    = 4,
+    CD.maxit    = 10
+    )
+  )
+```
+
+Entonces, ¿qué estamos haciendo aquí:
+
+1.  El modelo está controlando por: 
+    
+    a.  `edges` Número de enlaces en la red (en oposición a su densidad)
+    
+    b.  `nodematch("algún-nombre-de-variable-aquí")` Incluye un término que controla por homofilia/heterofilia
+    
+    c.  `mutual` Número de conexiones mutuas entre $(i, j), (j, i)$. Esto puede estar relacionado con, por ejemplo, cierre triádico.
+    
+Para más sobre parámetros de control, ver [@Morris2008].
+
+```{r 04-ergms-model1, cache=TRUE, eval=!chapter_cached, message=FALSE}
+ans1 <- ergm(
+  network_111 ~
+    edges +
+    nodematch("hispanic") +
+    nodematch("female1") +
+    nodematch("eversmk1")
+    ,
+  constraints = ~bd(maxout = 19),
+  control = control.ergm(
+    seed        = 1,
+    MCMLE.maxit = 10,
+    parallel    = 4,
+    CD.maxit    = 10
+    )
+  )
+```
+
+Este ejemplo toma más tiempo para calcular
+
+```{r 04-ergms-model2, cache=TRUE, eval=!chapter_cached, message=FALSE}
+ans2 <- ergm(
+  network_111 ~
+    edges +
+    nodematch("hispanic") +
+    nodematch("female1") +
+    nodematch("eversmk1") + 
+    mutual +
+    balance
+    ,
+  constraints = ~bd(maxout = 19),
+  control = control.ergm(
+    seed        = 1,
+    MCMLE.maxit = 10,
+    parallel    = 4,
+    CD.maxit    = 10
+    )
+  )
+```
+
+Ahora, un truco agradable para ver todas las regresiones en la misma tabla, podemos usar el paquete `texreg` [@R-texreg] que soporta salidas de `ergm`!
+
+```{r 04-ergm-tabulation-screen}
+library(texreg)
+screenreg(list(ans0, ans1, ans2))
+```
+
+O, si estás usando rmarkdown, puedes exportar los resultados usando LaTeX o html, intentemos este último para ver cómo se ve aquí:
+
+```{r 04-ergm-tabulation-html, results='asis', eval=knitr::is_html_output(), echo=knitr::is_html_output()}
+library(texreg)
+htmlreg(list(ans0, ans1, ans2))
+```
+
+```{r 04-ergm-tabulation-latex, results='asis', eval=knitr::is_latex_output(), echo=knitr::is_latex_output()}
+library(texreg)
+texreg(list(ans0, ans1, ans2))
+```
+
+```{r ergm-save-image, echo=FALSE, cache=TRUE}
+save.image("ergm.rda", compress = TRUE)
+```
+
+
+## Bondad de Ajuste del Modelo
+
+En términos brutos, una vez que cada cadena ha alcanzado la distribución estacionaria, podemos decir que no hay problemas con la autocorrelación y que cada punto de muestra es iid. Esto último implica que, dado que estamos ejecutando el modelo con más de una cadena, podemos usar todas las muestras (cadenas) como un solo conjunto de datos.
+
+> Cambios recientes en el algoritmo de estimación de ergm significan que estos gráficos ya no pueden usarse para asegurar que las estadísticas medias del modelo coincidan con las estadísticas de red observadas. Para esa funcionalidad, por favor usa el comando GOF: `gof(object, GOF=~model)`.
+>
+> ---?ergm::mcmc.diagnostics
+
+Dado que `ans0` es el mejor modelo, veamos las estadísticas GOF. Primero, veamos cómo se comportó el MCMC. Podemos usar la función `mcmc.diagnostics` incluida en el paquete. La función es un envoltorio de un par de funciones del paquete `coda` [@R-coda], que son llamadas sobre el objeto `$sample` que contiene las estadísticas *centradas* de las redes muestreadas. Al principio, puede ser confuso mirar el objeto `$sample`; no coincide ni con las estadísticas observadas ni con los coeficientes. 
+
+Cuando se llama `mcmc.diagnostics(ans0, centered = FALSE)`, verás muchas salidas, incluyendo un par de gráficos mostrando la traza y distribución posterior de las estadísticas *no centradas* (`centered = FALSE`). Los siguientes fragmentos de código reproducirán la salida de la función `mcmc.diagnostics` paso a paso usando el paquete coda. Primero, necesitamos *descentrar* el objeto de muestra:
+
+```{r ergm-uncentering}
+# Obteniendo la muestra centrada
+sample_centered <- ans0$sample
+
+# Obteniendo las estadísticas observadas y convirtiéndolas en una matriz para que podamos agregarlas
+# a las muestras
+observed <- summary(ans0$formula)
+observed <- matrix(
+  observed,
+  nrow  = nrow(sample_centered[[1]]),
+  ncol  = length(observed),
+  byrow = TRUE
+  )
+
+# Ahora descentramos la muestra
+sample_uncentered <- lapply(sample_centered, function(x) {
+  x + observed
+})
+
+# Tenemos que hacer de esto un objeto mcmc.list
+sample_uncentered <- coda::mcmc.list(sample_uncentered)
+```
+
+Bajo el capó:
+
+1. _Medias empíricas y sd, y cuantiles_: 
+
+```{r coda-summary}
+summary(sample_uncentered)
+```
+
+2. _Correlación cruzada_: 
+
+```{r coda-corr}
+coda::crosscorr(sample_uncentered)
+```
+
+3. _Autocorrelación_: Por ahora, solo veremos la autocorrelación para la cadena uno. La autocorrelación debería ser pequeña (en un entorno MCMC general). Si la autocorrelación es alta, entonces significa que tu muestra no es idd (no hay propiedad de Markov). Una forma de resolver esto es *adelgazar* la muestra.
+
+```{r coda-autocorr}
+coda::autocorr(sample_uncentered)[[1]]
+```
+
+4. _Diagnóstico de Geweke_: Del archivo de ayuda de la función:
+  
+  > "Si las muestras se extraen de la distribución estacionaria de la cadena, las dos medias son iguales y la estadística de Geweke tiene una distribución normal estándar asintóticamente. [...]
+  El Z-score se calcula bajo la suposición de que las dos partes de la cadena son asintóticamente independientes, lo que requiere que la suma de frac1 y frac2 sea estrictamente menor que 1."
+  >
+  > ---?coda::geweke.diag 
+  
+  Echemos un vistazo a una sola cadena:
+    
+```{r coda-geweke.diag}
+coda::geweke.diag(sample_uncentered)[[1]]
+```
+
+5. _(no incluido) Diagnóstico de Gelman_: Del archivo de ayuda de la función:
+    
+  > Gelman y Rubin (1992) proponen un enfoque general para monitorear la convergencia de salida MCMC en el que se ejecutan m > 1 cadenas paralelas con valores iniciales que están sobre-dispersos relativo a la distribución posterior. La convergencia se diagnostica cuando las cadenas han 'olvidado' sus valores iniciales, y la salida de todas las cadenas es indistinguible. El diagnóstico gelman.diag se aplica a una sola variable de la cadena. Se basa en una comparación de varianzas dentro de cadena y entre cadenas, y es similar a un análisis de varianza clásico.
+  > ---?coda::gelman.diag
+  
+  Como diferencia del estadístico de diagnóstico anterior, este usa todas las cadenas simultáneamente:
+  
+```{r coda-gelman.diag}
+coda::gelman.diag(sample_uncentered)
+```
+  
+  Como regla general, valores en el $[.9,1.1]$ son buenos.
+ 
+Una característica agradable de la función `mcmc.diagnostics` son los gráficos bonitos de traza y distribución posterior que genera. Si tienes el paquete de R `latticeExtra` [@R-latticeExtra], la función anulará los gráficos predeterminados usados por `coda::plot.mcmc` y usará lattice en su lugar, creando gráficos de mejor apariencia. El siguiente fragmento de código llama la función `mcmc.diagnostic`, pero suprimimos el resto de la salida (ver figura @fig-coda-plots).
+
+
+```{r}
+#| label: fig-coda-plots
+#| fig-align: center
+#| fig-cap: "Traza y distribución posterior de estadísticas de red muestreadas."
+# [2022-03-13] Esta línea está fallando por lo que podría ser un error de ergm
+# mcmc.diagnostics(ans0, center = FALSE) # Suprimiendo toda la salida
+```
+
+
+Si llamamos la función `mcmc.diagnostics`, este mensaje aparece al final:
+
+> Los diagnósticos MCMC mostrados aquí son de la última ronda de simulación, previo al cálculo de las estimaciones finales de parámetros. Porque las estimaciones finales son refinamientos de aquellas usadas para esta ejecución de simulación, estos diagnósticos pueden subestimar el rendimiento del modelo. Para evaluar directamente el rendimiento del modelo final en estadísticas del modelo, por favor usa el comando GOF: gof(ergmFitObject, GOF=~model).
+>
+> ---`mcmc.diagnostics(ans0)`
+
+¡No está tan mal (aunque el término `mutual` podría hacerlo mejor)!^[El sitio web wiki de statnet tiene un ejemplo muy agradable de gráficos de diagnóstico MCMC (muy) malos y buenos [aquí](https://statnet.org/trac/raw-attachment/wiki/Resources/ergm.fit.diagnostics.pdf).] Primero, observa que en la figura, vemos cuatro líneas diferentes; ¿por qué es eso? Dado que estábamos ejecutando en paralelo usando cuatro núcleos, el algoritmo ejecutó cuatro cadenas del algoritmo MCMC. Una prueba visual es ver si todas las cadenas se movieron más o menos al mismo lugar; en tal caso, podemos empezar a pensar sobre convergencia del modelo desde la perspectiva MCMC.
+
+Una vez que estamos seguros de haber alcanzado convergencia en el algoritmo MCMC, podemos empezar a pensar sobre qué tan bien nuestro modelo predice las propiedades de la red observada. Además de las estadísticas que definen nuestro ERGM, el comportamiento predeterminado de la función `gof` muestra GOF para:
+
+a.  Distribución de grado de entrada,
+b.  Distribución de grado de salida,
+c.  Socios compartidos por enlace, y
+d.  Geodésicas
+
+Echemos un vistazo
+
+```{r checking-gof, cache = TRUE, fig.pos='!h'}
+# Calculando e imprimiendo estadísticas GOF
+ans_gof <- gof(ans0)
+ans_gof
+
+# Graficando estadísticas GOF
+plot(ans_gof)
+```
+
+Prueba la siguiente configuración en su lugar
+
+```r
+ans0_bis <- ergm(
+  network_111 ~
+    edges +
+    nodematch("hispanic") +
+    nodematch("female1") +
+    mutual + 
+    esp(0:3) + 
+    idegree(0:10)
+    ,
+  constraints = ~bd(maxout = 19),
+  control = control.ergm(
+    seed        = 1,
+    MCMLE.maxit = 15,
+    parallel    = 4,
+    CD.maxit    = 15,
+    MCMC.samplesize = 2048*4,
+    MCMC.burnin = 30000,
+    MCMC.interval = 2048*4
+    )
+  )
+```
+
+Aumentar el tamaño de muestra, para que las curvas sean más suaves, intervalos más largos (adelgazamiento), lo que reduce la autocorrelación, y un quemado más grande. Todo esto junto para mejorar la estadística de prueba de Gelman. También agregamos idegree del 0 al 10, y esp del 0 al 3 para coincidir explícitamente con esas estadísticas en nuestro modelo.
+
+![Un ejemplo de un ERGM terrible (no hay convergencia en absoluto). También, un buen ejemplo de por qué ejecutar múltiples cadenas puede ser útil](img/awful-chains.png){fig-align="center"}
+
+
+## Más sobre convergencia MCMC
+
+Para más sobre este tema, recomiendo revisar [capítulo 1](http://www.mcmchandbook.net/HandbookChapter1.pdf) y [capítulo 6](http://www.mcmchandbook.net/HandbookChapter6.pdf) del Manual de MCMC [@brooks2011]. Ambos capítulos están disponibles para descarga gratuita desde el [sitio web del libro](http://www.mcmchandbook.net/HandbookSampleChapters.html).
+
+Para GOF echa un vistazo a la sección 6 del [tutorial ERGM 2016 Sunbelt](https://statnet.csde.washington.edu/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html), y para una revisión más técnica, puedes echar un vistazo a [@HunterJASA2008].
+
+
+## Interpretación Matemática
+
+Una de las partes más críticas del modelado estadístico es interpretar los resultados,
+si no la más importante. En el caso de ERGMs, un aspecto clave se basa en estadísticas de
+cambio. Supón que nos gustaría saber qué tan probable es que el vínculo $y_{ij}$ ocurra,
+dada el resto de la red. Podemos calcular tales probabilidades usando lo que
+la literatura a veces describe como el muestreador de Gibbs. 
+
+En particular, las log-odds del vínculo $ij$ ocurriendo condicional en el resto de
+la red pueden escribirse como:
+
+\begin{equation}
+	\logit{\Pr{y_{ij} = 1|y_{-ij}}} = \transpose{\theta}\Delta\chng{ij},
+\end{equation}
+
+\noindent con $\chng{ij}\equiv \snamed{\mathbf{y}}{ij}^+ - \snamed{\mathbf{y}}{ij}^-$ como
+el vector de estadísticas de cambio, en otras palabras, la diferencia entre las
+estadísticas suficientes cuando $y_{ij}=1$ y su valor cuando $y_{ij} = 0$. Para mostrar
+esto, escribimos lo siguiente:
+
+\begin{align*}
+	\Pr{y_{ij} = 1|y_{-ij}} & = %
+		\frac{\Pr{y_{ij} = 1, x_{-ij}}}{%
+			\Pr{y_{ij} = 1, y_{-ij}} + \Pr{y_{ij} = 0, y_{-ij}}} \\
+		& = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}}{%
+			\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + \exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}
+\end{align*}
+
+Aplicando la función logit a la ecuación anterior, obtenemos:
+
+\begin{align*}
+& = \log{\frac{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}}{%
+		\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + %
+		\exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}} - %
+	\log{ %
+		\frac{\exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}{%
+			\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + \exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}%
+	 } \\
+ & = \log{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}} - \log{\exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}} \\
+ & = \transpose{\theta}\left(\s{\mathbf{y}}^+_{ij} - \s{\mathbf{y}}^-_{ij}\right) \\
+ & = \transpose{\theta}\Delta\chng{ij}
+\end{align*}
+\noindent Por lo tanto, la probabilidad condicional del nodo $n$ ganando función $k$ puede escribirse como:
+
+\begin{equation}
+	\Pr{y_{ij} = 1|y_{-ij}} = \frac{1}{1 + \exp{-\transpose{\theta}\Delta\chng{ij}}}
+\end{equation}
+
+\noindent es decir, una probabilidad logística.
+
+## Independencia de Markov
+
+El desafío de analizar redes es su naturaleza interdependiente. No obstante, en ausencia de tal interdependencia, los ERGMs son equivalentes a regresión logística. Conceptualmente, si todas las estadísticas incluidas en el modelo no involucran dos o más díadas, entonces el modelo es no-Markoviano en el sentido de grafos de Markov.
+
+Matemáticamente, para ver esto, es suficiente mostrar que la probabilidad ERGM puede escribirse como el producto de las probabilidades de cada díada. 
+
+\begin{equation*}
+\Pr{\mathbf{y} | \theta} = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} 
+= \frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}}
+\end{equation*}
+
+Donde $\s{}_{ij}$ es una función tal que $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. Ahora necesitamos tratar con la constante normalizadora. Para ver cómo eso puede separarse, comencemos desde el resultado:
+
+\newcommand{\thetaS}[1]{\exp{\transpose{\theta}\s{\mathbf{y}}_{#1}}}
+
+\begin{align*}
+& =\prod_{ij}\left(1 + \thetaS{ij}\right) \\
+& = \left(1 + \thetaS{11}\right)\left(1 + \thetaS{12}\right)\dots\left(1 + \thetaS{nn}\right) \\
+& = 1 + \thetaS{11} + \thetaS{11}\thetaS{12} + \dots + \prod_{ij}\thetaS{ij} \\
+& = 1 + \thetaS{11} + \exp{\transpose{\theta}\left(\s{\mathbf{y}}_{11} + \s{\mathbf{y}}_{12}\right)} + \dots + \prod_{ij}\thetaS{ij} \\
+& = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\transpose{\theta}\s{\mathbf{y}}}
+\end{align*}
+
+Donde la última igualdad sigue del hecho de que la suma *es* la suma sobre todas las combinaciones posibles de redes, comenzando desde $exp(0) = 1$, hasta $exp(all)$. De esta manera, ahora podemos escribir:
+
+\begin{equation}
+\frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} = 
+\prod_{ij}\frac{\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{1 + \exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}
+\end{equation}
+
+Relacionado con esto, los ERGMs bloque-diagonales pueden estimarse como modelos independientes, uno por bloque. Para ver más sobre esto, lee [@Snijders2010margin]. De manera similar, dado que la independencia depende--juego de palabras intencionado--de particionar la función objetivo, como señala Snijders, las funciones no lineales hacen que el modelo sea dependiente, ej., $\s{\mathbf{y}} = \sqrt{\sum_{ij}y_{ij}}$, la raíz cuadrada del conteo de enlaces ya no es un grafo de Bernoulli.
+
+\renewcommand{\Pr}[1]{\mathbb{P}{#1}}
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = FALSE)
+```
