@@ -54,11 +54,7 @@ jobs:
       run: |
         quarto render --to pdf
 
-    - name: Render Spanish PDF
-      run: |
-        cd es && quarto render --to pdf
-
-    - name: Combine PDFs
+    - name: Combine docs
       run: |
         mkdir -p _docs/es
         cp -r es/_docs/* _docs/es/ 2>/dev/null || true
