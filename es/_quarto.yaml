@@ -1,0 +1,80 @@
+project:
+  type: book
+  output-dir: _docs
+
+execute: 
+  cache: false
+
+book:
+  google-analytics: G-30X6YBX6FJ
+  title: Ciencia de Redes Aplicada con R
+  author: George G. Vega Yon, Ph.D.
+  original-date: 2018-01-19
+  date: 2025-08-23
+  cover-image: img/front-page-dalle.png
+  cover-image-alt: 'Una imagen de IA generada con Bing: Dibuja una imagen de una red social. Incluye a una persona examinando la red y sosteniendo una laptop en una mano. La laptop debería tener el logo del lenguaje de programación R.'
+  page-footer: Ciencia de Redes Aplicada con R - [https://ggvy.cl](https://ggvy.cl){target="_blank"}
+  repo-url: https://github.com/gvegayon/appliedsnar
+  repo-branch: master
+  repo-actions: [edit, source, issue]
+  image: img/front-page-dalle.png
+  twitter-card:
+    description: 'Este libro (en desarrollo) es una colección de ejemplos utilizando el lenguaje de programación R para ciencia de redes. Incluye ejemplos de procesamiento de datos de redes, visualización, simulación y modelado.'
+    creator: "@gvegayon"
+  site-url: https://book.ggvy.cl
+  sharing: [twitter, linkedin]
+  navbar:
+    # background: light
+    search: true
+
+  chapters: 
+    - index.qmd
+    - part-01-01-intro.qmd
+    - part-01-02-the-basics.qmd
+    - part: "**Aplicaciones**"
+      chapters:
+        - part-01-03-week-1-sns-study.qmd
+        - part-01-06-network-simulation-and-viz.qmd
+        - part-01-07-egonets.qmd
+        - part-01-09-netdiffuser.qmd
+    - part: "**Inferencia estadística**"
+      chapters: 
+        - part-01-03-behavior.qmd
+        - part-01-04-ergms.qmd
+        - part-01-05-ergms-constrains.qmd
+        - part-01-05-stergm.qmd
+        - part-01-08-netboot.qmd
+        - part-01-10-siena.qmd
+        - part-01-11-power.qmd
+    - part: "**Fundamentos**"
+      chapters:
+        - part-02-10-statistical-foundations.qmd
+        - part-02-11-power.qmd
+    - part: "**Apéndice**"
+      chapters:
+        - part-03-12-data-appendix.qmd
+    - references.qmd
+  downloads:
+  - pdf
+
+
+bibliography: ../book.bib
+
+biblio-style: apalike
+
+format: 
+  html:
+    html-math-method: katex
+    toc: true
+    number-sections: false
+    theme: cerulean
+  pdf:
+    geometry: 
+      - top=1in
+      - bottom=1in
+      - left=1in
+      - right=1in
+    fontsize: 12pt
+    fontenc: T1
+    include-in-header: ../preamble.tex
+    keep-tex: true

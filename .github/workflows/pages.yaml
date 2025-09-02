@@ -21,9 +21,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Render
+    - name: Render English version
       run: |
         quarto render --to html
+
+    - name: Render Spanish version
+      run: |
+        cd es && quarto render --to html
+
+    - name: Combine versions
+      run: |
+        cp -r es/_docs/* _docs/es/ 2>/dev/null || mkdir -p _docs/es && cp -r es/_docs/* _docs/es/
 
     - name: Upload artifact
       # uses: actions/upload-pages-artifact@v3
@@ -41,9 +49,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Render
+    - name: Render English PDF
       run: |
         quarto render --to pdf
+
+    - name: Render Spanish PDF
+      run: |
+        cd es && quarto render --to pdf
+
+    - name: Combine PDFs
+      run: |
+        mkdir -p _docs/es 2>/dev/null || true
+        cp -r es/_docs/* _docs/es/ 2>/dev/null || true
 
     - name: Upload artifact
       # uses: actions/upload-pages-artifact@v3
