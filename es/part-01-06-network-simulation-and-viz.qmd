@@ -1,4 +1,4 @@
-# TBD
+# Simulación y Visualización de Redes
 
 ::: {.callout-warning}
 ## Nota de Traducción
