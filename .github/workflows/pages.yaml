@@ -25,21 +25,32 @@ jobs:
       run: |
         quarto render --to html
 
-    - name: Render Spanish version
-      run: |
-        cd es && quarto render --to html
-
-    - name: Combine versions
-      run: |
-        mkdir -p _docs/es
-        cp -r es/_docs/* _docs/es/ 2>/dev/null || true
-
     - name: Upload artifact
       # uses: actions/upload-pages-artifact@v3
       uses: actions/upload-artifact@v4
       with:
         path: _docs
         name: gh-page-html
+
+  build-html-es:
+    runs-on: ubuntu-22.04
+
+    container:
+      image: gvegayon/appliedsnar:latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Render Spanish version
+      run: |
+        cd es && quarto render --to html
+
+    - name: Upload artifact
+      # uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v4
+      with:
+        path: es/_docs
+        name: gh-page-html-es
 
   build-pdf:
     runs-on: ubuntu-22.04
@@ -80,7 +91,7 @@ jobs:
   combine:
     runs-on: ubuntu-22.04
 
-    needs: [build-html, build-pdf]
+    needs: [build-html, build-html-es, build-pdf]
 
     steps:
 
@@ -89,6 +100,12 @@ jobs:
       with:
         name: gh-page-html
         path: _docs
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: gh-page-html
+        path: _docs/es
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
