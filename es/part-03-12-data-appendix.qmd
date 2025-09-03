@@ -1,0 +1,12 @@
+# Conjuntos de datos
+
+::: {.callout-warning}
+## Nota de Traducción
+Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::
+
+## Datos SNS {#sns-data}
+
+```{r echo=FALSE, results='asis'}
+cat(readLines("../data-raw/03-sns.md"), sep="\n")
+```

@@ -1,0 +1,41 @@
+---
+date-modified: 2025-08-23
+---
+
+\renewcommand{\Pr}[1]{\text{Pr}\left(#1\right)}
+\renewcommand{\exp}[1]{\text{exp}\left\{#1\right\}}
+
+# Prefacio
+
+::: {.callout-warning}
+## Nota de Traducción
+Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::
+
+Los métodos estadísticos para sistemas en red están presentes en la mayoría de las disciplinas. A pesar de las diferencias de lenguaje entre áreas, muchos métodos desarrollados para estudiar problemas específicos pueden ser útiles fuera de su contexto original; esta es la premisa de este libro. **Ciencia de Redes Aplicada con R** proporciona ejemplos utilizando el lenguaje de programación R para estudiar sistemas en red. Aunque la mayoría de los casos tratan sobre análisis de redes sociales, los métodos presentados aquí pueden aplicarse a contextos como redes biológicas, redes de transporte y muchos otros.
+
+Todo el libro fue escrito utilizando [quarto](https://quarto.org){target="_blank"}--un sistema de [programación literaria](https://en.wikipedia.org/w/index.php?title=Literate_programming&oldid=1219921237) que permite mezclar texto y código--lo que significa que todo el código presentado es 100% ejecutable y, por tanto, reproducible. El código fuente está disponible en GitHub en [https://github.com/gvegayon/appliedsnar](https://github.com/gvegayon/appliedsnar){target="_blank"}. Se anima a los lectores a descargar el código y ejecutarlo en sus máquinas utilizando [RStudio](https://posit.co) o [VScode](https://code.visualstudio.com/).
+
+Además de la programación en R, estaremos utilizando <a href="https://posit.co" target="_blank">RStudio</a>. Para el manejo de datos, utilizaremos <a href="https://cran.r-project.org/package=dplyr" target="_blank">`dplyr`</a> y <a href="https://cran.r-project.org/package=data.table" target="_blank">`data.table`</a>. Los paquetes de manejo y visualización de datos de redes que utilizaremos son <a href="https://cran.r-project.org/package=igraph" target="_blank">`igraph`</a>, <a href="https://cran.r-project.org/package=netdiffuseR" target="_blank">netdiffuseR</a>, la suite <a href="https://statnet.org" target="_blank">statnet</a>, y <a href="https://cran.r-project.org/package=netplot" target="_blank">`netplot`</a>.
+
+## Sobre el proyecto
+
+Este proyecto comenzó hace más de seis años como parte de una serie de talleres y tutoriales que impartí en el <a href="https://cana.usc.edu" target="_blank">**Centro de Análisis de Redes Aplicadas**</a> de USC. Hoy, lo uso para recopilar y estudiar métodos estadísticos para analizar redes, con énfasis en sistemas sociales y biológicos. Además, el libro utilizará métodos de computación estadística como componente central.
+
+## Sobre el Autor
+
+Soy Profesor Asistente de Investigación en la <a href="https://medicine.utah.edu/internal-medicine/epidemiology" target="_blank">**División de Epidemiología de la Universidad de Utah**</a>, donde trabajo estudiando Sistemas Complejos utilizando Computación Estadística. Nací y crecí en Chile. Tengo más de diez años de experiencia <a href="https://github.com/gvegayon" target="_blank">desarrollando software científico</a> con enfoque en computación de alto rendimiento, visualización de datos y análisis de redes sociales. Mi formación es en Políticas Públicas (M.A. <a href="https://uai.cl" target="_blank">UAI</a>, 2011), Economía (M.Sc. <a href="https://caltech.edu" target="_blank">Caltech</a>, 2015), y Bioestadística (Ph.D. <a href="https://usc.edu" target="_blank">USC</a>, 2020).
+
+Obtuve mi Ph.D. en Bioestadística bajo la supervisión del <a href="https://scholar.google.com/citations?user=Zj5ky5gAAAAJ&hl=en" target="_blank">**Prof. Paul Marjoram**</a> y la <a href="https://kayladelahaye.net/" target="_blank">**Prof. Kayla de la Haye**</a>, con mi disertación titulada "*Essays on Bioinformatics and Social Network Analysis: Statistical and Computational Methods for Complex Systems.*"
+
+Si desea aprender más sobre mí, por favor visite mi sitio web en <a href="https://ggvy.cl" target="_blank">https://ggvy.cl</a>.
+
+## Sobre la versión en Español
+
+Esta versión en español del libro fue creada utilizando traducción automática con inteligencia artificial. Aunque se ha hecho un esfuerzo por mantener la precisión técnica y el contexto, algunos términos especializados y conceptos pueden requerir revisión adicional. La versión original en inglés permanece como la referencia autorizada.
+
+Los lectores que encuentren errores de traducción o áreas que requieran clarificación son bienvenidos a contribuir reportando problemas en el repositorio de GitHub del proyecto.
+
+## Divulgación sobre IA
+
+A partir de mediados de 2023, he estado utilizando IA para ayudarme a escribir este libro. Principalmente, uso una combinación de [GitHub co-pilot](https://github.com/features/copilot){target="_blank"}, que ayuda con código y texto, y [Grammarly](https://grammarly.com){target="_blank"}, que ayuda con gramática y estilo. El papel de la IA ha sido ayudarme a escribir más rápido y con mayor precisión, pero no ha estado involucrada en la conceptualización del libro o el desarrollo de los métodos presentados aquí.

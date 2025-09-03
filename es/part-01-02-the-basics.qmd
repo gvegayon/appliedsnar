@@ -1,0 +1,191 @@
+---
+date-modified: 2024-05-27
+---
+
+# Fundamentos de R
+
+::: {.callout-warning}
+## Nota de Traducción
+Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::
+
+R [@R] es un lenguaje de programación orientado a la computación estadística. R se ha convertido en el lenguaje de programación *de facto* en la comunidad de redes sociales debido al gran número de paquetes disponibles para análisis de redes. Los paquetes de R son colecciones de funciones, datos y documentación que extienden R. Un buen libro de referencia tanto para usuarios novatos como avanzados es ["The Art of R programming"](https://nostarch.com/artofr.htm) @Matloff2011[^matlof].
+
+[^matlof]: [Aquí](http://heather.cs.ucdavis.edu/~matloff/145/PLN/RMaterials/NSPpart.pdf) una versión pdf gratuita distribuida por el autor.
+
+## Obtener R
+
+Puedes obtener R desde el sitio web de Comprehensive R Archive Network [CRAN] ([enlace](https://cran.r-project.org/){target="_blank"}). CRAN es una red de servidores en todo el mundo que almacenan versiones idénticas y actualizadas de código y documentación para R. El sitio web de CRAN también tiene mucha información sobre R, incluyendo manuales, FAQs y listas de correo.
+
+Aunque R viene con una Interfaz Gráfica de Usuario [GUI], recomiendo obtener una alternativa como [RStudio](https://posit.com){target="_blank"} o [VSCode](https://code.visualstudio.com/){target="_blank"}. RStudio y VSCode son excelentes compañeros para programar en R. Mientras que RStudio es más común entre los usuarios de R, VSCode es un IDE de propósito más general que puede usarse para muchos otros lenguajes de programación, incluyendo Python y C++.
+
+## Cómo instalar paquetes
+
+Hoy en día, hay dos formas de instalar paquetes de R (que yo conozca), ya sea usando `install.packages`, que es una función que viene con R, o usando el paquete de R [`devtools`](https://cran.r-project.org/package=devtools) para instalar un paquete desde algún repositorio remoto que no sea CRAN, aquí hay algunos ejemplos:
+
+```r
+# Esto instalará el paquete igraph desde CRAN
+> install.packages("netdiffuseR")
+
+# ¡Esto instalará la versión más reciente desde el repositorio GitHub del proyecto!
+> devtools::install_github("USCCANA/netdiffuseR")
+```
+
+El primero, usando `install.packages`, instala la versión de CRAN de [`netdiffuseR`](https://r-project.org/package=netdiffuseR), mientras que la línea de código instala cualquier versión que esté publicada en https://github.com/USCCANA/netdiffuseR, que usualmente se llama la versión de desarrollo.
+
+En algunos casos, los usuarios pueden querer/necesitar instalar paquetes desde la línea de comandos ya que algunos paquetes necesitan configuración extra para ser instalados. Pero no necesitaremos ver eso ahora.
+
+
+## Una Introducción ~~suave~~ Rápida y Sucia a R
+
+Algunas tareas comunes en R
+
+0.  Obtener ayuda (y leer el manual) es *LO MÁS IMPORTANTE* que deberías saber. Por ejemplo, si quieres leer el manual (archivo de ayuda) de la función `read.csv`, puedes escribir cualquiera de estos:
+
+    ```r
+    ?read.csv
+    ?"read.csv"
+    help(read.csv)
+    help("read.csv")
+    ```
+
+    Si no estás completamente seguro de cuál es el nombre de la función, siempre puedes usar la *búsqueda difusa*
+
+    ```r
+    help.search("linear regression")
+    ??"linear regression"
+    ```
+    
+    
+
+1.  En R, puedes crear nuevos objetos usando el operador de asignación (`<-`) o el signo igual `=`, por ejemplo, los siguientes dos son equivalentes:
+    ```r
+    a <- 1
+    a =  1
+    ```
+    Históricamente, el operador de asignación es el más comúnmente usado.
+
+2.  R tiene varios tipos de objetos. Las estructuras más básicas en R son `vectors`, `matrix`, `list`, `data.frame`. Aquí hay un ejemplo de creación de varios de estos (cada línea está encerrada con paréntesis para que R imprima el elemento resultante):
+
+    ```{r}
+    #| label: creating
+    (a_vector     <- 1:9)
+    (another_vect <- c(1, 2, 3, 4, 5, 6, 7, 8, 9))
+    (a_string_vec <- c("I", "like", "netdiffuseR"))
+    (a_matrix     <- matrix(a_vector, ncol = 3))
+    
+    # Las matrices también pueden ser de strings
+    (a_string_mat <- matrix(letters[1:9], ncol=3)) 
+    
+    # El operador `cbind` hace "column bind"
+    (another_mat  <- cbind(1:4, 11:14)) 
+    
+    # El operador `rbind` hace "row bind"
+    (another_mat2 <- rbind(1:4, 11:14))
+    (a_string_mat <- matrix(letters[1:9], ncol = 3))
+    (a_list       <- list(a_vector, a_matrix))
+    
+    # ¡igual pero con nombres!
+    (another_list <- list(my_vec = a_vector, my_mat = a_matrix)) 
+    
+    # Los data frames pueden tener múltiples tipos de elementos; es
+    # una colección de listas
+    (a_data_frame <- data.frame(x = 1:10, y = letters[1:10]))
+    ```
+
+3.  Dependiendo del tipo de objeto, podemos acceder a sus componentes usando indexación:
+    ```{r indexing}
+    # Primeros 3 elementos
+    a_vector[1:3]
+    
+    # Tercer elemento
+    a_string_vec[3]
+    
+    # Una sub matriz
+    a_matrix[1:2, 1:2]
+    
+    # Tercera columna
+    a_matrix[,3]
+    
+    # Tercera fila
+    a_matrix[3,]
+    
+    # Primeros 6 elementos de la matriz. R almacena matrices
+    # por columna.
+    a_string_mat[1:6]
+    
+    # Estos tres son equivalentes
+    another_list[[1]]
+    another_list$my_vec
+    another_list[["my_vec"]]
+    
+    # Los data frames son como listas
+    a_data_frame[[1]]
+    a_data_frame[,1]
+    a_data_frame[["x"]]
+    a_data_frame$x
+    ```
+    
+4.  Declaraciones de flujo de control
+    ```{r control-flow}
+    # El bucle for de toda la vida
+    for (i in 1:10) {
+      print(paste("Estoy en el paso", i, "/", 10))
+    }
+    
+    # Un buen ifelse
+    
+    for (i in 1:10) {
+      
+      if (i %% 2) # Operando módulo
+        print(paste("Estoy en el paso", i, "/", 10, "(y soy impar)"))
+      else
+        print(paste("Estoy en el paso", i, "/", 10, "(y soy par)"))
+      
+    }
+    
+    # Un while
+    i <- 10
+    while (i > 0) {
+      print(paste("Estoy en el paso", i, "/", 10))
+      i <- i - 1
+    }
+    ```
+
+5.  R tiene un conjunto convincente de funciones de generación de números pseudo-aleatorios. En general, las funciones de distribución tienen la siguiente estructura de nombres:
+
+    a.  Generación de Números Aleatorios: `r[nombre-de-la-distribución]`, *ej.*, `rnorm` para normal, `runif` para uniforme.
+    b.  Función de densidad: `d[nombre-de-la-distribución]`, ej. `dnorm` para normal, `dunif` para uniforme.
+    c.  Función de Distribución Acumulativa (CDF): `p[nombre-de-la-distribución]`, *ej.*, `pnorm` para normal, `punif` para uniforme.
+    d.  Función inversa (cuantil): `q[nombre-de-la-distribución]`, ej. `qnorm` para la normal, `qunif` para la uniforme.
+    
+    Aquí hay algunos ejemplos:
+     
+    ```{r random-numbers}
+    # Para asegurar reproducibilidad
+    set.seed(1231)
+    
+    # 100,000 números Unif(0,1)
+    x <- runif(1e5)
+    hist(x)
+    
+    # 100,000 números N(0,1)
+    x <- rnorm(1e5)
+    hist(x)
+    
+    # 100,000 números N(10,25)
+    x <- rnorm(1e5, mean = 10, sd = 5)
+    hist(x)
+    
+    # 100,000 números Poisson(5)
+    x <- rpois(1e5, lambda = 5)
+    hist(x)
+    
+    # 100,000 números rexp(5)
+    x <- rexp(1e5, 5)
+    hist(x)
+    ```
+    
+    Más distribuciones están disponibles en `??Distributions`.
+
+Para una buena introducción a R, echa un vistazo a ["The Art of R Programming" por Norman Matloff](https://nostarch.com/artofr.htm). Para usuarios más avanzados, echa un vistazo a ["Advanced R" por Hadley Wickham](http://adv-r.had.co.nz/).

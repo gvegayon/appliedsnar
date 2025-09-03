@@ -1,0 +1,424 @@
+---
+date-modified: 2024-05-27
+---
+
+# Redes egocéntricas
+
+::: {.callout-warning}
+## Nota de Traducción
+Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::
+
+En el análisis de redes sociales egocéntricas (ESNA, para nuestro libro,) en lugar de tratar con una sola red, tenemos tantas redes como participantes en el estudio. Los egos--los sujetos principales del estudio--se analizan desde la perspectiva de su red social local. Para una vista más extendida de ESNA, revisa <a href="https://raffaelevacca.github.io/egocentric-r-book/" target="_blank">"*Análisis de redes egocéntricas con R*"</a> de Raffaele Vacca.
+
+En este capítulo, muestro cómo trabajar con un tipo particular de datos ESNA: información generada por la herramienta <a href="https://networkcanvas.com/" target="_blank">Network Canvas</a>. Puedes descargar un archivo ZIP "artificial" que contiene las salidas de un proyecto de Network Canvas [aquí](data-raw/networkCanvasExport-fake.zip)[^netcanvas-file]. Asumimos que el archivo ZIP fue extraído a la carpeta `data-raw/egonets`. Puedes proceder y extraer el ZIP por punto y clic o usar el siguiente código R para automatizar el proceso:
+
+[^netcanvas-file]: Agradezco a [Jacqueline M. Kent-Marvick](https://scholar.google.com/citations?user=Uht4YbkAAAAJ){target="_blank"}, quien me proporcionó lo que usé como línea base para generar la exportación artificial de Network Canvas.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Para hacer el archivo disponible
+if (dir.exists("docs/data-raw"))
+  dir.create("docs/data-raw", recursive=TRUE)
+file.copy(
+  "data-raw/networkCanvasExport-fake.zip",
+  "docs/data-raw/networkCanvasExport-fake.zip"
+  )
+
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+```{r unzip}
+unzip(
+  zipfile = "data-raw/networkCanvasExport-fake.zip",
+  exdir   = "data-raw/egonets"
+  )
+```
+
+Esto extraerá todos los archivos en `networkCanvasExport-fake.zip` a la subcarpeta `egonets`. Echemos un vistazo a los primeros archivos:
+
+```{r part-01-07-egonets-files}
+head(list.files(path = "data-raw/egonets"))
+```
+
+Como puedes ver, para cada ego en el conjunto de datos, hay cuatro archivos:
+
+- `...attributeList_Person.csv`: Atributos de los alters.
+
+- `...edgeList_Knows.csv`: Lista de enlaces indicando los vínculos entre los alters.
+
+- `...ego.csv`: Información sobre los egos.
+
+- `...graphml`: Y un <a href="https://en.wikipedia.org/wiki/GraphML" target="_blank">archivo `graphml`</a> que contiene las redes egocéntricas.
+
+Las siguientes secciones ilustrarán, archivo por archivo, cómo leer la información en R, aplicar cualquier procesamiento requerido, y almacenar la información para uso posterior. Comenzamos con los archivos `graphml`.
+
+## Archivos de red (graphml)
+
+Los archivos `graphml` pueden leerse directamente con la función `read_graph` de `igraph`. La clave es aprovechar las listas de R para evitar escribir una y otra vez el mismo bloque de código, y, en su lugar, manejar los datos a través de listas. 
+
+Al igual que cualquier función de lectura de datos, la función `read_graph` requiere una ruta de archivo al archivo de red. **La función que usaremos para listar los archivos requeridos es `list.files()`**:
+
+```{r netread, message=FALSE}
+# Comenzamos cargando igraph
+library(igraph)
+
+# Listando todos los archivos graphml
+graph_files <- list.files(
+  path       = "data-raw/egonets", # ¿Dónde están estos archivos?
+  pattern    = "*.graphml",        # Especificar un patrón para solo listar graphml
+  full.names = TRUE                # Y nos aseguramos de usar el nombre completo
+                                   # (ruta.) De lo contrario, solo obtendríamos nombres.
+  )
+
+# Echando un vistazo a los primeros tres archivos que obtuvimos
+graph_files[1:3]
+
+# Aplicando read_graph de igraph
+graphs <- lapply(
+  X      = graph_files,       # Lista de archivos a leer
+  FUN    = read_graph,        # La función a aplicar
+  format = "graphml"          # Argumento pasado a read_graph
+  )
+```
+
+Si la operación tuvo éxito, el bloque de código anterior debería generar una lista de objetos `igraph` llamada `graphs`. Echemos un vistazo a los primeros dos:
+
+```{r}
+graphs[[1]]
+graphs[[2]]
+```
+
+Como siempre, una de las primeras cosas que hacemos con redes es visualizarlas. Usaremos el <a href="https://cran.r-project.org/package=netplot" target="_blank">paquete de R `netplot`</a> (de un servidor) para dibujar las figuras:
+
+```{r plot-nets, message=FALSE, warning=FALSE}
+library(netplot)
+library(gridExtra)
+
+# El diseño del grafo es aleatorio
+set.seed(1231)
+
+# grid.arrange permite poner múltiples gráficos netplot en la misma página
+grid.arrange(
+  nplot(graphs[[1]]),
+  nplot(graphs[[2]]),
+  nplot(graphs[[3]]),
+  nplot(graphs[[4]]),
+  ncol = 2, nrow = 2
+)
+```
+
+¡Excelente! Dado que los nodos en nuestra red tienen características, podemos agregar un poco de color. Usaremos la variable `eat_with_2`, codificada como `TRUE` o `FALSE`. Los colores de los vértices pueden especificarse usando el argumento `vertex.color` de la función `nplot`. En nuestro caso, especificaremos colores pasando un vector con longitud igual al número de nodos en el grafo. Además, dado que haremos esto múltiples veces, vale la pena escribir una función:
+
+```{r plot-nets-colored}
+# Una función para colorear por la variable come con
+color_it <- function(net) {
+
+  # Codificando eat_with_2 para ser 1 (FALSE) o 2 (TRUE)
+  eatswith <- V(net)$eat_with_2
+
+  # Subconjuntando el color
+  ifelse(eatswith, "purple", "darkgreen")
+
+}
+```
+
+Esta función toma dos argumentos: una red y un vector de dos colores. Los atributos de vértice en `igraph` pueden accederse a través de la función `V(...)$...`. Para este ejemplo, para acceder al atributo `eat_with_2` en la red `net`, escribimos `V(net)$eat_with_2`. Finalmente, individuos con `eat_with_2` igual a true serán coloreados `purple`; de lo contrario, si es igual a `FALSE`, serán coloreados `darkgreen`. Antes de graficar las redes, veamos qué obtenemos cuando accedemos al atributo `eat_with_2` en el primer grafo:
+
+```{r}
+V(graphs[[1]])$eat_with_2
+```
+
+Un vector lógico. Ahora redibujemos las figuras:
+
+```{r part-01-07-plot-nets-colored}
+grid.arrange(
+  nplot(graphs[[1]], vertex.color = color_it(graphs[[1]])),
+  nplot(graphs[[2]], vertex.color = color_it(graphs[[2]])),
+  nplot(graphs[[3]], vertex.color = color_it(graphs[[3]])),
+  nplot(graphs[[4]], vertex.color = color_it(graphs[[4]])),
+  ncol = 2, nrow = 2
+)
+```
+
+Dado que la mayoría del tiempo, estaremos tratando con muchas redes egocéntricas; puedes querer dibujar cada red independientemente; el siguiente bloque de código hace eso. Primero, si es necesario, creará una carpeta para almacenar las redes. Luego, usando la función `lapply`, usará `netplot::nplot()` para dibujar las redes, agregar una leyenda, y guardar el grafo como `.../graphml_[número].png`, donde `[número]` irá de `01` al número total de redes en `graphs`.
+
+```{r plot-net-all, eval = FALSE}
+if (!dir.exists("egonets/figs/egonets"))
+  dir.create("egonets/figs/egonets", recursive = TRUE)
+
+lapply(seq_along(graphs), function(i) {
+  
+  # Creando el dispositivo 
+  png(sprintf("egonets/figs/egonets/graphml_%02i.png", i))  
+  
+  # Dibujando el gráfico
+  p <- nplot(
+    graphs[[i]],
+    vertex.color = color_it(graphs[[i]])
+    )
+  
+  # Agregando una leyenda
+  p <- nplot_legend(
+    p,
+    labels = c("come con: FALSE", "come con: TRUE"),
+    pch    = 21,
+    packgrob.args = list(side = "bottom"),
+    gp            = gpar(
+      fill = c("darkgreen", "purple")
+    ),
+    ncol = 2
+  )
+  
+  print(p)
+  
+  # Cerrando el dispositivo
+  dev.off()
+})
+```
+
+
+## Archivos de persona
+
+Como antes, listamos los archivos que terminan en `Person.csv` (con la ruta completa,) y los leemos en R. Aunque R tiene la función `read.csv`, aquí uso la función `fread` del <a href="https://cran.r-project.org/package=data.table" target="_blank">paquete de R `data.table`</a>. Junto con `dplyr`, `data.table` es una de las herramientas de manipulación de datos más populares en R. Además de la sintaxis, la mayor diferencia entre las dos es el rendimiento; `data.table` es significativamente más rápido que cualquier otro paquete de manejo de datos en R, y es una gran alternativa para manejar grandes conjuntos de datos. El siguiente bloque de código carga el paquete, lista los archivos, y los lee en R.
+
+```{r read-person}
+# Cargando data.table
+library(data.table)
+
+# Listando los archivos
+person_files <- list.files(
+  path       = "data-raw/egonets",
+  pattern    = "*Person.csv",
+  full.names = TRUE
+  )
+
+# Cargando todos en una sola lista
+persons <- lapply(person_files, fread)
+
+# Mirando el primer elemento
+persons[[1]]
+```
+
+Una tarea común es agregar un identificador a cada conjunto de datos en `persons` para que sepamos a qué ego pertenecen. De nuevo, la función `lapply` es nuestra amiga:
+
+
+```{r part-01-07-adding-ids}
+persons <- lapply(seq_along(persons), function(i) {
+  persons[[i]][, dataset_num := i]
+})
+```
+
+En `data.table`, las variables se crean usando el símbolo `:=`. El fragmento de código anterior es equivalente a esto:
+
+```r
+for (i in 1:length(persons)) {
+  persons[[i]]$dataset_num <- i
+}
+```
+
+Si es necesario, podemos transformar la lista `persons` en un objeto `data.table` (es decir, un solo `data.frame`) usando la función `rbindlist`[^rbindlist]. El siguiente bloque de código usa esa función para combinar los `data.table`s en un solo conjunto de datos.
+
+[^rbindlist]: Aunque no es lo mismo, `rbindlist` (casi siempre) produce el mismo resultado que llamar la función `do.call`. En particular, en lugar de ejecutar la llamada `rbindlist(persons)`, podríamos haber usado `do.call(rbind, persons)`.
+
+```{r}
+# Combinando los conjuntos de datos
+persons <- rbindlist(persons)
+persons
+```
+
+Ahora que tenemos un solo conjunto de datos, podemos hacer algo de exploración de datos. Por ejemplo, podemos usar el paquete `ggplot2` para dibujar un histograma de las edades de los alters.
+
+```{r part-01-07-ggplot-ages}
+# Cargando el paquete ggplot2
+library(ggplot2)
+
+# Histograma de edad
+ggplot(persons, aes(x = age)) +            # Iniciando el gráfico
+  geom_histogram(fill = "purple") +      # Agregando un histograma
+  labs(x = "Edad", y = "Frecuencia") +       # Cambiando las etiquetas del eje x/y
+  labs(title = "Distribución de Edad de Alters") # Agregando un título
+```
+
+
+
+## Archivos de ego
+
+Los archivos de ego contienen información sobre los egos (¡obvio!.) De nuevo, los leeremos todos a la vez usando `list.files` + `lapply`:
+
+```{r read-ego}
+# Listando archivos que terminan con *ego.csv
+ego_files <- list.files(
+  path       = "data-raw/egonets",
+  pattern    = "*ego.csv",
+  full.names = TRUE
+  )
+
+# Leyendo los archivos con fread
+egos <- lapply(ego_files, fread)
+
+# Combinándolos
+egos <- rbindlist(egos)
+head(egos)
+```
+
+Algo genial sobre `data.table` es que, dentro de corchetes cuadrados, podemos manipular los datos refiriéndonos a las variables directamente. Por ejemplo, si quisiéramos calcular la diferencia entre `sessionFinish` y `sessionStart`, usando R base haríamos lo siguiente:
+
+```r
+egos$total_time <- egos$sessionFinish - egos$sessionStart
+```
+
+Mientras que con `data.table`, la creación de variables es mucho más directa (nota que en lugar de usar `<-` o `=` para asignar una variable, usamos el operador `:=`):
+
+```{r egos-time}
+# ¿Cuánto tiempo?
+egos[, total_time := sessionFinish - sessionStart]
+```
+
+También podemos visualizar esto usando `ggplot2`:
+
+```{r egos-time-plot}
+ggplot(egos, aes(x = total_time)) +
+  geom_histogram() +
+  labs(x = "Tiempo en minutos", y = "Conteo") +
+  labs(title = "Tiempo total gastado por egos")
+```
+
+## Archivos de lista de enlaces
+
+Como mencioné antes, dado que estamos leyendo los archivos `graphml`, usar la lista de enlaces puede no ser necesario. Sin embargo, el proceso para importar el archivo de lista de enlaces a R es el mismo que hemos estado aplicando: listar los archivos y leerlos todos a la vez usando `lapply`:
+
+```{r read-edgelist}
+# Listando todos los archivos que terminan en Knows.csv
+edgelist_files <- list.files(
+  path = "data-raw/egonets",
+  pattern = "*Knows.csv",
+  full.names = TRUE
+  )
+
+# Leyendo todos los archivos a la vez
+edgelists <- lapply(edgelist_files, fread)
+```
+
+Para evitar confusión, también podemos agregar ids correspondientes al número de archivo. Una vez que hagamos eso, podemos combinar todos los archivos en un solo objeto `data.table` usando `rbindlist`:
+
+```{r part-01-07-adding-ids-edgelist}
+edgelists <- lapply(seq_along(edgelists), function(i) {
+  edgelists[[i]][, dataset_num := i]
+})
+
+edgelists <- rbindlist(edgelists)
+
+head(edgelists)
+```
+
+
+## Juntando todo
+
+En esta última parte del capítulo, usaremos los paquetes `igraph` y `ergm` para generar características (covariables, controles, variables independientes, o como las llames) a nivel de red egocéntrica. Una vez más, la función `lapply` es nuestra amiga
+
+### Generando estadísticas usando igraph
+
+El paquete de R `igraph` tiene múltiples rutinas de alto rendimiento para calcular estadísticas a nivel de grafo. Por ahora, nos enfocaremos en las siguientes estadísticas: conteo de vértices, conteo de enlaces, número de aislados, transitividad, y modularidad basada en centralidad de intermediación:
+
+```{r gen-stats}
+net_stats <- lapply(graphs, function(g) {
+  
+  # Calculando modularidad
+  groups <- cluster_edge_betweenness(g)
+  
+  # Calculando las estadísticas
+  data.table(
+    size      = vcount(g),
+    edges     = ecount(g),
+    nisolates = sum(degree(g) == 0),
+    transit   = transitivity(g, type = "global"),
+    modular   = modularity(groups)
+  )
+})
+```
+
+Observa que contamos aislados usando la función `degree()`. Podemos combinar las estadísticas en un solo `data.table` usando la función `rbindlist`:
+
+```{r}
+net_stats <- rbindlist(net_stats)
+
+head(net_stats)
+```
+
+### Generando estadísticas basadas en ergm
+
+El paquete de R `ergm` tiene un conjunto mucho más grande de estadísticas a nivel de grafo que podemos agregar a nuestros modelos.[^ergm-stats] La clave para generar estadísticas basadas en el paquete `ergm` es la función `summary_formula`. Antes de empezar a usar esa función, primero necesitamos convertir las redes `igraph` a objetos `network`, que son la clase de objeto nativa para el paquete `ergm`. Usamos el <a href="https://cran.r-project.org/package=intergraph" target="_blank">paquete de R `intergraph`</a> para eso, y en particular, la función `asNetwork`:
+
+[^ergm-stats]: ¡Hay una razón obvia, los ERGMs son todo sobre estadísticas a nivel de grafo!
+
+```{r part-01-07-igraph-to-network}
+# Cargando los paquetes requeridos
+library(intergraph)
+library(ergm)
+
+# Convirtiendo todos los objetos "igraph" en graphs a objetos "network"
+graphs_network <- lapply(graphs, asNetwork)
+```
+
+Con los objetos de red listos, podemos proceder a calcular estadísticas a nivel de grafo usando la función `summary_formula`. Aquí solo veremos: el número de triángulos, homofilia de género, y homofilia de dieta saludable:
+
+```{r part-01-07-gen-stats-ergm}
+net_stats_ergm <- lapply(graphs_network, function(n) {
+  
+  # Calculando las estadísticas
+  s <- summary_formula(
+    n ~ triangles +
+      nodematch("gender_1") +
+      nodematch("healthy_diet")
+    )
+  
+  # Guardándolas como un objeto data.table
+  data.table(
+    triangles       = s[1],
+    gender_homoph   = s[2],
+    healthyd_homoph = s[3]
+  )
+})
+```
+
+Una vez más, usamos `rbindlist` para combinar todas las estadísticas de red en un solo objeto `data.table`:
+
+```{r part-01-07-combine-ergm-stats}
+net_stats_ergm <- rbindlist(net_stats_ergm)
+head(net_stats_ergm)
+```
+
+## Guardando los datos
+
+Terminamos el capítulo guardando todo nuestro trabajo en cuatro conjuntos de datos:
+
+- Estadísticas de red (como un archivo csv)
+
+- Objetos igraph (como un archivo rda, que podemos leer de vuelta usando `read.rds`)
+
+- Objetos de red (ídem)
+
+- Archivos de persona (información de alters, como un archivo csv.)
+
+Los archivos CSV pueden guardarse usando `write.csv` o, como hacemos aquí, `fwrite` del paquete `data.table`:
+
+```{r saving}
+# Verificando que el directorio existe
+if (!dir.exists("data"))
+  dir.create("data")
+
+# Atributos de red
+master <- cbind(egos, net_stats, net_stats_ergm)
+fwrite(master, file = "data/network_stats.csv")
+
+# Redes
+saveRDS(graphs, file = "data/networks_igraph.rds")
+saveRDS(graphs_network, file = "data/networks_network.rds")
+
+# Atributos
+fwrite(persons, file = "data/persons.csv")
+```
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse = FALSE)
+```

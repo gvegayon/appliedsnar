@@ -1,0 +1,8 @@
+# Modelos de Grafos Aleatorios de Familia Exponencial Temporal
+
+::: {.callout-warning}
+## Nota de Traducción
+Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::
+
+¡Este tutorial es genial! [https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/tergm_tutorial.pdf](https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/tergm_tutorial.pdf){target="_blank"}

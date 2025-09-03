@@ -1,0 +1,101 @@
+# Regla de Bayes
+
+::: {.callout-warning}
+## Nota de Traducción
+Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::
+
+La Regla de Bayes es una ecuación fundamental en estadística bayesiana. Con ella, podemos reformular problemas inferenciales escribiendo probabilidades en términos de cantidades conocidas. La regla de Bayes puede enunciarse como sigue:
+
+\begin{equation}
+\Pr{\left(X=x|Y=y\right)} = \frac{\Pr{\left(Y=y|X=y\right)}\Pr{\left(X=x\right)}}{\Pr{\left(Y=y\right)}}
+\end{equation}
+
+Aquí, decimos que la probabilidad condicional de $X$ dado $Y$ puede expresarse en términos de la probabilidad condicional de $Y$ dado $X$. Por ejemplo, sea $X$ un vector desconocido de parámetros $\theta\in\Theta$ y $Y$ un conjunto de datos $D \sim f(\theta)$ cuyo proceso de generación de datos depende del $\theta$ no observado. Como la distribución posterior de los parámetros del modelo es en general, elusiva, en su lugar, usamos la regla de Bayes para reformular el problema:
+
+\begin{equation*}
+\Pr{\left(\theta|D\right)} = \frac{\Pr{\left(\theta|D\right)}\Pr{\left(\theta\right)}}{\Pr{\left(D\right)}}
+\end{equation*}
+
+Dado que el denominador de la ecuación no depende de $\theta$, podemos, en su lugar, escribir
+
+\begin{equation*}
+\Pr{\left(\theta|D\right)} \propto \Pr{\left(\theta|D\right)}\Pr{\left(\theta\right)}
+\end{equation*}
+
+En el mundo bayesiano, se asume que la distribución incondicional de los parámetros del modelo proviene de una distribución particular, mientras que en el mundo frecuentista, no se hacen suposiciones distribucionales sobre los parámetros del modelo. Lo último es entonces equivalente a decir que $\theta\sim \text{Uniforme}(-\infty, +\infty)$; por lo tanto, ¡incluso los frecuentistas asumen algo sobre los parámetros del modelo![^frequentists]
+
+[^frequentists]: La discusión sobre diferencias y similitudes entre frecuentistas y bayesianos tiene una larga tradición. En conclusión, nadie puede decir 100% que son una cosa u otra. En rigor, los frecuentistas dicen que los parámetros del modelo no son aleatorios sino determinísticos.
+
+La regla de Bayes puede derivarse usando probabilidades condicionales. En particular, $\Pr{\left(x=x|Y=y\right)}$ se define como $\Pr{\left(x=x, Y=y\right)}/Pr{\left(Y=y\right)}$. De manera similar, $\Pr{\left(y=y|X=x\right)}$ se define como $\Pr{\left(y=y, X=x\right)}/Pr{\left(X=x\right)}$, que puede reescribirse como $\Pr{\left(x=x, Y=y\right)} = \Pr{\left(y=y|X=x\right)}Pr{\left(X=x\right)}$. Reemplazando la última igualdad en la primera ecuación, obtenemos
+
+\begin{align*}
+\Pr{\left(x=x|Y=y\right)} & = \frac{\Pr{\left(x=x, Y=y\right)}}{Pr{\left(Y=y\right)}} \\
+& \frac{\Pr{\left(y=y|X=x\right)}Pr{\left(X=x\right)}}{Pr{\left(Y=y\right)}}
+\end{align*}
+
+# Cadena de Markov 
+
+Una Cadena de Markov es una secuencia de variables aleatorias en la cual la distribución condicional del $n$-ésimo elemento solo depende de $n-1$.
+
+## Algoritmo de Metropolis
+
+El Algoritmo de Metropolis, o MCMC de Metropolis, construye una Cadena de Markov que, bajo ciertas condiciones, converge a la distribución objetivo. La clave está en aceptar un movimiento propuesto de $\theta$ a $\theta'$ con 
+probabilidad igual a:
+
+\begin{equation}
+r = \min\left(1, \frac{\Pr{\left(\theta'|D\right)}}{\Pr{\left(\theta|D\right)}}\right)
+\end{equation}
+
+La secuencia resultante converge a la distribución objetivo. Podemos probar
+convergencia mostrando que (a) la secuencia es ergódica y (b) la distribución posterior
+coincide con la distribución objetivo. La ergodicidad describe tres
+propiedades de una cadena:
+
+- Irreductibilidad: No hay probabilidad cero de transición entre cualquier par de estados.
+
+- Aperiodicidad: Como el término sugiere, la cadena no tiene períodos/secuencias repetitivos.
+
+- No transitoria: Transitoria se refiere a una cadena que tiene probabilidad no-cero de
+nunca regresar a un estado inicial.
+
+Las tres propiedades son alcanzadas por cualquier caminata aleatoria basada en una
+distribución de probabilidad bien definida, así que nos enfocaremos en mostrar que la posterior coincide
+con la distribución objetivo.
+
+<!--
+ La siguiente prueba fue adaptada de "Bayesian Data
+Analysis:" 
+    \begin{align*}
+
+\end{align*} -->
+
+## Metropolis-Hastings
+
+$$
+\min\left(1, \frac{\Pr{\left(d|\theta'\right)}\Pr{\left(\theta'\right)}\Pr{\left(\theta'|\theta\right)}}{\Pr{\left(d|\theta\right)}\Pr{\left(\theta\right)}\Pr{\left(\theta|\theta'\right)}}\right)
+$$
+
+Si la probabilidad de transición es simétrica, entonces la ecuación anterior se reduce
+al probabilidad de Metropolis.
+
+## MCMC libre de verosimilitud
+
+1. Inicializar el algoritmo con $\theta_0$, $\theta^* =\theta_0$--el estado aceptado actual,--y estadística de resumen observada $s_0 = S(D_{observados})$:
+
+2. Para $t = 1$ hasta $T$ hacer:
+
+    a. Extraer $\theta_t$ de la distribución de propuesta $J(\theta_t|\theta^*)$
+
+    b. Extraer datos simulados $D_t$ del modelo $M(\theta_t)$
+
+    c. Calcular las estadísticas de resumen $s_t = S(D_t)$
+
+    d. Aceptar el estado propuesto con probabilidad
+    <!-- $$
+    r = \min\left(1, \frac{\Pr{\left(s_0|s_t,\theta_t\right)}\Pr{\left(\theta_t\right)}\Pr{\left(\theta^*\to\theta_t\right)}}{\Pr{\left(s_0|s_{t-1\right)},\theta_{t-1}}\Pr{\left(\theta_{t-1\right)}}\Pr{\left(\theta_{t\right)}\to\theta^*}}\right)
+    $$ -->
+
+    Si se acepta, establecer $\theta^* = \theta_t$.
+
+    e. Siguiente $t$

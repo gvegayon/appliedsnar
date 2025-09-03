@@ -4,9 +4,7 @@ date-modified: 2024-05-10
 
 # Network diffusion
 
-This chapter is based on the 2018 and 2019 tutorials of netdiffuseR
-at the Sunbelt conference. The source code of the tutorials, taught by [Thomas W. Valente](https://keck.usc.edu/faculty-search/thomas-william-valente/)
-and [George G. Vega Yon](https://ggvy.cl) (author of this book), is available [here](https://github.com/USCCANA/netdiffuser-sunbelt2018/tree/sunbelt2019).
+This chapter is based on the 2018 and 2019 tutorials of netdiffuseR at the Sunbelt conference. The source code of the tutorials, taught by [Thomas W. Valente](https://keck.usc.edu/faculty-search/thomas-william-valente/) and [George G. Vega Yon](https://ggvy.cl) (author of this book), is available [here](https://github.com/USCCANA/netdiffuser-sunbelt2018/tree/sunbelt2019).
 
 
 ## Network diffusion of innovation
@@ -19,11 +17,9 @@ library(netdiffuseR)
 
 <img source="https://github.com/USCCANA/netdiffuser-sunbelt2018/blob/sunbelt2019/valente_1995.jpg?raw=true" style="with: 200px"></img>
 
-*   Explains how new ideas and practices (innovations) spread within and between
-  communities.
+*   Explains how new ideas and practices (innovations) spread within and between communities.
 
-*   While a lot of factors have been shown to influence diffusion (Spatial,
-    Economic, Cultural, Biological, etc.), Social Networks are prominent.
+*   While a lot of factors have been shown to influence diffusion (Spatial, Economic, Cultural, Biological, etc.), Social Networks are prominent.
 
 *   There are many components in the diffusion network model, including network exposures, thresholds, infectiousness, susceptibility, hazard rates, diffusion rates (bass model), clustering (Moran's I), and so on.
 

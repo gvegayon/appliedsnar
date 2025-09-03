@@ -1,0 +1,290 @@
+# Usando restricciones en ERGMs
+
+::: {.callout-warning}
+## Nota de Traducción
+Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::
+
+
+Los Modelos de Grafos Aleatorios Exponenciales [ERGMs] pueden representar una variedad de clases de redes. A menudo observamos redes sociales "regulares" como estudiantes en escuelas, colegas en el lugar de trabajo, o familias. No obstante, algunas redes sociales que estudiamos tienen características que restringen cómo pueden ocurrir las conexiones. Ejemplos típicos son [grafos bi-partitos](https://en.wikipedia.org/wiki/Bipartite_graph) y [redes multinivel](https://cran.r-project.org/web/packages/mlergm/vignettes/mlergm_tutorial.html). Hay dos clases de vértices en redes bi-partitas, y los vínculos solo pueden ocurrir entre clases. Por otro lado, las redes multinivel pueden presentar múltiples clases con vínculos entre clases algo restringidos. En ambos casos, existen restricciones estructurales, lo que significa que algunas configuraciones pueden no ser plausibles.
+
+Matemáticamente, lo que estamos tratando de hacer es, en lugar de asumir que todas las configuraciones de red son posibles:
+
+$$
+\left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j\right\}
+$$
+
+\noindent queremos ir un poco más allá evitando bucles, a saber:
+
+
+$$
+\left\{\mathbf{y} \in \mathcal{Y}: y_{ij} = 0, \forall i = j; \mathbf{y} \in C\right\}
+$$,
+
+\noindent donde $C$ es una restricción, por ejemplo, solo redes sin triángulos. El paquete de R `ergm` tiene capacidades incorporadas para lidiar con algunos de estos casos. No obstante, podemos especificar modelos con restricciones estructurales arbitrarias incorporadas en el modelo. La clave está en usar términos de offset.
+
+## Ejemplo 1: Egos entrelazados y alters desconectados
+
+Imagina que tenemos dos conjuntos de vértices. El primero, grupo `E`, son egos parte de un estudio egocéntrico. El segundo grupo, llamado `A`, está compuesto por personas mencionadas por egos en `E` pero que no fueron encuestadas. Asume que individuos en `A` solo pueden conectarse a individuos en `E`; además, individuos en `E` no tienen restricciones para conectarse. En otras palabras, solo existen dos tipos de vínculos: `E-E` y `A-E`. La pregunta es ahora, ¿cómo podemos aplicar tal restricción en un ERGM?
+
+Usar offsets, y en particular, establecer coeficientes a `-Inf` proporciona una forma fácil de restringir el conjunto de soporte de ERGMs. Por ejemplo, si quisiéramos restringir el soporte para incluir redes sin triángulos, agregaríamos el término `offset(triangle)` y usaríamos la opción `offset.coef = -Inf` para indicar que las realizaciones que incluyen triángulos no son posibles. Usando R:
+
+
+```r
+ergm(net ~ edges + offset(triangle), offset.coef = -Inf)
+```
+
+En este modelo, un grafo de Bernoulli, reducimos el espacio muestral a redes sin triángulos. En nuestro ejemplo, tal estadística solo debería tomar valores no cero cuando los vínculos dentro de la clase `A` ocurran. Podemos usar el término `nodematch()` para hacer eso. Formalmente
+
+$$
+\text{NodeMatch}(x) = \sum_{i,j} y_{ij} \mathbf{1}({x_{i} = x_{j}})
+$$
+
+Esta estadística sumará sobre todos los vínculos en los que el atributo $X$ de la fuente ($i$) y el objetivo ($j$) son iguales. Una forma de hacer que esto suceda es creando una variable auxiliar que sea igual a, p. ej., 0 para todos los vértices en `A`, y un valor único diferente de cero en caso contrario. Por ejemplo, si tuviéramos 2 `A`s y tres `E`s, los datos se verían algo así: $\{0,0,1,2,3\}$. El siguiente bloque de código crea un grafo vacío con 50 nodos, 10 de los cuales están en el grupo `E` (ego).
+
+```{r, message=FALSE, warning=FALSE}
+library(ergm, quietly =  TRUE)
+library(sna, quietly =  TRUE)
+
+n <- 50
+n_egos <- 10
+net <- as.network(matrix(0, ncol = n, nrow = n), directed = TRUE)
+
+# Asignemos los grupos
+net %v% "is.ego" <- c(rep(TRUE, n_egos), rep(FALSE, n - n_egos))
+net %v% "is.ego"
+
+gplot(net, vertex.col = net %v% "is.ego")
+```
+
+Para crear la variable auxiliar, usaremos la siguiente función:
+
+```{r}
+# Función que crea una variable auxiliar para el modelo ergm
+make_aux_var <- function(my_net, is_ego_dummy) {
+  
+  n_vertex <- length(my_net %v% is_ego_dummy)
+  n_ego_   <- sum(my_net %v% is_ego_dummy)
+  
+  # Creando una variable auxiliar para identificar los vínculos no-informante no-informante
+  my_net %v% "aux_var" <- ifelse(
+    !my_net %v% is_ego_dummy, 0, 1:(n_vertex - n_ego_)
+    )
+
+  my_net
+}
+```
+
+
+Llamar la función en nuestros datos resulta en lo siguiente:
+
+```{r}
+net <- make_aux_var(net, "is.ego")
+
+# Echando un vistazo a las primeras 15 filas de datos
+cbind(
+  Is_Ego = net %v% "is.ego",
+  Aux    = net %v% "aux_var"  
+) |> head(n = 15)
+```
+
+Ahora podemos usar estos datos para simular una red en la cual los vínculos entre
+vértices de clase `A` no son posibles:
+
+```{r}
+set.seed(2828)
+net_sim <- simulate(net ~ edges + nodematch("aux_var"), coef = c(-3.0, -Inf))
+gplot(net_sim, vertex.col = net_sim %v% "is.ego")
+```
+
+Como puedes ver, esta red solo tiene vínculos del tipo `E-E` y `A-E`. Podemos verificar (i) viendo los conteos y (ii) visualizando cada subgrafo inducido por separado:
+
+```{r}
+summary(net_sim ~ edges + nodematch("aux_var"))
+
+net_of_alters <- get.inducedSubgraph(
+  net_sim, which((net_sim %v% "aux_var") == 0)
+  )
+
+net_of_egos <- get.inducedSubgraph(
+  net_sim, which((net_sim %v% "aux_var") != 0)
+  )
+
+# Conteos
+summary(net_of_alters ~ edges + nodematch("aux_var"))
+summary(net_of_egos ~ edges + nodematch("aux_var"))
+
+# Figuras
+op <- par(mfcol = c(1, 2))
+gplot(net_of_alters, vertex.col = net_of_alters %v% "is.ego", main = "A")
+gplot(net_of_egos, vertex.col = net_of_egos %v% "is.ego", main = "E")
+par(op)
+```
+
+Ahora, para ajustar un ERGM con esta restricción, simplemente necesitamos hacer uso de los términos offset. Aquí hay un ejemplo:
+
+```{r collapse = TRUE}
+ans <- ergm(
+  net_sim ~ edges + offset(nodematch("aux_var")), # El modelo (nota el offset)
+  offset.coef = -Inf                              # El coeficiente offset
+  )
+summary(ans)
+```
+
+Este modelo ERGM--que por cierto solo presentaba términos diádicos independientes, y por lo tanto puede reducirse a una regresión logística--restringe el soporte excluyendo todas las redes en las que existen vínculos dentro de la clase `A`. Para finalizar, veamos algunas simulaciones basadas en este modelo:
+
+```{r}
+set.seed(1323)
+op <- par(mfcol = c(2,2), mar = rep(1, 4))
+for (i in 1:4) {
+  gplot(simulate(ans), vertex.col = net %v% "is.ego", vertex.cex = 2)
+  box()
+}
+par(op)
+```
+
+Todas las redes sin vínculos entre nodos `A`.
+
+## Ejemplo 2: Redes bi-partitas
+
+En el caso de redes bipartitas (a veces llamadas redes de afiliación,) podemos usar los términos de `ergm` para grafos bipartitos para corroborar lo que discutimos aquí. Por ejemplo, el término de dos estrellas. Comencemos simulando una red bipartita usando los parámetros `edges` y `two-star`. Dado que el término `k-star` usualmente es complejo de ajustar (tiende a generar modelos degenerados,) aprovecharemos la función de transformación `Log()` en el paquete `ergm` para suavizar el término.[^notprettyaic]
+
+[^notprettyaic]: Después de escribir este ejemplo, se hizo aparente que el uso de la función de transformación `Log()` puede no ser ideal. Dado que muchos términos usados en ERGMs pueden ser cero, p. ej., triángulos, el término `Log(~ ostar(2))` está indefinido cuando `ostar(2) = 0`. En la práctica, el paquete ERGM establece un límite inferior para el log de 0, así que, en lugar de tener `Log(0) ~ -Inf`, lo establecen como un número negativo realmente grande. Esto causa todo tipo de problemas a las estimaciones; en nuestro ejemplo, una sobreestimación del parámetro poblacional y una log-verosimilitud positiva. Por lo tanto, no recomendaría usar esta transformación muy a menudo.  
+
+La red bipartita que estaremos simulando tendrá 100 actores y 50 entidades. Los actores, que mapearemos al primer nivel de los términos `ergm`, esto es, `b1star` `b1nodematch`, etc. enviarán vínculos a las entidades, el segundo nivel del ERGM bipartito. Para crear una red bipartita, crearemos una matriz vacía de tamaño `nactors x nentitites`; por lo tanto, los actores están representados por filas y las entidades por columnas. 
+
+```{r 05-new-bipartite}
+# Parámetros para la simulación
+nactors   <- 100
+nentities <- floor(nactors/2)
+n         <- nactors + nentities
+
+# Creando una red bipartita vacía (línea base)
+net_b <- network(
+  matrix(0, nrow = nactors, ncol = nentities), bipartite = TRUE
+)
+
+# Simulando el ERGM bipartito,
+net_b <- simulate(net_b ~ edges + Log(~b1star(2)), coef = c(-3, 1.5), seed = 55)
+```
+
+Veamos qué obtuvimos aquí:
+
+```{r 05-example2-simulated-graph}
+summary(net_b ~ edges + Log(~b1star(2)))
+netplot::nplot(net_b, vertex.col = (1:n <= nactors) + 1)
+```
+
+Nota que los primeros `nactors` vértices en la red son los actores, y los restantes son las entidades. Ahora, aunque el paquete `ergm` presenta términos de red bipartita, aún podemos ajustar un ERGM bipartito sin declarar explícitamente el grafo como tal. En tal caso, el término `b1star(2)` de una red bipartita es equivalente a un `ostar(2)` en un grafo dirigido. De manera similar, `b2star(2)` en un grafo bipartito coincide con el término `istar(2)` en un grafo dirigido. Esta información será relevante al ajustar el ERGM. Transformemos la red bipartita en un grafo dirigido. El siguiente bloque de código hace eso:
+
+```{r 05-bipartite-maps}
+# Identificando los enlaces
+net_not_b <- which(as.matrix(net_b) != 0, arr.ind = TRUE)
+
+# Necesitamos compensar el punto final de los vínculos por nactors
+# para que los ids vayan de 1 hasta (nactors + nentitites)
+net_not_b[,2] <- net_not_b[,2] + nactors
+
+# El grafo resultante es una red dirigida
+net_not_b <- network(net_not_b, directed = TRUE)
+```
+
+Ahora casi hemos terminado. Como antes, necesitamos usar covariables a nivel de nodo
+para poner las restricciones en nuestro modelo. Para que este ERGM refleje un ERGM en
+una red bipartita, necesitamos dos restricciones:
+
+1. Solo se permiten vínculos de actores a entidades, y
+2. las entidades solo pueden recibir vínculos.
+
+Los términos offset correspondientes para este modelo son: `nodematch("is.actor") ~ -Inf`,
+y `nodeocov("isnot.actor") ~ -Inf`. Matemáticamente:
+
+\begin{align*}
+\text{NodeMatch(x = "is.actor")} &= \sum_{i<j} y_{ij}\mathbb{1}\left(x_i = x_j\right) \\
+\text{NodeOCov(x = "isnot.actor")} &= \sum_{i} x_i \times \sum_{j<i} y_{ij} 
+\end{align*}
+
+En otras palabras, estamos estableciendo que los vínculos entre nodos de la misma clase están
+prohibidos, y los vínculos salientes están prohibidos para las entidades. Creemos los
+atributos de vértice necesarios para usar los términos mencionados:
+
+```{r 05-example2-coloring}
+net_not_b %v% "is.actor" <- as.integer(1:n <= nactors)
+net_not_b %v% "isnot.actor" <- as.integer(1:n > nactors)
+```
+
+Finalmente, para asegurarnos de que hemos hecho todo bien, veamos cómo ambas redes--bipartita
+y unimodal--se ven lado a lado:
+
+```{r 05-example2-side-by-side}
+# Primero, obtengamos el diseño
+fig <- netplot::nplot(net_b, vertex.col = (1:n <= nactors) + 1)
+gridExtra::grid.arrange(
+  fig,
+  netplot::nplot(
+    net_not_b, vertex.col = (1:n <= nactors) + 1,
+    layout = fig$.layout
+     ),
+  ncol = 2, nrow = 1
+)
+
+# Viendo los conteos
+summary(net_b ~ edges + b1star(2) + b2star(2))
+summary(net_not_b ~ edges + ostar(2) + istar(2))
+```
+
+Con las dos redes coincidiendo, ahora podemos ajustar los ERGMs con y sin
+términos offset y comparar los resultados entre los dos modelos:
+
+```{r 05-biparte-ergm1, message = FALSE}
+# ERGM con un grafo bipartito
+res_b     <- ergm(
+  # Fórmula principal
+  net_b ~ edges + Log(~b1star(2)),
+
+  # Parámetros de control
+  control = control.ergm(seed = 1)
+  )
+
+# ERGM con un digrafo con restricciones
+res_not_b <- ergm(
+  # Fórmula principal
+  net_not_b ~ edges + Log(~ostar(2)) +
+
+  # Términos offset 
+  offset(nodematch("is.actor")) + offset(nodeocov("isnot.actor")),
+  offset.coef = c(-Inf, -Inf),
+
+  # Parámetros de control
+  control = control.ergm(seed = 1)
+  )
+```
+
+Aquí están las estimaciones (usando el paquete de R `texreg` para una salida más bonita):
+
+```{r 05-bipartite-ergm-res}
+texreg::screenreg(list(Bipartite = res_b, Directed = res_not_b))
+```
+
+Como se esperaba, ambos modelos producen la "misma" estimación. Las diferencias menores
+observadas entre los modelos son cómo el paquete `ergm` realiza
+el muestreo. En particular, en el caso bipartito, `ergm` tiene rutinas especiales
+para hacer el muestreo más eficiente, teniendo una tasa de aceptación más alta
+que la del modelo en el que el grafo bipartito no fue explícitamente
+declarado. Podemos decir esto inspeccionando las tasas de rechazo:
+
+```{r 05-example2-post-dist}
+data.frame(
+  Bipartite = coda::rejectionRate(res_b$sample[[1]]) * 100,
+  Directed  = coda::rejectionRate(res_not_b$sample[[1]][, -c(3,4)]) * 100
+) |> knitr::kable(digits = 2, caption = "Tasa de rechazo (porcentaje)")
+```
+
+El ERGM ajustado con los términos offset tiene una tasa de rechazo mucho más alta
+que la del ERGM ajustado con el ERGM bipartito.
+
+Finalmente, el hecho de que podamos ajustar ERGMs usando offset no significa que
+necesitemos usarlo TODO el tiempo. A menos que haya una muy buena razón para
+evitar las capacidades de `ergm`, no recomendaría ajustar ERGMs bipartitos
+como acabamos de hacer, ya que los autores del paquete han incluido (MUCHAS) 
+características para hacer nuestro trabajo más fácil.

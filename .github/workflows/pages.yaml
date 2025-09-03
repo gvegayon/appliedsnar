@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Render
+    - name: Render English version
       run: |
         quarto render --to html
 
@@ -32,6 +32,26 @@ jobs:
         path: _docs
         name: gh-page-html
 
+  build-html-es:
+    runs-on: ubuntu-22.04
+
+    container:
+      image: gvegayon/appliedsnar:latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Render Spanish version
+      run: |
+        cd es && quarto render --to html
+
+    - name: Upload artifact
+      # uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v4
+      with:
+        path: es/_docs
+        name: gh-page-html-es
+
   build-pdf:
     runs-on: ubuntu-22.04
 
@@ -41,9 +61,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Render
+    - name: Render English PDF
       run: |
         quarto render --to pdf
+
+    - name: Combine docs
+      run: |
+        mkdir -p _docs/es
+        cp -r es/_docs/* _docs/es/ 2>/dev/null || true
 
     - name: Upload artifact
       # uses: actions/upload-pages-artifact@v3
@@ -63,10 +88,46 @@ jobs:
           _docs/*log
         name: gh-page-latex-logs
 
+  build-pdf-es:
+    runs-on: ubuntu-22.04
+
+    container:
+      image: gvegayon/appliedsnar:latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Render Spanish PDF
+      run: |
+        cd es && quarto render --to pdf
+
+    - name: Combine docs
+      run: |
+        mkdir -p _docs/es
+        cp -r es/_docs/* _docs/es/ 2>/dev/null || true
+
+    - name: Upload artifact
+      # uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v4
+      with:
+        path: es/_docs
+        name: gh-page-pdf-es
+
+    - name: Upload LaTeX file
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        path: |
+          es/_docs/*.tex
+          es/*.tex
+          es/*.log
+          es/_docs/*log
+        name: gh-page-latex-logs-es
+
   combine:
     runs-on: ubuntu-22.04
 
-    needs: [build-html, build-pdf]
+    needs: [build-html, build-html-es, build-pdf, build-pdf-es]
 
     steps:
 
@@ -79,12 +140,25 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
+        name: gh-page-html-es
+        path: _docs/es
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
         name: gh-page-pdf
         path: pdf
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: gh-page-pdf-es
+        path: pdf-es
 
     - name: Combine
       run: |
         cp -r pdf/* _docs
+        cp -r pdf-es/* _docs/es
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v4

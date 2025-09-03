@@ -1,0 +1,373 @@
+# Comportamiento y coevolución
+
+:::{.content-hidden}
+{{< include ../math.tex >}}
+:::
+
+::: {.callout-warning}
+## Nota de Traducción
+Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::
+
+::: {.callout-note}
+Todo el contenido de esta sección fue presentado durante la Escuela de Verano Sistemas Complejos 2024 en la Universidad del Desarrollo. La versión original se puede encontrar [aquí](https://gvegayon.github.io/networks-udd2024/){target="_blank"}.
+:::
+
+<!-- \newcommand{\bmi}[1]{\bm{{#1}}} -->
+\newcommand{\tpose}[1]{#1^{\mathbf{t}}}
+\newcommand{\Prergm}[0]{P_{\mathcal{Y}, \bm{{\theta}}}}
+\newcommand{\Y}[0]{\bm{{Y}}}
+\newcommand{\y}[0]{\bm{{y}}}
+\newcommand{\X}[0]{\bm{{X}}}
+\newcommand{\x}[0]{\bm{{x}}}
+\newcommand{\thetas}[0]{\bm{{\theta}}}
+<!-- \newcommand{\isone}[1]{\mathbb{1}\left(#1\right)} -->
+
+
+## Introducción
+
+Esta sección se enfoca en la inferencia que involucra redes y un resultado secundario. Aunque hay muchas formas de estudiar la coevolución o dependencia entre red y comportamiento, esta sección se enfoca en dos clases de análisis: cuando la red es fija y cuando tanto la red como el comportamiento se influyen mutuamente.
+
+Si tratamos la red como dada o endógena establece la complejidad de realizar inferencia estadística. El análisis de datos se vuelve mucho más directo si nuestra investigación se enfoca en resultados a nivel individual embebidos en una red y no en la red misma. Aquí, trataremos con tres casos particulares: (1) cuando los efectos de red son rezagados, (2) redes egocéntricas, y (3) cuando los efectos de red son contemporáneos.
+
+## Exposición rezagada
+
+Si asumimos que la influencia de la red en forma de exposición está rezagada, tenemos uno de los casos más directos para la inferencia de redes [@hayeSmokingDiffusionNetworks2019; @valenteDiffusionContagionProcesses2020; @valenteNetworkInfluencesPolicy2019]. Aquí, en lugar de tratar con modelos estadísticos complicados, el problema se reduce a estimar un modelo de regresión lineal simple. Generalmente, los efectos de exposición rezagada se ven así:
+
+$$
+y_{it} = \rho \left(\sum_{j\neq i}X_{ij}\right)^{-1}\left(\sum_{j\neq i}y_{jt-1} X_{ij}\right) + {\bm{{\theta}}}^{\mathbf{t}}\bm{{w_i}} + \varepsilon,\quad \varepsilon \sim \text{N}(0, \sigma^2)
+$$
+
+donde $y_{it}$ es el resultado del individuo $i$ en el tiempo $t$, $X_{ij}$ es la entrada $ij$-ésima de la matriz de adyacencia, $\bm{{\theta}}$ es un vector de coeficientes, $\bm{{w_i}}$ es un vector de características/covariables del individuo $i$, y $\varepsilon_i$ es un error distribuido normalmente. Aquí, el componente clave es $\rho$: el coeficiente asociado con el efecto de exposición de red.
+
+La estadística de exposición, $\left(\sum_{j\neq i}X_{ij}\right)^{-1}\left(\sum_{j\neq i}y_{jt-1} X_{ij}\right)$, es el promedio ponderado de los resultados de los vecinos de $i$ en el tiempo $t-1$. 
+
+## Ejemplo de código: Exposición rezagada
+
+El siguiente ejemplo de código muestra cómo estimar un efecto de exposición rezagada usando la función `glm` en R. El modelo que simularemos y estimaremos presenta un grafo de Bernoulli con 1,000 nodos y una densidad de 0.01.
+
+$$
+y_{it} = \theta_1 + \rho \text{Exposure}_{it} + \theta_2 w_i + \varepsilon
+$$
+  
+
+donde $\text{Exposure}_{it}$ es la estadística de exposición definida arriba, y $w_i$ es un vector de covariables. 
+
+```{r}
+#| label: lagged-exposure
+## Simulando datos
+n <- 1000
+time <- 2
+theta <- c(-1, 3)
+
+## Muestreando una red de Bernoulli
+set.seed(3132)
+p <- 0.01
+X <- matrix(rbinom(n^2, 1, p), nrow = n)
+diag(X) <- 0
+
+## Covariable
+W <- matrix(rnorm(n), nrow = n)
+
+## Simulando el resultado
+rho <- 0.5
+Y0 <- cbind(rnorm(n))
+
+## La exposición rezagada
+expo <- (X %*% Y0)/rowSums(X)
+Y1 <- theta[1] + rho * expo + W * theta[2] + rnorm(n)
+```
+
+Ahora ajustamos el modelo usando GLM, en este caso, regresión lineal
+
+```{r}
+#| label: lagged-exposure-fit
+fit <- glm(Y1 ~ expo + W, family = "gaussian")
+summary(fit)
+```
+
+
+## Redes egocéntricas
+
+Generalmente, cuando usamos redes egocéntricas y resultados de los egos, estamos pensando en un modelo donde una observación es el par $(y_i, X_i)$, esto es, el resultado del individuo $i$ y la red egocéntrica del individuo $i$. Cuando tal es el caso, dado que (a) las redes son independientes entre egos y (b) las redes son fijas, como el caso anterior, un modelo de regresión lineal simple es suficiente para realizar los análisis. Un modelo típico se ve así:
+
+$$
+\bm{{y}} = \tpose{\bm{{\theta}}_{x}}s(\bm{{X}}) + \tpose{\thetas}\bm{{w}} + \varepsilon,\quad \varepsilon \sim \text{N}(0, \sigma^2)
+$$
+
+Donde $\bm{{y}}$ es un vector de resultados, $\bm{{X}}$ es una matriz de redes egocéntricas, $\bm{{w}}$ es un vector de covariables, $\bm{{\theta}}$ es un vector de coeficientes, y $\varepsilon$ es un vector de errores. El componente clave aquí es $s(\bm{{X}})$, que es un vector de estadísticas suficientes de las redes egocéntricas. Por ejemplo, si estamos interesados en el número de vínculos, $s(\bm{{X}})$ es un vector del número de vínculos de cada ego.
+
+## Ejemplo de código: Redes egocéntricas
+
+Para este ejemplo, simularemos un flujo de 1,000 grafos de Bernoulli analizando la probabilidad de deserción escolar. Cada red tendrá entre 4 y 10 nodos y tendrá una densidad de 0.4. El proceso de generación de datos es el siguiente:
+
+$$
+{\Pr{}}_{\bm{{\theta}}}\left(Y_i=1\right) = \text{logit}^{-1}\left(\thetas_x s(\bm{{X}}_i) \right)
+$$
+
+Donde $s(X) \equiv \left(\text{densidad}, \text{n vínculos mutuos}\right)$, y $\bm{{\theta}}_x = (0.5, -1)$. Este modelo solo presenta estadísticas suficientes. Comenzamos simulando las redes
+
+```{r}
+#| label: egocentric-networks
+set.seed(331)
+n <- 1000
+sizes <- sample(4:10, n, replace = TRUE)
+
+## Simulando las redes
+X <- lapply(sizes, function(x) matrix(rbinom(x^2, 1, 0.4), nrow = x))
+X <- lapply(X, \(x) {diag(x) <- 0; x})
+
+## Inspeccionando las primeras 5
+head(X, 5)
+```
+
+Usando el paquete de R `ergm` [@R-ergm; @Hunter2008], podemos extraer las estadísticas suficientes asociadas de las redes egocéntricas:
+
+```{r}
+#| label: egocentric-networks-stats
+#| message: false
+#| warning: false
+#| cache: true
+library(ergm)
+stats <- lapply(X, \(x) summary_formula(x ~ density + mutual))
+
+## Convirtiendo la lista en una matriz
+stats <- do.call(rbind, stats)
+
+## Inspeccionando las primeras 5
+head(stats, 5)
+```
+
+Ahora simulamos los resultados
+
+```{r}
+#| label: egocentric-networks-outcomes
+y <- rbinom(n, 1, plogis(stats %*% c(0.5, -1)))
+glm(y ~ stats, family = binomial(link = "logit")) |>
+  summary()
+```
+
+## Los efectos de red son endógenos
+
+Aquí tenemos dos enfoques diferentes: Autocorrelación Espacial [SAR], y el modelo de atributo de actor autologístico [ALAAM] [@robinsNetworkModelsSocial2001b]. El primero es una generalización del modelo de regresión lineal que considera la dependencia espacial. El segundo es un pariente cercano de los ERGMs que trata las covariables como endógenas y la red como exógena. En general, los ALAAMs son más flexibles que los SARs, pero los SARs son más fáciles de estimar.
+
+**SAR** Formalmente, los modelos SAR [ver @lesageIntroductionSpatialEconometrics2008] pueden usarse para estimar efectos de exposición de red. La forma general es:
+
+$$
+\bm{{y}} = \rho \bm{{W}} \bm{{y}} + \bm{{\theta}}^{\mathbf{t}} \bm{{X}} + \epsilon,\quad \epsilon \sim \text{MVN}(0, \Sigma)
+$$
+
+donde $\bm{{y}}\equiv \{y_i\}$ es un vector de resultados, $\rho$ es un coeficiente de autocorrelación, $\bm{{W}} \in \{w_{ij}\}$ es una matriz cuadrada estocástica por filas de tamaño $n$, $\bm{{\theta}}$ es un vector de parámetros del modelo, $\bm{{X}}$ es la matriz correspondiente con variables exógenas, y $\epsilon$ es un vector de errores que se distribuye normal multivariado con media 0 y covarianza $\Sigma$.[^notation] El modelo SAR es una generalización del modelo de regresión lineal que considera la dependencia espacial. El modelo SAR puede estimarse usando el paquete `spatialreg` en R [@Bivand2022].
+
+::: {.callout-tip}
+¿Cuál es la red apropiada para usar en el modelo SAR? Según @lesageBiggestMythSpatial2014, no es muy importante. Dado que $(I_n - \rho \mathbf{W})^{-1} = \rho \mathbf{W} + \rho^2 \mathbf{W}^2 + \dots$.
+:::
+
+Aunque el modelo SAR fue desarrollado para datos espaciales, es fácil aplicarlo a datos de red. Además, cada entrada del vector $\bm{{Wy}}$ tiene la misma definición que la exposición de red, es decir
+
+$$
+\bm{{Wy}} \equiv \left\{\sum_{j}y_j w_{ij}\right\}_i
+$$
+
+Dado que $\bm{{W}}$ es estocástica por filas, $\bm{{Wy}}$ es un promedio ponderado del resultado de los vecinos de $i$, *es decir*, un vector de exposiciones de red.
+
+**ALAAM** La forma más simple en que podemos pensar sobre esta clase de modelos es como si una covariable dada intercambiara lugares con la red en un ERGM, entonces la red ahora es fija y la covariable es la variable aleatoria. Aunque los ALAAMs también pueden estimar efectos de exposición de red, podemos usarlos para construir modelos más complejos más allá de la exposición. La forma general es:
+
+$$
+\Prcond{\bm{{Y}} = \bm{{y}}}{\bm{{W}},\bm{{X}}} = \exp{\left(\bm{{\theta}}^{\mathbf{t}}s(\bm{{y}},\bm{{W}}, \bm{{X}})\right)}\times\eta(\bm{{\theta}})^{-1}
+$$
+
+$$
+\eta(\bm{{\theta}}) = \sum_{\bm{{y}}}\exp{\left(\bm{{\theta}}^{\mathbf{t}}s(\bm{{y}},\bm{{W}}, \bm{{X}})\right)}
+$$
+
+Donde $\bm{{Y}}\equiv \{y_i \in (0, 1)\}$ es un vector de resultados individuales binarios, $\bm{{W}}$ denota la red social, $\bm{{X}}$ es una matriz de variables exógenas, $\bm{{\theta}}$ es un vector de parámetros del modelo, $s(\bm{{y}},\bm{{W}}, \bm{{X}})$ es un vector de estadísticas suficientes, y $\eta(\bm{{\theta}})$ es una constante normalizadora.
+
+
+## Ejemplo de código: SAR
+
+La simulación de modelos SAR puede hacerse usando la siguiente observación: Aunque el resultado aparece en ambos lados de la ecuación, podemos aislarlo en un lado y resolverlo; formalmente:
+
+$$
+\bm{{y}} = \rho \bm{{X}} \bm{{y}} + \tpose{\bm{{\theta}}}\bm{{W}} + \varepsilon \implies \bm{{y}} = \left(\bm{{I}} - \rho \bm{{X}}\right)^{-1}\tpose{\bm{{\theta}}}\bm{{W}} + \left(\bm{{I}} - \rho \bm{{X}}\right)^{-1}\varepsilon
+$$
+
+El siguiente fragmento de código simula un modelo SAR con un grafo de Bernoulli con 1,000 nodos y una densidad de 0.01. El proceso de generación de datos es el siguiente:
+
+```{r}
+#| label: sar
+#| cache: true
+set.seed(4114)
+n <- 1000
+
+## Simulando la red
+p <- 0.01
+X <- matrix(rbinom(n^2, 1, p), nrow = n)
+
+## Covariable
+W <- matrix(rnorm(n), nrow = n)
+
+## Simulando el resultado
+rho <- 0.5
+library(MASS) # Para la función mvrnorm
+
+## Identidad menos rho * X
+X_rowstoch <- X / rowSums(X)
+I <- diag(n) - rho * X_rowstoch
+
+## El resultado
+Y <- solve(I) %*% (2 * W) + solve(I) %*% mvrnorm(1, rep(0, n), diag(n))
+```
+
+Usando el paquete de R `spatialreg`, podemos ajustar el modelo usando la función `lagsarlm`:
+
+```{r}
+#| label: sar-fit
+#| cache: true
+#| warning: false
+#| message: false
+library(spdep) # para la función mat2listw
+library(spatialreg)
+fit <- lagsarlm(
+  Y ~ W,
+  data  = as.data.frame(X),
+  listw = mat2listw(X_rowstoch)
+  )
+```
+
+```{r}
+#| label: sar-fit-summary
+#| cache: true
+## Usando texreg para obtener una impresión bonita
+texreg::screenreg(fit, single.row = TRUE)
+```
+
+La interpretación de este modelo es casi la misma que una regresión lineal, con la diferencia de que tenemos el efecto de autocorrelación (`rho`). Como se esperaba, el modelo obtuvo una estimación lo suficientemente cercana al parámetro poblacional: $\rho = 0.5$.
+
+## Ejemplo de código: ALAAM
+
+Hasta la fecha, no hay un paquete de R que implemente el marco ALAAM. Sin embargo, puedes ajustar ALAAMs usando el software PNet desarrollado por el grupo Melnet de la Universidad de Melbourne (haz clic [aquí](https://www.melnet.org.au/pnet/){target="_blank"}).
+
+Debido a las similitudes, los ALAAMs pueden implementarse usando ERGMs. Debido a la novedad de esto, el ejemplo de código se dejará como un posible proyecto de clase. Publicaremos un ejemplo completo después del taller.
+
+## Coevolución
+
+Finalmente, discutimos la coevolución cuando tanto la red como el comportamiento están embebidos en un bucle de retroalimentación. La coevolución debería ser la suposición predeterminada cuando se trata de redes sociales. Sin embargo, los modelos capaces de capturar la coevolución son difíciles de estimar. Aquí, discutiremos dos de tales modelos: Modelos Estocásticos Orientados al Actor (o Modelos Siena) (introducidos por primera vez en @snijdersStochasticActorOriented1996; ver también @snijdersStochasticActorOrientedModels2017) y Modelos de Red Exponencial Aleatorios de familia exponencial [ERNMs,] una generalización de ERGMs [@wangUnderstandingNetworksExponentialfamily2023; @ernmsFellows2023].
+
+**Siena** Los Modelos Estocásticos Orientados al Actor [SOAMs] o Modelos Siena son modelos dinámicos de red y comportamiento que describen la transición de un sistema de red dentro de dos o más puntos de tiempo. 
+
+**ERNMs** Este modelo está estrechamente relacionado con los ERGMs, con la diferencia de que incorporan una salida a nivel de vértice. Conceptualmente, se está moviendo de tener una red aleatoria, a un modelo donde una característica de vértice dada y la red son aleatorias:
+
+$$
+\Prergm(\Y=\y|\X=\x) \to \Prergm(\Y=\y, \X=\x)
+$$
+
+## Ejemplo de código: Siena
+
+Este ejemplo fue adaptado del paquete de R `RSiena` (ver página `?sienaGOF-auxiliary`). Comenzamos cargando el paquete y echando un vistazo a los datos que usaremos:
+
+```{r}
+#| label: siena-data-struct
+library(RSiena)
+
+## Visualizando la matriz de adyacencia y comportamiento
+op <- par(mfrow=c(2, 2))
+image(s501, main = "Red: s501")
+image(s502, main = "Red: s502")
+hist(s50a[,1], main = "Comp1")
+hist(s50a[,2], main = "Comp2")
+par(op)
+```
+
+El siguiente paso es el proceso de preparación de datos. `RSiena` no recibe datos crudos tal como están. Necesitamos declarar explícitamente las redes y la variable de resultado. Los modelos Siena también pueden modelar cambios de red
+
+```{r}
+#| label: siena-data-prep
+## Inicializando la variable dependiente (red)
+mynet1 <- sienaDependent(array(c(s501, s502), dim=c(50, 50, 2)))
+mynet1
+mybeh  <- sienaDependent(s50a[,1:2], type="behavior")
+mybeh
+
+## Covariables a nivel de nodo (artificiales)
+mycov  <- c(rep(1:3,16),1,2)
+
+## Covariables a nivel de enlace (también artificiales)
+mydycov <- matrix(rep(1:5, 500), 50, 50) 
+```
+
+```{r}
+#| label: siena-model-build
+#| collapse: true
+## Creando el objeto de datos
+mydata <- sienaDataCreate(mynet1, mybeh)
+
+## Agregando los efectos (¡primero obtenerlos!)
+myeff <- getEffects(mydata)
+
+## Nota que Siena agrega algunos efectos predeterminados
+myeff
+
+## Agregando algunos efectos extra (automáticamente los imprime)
+myeff <- includeEffects(myeff, transTies, cycle3)
+```
+
+Para agregar más efectos, primero, llama a la función `effectsDocumentation(myeff)`. Te mostrará explícitamente cómo agregar un efecto particular. Por ejemplo, si quisiéramos agregar exposición de red (`avExposure`,) bajo la documentación de `effectsDocumentation(myeff)` necesitamos pasar los siguientes argumentos:
+
+```{r}
+#| label: siena-exposure
+## Y ahora, efecto de exposición
+myeff <- includeEffects(
+  myeff,
+  avExposure,
+  # Estos últimos tres son especificados por effectsDocum...
+  name         = "mybeh",
+  interaction1 = "mynet1",
+  type         = "rate"
+  )
+```
+
+El siguiente paso involucra crear el modelo con (`sienaAlgorithmCreate`,) donde especificamos todos los parámetros para ajustar el modelo (ej., pasos MCMC.) Aquí, modificamos los valores de `n3` y `nsub` a la mitad de los valores predeterminados para reducir el tiempo que tomaría ajustar el modelo; sin embargo esto degrada la calidad del ajuste.
+
+```{r}
+#| label: siena-model-fit
+#| collapse: true
+#| cache: true
+## Fases 2 y 3 más cortas, solo para ejemplo:
+myalgorithm <- sienaAlgorithmCreate(
+  nsub = 2, n3 = 500, seed = 122, projname = NULL
+  )
+ 
+## Ajustando e imprimiendo el modelo
+ans <- siena07(
+  myalgorithm,
+  data = mydata, effects = myeff,
+  returnDeps = TRUE, batch = TRUE
+  )
+
+ans
+```
+
+Como regla general, valores t absolutos por debajo de 0.1 muestran buena convergencia, por debajo de 0.2 decimos "razonablemente bien," y por encima no hay convergencia. Resaltemos dos de los efectos que tenemos en nuestro modelo
+
+1. Los vínculos transitivos (número cinco) son positivos 0.78 con un valor t menor que 0.01. Por lo tanto, decimos que la red tiene una tendencia hacia la transitividad (equilibrio) que es significativa.
+
+2. El efecto de exposición (número siete) también es positivo, pero pequeño, 0.03, pero aún significativo (valor t de -0.01)
+
+Como con ERGMs, también hacemos bondad de ajuste:
+
+```{r}
+#| label: siena-gof
+#| cache: true
+sienaGOF(ans, OutdegreeDistribution, varName="mynet1") |>
+  plot()
+sienaGOF(ans, BehaviorDistribution, varName = "mybeh") |> 
+  plot()
+```
+
+
+## Ejemplo de código: ERNM
+
+Hasta la fecha, no hay un lanzamiento CRAN para el modelo ERNM. La única implementación de la que estoy al tanto es de uno de los autores principales, que está disponible en GitHub: [https://github.com/fellstat/ernm](https://github.com/fellstat/ernm){target="_blank"}. Desafortunadamente, la versión actual del paquete parece estar rota.
+
+Al igual que el caso ALAAM, como los ERNMs están estrechamente relacionados con los ERGMS, ¡construir un ejemplo usando el paquete ERGM podría ser una gran oportunidad para un proyecto de clase!

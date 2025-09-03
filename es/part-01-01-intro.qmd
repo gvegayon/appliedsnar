@@ -1,0 +1,26 @@
+# Introducción
+
+::: {.callout-warning}
+## Nota de Traducción
+Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::
+
+```{r include=FALSE, cache=FALSE}
+rm(list = ls())
+
+pkgs <- c("igraph", "statnet", "sns", "network", "dplyr", "stringr",
+          "tidyr", "tidyselect", "ergm", "netdiffuseR", "lattice", "RSiena",
+          "netplot")
+pkgs <- paste0("package:", pkgs)
+
+for (pkg in pkgs)
+  tryCatch(
+    detach(pkg, unload = TRUE, character.only = TRUE, force = TRUE),
+    error = function(e) e)
+```
+
+El Análisis de Redes Sociales y la Ciencia de Redes tienen una larga tradición académica. Desde modelos de difusión social hasta redes de interacción de proteínas, estas disciplinas de sistemas complejos cubren una variedad de problemas a través de campos científicos. Sin embargo, aunque estos podrían verse como ampliamente diferentes, el objeto bajo el microscopio es el mismo: las redes.
+
+Con una larga historia (e insuficiente colaboración interdisciplinaria, si me permiten decir) de avances científicos que ocurren de manera algo aislada, el potencial para la polinización cruzada entre disciplinas dentro de la ciencia de redes es inmenso.
+
+Este libro intenta compilar los muchos métodos disponibles en el ámbito de las ciencias de la complejidad, proporcionar un examen matemático profundo--cuando sea posible--y proporcionar algunos ejemplos que ilustren su uso.
