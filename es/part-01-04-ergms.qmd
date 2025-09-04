@@ -330,7 +330,7 @@ ans1 <- ergm(
   )
 ```
 
-Finalmente, podemos intentar estimar un modelo con términos más complejos, por ejemplo, el *geometrically weighted edge-wise shared partner* (gwesp). Éste término captura el cierre triádico, pero es más fácil de estimar que `triangle`. Más aún, para facilitar el proceso de estimación, podemos incorporar el termino *geometrically weighted dyad-wise shared partner* (gwdsp). Más detalles sobre estos términos en @hunterCurvedExponentialFamily2007.
+Finalmente, podemos intentar estimar un modelo con términos más complejos, por ejemplo, el *geometrically weighted edge-wise shared partner* (gwesp). Éste término captura el cierre triádico, pero es más fácil de estimar que `triangle`. Más aún, para facilitar el proceso de estimación, podemos incorporar el termino *geometrically weighted dyad-wise shared partner* (gwdsp). Ambos estadísticos incluyen un parámetro de descuento (decay); por el momento, fijaremos ambos parametros en 0.5 (valores entre 0.25 y 1.5 son comunes). Más detalles sobre estos términos en @hunterCurvedExponentialFamily2007.
 
 ```{r}
 #| label: 04-ergms-model2

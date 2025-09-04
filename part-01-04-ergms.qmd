@@ -330,7 +330,7 @@ ans1 <- ergm(
   )
 ```
 
-Finally, we can try incorporating a more complex term, for example, the geometrically weighted edge-wise shared partners (gwesp) term. This term is akin to triadic closure, but it is easier to estimate. Moreover, to ease the estimation process, it is recommended to add the geometrically weighted dyad-wise shared partners (gwdsp) term too. For more on this, see @hunterCurvedExponentialFamily2007.
+Finally, we can try incorporating a more complex term, for example, the geometrically weighted edge-wise shared partners (gwesp) term. This term is akin to triadic closure, but it is easier to estimate. Moreover, to ease the estimation process, it is recommended to add the geometrically weighted dyad-wise shared partners (gwdsp) term too. Both terms include a decay parameter; for simplicity, both will be fixed and set to be 0.5 (values between 0.25 and 1.5 are common). For more on this, see @hunterCurvedExponentialFamily2007.
 
 ```{r}
 #| label: 04-ergms-model2
