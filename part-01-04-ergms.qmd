@@ -308,7 +308,7 @@ So what are we doing here:
     
     c.  `mutual` Number of mutual connections between $(i, j), (j, i)$. This can be related to, for example, triadic closure.
     
-For more on control parameters, see @Morris2008. The next model consists of a simpler version. Excluding the mutual term leads to an ERGM with no Markov terms, meaning that all the sufficient statistics feature one tie at a time. The mutual term included two ties ($i \to j$ and $j \to i$). Models like this reduce to a logistic regression, which is why the fitting process avoids using MCMC:
+For more on control parameters, see @Morris2008. The next model consists of a simpler version. Excluding the mutual term leads to an ERGM with no Markov terms, meaning that all the sufficient statistics are functions of individual edges rather than configurations involving multiple edges. The mutual term, by contrast, involves pairs of ties ($i \to j$ and $j \to i$), which is an example of a Markov term. Models with only non-Markov terms reduce to a logistic regression, which is why the fitting process avoids using MCMC:
 
 ```{r}
 #| label: 04-ergms-model1
