@@ -32,4 +32,6 @@ RUN install2.r --error -n 4 \
 	microbenchmark \
 	RSiena
 
+RUN apt-get update && apt-get install -y --no-install-recommends vim
+
 CMD ["bash"]

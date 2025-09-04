@@ -1,16 +1,12 @@
 ---
-date-modified: 2025-08-23
+date-modified: 2025-09-03
+date: 2025-08-23
 ---
 
 \renewcommand{\Pr}[1]{\text{Pr}\left(#1\right)}
 \renewcommand{\exp}[1]{\text{exp}\left\{#1\right\}}
 
 # Prefacio
-
-::: {.callout-warning}
-## Nota de Traducción
-Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
-:::
 
 Los métodos estadísticos para sistemas en red están presentes en la mayoría de las disciplinas. A pesar de las diferencias de lenguaje entre áreas, muchos métodos desarrollados para estudiar problemas específicos pueden ser útiles fuera de su contexto original; esta es la premisa de este libro. **Ciencia de Redes Aplicada con R** proporciona ejemplos utilizando el lenguaje de programación R para estudiar sistemas en red. Aunque la mayoría de los casos tratan sobre análisis de redes sociales, los métodos presentados aquí pueden aplicarse a contextos como redes biológicas, redes de transporte y muchos otros.
 
@@ -38,4 +34,4 @@ Los lectores que encuentren errores de traducción o áreas que requieran clarif
 
 ## Divulgación sobre IA
 
-A partir de mediados de 2023, he estado utilizando IA para ayudarme a escribir este libro. Principalmente, uso una combinación de [GitHub co-pilot](https://github.com/features/copilot){target="_blank"}, que ayuda con código y texto, y [Grammarly](https://grammarly.com){target="_blank"}, que ayuda con gramática y estilo. El papel de la IA ha sido ayudarme a escribir más rápido y con mayor precisión, pero no ha estado involucrada en la conceptualización del libro o el desarrollo de los métodos presentados aquí.
+A partir de mediados de 2023, he estado utilizando IA para ayudarme a escribir este libro. Principalmente, uso una combinación de [GitHub co-pilot](https://github.com/features/copilot){target="_blank"}, que ayuda con código y texto, y [Grammarly](https://grammarly.com){target="_blank"}, que ayuda con gramática y estilo. El papel de la IA ha sido ayudarme a escribir más rápido, pero no ha estado involucrada en la conceptualización del libro o el desarrollo de los métodos presentados aquí.
