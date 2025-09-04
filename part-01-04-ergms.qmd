@@ -14,12 +14,6 @@ I strongly suggest reading the vignette in the `ergm` R package.
 ```{r}
 #| echo: false
 #| label: 01-04-setup
-if (file.exists("ergm.rda")) {
-  load("ergm.rda")
-  chapter_cached <- TRUE
-} else {
-  chapter_cached <- FALSE
-}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
@@ -316,7 +310,10 @@ So what are we doing here:
     
 For more on control parameters, see @Morris2008. The next model consists of a simpler version. Excluding the mutual term leads to an ERGM with no Markov terms, meaning that all the sufficient statistics feature one tie at a time. The mutual term included two ties ($i \to j$ and $j \to i$). Models like this reduce to a logistic regression, which is why the fitting process avoids using MCMC:
 
-```{r 04-ergms-model1, cache=TRUE, eval=!chapter_cached, message=FALSE}
+```{r}
+#| label: 04-ergms-model1
+#| cache: true
+#| message: false
 ans1 <- ergm(
   network_111 ~
     edges +
@@ -335,7 +332,10 @@ ans1 <- ergm(
 
 Finally, we can try incorporating a more complex term, for example, the geometrically weighted edge-wise shared partners (gwesp) term. This term is akin to triadic closure, but it is easier to estimate. Moreover, to ease the estimation process, it is recommended to add the geometrically weighted dyad-wise shared partners (gwdsp) term too. For more on this, see @hunterCurvedExponentialFamily2007.
 
-```{r 04-ergms-model2, cache=TRUE, eval=!chapter_cached, message=FALSE}
+```{r}
+#| label: 04-ergms-model2
+#| cache: true
+#| message: false
 ans2 <- ergm(
   network_111 ~
     edges +

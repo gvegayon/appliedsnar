@@ -14,12 +14,6 @@ Recomiendo encarecidamente leer la viñeta del paquete de R `ergm`.
 ```{r}
 #| echo: false
 #| label: 01-04-setup
-if (file.exists("ergm.rda")) {
-  load("ergm.rda")
-  chapter_cached <- TRUE
-} else {
-  chapter_cached <- FALSE
-}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
@@ -316,7 +310,10 @@ Entonces, ¿qué estamos haciendo aquí:
     
 Para más sobre parámetros de control, ver @Morris2008. El siguiente modelo consiste en una version más simple del modelo anterior. Excluye el término `mutual` lleva a un modelo sin términos markovianos, es decir, los estadísticos de la red son funciones de enlaces individuales y no de pares de enlaces o más. El término `mutual` incluye dos enlaces ($i\to j$ y $j\to i$). Modelos sin términos markovianos pueden ser estimados usando regresión logística, evitando la necesidad de simulaciones MCMC:
 
-```{r 04-ergms-model1, cache=TRUE, eval=!chapter_cached, message=FALSE}
+```{r}
+#| label: 04-ergms-model1
+#| cache: true
+#| message: false
 ans1 <- ergm(
   network_111 ~
     edges +
@@ -335,7 +332,10 @@ ans1 <- ergm(
 
 Finalmente, podemos intentar estimar un modelo con términos más complejos, por ejemplo, el *geometrically weighted edge-wise shared partner* (gwesp). Éste término captura el cierre triádico, pero es más fácil de estimar que `triangle`. Más aún, para facilitar el proceso de estimación, podemos incorporar el termino *geometrically weighted dyad-wise shared partner* (gwdsp). Más detalles sobre estos términos en @hunterCurvedExponentialFamily2007.
 
-```{r 04-ergms-model2, cache=TRUE, eval=!chapter_cached, message=FALSE}
+```{r}
+#| label: 04-ergms-model2
+#| cache: true
+#| message: false
 ans2 <- ergm(
   network_111 ~
     edges +
@@ -383,11 +383,6 @@ En base a los resultados, podemos hacer las siguientes observaciones:
 3. El término `mutual` es significativo, positivo y grande (~4). Esto indica una fuerte tendencia de los individuos a establecer amistad mutua.
 
 4. El término `gwesp` es positivo y significativo. La interpretación de este término no siempre es simple. Generalmente, decimos que un término gwesp positivo significa que hay una tendencia hacia el cierre triádico.
-
-```{r ergm-save-image, echo=FALSE, cache=TRUE}
-save.image("ergm.rda", compress = TRUE)
-```
-
 
 ## Bondad de Ajuste del Modelo
 
