@@ -6,6 +6,7 @@ execute:
   cache: false
 
 book:
+  version: 0.1.0
   google-analytics: G-30X6YBX6FJ
   title: Applied Network Science with R
   author: George G. Vega Yon, Ph.D.
@@ -54,6 +55,7 @@ book:
       chapters:
         - part-03-12-data-appendix.qmd
     - references.qmd
+    - news.qmd
   downloads:
   - pdf
 

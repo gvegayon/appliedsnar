@@ -1,6 +1,11 @@
 ---
-date-modified: 2024-06-27
+date: 2024-06-27
+date-modified: 2025-09-03
 ---
+
+:::{.content-hidden}
+{{< include math.tex >}}
+:::
 
 # Exponential Random Graph Models
 
@@ -8,6 +13,7 @@ I strongly suggest reading the vignette in the `ergm` R package.
 
 ```{r}
 #| echo: false
+#| label: 01-04-setup
 if (file.exists("ergm.rda")) {
   load("ergm.rda")
   chapter_cached <- TRUE
@@ -158,8 +164,6 @@ For more details, see [@Hunter2008]. A sketch of the algorithm follows:
 
 ## The `ergm` package
 
-The `ergm` R package [@R-ergm]
-
 From the previous section:^[You can download the 03.rda file from [this link](https://github.com/gvegayon/appliedsnar).]
 
 ```{r 04-setup, message=FALSE, warning=FALSE}
@@ -195,7 +199,7 @@ igraph::list.edge.attributes(my_igraph_object)
 network::list.edge.attributes(my_network_object)
 ```
 
-Anyway... Using the `asNetwork` function, we can coerce the `igraph` object into a network object so we can use it with the `ergm` function:
+Using the `asNetwork` function, we can coerce the `igraph` object into a network object so we can use it with the `ergm` function:
 
 ```{r 03-ergms-intergraph, cache=TRUE}
 # Creating the new network
@@ -252,9 +256,11 @@ nplot(
   )
 ```
 
-## Running ERGMs
+Coloring by `hispanic`, we can see that nodes seem to be clustered by this attribute. Visual inspection in network science can be very useful, but, in order to make more formal statements, we need to use statistical models; this is where ERGMs shine.
 
-Proposed workflow:
+## Estimating ERGMs
+
+Although there is no silver bullet for estimating these models, the following workflow has worked for me in the past:
 
 1.  Estimate the simplest model, adding one variable at a time.
 
@@ -268,7 +274,11 @@ What to use:
 
 2.  `ergm.constraints`: Where to sample the network from. Gives stability and (in some cases) faster convergence as by constraining the model you are reducing the sample size.
 
-Here is an example of a couple of models that we could compare^[Notice that this document may not include the usual messages that the `ergm` command generates during the estimation procedure. This is just to make it more printable-friendly.]
+Here is an example of a couple of models that we could compare
+
+::: {.callout-note}
+Notice that this document may not include the usual messages that the `ergm` command generates during the estimation procedure. This is just to make it more printable-friendly.
+:::
 
 ```{r}
 #| label: 04-ergms-model0
@@ -281,7 +291,6 @@ ans0 <- ergm(
     nodematch("female1") +
     nodematch("eversmk1") +
     mutual,
-  constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
     MCMLE.maxit = 10,
@@ -290,6 +299,10 @@ ans0 <- ergm(
     )
   )
 ```
+
+::: {.callout-note title="Previous version of the book"}
+In a previous version of the book we used the `bd` constraint to limit the maximum number of outgoing ties to 19. Although this is a reasonable constraint (as the sample may have been restricted by construction), the current version of the ERGM package returns a warning and shows the GOF statistics with switched signs (negative AIC and BIC, and positive Loglikelihood).
+:::
 
 So what are we doing here:
 
@@ -301,7 +314,7 @@ So what are we doing here:
     
     c.  `mutual` Number of mutual connections between $(i, j), (j, i)$. This can be related to, for example, triadic closure.
     
-For more on control parameters, see [@Morris2008].
+For more on control parameters, see @Morris2008. The next model consists of a simpler version. Excluding the mutual term leads to an ERGM with no Markov terms, meaning that all the sufficient statistics feature one tie at a time. The mutual term included two ties ($i \to j$ and $j \to i$). Models like this reduce to a logistic regression, which is why the fitting process avoids using MCMC:
 
 ```{r 04-ergms-model1, cache=TRUE, eval=!chapter_cached, message=FALSE}
 ans1 <- ergm(
@@ -311,7 +324,6 @@ ans1 <- ergm(
     nodematch("female1") +
     nodematch("eversmk1")
     ,
-  constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
     MCMLE.maxit = 10,
@@ -321,7 +333,7 @@ ans1 <- ergm(
   )
 ```
 
-This example takes longer to compute
+Finally, we can try incorporating a more complex term, for example, the geometrically weighted edge-wise shared partners (gwesp) term. This term is akin to triadic closure, but it is easier to estimate. Moreover, to ease the estimation process, it is recommended to add the geometrically weighted dyad-wise shared partners (gwdsp) term too. For more on this, see @hunterCurvedExponentialFamily2007.
 
 ```{r 04-ergms-model2, cache=TRUE, eval=!chapter_cached, message=FALSE}
 ans2 <- ergm(
@@ -331,9 +343,9 @@ ans2 <- ergm(
     nodematch("female1") +
     nodematch("eversmk1") + 
     mutual +
-    balance
+    gwesp(decay = 0.5, fixed = TRUE) +
+    gwdsp(decay = 0.5, fixed = TRUE)
     ,
-  constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
     MCMLE.maxit = 10,
@@ -362,6 +374,16 @@ library(texreg)
 texreg(list(ans0, ans1, ans2))
 ```
 
+Before we go to the next section, let's make some comments on what we see in the table:
+
+1. Of the three models, the last one is the best in terms of smallest AIC and BIC, and largest Loglikelihood.
+
+2. All the nodematch terms are significant and positive, which means that we have homophily by `hispanic`, `female1`, and `eversmk1`.
+
+3. The `mutual` term is significant, positive, and large (~4). This indicates a strong tendency for individuals to befriend each other.
+
+4. The `gwesp` term is positive and significant. The interpretation of this term is not always simple. Generally, we say that a positive gwesp term means that there is a tendency for triadic closure. 
+
 ```{r ergm-save-image, echo=FALSE, cache=TRUE}
 save.image("ergm.rda", compress = TRUE)
 ```
@@ -375,17 +397,17 @@ In raw terms, once each chain has reached stationary distribution, we can say th
 >
 > ---?ergm::mcmc.diagnostics
 
-Since `ans0` is the best model, let's look at the GOF statistics. First, let's see how the MCMC did. We can use the `mcmc.diagnostics` function included in the package. The function is a wrapper of a couple of functions from the `coda` package [@R-coda], which are called upon the `$sample` object holding the *centered* statistics from the sampled networks. At first, it can be confusing to look at the `$sample` object; it neither matches the observed statistics nor the coefficients. 
+Since `ans2` is the best model, let's look at the GOF statistics. First, let's see how the MCMC did. We can use the `mcmc.diagnostics` function included in the package. The function is a wrapper of a couple of functions from the `coda` package [@R-coda], which are called upon the `$sample` object holding the *centered* statistics from the sampled networks. At first, it can be confusing to look at the `$sample` object; it neither matches the observed statistics nor the coefficients. 
 
-When calling `mcmc.diagnostics(ans0, centered = FALSE)`, you will see many outputs, including a couple of plots showing the trace and posterior distribution of the *uncentered* statistics (`centered = FALSE`). The following code chunks will reproduce the output from the `mcmc.diagnostics` function step by step using the coda package. First, we need to *uncenter* the sample object:
+When calling `mcmc.diagnostics(ans2, centered = FALSE)`, you will see many outputs, including a couple of plots showing the trace and posterior distribution of the *uncentered* statistics (`centered = FALSE`). The following code chunks will reproduce the output from the `mcmc.diagnostics` function step by step using the coda package. First, we need to *uncenter* the sample object:
 
 ```{r ergm-uncentering}
 # Getting the centered sample
-sample_centered <- ans0$sample
+sample_centered <- ans2$sample
 
 # Getting the observed statistics and turning it into a matrix so we can add it
 # to the samples
-observed <- summary(ans0$formula)
+observed <- summary(ans2$formula)
 observed <- matrix(
   observed,
   nrow  = nrow(sample_centered[[1]]),
@@ -479,7 +501,7 @@ Let's take a look at it
 
 ```{r checking-gof, cache = TRUE, fig.pos='!h'}
 # Computing and printing GOF estatistics
-ans_gof <- gof(ans0)
+ans_gof <- gof(ans2)
 ans_gof
 
 # Plotting GOF statistics
@@ -498,7 +520,6 @@ ans0_bis <- ergm(
     esp(0:3) + 
     idegree(0:10)
     ,
-  constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
     MCMLE.maxit = 15,

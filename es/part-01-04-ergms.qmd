@@ -1,18 +1,19 @@
 ---
-date-modified: 2024-06-27
+date: 2024-06-27
+date-modified: 2025-09-03
 ---
 
-# Modelos de Grafos Aleatorios Exponenciales
-
-::: {.callout-warning}
-## Nota de Traducción
-Esta versión del capítulo fue traducida de manera automática utilizando IA. El capítulo aún no ha sido revisado por un humano.
+:::{.content-hidden}
+{{< include math.tex >}}
 :::
+
+# Modelos Exponenciales de Grafos Aleatorios
 
 Recomiendo encarecidamente leer la viñeta del paquete de R `ergm`.
 
 ```{r}
 #| echo: false
+#| label: 01-04-setup
 if (file.exists("ergm.rda")) {
   load("ergm.rda")
   chapter_cached <- TRUE
@@ -32,7 +33,7 @@ vignette("ergm", package="ergm")
 
 ![Fuente: Hunter et al. (2008)](img/hunter2008.png)
 
-En pocas palabras, usamos ERGMs como una interpretación paramétrica de la distribución de $\mathbf{Y}$, que toma la forma canónica:
+En pocas palabras, usamos ERGMs (que en inglés son "Exponential Random Graph Models") como una interpretación paramétrica de la distribución de $\mathbf{Y}$, que toma la forma canónica:
 
 $$
 \Pr{\mathbf{Y}=\mathbf{y};\mathbf{\theta}}{\mathcal{Y}} = \frac{\exp{\theta^{\text{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y} 
@@ -106,7 +107,7 @@ De nuevo, el mismo resultado. El grafo de Bernoulli no es el único modelo ERGM 
 
 ## Estimación de ERGMs
 
-El objetivo final es realizar inferencia estadística sobre el modelo propuesto. En un entorno *estándar*, podríamos usar Estimación de Máxima Verosimilitud (MLE), que consiste en encontrar los parámetros del modelo $\theta$ que, dados los datos observados, maximicen la verosimilitud del modelo. Para esto último, generalmente usamos [el método de Newton](https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization). El método de Newton requiere calcular la log-verosimilitud del modelo, lo que puede ser desafiante en ERGMs.
+El objetivo final es realizar inferencia estadística sobre el modelo propuesto. En un entorno *estándar*, podríamos usar Estimación de Máxima Verosimilitud (MLE, por sus siglas en inglés), que consiste en encontrar los parámetros del modelo $\theta$ que, dados los datos observados, maximicen la verosimilitud del modelo. Para esto último, generalmente usamos [el método de Newton](https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization). El método de Newton requiere calcular la log-verosimilitud del modelo, lo que puede ser desafiante en ERGMs.
 
 Para ERGMs, dado que parte de la verosimilitud involucra una constante normalizadora que es una función de todas las redes posibles, esto no es tan directo como en el entorno regular. Debido a esto, la mayoría de los métodos de estimación se basan en simulaciones.
 
@@ -163,8 +164,6 @@ Para más detalles, ver [@Hunter2008]. Un bosquejo del algoritmo sigue:
 
 ## El paquete `ergm`
 
-El paquete de R `ergm` [@R-ergm]
-
 De la sección anterior:^[Puedes descargar el archivo 03.rda desde [este enlace](https://github.com/gvegayon/appliedsnar).]
 
 ```{r 04-setup, message=FALSE, warning=FALSE}
@@ -200,7 +199,7 @@ igraph::list.edge.attributes(my_igraph_object)
 network::list.edge.attributes(my_network_object)
 ```
 
-De todos modos... Usando la función `asNetwork`, podemos coercionar el objeto `igraph` en un objeto network para que podamos usarlo con la función `ergm`:
+Usando la función `asNetwork`, podemos coercionar el objeto `igraph` en un objeto network para que podamos usarlo con la función `ergm`:
 
 ```{r 03-ergms-intergraph, cache=TRUE}
 # Creando la nueva red
@@ -210,7 +209,7 @@ network_111 <- intergraph::asNetwork(ig_year1_111)
 ergm(network_111 ~ edges)
 ```
 
-Entonces, ¿qué pasó aquí? Obtuvimos una advertencia. Resulta que nuestra red tiene bucles (¡no pensé en eso antes!). Echemos un vistazo a eso con la función `which_loop`
+Entonces, ¿qué pasó aquí? Obtuvimos una advertencia. Resulta que nuestra red tiene bucles (¡no pensé en eso antes!), que son arcos que conectan un nodo consigo mismo. Echemos un vistazo a eso con la función `which_loop`
 
 ```{r 03-ergms-which-loop}
 E(ig_year1_111)[which_loop(ig_year1_111)]
@@ -257,9 +256,11 @@ nplot(
   )
 ```
 
-## Ejecutando ERGMs
+Colorando por `hispanic`, podemos ver que los nodos parecen estar agrupados por este atributo. La inspección visual en la ciencia de redes puede ser muy útil, pero, para hacer declaraciones más formales, necesitamos usar modelos estadísticos; aquí es donde los ERGMs brillan.
 
-Flujo de trabajo propuesto:
+## Estimando ERGMs
+
+Aunque no existe una solución única para estimar estos modelos, el siguiente flujo de trabajo me ha funcionado en el pasado:
 
 1.  Estimar el modelo más simple, agregando una variable a la vez.
 
@@ -273,7 +274,11 @@ Qué usar:
 
 2.  `ergm.constraints`: De dónde muestrear la red. Da estabilidad y (en algunos casos) convergencia más rápida ya que al restringir el modelo estás reduciendo el tamaño de la muestra.
 
-Aquí hay un ejemplo de un par de modelos que podríamos comparar^[Nota que este documento puede no incluir los mensajes usuales que el comando `ergm` genera durante el procedimiento de estimación. Esto es solo para hacerlo más amigable para imprimir.]
+Aquí hay un ejemplo de un par de modelos que podríamos comparar
+
+::: {.callout-note}
+Nota que este documento puede no incluir los mensajes usuales que el comando `ergm` genera durante el procedimiento de estimación. Esto es solo para hacerlo más amigable para imprimir.
+:::
 
 ```{r}
 #| label: 04-ergms-model0
@@ -286,7 +291,6 @@ ans0 <- ergm(
     nodematch("female1") +
     nodematch("eversmk1") +
     mutual,
-  constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
     MCMLE.maxit = 10,
@@ -295,6 +299,10 @@ ans0 <- ergm(
     )
   )
 ```
+
+::: {.callout-note title="Versión anterior del libro"}
+En una versión anterior del libro usamos la restricción `bd` para limitar el número máximo de vínculos salientes a 19. Aunque esta es una restricción razonable (ya que la muestra pudo haber sido restringida por construcción), la versión actual del paquete ERGM devuelve una advertencia y muestra las estadísticas GOF con signos cambiados (AIC y BIC negativos, y Logverosimilitud positiva).
+:::
 
 Entonces, ¿qué estamos haciendo aquí:
 
@@ -306,7 +314,7 @@ Entonces, ¿qué estamos haciendo aquí:
     
     c.  `mutual` Número de conexiones mutuas entre $(i, j), (j, i)$. Esto puede estar relacionado con, por ejemplo, cierre triádico.
     
-Para más sobre parámetros de control, ver [@Morris2008].
+Para más sobre parámetros de control, ver @Morris2008. El siguiente modelo consiste en una version más simple del modelo anterior. Excluye el término `mutual` lleva a un modelo sin términos markovianos, es decir, los estadísticos de la red son funciones de enlaces individuales y no de pares de enlaces o más. El término `mutual` incluye dos enlaces ($i\to j$ y $j\to i$). Modelos sin términos markovianos pueden ser estimados usando regresión logística, evitando la necesidad de simulaciones MCMC:
 
 ```{r 04-ergms-model1, cache=TRUE, eval=!chapter_cached, message=FALSE}
 ans1 <- ergm(
@@ -316,7 +324,6 @@ ans1 <- ergm(
     nodematch("female1") +
     nodematch("eversmk1")
     ,
-  constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
     MCMLE.maxit = 10,
@@ -326,7 +333,7 @@ ans1 <- ergm(
   )
 ```
 
-Este ejemplo toma más tiempo para calcular
+Finalmente, podemos intentar estimar un modelo con términos más complejos, por ejemplo, el *geometrically weighted edge-wise shared partner* (gwesp). Éste término captura el cierre triádico, pero es más fácil de estimar que `triangle`. Más aún, para facilitar el proceso de estimación, podemos incorporar el termino *geometrically weighted dyad-wise shared partner* (gwdsp). Más detalles sobre estos términos en @hunterCurvedExponentialFamily2007.
 
 ```{r 04-ergms-model2, cache=TRUE, eval=!chapter_cached, message=FALSE}
 ans2 <- ergm(
@@ -336,9 +343,9 @@ ans2 <- ergm(
     nodematch("female1") +
     nodematch("eversmk1") + 
     mutual +
-    balance
+    gwesp(decay = 0.5, fixed = TRUE) +
+    gwdsp(decay = 0.5, fixed = TRUE)
     ,
-  constraints = ~bd(maxout = 19),
   control = control.ergm(
     seed        = 1,
     MCMLE.maxit = 10,
@@ -367,6 +374,16 @@ library(texreg)
 texreg(list(ans0, ans1, ans2))
 ```
 
+En base a los resultados, podemos hacer las siguientes observaciones:
+
+1. De los tres modelos, el último es el mejor en términos de menor AIC y BIC, y mayor Logverosimilitud.
+
+2. Todos los términos nodematch son significativos y positivos, lo que significa que tenemos homofilia por `hispanic`, `female1`, y `eversmk1`.
+
+3. El término `mutual` es significativo, positivo y grande (~4). Esto indica una fuerte tendencia de los individuos a establecer amistad mutua.
+
+4. El término `gwesp` es positivo y significativo. La interpretación de este término no siempre es simple. Generalmente, decimos que un término gwesp positivo significa que hay una tendencia hacia el cierre triádico.
+
 ```{r ergm-save-image, echo=FALSE, cache=TRUE}
 save.image("ergm.rda", compress = TRUE)
 ```
@@ -380,17 +397,17 @@ En términos brutos, una vez que cada cadena ha alcanzado la distribución estac
 >
 > ---?ergm::mcmc.diagnostics
 
-Dado que `ans0` es el mejor modelo, veamos las estadísticas GOF. Primero, veamos cómo se comportó el MCMC. Podemos usar la función `mcmc.diagnostics` incluida en el paquete. La función es un envoltorio de un par de funciones del paquete `coda` [@R-coda], que son llamadas sobre el objeto `$sample` que contiene las estadísticas *centradas* de las redes muestreadas. Al principio, puede ser confuso mirar el objeto `$sample`; no coincide ni con las estadísticas observadas ni con los coeficientes. 
+Dado que `ans2` es el mejor modelo, veamos las estadísticas GOF. Primero, veamos cómo se comportó el MCMC. Podemos usar la función `mcmc.diagnostics` incluida en el paquete. La función es un envoltorio de un par de funciones del paquete `coda` [@R-coda], que son llamadas sobre el objeto `$sample` que contiene las estadísticas *centradas* de las redes muestreadas. Al principio, puede ser confuso mirar el objeto `$sample`; no coincide ni con las estadísticas observadas ni con los coeficientes. 
 
-Cuando se llama `mcmc.diagnostics(ans0, centered = FALSE)`, verás muchas salidas, incluyendo un par de gráficos mostrando la traza y distribución posterior de las estadísticas *no centradas* (`centered = FALSE`). Los siguientes fragmentos de código reproducirán la salida de la función `mcmc.diagnostics` paso a paso usando el paquete coda. Primero, necesitamos *descentrar* el objeto de muestra:
+Cuando se llama `mcmc.diagnostics(ans2, centered = FALSE)`, verás muchas salidas, incluyendo un par de gráficos mostrando la traza y distribución posterior de las estadísticas *no centradas* (`centered = FALSE`). Los siguientes fragmentos de código reproducirán la salida de la función `mcmc.diagnostics` paso a paso usando el paquete coda. Primero, necesitamos *descentrar* el objeto de muestra:
 
 ```{r ergm-uncentering}
 # Obteniendo la muestra centrada
-sample_centered <- ans0$sample
+sample_centered <- ans2$sample
 
 # Obteniendo las estadísticas observadas y convirtiéndolas en una matriz para que podamos agregarlas
 # a las muestras
-observed <- summary(ans0$formula)
+observed <- summary(ans2$formula)
 observed <- matrix(
   observed,
   nrow  = nrow(sample_centered[[1]]),
@@ -484,7 +501,7 @@ Echemos un vistazo
 
 ```{r checking-gof, cache = TRUE, fig.pos='!h'}
 # Calculando e imprimiendo estadísticas GOF
-ans_gof <- gof(ans0)
+ans_gof <- gof(ans2)
 ans_gof
 
 # Graficando estadísticas GOF

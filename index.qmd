@@ -1,5 +1,6 @@
 ---
-date-modified: 2025-08-23
+date: 2025-08-23
+date-modified: 2025-09-03
 ---
 
 \renewcommand{\Pr}[1]{\text{Pr}\left(#1\right)}
@@ -9,12 +10,13 @@ date-modified: 2025-08-23
 
 Statistical methods for networked systems are present in most disciplines. Despite language differences between areas, many methods developed to study specific problems can be helpful outside their original context; this is the premise of this book. **Applied Network Science with R** provides examples using the R programming language to study networked systems. Although most cases deal with social network analysis, the methods presented here can be applied to contexts such as biological networks, transportation networks, and many others.
 
-## Spanish Version Available
-A Spanish translation of this book is available at [es/](es/index.html). The Spanish version was created using AI translation and may require human review for technical accuracy.
-
 The entire book was written using [quarto](https://quarto.org){target="_blank"}--a [literate programming](https://en.wikipedia.org/w/index.php?title=Literate_programming&oldid=1219921237) system that allows mixing text and code--meaning that all the code presented is 100% executable and, thus, reproducible. The source code is available on GitHub at [https://github.com/gvegayon/appliedsnar](https://github.com/gvegayon/appliedsnar){target="_blank"}. Readers are encouraged to download the code and execute it on their machines using either [RStudio](https://posit.co) or [VScode](https://code.visualstudio.com/).
 
 Besides the R programming, we will be using <a href="https://posit.co" target="_blank">RStudio</a>. For data management, we will use <a href="https://cran.r-project.org/package=dplyr" target="_blank">`dplyr`</a> and <a href="https://cran.r-project.org/package=data.table" target="_blank">`data.table`</a>. The network data management and visualization packages we will use are  <a href="https://cran.r-project.org/package=igraph" target="_blank">`igraph`</a>, <a href="https://cran.r-project.org/package=netdiffuseR" target="_blank">netdiffuseR</a>, the <a href="https://statnet.org" target="_blank">statnet</a> suite, and <a href="https://cran.r-project.org/package=netplot" target="_blank">`netplot`</a>.
+
+## Spanish Version Available
+
+A Spanish translation of this book is available at [es/](es/index.html). The Spanish version was created using AI translation and may require human review for technical accuracy.
 
 ## About the project
 
@@ -30,4 +32,4 @@ If you'd like to learn more about me, please visit my website at <a href="https:
 
 ## AI Disclosure
 
-Starting in mid-2023, I have been using AI to help me write this book. Mainly, I use a combination of [GitHub co-pilot](https://github.com/features/copilot){target="_blank"}, which aids with code and text, and [Grammarly](https://grammarly.com){target="_blank"}, which aids with grammar and style. AI's role has been to help me write faster and more accurately, but it has not been involved in the book's conceptualization or the development of the methods presented here.
+Starting in mid-2023, I have been using AI to help me write this book. Mainly, I use a combination of [GitHub co-pilot](https://github.com/features/copilot){target="_blank"}, which aids with code and text, and [Grammarly](https://grammarly.com){target="_blank"}, which aids with grammar and style. AI's role has been to help me write faster, but it has not been involved in the book's conceptualization or the development of the methods presented here.

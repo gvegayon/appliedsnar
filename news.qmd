@@ -1,0 +1,12 @@
+---
+date: 2025-09-03
+date-modified: 2025-09-03
+---
+
+# News
+
+## Version 0.1.0 (2025-09-03)
+
+- Started the news section of the book. I will try to keep track of the changes made to the book here. Previous versions of the book will now be archived using releases on GitHub.
+
+- Minor edits to the ERGM chapter.
