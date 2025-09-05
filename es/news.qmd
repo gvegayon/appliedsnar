@@ -5,7 +5,7 @@ date-modified: 2025-09-03
 
 # Novedades
 
-## Versión 0.1.0 (2025-09-03)
+## Versión 2025.09.03
 
 - Desde ahora, el libro cuenta con una sección de novedades. Intentaré mantener esta al día incluyendo los cambios realizados entre versiones. Versiones anteriores se encontrarán disponibles en GitHub como "releases".
 

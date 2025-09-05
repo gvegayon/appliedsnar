@@ -6,10 +6,11 @@ execute:
   cache: false
 
 book:
-  version: 0.1.0
+  version: 2025.09.03
   google-analytics: G-30X6YBX6FJ
   title: Ciencia de Redes Aplicada con R
   author: George G. Vega Yon, Ph.D.
+  language: es
   original-date: 2018-01-19
   date: 2025-08-23
   cover-image: img/front-page-dalle.png
@@ -52,9 +53,8 @@ book:
       chapters:
         - part-02-10-statistical-foundations.qmd
         - part-02-11-power.qmd
-    - part: "**Apéndice**"
-      chapters:
-        - part-03-12-data-appendix.qmd
+  appendices:
+    - part-03-12-data-appendix.qmd
     - references.qmd
     - news.qmd
   downloads:
