@@ -1,3 +1,8 @@
+---
+date: 2024-09-07
+date-modified: 2025-09-07
+---
+
 # Bayes' Rule
 
 Bayes' Rule is a fundamental equation in Bayesian statistics. With it, we can reformulate inferential problems by writing probabilities in terms of known quantities. Bayes' rule can be stated as follows:
@@ -9,13 +14,13 @@ Bayes' Rule is a fundamental equation in Bayesian statistics. With it, we can re
 Here, we say that the conditional probability of $X$ given $Y$ can be expressed in terms of the conditional probability of $Y$ given $X$. For example, let $X$ be an unknown vector of parameters $\theta\in\Theta$ and $Y$ a dataset $D \sim f(\theta)$ whose data generating process depends on the unobserved $\theta$. As the posterior distribution of model parameters is in general, elusive, instead, we use Bayes' rule to rephrase the problem:
 
 \begin{equation*}
-\Pr{\left(\theta|D\right)} = \frac{\Pr{\left(\theta|D\right)}\Pr{\left(\theta\right)}}{\Pr{\left(D\right)}}
+\Pr{\left(\theta|D\right)} = \frac{\Pr{\left(D|\theta\right)}\Pr{\left(\theta\right)}}{\Pr{\left(D\right)}}
 \end{equation*}
 
 Since the denominator of the equation does not depend on $\theta$, we can, instead, write
 
 \begin{equation*}
-\Pr{\left(\theta|D\right)} \propto \Pr{\left(\theta|D\right)}\Pr{\left(\theta\right)}
+\Pr{\left(\theta|D\right)} \propto \Pr{\left(D|\theta\right)}\Pr{\left(\theta\right)}
 \end{equation*}
 
 In the Bayesian world, the unconditional distribution of the model parameters is assumed to come from a particular distribution, whereas in the frequentist world, no distributional assumptions are made about the model parameters. The latter is then equivalent to saying that $\theta\sim \text{Uniform}(-\infty, +\infty)$; therefore, even frequentists assume something about the model parameters![^frequentists]

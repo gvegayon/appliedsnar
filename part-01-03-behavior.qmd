@@ -1,3 +1,8 @@
+---
+date: 2024-09-07
+date-modified: 2025-09-07
+---
+
 # Behavior and coevolution
 
 :::{.content-hidden}
@@ -42,11 +47,11 @@ The exposure statistic, $\left(\sum_{j\neq i}X_{ij}\right)^{-1}\left(\sum_{j\neq
 The following code example shows how to estimate a lagged exposure effect using the `glm` function in R. The model we will simulate and estimate features a Bernoulli graph with 1,000 nodes and a density of 0.01.
 
 $$
-y_{it} = \theta_1 + \rho \text{Exposure}_{it} + \theta_2 w_i + \varepsilon
+y_{it} = \theta_1 + \rho \text{Exposure}_{i,t-1} + \theta_2 w_i + \varepsilon
 $$
   
 
-where $\text{Exposure}_{it}$ is the exposure statistic defined above, and $w_i$ is a vector of covariates. 
+where $\text{Exposure}_{i,t-1}$ is the exposure statistic defined above, and $w_i$ is a vector of covariates.
 
 ```{r}
 #| label: lagged-exposure

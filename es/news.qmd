@@ -1,9 +1,13 @@
 ---
 date: 2025-09-03
-date-modified: 2025-09-03
+date-modified: 2025-09-07
 ---
 
 # Novedades
+
+## Versión 2024.09.07
+
+- Se corrigieron errores tipográficos en las fórmulas del capítulo de estadística bayesiana y en el capítulo de comportamiento.
 
 ## Versión 2025.09.03
 
