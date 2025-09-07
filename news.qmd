@@ -1,9 +1,13 @@
 ---
 date: 2025-09-03
-date-modified: 2025-09-03
+date-modified: 2025-09-07
 ---
 
 # News
+
+## Version 2024.09.07
+
+- Corrected math typos in the Bayesian statistics chapter and the behavior chapter.
 
 ## Version 2025.09.03
 
