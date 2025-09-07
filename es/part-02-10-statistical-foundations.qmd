@@ -14,13 +14,13 @@ La Regla de Bayes es una ecuación fundamental en estadística bayesiana. Con el
 Aquí, decimos que la probabilidad condicional de $X$ dado $Y$ puede expresarse en términos de la probabilidad condicional de $Y$ dado $X$. Por ejemplo, sea $X$ un vector desconocido de parámetros $\theta\in\Theta$ y $Y$ un conjunto de datos $D \sim f(\theta)$ cuyo proceso de generación de datos depende del $\theta$ no observado. Como la distribución posterior de los parámetros del modelo es en general, elusiva, en su lugar, usamos la regla de Bayes para reformular el problema:
 
 \begin{equation*}
-\Pr{\left(\theta|D\right)} = \frac{\Pr{\left(\theta|D\right)}\Pr{\left(\theta\right)}}{\Pr{\left(D\right)}}
+\Pr{\left(\theta|D\right)} = \frac{\Pr{\left(D|\theta\right)}\Pr{\left(\theta\right)}}{\Pr{\left(D\right)}}
 \end{equation*}
 
 Dado que el denominador de la ecuación no depende de $\theta$, podemos, en su lugar, escribir
 
 \begin{equation*}
-\Pr{\left(\theta|D\right)} \propto \Pr{\left(\theta|D\right)}\Pr{\left(\theta\right)}
+\Pr{\left(\theta|D\right)} \propto \Pr{\left(D|\theta\right)}\Pr{\left(\theta\right)}
 \end{equation*}
 
 En el mundo bayesiano, se asume que la distribución incondicional de los parámetros del modelo proviene de una distribución particular, mientras que en el mundo frecuentista, no se hacen suposiciones distribucionales sobre los parámetros del modelo. Lo último es entonces equivalente a decir que $\theta\sim \text{Uniforme}(-\infty, +\infty)$; por lo tanto, ¡incluso los frecuentistas asumen algo sobre los parámetros del modelo![^frequentists]
