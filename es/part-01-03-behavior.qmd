@@ -1,3 +1,8 @@
+---
+date: 2024-09-07
+date-modified: 2025-09-07
+---
+
 # Comportamiento y coevolución
 
 :::{.content-hidden}
@@ -47,11 +52,11 @@ La estadística de exposición, $\left(\sum_{j\neq i}X_{ij}\right)^{-1}\left(\su
 El siguiente ejemplo de código muestra cómo estimar un efecto de exposición rezagada usando la función `glm` en R. El modelo que simularemos y estimaremos presenta un grafo de Bernoulli con 1,000 nodos y una densidad de 0.01.
 
 $$
-y_{it} = \theta_1 + \rho \text{Exposure}_{it} + \theta_2 w_i + \varepsilon
+y_{it} = \theta_1 + \rho \text{Exposure}_{i,t-1} + \theta_2 w_i + \varepsilon
 $$
   
 
-donde $\text{Exposure}_{it}$ es la estadística de exposición definida arriba, y $w_i$ es un vector de covariables. 
+donde $\text{Exposure}_{i,t-1}$ es la estadística de exposición definida arriba, y $w_i$ es un vector de covariables.
 
 ```{r}
 #| label: lagged-exposure

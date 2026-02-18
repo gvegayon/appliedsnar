@@ -7,10 +7,17 @@ date-modified: 2026-02-18
 
 ## Versión 2026.02.18
 
+- Corrección en la sección derivando el ERGM diádico-independiente.
+
 - Mejoras de gramática y consistencia al capítulo de ERGM, incluyendo:
   - Corrección de inconsistencia de variables: $x_{-ij}$ → $y_{-ij}$
   - Mejora de claridad: reemplazado "la probabilidad condicional del nodo $n$ ganando función $k$" con "la probabilidad condicional del vínculo $y_{ij}$ ocurriendo"
   - Eliminados envoltorios equation* innecesarios para mejor compatibilidad con LaTeX
+
+## Versión 2025.09.07
+
+- Se corrigieron errores tipográficos en las fórmulas del capítulo de estadística bayesiana y en el capítulo de comportamiento.
+
 
 ## Versión 2025.09.03
 
