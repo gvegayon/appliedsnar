@@ -552,7 +552,7 @@ statistics. Suppose that we would like to know how likely the tie $y_{ij}$ is to
 happen, given the rest of the network. We can compute such probabilities using what
 literature sometimes describes as the Gibbs-sampler. 
 
-In particular, the log-odds of the $ij$ tie ocurring conditional on the rest of
+In particular, the log-odds of the $ij$ tie occurring conditional on the rest of
 the network can be written as:
 
 \begin{equation}
@@ -566,7 +566,7 @@ this, we write the following:
 
 \begin{align*}
 	\Pr{y_{ij} = 1|y_{-ij}} & = %
-		\frac{\Pr{y_{ij} = 1, x_{-ij}}}{%
+		\frac{\Pr{y_{ij} = 1, y_{-ij}}}{%
 			\Pr{y_{ij} = 1, y_{-ij}} + \Pr{y_{ij} = 0, y_{-ij}}} \\
 		& = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}}{%
 			\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + \exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}
@@ -586,7 +586,7 @@ Applying the logit function to the previous equation, we obtain:
  & = \transpose{\theta}\left(\s{\mathbf{y}}^+_{ij} - \s{\mathbf{y}}^-_{ij}\right) \\
  & = \transpose{\theta}\Delta\chng{ij}
 \end{align*}
-\noindent Henceforth, the conditional probability of node $n$ gaining function $k$ can be written as:
+\noindent Therefore, the conditional probability of the tie $y_{ij}$ occurring can be written as:
 
 \begin{equation}
 	\Pr{y_{ij} = 1|y_{-ij}} = \frac{1}{1 + \exp{-\transpose{\theta}\Delta\chng{ij}}}
@@ -609,7 +609,7 @@ Where $\s{}_{ij}$ is a function such that $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf
 
 $$
 \sum_{y\in\mathcal{Y}}\exp{\transpose{\theta}\s{\mathbf{y}}} = %
-  \sum_{y\mathcal{Y}}\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}} = %
+  \sum_{y\in\mathcal{Y}}\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}} = %
   \prod_{ij}\sum_{y\in\{0,1\}}\exp{\transpose{\theta}\s{\mathbf{y}_{ij}}}
 $$
 

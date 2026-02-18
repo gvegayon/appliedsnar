@@ -562,7 +562,7 @@ esto, escribimos lo siguiente:
 
 \begin{align*}
 	\Pr{y_{ij} = 1|y_{-ij}} & = %
-		\frac{\Pr{y_{ij} = 1, x_{-ij}}}{%
+		\frac{\Pr{y_{ij} = 1, y_{-ij}}}{%
 			\Pr{y_{ij} = 1, y_{-ij}} + \Pr{y_{ij} = 0, y_{-ij}}} \\
 		& = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}}{%
 			\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + \exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}
@@ -582,7 +582,7 @@ Aplicando la función logit a la ecuación anterior, obtenemos:
  & = \transpose{\theta}\left(\s{\mathbf{y}}^+_{ij} - \s{\mathbf{y}}^-_{ij}\right) \\
  & = \transpose{\theta}\Delta\chng{ij}
 \end{align*}
-\noindent Por lo tanto, la probabilidad condicional del nodo $n$ ganando función $k$ puede escribirse como:
+\noindent Por lo tanto, la probabilidad condicional de que el vínculo $y_{ij}$ ocurra puede escribirse como:
 
 \begin{equation}
 	\Pr{y_{ij} = 1|y_{-ij}} = \frac{1}{1 + \exp{-\transpose{\theta}\Delta\chng{ij}}}
@@ -596,10 +596,10 @@ El desafío de analizar redes es su naturaleza interdependiente. No obstante, en
 
 Matemáticamente, para ver esto, es suficiente mostrar que la probabilidad ERGM puede escribirse como el producto de las probabilidades de cada díada. 
 
-\begin{equation*}
+$$
 \Pr{\mathbf{y} | \theta} = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} 
 = \frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}}
-\end{equation*}
+$$
 
 Donde $\s{}_{ij}$ es una función tal que $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. Ahora necesitamos tratar con la constante normalizadora. Para ver cómo eso puede separarse, comencemos desde el resultado:
 

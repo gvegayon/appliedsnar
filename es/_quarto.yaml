@@ -6,13 +6,13 @@ execute:
   cache: false
 
 book:
-  version: 2025.09.03
+  version: 2026.02.18
   google-analytics: G-30X6YBX6FJ
   title: Ciencia de Redes Aplicada con R
   author: George G. Vega Yon, Ph.D.
   language: es
   original-date: 2018-01-19
-  date: 2025-08-23
+  date: 2026-02-18
   cover-image: img/front-page-dalle.png
   cover-image-alt: 'Una imagen de IA generada con Bing: Dibuja una imagen de una red social. Incluye a una persona examinando la red y sosteniendo una laptop en una mano. La laptop debería tener el logo del lenguaje de programación R.'
   page-footer: Ciencia de Redes Aplicada con R - [https://ggvy.cl](https://ggvy.cl){target="_blank"}
