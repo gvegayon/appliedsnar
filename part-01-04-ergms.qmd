@@ -601,10 +601,8 @@ The challenge of analyzing networks is their interdependent nature. Nonetheless,
 Mathematically, to see this, it suffices to show that the ERGM probability can be written as the product of each dyads' individual probabilities.
 
 $$
-\begin{equation*}
 \Pr{\mathbf{y} | \theta} = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} 
 = \frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}}
-\end{equation*}
 $$
 
 Where $\s{}_{ij}$ is a function such that $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. We now need to deal with the normalizing constant. The key lies in the fact that we can swap the sum and the product operators. In the case of the dyadic independent model, the normalizing constant can be written as:
