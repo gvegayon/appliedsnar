@@ -1,13 +1,25 @@
 ---
-date: 2025-09-03
-date-modified: 2025-09-07
+date: 2026-02-18
+date-modified: 2026-02-18
 ---
 
 # News
 
-## Version 2024.09.07
+## Version 2026.02.18
+
+- Corrected mathematical derivation of the dyadic-independent ERGM.
+
+- Grammar and consistency improvements to the ERGM chapter, including:
+  - Fixed typo: "ocurring" → "occurring"
+  - Corrected variable inconsistency: $x_{-ij}$ → $y_{-ij}$
+  - Improved clarity: replaced "Henceforth, the conditional probability of node $n$ gaining function $k$" with "Therefore, the conditional probability of the tie $y_{ij}$ occurring"
+  - Fixed missing $\in$ in summation notation
+  - Removed unnecessary equation* wrappers for better LaTeX compatibility
+
+## Version 2025.09.07
 
 - Corrected math typos in the Bayesian statistics chapter and the behavior chapter.
+
 
 ## Version 2025.09.03
 

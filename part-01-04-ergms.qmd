@@ -552,7 +552,7 @@ statistics. Suppose that we would like to know how likely the tie $y_{ij}$ is to
 happen, given the rest of the network. We can compute such probabilities using what
 literature sometimes describes as the Gibbs-sampler. 
 
-In particular, the log-odds of the $ij$ tie ocurring conditional on the rest of
+In particular, the log-odds of the $ij$ tie occurring conditional on the rest of
 the network can be written as:
 
 \begin{equation}
@@ -566,7 +566,7 @@ this, we write the following:
 
 \begin{align*}
 	\Pr{y_{ij} = 1|y_{-ij}} & = %
-		\frac{\Pr{y_{ij} = 1, x_{-ij}}}{%
+		\frac{\Pr{y_{ij} = 1, y_{-ij}}}{%
 			\Pr{y_{ij} = 1, y_{-ij}} + \Pr{y_{ij} = 0, y_{-ij}}} \\
 		& = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}}{%
 			\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + \exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}
@@ -586,7 +586,7 @@ Applying the logit function to the previous equation, we obtain:
  & = \transpose{\theta}\left(\s{\mathbf{y}}^+_{ij} - \s{\mathbf{y}}^-_{ij}\right) \\
  & = \transpose{\theta}\Delta\chng{ij}
 \end{align*}
-\noindent Henceforth, the conditional probability of node $n$ gaining function $k$ can be written as:
+\noindent Therefore, the conditional probability of the tie $y_{ij}$ occurring can be written as:
 
 \begin{equation}
 	\Pr{y_{ij} = 1|y_{-ij}} = \frac{1}{1 + \exp{-\transpose{\theta}\Delta\chng{ij}}}
@@ -594,35 +594,42 @@ Applying the logit function to the previous equation, we obtain:
 
 \noindent i.e., a logistic probability.
 
-## Markov independence
+## Dyadic independence
 
-The challenge of analyzing networks is their interdependent nature. Nonetheless, in the absence of such interdependence, ERGMs are equivalent to logistic regression. Conceptually, if all the statistics included in the model do not involve two or more dyads, then the model is non-Markovian in the sense of Markov graphs.
+The challenge of analyzing networks is their interdependent nature. Nonetheless, in the absence of such interdependence, ERGMs are equivalent to logistic regression. Conceptually, if all the statistics included in the model do not involve two or more dyads, then the model is dyadic independent.
 
-Mathematically, to see this, it suffices to show that the ERGM probability can be written as the product of each dyads' probabilities. 
+Mathematically, to see this, it suffices to show that the ERGM probability can be written as the product of each dyads' individual probabilities.
 
-\begin{equation*}
+$$
 \Pr{\mathbf{y} | \theta} = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} 
 = \frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}}
-\end{equation*}
+$$
 
-Where $\s{}_{ij}$ is a function such that $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. We now need to deal with the normalizing constant. To see how that can be saparated, let's start from the result:
+Where $\s{}_{ij}$ is a function such that $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. We now need to deal with the normalizing constant. The key lies in the fact that we can swap the sum and the product operators. In the case of the dyadic independent model, the normalizing constant can be written as:
+
+$$
+\sum_{y\in\mathcal{Y}}\exp{\transpose{\theta}\s{\mathbf{y}}} = %
+  \sum_{y\in\mathcal{Y}}\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}} = %
+  \prod_{ij}\sum_{y\in\{0,1\}}\exp{\transpose{\theta}\s{\mathbf{y}_{ij}}}
+$$
+
+This can only be achieved with dyadic independence. Otherwise, this arrangement cannot be done. Now, we can write the ERGM model as follows:
+
+$$
+\prod_{ij}\left[\frac{%
+\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}%
+}{%
+\sum_{y'\in\{0,1\}}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}%
+}\right] = %
+\prod_{ij}\left[\frac{1}{%
+1 + \exp{-\transpose{\theta}\Delta\chng{ij}}}%
+\right]
+$$
+
+
+Where the last equality comes from dividing each by the $ij$-th numerator. Since at least one of the two elements of the $\sum_{y'\in\{0,1\}}$ matches the observed $y_{ij}$, one reduces to one, and the other to the change statistic.
 
 \newcommand{\thetaS}[1]{\exp{\transpose{\theta}\s{\mathbf{y}}_{#1}}}
-
-\begin{align*}
-& =\prod_{ij}\left(1 + \thetaS{ij}\right) \\
-& = \left(1 + \thetaS{11}\right)\left(1 + \thetaS{12}\right)\dots\left(1 + \thetaS{nn}\right) \\
-& = 1 + \thetaS{11} + \thetaS{11}\thetaS{12} + \dots + \prod_{ij}\thetaS{ij} \\
-& = 1 + \thetaS{11} + \exp{\transpose{\theta}\left(\s{\mathbf{y}}_{11} + \s{\mathbf{y}}_{12}\right)} + \dots + \prod_{ij}\thetaS{ij} \\
-& = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\transpose{\theta}\s{\mathbf{y}}}
-\end{align*}
-
-Where the last equality follows from the fact that the sum *is* the sum over all possible combinations of networks, starting from $exp(0) = 1$, up to $exp(all)$. This way, we can now write:
-
-\begin{equation}
-\frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} = 
-\prod_{ij}\frac{\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{1 + \exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}
-\end{equation}
 
 Related to this, block-diagonal ERGMs can be estimated as independent models, one per block. To see more about this, read [@Snijders2010margin]. Likewise, since independence depends--pun intended--on partitioning the objective function, as pointed by Snijders, non-linear functions make the model dependent, e.g., $\s{\mathbf{y}} = \sqrt{\sum_{ij}y_{ij}}$, the square root of the edgecount is no longer a bernoulli graph.
 
