@@ -582,7 +582,7 @@ Aplicando la función logit a la ecuación anterior, obtenemos:
  & = \transpose{\theta}\left(\s{\mathbf{y}}^+_{ij} - \s{\mathbf{y}}^-_{ij}\right) \\
  & = \transpose{\theta}\Delta\chng{ij}
 \end{align*}
-\noindent Por lo tanto, la probabilidad condicional del vínculo $y_{ij}$ ocurriendo puede escribirse como:
+\noindent Por lo tanto, la probabilidad condicional de que el vínculo $y_{ij}$ ocurra puede escribirse como:
 
 \begin{equation}
 	\Pr{y_{ij} = 1|y_{-ij}} = \frac{1}{1 + \exp{-\transpose{\theta}\Delta\chng{ij}}}
