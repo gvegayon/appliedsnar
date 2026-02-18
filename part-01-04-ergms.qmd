@@ -564,7 +564,6 @@ the vector of change statistics, in other words, the difference between the
 sufficient statistics when $y_{ij}=1$ and its value when $y_{ij} = 0$. To show
 this, we write the following:
 
-$$
 \begin{align*}
 	\Pr{y_{ij} = 1|y_{-ij}} & = %
 		\frac{\Pr{y_{ij} = 1, x_{-ij}}}{%
@@ -572,7 +571,6 @@ $$
 		& = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}}}{%
 			\exp{\transpose{\theta}\s{\mathbf{y}}^+_{ij}} + \exp{\transpose{\theta}\s{\mathbf{y}}^-_{ij}}}
 \end{align*}
-$$
 
 Applying the logit function to the previous equation, we obtain:
 
