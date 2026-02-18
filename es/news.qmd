@@ -1,9 +1,16 @@
 ---
-date: 2025-09-03
-date-modified: 2025-09-03
+date: 2026-02-18
+date-modified: 2026-02-18
 ---
 
 # Novedades
+
+## Versión 2026.02.18
+
+- Mejoras de gramática y consistencia al capítulo de ERGM, incluyendo:
+  - Corrección de inconsistencia de variables: $x_{-ij}$ → $y_{-ij}$
+  - Mejora de claridad: reemplazado "la probabilidad condicional del nodo $n$ ganando función $k$" con "la probabilidad condicional del vínculo $y_{ij}$ ocurriendo"
+  - Eliminados envoltorios equation* innecesarios para mejor compatibilidad con LaTeX
 
 ## Versión 2025.09.03
 
