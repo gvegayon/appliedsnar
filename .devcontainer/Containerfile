@@ -1,4 +1,4 @@
-FROM rocker/tidyverse:4.5.1
+FROM ghcr.io/rocker-org/devcontainer/geospatial:4.5
 
 RUN install2.r --error languageserver && \
     installGithub.r nx10/httpgd
@@ -10,11 +10,6 @@ RUN install2.r spatialreg
 
 # Missing libraries
 RUN apt-get install --no-install-recommends -y libglpk-dev
-
-# Installing quarto
-RUN quarto install tool tinytex --log-level warning
-
-ENV PATH="/root/.TinyTeX/bin/x86_64-linux:${PATH}"
 
 RUN install2.r --error -n 4 \
 	igraph \
