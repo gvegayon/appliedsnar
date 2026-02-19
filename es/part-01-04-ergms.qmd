@@ -596,29 +596,34 @@ El desafío de analizar redes es su naturaleza interdependiente. No obstante, en
 
 Matemáticamente, para ver esto, es suficiente mostrar que la probabilidad ERGM puede escribirse como el producto de las probabilidades de cada díada. 
 
+
 $$
 \Pr{\mathbf{y} | \theta} = \frac{\exp{\transpose{\theta}\s{\mathbf{y}}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} 
 = \frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}}
 $$
 
-Donde $\s{}_{ij}$ es una función tal que $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. Ahora necesitamos tratar con la constante normalizadora. Para ver cómo eso puede separarse, comencemos desde el resultado:
+Donde $\s{}_{ij}$ es una funcion tal que $\s{\mathbf{y}} = \sum_{ij}{\s{\mathbf{y}}_{ij}}$. Ahora, debemos lidear con la constante normalizadora. Para esto, necesitamos usar el hecho de que podemos intercambiar la suma y el producto. En el caso del modelo de díada independiente, la constante normalizadora puede escribirse como:
 
-\newcommand{\thetaS}[1]{\exp{\transpose{\theta}\s{\mathbf{y}}_{#1}}}
+$$
+\sum_{y\in\mathcal{Y}}\exp{\transpose{\theta}\s{\mathbf{y}}} = %
+  \sum_{y\in\mathcal{Y}}\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}} = %
+  \prod_{ij}\sum_{y\in\{0,1\}}\exp{\transpose{\theta}\s{\mathbf{y}_{ij}}}
+$$
 
-\begin{align*}
-& =\prod_{ij}\left(1 + \thetaS{ij}\right) \\
-& = \left(1 + \thetaS{11}\right)\left(1 + \thetaS{12}\right)\dots\left(1 + \thetaS{nn}\right) \\
-& = 1 + \thetaS{11} + \thetaS{11}\thetaS{12} + \dots + \prod_{ij}\thetaS{ij} \\
-& = 1 + \thetaS{11} + \exp{\transpose{\theta}\left(\s{\mathbf{y}}_{11} + \s{\mathbf{y}}_{12}\right)} + \dots + \prod_{ij}\thetaS{ij} \\
-& = \sum_{\mathbf{y}\in\mathcal{Y}}\exp{\transpose{\theta}\s{\mathbf{y}}}
-\end{align*}
+Lo anterior solo es posible si las díadas son idependientes. De lo contrario, tal arreglo no es factible. Ahora, podemos re escribir la ecuación como sigue:
 
-Donde la última igualdad sigue del hecho de que la suma *es* la suma sobre todas las combinaciones posibles de redes, comenzando desde $exp(0) = 1$, hasta $exp(all)$. De esta manera, ahora podemos escribir:
+$$
+\prod_{ij}\left[\frac{%
+\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}%
+}{%
+\sum_{y'\in\{0,1\}}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}%
+}\right] = %
+\prod_{ij}\left[\frac{1}{%
+1 + \exp{-\transpose{\theta}\Delta\chng{ij}}}%
+\right]
+$$
 
-\begin{equation}
-\frac{\prod_{ij}\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{\sum_{y}\exp{\transpose{\theta}\s{\mathbf{y}}}} = 
-\prod_{ij}\frac{\exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}{1 + \exp{\transpose{\theta}\s{\mathbf{y}}_{ij}}}
-\end{equation}
+Donde la última igualdad está dada al dividir cada elemento de la multiplicación por su numerador correspondiente. Dado que al menos uno de los dos términos de la suma $\sum_{y'\in\{0,1\}}$ es igual al observado en la red, uno de ellos equivale a uno y el otro a una función del estadístico de cámbio.
 
 Relacionado con esto, los ERGMs bloque-diagonales pueden estimarse como modelos independientes, uno por bloque. Para ver más sobre esto, lee [@Snijders2010margin]. De manera similar, dado que la independencia depende--juego de palabras intencionado--de particionar la función objetivo, como señala Snijders, las funciones no lineales hacen que el modelo sea dependiente, ej., $\s{\mathbf{y}} = \sqrt{\sum_{ij}y_{ij}}$, la raíz cuadrada del conteo de enlaces ya no es un grafo de Bernoulli.
 
