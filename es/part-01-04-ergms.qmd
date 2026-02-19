@@ -590,9 +590,9 @@ Aplicando la función logit a la ecuación anterior, obtenemos:
 
 \noindent es decir, una probabilidad logística.
 
-## Independencia de Markov
+## Independencia díadica
 
-El desafío de analizar redes es su naturaleza interdependiente. No obstante, en ausencia de tal interdependencia, los ERGMs son equivalentes a regresión logística. Conceptualmente, si todas las estadísticas incluidas en el modelo no involucran dos o más díadas, entonces el modelo es no-Markoviano en el sentido de grafos de Markov.
+El desafío de analizar redes es su naturaleza interdependiente. No obstante, en ausencia de tal interdependencia, los ERGMs son equivalentes a regresión logística. Conceptualmente, si todas las estadísticas incluidas en el modelo no involucran dos o más díadas, entonces el modelo pierde complejidad.
 
 Matemáticamente, para ver esto, es suficiente mostrar que la probabilidad ERGM puede escribirse como el producto de las probabilidades de cada díada. 
 
