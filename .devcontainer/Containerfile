@@ -31,4 +31,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends vim
 
 RUN quarto install tinytex
 
+RUN installGithub.r  gvegayon/tabulergm@directed-term-variants
+
 CMD ["bash"]

@@ -536,6 +536,30 @@ Increase the sample size, so the curves are smoother, longer intervals (thinning
 
 ![An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful](img/awful-chains.png){fig-align="center"}
 
+## Reporting model results 
+
+Reporting ERGM results can be done smoothly using a combination of two R packages: [`texreg`](https://cran.r-project.org/package=texreg){target="_blank"} and [`tabulergm`](https://github.com/gvegayon/tabulergm){target="_blank"}. The `texreg` package, which we used in the previous chapter, provides an easy way to create regression tables featuring multiple models at the same time. The `tabulergm` R package, on the other hand, consists of a tool to describe your network models. Let's see them in action; we will start with `texreg`:
+
+::: {.callout-important}
+The `tabulergm` package is a new package that was recently submitted to CRAN. While it is reviewed by CRAN, you can get a copy of the package at <https://github.com/gvegayon/tabulergm>
+:::
+
+```{r}
+#| label: tabulation-texreg
+#| results: asis
+texreg::knitreg(ans2, single.row = TRUE)
+```
+
+We can directly pass the model object, but the formula would provide a summary table including the mathemathical and graphical representation (a drawing) of the terms, as well as a description pulled from the ERGM package:
+
+```{r}
+#| label: tabulation-tabulergm
+#| results: asis
+tabulergm::tabulergm_table(
+  formula(ans2),
+  format = "markdown"
+  )
+```
 
 ## More on MCMC convergence
 
