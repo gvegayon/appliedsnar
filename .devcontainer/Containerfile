@@ -30,7 +30,8 @@ RUN install2.r --error -n 4 \
 RUN apt-get update && apt-get install -y --no-install-recommends vim
 
 RUN quarto install tinytex && \
-	tlmgr update --self --all && \
-	tlmgr install amsfonts
+	TLMGR="$(find /root/.TinyTeX/bin -mindepth 1 -maxdepth 1 -type d)/tlmgr" && \
+	"$TLMGR" update --self --all && \
+	"$TLMGR" install amsfonts
 
 CMD ["bash"]
