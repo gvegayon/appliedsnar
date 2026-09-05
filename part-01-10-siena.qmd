@@ -1,3 +1,7 @@
+---
+description: "Stochastic Actor-Oriented Models (SAOMs), also known as Siena models, which describe network dynamics from the actors' probabilistic choice perspective."
+---
+
 # Stochastic Actor Oriented Models
 
 Stochastic Actor Oriented Models (SOAM), also known as Siena models were introduced by CITATION NEEDED.

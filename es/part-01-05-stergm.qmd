@@ -1,3 +1,7 @@
+---
+description: "Modelos de grafos aleatorios de familia exponencial temporal (TERGMs y STERGMs) para modelar la formación y disolución de vínculos en redes dinámicas."
+---
+
 # Modelos de Grafos Aleatorios de Familia Exponencial Temporal
 
 ::: {.callout-warning}

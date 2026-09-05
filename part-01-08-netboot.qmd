@@ -1,3 +1,7 @@
+---
+description: "Hypothesis testing in networks with non-parametric methods in R: comparing networks, testing the prevalence of motifs such as transitive triads, and bootstrapping."
+---
+
 # Hypothesis testing in networks
 
 Overall, there are many ways in which we can see hypothesis testing within

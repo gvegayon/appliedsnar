@@ -1,3 +1,7 @@
+---
+description: "Bibliografía completa y obras citadas en Ciencia de Redes Aplicada con R."
+---
+
 # Referencias {.unnumbered}
 
 ::: {.callout-warning}

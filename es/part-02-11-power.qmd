@@ -1,3 +1,7 @@
+---
+description: "Análisis de poder y tamaño de muestra: errores de tipo I y tipo II, poder estadístico y cómo aplicarlos al diseño de estudios de redes."
+---
+
 # Poder y tamaño de muestra {#sec-part2-power}
 
 ::: {.callout-warning}

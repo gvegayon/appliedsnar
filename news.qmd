@@ -1,6 +1,7 @@
 ---
 date: 2026-02-18
 date-modified: 2026-02-18
+description: "Release notes and change log for Applied Network Science with R, listing what changed in each version of the book."
 ---
 
 # News

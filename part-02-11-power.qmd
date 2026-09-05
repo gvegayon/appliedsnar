@@ -1,3 +1,7 @@
+---
+description: "Power and sample size analysis explained: type I and type II errors, statistical power, and how to apply them when designing network studies."
+---
+
 # Power and sample size {#sec-part2-power}
 
 Computing power and sample size are common tasks in study design. This chapter will walk you

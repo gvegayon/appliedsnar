@@ -1,3 +1,7 @@
+---
+description: "Full bibliography and works cited in Applied Network Science with R."
+---
+
 # References {.unnumbered}
 
 ::: {#refs}

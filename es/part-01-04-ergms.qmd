@@ -1,6 +1,7 @@
 ---
 date: 2024-06-27
 date-modified: 2025-09-03
+description: "Modelos Exponenciales de Grafos Aleatorios (ERGMs) en R con el paquete ergm: especificación del modelo, estimación, diagnósticos MCMC, convergencia y bondad de ajuste."
 ---
 
 :::{.content-hidden}
@@ -25,7 +26,7 @@ vignette("ergm", package="ergm")
 >
 > --- [@Hunter2008]
 
-![Fuente: Hunter et al. (2008)](img/hunter2008.png)
+![Fuente: Hunter et al. (2008)](img/hunter2008.png){fig-alt="Dos diagramas de redes de Hunter et al. (2008): (a) la red samplike, con vínculos dirigidos entre nodos dibujados como círculos, diamantes y triángulos de colores, y (b) la red faux.mesa.high, con nodos coloreados y con formas según el grado escolar, del 7 al 12."}
 
 En pocas palabras, usamos ERGMs (que en inglés son "Exponential Random Graph Models") como una interpretación paramétrica de la distribución de $\mathbf{Y}$, que toma la forma canónica:
 
@@ -530,7 +531,7 @@ ans0_bis <- ergm(
 
 Aumentar el tamaño de muestra, para que las curvas sean más suaves, intervalos más largos (adelgazamiento), lo que reduce la autocorrelación, y un quemado más grande. Todo esto junto para mejorar la estadística de prueba de Gelman. También agregamos idegree del 0 al 10, y esp del 0 al 3 para coincidir explícitamente con esas estadísticas en nuestro modelo.
 
-![Un ejemplo de un ERGM terrible (no hay convergencia en absoluto). También, un buen ejemplo de por qué ejecutar múltiples cadenas puede ser útil](img/awful-chains.png){fig-align="center"}
+![Un ejemplo de un ERGM terrible (no hay convergencia en absoluto). También, un buen ejemplo de por qué ejecutar múltiples cadenas puede ser útil](img/awful-chains.png){fig-align="center" fig-alt="Diagnósticos MCMC de un ERGM que no converge. Los gráficos de traza de los estadísticos nodematch.eversmk1, gwesp y gwesp.decay muestran cuatro cadenas que se separan en lugar de mezclarse, y las densidades correspondientes muestran cuatro modas separadas que no se traslapan."}
 
 
 ## Más sobre convergencia MCMC

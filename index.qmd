@@ -1,6 +1,7 @@
 ---
 date: 2025-08-23
 date-modified: 2025-09-03
+description: "Preface to Applied Network Science with R, a free and fully reproducible book of R examples for analyzing social, biological, and other networked systems."
 ---
 
 \renewcommand{\Pr}[1]{\text{Pr}\left(#1\right)}

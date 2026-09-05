@@ -1,6 +1,7 @@
 ---
 date: 2024-09-07
 date-modified: 2025-09-07
+description: "Statistical foundations for network models: Bayes' rule, prior and posterior distributions, and how the Bayesian and frequentist views of model parameters differ."
 ---
 
 # Bayes' Rule

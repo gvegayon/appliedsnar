@@ -1,5 +1,6 @@
 ---
 date-modified: 2024-05-10
+description: "Difusión de innovaciones en redes con netdiffuseR en R: exposición en la red, umbrales de adopción, infecciosidad y susceptibilidad, tasas de riesgo y tasas de difusión."
 ---
 
 # Difusión en Redes
@@ -19,7 +20,7 @@ Este capítulo está basado en los tutoriales de netdiffuseR de 2018 y 2019 en l
 library(netdiffuseR)
 ```
 
-<img source="https://github.com/USCCANA/netdiffuser-sunbelt2018/blob/sunbelt2019/valente_1995.jpg?raw=true" style="with: 200px"></img>
+<img src="https://github.com/USCCANA/netdiffuser-sunbelt2018/blob/sunbelt2019/valente_1995.jpg?raw=true" alt="Portada de Network Models of the Diffusion of Innovations de Thomas W. Valente (1995)." style="width: 200px"></img>
 
 *   Explica cómo las nuevas ideas y prácticas (innovaciones) se extienden dentro y entre comunidades.
 

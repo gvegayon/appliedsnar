@@ -1,3 +1,7 @@
+---
+description: "Codebook and documentation for the datasets used in the book, including the Social Network Study (SNS) school network data."
+---
+
 # Datasets
 
 ## SNS data {#sns-data}

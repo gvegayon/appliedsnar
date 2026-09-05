@@ -1,3 +1,7 @@
+---
+description: "Using constraints in ERGMs to model bipartite and multilevel networks in R, restricting the support of the model with offset terms and infinite coefficients."
+---
+
 # Using constraints in ERGMs
 
 

@@ -1,6 +1,7 @@
 ---
 date: 2024-09-07
 date-modified: 2025-09-07
+description: "Behavior and network coevolution: statistical models for how social networks and individual behavior shape each other over time, with worked R examples."
 ---
 
 # Behavior and coevolution

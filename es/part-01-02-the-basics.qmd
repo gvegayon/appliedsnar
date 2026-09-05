@@ -1,5 +1,6 @@
 ---
 date-modified: 2024-05-27
+description: "Fundamentos de R para el análisis de redes: obtener R desde CRAN, elegir entre RStudio y VS Code, e instalar paquetes con install.packages y devtools."
 ---
 
 # Fundamentos de R

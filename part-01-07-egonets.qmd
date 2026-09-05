@@ -1,5 +1,6 @@
 ---
 date-modified: 2024-05-27
+description: "Egocentric network analysis in R: reading and processing Network Canvas exports to build ego and alter datasets for egocentric social network studies."
 ---
 
 # Egocentric networks

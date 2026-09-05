@@ -1,3 +1,7 @@
+---
+description: "Pruebas de hipótesis en redes con métodos no paramétricos en R: comparar redes, evaluar la prevalencia de motivos como las tríadas transitivas y bootstrap de redes."
+---
+
 # Pruebas de hipótesis en redes
 
 ::: {.callout-warning}

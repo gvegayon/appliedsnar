@@ -1,6 +1,7 @@
 ---
 date: 2024-06-27
 date-modified: 2025-09-03
+description: "Exponential Random Graph Models (ERGMs) in R with the ergm package: model specification, estimation, MCMC diagnostics, convergence, and goodness of fit."
 ---
 
 :::{.content-hidden}
@@ -25,7 +26,7 @@ vignette("ergm", package="ergm")
 >
 > --- [@Hunter2008]
 
-![Source: Hunter et al. (2008)](img/hunter2008.png)
+![Source: Hunter et al. (2008)](img/hunter2008.png){fig-alt="Two network diagrams from Hunter et al. (2008): (a) the samplike network, with directed ties between nodes drawn as colored circles, diamonds, and triangles, and (b) the faux.mesa.high network, with nodes colored and shaped by school grade, 7 through 12."}
 
 In a nutshell, we use ERGMs as a parametric interpretation of the distribution of $\mathbf{Y}$, which takes the canonical form:
 
@@ -534,7 +535,7 @@ ans0_bis <- ergm(
 
 Increase the sample size, so the curves are smoother, longer intervals (thinning), which reduces autocorrelation, and a larger burin. All this together to improve the Gelman test statistic. We also added idegree from 0 to 10, and esp from 0 to 3 to explicitly match those statistics in our model.
 
-![An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful](img/awful-chains.png){fig-align="center"}
+![An example of a terrible ERGM (no convergence at all). Also, a good example of why running multiple chains can be useful](img/awful-chains.png){fig-align="center" fig-alt="MCMC diagnostics for a non-converging ERGM. Trace plots for the nodematch.eversmk1, gwesp, and gwesp.decay statistics show four chains drifting apart instead of mixing, and the matching density plots show four separate, non-overlapping modes."}
 
 
 ## More on MCMC convergence

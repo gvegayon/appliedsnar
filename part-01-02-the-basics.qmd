@@ -1,5 +1,6 @@
 ---
 date-modified: 2024-05-27
+description: "R basics for network analysis: getting R from CRAN, choosing between RStudio and VS Code, and installing packages with install.packages and devtools."
 ---
 
 # R Basics

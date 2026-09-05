@@ -1,5 +1,6 @@
 ---
 date-modified: 2024-05-10
+description: "Network diffusion of innovations in R with netdiffuseR: network exposure, adoption thresholds, infectiousness and susceptibility, hazard rates, and diffusion rates."
 ---
 
 # Network diffusion
@@ -15,7 +16,7 @@ This chapter is based on the 2018 and 2019 tutorials of netdiffuseR at the Sunbe
 library(netdiffuseR)
 ```
 
-<img source="https://github.com/USCCANA/netdiffuser-sunbelt2018/blob/sunbelt2019/valente_1995.jpg?raw=true" style="with: 200px"></img>
+<img src="https://github.com/USCCANA/netdiffuser-sunbelt2018/blob/sunbelt2019/valente_1995.jpg?raw=true" alt="Cover of Network Models of the Diffusion of Innovations by Thomas W. Valente (1995)." style="width: 200px"></img>
 
 *   Explains how new ideas and practices (innovations) spread within and between communities.
 

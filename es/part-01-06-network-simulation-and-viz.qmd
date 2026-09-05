@@ -1,3 +1,7 @@
+---
+description: "Simula redes artificiales con ERGMs y visualízalas en R usando sna, igraph, netplot y rgexf, incluyendo figuras de redes interactivas en HTML."
+---
+
 # Simulación y Visualización
 
 ::: {.callout-warning}

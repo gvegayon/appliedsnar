@@ -1,6 +1,7 @@
 ---
 date: 2026-02-18
 date-modified: 2026-02-18
+description: "Notas de versión y registro de cambios de Ciencia de Redes Aplicada con R, con lo que cambió en cada versión del libro."
 ---
 
 # Novedades

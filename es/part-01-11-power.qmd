@@ -1,3 +1,7 @@
+---
+description: "Cálculo de poder estadístico para estudios de redes mediante simulación en R, incluyendo efectos de derrame en estudios egocéntricos y estimación del tamaño de muestra."
+---
+
 # Cálculo de poder en estudios de redes
 
 ::: {.callout-warning}
