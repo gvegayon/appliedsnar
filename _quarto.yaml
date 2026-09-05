@@ -21,7 +21,7 @@ book:
   repo-branch: master
   repo-actions: [edit, source, issue]
   image: img/front-page-dalle.png
-  favicon: img/front-page-dalle.png
+  favicon: img/favicon.ico
   open-graph: true
   twitter-card:
     card-style: summary_large_image

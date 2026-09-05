@@ -22,13 +22,13 @@ book:
   repo-subdir: 'es'
   repo-actions: [edit, source, issue]
   image: img/front-page-dalle.png
-  favicon: img/front-page-dalle.png
+  favicon: img/favicon.ico
   open-graph: true
   twitter-card:
     card-style: summary_large_image
     description: 'Este libro (en desarrollo) es una colección de ejemplos utilizando el lenguaje de programación R para ciencia de redes. Incluye ejemplos de procesamiento de datos de redes, visualización, simulación y modelado.'
     creator: "@gvegayon"
-  site-url: https://book.ggvy.cl
+  site-url: https://book.ggvy.cl/es
   sharing: [twitter, linkedin]
   page-navigation: true
   navbar:
