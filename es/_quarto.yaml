@@ -15,17 +15,22 @@ book:
   date: 2026-02-18
   cover-image: img/front-page-dalle.png
   cover-image-alt: 'Una imagen de IA generada con Bing: Dibuja una imagen de una red social. Incluye a una persona examinando la red y sosteniendo una laptop en una mano. La laptop debería tener el logo del lenguaje de programación R.'
+  description: 'Un libro gratuito y de código abierto sobre ciencia de redes aplicada con R: procesamiento de datos de redes, visualización, simulación, ERGMs, STERGMs, netdiffuseR e inferencia estadística para redes sociales y biológicas.'
   page-footer: Ciencia de Redes Aplicada con R - [https://ggvy.cl](https://ggvy.cl){target="_blank"}
   repo-url: https://github.com/gvegayon/appliedsnar
   repo-branch: master
   repo-subdir: 'es'
   repo-actions: [edit, source, issue]
   image: img/front-page-dalle.png
+  favicon: img/favicon.ico
+  open-graph: true
   twitter-card:
+    card-style: summary_large_image
     description: 'Este libro (en desarrollo) es una colección de ejemplos utilizando el lenguaje de programación R para ciencia de redes. Incluye ejemplos de procesamiento de datos de redes, visualización, simulación y modelado.'
     creator: "@gvegayon"
-  site-url: https://book.ggvy.cl
+  site-url: https://book.ggvy.cl/es
   sharing: [twitter, linkedin]
+  page-navigation: true
   navbar:
     # background: light
     search: true

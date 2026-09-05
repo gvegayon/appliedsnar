@@ -1,3 +1,7 @@
+---
+description: "An introduction to network science and social network analysis with R, and to the packages used throughout the book: igraph, statnet, ergm, netdiffuseR, and netplot."
+---
+
 # Introduction
 
 ```{r include=FALSE, cache=FALSE}

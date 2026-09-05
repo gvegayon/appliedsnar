@@ -15,16 +15,21 @@ book:
   date: 2026-02-18
   cover-image: img/front-page-dalle.png
   cover-image-alt: 'An AI image generated with Bing: Draw an image of a social network. Include a person examining the network and holding a laptop in one hand. The laptop should have the logo of the R programming language.'
+  description: 'A free, open-source book on applied network science with R, covering network data processing, visualization, simulation, ERGMs, STERGMs, netdiffuseR, and statistical inference for social and biological networks.'
   page-footer: Applied Network Science with R - [https://ggvy.cl](https://ggvy.cl){target="_blank"}
   repo-url: https://github.com/gvegayon/appliedsnar
   repo-branch: master
   repo-actions: [edit, source, issue]
   image: img/front-page-dalle.png
+  favicon: img/favicon.ico
+  open-graph: true
   twitter-card:
+    card-style: summary_large_image
     description: 'This (WIP) book is a collection of examples using the R programming for network science. It includes examples of network data processing, visualization, simulation, and modeling.'
     creator: "@gvegayon"
   site-url: https://book.ggvy.cl
   sharing: [twitter, linkedin]
+  page-navigation: true
   navbar:
     # background: light
     search: true

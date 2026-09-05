@@ -1,3 +1,7 @@
+---
+description: "Modelos Estocásticos Orientados al Actor (SAOM), o modelos Siena, que describen la dinámica de redes desde la elección probabilística de los actores."
+---
+
 # Modelos Estocásticos Orientados al Actor
 
 ::: {.callout-warning}

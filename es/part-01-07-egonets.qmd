@@ -1,5 +1,6 @@
 ---
 date-modified: 2024-05-27
+description: "Análisis de redes egocéntricas en R: leer y procesar exportaciones de Network Canvas para construir conjuntos de datos de egos y alteris."
 ---
 
 # Redes egocéntricas

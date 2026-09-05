@@ -1,5 +1,6 @@
 ---
 date-modified: 2024-05-10
+description: "Procesa datos de encuestas escolares en redes con R, de principio a fin: leer archivos Stata, construir la red, calcular estadísticas descriptivas y visualizarla."
 ---
 
 # Redes escolares

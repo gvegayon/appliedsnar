@@ -1,6 +1,7 @@
 ---
 date: 2024-09-07
 date-modified: 2025-09-07
+description: "Fundamentos estadísticos para modelos de redes: la regla de Bayes, las distribuciones a priori y posteriores, y cómo difieren las visiones bayesiana y frecuentista."
 ---
 
 

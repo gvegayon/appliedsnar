@@ -1,3 +1,7 @@
+---
+description: "Una introducción a la ciencia de redes y al análisis de redes sociales con R, y a los paquetes usados a lo largo del libro: igraph, statnet, ergm, netdiffuseR y netplot."
+---
+
 # Introducción
 
 ::: {.callout-warning}

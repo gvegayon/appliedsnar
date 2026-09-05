@@ -1,3 +1,7 @@
+---
+description: "Uso de restricciones en ERGMs para modelar redes bipartitas y multinivel en R, restringiendo el soporte del modelo con términos offset y coeficientes infinitos."
+---
+
 # Usando restricciones en ERGMs
 
 ::: {.callout-warning}

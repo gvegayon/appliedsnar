@@ -1,6 +1,7 @@
 ---
 date-modified: 2025-09-03
 date: 2025-08-23
+description: "Prefacio de Ciencia de Redes Aplicada con R, un libro gratuito y reproducible con ejemplos en R para analizar redes sociales, biológicas y otros sistemas en red."
 ---
 
 \renewcommand{\Pr}[1]{\text{Pr}\left(#1\right)}

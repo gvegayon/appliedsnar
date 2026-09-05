@@ -1,3 +1,7 @@
+---
+description: "Libro de códigos y documentación de los conjuntos de datos usados en el libro, incluyendo los datos de redes escolares del Social Network Study (SNS)."
+---
+
 # Conjuntos de datos
 
 ::: {.callout-warning}

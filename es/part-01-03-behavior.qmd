@@ -1,6 +1,7 @@
 ---
 date: 2024-09-07
 date-modified: 2025-09-07
+description: "Comportamiento y coevolución de redes: modelos estadísticos sobre cómo las redes sociales y el comportamiento individual se moldean mutuamente, con ejemplos en R."
 ---
 
 # Comportamiento y coevolución

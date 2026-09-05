@@ -1,4 +1,8 @@
-# Simulation and vizualization
+---
+description: "Simulate artificial networks with ERGMs and visualize them in R using sna, igraph, netplot, and rgexf, including interactive HTML network figures."
+---
+
+# Simulation and visualization
 
 In this chapter, we will build and visualize artificial networks using Exponential Random Graph Models [ERGMs.] Together with chapter 3, this will be an extended  example of how to read network data and visualize it using some of the available R packages out there.
 

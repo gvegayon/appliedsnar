@@ -1,5 +1,6 @@
 ---
 date-modified: 2024-05-10
+description: "A start-to-finish example of turning school survey data into a network in R: reading Stata files, building the network, computing descriptives, and visualizing it."
 ---
 
 # School networks
