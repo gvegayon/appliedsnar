@@ -10,13 +10,17 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  packages: read
 
 jobs:
   build-html:
     runs-on: ubuntu-22.04
 
     container:
-      image: gvegayon/appliedsnar:latest
+      image: ghcr.io/${{ github.repository }}:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
     - uses: actions/checkout@v4
@@ -36,7 +40,10 @@ jobs:
     runs-on: ubuntu-22.04
 
     container:
-      image: gvegayon/appliedsnar:latest
+      image: ghcr.io/${{ github.repository }}:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
     - uses: actions/checkout@v4
@@ -56,7 +63,10 @@ jobs:
     runs-on: ubuntu-22.04
 
     container:
-      image: gvegayon/appliedsnar:latest
+      image: ghcr.io/${{ github.repository }}:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
     - uses: actions/checkout@v4
@@ -92,7 +102,10 @@ jobs:
     runs-on: ubuntu-22.04
 
     container:
-      image: gvegayon/appliedsnar:latest
+      image: ghcr.io/${{ github.repository }}:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
     - uses: actions/checkout@v4

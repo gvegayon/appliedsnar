@@ -29,6 +29,8 @@ RUN install2.r --error -n 4 \
 
 RUN apt-get update && apt-get install -y --no-install-recommends vim
 
-RUN quarto install tinytex
+RUN quarto install tinytex && \
+	tlmgr update --self --all && \
+	tlmgr install amsfonts
 
 CMD ["bash"]
