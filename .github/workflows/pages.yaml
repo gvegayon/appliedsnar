@@ -68,6 +68,14 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    env:
+      # GitHub Actions overrides HOME to /github/home for jobs that run in a
+      # custom container. TinyTeX is installed under /root/.TinyTeX at image
+      # build time (HOME=/root during docker build), so without this Quarto's
+      # TinyTeX detection looks in the wrong place and reports
+      # "No TeX installation was detected" even though it's present.
+      HOME: /root
+
     steps:
     - uses: actions/checkout@v4
 
@@ -106,6 +114,11 @@ jobs:
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
+    env:
+      # See build-pdf: GitHub Actions overrides HOME for container jobs,
+      # which otherwise breaks Quarto's TinyTeX detection.
+      HOME: /root
 
     steps:
     - uses: actions/checkout@v4
