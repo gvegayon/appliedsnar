@@ -13,7 +13,7 @@ regarding error types and statistical power.
 One of the most important tables we'll see around is the contingency table of accept/reject the null hypothesis conditional on the true state:
 
 ```{r 11-contingency, echo=FALSE}
-tab <- c("True positive", "False negative", "False positive", "True negative")
+tab <- c("True negative", "False negative", "False positive", "True positive")
 tab <- matrix(tab, ncol = 2, byrow = TRUE, dimnames = list(c("H0 is true", "H1 is true"), c("Accept H0", "Reject H0")))
 knitr::kable(tab)
 ```
